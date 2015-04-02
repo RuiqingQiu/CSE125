@@ -31,10 +31,15 @@ Team Members:
 
 ////////////////////////////////////////////////////////////
 
+Repo Policy:
 
 - master: deployed product
-- staging: ready for alpha/beta testing
-- development: stable version, can perform tests on this
+
+- staging: ready for alpha/beta testing, commit from
+  development
+
+- development: stable version, can perform system tests
+
 - feature_name_example_branch: make a branch for each new 
   feature, test locally, commit to branch, merge to 
   development when you know feature works for sure
