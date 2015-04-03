@@ -1,0 +1,26 @@
+//
+//  objreader.h
+//  cse167kart
+//
+//  Authors: Nick Troast, Monica Liu, Andrew Lin
+//  Created: 12/2/13
+//
+//  Modified: 12/7/13
+//
+// Original Author: Dr. Jurgen Schulze
+//
+
+#ifndef __ObjReader_h__
+#define __ObjReader_h__
+
+class ObjReader
+{
+  public:
+  static void  readObj(const char* fileName, int &nVertices, float **vertices, float **normals, float **texcoords, int &nIndices, int **indices);
+
+  private:
+    static void get_indices(char *word, int *vindex, int *tindex, int *nindex);
+};
+
+#endif 
+
