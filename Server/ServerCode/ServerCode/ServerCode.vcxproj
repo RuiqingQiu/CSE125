@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{48091062-B1B7-420C-93B2-E83669AC1603}</ProjectGuid>
-    <RootNamespace>Project1</RootNamespace>
+    <ProjectGuid>{315468EA-B7F7-4D2B-8DD1-9D962C02E780}</ProjectGuid>
+    <RootNamespace>ServerCode</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -64,23 +64,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\ClientGame.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\ClientNetwork.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\NetworkData.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\NetworkServices.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\ServerGame.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\ServerNetwork.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\stdafx.h" />
-    <ClInclude Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\targetver.h" />
+    <ClInclude Include="..\ClientGame.h" />
+    <ClInclude Include="..\ClientNetwork.h" />
+    <ClInclude Include="..\NetworkData.h" />
+    <ClInclude Include="..\NetworkServices.h" />
+    <ClInclude Include="..\ServerGame.h" />
+    <ClInclude Include="..\ServerNetwork.h" />
+    <ClInclude Include="..\stdafx.h" />
+    <ClInclude Include="..\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\ClientGame.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\ClientNetwork.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\main.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\NetworkServices.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\ServerGame.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\ServerNetwork.cpp" />
-    <ClCompile Include="..\..\..\..\..\..\Downloads\simple_network\simple_network\stdafx.cpp" />
+    <ClCompile Include="..\ClientGame.cpp" />
+    <ClCompile Include="..\ClientNetwork.cpp" />
+    <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\NetworkServices.cpp" />
+    <ClCompile Include="..\ServerGame.cpp" />
+    <ClCompile Include="..\ServerNetwork.cpp" />
+    <ClCompile Include="..\stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
