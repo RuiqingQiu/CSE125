@@ -119,6 +119,12 @@ int ServerNetwork::receiveData(unsigned int client_id, char * recvbuf)
     {
         SOCKET currentSocket = sessions[client_id];
         iResult = NetworkServices::receiveMessage(currentSocket, recvbuf, MAX_PACKET_SIZE);
+		Packet p;
+		//Use the received message to create the packet again
+		p.deserialize(recvbuf);
+		printf("%d", p.position_x);
+		printf("%d", p.position_y);
+		printf("%d", p.position_z);
 
         if (iResult == 0)
         {

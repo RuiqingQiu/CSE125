@@ -66,7 +66,6 @@ void ServerGame::receiveFromClients()
                 case ACTION_EVENT:
 
                     printf("server received action event packet from client\n");
-
                     sendActionPackets();
 
                     break;

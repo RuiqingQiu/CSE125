@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ClientNetwork.h"
-
+#include <iostream>
 
 ClientNetwork::ClientNetwork(void)
 {
@@ -22,9 +22,7 @@ ClientNetwork::ClientNetwork(void)
         printf("WSAStartup failed with error: %d\n", iResult);
         exit(1);
     }
-
-
-
+	
     // set address info
     ZeroMemory( &hints, sizeof(hints) );
     hints.ai_family = AF_UNSPEC;
@@ -33,10 +31,12 @@ ClientNetwork::ClientNetwork(void)
 
 	
     //resolve server address and port 
-    iResult = getaddrinfo("127.0.0.1", DEFAULT_PORT, &hints, &result);
-
+	
+	//Change the address to the network ip address
+    iResult = getaddrinfo("128.54.70.32", DEFAULT_PORT, &hints, &result);
     if( iResult != 0 ) 
     {
+		OutputDebugString("getaddrinfo failed with error");
         printf("getaddrinfo failed with error: %d\n", iResult);
         WSACleanup();
         exit(1);
