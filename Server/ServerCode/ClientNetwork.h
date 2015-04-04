@@ -22,8 +22,7 @@ class ClientNetwork
 public:
 
     // for error checking function calls in Winsock library
-    int iResult;
-
+    int iResult; 
     // socket for client to connect to server
     SOCKET ConnectSocket;
 

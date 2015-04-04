@@ -7,6 +7,7 @@
 #include "ClientGame.h"
 // used for multi-threading
 #include <process.h>
+#include <iostream>
 
 void serverLoop(void *);
 void clientLoop(void);
@@ -16,17 +17,22 @@ ClientGame * client;
 
 int main()
 {
-
-	// initialize the server
+	
+	// initialize the server, comment if running client
 	server = new ServerGame();
-
+	while (true)
+	{
+		server->update();
+	}
 	// create thread with arbitrary argument for the run function
-    _beginthread( serverLoop, 0, (void*)12);
+    //_beginthread( serverLoop, 0, (void*)12);
 
+
+	//Uncomment this part for running client
     // initialize the client 
-    client = new ClientGame();
+    //client = new ClientGame();
 
-	clientLoop();
+	//clientLoop();
 }
 
 void serverLoop(void * arg) 
