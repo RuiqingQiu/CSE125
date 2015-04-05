@@ -18,7 +18,7 @@ int main()
 
 	// initialize the server, comment if running client
 	server = new ServerGame();
-	
+	/*
 	GameObj* obj = new GameObj(1, 2, 3, 4);
 	GameObj* obj2 = new GameObj(8, 7, 6, 5);
 
@@ -31,10 +31,10 @@ int main()
 	memcpy(cstr, result.c_str(), sizeof(cstr));
 
 	cout << cstr << endl;
+	*/
 	// create thread with arbitrary argument for the run function
 	//_beginthread( serverLoop, 0, (void*)12);
-
-	while (1){}
+	serverLoop((void*)12);
 
 	//Uncomment this part for running client
 	// initialize the client 
