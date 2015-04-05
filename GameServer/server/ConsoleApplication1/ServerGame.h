@@ -9,7 +9,7 @@
 class ServerGame
 {
 
-	std::vector<GameObj> gameObjs;
+	//std::vector<GameObj> gameObjs;
 
 public:
 
@@ -22,9 +22,9 @@ public:
 
 	void sendActionPackets();
 
-	void pushGameObj(GameObj);
+	//void pushGameObj(GameObj);
 
-	std::vector<GameObj> getGameObjs();
+	//std::vector<GameObj> getGameObjs();
 
 
 	string convertData(char*);

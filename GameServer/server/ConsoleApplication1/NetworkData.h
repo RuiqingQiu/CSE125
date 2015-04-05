@@ -15,6 +15,7 @@ enum PacketTypes {
 	MOVE_BACKWARD = 5,
 	MOVE_UP = 6,
 	MOVE_DOWN = 7,
+	ACTION_EVENT = 8,
 };
 
 
@@ -22,7 +23,7 @@ struct SPacket {
 
 	unsigned int packet_type;
 
-	char data[MAX_PACKET_SIZE-4];
+	char data[1024];
 
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(SPacket));
