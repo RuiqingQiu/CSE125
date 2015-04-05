@@ -26,6 +26,12 @@ void Cube::VOnUpdate(GameInfoPacket* pData)
 {
 
 }
+void Cube::VOnClientUpdate(GameInfoPacket* pData){ 
+	PlayerInfo* p = pData->get_player_info(this->identifier);
+	if (p){
+		this->localTransform.position = Vector3(p->x, p->y, p->z);
+	}
+}
 
 void Cube::VOnDraw()
 {

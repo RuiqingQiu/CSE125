@@ -11,5 +11,7 @@ public:
 
 	virtual void VOnDraw(){ };
 	virtual void VOnUpdate(GameInfoPacket* pData){ };
+	virtual void VOnClientUpdate(GameInfoPacket* pData){ };
+
 };
 

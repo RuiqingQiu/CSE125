@@ -79,13 +79,19 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientGame.h" />
+    <ClInclude Include="ClientNetwork.h" />
     <ClInclude Include="ComponentNode.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
     <ClInclude Include="GameInfoPacket.h" />
+    <ClInclude Include="GamePacketManager.h" />
     <ClInclude Include="GameView.h" />
     <ClInclude Include="GeoNode.h" />
     <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="NetworkData.h" />
+    <ClInclude Include="NetworkServices.h" />
+    <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Transform.h" />
@@ -94,13 +100,18 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClientGame.cpp" />
+    <ClCompile Include="ClientNetwork.cpp" />
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="GameInfoPacket.cpp" />
+    <ClCompile Include="GamePacketManager.cpp" />
     <ClCompile Include="GameView.cpp" />
     <ClCompile Include="GeoNode.cpp" />
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="ComponentNode.cpp" />
+    <ClCompile Include="NetworkServices.cpp" />
+    <ClCompile Include="PlayerInfo.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
