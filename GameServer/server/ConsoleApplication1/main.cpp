@@ -13,27 +13,14 @@ void serverLoop(void *);
 void clientLoop(void);
 
 ServerGame * server;
+unsigned int gameState;
 int main()
 {
 
+	gameState = 0;
 	// initialize the server, comment if running client
 	server = new ServerGame();
-	/*
-	GameObj* obj = new GameObj(1, 2, 3, 4);
-	GameObj* obj2 = new GameObj(8, 7, 6, 5);
-
-	char* des = "wrong";
-	server->pushGameObj(*obj);
-	server->pushGameObj(*obj2);
-
-	string result = server->convertData(des);
-	char cstr [1000000];
-	memcpy(cstr, result.c_str(), sizeof(cstr));
-
-	cout << cstr << endl;
-	*/
-	// create thread with arbitrary argument for the run function
-	//_beginthread( serverLoop, 0, (void*)12);
+	
 	serverLoop((void*)12);
 
 	//Uncomment this part for running client
@@ -47,6 +34,14 @@ void serverLoop(void * arg)
 {
 	while (true)
 	{
+		switch (gameState){
+		case 0: 
+			gameState = server->waitForConnections();
+			break;
+		case 1:
+			break;
+		
+		}
 		server->update();
 	}
 }
