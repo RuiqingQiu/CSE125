@@ -1,14 +1,15 @@
 #pragma once
 class GameObj
 {
+
 	double _x;
 	double _y;
 	double _z;
 	unsigned int _id;
 
 public:
-	GameObj(unsigned int);
-	GameObj(unsigned int, double, double, double);
+	GameObj();
+	GameObj(double, double, double);
 	~GameObj();
 
 	double getX();

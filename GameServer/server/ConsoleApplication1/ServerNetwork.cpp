@@ -155,3 +155,23 @@ void ServerNetwork::sendToAll(char * packets, int totalSize)
 		}
 	}
 }
+
+
+//ServerNetwork.cpp
+// send data to one client
+void ServerNetwork::sendToOne(char * packets, int totalSize, unsigned int client_ID)
+{
+	SOCKET currentSocket;
+	std::map<unsigned int, SOCKET>::iterator iter;
+	int iSendResult;
+	iter = sessions.find(client_ID);
+
+	currentSocket = iter->second;
+	iSendResult = NetworkServices::sendMessage(currentSocket, packets, totalSize);
+
+	if (iSendResult == SOCKET_ERROR)
+	{
+		printf("send failed with error: %d\n", WSAGetLastError());
+		closesocket(currentSocket);
+	}
+}

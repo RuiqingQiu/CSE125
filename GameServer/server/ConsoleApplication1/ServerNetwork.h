@@ -35,6 +35,11 @@ public:
 	// for error checking return values
 	int iResult;
 
+	//ServerNetwork.h
+	// send data to one client
+	void sendToOne(char * packets, int totalSize, unsigned int client_ID);
+
+
 	// table to keep track of each client's socket
 	std::map<unsigned int, SOCKET> sessions;
 };

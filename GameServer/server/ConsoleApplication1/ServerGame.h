@@ -5,11 +5,14 @@
 #include <vector>
 #include "GameObj.h"
 #include <string>
+#include <iostream>
+#include <map>
 
 class ServerGame
 {
 
-	//std::vector<GameObj> gameObjs;
+	std::vector<GameObj> gameObjs;
+	std::map<unsigned int, GameObj> clientPair;
 
 public:
 
@@ -22,12 +25,16 @@ public:
 
 	void sendActionPackets();
 
-	//void pushGameObj(GameObj);
+	void pushGameObj(GameObj);
 
-	//std::vector<GameObj> getGameObjs();
+	std::vector<GameObj> getGameObjs();
+
+	void sendClientConfirmationPacket(char* clientName, unsigned int client_ID);
+
+	unsigned int ServerGame::waitForConnections();
 
 
-	string convertData(char*);
+	string convertData();
 private:
 
 	// IDs for the clients connecting for table in ServerNetwork 
