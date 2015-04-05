@@ -17,6 +17,7 @@ public:
 
     Cube(float);
     virtual ~Cube(void);
+	virtual void VOnClientUpdate(GameInfoPacket* pData);
 
 	virtual void VOnDraw();
 	virtual void VOnUpdate(GameInfoPacket* pData);

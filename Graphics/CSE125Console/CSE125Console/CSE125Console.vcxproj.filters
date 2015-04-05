@@ -72,6 +72,24 @@
     <ClInclude Include="GameView.h">
       <Filter>Source Files\GameView</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerInfo.h">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientGame.h">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientNetwork.h">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkData.h">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkServices.h">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePacketManager.h">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -109,6 +127,21 @@
     </ClCompile>
     <ClCompile Include="GameView.cpp">
       <Filter>Source Files\GameView</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInfo.cpp">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientGame.cpp">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientNetwork.cpp">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkServices.cpp">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePacketManager.cpp">
+      <Filter>Source Files\NetPacket</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

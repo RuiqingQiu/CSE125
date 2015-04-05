@@ -12,7 +12,7 @@ public:
 	std::vector<GeoNode*> NodeList;
 
 	void OnRender();
-	void OnUpdate(GameInfoPacket* info);
+	void OnClientUpdate(GameInfoPacket* info);
 
 	void PushGeoNode(GeoNode* node);
 	void PopGeoNode(GeoNode* node);

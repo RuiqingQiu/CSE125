@@ -20,12 +20,13 @@ void GameView::OnRender()
 	}
 }
 
-void GameView::OnUpdate(GameInfoPacket* info)
+void GameView::OnClientUpdate(GameInfoPacket* info)
 {
 	for each (GeoNode* node in NodeList)
 	{
-		node->VOnUpdate(info);
+	    node->VOnClientUpdate(info);
 	}
+
 }
 
 void GameView::PushGeoNode(GeoNode* node)

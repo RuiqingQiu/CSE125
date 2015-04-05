@@ -17,11 +17,19 @@ int Window::height = 512;   //Set window height in pixels here
 
 static GameView* view;
 static Cube* cube;
+
+GamePacketManager* Window::manager;
+
+//Init server info here later
 void Window::initialize(void)
 {
+	manager = new GamePacketManager();
+
 	view = new GameView();
+
 	cube = new Cube(2);
 	cube->localTransform.position = Vector3(0, 0, -5);
+	cube->identifier = 1;
 	view->PushGeoNode(cube);
 	//Setup the light
 }
@@ -34,7 +42,23 @@ void Window::idleCallback()
     //Call the display routine to draw the cube
     displayCallback();
 }
+void Window::processNormalKeys(unsigned char key, int x, int y){
+	if (key == 27){
+		exit(0);
+	}
+	else if (key == 'a'){
+		
+	}
+	else if (key == 'w'){
 
+	}
+	else if (key == 's'){
+
+	}
+	else if (key == 'd'){
+
+	}
+}
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
 void Window::reshapeCallback(int w, int h)
@@ -60,6 +84,30 @@ void Window::displayCallback()
 	glTranslated(0.0f, 0.0f, -5.0f);
 
 	printf("display\n");
+
+	//get net p, client loop  check packet, if so process then update object states, else render
+	
+	/*
+	GameInfoPacket* g = new GameInfoPacket();
+	PlayerInfo* p = new PlayerInfo();
+	p->id = 1;
+	p->x = 1;
+	p->y = 0;
+	p->z = -10;
+
+	g->player_infos.push_back(p);
+	*/
+
+
+	//Manager get packet
+	/*
+	GameInfoPacket* p = manager->tryGetGameInfo();
+	if (p){
+
+		//update
+		view->OnClientUpdate(p);
+	}*/
+
 	view->OnRender();
     //Tell OpenGL to clear any outstanding commands in its command buffer
     //This will make sure that all of our commands are fully executed before
