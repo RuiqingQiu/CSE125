@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include "ClientNetwork.h"
 #include "NetworkData.h"
+#include <string>
 
 class ClientGame
 {
@@ -16,7 +17,7 @@ public:
 
     char network_data[MAX_PACKET_SIZE];
 
-	char*  update();
+	std::string  update();
 
 	bool connectToServer(char* ipaddress);
 };
