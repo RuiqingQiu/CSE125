@@ -36,7 +36,7 @@ struct SPacket {
 struct CPacket {
 
 	unsigned int packet_type;
-
+	char data[1024];
 
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(CPacket));

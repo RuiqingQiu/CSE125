@@ -28,6 +28,12 @@
     <Filter Include="Source Files\GameView">
       <UniqueIdentifier>{feb90d39-46c6-4cb5-a527-8f8905897ae0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GamePlayer">
+      <UniqueIdentifier>{2923743c-189a-46eb-b937-8c2cf5ebbc82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{9b7a4e3a-22ff-486c-844c-8d6ae90bd181}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -90,6 +96,18 @@
     <ClInclude Include="GamePacketManager.h">
       <Filter>Source Files\NetPacket</Filter>
     </ClInclude>
+    <ClInclude Include="GameCore.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayer.h">
+      <Filter>Source Files\GamePlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInputInterface.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardGameInput.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -142,6 +160,18 @@
     </ClCompile>
     <ClCompile Include="GamePacketManager.cpp">
       <Filter>Source Files\NetPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePlayer.cpp">
+      <Filter>Source Files\GamePlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInputInterface.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardGameInput.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
