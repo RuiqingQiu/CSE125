@@ -4,11 +4,12 @@
 #include <iostream>
 #include <vector>
 #include "GameObj.h"
+#include <string>
 
 class ServerGame
 {
 
-	std::vector<GameObj> gameObjs;
+	//std::vector<GameObj> gameObjs;
 
 public:
 
@@ -21,6 +22,12 @@ public:
 
 	void sendActionPackets();
 
+	//void pushGameObj(GameObj);
+
+	//std::vector<GameObj> getGameObjs();
+
+
+	string convertData(char*);
 private:
 
 	// IDs for the clients connecting for table in ServerNetwork 
@@ -28,6 +35,7 @@ private:
 
 	// The ServerNetwork object 
 	ServerNetwork* network;
+
 
 	// data buffer
 	char network_data[MAX_PACKET_SIZE];
