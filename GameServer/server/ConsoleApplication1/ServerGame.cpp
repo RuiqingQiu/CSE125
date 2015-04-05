@@ -8,8 +8,10 @@ ServerGame::ServerGame(void)
 	// id's to assign clients for our table
 	client_id = 0;
 
+
 	// set up the server network to listen 
 	network = new ServerNetwork();
+
 }
 
 ServerGame::~ServerGame(void)
@@ -32,7 +34,7 @@ void ServerGame::update()
 void ServerGame::receiveFromClients()
 {
 
-	Packet packet;
+	SPacket packet;
 
 	// go through all clients
 	std::map<unsigned int, SOCKET>::iterator iter;
@@ -51,7 +53,7 @@ void ServerGame::receiveFromClients()
 		while (i < (unsigned int)data_length)
 		{
 			packet.deserialize(&(network_data[i]));
-			i += sizeof(Packet);
+			i += sizeof(SPacket);
 
 			switch (packet.packet_type) {
 
@@ -63,7 +65,7 @@ void ServerGame::receiveFromClients()
 
 				break;
 
-			case ACTION_EVENT:
+			case GAME_STATE:
 
 				printf("server received action event packet from client\n");
 				sendActionPackets();
@@ -84,13 +86,56 @@ void ServerGame::receiveFromClients()
 void ServerGame::sendActionPackets()
 {
 	// send action packet
-	const unsigned int packet_size = sizeof(Packet);
+	const unsigned int packet_size = sizeof(SPacket);
 	char packet_data[packet_size];
 
-	Packet packet;
-	packet.packet_type = ACTION_EVENT;
+	GameObj* obj = new GameObj(1, 2, 3, -12);
+	GameObj* obj2 = new GameObj(8, 7, 6, -5);
+
+	SPacket packet;
+
+	char* des = "wrong";
+	this->pushGameObj(*obj);
+	this->pushGameObj(*obj2);
+
+	string result = this->convertData(des);
+	memcpy(packet.data, result.c_str(), sizeof(packet.data));
+
+	SPacket packet;
+	packet.packet_type = GAME_STATE;
 
 	packet.serialize(packet_data);
 
 	network->sendToAll(packet_data, packet_size);
+}
+
+// convert gameobjs to jason file
+string ServerGame::convertData(char* des){
+	string temp;
+	for (vector<GameObj>::iterator i = gameObjs.begin();
+		i != gameObjs.end(); ++i)
+	{
+		temp += to_string(i->getId());
+		temp += ' ';
+		temp += to_string(i->getX());
+		temp += ' ';
+		temp += to_string(i->getY());
+		temp += ' ';
+		temp += to_string(i->getZ());
+		temp += '\n';
+	}
+	return temp;
+	des = new char[temp.length() + 1];
+	memset(des, 0, temp.length() + 1);
+	memcpy(des, temp.c_str(), temp.length());
+}
+
+std::vector<GameObj> ServerGame::getGameObjs()
+{
+	return gameObjs;
+}
+
+void ServerGame::pushGameObj(GameObj obj)
+{
+	gameObjs.push_back(obj);
 }
