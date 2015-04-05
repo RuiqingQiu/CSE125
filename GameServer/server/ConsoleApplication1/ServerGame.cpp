@@ -34,7 +34,7 @@ void ServerGame::update()
 void ServerGame::receiveFromClients()
 {
 
-	SPacket packet;
+	CPacket packet;
 
 	// go through all clients
 	std::map<unsigned int, SOCKET>::iterator iter;
@@ -53,7 +53,7 @@ void ServerGame::receiveFromClients()
 		while (i < (unsigned int)data_length)
 		{
 			packet.deserialize(&(network_data[i]));
-			i += sizeof(SPacket);
+			i += sizeof(CPacket);
 
 			switch (packet.packet_type) {
 
@@ -101,7 +101,6 @@ void ServerGame::sendActionPackets()
 	string result = this->convertData(des);
 	memcpy(packet.data, result.c_str(), sizeof(packet.data));
 
-	SPacket packet;
 	packet.packet_type = GAME_STATE;
 
 	packet.serialize(packet_data);
