@@ -1,15 +1,18 @@
 #include "GameObj.h"
 
+static unsigned int _totalId;
 
-GameObj::GameObj(unsigned int myId)
+GameObj::GameObj()
 {
-	_id = myId;
+	_totalId++;
+	_id = _totalId;
 }
 
 
-GameObj::GameObj(unsigned int myId, double posX, double posY, double posZ)
+GameObj::GameObj(double posX, double posY, double posZ)
 {
-	_id = myId;
+	_totalId++;
+	_id = _totalId;
 	_x = posX;
 	_y = posY;
 	_z = posZ;
