@@ -83,7 +83,7 @@ void Window::displayCallback()
 	glLoadIdentity();
 	glTranslated(0.0f, 0.0f, -5.0f);
 
-	printf("display\n");
+	//printf("display\n");
 
 	//get net p, client loop  check packet, if so process then update object states, else render
 	
@@ -100,13 +100,13 @@ void Window::displayCallback()
 
 
 	//Manager get packet
-	/*
+	
 	GameInfoPacket* p = manager->tryGetGameInfo();
 	if (p){
 
 		//update
 		view->OnClientUpdate(p);
-	}*/
+	}
 
 	view->OnRender();
     //Tell OpenGL to clear any outstanding commands in its command buffer
