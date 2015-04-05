@@ -6,10 +6,6 @@ GameObj::GameObj(unsigned int myId)
 	_id = myId;
 }
 
-GameObj::GameObj(unsigned int myId)
-{
-	_id = myId;
-}
 
 GameObj::GameObj(unsigned int myId, double posX, double posY, double posZ)
 {
