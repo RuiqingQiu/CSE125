@@ -60,7 +60,6 @@ void ServerGame::receiveFromClients()
 			case INIT_CONNECTION:
 
 				printf("server received init packet from client\n");
-
 				sendActionPackets();
 
 				break;
@@ -73,6 +72,7 @@ void ServerGame::receiveFromClients()
 				break;
 
 			default:
+				sendActionPackets();
 
 				printf("error in packet types\n");
 
@@ -85,29 +85,34 @@ void ServerGame::receiveFromClients()
 
 void ServerGame::sendActionPackets()
 {
+
+	cout << "send" << endl;
 	// send action packet
 	const unsigned int packet_size = sizeof(SPacket);
 	char packet_data[packet_size];
 
-	GameObj* obj = new GameObj(1, 2, 3, -12);
-	GameObj* obj2 = new GameObj(8, 7, 6, -5);
+	//GameObj* obj = new GameObj(1, 2, 3, -12);
+	//GameObj* obj2 = new GameObj(8, 7, 6, -5);
 
 	SPacket packet;
+	//packet.data[0] = '1';
 
-	char* des = "wrong";
-	this->pushGameObj(*obj);
-	this->pushGameObj(*obj2);
+	//char* des = "wrong";
+	//this->pushGameObj(*obj);
+	//this->pushGameObj(*obj2);
+	float x = (float)rand() / RAND_MAX;
+	string result = "1 " + to_string(x) + " 0 -5\n";
 
-	string result = this->convertData(des);
+	//string result = this->convertData(des);
 	memcpy(packet.data, result.c_str(), sizeof(packet.data));
 
-	packet.packet_type = GAME_STATE;
+	packet.packet_type = ACTION_EVENT;
 
 	packet.serialize(packet_data);
 
 	network->sendToAll(packet_data, packet_size);
 }
-
+/*
 // convert gameobjs to jason file
 string ServerGame::convertData(char* des){
 	string temp;
@@ -138,3 +143,4 @@ void ServerGame::pushGameObj(GameObj obj)
 {
 	gameObjs.push_back(obj);
 }
+*/
