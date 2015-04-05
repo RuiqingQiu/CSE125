@@ -79,6 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameObj.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="NetworkData.h" />
     <ClInclude Include="NetworkServices.h" />
     <ClInclude Include="resource.h" />
@@ -89,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameObj.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="ServerGame.cpp" />
     <ClCompile Include="ServerNetwork.cpp" />
