@@ -4,6 +4,7 @@
 #include "ClientNetwork.h"
 #include "NetworkData.h"
 #include <string>
+#include "GameInfoPacket.h"
 
 class ClientGame
 {
@@ -17,8 +18,10 @@ public:
 
     char network_data[MAX_PACKET_SIZE];
 
-	std::string  update();
+	GameInfoPacket* update();
 
 	bool connectToServer(char* ipaddress);
+
+	bool sendPacket(CPacket p);
 };
 
