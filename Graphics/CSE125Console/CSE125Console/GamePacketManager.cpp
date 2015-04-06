@@ -5,10 +5,6 @@
 GamePacketManager::GamePacketManager()
 {
 	client = new ClientGame();
-<<<<<<< HEAD
-	client->connectToServer("128.54.70.30");
-=======
->>>>>>> origin/master
 }
 
 
@@ -25,6 +21,7 @@ bool GamePacketManager::ConnectToServer(char* ipaddress)
 GameInfoPacket* GamePacketManager::tryGetGameInfo(){
 	//char* data = client->update();
 	GameInfoPacket* result = client->update();
+
 	return result;
 }
 
