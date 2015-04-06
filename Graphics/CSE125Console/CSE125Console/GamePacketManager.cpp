@@ -5,7 +5,7 @@
 GamePacketManager::GamePacketManager()
 {
 	client = new ClientGame();
-	client->connectToServer("128.54.70.27");
+	client->connectToServer("128.54.70.30");
 }
 
 

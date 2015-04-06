@@ -26,9 +26,9 @@ unsigned int ServerGame::waitForConnections()
 	// get new clients
 	if (network->acceptNewClient(client_id))
 	{
-		GameObj * clientOb = new GameObj();
-		this->pushGameObj(*clientOb);
-		clientPair.insert(std::pair<unsigned int, GameObj>(client_id, *clientOb));
+		GameObj * clientOb = new GameObj(0,0,-5);
+		this->pushGameObj(clientOb);
+		clientPair.insert(std::pair<unsigned int, GameObj*>(client_id, clientOb));
 		printf("client %d has been connected to the server\n", client_id);
 
 		client_id++;
@@ -65,7 +65,7 @@ unsigned int ServerGame::waitForConnections()
 			}
 		}
 	}
-	if (client_id >= 4) return 1;
+	if (client_id >= 1) return 1;
 	else return 0;
 }
 
@@ -77,10 +77,7 @@ void ServerGame::update()
 	// get new clients
 	if (network->acceptNewClient(client_id))
 	{
-		
-		printf("client %d has been connected to the server\n", client_id);
-
-		client_id++;
+		printf("No more client could add to game. Close the connection with new client\I", client_id);
 	}
 
 	receiveFromClients();
@@ -90,14 +87,15 @@ void ServerGame::receiveFromClients()
 {
 
 	CPacket packet;
-
+	//cout << gameObjs.size() << endl;
+	
 	// go through all clients
 	std::map<unsigned int, SOCKET>::iterator iter;
 
 	for (iter = network->sessions.begin(); iter != network->sessions.end(); iter++)
 	{
 		int data_length = network->receiveData(iter->first, network_data);
-
+		
 		if (data_length <= 0)
 		{
 			//no data recieved
@@ -109,15 +107,149 @@ void ServerGame::receiveFromClients()
 		{
 			packet.deserialize(&(network_data[i]));
 			i += sizeof(CPacket);
-
+			cout << packet.packet_type << endl;
 			switch (packet.packet_type) {
 
-			case GAME_STATE:
+			case MOVE_LEFT: {
 
-				printf("server received action event packet from client\n");
+								printf("server received action event packet from client game logic & phyics\n");
+								string packetInfoStr = "";
+								int i;
+								for (i = 0;; i++)
+								{
+									if (packet.data[i] != '\n')
+										packetInfoStr += packet.data[i];
+									else
+									{
+										break;
+									}
+								}
+								unsigned int cid = stoul(packetInfoStr);
+								std::map<unsigned int, GameObj *>::iterator it;
+								it = clientPair.find(cid);
+								GameObj*  cob = it->second;
+								cob->setX(cob->getX() - oneStep);
+								cout << cob->getX() << endl;
+								sendActionPackets();
+								break;
+			}
+			case MOVE_RIGHT: {
+
+								printf("server received action event packet from client game logic & phyics\n");
+								string packetInfoStr = "";
+								int i;
+								for (i = 0;; i++)
+								{
+									if (packet.data[i] != '\n')
+										packetInfoStr += packet.data[i];
+									else
+									{
+										break;
+									}
+								}
+								unsigned int cid = stoul(packetInfoStr);
+								std::map<unsigned int, GameObj *>::iterator it;
+								it = clientPair.find(cid);
+								GameObj*  cob = it->second;
+								cob->setX(cob->getX() + oneStep);
+								cout << cob->getX() << endl;
+								sendActionPackets();
+								break;
+			}			
+			case MOVE_BACKWARD: {
+
+								printf("server received action event packet from client game logic & phyics\n");
+								string packetInfoStr = "";
+								int i;
+								for (i = 0;; i++)
+								{
+									if (packet.data[i] != '\n')
+										packetInfoStr += packet.data[i];
+									else
+									{
+										break;
+									}
+								}
+								unsigned int cid = stoul(packetInfoStr);
+								std::map<unsigned int, GameObj *>::iterator it;
+								it = clientPair.find(cid);
+								GameObj*  cob = it->second;
+								cob->setZ(cob->getZ() + oneStep);
+								cout << cob->getX() << endl;
+								sendActionPackets();
+								break;
+			}			
+			case MOVE_FORWARD: {
+
+				printf("server received action event packet from client game logic & phyics\n");
+				string packetInfoStr = "";
+				int i;
+				for (i = 0;; i++)
+				{
+					if (packet.data[i] != '\n')
+						packetInfoStr += packet.data[i];
+					else
+					{
+						break;
+					}
+				}
+				unsigned int cid = stoul(packetInfoStr);
+				std::map<unsigned int, GameObj *>::iterator it;
+				it = clientPair.find(cid);
+				GameObj*  cob = it->second;
+				cob->setZ(cob->getZ() - oneStep);
+				cout << cob->getX() << endl;
 				sendActionPackets();
-
 				break;
+			}
+			case MOVE_UP: {
+
+								   printf("server received action event packet from client game logic & phyics\n");
+								   string packetInfoStr = "";
+								   int i;
+								   for (i = 0;; i++)
+								   {
+									   if (packet.data[i] != '\n')
+										   packetInfoStr += packet.data[i];
+									   else
+									   {
+										   break;
+									   }
+								   }
+								   unsigned int cid = stoul(packetInfoStr);
+								   std::map<unsigned int, GameObj *>::iterator it;
+								   it = clientPair.find(cid);
+								   GameObj*  cob = it->second;
+								   cob->setY(cob->getY() + oneStep);
+								   cout << cob->getX() << endl;
+								   sendActionPackets();
+								   break;
+			}
+
+			case MOVE_DOWN: {
+
+								   printf("server received action event packet from client game logic & phyics\n");
+								   string packetInfoStr = "";
+								   int i;
+								   for (i = 0;; i++)
+								   {
+									   if (packet.data[i] != '\n')
+										   packetInfoStr += packet.data[i];
+									   else
+									   {
+										   break;
+									   }
+								   }
+								   unsigned int cid = stoul(packetInfoStr);
+								   std::map<unsigned int, GameObj *>::iterator it;
+								   it = clientPair.find(cid);
+								   GameObj*  cob = it->second;
+								   cob->setY(cob->getY() - oneStep);
+								   cout << cob->getX() << endl;
+								   sendActionPackets();
+								   break;
+			}
+
 
 			default:
 				sendActionPackets();
@@ -139,7 +271,7 @@ void ServerGame::sendActionPackets()
 	const unsigned int packet_size = sizeof(SPacket);
 	char packet_data[packet_size];
 
-	GameObj* obj = new GameObj(1, -1, -5);
+	//GameObj* obj = new GameObj(1, -1, -5);
 	//GameObj* obj2 = new GameObj(1, -2, -5);
 
 
@@ -148,12 +280,12 @@ void ServerGame::sendActionPackets()
 
 	//char* des = "wrong";
 
-	this->pushGameObj(*obj);
+	//this->pushGameObj(*obj);
 	string des = convertData();
 
 	memcpy(packet.data, des.c_str(), sizeof(packet.data));
 
-	packet.packet_type = 1;
+	packet.packet_type = GAME_STATE;
 
 	packet.serialize(packet_data);
 
@@ -163,28 +295,29 @@ void ServerGame::sendActionPackets()
 // convert gameobjs to jason file
 string ServerGame::convertData(){
 	string temp;
-	for (vector<GameObj>::iterator i = gameObjs.begin();
+	for (vector<GameObj*>::iterator i = gameObjs.begin();
 		i != gameObjs.end(); ++i)
 	{
-		temp += to_string(i->getId());
+		temp += to_string((*i)->getId());
 		temp += ' ';
-		temp += to_string(i->getX());
+		temp += to_string((*i)->getX());
 		temp += ' ';
-		temp += to_string(i->getY());
+		temp += to_string((*i)->getY());
 		temp += ' ';
-		temp += to_string(i->getZ());
+		temp += to_string((*i)->getZ());
 		temp += '\n';
 	}
+	cout << temp << endl;
 	return temp;
 
 }
 
-std::vector<GameObj> ServerGame::getGameObjs()
+std::vector<GameObj*> ServerGame::getGameObjs()
 {
 	return gameObjs;
 }
 
-void ServerGame::pushGameObj(GameObj obj)
+void ServerGame::pushGameObj(GameObj* obj)
 {
 	gameObjs.push_back(obj);
 }
@@ -217,7 +350,3 @@ void ServerGame::sendClientConfirmationPacket(char* clientName, unsigned int cli
 	packet.serialize(packet_data);
 	network->sendToOne(packet_data, packet_size, client_ID);
 }
-
-
-
-

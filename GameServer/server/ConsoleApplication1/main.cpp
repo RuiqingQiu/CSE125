@@ -32,16 +32,23 @@ int main()
 
 void serverLoop(void * arg)
 {
+
 	while (true)
 	{
 		switch (gameState){
-		case 0: 
-			gameState = server->waitForConnections();
-			break;
-		case 1:
-			break;
-		
+		case 0: {
+					gameState = server->waitForConnections();
+					break;
 		}
-		server->update();
+		case 1:
+			{
+				   //cout << "state 1 " << endl;
+				   server->update();
+				   
+				   //server->sendActionPackets();
+				   break;
+			}
+		}
+		//server->update();
 	}
 }
