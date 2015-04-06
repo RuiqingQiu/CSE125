@@ -11,8 +11,8 @@
 class ServerGame
 {
 
-	std::vector<GameObj> gameObjs;
-	std::map<unsigned int, GameObj> clientPair;
+	std::vector<GameObj*> gameObjs;
+	std::map<unsigned int, GameObj *> clientPair;
 
 public:
 
@@ -25,9 +25,9 @@ public:
 
 	void sendActionPackets();
 
-	void pushGameObj(GameObj);
+	void pushGameObj(GameObj*);
 
-	std::vector<GameObj> getGameObjs();
+	std::vector<GameObj*> getGameObjs();
 
 	void sendClientConfirmationPacket(char* clientName, unsigned int client_ID);
 

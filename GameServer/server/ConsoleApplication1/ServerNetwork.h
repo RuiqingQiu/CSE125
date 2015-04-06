@@ -10,6 +10,7 @@ using namespace std;
 
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "6881" 
+#define oneStep 0.1
 
 class ServerNetwork
 {
