@@ -5,7 +5,6 @@
 #include <vector>
 #include "GameObj.h"
 #include <string>
-#include <iostream>
 #include <map>
 
 class ServerGame
