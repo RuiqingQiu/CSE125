@@ -1,12 +1,12 @@
 // main.cpp : Defines the entry point for the console application.
 //
-
+//#include "TimeFrame.h"
 // may need #include "stdafx.h" in visual studio
 #include "stdafx.h"
 #include "ServerGame.h"
 // used for multi-threading
 #include <process.h>
-#include <iostream>
+#include <ctime>
 #include "GameObj.h"
 
 void serverLoop(void *);
@@ -32,9 +32,11 @@ int main()
 
 void serverLoop(void * arg)
 {
-
+	int timeFrame = 1000;
+	
 	while (true)
 	{
+		unsigned t0 = clock();
 		switch (gameState){
 		case 0: {
 					gameState = server->waitForConnections();
@@ -50,5 +52,13 @@ void serverLoop(void * arg)
 			}
 		}
 		//server->update();
+		
+
+		cout << "Sleep the frame." << endl;
+		unsigned elapsed = clock() - t0;
+		//TimeFrame::frameSleep(timeFrame - elapsed);
+		Sleep(timeFrame - elapsed);
+		//cout << elapsed << endl;
+		cout << "Frame has completed sleeping." << endl;
 	}
 }
