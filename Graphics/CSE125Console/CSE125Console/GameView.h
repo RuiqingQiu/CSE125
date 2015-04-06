@@ -3,6 +3,7 @@
 #include <vector>
 #include "GeoNode.h"
 #include "GameInfoPacket.h"
+#include <GL/glut.h>
 class GameView
 {
 public:
@@ -11,8 +12,8 @@ public:
 	int gameViewId;
 	std::vector<GeoNode*> NodeList;
 
-	void OnRender();
-	void OnClientUpdate(GameInfoPacket* info);
+	virtual void VOnRender(); //must have
+	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
 
 	void PushGeoNode(GeoNode* node);
 	void PopGeoNode(GeoNode* node);

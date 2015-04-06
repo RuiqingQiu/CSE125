@@ -8,6 +8,7 @@ class GameInfoPacket
 public:
 	vector<PlayerInfo*> player_infos;
 	PlayerInfo* get_player_info(int id);
+	unsigned int packet_types;
 	GameInfoPacket();
 	~GameInfoPacket();
 };
