@@ -5,7 +5,7 @@
 #include "NetworkData.h"
 #include <string>
 #include "GameInfoPacket.h"
-
+#include <stdio.h>
 class ClientGame
 {
 public:

@@ -24,7 +24,7 @@ void Window::initialize(void)
 	view->PushGeoNode(cube);
 	
 	g_pCore->pGameView = view;
-	g_pCore->pGamePacketManager->ConnectToServer("127.1.1.1");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
 	//Setup the light
 }
 
@@ -59,8 +59,15 @@ void Window::displayCallback()
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
 	if (p){
+		switch (p->packet_types){
+		case GAME_STATE:
+			g_pCore->pGameView->VOnClientUpdate(p);
+			break;
+		case CONFIRM_CONNECTION:
+			g_pCore->pPlayer->playerid = p->player_infos[0]->id;
+
+		}
 		//update
-		g_pCore->pGameView->VOnClientUpdate(p);
 	}
 	g_pCore->pGameView->VOnRender();
 }

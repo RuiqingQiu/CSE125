@@ -23,8 +23,10 @@ bool ClientGame::connectToServer(char* ipaddress)
 	char packet_data[packet_size];
 
 	CPacket packet;
-	packet.packet_type = INIT_CONNECTION;
 
+	packet.packet_type = INIT_CONNECTION;
+	string tmp = "Thomas\n\0";
+	strncpy_s(packet.data, tmp.c_str(), sizeof(packet.data));
 	packet.serialize(packet_data);
 
 	NetworkServices::sendMessage(network->ConnectSocket, packet_data, packet_size);
@@ -44,7 +46,7 @@ void ClientGame::sendActionPackets()
     char packet_data[packet_size];
 
     CPacket packet;
-    packet.packet_type = ACTION_EVENT;
+    packet.packet_type = 1;
 
     packet.serialize(packet_data);
 
@@ -53,6 +55,7 @@ void ClientGame::sendActionPackets()
 
 bool ClientGame::sendPacket(CPacket packet)
 {
+	printf(packet.data);
 	const unsigned int packet_size = sizeof(CPacket);
 	char packet_data[packet_size];
 
@@ -103,9 +106,9 @@ GameInfoPacket* ClientGame::update()
 
         switch (packet.packet_type) {
 
-		case ACTION_EVENT:
+		case GAME_STATE:
 				{
-							 printf("client received action event packet from server\n");
+							 printf("client received game state packet from server\n");
 							 std::cout << packet.data << std::endl;
 							 std::string result = std::string(packet.data);
 							 if (result == ""){
@@ -123,10 +126,26 @@ GameInfoPacket* ClientGame::update()
 								 g->player_infos.push_back(p);
 								 g->packet_types = packet.packet_type;
 							 }
-							 sendActionPackets();
+							 //sendActionPackets();
 
 							 break;
 				}
+		case CONFIRM_CONNECTION:
+		{
+			std::string result = std::string(packet.data);
+			std::vector<std::string> v;
+			split(result, v, '\n');
+			std::cout << "from confirm connection" << std::endl;
+			std::cout << packet.data << std::endl;
+			g->packet_types = packet.packet_type;
+			PlayerInfo* p = new PlayerInfo();
+			std::cout << v[1] << std::endl;
+			p->id = stoi(v[1]);
+			g->player_infos.push_back(p);
+			break;
+
+		}
+		
 		default:{
 
 					printf("error in packet types\n");
