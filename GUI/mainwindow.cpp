@@ -46,14 +46,7 @@
 
 MainWindow::MainWindow()
 {
-    QMenuBar *menuBar = new QMenuBar;
-    QMenu *menuWindow = menuBar->addMenu(tr("&Window"));
-    QAction *addNew = new QAction(menuWindow);
-    addNew->setText(tr("Add new"));
-    menuWindow->addAction(addNew);
-    connect(addNew, SIGNAL(triggered()), this, SLOT(onAddNew()));
-    setMenuBar(menuBar);
-
+ 
     onAddNew();
 }
 
