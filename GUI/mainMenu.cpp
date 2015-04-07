@@ -1,8 +1,15 @@
 #include "mainMenu.h"
 
 mainMenu::mainMenu() {
-    //load logo image
-    //logo = new QImage();
+    logo = new QImage("C:/Users/miw034/Desktop/triton.jpg","jpg");
+    QLabel* imgDisplayLabel;
+    imgDisplayLabel = new QLabel("");
+    imgDisplayLabel->setPixmap(QPixmap::fromImage(*logo));
+    imgDisplayLabel->setAlignment(Qt::AlignCenter);
+    imgDisplayLabel->setMaximumWidth(400);
+    imgDisplayLabel->setMinimumWidth(400);
+    imgDisplayLabel->setMaximumHeight(300);
+    imgDisplayLabel->setMinimumHeight(300);
 
     //initialize buttons
     serverName = new QLineEdit();
@@ -31,6 +38,7 @@ mainMenu::mainMenu() {
     mainLayout->setAlignment(Qt::AlignCenter);
 
     //add content to the layout
+    mainLayout->addWidget(imgDisplayLabel);
     mainLayout->addWidget(serverName);
     mainLayout->addWidget(robotName);
     mainLayout->addWidget(playButton);
