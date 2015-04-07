@@ -71,15 +71,7 @@ private:
     mainMenu * menu;
     buildView * buildV;
 
-    QSlider *createSlider();
-
-    GLWidget *glWidget;
-    QSlider *xSlider;
-    QSlider *ySlider;
-    QSlider *zSlider;
-    QPushButton *dockBtn;
     MainWindow *mainWindow;
-    QWidget * sampleCode;
 };
 
 #endif
