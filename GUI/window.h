@@ -44,10 +44,7 @@
 #include "mainMenu.h"
 #include "buildView.h"
 #include "battlefieldView.h"
-<<<<<<< Updated upstream
-=======
 #include "helpMenu.h"
->>>>>>> Stashed changes
 
 QT_BEGIN_NAMESPACE
 class QSlider;
@@ -79,14 +76,11 @@ private:
 
     mainMenu * menu;
     buildView * buildV;
-<<<<<<< Updated upstream
     battlefieldView* battlefield;
-=======
-    battlefieldView * battle;
+
     helpMenu * help;
     view * previousScreen;
     view * currentScreen;
->>>>>>> Stashed changes
 
     MainWindow * mainWindow;
 };

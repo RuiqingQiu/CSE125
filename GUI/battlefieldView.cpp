@@ -1,11 +1,9 @@
 #include "battlefieldView.h"
 
-<<<<<<< Updated upstream
 battlefieldView::battlefieldView()
 {
     //renderText(20, 100, "Hello Jcy, My first OpenGL app.");
-=======
-battlefieldView::battlefieldView() {
+
     glWidget = new GLWidget;
     backButton = new QPushButton(tr("Back"));
 
@@ -14,7 +12,6 @@ battlefieldView::battlefieldView() {
     mainLayout->addWidget(backButton, 0, 0);
 
     setLayout(mainLayout);
->>>>>>> Stashed changes
 }
 
 battlefieldView::~battlefieldView()

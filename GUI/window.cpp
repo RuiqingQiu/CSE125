@@ -57,7 +57,7 @@ Window::Window(MainWindow *mw)
 	// initialize the views
     menu = new mainMenu();
     buildV = new buildView();
-    battle = new battlefieldView();
+    battlefield = new battlefieldView();
     help = new helpMenu();
 
 	// fix the window size to be full screen
@@ -68,10 +68,10 @@ Window::Window(MainWindow *mw)
 	mainLayout = new QVBoxLayout;
     mainLayout->addWidget(menu);
     mainLayout->addWidget(buildV);
-    mainLayout->addWidget(battle);
+    mainLayout->addWidget(battlefield);
     mainLayout->addWidget(help);
     buildV->hide();
-    battle->hide();
+    battlefield->hide();
     help->hide();
     currentScreen = menu;
     previousScreen = menu;
@@ -82,7 +82,7 @@ Window::Window(MainWindow *mw)
     connect(buildV->battleButton, SIGNAL(clicked()), this, SLOT(battleButtonPressed()));
     connect(buildV->helpButton, SIGNAL(clicked()), this, SLOT(helpButtonPressed()));
     connect(help->backButton, SIGNAL(clicked()), this, SLOT(backPressed()));
-    connect(battle->backButton, SIGNAL(clicked()), this, SLOT(backPressed()));
+    connect(battlefield->backButton, SIGNAL(clicked()), this, SLOT(backPressed()));
 
 	setLayout(mainLayout);
     setWindowTitle("CSE125 Group 1");
@@ -121,7 +121,7 @@ void Window::dockUndock() {
 void Window::playButtonPressed() {
     menu->hide();
     buildV->show();
-    battle->hide();
+    battlefield->hide();
     help->hide();
     previousScreen = currentScreen;
     currentScreen = buildV;
@@ -130,16 +130,16 @@ void Window::playButtonPressed() {
 void Window::battleButtonPressed() {
     menu->hide();
     buildV->hide();
-    battle->show();
+    battlefield->show();
     help->hide();
     previousScreen = currentScreen;
-    currentScreen = battle;
+    currentScreen = battlefield;
 }
 
 void Window::helpButtonPressed() {
     menu->hide();
     buildV->hide();
-    battle->hide();
+    battlefield->hide();
     help->show();
     previousScreen = currentScreen;
     currentScreen = help;
