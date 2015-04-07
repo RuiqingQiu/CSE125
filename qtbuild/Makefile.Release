@@ -51,37 +51,7 @@ SOURCES       = ..\GUI\battlefieldView.cpp \
 		..\GUI\main.cpp \
 		..\GUI\mainMenu.cpp \
 		..\GUI\mainwindow.cpp \
-		..\GUI\window.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Network\ServerGame.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Network\ServerNetwork.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Camera.cpp \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.cpp \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.cpp \
-		..\Graphics\CSE125Console\CSE125Console\ComponentNode.cpp \
-		..\Graphics\CSE125Console\CSE125Console\CSE125Console.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Cube.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GameCore.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GameInputInterface.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GamePacketManager.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GamePlayer.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GameView.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Model3D.cpp \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.cpp \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.cpp \
-		..\Graphics\CSE125Console\CSE125Console\StandardGameInput.cpp \
-		..\Graphics\CSE125Console\CSE125Console\test_SOIL.cpp \
-		..\Graphics\CSE125Console\CSE125Console\tiny_obj_loader.cc \
-		..\Graphics\CSE125Console\CSE125Console\Transform.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.cpp \
-		..\Graphics\CSE125Console\CSE125Console\image_DXT.c \
-		..\Graphics\CSE125Console\CSE125Console\image_helper.c \
-		..\Graphics\CSE125Console\CSE125Console\SOIL.c \
-		..\Graphics\CSE125Console\CSE125Console\stb_image_aug.c \
-		..\Graphics\CSE125Console\CSE125Console\StdAfx.cpp release\moc_glwidget.cpp \
+		..\GUI\window.cpp release\moc_glwidget.cpp \
 		release\moc_mainwindow.cpp \
 		release\moc_window.cpp
 OBJECTS       = release\battlefieldView.obj \
@@ -93,36 +63,6 @@ OBJECTS       = release\battlefieldView.obj \
 		release\mainMenu.obj \
 		release\mainwindow.obj \
 		release\window.obj \
-		release\ServerGame.obj \
-		release\ServerNetwork.obj \
-		release\Camera.obj \
-		release\ClientGame.obj \
-		release\ClientNetwork.obj \
-		release\ComponentNode.obj \
-		release\CSE125Console.obj \
-		release\Cube.obj \
-		release\GameCore.obj \
-		release\GameInfoPacket.obj \
-		release\GameInputInterface.obj \
-		release\GamePacketManager.obj \
-		release\GamePlayer.obj \
-		release\GameView.obj \
-		release\GeoNode.obj \
-		release\Matrix4.obj \
-		release\Model3D.obj \
-		release\NetworkServices.obj \
-		release\PlayerInfo.obj \
-		release\StandardGameInput.obj \
-		release\test_SOIL.obj \
-		release\tiny_obj_loader.obj \
-		release\Transform.obj \
-		release\Vector3.obj \
-		release\Vector4.obj \
-		release\image_DXT.obj \
-		release\image_helper.obj \
-		release\SOIL.obj \
-		release\stb_image_aug.obj \
-		release\StdAfx.obj \
 		release\moc_glwidget.obj \
 		release\moc_mainwindow.obj \
 		release\moc_window.obj
@@ -135,41 +75,7 @@ DIST          =  ..\GUI\battlefieldView.h \
 		..\GUI\mainMenu.h \
 		..\GUI\mainwindow.h \
 		..\GUI\view.h \
-		..\GUI\window.h \
-		..\Graphics\CSE125Console\CSE125Console\Network\ServerGame.h \
-		..\Graphics\CSE125Console\CSE125Console\Network\ServerNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\Network\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Camera.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\ComponentNode.h \
-		..\Graphics\CSE125Console\CSE125Console\Cube.h \
-		..\Graphics\CSE125Console\CSE125Console\Definition.h \
-		..\Graphics\CSE125Console\CSE125Console\GameCore.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInputInterface.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePacketManager.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePlayer.h \
-		..\Graphics\CSE125Console\CSE125Console\GameView.h \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.h \
-		..\Graphics\CSE125Console\CSE125Console\image_DXT.h \
-		..\Graphics\CSE125Console\CSE125Console\image_helper.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Model3D.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkData.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h \
-		..\Graphics\CSE125Console\CSE125Console\SOIL.h \
-		..\Graphics\CSE125Console\CSE125Console\StandardGameInput.h \
-		..\Graphics\CSE125Console\CSE125Console\stb_image_aug.h \
-		..\Graphics\CSE125Console\CSE125Console\stbi_DDS_aug.h \
-		..\Graphics\CSE125Console\CSE125Console\stbi_DDS_aug_c.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\tiny_obj_loader.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\StdAfx.h ..\GUI\battlefieldView.cpp \
+		..\GUI\window.h ..\GUI\battlefieldView.cpp \
 		..\GUI\buildView.cpp \
 		..\GUI\glwidget.cpp \
 		..\GUI\helpmenu.cpp \
@@ -177,37 +83,7 @@ DIST          =  ..\GUI\battlefieldView.h \
 		..\GUI\main.cpp \
 		..\GUI\mainMenu.cpp \
 		..\GUI\mainwindow.cpp \
-		..\GUI\window.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Network\ServerGame.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Network\ServerNetwork.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Camera.cpp \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.cpp \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.cpp \
-		..\Graphics\CSE125Console\CSE125Console\ComponentNode.cpp \
-		..\Graphics\CSE125Console\CSE125Console\CSE125Console.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Cube.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GameCore.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GameInputInterface.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GamePacketManager.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GamePlayer.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GameView.cpp \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Model3D.cpp \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.cpp \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.cpp \
-		..\Graphics\CSE125Console\CSE125Console\StandardGameInput.cpp \
-		..\Graphics\CSE125Console\CSE125Console\test_SOIL.cpp \
-		..\Graphics\CSE125Console\CSE125Console\tiny_obj_loader.cc \
-		..\Graphics\CSE125Console\CSE125Console\Transform.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.cpp \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.cpp \
-		..\Graphics\CSE125Console\CSE125Console\image_DXT.c \
-		..\Graphics\CSE125Console\CSE125Console\image_helper.c \
-		..\Graphics\CSE125Console\CSE125Console\SOIL.c \
-		..\Graphics\CSE125Console\CSE125Console\stb_image_aug.c \
-		..\Graphics\CSE125Console\CSE125Console\StdAfx.cpp
+		..\GUI\window.cpp
 QMAKE_TARGET  = CSE125
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = CSE125.exe
@@ -233,26 +109,6 @@ DESTDIR_TARGET = release\CSE125.exe
 <<
 
 {..\GUI}.c{release\}.obj::
-	$(CC) -c $(CFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{..\Graphics\CSE125Console\CSE125Console\Network}.cpp{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{..\Graphics\CSE125Console\CSE125Console\Network}.cc{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{..\Graphics\CSE125Console\CSE125Console\Network}.cxx{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{..\Graphics\CSE125Console\CSE125Console\Network}.c{release\}.obj::
 	$(CC) -c $(CFLAGS) $(INCPATH) -Forelease\ @<<
 	$<
 <<
@@ -297,26 +153,6 @@ DESTDIR_TARGET = release\CSE125.exe
 	$<
 <<
 
-{..\Graphics\CSE125Console\CSE125Console}.cpp{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{..\Graphics\CSE125Console\CSE125Console}.cc{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{..\Graphics\CSE125Console\CSE125Console}.cxx{release\}.obj::
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
-{..\Graphics\CSE125Console\CSE125Console}.c{release\}.obj::
-	$(CC) -c $(CFLAGS) $(INCPATH) -Forelease\ @<<
-	$<
-<<
-
 ####### Build rules
 
 first: all
@@ -336,7 +172,7 @@ dist:
 	$(ZIP) CSE125.zip $(SOURCES) $(DIST) ..\CSE125.pro C:\Qt\5.4\msvc2013_64\mkspecs\features\spec_pre.prf C:\Qt\5.4\msvc2013_64\mkspecs\common\shell-win32.conf C:\Qt\5.4\msvc2013_64\mkspecs\qconfig.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_charts.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_charts_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_clucene_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_core.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_datavisualization.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_datavisualization_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_declarative.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_declarative_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_enginio.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_enginio_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_help.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_location.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_location_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_network.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_platformsupport_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_purchasing.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_purchasing_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_script.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_script_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_scripttools.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_scripttools_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webengine.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webengine_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webenginecore.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webenginecore_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webenginewidgets.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webenginewidgets_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webkit.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webkit_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webkitwidgets.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webkitwidgets_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webview.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_webview_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.4\msvc2013_64\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.4\msvc2013_64\mkspecs\features\qt_functions.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\qt_config.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\win32\qt_config.prf C:\Qt\5.4\msvc2013_64\mkspecs\win32-msvc2013\qmake.conf C:\Qt\5.4\msvc2013_64\mkspecs\features\spec_post.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\exclusive_builds.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\default_pre.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\win32\default_pre.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\resolve_config.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\default_post.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\build_pass.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\win32\rtti.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\precompile_header.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\warn_on.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\qt.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\resources.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\moc.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\win32\opengl.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\uic.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\win32\windows.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\testcase_targets.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\exceptions.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\yacc.prf C:\Qt\5.4\msvc2013_64\mkspecs\features\lex.prf ..\CSE125.pro C:/Qt/5.4/msvc2013_64/lib/qtmain.prl C:/Qt/5.4/msvc2013_64/lib/Qt5Core.prl C:/Qt/5.4/msvc2013_64/lib/Qt5Widgets.prl C:/Qt/5.4/msvc2013_64/lib/Qt5Gui.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\battlefieldView.obj release\buildView.obj release\glwidget.obj release\helpmenu.obj release\logo.obj release\main.obj release\mainMenu.obj release\mainwindow.obj release\window.obj release\ServerGame.obj release\ServerNetwork.obj release\Camera.obj release\ClientGame.obj release\ClientNetwork.obj release\ComponentNode.obj release\CSE125Console.obj release\Cube.obj release\GameCore.obj release\GameInfoPacket.obj release\GameInputInterface.obj release\GamePacketManager.obj release\GamePlayer.obj release\GameView.obj release\GeoNode.obj release\Matrix4.obj release\Model3D.obj release\NetworkServices.obj release\PlayerInfo.obj release\StandardGameInput.obj release\test_SOIL.obj release\tiny_obj_loader.obj release\Transform.obj release\Vector3.obj release\Vector4.obj release\image_DXT.obj release\image_helper.obj release\SOIL.obj release\stb_image_aug.obj release\StdAfx.obj release\moc_glwidget.obj release\moc_mainwindow.obj release\moc_window.obj
+	-$(DEL_FILE) release\battlefieldView.obj release\buildView.obj release\glwidget.obj release\helpmenu.obj release\logo.obj release\main.obj release\mainMenu.obj release\mainwindow.obj release\window.obj release\moc_glwidget.obj release\moc_mainwindow.obj release\moc_window.obj
 	-$(DEL_FILE) release\CSE125.exp
 
 distclean: clean 
@@ -5393,234 +5229,6 @@ release\window.obj: ..\GUI\window.cpp ..\GUI\glwidget.h \
 		C:\Qt\5.4\msvc2013_64\include\QtGui\QKeyEvent \
 		C:\Qt\5.4\msvc2013_64\include\QtWidgets\QApplication \
 		C:\Qt\5.4\msvc2013_64\include\QtWidgets\QMessageBox
-
-release\ServerGame.obj: ..\Graphics\CSE125Console\CSE125Console\Network\ServerGame.cpp ..\Graphics\CSE125Console\CSE125Console\Network\ServerGame.h \
-		..\Graphics\CSE125Console\CSE125Console\Network\ServerNetwork.h
-
-release\ServerNetwork.obj: ..\Graphics\CSE125Console\CSE125Console\Network\ServerNetwork.cpp ..\Graphics\CSE125Console\CSE125Console\Network\ServerNetwork.h
-
-release\Camera.obj: ..\Graphics\CSE125Console\CSE125Console\Camera.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Camera.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h
-
-release\ClientGame.obj: ..\Graphics\CSE125Console\CSE125Console\ClientGame.cpp ..\Graphics\CSE125Console\CSE125Console\StdAfx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkData.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h
-
-release\ClientNetwork.obj: ..\Graphics\CSE125Console\CSE125Console\ClientNetwork.cpp ..\Graphics\CSE125Console\CSE125Console\StdAfx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkData.h
-
-release\ComponentNode.obj: ..\Graphics\CSE125Console\CSE125Console\ComponentNode.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\ComponentNode.h
-
-release\CSE125Console.obj: ..\Graphics\CSE125Console\CSE125Console\CSE125Console.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Window.h \
-		..\Graphics\CSE125Console\CSE125Console\GameCore.h \
-		..\Graphics\CSE125Console\CSE125Console\GameView.h \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h \
-		..\Graphics\CSE125Console\CSE125Console\Camera.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePacketManager.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkData.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePlayer.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInputInterface.h
-
-release\Cube.obj: ..\Graphics\CSE125Console\CSE125Console\Cube.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Cube.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\ComponentNode.h \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h \
-		..\Graphics\CSE125Console\CSE125Console\Window.h \
-		..\Graphics\CSE125Console\CSE125Console\GameCore.h \
-		..\Graphics\CSE125Console\CSE125Console\GameView.h \
-		..\Graphics\CSE125Console\CSE125Console\Camera.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePacketManager.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkData.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePlayer.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInputInterface.h
-
-release\GameCore.obj: ..\Graphics\CSE125Console\CSE125Console\GameCore.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\GameCore.h \
-		..\Graphics\CSE125Console\CSE125Console\GameView.h \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h \
-		..\Graphics\CSE125Console\CSE125Console\Camera.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePacketManager.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkData.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePlayer.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInputInterface.h \
-		..\Graphics\CSE125Console\CSE125Console\StandardGameInput.h
-
-release\GameInfoPacket.obj: ..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h
-
-release\GameInputInterface.obj: ..\Graphics\CSE125Console\CSE125Console\GameInputInterface.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInputInterface.h
-
-release\GamePacketManager.obj: ..\Graphics\CSE125Console\CSE125Console\GamePacketManager.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePacketManager.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkData.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h
-
-release\GamePlayer.obj: ..\Graphics\CSE125Console\CSE125Console\GamePlayer.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePlayer.h
-
-release\GameView.obj: ..\Graphics\CSE125Console\CSE125Console\GameView.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\GameView.h \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h \
-		..\Graphics\CSE125Console\CSE125Console\Camera.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h
-
-release\GeoNode.obj: ..\Graphics\CSE125Console\CSE125Console\GeoNode.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h
-
-release\Matrix4.obj: ..\Graphics\CSE125Console\CSE125Console\Matrix4.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h
-
-release\Model3D.obj: ..\Graphics\CSE125Console\CSE125Console\Model3D.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Model3D.h \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h \
-		..\Graphics\CSE125Console\CSE125Console\tiny_obj_loader.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h
-
-release\NetworkServices.obj: ..\Graphics\CSE125Console\CSE125Console\NetworkServices.cpp ..\Graphics\CSE125Console\CSE125Console\StdAfx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h
-
-release\PlayerInfo.obj: ..\Graphics\CSE125Console\CSE125Console\PlayerInfo.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h
-
-release\StandardGameInput.obj: ..\Graphics\CSE125Console\CSE125Console\StandardGameInput.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\StandardGameInput.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInputInterface.h \
-		..\Graphics\CSE125Console\CSE125Console\GameCore.h \
-		..\Graphics\CSE125Console\CSE125Console\GameView.h \
-		..\Graphics\CSE125Console\CSE125Console\GeoNode.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\GameInfoPacket.h \
-		..\Graphics\CSE125Console\CSE125Console\PlayerInfo.h \
-		..\Graphics\CSE125Console\CSE125Console\Camera.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePacketManager.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientGame.h \
-		..\Graphics\CSE125Console\CSE125Console\ClientNetwork.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkServices.h \
-		..\Graphics\CSE125Console\CSE125Console\NetworkData.h \
-		..\Graphics\CSE125Console\CSE125Console\GamePlayer.h
-
-release\test_SOIL.obj: ..\Graphics\CSE125Console\CSE125Console\test_SOIL.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\SOIL.h
-
-release\tiny_obj_loader.obj: ..\Graphics\CSE125Console\CSE125Console\tiny_obj_loader.cc ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\tiny_obj_loader.h
-
-release\Transform.obj: ..\Graphics\CSE125Console\CSE125Console\Transform.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Transform.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h \
-		..\Graphics\CSE125Console\CSE125Console\Matrix4.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h
-
-release\Vector3.obj: ..\Graphics\CSE125Console\CSE125Console\Vector3.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector3.h
-
-release\Vector4.obj: ..\Graphics\CSE125Console\CSE125Console\Vector4.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h \
-		..\Graphics\CSE125Console\CSE125Console\Vector4.h
-
-release\image_DXT.obj: ..\Graphics\CSE125Console\CSE125Console\image_DXT.c ..\Graphics\CSE125Console\CSE125Console\image_DXT.h
-
-release\image_helper.obj: ..\Graphics\CSE125Console\CSE125Console\image_helper.c ..\Graphics\CSE125Console\CSE125Console\image_helper.h
-
-release\SOIL.obj: ..\Graphics\CSE125Console\CSE125Console\SOIL.c ..\Graphics\CSE125Console\CSE125Console\SOIL.h \
-		..\Graphics\CSE125Console\CSE125Console\stb_image_aug.h \
-		..\Graphics\CSE125Console\CSE125Console\image_helper.h \
-		..\Graphics\CSE125Console\CSE125Console\image_DXT.h
-
-release\stb_image_aug.obj: ..\Graphics\CSE125Console\CSE125Console\stb_image_aug.c ..\Graphics\CSE125Console\CSE125Console\stb_image_aug.h \
-		..\Graphics\CSE125Console\CSE125Console\stbi_DDS_aug.h \
-		..\Graphics\CSE125Console\CSE125Console\stbi_DDS_aug_c.h
-
-release\StdAfx.obj: ..\Graphics\CSE125Console\CSE125Console\StdAfx.cpp ..\Graphics\CSE125Console\CSE125Console\stdafx.h \
-		..\Graphics\CSE125Console\CSE125Console\targetver.h
 
 release\moc_glwidget.obj: release\moc_glwidget.cpp 
 
