@@ -46,7 +46,6 @@
 
 MainWindow::MainWindow()
 {
- 
     onAddNew();
 }
 

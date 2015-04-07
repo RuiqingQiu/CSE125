@@ -57,14 +57,33 @@ Window::Window(MainWindow *mw)
 	// initialize the views
     menu = new mainMenu();
     buildV = new buildView();
+    battle = new battlefieldView();
+    help = new helpMenu();
 
 	// fix the window size to be full screen
     QDesktopWidget dw;
-    setFixedSize(dw.width(), dw.height());
+    setFixedSize(dw.width()-100, dw.height()-100);
+
     // set the main layout when the game starts
 	mainLayout = new QVBoxLayout;
-	connect(menu->playButton, SIGNAL(clicked()), this, SLOT(playButtonPressed()));
     mainLayout->addWidget(menu);
+    mainLayout->addWidget(buildV);
+    mainLayout->addWidget(battle);
+    mainLayout->addWidget(help);
+    buildV->hide();
+    battle->hide();
+    help->hide();
+    currentScreen = menu;
+    previousScreen = menu;
+
+    //connect buttons to actions
+    connect(menu->playButton, SIGNAL(clicked()), this, SLOT(playButtonPressed()));
+    connect(menu->helpButton, SIGNAL(clicked()), this, SLOT(helpButtonPressed()));
+    connect(buildV->battleButton, SIGNAL(clicked()), this, SLOT(battleButtonPressed()));
+    connect(buildV->helpButton, SIGNAL(clicked()), this, SLOT(helpButtonPressed()));
+    connect(help->backButton, SIGNAL(clicked()), this, SLOT(backPressed()));
+    connect(battle->backButton, SIGNAL(clicked()), this, SLOT(backPressed()));
+
 	setLayout(mainLayout);
     setWindowTitle("CSE125 Group 1");
 }
@@ -100,8 +119,37 @@ void Window::dockUndock() {
 }
 
 void Window::playButtonPressed() {
-    mainLayout->removeWidget(menu);
-    delete menu;
-    mainLayout->addWidget(buildV);
-    //mainLayout->addWidget(dockBtn);
+    menu->hide();
+    buildV->show();
+    battle->hide();
+    help->hide();
+    previousScreen = currentScreen;
+    currentScreen = buildV;
+}
+
+void Window::battleButtonPressed() {
+    menu->hide();
+    buildV->hide();
+    battle->show();
+    help->hide();
+    previousScreen = currentScreen;
+    currentScreen = battle;
+}
+
+void Window::helpButtonPressed() {
+    menu->hide();
+    buildV->hide();
+    battle->hide();
+    help->show();
+    previousScreen = currentScreen;
+    currentScreen = help;
+}
+
+void Window::backPressed() {
+    currentScreen->hide();
+    previousScreen->show();
+
+    view * temp = currentScreen;
+    currentScreen = previousScreen;
+    previousScreen = temp;
 }

@@ -5,7 +5,8 @@ HEADERS       = glwidget.h \
     mainMenu.h \
     battlefieldView.h \
     buildView.h \
-    views.h
+    helpmenu.h \
+    view.h
 SOURCES       = glwidget.cpp \
                 main.cpp \
                 window.cpp \
@@ -13,7 +14,8 @@ SOURCES       = glwidget.cpp \
                 logo.cpp \
     mainMenu.cpp \
     battlefieldView.cpp \
-    buildView.cpp
+    buildView.cpp \
+    helpmenu.cpp
 
 QT           += widgets
 
