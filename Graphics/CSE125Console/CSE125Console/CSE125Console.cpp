@@ -50,6 +50,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Register the callback for the mouse
 	//Register the callback for the mouse motion
 
+	glDisable(GL_CULL_FACE);
 	//Initialize the Window:
 	//The body of this function is a great place to load textures, shaders, etc.
 	//and do any operations/calculations/configurations that only need to happen once.

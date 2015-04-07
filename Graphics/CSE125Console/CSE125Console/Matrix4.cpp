@@ -236,6 +236,7 @@ void Matrix4::makeTranslate(double tx, double ty, double tz){
 }// make a translation matrix
 void Matrix4::print(string comment){
     for(int row = 0; row < 4; row++){
+		cout << comment << endl;
         cout << this->m[row][0] << ", " << this->m[row][1] << ", " << this->m[row][2] << ", " << this->m[row][3] << endl;
     }
 }// print the matrix (display all 16 matrix components numerically on the screen in a 4x4 array)
