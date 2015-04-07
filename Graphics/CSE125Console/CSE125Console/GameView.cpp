@@ -4,6 +4,7 @@
 
 GameView::GameView()
 {
+	pViewCamera = new Camera();
 }
 
 
@@ -20,10 +21,20 @@ void GameView::VOnRender()
 	//Set the OpenGL matrix mode to ModelView
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	
+	pViewCamera->setUpCamera();
+	
+	
+
+	//glPushMatrix();
+	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
+
 	for each (GeoNode* node in NodeList)
 	{
 		node->VOnDraw();
 	}
+
+	//glPopMatrix();
 	//Tell OpenGL to clear any outstanding commands in its command buffer
 	//This will make sure that all of our commands are fully executed before
 	//we swap buffers and show the user the freshly drawn frame
