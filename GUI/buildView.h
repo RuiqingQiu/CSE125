@@ -2,6 +2,7 @@
 #define BUILDVIEW_H
 
 #include <QComboBox>
+#include <QListWidget>
 
 #include "view.h"
 
@@ -19,7 +20,7 @@ public:
 private:
     GLWidget * glWidget;
 
-    //array of combo box for now... need to make a selector
+    //temporary, need to learn how to use QListWidget!
     QComboBox * listOptions[NUMOPS];
 };
 

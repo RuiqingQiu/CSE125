@@ -1,15 +1,10 @@
 #include "mainMenu.h"
 
 mainMenu::mainMenu() {
-    logo = new QImage("C:/Users/miw034/Desktop/triton.jpg","jpg");
-    QLabel* imgDisplayLabel;
-    imgDisplayLabel = new QLabel("");
-    imgDisplayLabel->setPixmap(QPixmap::fromImage(*logo));
-    imgDisplayLabel->setAlignment(Qt::AlignCenter);
-    imgDisplayLabel->setMaximumWidth(400);
-    imgDisplayLabel->setMinimumWidth(400);
-    imgDisplayLabel->setMaximumHeight(300);
-    imgDisplayLabel->setMinimumHeight(300);
+    //load logo image
+    QPixmap background;
+    background.load("/Users/Tsuruko/CSE125/GUI/testimg.jpg");
+    background = background.scaled(this->size(), Qt::IgnoreAspectRatio);
 
     //initialize buttons
     serverName = new QLineEdit();
@@ -38,12 +33,13 @@ mainMenu::mainMenu() {
     mainLayout->setAlignment(Qt::AlignCenter);
 
     //add content to the layout
-    mainLayout->addWidget(imgDisplayLabel);
+    QLabel * img = new QLabel;
+    img->setPixmap(background);
+    mainLayout->addWidget(img);
     mainLayout->addWidget(serverName);
     mainLayout->addWidget(robotName);
     mainLayout->addWidget(playButton);
     mainLayout->addWidget(helpButton);
-    setLayout(mainLayout);
 
     //align widgets to center
     mainLayout->setAlignment(serverName, Qt::AlignHCenter);
@@ -51,7 +47,7 @@ mainMenu::mainMenu() {
     mainLayout->setAlignment(playButton, Qt::AlignHCenter);
     mainLayout->setAlignment(helpButton, Qt::AlignHCenter);
 
-    //connect buttons to action
+    setLayout(mainLayout);
 }
 
 mainMenu::~mainMenu()
