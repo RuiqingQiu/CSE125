@@ -136,6 +136,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="battlefieldView.cpp" />
+    <ClCompile Include="buildView.cpp" />
     <ClCompile Include="Debug\moc_glwidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -148,6 +150,7 @@
     <ClCompile Include="glwidget.cpp" />
     <ClCompile Include="logo.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="Release\moc_glwidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -161,6 +164,8 @@
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="mainMenu.h" />
+    <ClInclude Include="views.h" />
     <CustomBuild Include="glwidget.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
 if errorlevel 1 goto VCEnd
@@ -181,6 +186,8 @@ endlocal
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="battlefieldView.h" />
+    <ClInclude Include="buildView.h" />
     <ClInclude Include="logo.h" />
     <CustomBuild Include="mainwindow.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
