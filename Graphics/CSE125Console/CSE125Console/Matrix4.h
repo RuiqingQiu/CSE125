@@ -1,11 +1,14 @@
+#include "stdafx.h"
+
 #ifndef _MATRIX4_H_
 #define _MATRIX4_H_
 
 #define M_PI 3.14159265358979323846
-#include "stdafx.h"
 
 #include "Vector4.h"
 #include "Vector3.h"
+#include <iostream>
+#include <string>
 
 class Matrix4
 {

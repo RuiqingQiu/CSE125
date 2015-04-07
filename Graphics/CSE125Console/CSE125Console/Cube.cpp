@@ -40,17 +40,22 @@ void Cube::VOnDraw()
     
     //Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
     glMatrixMode(GL_MODELVIEW);
-    
+	glPushMatrix();
+	//Apply local transformation
+	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
+	//world.identity();
     //Push a save state onto the matrix stack, and multiply in the toWorld matrix
-    glPushMatrix();
-	glLoadMatrixd(localTransform.GetGLMatrix4().getPointer());
-
+	//world = world * localTransform.GetMatrix4();
+	//world.transpose();
+	//glLoadMatrixd(world.getPointer());
+	//glutSolidTeapot(2);
     //Make cube!
     //Note: The glBegin, and glEnd should always be as close to the glNormal/glVertex calls as possible
     //These are special calls that 'freeze' many internal states of OpenGL.
     //Once the glBegin state is active many of the calls made to OpenGL (like glMultMatrixf) will be IGNORED!
     //As a good habit, only call glBegin just before you need to draw, and call end just after you finish
-    glBegin(GL_QUADS);
+    
+	glBegin(GL_QUADS);
 	//glTranslated(0, 0, 5);
     // Draw front face:
     glNormal3f(0.0, 0.0, 1.0);

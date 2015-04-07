@@ -4,6 +4,7 @@
 #include "GeoNode.h"
 #include "GameInfoPacket.h"
 #include <GL/glut.h>
+#include "Camera.h"
 class GameView
 {
 public:
@@ -11,7 +12,7 @@ public:
 	~GameView();
 	int gameViewId;
 	std::vector<GeoNode*> NodeList;
-
+	Camera* pViewCamera;
 	virtual void VOnRender(); //must have
 	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
 
