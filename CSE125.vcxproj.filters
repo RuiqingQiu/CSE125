@@ -26,12 +26,12 @@
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{f8b54f7e-5601-4548-8131-de61f83fc50b}</UniqueIdentifier>
+      <UniqueIdentifier>{f90d73c6-fde4-4e46-acea-3f6e9f732b2f}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Generated Files\Release">
-      <UniqueIdentifier>{cee6c352-14e5-4dcf-a780-5a70929ce6f3}</UniqueIdentifier>
+      <UniqueIdentifier>{add24956-9370-4f8b-aecb-0b617d07d3e2}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
@@ -240,6 +240,9 @@
     <ClInclude Include="Graphics\CSE125Console\CSE125Console\StandardGameInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\CSE125Console\CSE125Console\StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Graphics\CSE125Console\CSE125Console\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -300,8 +303,5 @@
     <CustomBuild Include="GUI\window.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <ClInclude Include="Graphics\CSE125Console\CSE125Console\StdAfx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
