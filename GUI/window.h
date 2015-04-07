@@ -41,7 +41,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QWidget>
+#include "mainMenu.h"
+#include "buildView.h"
 
 QT_BEGIN_NAMESPACE
 class QSlider;
@@ -63,15 +64,13 @@ protected:
 
 private slots:
     void dockUndock();
+    void playButtonPressed();
 
 private:
-    QSlider *createSlider();
+    QVBoxLayout * mainLayout;
+    mainMenu * menu;
+    buildView * buildV;
 
-    GLWidget *glWidget;
-    QSlider *xSlider;
-    QSlider *ySlider;
-    QSlider *zSlider;
-    QPushButton *dockBtn;
     MainWindow *mainWindow;
 };
 
