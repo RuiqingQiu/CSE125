@@ -1,10 +1,11 @@
 #include "mainMenu.h"
 
 mainMenu::mainMenu() {
+    //setStyleSheet("background-image: url(/Users/Tsuruko/CSE125/GUI/testimg.jpg)");
     //load logo image
-    QPixmap background;
-    background.load("/Users/Tsuruko/CSE125/GUI/testimg.jpg");
-    background = background.scaled(this->size(), Qt::IgnoreAspectRatio);
+    //QPixmap logoImg;
+    //logoImg.load("/Users/Tsuruko/CSE125/GUI/testimg.jpg");
+    //logoImg = logoImg.scaled(this->size(), Qt::IgnoreAspectRatio);
 
     //initialize buttons
     serverName = new QLineEdit();
@@ -34,7 +35,7 @@ mainMenu::mainMenu() {
 
     //add content to the layout
     QLabel * img = new QLabel;
-    img->setPixmap(background);
+    //img->setPixmap(logoImg);
     mainLayout->addWidget(img);
     mainLayout->addWidget(serverName);
     mainLayout->addWidget(robotName);
