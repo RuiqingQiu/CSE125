@@ -54,22 +54,19 @@
 Window::Window(MainWindow *mw)
     : mainWindow(mw) {
 
+	// initialize the views
     menu = new mainMenu();
     buildV = new buildView();
 
+	// fix the window size to be full screen
     QDesktopWidget dw;
     setFixedSize(dw.width(), dw.height());
-    mainLayout = new QVBoxLayout;
-
-    connect(menu->playButton, SIGNAL(clicked()), this, SLOT(playButtonPressed()));
+    // set the main layout when the game starts
+	mainLayout = new QVBoxLayout;
+	connect(menu->playButton, SIGNAL(clicked()), this, SLOT(playButtonPressed()));
     mainLayout->addWidget(menu);
-
-    connect(buildV->dockBtn, SIGNAL(clicked()), this, SLOT(dockUndock()));
-    //mainLayout->addWidget(dockBtn);
-
-    setLayout(mainLayout);
-
-    setWindowTitle(tr("Hello GL"));
+	setLayout(mainLayout);
+    setWindowTitle("CSE125 Group 1");
 }
 
 void Window::keyPressEvent(QKeyEvent *e) {
