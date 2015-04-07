@@ -43,6 +43,9 @@
 
 #include <QWidget>
 
+
+#include "mainMenu.h"
+
 QT_BEGIN_NAMESPACE
 class QSlider;
 class QPushButton;
@@ -63,8 +66,13 @@ protected:
 
 private slots:
     void dockUndock();
+    void playButtonPressed();
 
 private:
+    QVBoxLayout * mainLayout;
+    mainMenu * menu;
+
+
     QSlider *createSlider();
 
     GLWidget *glWidget;

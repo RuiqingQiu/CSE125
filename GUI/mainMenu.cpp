@@ -1,8 +1,6 @@
 #include "mainMenu.h"
 
-mainMenu::mainMenu()
-{
-    QDesktopWidget * dw = new QDesktopWidget();
+mainMenu::mainMenu() {
     //load logo image
     //logo = new QImage();
 
