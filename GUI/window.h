@@ -61,9 +61,6 @@ class Window : public QWidget
 public:
     Window(MainWindow *mw);
 
-protected:
-    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
-
 private slots:
     void dockUndock();
     void playButtonPressed();

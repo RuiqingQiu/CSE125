@@ -56,3 +56,12 @@ void MainWindow::onAddNew()
     else
         QMessageBox::information(0, tr("Cannot add new window"), tr("Already occupied. Undock first."));
 }
+
+void MainWindow::keyPressEvent(QKeyEvent *e) {
+    if (e->key() == Qt::Key_Escape) {
+        std::cout << "closing" << std::endl;
+        close();
+    } else {
+        QWidget::keyPressEvent(e);
+    }
+}

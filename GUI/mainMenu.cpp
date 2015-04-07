@@ -23,11 +23,11 @@ mainMenu::mainMenu() {
     robotName->setMinimumWidth(300);
 
     playButton = new QPushButton(tr("Play Now!"));
-    playButton->setMaximumWidth(200);
-    playButton->setMinimumWidth(200);
+    playButton->setMaximumWidth(BUTTONSIZE);
+    playButton->setMinimumWidth(BUTTONSIZE);
     helpButton = new QPushButton(tr("Help"));
-    helpButton->setMaximumWidth(200);
-    helpButton->setMinimumWidth(200);
+    helpButton->setMaximumWidth(BUTTONSIZE);
+    helpButton->setMinimumWidth(BUTTONSIZE);
 
     //create a layout for this widget
     QVBoxLayout * mainLayout = new QVBoxLayout();
