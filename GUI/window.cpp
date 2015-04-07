@@ -80,13 +80,14 @@ Window::Window(MainWindow *mw)
     container->addWidget(ySlider);
     container->addWidget(zSlider);
 
-    QWidget *w = new QWidget;
-    w->setLayout(container);
-    //mainLayout->addWidget(w);
+    sampleCode = new QWidget;
+    sampleCode->setLayout(container);
+    //mainLayout->addWidget(sampleCode);
+    connect(menu->playButton, SIGNAL(clicked()), this, SLOT(playButtonPressed()));
     mainLayout->addWidget(menu);
     dockBtn = new QPushButton(tr("Undock"), this);
     connect(dockBtn, SIGNAL(clicked()), this, SLOT(dockUndock()));
-    mainLayout->addWidget(dockBtn);
+    //mainLayout->addWidget(dockBtn);
 
     setLayout(mainLayout);
 
@@ -142,4 +143,7 @@ void Window::dockUndock()
 
 void Window::playButtonPressed() {
     mainLayout->removeWidget(menu);
+    delete menu;
+    mainLayout->addWidget(sampleCode);
+    mainLayout->addWidget(dockBtn);
 }

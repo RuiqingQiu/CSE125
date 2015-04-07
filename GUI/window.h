@@ -81,6 +81,7 @@ private:
     QSlider *zSlider;
     QPushButton *dockBtn;
     MainWindow *mainWindow;
+    QWidget * sampleCode;
 };
 
 #endif
