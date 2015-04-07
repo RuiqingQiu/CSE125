@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{9b7a4e3a-22ff-486c-844c-8d6ae90bd181}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Third Party">
+      <UniqueIdentifier>{6a6e0345-1ec5-4180-9a7d-168ecb08ff3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -108,6 +111,33 @@
     <ClInclude Include="StandardGameInput.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="image_DXT.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="image_helper.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="SOIL.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image_aug.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="stbi_DDS_aug.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="stbi_DDS_aug_c.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="tiny_obj_loader.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3D.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -172,6 +202,27 @@
     </ClCompile>
     <ClCompile Include="StandardGameInput.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="image_DXT.c">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="image_helper.c">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="SOIL.c">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image_aug.c">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="tiny_obj_loader.cc">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="Model3D.cpp">
+      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
