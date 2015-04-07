@@ -3,10 +3,11 @@
 
 #include <QComboBox>
 #include <QListWidget>
+#include <QListWidgetItem>
 
 #include "view.h"
 
-static const int NUMOPS = 3;
+static const int LISTCONST = 400;
 
 class buildView : public view
 {
@@ -20,8 +21,7 @@ public:
 private:
     GLWidget * glWidget;
 
-    //temporary, need to learn how to use QListWidget!
-    QComboBox * listOptions[NUMOPS];
+    QListWidget * listOptions;
 };
 
 #endif // BUILDVIEW_H

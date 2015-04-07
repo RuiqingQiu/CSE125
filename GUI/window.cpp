@@ -61,8 +61,9 @@ Window::Window(MainWindow *mw)
     help = new helpMenu();
 
 	// fix the window size to be full screen
-    QDesktopWidget dw;
-    setFixedSize(dw.width()-100, dw.height()-100);
+    QDesktopWidget desktopWidget;
+    setFixedSize(desktopWidget.width()-WINDOWCONST, desktopWidget.height()-WINDOWCONST);
+    //showFullScreen();
 
     // set the main layout when the game starts
 	mainLayout = new QVBoxLayout;
@@ -83,16 +84,10 @@ Window::Window(MainWindow *mw)
     connect(buildV->helpButton, SIGNAL(clicked()), this, SLOT(helpButtonPressed()));
     connect(help->backButton, SIGNAL(clicked()), this, SLOT(backPressed()));
     connect(battlefield->backButton, SIGNAL(clicked()), this, SLOT(backPressed()));
+    connect(battlefield->helpButton, SIGNAL(clicked()), this, SLOT(helpButtonPressed()));
 
 	setLayout(mainLayout);
     setWindowTitle("CSE125 Group 1");
-}
-
-void Window::keyPressEvent(QKeyEvent *e) {
-    if (e->key() == Qt::Key_Escape)
-        close();
-    else
-        QWidget::keyPressEvent(e);
 }
 
 void Window::dockUndock() {

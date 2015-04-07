@@ -1,32 +1,37 @@
 #include "buildView.h"
 
 buildView::buildView() {
+
+    //initialize opengl
     glWidget = new GLWidget;
+    QDesktopWidget desktopWidget;
+    glWidget->setMinimumWidth(desktopWidget.width()-WINDOWCONST-LISTCONST);
 
     //initialize widgets
-    for (int i = 0; i < NUMOPS; i++) {
-        listOptions[i] = new QComboBox();
-        listOptions[i]->addItem(tr("some build option"));
-        listOptions[i]->addItem(tr("some build option"));
-        listOptions[i]->addItem(tr("some build option"));
-    }
+    listOptions = new QListWidget;
+    listOptions->setMaximumWidth(LISTCONST);
+
+    //2 ways to add items:
+        //this way you don't need row
+        new QListWidgetItem(tr("weapons"), listOptions);
+        new QListWidgetItem(tr("armor"), listOptions);
+        new QListWidgetItem(tr("movement"), listOptions);
+
+        //this way you want it on a certain row
+        QListWidgetItem *newItem = new QListWidgetItem;
+        newItem->setText(tr("body"));
+        listOptions->insertItem(4, newItem);
+
     battleButton  = new QPushButton(tr("Battle!"));
     helpButton = new QPushButton(tr("Help"));
+    helpButton->setMaximumWidth(BUTTONSIZE);
 
-    QVBoxLayout * listContainer = new QVBoxLayout;
-    for (int i = 0; i < NUMOPS; i++) {
-        listContainer->addWidget(listOptions[i]);
-    }
-    QWidget * myList = new QWidget;
-    myList->setLayout(listContainer);
-
+    //create main window layout
     QGridLayout * mainLayout = new QGridLayout;
     mainLayout->addWidget(glWidget, 0, 0);
-    mainLayout->addWidget(myList, 0, 1);
+    mainLayout->addWidget(listOptions, 0, 1);
     mainLayout->addWidget(battleButton, 1,1);
     mainLayout->addWidget(helpButton, 1, 0);
-
-
 
     setLayout(mainLayout);
 }

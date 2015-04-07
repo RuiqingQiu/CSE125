@@ -11,6 +11,7 @@ public:
     ~battlefieldView();
 
     QPushButton * backButton;
+    QPushButton * helpButton;
 private:
     GLWidget * glWidget;
 };
