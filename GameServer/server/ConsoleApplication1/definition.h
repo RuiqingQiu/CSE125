@@ -17,7 +17,7 @@
 		INIT_STATE2 = 2,
 		INIT_STATE3 = 3,
 		BUILD_STATE = 4,
-		GAME_STATE = 5,
+		GAME_STATE0 = 5,
 		END_STATE = 8,
 
 	};

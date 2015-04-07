@@ -11,7 +11,7 @@ class ServerCore
 public:
 	ServerCore();
 	~ServerCore();
-	void serverLoop(void)
+	void serverLoop(void);
 
 };
 
