@@ -41,6 +41,9 @@
 #include "glwidget.h"
 #include "window.h"
 #include "mainwindow.h"
+
+#include "mainMenu.h"
+
 #include <QSlider>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -53,7 +56,13 @@
 Window::Window(MainWindow *mw)
     : mainWindow(mw)
 {
+
+    mainMenu * menu = new mainMenu();
+
     glWidget = new GLWidget;
+
+    QDesktopWidget dw;
+    setFixedSize(dw.width(), dw.height());
 
     xSlider = createSlider();
     ySlider = createSlider();
@@ -75,7 +84,8 @@ Window::Window(MainWindow *mw)
 
     QWidget *w = new QWidget;
     w->setLayout(container);
-    mainLayout->addWidget(w);
+    //mainLayout->addWidget(w);
+    mainLayout->addWidget(menu);
     dockBtn = new QPushButton(tr("Undock"), this);
     connect(dockBtn, SIGNAL(clicked()), this, SLOT(dockUndock()));
     mainLayout->addWidget(dockBtn);
