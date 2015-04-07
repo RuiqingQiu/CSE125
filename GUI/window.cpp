@@ -42,8 +42,6 @@
 #include "window.h"
 #include "mainwindow.h"
 
-#include "mainMenu.h"
-
 #include <QSlider>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -57,7 +55,7 @@ Window::Window(MainWindow *mw)
     : mainWindow(mw)
 {
 
-    mainMenu * menu = new mainMenu();
+    menu = new mainMenu();
 
     glWidget = new GLWidget;
 
@@ -75,7 +73,7 @@ Window::Window(MainWindow *mw)
     connect(zSlider, SIGNAL(valueChanged(int)), glWidget, SLOT(setZRotation(int)));
     connect(glWidget, SIGNAL(zRotationChanged(int)), zSlider, SLOT(setValue(int)));
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout = new QVBoxLayout;
     QHBoxLayout *container = new QHBoxLayout;
     container->addWidget(glWidget);
     container->addWidget(xSlider);
@@ -140,4 +138,8 @@ void Window::dockUndock()
             QMessageBox::information(0, tr("Cannot dock"), tr("Main window already occupied"));
         }
     }
+}
+
+void Window::playButtonPressed() {
+    mainLayout->removeWidget(menu);
 }

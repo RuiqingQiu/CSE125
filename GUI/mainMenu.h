@@ -6,19 +6,14 @@
 #include <QPushButton>
 #include <QImage>
 
-class mainMenu: public QWidget
-{
+class mainMenu: public view {
+
 public:
+
     mainMenu();
     ~mainMenu();
 
-
-private slots:
-    void playPressed();
-    void helpPressed();
-    void enterText();
-
-private:
+//private:
 
     QImage * logo;
 

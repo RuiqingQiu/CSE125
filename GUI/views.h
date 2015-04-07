@@ -6,7 +6,9 @@
 #include <QVBoxLayout>
 #include <QDesktopWidget>
 
-#include <iostream>
+class view : public QWidget {
+
+};
 
 #endif // VIEWS
 
