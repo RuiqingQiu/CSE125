@@ -2,9 +2,11 @@
 #define VIEWS
 
 #include <QWidget>
-#include <QGridLayout>
 #include <QVBoxLayout>
-#include <QDesktopWidget>
+
+#include <QPushButton>
+
+#include "glwidget.h"
 
 class view : public QWidget {
 

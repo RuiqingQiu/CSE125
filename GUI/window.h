@@ -41,10 +41,8 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <QWidget>
-
-
 #include "mainMenu.h"
+#include "buildView.h"
 
 QT_BEGIN_NAMESPACE
 class QSlider;
@@ -71,7 +69,7 @@ private slots:
 private:
     QVBoxLayout * mainLayout;
     mainMenu * menu;
-
+    buildView * buildV;
 
     QSlider *createSlider();
 

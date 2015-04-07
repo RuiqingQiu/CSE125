@@ -56,6 +56,7 @@ Window::Window(MainWindow *mw)
 {
 
     menu = new mainMenu();
+    buildV = new buildView();
 
     glWidget = new GLWidget;
 
@@ -144,6 +145,6 @@ void Window::dockUndock()
 void Window::playButtonPressed() {
     mainLayout->removeWidget(menu);
     delete menu;
-    mainLayout->addWidget(sampleCode);
-    mainLayout->addWidget(dockBtn);
+    mainLayout->addWidget(buildV);
+    //mainLayout->addWidget(dockBtn);
 }
