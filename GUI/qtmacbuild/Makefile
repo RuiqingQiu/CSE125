@@ -55,7 +55,8 @@ SOURCES       = ../glwidget.cpp \
 		../logo.cpp \
 		../mainMenu.cpp \
 		../battlefieldView.cpp \
-		../buildView.cpp moc_glwidget.cpp \
+		../buildView.cpp \
+		../helpmenu.cpp moc_glwidget.cpp \
 		moc_window.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = glwidget.o \
@@ -66,6 +67,7 @@ OBJECTS       = glwidget.o \
 		mainMenu.o \
 		battlefieldView.o \
 		buildView.o \
+		helpmenu.o \
 		moc_glwidget.o \
 		moc_window.o \
 		moc_mainwindow.o
@@ -210,14 +212,16 @@ DIST          = ../../../../Qt/5.4/clang_64/mkspecs/features/spec_pre.prf \
 		../mainMenu.h \
 		../battlefieldView.h \
 		../buildView.h \
-		../views.h ../glwidget.cpp \
+		../helpmenu.h \
+		../view.h ../glwidget.cpp \
 		../main.cpp \
 		../window.cpp \
 		../mainwindow.cpp \
 		../logo.cpp \
 		../mainMenu.cpp \
 		../battlefieldView.cpp \
-		../buildView.cpp
+		../buildView.cpp \
+		../helpmenu.cpp
 QMAKE_TARGET  = GUI
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = GUI.app/Contents/MacOS/GUI
@@ -560,8 +564,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../glwidget.h ../window.h ../mainwindow.h ../logo.h ../mainMenu.h ../battlefieldView.h ../buildView.h ../views.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../glwidget.cpp ../main.cpp ../window.cpp ../mainwindow.cpp ../logo.cpp ../mainMenu.cpp ../battlefieldView.cpp ../buildView.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../glwidget.h ../window.h ../mainwindow.h ../logo.h ../mainMenu.h ../battlefieldView.h ../buildView.h ../helpmenu.h ../view.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../glwidget.cpp ../main.cpp ../window.cpp ../mainwindow.cpp ../logo.cpp ../mainMenu.cpp ../battlefieldView.cpp ../buildView.cpp ../helpmenu.cpp $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -609,8 +613,39 @@ moc_glwidget.cpp: ../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/He
 		../glwidget.h
 	/Users/Tsuruko/Qt/5.4/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -I/Users/Tsuruko/Qt/5.4/clang_64/mkspecs/macx-clang -I/Users/Tsuruko/CSE125/GUI -I/Users/Tsuruko/Qt/5.4/clang_64/lib/QtWidgets.framework/Headers -I/Users/Tsuruko/Qt/5.4/clang_64/lib/QtGui.framework/Headers -I/Users/Tsuruko/Qt/5.4/clang_64/lib/QtCore.framework/Headers -I. -F/Users/Tsuruko/Qt/5.4/clang_64/lib ../glwidget.h -o moc_glwidget.cpp
 
-moc_window.cpp: ../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
+moc_window.cpp: ../mainMenu.h \
+		../view.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qboxlayout.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
+		../glwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QOpenGLWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qopenglwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLFunctions \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglfunctions.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLVertexArrayObject \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglvertexarrayobject.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLBuffer \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglbuffer.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QMatrix4x4 \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qmatrix4x4.h \
+		../logo.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopengl.h \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QVector \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qvector.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QVector3D \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qvector3d.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QLineEdit \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlineedit.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QImage \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qimage.h \
+		../buildView.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QComboBox \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qcombobox.h \
+		../battlefieldView.h \
 		../window.h
 	/Users/Tsuruko/Qt/5.4/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -I/Users/Tsuruko/Qt/5.4/clang_64/mkspecs/macx-clang -I/Users/Tsuruko/CSE125/GUI -I/Users/Tsuruko/Qt/5.4/clang_64/lib/QtWidgets.framework/Headers -I/Users/Tsuruko/Qt/5.4/clang_64/lib/QtGui.framework/Headers -I/Users/Tsuruko/Qt/5.4/clang_64/lib/QtCore.framework/Headers -I. -F/Users/Tsuruko/Qt/5.4/clang_64/lib ../window.h -o moc_window.cpp
 
@@ -689,20 +724,30 @@ window.o: ../window.cpp ../glwidget.h \
 		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QVector3D \
 		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qvector3d.h \
 		../window.h \
+		../mainMenu.h \
+		../view.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qboxlayout.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QLineEdit \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlineedit.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QImage \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qimage.h \
+		../buildView.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QComboBox \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qcombobox.h \
+		../battlefieldView.h \
 		../mainwindow.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QMainWindow \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qmainwindow.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QSlider \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qslider.h \
-		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
-		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qboxlayout.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QHBoxLayout \
 		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QKeyEvent \
 		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qevent.h \
-		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
-		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QDesktopWidget \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qdesktopwidget.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QApplication \
@@ -715,8 +760,39 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QMainWindow \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qmainwindow.h \
 		../window.h \
+		../mainMenu.h \
+		../view.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qboxlayout.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
+		../glwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QOpenGLWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qopenglwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLFunctions \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglfunctions.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLVertexArrayObject \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglvertexarrayobject.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLBuffer \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglbuffer.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QMatrix4x4 \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qmatrix4x4.h \
+		../logo.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopengl.h \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QVector \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qvector.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QVector3D \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qvector3d.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QLineEdit \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlineedit.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QImage \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qimage.h \
+		../buildView.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QComboBox \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qcombobox.h \
+		../battlefieldView.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QMenuBar \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qmenubar.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QMenu \
@@ -735,28 +811,118 @@ logo.o: ../logo.cpp ../logo.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logo.o ../logo.cpp
 
 mainMenu.o: ../mainMenu.cpp ../mainMenu.h \
-		../views.h \
+		../view.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h \
-		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QLineEdit \
-		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlineedit.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qboxlayout.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
+		../glwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QOpenGLWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qopenglwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLFunctions \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglfunctions.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLVertexArrayObject \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglvertexarrayobject.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLBuffer \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglbuffer.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QMatrix4x4 \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qmatrix4x4.h \
+		../logo.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopengl.h \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QVector \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qvector.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QVector3D \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qvector3d.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QLineEdit \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qlineedit.h \
 		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QImage \
 		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qimage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainMenu.o ../mainMenu.cpp
 
 battlefieldView.o: ../battlefieldView.cpp ../battlefieldView.h \
-		../views.h \
+		../view.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
-		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qboxlayout.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
+		../glwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QOpenGLWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qopenglwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLFunctions \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglfunctions.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLVertexArrayObject \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglvertexarrayobject.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLBuffer \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglbuffer.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QMatrix4x4 \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qmatrix4x4.h \
+		../logo.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopengl.h \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QVector \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qvector.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QVector3D \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qvector3d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o battlefieldView.o ../battlefieldView.cpp
 
 buildView.o: ../buildView.cpp ../buildView.h \
-		../views.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QComboBox \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qcombobox.h \
+		../view.h \
 		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
-		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qboxlayout.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
+		../glwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QOpenGLWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qopenglwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLFunctions \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglfunctions.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLVertexArrayObject \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglvertexarrayobject.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLBuffer \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglbuffer.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QMatrix4x4 \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qmatrix4x4.h \
+		../logo.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopengl.h \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QVector \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qvector.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QVector3D \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qvector3d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o buildView.o ../buildView.cpp
+
+helpmenu.o: ../helpmenu.cpp ../helpmenu.h \
+		../view.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QVBoxLayout \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qboxlayout.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QPushButton \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qpushbutton.h \
+		../glwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/QOpenGLWidget \
+		../../../Qt/5.4/clang_64/lib/QtWidgets.framework/Versions/5/Headers/qopenglwidget.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLFunctions \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglfunctions.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLVertexArrayObject \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglvertexarrayobject.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QOpenGLBuffer \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopenglbuffer.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QMatrix4x4 \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qmatrix4x4.h \
+		../logo.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qopengl.h \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/QVector \
+		../../../Qt/5.4/clang_64/lib/QtCore.framework/Versions/5/Headers/qvector.h \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/QVector3D \
+		../../../Qt/5.4/clang_64/lib/QtGui.framework/Versions/5/Headers/qvector3d.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o helpmenu.o ../helpmenu.cpp
 
 moc_glwidget.o: moc_glwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_glwidget.o moc_glwidget.cpp

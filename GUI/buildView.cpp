@@ -3,49 +3,35 @@
 buildView::buildView() {
     glWidget = new GLWidget;
 
-    xSlider = createSlider();
-    ySlider = createSlider();
-    zSlider = createSlider();
+    //initialize widgets
+    for (int i = 0; i < NUMOPS; i++) {
+        listOptions[i] = new QComboBox();
+        listOptions[i]->addItem(tr("some build option"));
+        listOptions[i]->addItem(tr("some build option"));
+        listOptions[i]->addItem(tr("some build option"));
+    }
+    battleButton  = new QPushButton(tr("Battle!"));
+    helpButton = new QPushButton(tr("Help"));
 
-    connect(xSlider, SIGNAL(valueChanged(int)), glWidget, SLOT(setXRotation(int)));
-    connect(glWidget, SIGNAL(xRotationChanged(int)), xSlider, SLOT(setValue(int)));
-    connect(ySlider, SIGNAL(valueChanged(int)), glWidget, SLOT(setYRotation(int)));
-    connect(glWidget, SIGNAL(yRotationChanged(int)), ySlider, SLOT(setValue(int)));
-    connect(zSlider, SIGNAL(valueChanged(int)), glWidget, SLOT(setZRotation(int)));
-    connect(glWidget, SIGNAL(zRotationChanged(int)), zSlider, SLOT(setValue(int)));
+    QVBoxLayout * listContainer = new QVBoxLayout;
+    for (int i = 0; i < NUMOPS; i++) {
+        listContainer->addWidget(listOptions[i]);
+    }
+    QWidget * myList = new QWidget;
+    myList->setLayout(listContainer);
 
-    QVBoxLayout * mainLayout = new QVBoxLayout;
-    QHBoxLayout *container = new QHBoxLayout;
-    container->addWidget(glWidget);
-    container->addWidget(xSlider);
-    container->addWidget(ySlider);
-    container->addWidget(zSlider);
+    QGridLayout * mainLayout = new QGridLayout;
+    mainLayout->addWidget(glWidget, 0, 0);
+    mainLayout->addWidget(myList, 0, 1);
+    mainLayout->addWidget(battleButton, 1,1);
+    mainLayout->addWidget(helpButton, 1, 0);
 
-    QWidget * w = new QWidget;
-    w->setLayout(container);
-    mainLayout->addWidget(w);
-    dockBtn = new QPushButton(tr("Undock"), this);
-    mainLayout->addWidget(dockBtn);
+
 
     setLayout(mainLayout);
-
-    xSlider->setValue(15 * 16);
-    ySlider->setValue(345 * 16);
-    zSlider->setValue(0 * 16);
 }
 
 buildView::~buildView()
 {
 
-}
-
-QSlider *buildView::createSlider()
-{
-    QSlider *slider = new QSlider(Qt::Vertical);
-    slider->setRange(0, 360 * 16);
-    slider->setSingleStep(16);
-    slider->setPageStep(15 * 16);
-    slider->setTickInterval(15 * 16);
-    slider->setTickPosition(QSlider::TicksRight);
-    return slider;
 }
