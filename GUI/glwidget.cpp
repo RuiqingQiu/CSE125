@@ -43,6 +43,7 @@
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
 #include <math.h>
+#include <iostream>
 
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent),
@@ -258,8 +259,20 @@ void GLWidget::paintGL()
     m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
 
     glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
-
     m_program->release();
+}
+
+void GLWidget::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(Qt::black);
+    QRect rect = QRect(100,500,300,200);
+    painter.drawText(rect, Qt::AlignCenter,"Hello World !");
+    painter.drawRect(rect);
+    painter.end();
+
 }
 
 void GLWidget::resizeGL(int w, int h)

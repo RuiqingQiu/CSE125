@@ -46,6 +46,11 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLBuffer>
 #include <QMatrix4x4>
+#include <QtOpenGL/QGLWidget>
+#include <QtOpenGL/QtOpenGL>
+#include <QPainter>
+#include <QWidget>
+
 #include "logo.h"
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
@@ -74,10 +79,12 @@ signals:
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
-    void paintGL() Q_DECL_OVERRIDE;
+    //void paintGL() Q_DECL_OVERRIDE;
+    void paintGL();
     void resizeGL(int width, int height) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event);
 
 private:
     void setupVertexAttribs();

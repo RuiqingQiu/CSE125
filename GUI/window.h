@@ -43,6 +43,7 @@
 
 #include "mainMenu.h"
 #include "buildView.h"
+#include "battlefieldView.h"
 
 QT_BEGIN_NAMESPACE
 class QSlider;
@@ -70,6 +71,7 @@ private:
     QVBoxLayout * mainLayout;
     mainMenu * menu;
     buildView * buildV;
+    battlefieldView* battlefield;
 
     MainWindow *mainWindow;
 };

@@ -2,15 +2,14 @@
 #define BATTLEFIELDVIEW_H
 
 #include "views.h"
+#include <QtGui>
 
-class battlefieldView : public view
+
+class battlefieldView : public QOpenGLWidget
 {
 public:
     battlefieldView();
     ~battlefieldView();
-
-
-private:
 
 };
 
