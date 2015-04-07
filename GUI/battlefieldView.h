@@ -3,11 +3,15 @@
 
 #include "views.h"
 
-class battlefieldView : public QWidget
+class battlefieldView : public view
 {
 public:
     battlefieldView();
     ~battlefieldView();
+
+
+private:
+
 };
 
 #endif // BATTLEFIELDVIEW_H
