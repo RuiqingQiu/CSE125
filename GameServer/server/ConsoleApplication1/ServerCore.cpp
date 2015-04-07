@@ -28,12 +28,13 @@ void ServerCore::serverLoop()
 		switch (gameState->getState())
 		{
 		case INIT_STATE0:
-			action = gameLogic.waitToConnect();
+			action = gameLogic->waitToConnect();
 		default:
+			action = WAIT; 
 			break;
 		}
 
-		gameState->nextState();
+		gameState->nextState(action);
 
 
 		//cout << "Sleep the frame." << endl;
