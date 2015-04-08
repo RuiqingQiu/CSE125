@@ -1,7 +1,7 @@
 #include "mainMenu.h"
 
 mainMenu::mainMenu() {
-    //setStyleSheet("background-image: url(C:\Users\tsuruko\Documents\GitHub\CSE125\data\testimg.jpg)");
+    //setStyleSheet("background-image: url(/Users/Tsuruko/CSE125/GUI/testimg.jpg)");
     //load logo image
     //QPixmap logoImg;
     //logoImg.load("/Users/Tsuruko/CSE125/GUI/testimg.jpg");
