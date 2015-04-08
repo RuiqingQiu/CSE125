@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "Graphics/CSE125Console/CSE125Console/StdAfx.h"
 #include "ServerGame.h"
 
 unsigned int ServerGame::client_id; 

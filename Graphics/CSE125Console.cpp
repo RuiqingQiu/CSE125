@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "Window.h"
+#include "graphicsWindow.h"
 
 #ifdef __APPLE__
 #include <GLUT/glut.h>
@@ -14,7 +14,7 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	glutInit(&argc, (char**)argv);                                      //Initialize GLUT
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);   //Open an OpenGL context with double buffering, RGB colors, and depth buffering
-	glutInitWindowSize(Window::width, Window::height);          //Set initial window size
+    glutInitWindowSize(graphicsWindow::width, graphicsWindow::height);          //Set initial window size
 	glutCreateWindow("UCSD CSE 167 - Project 1 - OpenGL Cube"); //Open window and set window title
 
 	glEnable(GL_DEPTH_TEST);                                    //Enable depth buffering
@@ -41,10 +41,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 	//Register callback functions:
-	glutDisplayFunc(Window::displayCallback);
-	glutReshapeFunc(Window::reshapeCallback);
-	glutIdleFunc(Window::idleCallback);
-	glutKeyboardFunc(Window::processNormalKeys);
+    glutDisplayFunc(graphicsWindow::displayCallback);
+    glutReshapeFunc(graphicsWindow::reshapeCallback);
+    glutIdleFunc(graphicsWindow::idleCallback);
+    glutKeyboardFunc(graphicsWindow::processNormalKeys);
 	//Register the callback for the keyboard
 	//Register the callback for the keyboard function keys
 	//Register the callback for the mouse
@@ -54,7 +54,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Initialize the Window:
 	//The body of this function is a great place to load textures, shaders, etc.
 	//and do any operations/calculations/configurations that only need to happen once.
-	Window::initialize();
+    graphicsWindow::initialize();
 
 	//Start up the render loop!
 	glutMainLoop();

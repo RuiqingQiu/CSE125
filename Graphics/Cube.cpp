@@ -8,7 +8,7 @@
     #include <GL/glut.h>
 #endif
 
-#include "Window.h"
+#include "graphicsWindow.h"
 #include "math.h"
 
 Cube::Cube(float size)
