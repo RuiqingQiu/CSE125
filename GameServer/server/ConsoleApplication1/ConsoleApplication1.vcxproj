@@ -90,7 +90,6 @@
     <ClInclude Include="NetworkServices.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ServerCore.h" />
-    <ClInclude Include="ServerGame.h" />
     <ClInclude Include="ServerNetwork.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -107,7 +106,6 @@
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="ServerCore.cpp" />
-    <ClCompile Include="ServerGame.cpp" />
     <ClCompile Include="ServerNetwork.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TimeFrame.cpp" />

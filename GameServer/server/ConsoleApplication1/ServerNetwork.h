@@ -10,7 +10,6 @@ using namespace std;
 
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "6881" 
-#define oneStep 0.1
 
 class ServerNetwork
 {
@@ -22,10 +21,10 @@ public:
 	void sendToAll(char * packets, int totalSize);
 
 	// receive incoming data
-	int receiveData(unsigned int client_id, char * recvbuf);
+	int receiveData( int client_id, char * recvbuf);
 
 	// accept new connections
-	bool acceptNewClient(unsigned int & id);
+	bool acceptNewClient(int & id);
 
 	// Socket to listen for new connections
 	SOCKET ListenSocket;

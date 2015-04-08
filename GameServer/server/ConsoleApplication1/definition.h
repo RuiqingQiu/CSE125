@@ -21,3 +21,6 @@
 		END_STATE = 8,
 
 	};
+
+#define oneStep 0.1
+#define TIMEFRAME 300;

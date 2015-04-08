@@ -17,7 +17,7 @@ Network::~Network()
 }
 
 
-void Network::sendClientConfirmationPacket(const char* clientName, unsigned int client_ID){
+void Network::sendClientConfirmationPacket(const char* clientName, int client_ID){
 	cout << "Sending Confirmation Packet" << endl;
 	const unsigned int packet_size = sizeof(SPacket);
 	char packet_data[packet_size];
@@ -48,7 +48,7 @@ void Network::sendClientConfirmationPacket(const char* clientName, unsigned int 
 
 
 
-unsigned int Network::waitForConnections(){
+int Network::waitForConnections(){
 	if (network->acceptNewClient(client_id))
 	{
 		printf("client %d has been connected to the server\n", client_id);
@@ -92,12 +92,39 @@ void Network::receiveFromClients(std::vector<Events*>* eventList){
 
 }
 
-void sendActionPackets();
+void Network::sendActionPackets(vector<GameObj*> * gameObjs){
+
+	//cout << "send Action" << endl;
+	// send action packet
+	const unsigned int packet_size = sizeof(SPacket);
+	char packet_data[packet_size];
+
+	//GameObj* obj = new GameObj(1, -1, -5);
+	//GameObj* obj2 = new GameObj(1, -2, -5);
+
+
+	SPacket packet;
+	//packet.data[0] = '1';
+
+	//char* des = "wrong";
+
+	//this->pushGameObj(*obj);
+	string des = convertData(gameObjs);
+
+	memcpy(packet.data, des.c_str(), sizeof(packet.data));
+
+	packet.packet_type = GAME_STATE;
+
+	packet.serialize(packet_data);
+
+	network->sendToAll(packet_data, packet_size);
+}
+
 
 
 void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 
-	cout << packet.packet_type << endl;
+	cout << "packet type : " << packet.packet_type << endl;
 	switch (packet.packet_type) {
 		case INIT_CONNECTION: {
 								  Events * e = new Events(INIT_CONNECTION);
@@ -132,7 +159,10 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 								break;
 							}
 						}
-						unsigned int cid = stoul(packetInfoStr);
+						cout << packet.data << endl;
+						cout << "recieved string "<< packetInfoStr << endl;
+						int cid = stoi(packetInfoStr);
+						cout << "recived cid = " << cid << endl;
 						e->setCid(cid);
 						eventList->push_back(e);
 						break;
@@ -234,15 +264,31 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 							eventList->push_back(e);
 							break;
 		}
-
-
-		default:
-		printf("error in packet types\n");
-		break;
+		default:{
+					printf("error in packet types 222222\n");
+					break;
+		}
 	}
 }
 
 
 
 
-string convertData();
+string Network::convertData(vector<GameObj*> * gameObjs){
+	string temp;
+	for (vector<GameObj*>::iterator i = gameObjs->begin();
+		i != gameObjs->end(); ++i)
+	{
+		temp += to_string((*i)->getId());
+		temp += ' ';
+		temp += to_string((*i)->getX());
+		temp += ' ';
+		temp += to_string((*i)->getY());
+		temp += ' ';
+		temp += to_string((*i)->getZ());
+		temp += '\n';
+	}
+	//cout << temp << endl;
+	return temp;
+
+}

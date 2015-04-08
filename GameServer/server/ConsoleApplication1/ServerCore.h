@@ -2,9 +2,11 @@
 #include "GameState.h"
 #include "GameLogic.h"
 #include "definition.h"
+#include "TimeFrame.h"
 
 class ServerCore
 {
+	TimeFrame* timeFrame;
 	GameState* gameState;
 	GameLogic* gameLogic;
 
