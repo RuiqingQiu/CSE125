@@ -11,7 +11,7 @@
 class Network {
 private:
 	// IDs for the clients connecting for table in ServerNetwork 
-	unsigned int client_id;
+	int client_id;
 
 	// The ServerNetwork object 
 	ServerNetwork* network;
@@ -22,11 +22,11 @@ private:
 public:
 	Network();
 	~Network();
-	void sendClientConfirmationPacket(const char* clientName, unsigned int client_ID);
-	unsigned int waitForConnections();
-	string convertData();
+	void sendClientConfirmationPacket(const char* clientName, int client_ID);
+	int waitForConnections();
+	string convertData(vector<GameObj*> * gameObjs);
 	void receiveFromClients(std::vector<Events*>*);
-	void sendActionPackets();
+	void sendActionPackets(vector<GameObj*> * gameObjs);
 	void convertEvents(CPacket packet, std::vector<Events*>* eventList);
 };
 #endif

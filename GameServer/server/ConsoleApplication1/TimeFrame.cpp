@@ -9,6 +9,9 @@ TimeFrame::TimeFrame()
 	countdownTime = 0;
 }
 
+TimeFrame::~TimeFrame(){
+	
+}
 // Start clock
 void TimeFrame::startClock()
 {

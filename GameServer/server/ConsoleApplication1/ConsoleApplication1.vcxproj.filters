@@ -57,9 +57,6 @@
     <ClInclude Include="GameLogic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ServerGame.h">
-      <Filter>Header Files\servergame</Filter>
-    </ClInclude>
     <ClInclude Include="TimeFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -99,9 +96,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameLogic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TimeFrame.cpp">

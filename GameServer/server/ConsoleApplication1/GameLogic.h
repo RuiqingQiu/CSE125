@@ -5,14 +5,16 @@
 
 #include "Network.h"
 #include "GamePhysics.h"
+#include "definition.h"
+#include "TimeFrame.h"
 class GameLogic {
 private:
 	Network* network;
 	GamePhysics* gamePhysics;
-
+	TimeFrame* countDown;
 
 	std::vector<GameObj*> gameObjs;
-	std::map<unsigned int, GameObj *> clientPair;
+	std::map<int, GameObj *> clientPair;
 	std::vector<Events *> elist;
 public:
 	GameLogic();
@@ -20,6 +22,8 @@ public:
 	unsigned int waitToConnect();
 	void pushGameObj(GameObj*);
 	std::vector<GameObj*> getGameObjs();
-
+	unsigned int gameLoop();
+	void gameStart();
+	void prePhyLogic();
 };
 #endif
