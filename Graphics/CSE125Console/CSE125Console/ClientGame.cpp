@@ -9,7 +9,7 @@ ClientGame::ClientGame(void)
    
 }
 
-bool ClientGame::connectToServer(const char * ipaddress)
+bool ClientGame::connectToServer(char* ipaddress)
 {
 
 	bool isConnectSuccess = network->connectToServer(ipaddress);

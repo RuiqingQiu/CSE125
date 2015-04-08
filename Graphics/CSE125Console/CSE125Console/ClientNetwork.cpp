@@ -8,7 +8,7 @@ ClientNetwork::ClientNetwork(void)
 }
 
 
-bool ClientNetwork::connectToServer(const char* ipaddress)
+bool ClientNetwork::connectToServer(char* ipaddress)
 {
 	// create WSADATA object
 	WSADATA wsaData;

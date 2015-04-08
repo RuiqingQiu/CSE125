@@ -7,33 +7,30 @@
     #include <GL/glut.h>
 #endif
 
-#include "stdafx.h"
-#include "GamePacketManager.h"
-#include "GameCore.h"
-#include "graphicsWindow.h"
+#include "Window.h"
 #include "GameView.h"
 #include "Cube.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
 
-int graphicsWindow::width  = 512;   //Set window width in pixels here
-int graphicsWindow::height = 512;   //Set window height in pixels here
+int Window::width  = 512;   //Set window width in pixels here
+int Window::height = 512;   //Set window height in pixels here
 //Init server info here later
-void graphicsWindow::initialize(void)
+void Window::initialize(void)
 {
 	GameView* view = new GameView();
 	Cube* cube = new Cube(4);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	cube->identifier = 1;
-	//view->PushGeoNode(cube);
+	view->PushGeoNode(cube);
 	g_pCore->pGameView = view;
 	g_pCore->pGamePacketManager->ConnectToServer("127.1.1.1");
 	//Setup the light
-	Model3D *object = new Model3D("Pikachu.obj");
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.scale = Vector3(1, 1, 1);
+	//Model3D *object = new Model3D("Pikachu.obj");
+	//object->localTransform.position = Vector3(0, 0, 0);
+	//object->localTransform.scale = Vector3(1, 1, 1);
 
-	view->PushGeoNode(object);
+	//view->PushGeoNode(object);
 
 
 }
@@ -41,17 +38,17 @@ void graphicsWindow::initialize(void)
 //----------------------------------------------------------------------------
 // Callback method called when system is idle.
 // This is called at the start of every new "frame" (qualitatively)
-void graphicsWindow::idleCallback()
+void Window::idleCallback()
 {
     //Call the display routine to draw the cube
     displayCallback();
 }
-void graphicsWindow::processNormalKeys(unsigned char key, int x, int y){
+void Window::processNormalKeys(unsigned char key, int x, int y){
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
 }
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
-void graphicsWindow::reshapeCallback(int w, int h)
+void Window::reshapeCallback(int w, int h)
 {
     width = w;                                                       //Set the window width
     height = h;                                                      //Set the window height
@@ -64,7 +61,7 @@ void graphicsWindow::reshapeCallback(int w, int h)
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
-void graphicsWindow::displayCallback()
+void Window::displayCallback()
 {
 
 	//Manager get packet	

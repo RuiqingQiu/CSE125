@@ -31,6 +31,6 @@ public:
     ~ClientNetwork(void);
 
 	int receivePackets(char *);
-	bool connectToServer(const char* ipaddress);
+	bool connectToServer(char* ipaddress);
 };
 

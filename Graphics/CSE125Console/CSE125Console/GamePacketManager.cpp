@@ -12,7 +12,7 @@ GamePacketManager::~GamePacketManager()
 {
 }
 
-bool GamePacketManager::ConnectToServer(const char * ipaddress)
+bool GamePacketManager::ConnectToServer(char* ipaddress)
 {
 	return client->connectToServer(ipaddress);
 }

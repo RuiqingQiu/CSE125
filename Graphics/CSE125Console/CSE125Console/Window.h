@@ -1,8 +1,10 @@
+#include "stdafx.h"
+//#include "GamePacketManager.h"
+#include "GameCore.h"
+#ifndef CSE167_Window_h
+#define CSE167_Window_h
 
-#ifndef CSE167_graphicsWindow_h
-#define CSE167_graphicsWindow_h
-
-class graphicsWindow	  // OpenGL output window related routines
+class Window	  // OpenGL output window related routines
 {
     
 public:
