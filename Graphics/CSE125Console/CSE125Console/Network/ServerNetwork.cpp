@@ -1,4 +1,4 @@
-#include "Graphics/CSE125Console/CSE125Console/StdAfx.h"
+#include "StdAfx.h"
 #include "ServerNetwork.h"
 
 

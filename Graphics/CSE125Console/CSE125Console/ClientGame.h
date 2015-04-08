@@ -20,7 +20,7 @@ public:
 
 	GameInfoPacket* update();
 
-	bool connectToServer(const char * ipaddress);
+	bool connectToServer(char* ipaddress);
 
 	bool sendPacket(CPacket p);
 };
