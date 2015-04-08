@@ -50,6 +50,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
 
+protected:
+    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+
 private slots:
     void onAddNew();
 };
