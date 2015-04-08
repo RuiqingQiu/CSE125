@@ -7,16 +7,19 @@
     #include <GL/glut.h>
 #endif
 
-#include "Window.h"
+#include "stdafx.h"
+#include "GamePacketManager.h"
+#include "GameCore.h"
+#include "graphicsWindow.h"
 #include "GameView.h"
 #include "Cube.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
 
-int Window::width  = 512;   //Set window width in pixels here
-int Window::height = 512;   //Set window height in pixels here
+int graphicsWindow::width  = 512;   //Set window width in pixels here
+int graphicsWindow::height = 512;   //Set window height in pixels here
 //Init server info here later
-void Window::initialize(void)
+void graphicsWindow::initialize(void)
 {
 	GameView* view = new GameView();
 	Cube* cube = new Cube(2);
@@ -37,17 +40,17 @@ void Window::initialize(void)
 //----------------------------------------------------------------------------
 // Callback method called when system is idle.
 // This is called at the start of every new "frame" (qualitatively)
-void Window::idleCallback()
+void graphicsWindow::idleCallback()
 {
     //Call the display routine to draw the cube
     displayCallback();
 }
-void Window::processNormalKeys(unsigned char key, int x, int y){
+void graphicsWindow::processNormalKeys(unsigned char key, int x, int y){
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
 }
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
-void Window::reshapeCallback(int w, int h)
+void graphicsWindow::reshapeCallback(int w, int h)
 {
     width = w;                                                       //Set the window width
     height = h;                                                      //Set the window height
@@ -60,7 +63,7 @@ void Window::reshapeCallback(int w, int h)
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
-void Window::displayCallback()
+void graphicsWindow::displayCallback()
 {
 
 	//Manager get packet	

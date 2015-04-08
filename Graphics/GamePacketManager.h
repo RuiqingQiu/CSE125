@@ -14,7 +14,7 @@ public:
 	ClientGame* client;
 	GamePacketManager();
 	~GamePacketManager();
-	bool ConnectToServer(char* ipaddress);
+	bool ConnectToServer(const char* ipaddress);
 	bool SendMoveToRight(int id);
 	bool SendMoveToLeft(int id);
 	bool SendMoveToTop(int id);
