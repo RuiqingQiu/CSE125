@@ -36,7 +36,7 @@ void Cube::VOnClientUpdate(GameInfoPacket* pData){
 void Cube::VOnDraw()
 {
     float halfSize = size/2.0;
-	//glColor3f(0, 1, 0);
+	glColor3f(0, 1, 0);
     
     //Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
     glMatrixMode(GL_MODELVIEW);

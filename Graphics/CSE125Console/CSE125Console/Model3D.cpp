@@ -62,6 +62,7 @@ Model3D::Model3D(string filename){
 		}
 		printf("\n");
 
+
 		if (materials[i].diffuse_texname.c_str())
 		{
 			GLuint tex_2d = SOIL_load_OGL_texture
@@ -135,7 +136,7 @@ void Model3D::VOnDraw(){
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
-
+	glColor3f(1, 1, 1);
 	for (size_t i = 0; i < shapes.size(); i++) {
 		
 		for (size_t f = 0; f < shapes[i].mesh.indices.size() / 3; f++) {
@@ -164,8 +165,13 @@ void Model3D::VOnDraw(){
 			glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
 			glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
 
-
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//THIS LINE OF CODE MUST BE AFTER THE TEXTURE LOADING CODE
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			glBegin(GL_TRIANGLES);
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//DONT MODIFY IF YOU DONT KNOW WHAT IT IS
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 			//texture
 			glTexCoord2f(shapes[i].mesh.texcoords[2 * i1 + 0], shapes[i].mesh.texcoords[2 * i1 + 1]);
