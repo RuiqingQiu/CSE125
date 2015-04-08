@@ -43,6 +43,8 @@
 
 #include "mainMenu.h"
 #include "buildView.h"
+#include "battlefieldView.h"
+#include "helpMenu.h"
 
 QT_BEGIN_NAMESPACE
 class QSlider;
@@ -59,19 +61,25 @@ class Window : public QWidget
 public:
     Window(MainWindow *mw);
 
-protected:
-    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
-
 private slots:
     void dockUndock();
     void playButtonPressed();
+    void battleButtonPressed();
+    void helpButtonPressed();
+    void backPressed();
 
 private:
     QVBoxLayout * mainLayout;
+
     mainMenu * menu;
     buildView * buildV;
+    battlefieldView* battlefield;
 
-    MainWindow *mainWindow;
+    helpMenu * help;
+    view * previousScreen;
+    view * currentScreen;
+
+    MainWindow * mainWindow;
 };
 
 #endif

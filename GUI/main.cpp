@@ -42,6 +42,16 @@
 #include <QDesktopWidget>
 #include <QSurfaceFormat>
 
+#include <QOpenGLWidget>
+#include <QOpenGLFunctions>
+#include <QOpenGLVertexArrayObject>
+#include <QOpenGLBuffer>
+#include <QMatrix4x4>
+#include <QtOpenGL/QGLWidget>
+#include <QtOpenGL/QtOpenGL>
+#include <QPainter>
+#include <QWidget>
+
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])

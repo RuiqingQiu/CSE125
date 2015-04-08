@@ -1,51 +1,42 @@
 #include "buildView.h"
 
 buildView::buildView() {
+
+    //initialize opengl
     glWidget = new GLWidget;
+    QDesktopWidget desktopWidget;
+    glWidget->setMinimumWidth(desktopWidget.width()-WINDOWCONST-LISTCONST);
 
-    xSlider = createSlider();
-    ySlider = createSlider();
-    zSlider = createSlider();
+    //initialize widgets
+    listOptions = new QListWidget;
+    listOptions->setMaximumWidth(LISTCONST);
 
-    connect(xSlider, SIGNAL(valueChanged(int)), glWidget, SLOT(setXRotation(int)));
-    connect(glWidget, SIGNAL(xRotationChanged(int)), xSlider, SLOT(setValue(int)));
-    connect(ySlider, SIGNAL(valueChanged(int)), glWidget, SLOT(setYRotation(int)));
-    connect(glWidget, SIGNAL(yRotationChanged(int)), ySlider, SLOT(setValue(int)));
-    connect(zSlider, SIGNAL(valueChanged(int)), glWidget, SLOT(setZRotation(int)));
-    connect(glWidget, SIGNAL(zRotationChanged(int)), zSlider, SLOT(setValue(int)));
+    //2 ways to add items:
+        //this way you don't need row
+        new QListWidgetItem(tr("weapons"), listOptions);
+        new QListWidgetItem(tr("armor"), listOptions);
+        new QListWidgetItem(tr("movement"), listOptions);
 
-    QVBoxLayout * mainLayout = new QVBoxLayout;
-    QHBoxLayout *container = new QHBoxLayout;
-    container->addWidget(glWidget);
-    container->addWidget(xSlider);
-    container->addWidget(ySlider);
-    container->addWidget(zSlider);
+        //this way you want it on a certain row
+        QListWidgetItem *newItem = new QListWidgetItem;
+        newItem->setText(tr("body"));
+        listOptions->insertItem(4, newItem);
 
-    QWidget * w = new QWidget;
-    w->setLayout(container);
-    mainLayout->addWidget(w);
-    dockBtn = new QPushButton(tr("Undock"), this);
-    mainLayout->addWidget(dockBtn);
+    battleButton  = new QPushButton(tr("Battle!"));
+    helpButton = new QPushButton(tr("Help"));
+    helpButton->setMaximumWidth(BUTTONSIZE);
+
+    //create main window layout
+    QGridLayout * mainLayout = new QGridLayout;
+    mainLayout->addWidget(glWidget, 0, 0);
+    mainLayout->addWidget(listOptions, 0, 1);
+    mainLayout->addWidget(battleButton, 1,1);
+    mainLayout->addWidget(helpButton, 1, 0);
 
     setLayout(mainLayout);
-
-    xSlider->setValue(15 * 16);
-    ySlider->setValue(345 * 16);
-    zSlider->setValue(0 * 16);
 }
 
 buildView::~buildView()
 {
 
-}
-
-QSlider *buildView::createSlider()
-{
-    QSlider *slider = new QSlider(Qt::Vertical);
-    slider->setRange(0, 360 * 16);
-    slider->setSingleStep(16);
-    slider->setPageStep(15 * 16);
-    slider->setTickInterval(15 * 16);
-    slider->setTickPosition(QSlider::TicksRight);
-    return slider;
 }

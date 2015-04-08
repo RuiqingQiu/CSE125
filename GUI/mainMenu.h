@@ -1,7 +1,7 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
-#include "views.h"
+#include "view.h"
 #include <QLineEdit>
 #include <QPushButton>
 #include <QImage>
@@ -22,8 +22,6 @@ public:
 
     QPushButton * playButton;
     QPushButton * helpButton;
-
-
 };
 
 #endif // MAINMENU_H

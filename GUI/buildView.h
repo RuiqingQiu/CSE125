@@ -1,25 +1,27 @@
 #ifndef BUILDVIEW_H
 #define BUILDVIEW_H
 
-#include <QSlider>
+#include <QComboBox>
+#include <QListWidget>
+#include <QListWidgetItem>
 
-#include "views.h"
+#include "view.h"
 
-class buildView : public QWidget
+static const int LISTCONST = 400;
+
+class buildView : public view
 {
 public:
     buildView();
     ~buildView();
 
-    QPushButton *dockBtn;
+    QPushButton * dockBtn;
+    QPushButton * battleButton;
+    QPushButton * helpButton;
 private:
-    QSlider *createSlider();
+    GLWidget * glWidget;
 
-    GLWidget *glWidget;
-    QSlider *xSlider;
-    QSlider *ySlider;
-    QSlider *zSlider;
-
+    QListWidget * listOptions;
 };
 
 #endif // BUILDVIEW_H

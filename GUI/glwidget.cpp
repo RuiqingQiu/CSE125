@@ -1,48 +1,17 @@
-/****************************************************************************
-**
-** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
-** Contact: http://www.qt-project.org/legal
-**
-** This file is part of the examples of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:BSD$
-** You may use this file under the terms of the BSD license as follows:
-**
-** "Redistribution and use in source and binary forms, with or without
-** modification, are permitted provided that the following conditions are
-** met:
-**   * Redistributions of source code must retain the above copyright
-**     notice, this list of conditions and the following disclaimer.
-**   * Redistributions in binary form must reproduce the above copyright
-**     notice, this list of conditions and the following disclaimer in
-**     the documentation and/or other materials provided with the
-**     distribution.
-**   * Neither the name of Digia Plc and its Subsidiary(-ies) nor the names
-**     of its contributors may be used to endorse or promote products derived
-**     from this software without specific prior written permission.
-**
-**
-** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 #include "glwidget.h"
 #include <QMouseEvent>
 #include <QOpenGLShaderProgram>
 #include <QCoreApplication>
 #include <math.h>
+#include <iostream>
+
+#include "Graphics/stdafx.h"
+#include "Graphics/GamePacketManager.h"
+#include "Graphics/GameCore.h"
+#include "Graphics/GameView.h"
+#include "Graphics/Cube.h"
+#include "Graphics/tiny_obj_loader.h"
+#include "Graphics/Model3D.h"
 
 GLWidget::GLWidget(QWidget *parent)
     : QOpenGLWidget(parent),
@@ -176,8 +145,24 @@ static const char *fragmentShaderSource =
     "   gl_FragColor = vec4(col, 1.0);\n"
     "}\n";
 
-void GLWidget::initializeGL()
-{
+void GLWidget::initializeGL() {
+
+	//graphics window initialize
+	/*
+	GameView* view = new GameView();
+	Cube* cube = new Cube(2);
+	cube->localTransform.position = Vector3(0, 0, 0);
+	cube->identifier = 1;
+	//view->PushGeoNode(cube);
+	g_pCore->pGameView = view;
+	g_pCore->pGamePacketManager->ConnectToServer("127.1.1.1");
+	//Setup the light
+	Model3D *object = new Model3D("./Assets/pikachu.obj");
+	object->localTransform.position = Vector3(0, 0, 0);
+
+	view->PushGeoNode(object);
+	*/
+
     // In this example the widget's corresponding top-level window can change
     // several times during the widget's lifetime. Whenever this happens, the
     // QOpenGLWidget's associated context is destroyed and a new one is created.
@@ -226,6 +211,7 @@ void GLWidget::initializeGL()
     m_program->setUniformValue(m_lightPosLoc, QVector3D(0, 0, 70));
 
     m_program->release();
+
 }
 
 void GLWidget::setupVertexAttribs()
@@ -241,6 +227,8 @@ void GLWidget::setupVertexAttribs()
 
 void GLWidget::paintGL()
 {
+	//graphics window display callback goes here
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -258,12 +246,26 @@ void GLWidget::paintGL()
     m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
 
     glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
-
     m_program->release();
+}
+
+void GLWidget::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(Qt::black);
+    QRect rect = QRect(100,500,300,200);
+    painter.drawText(rect, Qt::AlignCenter,"Hello World !");
+    painter.drawRect(rect);
+    painter.end();
+
 }
 
 void GLWidget::resizeGL(int w, int h)
 {
+	//graphics window redisplay callback goes here
+
     m_proj.setToIdentity();
     m_proj.perspective(45.0f, GLfloat(w) / h, 0.01f, 100.0f);
 }
@@ -286,4 +288,8 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
         setZRotation(m_zRot + 8 * dx);
     }
     m_lastPos = event->pos();
+}
+
+void GLWidget::keyPressEvent(QKeyEvent *event) {
+	// graphics window keypress callback goes here
 }
