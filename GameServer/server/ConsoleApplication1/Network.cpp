@@ -96,6 +96,11 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 
 	//cout << "send Action" << endl;
 	// send action packet
+	if (gameObjs == nullptr)
+	{
+		cout << "null ptr\n" << endl;
+	}
+
 	const unsigned int packet_size = sizeof(SPacket);
 	char packet_data[packet_size];
 
@@ -106,18 +111,25 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 	SPacket packet;
 	//packet.data[0] = '1';
 
-	//char* des = "wrong";
+	//string des = "1 1 1 0";
 
-	//this->pushGameObj(*obj);
 	string des = convertData(gameObjs);
 
-	memcpy(packet.data, des.c_str(), sizeof(packet.data));
+	memset(packet.data, 0, sizeof(packet.data));
 
+	//cout << "packet size is : "<< sizeof(des) << endl;
+	memcpy(packet.data, des.c_str(), sizeof(des));
+	
+	//cout << "AFTER MEM COPY" << endl;
 	packet.packet_type = GAME_STATE;
 
 	packet.serialize(packet_data);
+	//cout << "BERFORE SEND TO ALL" << endl;
 
 	network->sendToAll(packet_data, packet_size);
+
+	//cout << "AFTER SEND TO ALL" << endl;
+
 }
 
 
@@ -272,13 +284,27 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 }
 
 
-
+static string temp;
 
 string Network::convertData(vector<GameObj*> * gameObjs){
-	string temp;
+	temp = "";
+	//cout <<"GAME OBJ SIZE IS : "<< gameObjs->size() << endl;\
+
+	if (gameObjs == nullptr)
+	{
+		cout << "NULL" << endl;
+		return temp;
+	}
+
 	for (vector<GameObj*>::iterator i = gameObjs->begin();
 		i != gameObjs->end(); ++i)
 	{
+		if ((*i) == nullptr)
+		{
+			cout << "NULL" << endl;
+			break;
+		}
+
 		temp += to_string((*i)->getId());
 		temp += ' ';
 		temp += to_string((*i)->getX());
@@ -288,7 +314,8 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += to_string((*i)->getZ());
 		temp += '\n';
 	}
-	//cout << temp << endl;
+	
+	temp += "\0";
+	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;
 	return temp;
-
 }

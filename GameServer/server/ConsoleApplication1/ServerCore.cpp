@@ -57,7 +57,7 @@ void ServerCore::serverLoop()
 		//cout << "Sleep the frame." << endl;
 		//unsigned elapsed = clock() - t0;
 		////TimeFrame::frameSleep(timeFrame - elapsed);
-		timeFrame->frameSleep(1000 - timeFrame->getElapsedTime()); //;
+		timeFrame->frameSleep(33 - timeFrame->getElapsedTime()); //;
 		////cout << elapsed << endl;
 		//cout << "Frame has completed sleeping." << endl;
 	}
