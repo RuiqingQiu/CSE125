@@ -62,12 +62,13 @@ unsigned int GameLogic::gameLoop (){
 	network->receiveFromClients(&elist);
 	
 
-	if (countDown->checkCountdown()) return TIMEUP;
+	//if (countDown->checkCountdown()) return TIMEUP;
 	
 	//do gamelogic for all events
 	prePhyLogic();
 	
 	//pass the time into physics
+	
 	unsigned int time = countDown->getElapsedTime();
 
 	countDown->startClock();
@@ -155,11 +156,16 @@ void GameLogic::prePhyLogic(){
 
 		default:{
 					printf("error in packet types\n");
+					break;
 		}
 		}
-		iter = elist.erase(iter);
-		cout << "elist size == " << elist.size() << endl;
+
+		iter++;
+	
 	}
+
+	elist.clear();
+	cout << "elist size == " << elist.size() << endl;
 }
 
 
@@ -173,4 +179,5 @@ void GameLogic::pushGameObj(GameObj* obj)
 {
 	gameObjs.push_back(obj);
 }
+
 
