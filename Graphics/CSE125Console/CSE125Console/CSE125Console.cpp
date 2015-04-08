@@ -29,17 +29,19 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//light
 	float position[] = { 0.0, 1.0, 0.0, 0.0 };	// lightsource position
-	GLfloat  ambientLight[] = { 1.0f, 0, 0, 1.0f };
+	GLfloat  ambientLight[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	GLfloat  diffuseLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat  specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,ambientLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, position);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+
 	glEnable(GL_LIGHT0);
 	//mat
-	float specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	float shininess[] = { 100.0 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_NORMALIZE);
 	//Register callback functions:
 	glutDisplayFunc(Window::displayCallback);
 	glutReshapeFunc(Window::reshapeCallback);
@@ -49,8 +51,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Register the callback for the keyboard function keys
 	//Register the callback for the mouse
 	//Register the callback for the mouse motion
-
-	glDisable(GL_CULL_FACE);
 	//Initialize the Window:
 	//The body of this function is a great place to load textures, shaders, etc.
 	//and do any operations/calculations/configurations that only need to happen once.

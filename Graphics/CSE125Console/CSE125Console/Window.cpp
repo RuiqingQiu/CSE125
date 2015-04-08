@@ -19,14 +19,14 @@ int Window::height = 512;   //Set window height in pixels here
 void Window::initialize(void)
 {
 	GameView* view = new GameView();
-	Cube* cube = new Cube(2);
-	cube->localTransform.position = Vector3(0, 0, 0);
-	cube->identifier = 1;
+	//Cube* cube = new Cube(2);
+	//cube->localTransform.position = Vector3(0, 0, 0);
+	//cube->identifier = 1;
 	//view->PushGeoNode(cube);
 	g_pCore->pGameView = view;
 	g_pCore->pGamePacketManager->ConnectToServer("127.1.1.1");
 	//Setup the light
-	Model3D *object = new Model3D("./Assets/pikachu.obj");
+	Model3D *object = new Model3D("Pikachu.obj");
 	object->localTransform.position = Vector3(0, 0, 0);
 
 	view->PushGeoNode(object);

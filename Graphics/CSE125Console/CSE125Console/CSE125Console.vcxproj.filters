@@ -114,11 +114,11 @@
     <ClInclude Include="Camera.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="image_DXT.h">
+    <ClInclude Include="tiny_obj_loader.h">
       <Filter>Third Party</Filter>
     </ClInclude>
-    <ClInclude Include="image_helper.h">
-      <Filter>Third Party</Filter>
+    <ClInclude Include="Model3D.h">
+      <Filter>Source Files\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="SOIL.h">
       <Filter>Third Party</Filter>
@@ -132,11 +132,11 @@
     <ClInclude Include="stbi_DDS_aug_c.h">
       <Filter>Third Party</Filter>
     </ClInclude>
-    <ClInclude Include="tiny_obj_loader.h">
+    <ClInclude Include="image_DXT.h">
       <Filter>Third Party</Filter>
     </ClInclude>
-    <ClInclude Include="Model3D.h">
-      <Filter>Source Files\Geometry</Filter>
+    <ClInclude Include="image_helper.h">
+      <Filter>Third Party</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -206,11 +206,11 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="image_DXT.c">
+    <ClCompile Include="tiny_obj_loader.cc">
       <Filter>Third Party</Filter>
     </ClCompile>
-    <ClCompile Include="image_helper.c">
-      <Filter>Third Party</Filter>
+    <ClCompile Include="Model3D.cpp">
+      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="SOIL.c">
       <Filter>Third Party</Filter>
@@ -218,11 +218,11 @@
     <ClCompile Include="stb_image_aug.c">
       <Filter>Third Party</Filter>
     </ClCompile>
-    <ClCompile Include="tiny_obj_loader.cc">
+    <ClCompile Include="image_DXT.c">
       <Filter>Third Party</Filter>
     </ClCompile>
-    <ClCompile Include="Model3D.cpp">
-      <Filter>Source Files\Geometry</Filter>
+    <ClCompile Include="image_helper.c">
+      <Filter>Third Party</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
