@@ -10,7 +10,7 @@
 
 #include "Window.h"
 #include "math.h"
-
+#include "SOIL.h"
 Cube::Cube(float size)
 {
 	localTransform = Transform();
@@ -36,7 +36,7 @@ void Cube::VOnClientUpdate(GameInfoPacket* pData){
 void Cube::VOnDraw()
 {
     float halfSize = size/2.0;
-	glColor3f(0, 1, 0);
+	//glColor3f(0, 1, 0);
     
     //Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
     glMatrixMode(GL_MODELVIEW);
@@ -54,7 +54,7 @@ void Cube::VOnDraw()
     //These are special calls that 'freeze' many internal states of OpenGL.
     //Once the glBegin state is active many of the calls made to OpenGL (like glMultMatrixf) will be IGNORED!
     //As a good habit, only call glBegin just before you need to draw, and call end just after you finish
-    
+	
 	glBegin(GL_QUADS);
 	//glTranslated(0, 0, 5);
     // Draw front face:
@@ -101,6 +101,8 @@ void Cube::VOnDraw()
     
     glEnd();
     
+
+
     //The above glBegin, glEnd, glNormal and glVertex calls can be replaced with a glut convenience function
     //glutSolidCube(size);
     

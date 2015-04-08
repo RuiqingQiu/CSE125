@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "SOIL.h"
 #include "Model3D.h"
 
 
@@ -12,7 +13,7 @@ Model3D::Model3D(string filename){
 
 	std::string inputfile = filename;
 
-	std::string err = tinyobj::LoadObj(shapes, materials, inputfile.c_str());
+	std::string err = tinyobj::LoadObj(shapes, materials, inputfile.c_str(), NULL);
 
 	if (!err.empty()) {
 		std::cerr << err << std::endl;
@@ -60,6 +61,28 @@ Model3D::Model3D(string filename){
 			printf("  material.%s = %s\n", it->first.c_str(), it->second.c_str());
 		}
 		printf("\n");
+
+		if (materials[i].diffuse_texname.c_str())
+		{
+			GLuint tex_2d = SOIL_load_OGL_texture
+				(
+				//strcat(pre,name),
+				//"Texture/mygod.tga",
+			    materials[i].diffuse_texname.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+			/* check for an error during the load process */
+			if (0 == tex_2d)
+			{
+				printf("SOIL loading error: '%s'\n", SOIL_last_result());
+			}
+			else{
+				printf("SOIL loading success %i\n", tex_2d);
+			}
+		}
 	}
 }
 
@@ -112,8 +135,6 @@ void Model3D::VOnDraw(){
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
-	//glScalef(10, 10, 10);
-	glBegin(GL_TRIANGLES);
 
 	for (size_t i = 0; i < shapes.size(); i++) {
 		
@@ -123,20 +144,65 @@ void Model3D::VOnDraw(){
 			int i3 = shapes[i].mesh.indices[3 * f + 2];
 			int m1 = shapes[i].mesh.material_ids[f];
 			
-			//normal goes here
-			glColor3f(1, 0, 0);
-			glNormal3f(0, 0, -1);
+			//material goes here
+			//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
+			//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
+			glBindTexture(GL_TEXTURE_2D, m1+1);
+			// Make sure no bytes are padded:
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+			// Select GL_MODULATE to mix texture with polygon color for shading:
+			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+			// Use bilinear interpolation:
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glEnable(GL_TEXTURE_2D);
+
+			glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
+			glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
+
+
+			glBegin(GL_TRIANGLES);
+
+			//texture
+			glTexCoord2f(shapes[i].mesh.texcoords[2 * i1 + 0], shapes[i].mesh.texcoords[2 * i1 + 1]);
+			
+			//avg normal goes here
+			glNormal3f(shapes[i].mesh.normals[3 * i1 + 0],
+				       shapes[i].mesh.normals[3 * i1 + 1],
+					   shapes[i].mesh.normals[3 * i1 + 2]
+					  );
 			glVertex3f(shapes[i].mesh.positions[3 * i1 + 0], shapes[i].mesh.positions[3 * i1 + 1], shapes[i].mesh.positions[3 * i1 + 2]);
+
+			//texture
+			glTexCoord2f(shapes[i].mesh.texcoords[2 * i2 + 0], shapes[i].mesh.texcoords[2 * i2 + 1]);
+			//avg normal goes here
+			glNormal3f(shapes[i].mesh.normals[3 * i2 + 0],
+				shapes[i].mesh.normals[3 * i2 + 1],
+				shapes[i].mesh.normals[3 * i2 + 2]
+				);
 			glVertex3f(shapes[i].mesh.positions[3 * i2 + 0], shapes[i].mesh.positions[3 * i2 + 1], shapes[i].mesh.positions[3 * i2 + 2]);
+
+			//texture
+			glTexCoord2f(shapes[i].mesh.texcoords[2 * i3 + 0], shapes[i].mesh.texcoords[2 * i3 + 1]);
+			//avg normal goes here
+			glNormal3f(shapes[i].mesh.normals[3 * i3 + 0],
+				shapes[i].mesh.normals[3 * i3 + 1],
+				shapes[i].mesh.normals[3 * i3 + 2]
+				);
 			glVertex3f(shapes[i].mesh.positions[3 * i3 + 0], shapes[i].mesh.positions[3 * i3 + 1], shapes[i].mesh.positions[3 * i3 + 2]);
 
-			//cout << "													" << endl;
-			//cout << "(" << shapes[i].mesh.positions[3 * i1 + 0] << " " << shapes[i].mesh.positions[3 * i1 + 1] << " " << shapes[i].mesh.positions[3 * i1 + 2] << ")" << endl;
-			//cout << "(" << shapes[i].mesh.positions[3 * i2 + 0] << " " << shapes[i].mesh.positions[3 * i2 + 1] << " " << shapes[i].mesh.positions[3 * i2 + 2] << ")" << endl;
-			//cout <<"("<< shapes[i].mesh.positions[3 * i3 + 0] <<" " << shapes[i].mesh.positions[3 * i3 + 1]<<" "<< shapes[i].mesh.positions[3 * i3 + 2] << ")"<< endl;
+			glEnd();
+
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glDisable(GL_TEXTURE_2D);
+
 		}
+
 	}
-	glEnd();
 
 	glPopMatrix();
 }
