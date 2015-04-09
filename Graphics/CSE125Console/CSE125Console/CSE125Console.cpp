@@ -9,6 +9,7 @@
 #else
 #include <GL/glut.h>
 #endif
+#define GL_TEXTURE_CUBE_MAP_SEAMLESS 0x884F
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -54,6 +55,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Initialize the Window:
 	//The body of this function is a great place to load textures, shaders, etc.
 	//and do any operations/calculations/configurations that only need to happen once.
+
+	//remove seam
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
 	Window::initialize();
 
 	//Start up the render loop!

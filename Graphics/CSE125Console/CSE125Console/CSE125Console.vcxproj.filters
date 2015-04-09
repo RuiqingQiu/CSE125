@@ -138,6 +138,9 @@
     <ClInclude Include="image_helper.h">
       <Filter>Third Party</Filter>
     </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -223,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="image_helper.c">
       <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
