@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolver_DX11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolver_DX11SIMDAware.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolver_DX11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolver_DX11SIMDAware.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\Shared\btSoftBodySolverData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolverVertexData_DX11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolverTriangleData_DX11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolverLinkData_DX11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolverLinkData_DX11SIMDAware.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolverBuffer_DX11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\btSoftBodySolverVertexBuffer_DX11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\OutputToVertexArray.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\UpdateNormals.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\Integrate.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\UpdatePositions.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\UpdateNodes.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\ComputeBounds.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\SolvePositions.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\SolvePositionsSIMDBatched.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\solveCollisionsAndUpdateVelocities.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\solveCollisionsAndUpdateVelocitiesSIMDBatched.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\UpdatePositionsFromVelocities.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\ApplyForces.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\PrepareLinks.hlsl" />
+    <FXCompile Include="C:\Users\rqiu\Desktop\Physics\bullet-2.82-r2704\bullet-2.82-r2704\src\BulletMultiThreaded\GpuSoftBodySolvers\DX11\HLSL\VSolveLinks.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{55D99810-ED9D-42A0-A0D4-6464558338F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{1B3F65E2-12DA-400A-924C-64C58895CEEE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
