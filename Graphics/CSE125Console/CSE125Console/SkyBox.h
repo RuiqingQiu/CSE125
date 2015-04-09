@@ -2,7 +2,6 @@
 #include "GeoNode.h"
 #include <GL/glut.h>
 #include "Transform.h"
-#include <fbxsdk.h>
 #include <gl\GL.h>
 #include "SOIL.h"
 
