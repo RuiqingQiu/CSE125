@@ -53,6 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\rqiu\Desktop\CSE125\GameServer\bullet-2.82-r2704\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,6 +113,17 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ConsoleApplication1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\bullet-2.82-r2704\BulletBuild\src\BulletCollision\BulletCollision.vcxproj">
+      <Project>{2ebdd13b-7e2e-46c8-944f-0b0e5060dcba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bullet-2.82-r2704\BulletBuild\src\BulletDynamics\BulletDynamics.vcxproj">
+      <Project>{dbeca82c-ddc9-47df-ad44-0b74aed7f36a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\bullet-2.82-r2704\BulletBuild\src\LinearMath\LinearMath.vcxproj">
+      <Project>{9ea3f5a1-fd03-4f45-a302-826e1c5f44b8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
