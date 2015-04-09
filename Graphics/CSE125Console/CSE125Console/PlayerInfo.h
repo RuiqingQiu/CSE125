@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 class PlayerInfo
 {
 public:
@@ -10,6 +11,8 @@ public:
 	double y;
 	double z;
 
+	bool processed = false;
+	void print();
 	PlayerInfo();
 	~PlayerInfo();
 };

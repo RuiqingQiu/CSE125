@@ -26,23 +26,25 @@ void Window::initialize(void)
 	Cube* cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
-	cube->identifier = 1;
-	view->PushGeoNode(cube);
+	//cube->identifier = 1;
+	//view->PushGeoNode(cube);
 	
 	g_pCore->pGameView = view;
 
-	//g_pCore->pGamePacketManager->ConnectToServer("1.1.1.1");
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.5");
 
 	//Setup the light
-	//Model3D *object = new Model3D("Pikachu.obj");
-	//object->localTransform.position = Vector3(0, 0, 0);
-	//object->localTransform.scale = Vector3(1, 1, 1);
+	Model3D *object = new Model3D("woodcube.obj");
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(90, 0, 0);
 
-	//view->PushGeoNode(object);
 
-
-	SkyBox *object = new SkyBox();
 	view->PushGeoNode(object);
+
+
+	SkyBox *object2 = new SkyBox();
+	view->PushGeoNode(object2);
 
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
@@ -83,6 +85,7 @@ void Window::displayCallback()
 		switch (p->packet_types){
 		case GAME_STATE:
 			g_pCore->pGameView->VOnClientUpdate(p);
+
 			break;
 		case CONFIRM_CONNECTION:
 			g_pCore->pPlayer->playerid = p->player_infos[0]->id;
