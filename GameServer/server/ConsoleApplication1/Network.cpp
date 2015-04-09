@@ -114,12 +114,15 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 	//string des = "1 1 1 0";
 
 	string des = convertData(gameObjs);
-
+	//cout << "*********Sending SPacket: " << des << endl;
 	memset(packet.data, 0, sizeof(packet.data));
-
+	//char* str = new char[sizeof(des) + 1];
+	//std::strcpy(str, des.c_str());
 	//cout << "packet size is : "<< sizeof(des) << endl;
-	memcpy(packet.data, des.c_str(), sizeof(des));
-	
+	memcpy(packet.data, des.c_str(), des.length()+1);
+	//cout << "size of des: " << sizeof(des) << endl;
+	//cout << "des.cstr: " << des.c_str() << endl;
+	//cout << "``packet.data: " << packet.data << endl;
 	//cout << "AFTER MEM COPY" << endl;
 	packet.packet_type = GAME_STATE;
 
@@ -306,16 +309,19 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		}
 
 		temp += to_string((*i)->getId());
+		
 		temp += ' ';
 		temp += to_string((*i)->getX());
+		cout << "tostring: " << to_string((*i)->getX()) << endl;
 		temp += ' ';
 		temp += to_string((*i)->getY());
 		temp += ' ';
 		temp += to_string((*i)->getZ());
-		temp += '\n';
+		temp += ' ';
 	}
 	
 	temp += "\0";
 	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;
 	return temp;
 }
+
