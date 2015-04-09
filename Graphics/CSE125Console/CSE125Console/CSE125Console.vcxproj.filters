@@ -142,7 +142,7 @@
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="gui.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
