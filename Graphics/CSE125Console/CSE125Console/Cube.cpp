@@ -109,6 +109,8 @@ void Cube::VOnDraw()
     //Pop the save state off the matrix stack
     //This will undo the multiply we did earlier
     glPopMatrix();
+	glColor3f(1, 1, 1);
+
 }
 
 
