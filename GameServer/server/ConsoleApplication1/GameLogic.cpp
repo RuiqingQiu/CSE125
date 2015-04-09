@@ -13,6 +13,7 @@ GameLogic::~GameLogic()
 	delete network;
 	delete gamePhysics;
 	delete countDown;
+
 }
 
 unsigned int GameLogic::waitToConnect()
@@ -20,8 +21,8 @@ unsigned int GameLogic::waitToConnect()
 	int cid; 
 	cid = network->waitForConnections();
 	if (cid == -1) return WAIT;
-	cout << "cid of new client = " << cid << endl;
-	GameObj * clientOb = new GameObj(0, 0, -5);
+	//cout << "cid of new client = " << cid << endl;
+	GameObj * clientOb = new GameObj(cid*10, cid*10, -5, 0, 0, 0, 1, BOX);
 	this->pushGameObj(clientOb);
 	clientPair.insert(std::pair<int, GameObj*>(cid, clientOb));
 	//elist->push_back(new Events(0));
@@ -165,7 +166,7 @@ void GameLogic::prePhyLogic(){
 	}
 
 	elist.clear();
-	cout << "elist size == " << elist.size() << endl;
+	//cout << "elist size == " << elist.size() << endl;
 }
 
 

@@ -7,11 +7,14 @@
 #include "GamePhysics.h"
 #include "definition.h"
 #include "TimeFrame.h"
+
+
 class GameLogic {
 private:
 	Network* network;
 	GamePhysics* gamePhysics;
 	TimeFrame* countDown;
+
 
 	std::vector<GameObj*> gameObjs;
 	std::map<int, GameObj *> clientPair;
