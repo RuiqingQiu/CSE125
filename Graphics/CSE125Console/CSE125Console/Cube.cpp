@@ -56,6 +56,7 @@ void Cube::VOnDraw()
     //Once the glBegin state is active many of the calls made to OpenGL (like glMultMatrixf) will be IGNORED!
     //As a good habit, only call glBegin just before you need to draw, and call end just after you finish
 	
+	/*
 	glBegin(GL_QUADS);
 	//glTranslated(0, 0, 5);
     // Draw front face:
@@ -101,11 +102,11 @@ void Cube::VOnDraw()
     glVertex3f(-halfSize, -halfSize,  halfSize);
     
     glEnd();
-    
+    */
 
 
     //The above glBegin, glEnd, glNormal and glVertex calls can be replaced with a glut convenience function
-    //glutSolidCube(size);
+    glutSolidCube(size);
     
     //Pop the save state off the matrix stack
     //This will undo the multiply we did earlier
