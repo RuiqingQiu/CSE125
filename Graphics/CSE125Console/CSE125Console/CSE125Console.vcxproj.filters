@@ -141,9 +141,6 @@
     <ClInclude Include="SkyBox.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="gui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -232,9 +229,6 @@
     </ClCompile>
     <ClCompile Include="SkyBox.cpp">
       <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="gui.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

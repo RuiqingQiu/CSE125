@@ -16,9 +16,6 @@
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
-
-gui buildmode = gui();
-
 //Init server info here later
 void Window::initialize(void)
 {
@@ -95,13 +92,4 @@ void Window::displayCallback()
 	}
 
 	g_pCore->pGameView->VOnRender();
-
-	buildmode.draw(width, height);
-
-	//Tell OpenGL to clear any outstanding commands in its command buffer
-	//This will make sure that all of our commands are fully executed before
-	//we swap buffers and show the user the freshly drawn frame
-	glFlush();
-	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
-	glutSwapBuffers();
 }
