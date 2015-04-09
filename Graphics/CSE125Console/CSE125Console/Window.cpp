@@ -28,7 +28,7 @@ void Window::initialize(void)
 	
 	g_pCore->pGameView = view;
 
-	//g_pCore->pGamePacketManager->ConnectToServer("1.1.1.1");
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.5");
 
 	//Setup the light
 	//Model3D *object = new Model3D("Pikachu.obj");
@@ -80,6 +80,8 @@ void Window::displayCallback()
 		switch (p->packet_types){
 		case GAME_STATE:
 			g_pCore->pGameView->VOnClientUpdate(p);
+			
+
 			break;
 		case CONFIRM_CONNECTION:
 			g_pCore->pPlayer->playerid = p->player_infos[0]->id;
