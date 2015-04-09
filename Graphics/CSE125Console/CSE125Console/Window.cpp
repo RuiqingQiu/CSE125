@@ -23,7 +23,7 @@ void Window::initialize(void)
 	Cube* cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
-	cube->identifier = 1;
+	//cube->identifier = 1;
 	//view->PushGeoNode(cube);
 	
 	g_pCore->pGameView = view;
@@ -82,7 +82,6 @@ void Window::displayCallback()
 		switch (p->packet_types){
 		case GAME_STATE:
 			g_pCore->pGameView->VOnClientUpdate(p);
-			
 
 			break;
 		case CONFIRM_CONNECTION:
