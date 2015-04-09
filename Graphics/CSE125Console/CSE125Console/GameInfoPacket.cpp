@@ -11,6 +11,7 @@ PlayerInfo* GameInfoPacket::get_player_info(int id){
 	return nullptr;
 }
 
+
 GameInfoPacket::GameInfoPacket()
 {
 }
