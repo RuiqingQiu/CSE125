@@ -1,7 +1,7 @@
 #pragma once
 class GameObj
 {
-
+private:
 	double _x;
 	double _y;
 	double _z;
