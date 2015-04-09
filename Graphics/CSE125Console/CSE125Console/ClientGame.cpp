@@ -118,16 +118,24 @@ GameInfoPacket* ClientGame::update()
 							 else{
 								 std::vector<std::string> v;
 								 split(result, v, ' ');
-								 PlayerInfo* p = new PlayerInfo();
-								 p->id = stof(v[0]);
-								 p->x = stof(v[1]);
-								 p->y = stof(v[2]);
-								 p->z = stof(v[3]);
-								 g->player_infos.push_back(p);
+								 for (int i = 0; i < v.size(); i++){
+									 cout << v[i] << endl;
+								 }
+								 for (int i = 0; i < v.size()-1; i += 4){
+									 PlayerInfo* p = new PlayerInfo();
+									 p->id = stof(v[i]);
+									 p->x = stof(v[i+1]);
+									 p->y = stof(v[i+2]);
+									 p->z = stof(v[i+3]);
+									 p->processed = false;
+									 p->print();
+									 g->player_infos.push_back(p);
+								 }
+								 std::cout << "pushing " << g->player_infos.size() << " on to the list" << std::endl;
 								 g->packet_types = packet.packet_type;
 							 }
 							 //sendActionPackets();
-
+							 return g;
 							 break;
 				}
 		case CONFIRM_CONNECTION:
@@ -142,6 +150,7 @@ GameInfoPacket* ClientGame::update()
 			std::cout << v[1] << std::endl;
 			p->id = stoi(v[1]);
 			g->player_infos.push_back(p);
+			return g;
 			break;
 
 		}
