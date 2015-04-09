@@ -79,9 +79,11 @@ Model3D::Model3D(string filename){
 			if (0 == tex_2d)
 			{
 				printf("SOIL loading error: '%s'\n", SOIL_last_result());
+				isTextured = false;
 			}
 			else{
 				printf("SOIL loading success %i\n", tex_2d);
+				isTextured = true;
 			}
 		}
 	}
@@ -145,26 +147,27 @@ void Model3D::VOnDraw(){
 			int i3 = shapes[i].mesh.indices[3 * f + 2];
 			int m1 = shapes[i].mesh.material_ids[f];
 			
-			//material goes here
-			//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
-			//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
-			glBindTexture(GL_TEXTURE_2D, m1+1);
-			// Make sure no bytes are padded:
-			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+			if (isTextured){
+				//material goes here
+				//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
+				//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
+				glBindTexture(GL_TEXTURE_2D, m1 + 1);
+				// Make sure no bytes are padded:
+				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-			// Select GL_MODULATE to mix texture with polygon color for shading:
-			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+				// Select GL_MODULATE to mix texture with polygon color for shading:
+				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-			// Use bilinear interpolation:
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			glEnable(GL_TEXTURE_2D);
+				// Use bilinear interpolation:
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glEnable(GL_TEXTURE_2D);
 
-			glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
-			glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
-			glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
-			glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
-
+				glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
+				glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
+				glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
+				glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
+			}
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//THIS LINE OF CODE MUST BE AFTER THE TEXTURE LOADING CODE
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -172,10 +175,10 @@ void Model3D::VOnDraw(){
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//DONT MODIFY IF YOU DONT KNOW WHAT IT IS
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-			//texture
-			glTexCoord2f(shapes[i].mesh.texcoords[2 * i1 + 0], shapes[i].mesh.texcoords[2 * i1 + 1]);
-			
+			if (isTextured){
+				//texture
+				glTexCoord2f(shapes[i].mesh.texcoords[2 * i1 + 0], shapes[i].mesh.texcoords[2 * i1 + 1]);
+			}
 			//avg normal goes here
 			glNormal3f(shapes[i].mesh.normals[3 * i1 + 0],
 				       shapes[i].mesh.normals[3 * i1 + 1],
@@ -183,8 +186,10 @@ void Model3D::VOnDraw(){
 					  );
 			glVertex3f(shapes[i].mesh.positions[3 * i1 + 0], shapes[i].mesh.positions[3 * i1 + 1], shapes[i].mesh.positions[3 * i1 + 2]);
 
-			//texture
-			glTexCoord2f(shapes[i].mesh.texcoords[2 * i2 + 0], shapes[i].mesh.texcoords[2 * i2 + 1]);
+			if (isTextured){
+				//texture
+				glTexCoord2f(shapes[i].mesh.texcoords[2 * i2 + 0], shapes[i].mesh.texcoords[2 * i2 + 1]);
+			}
 			//avg normal goes here
 			glNormal3f(shapes[i].mesh.normals[3 * i2 + 0],
 				shapes[i].mesh.normals[3 * i2 + 1],
@@ -192,8 +197,10 @@ void Model3D::VOnDraw(){
 				);
 			glVertex3f(shapes[i].mesh.positions[3 * i2 + 0], shapes[i].mesh.positions[3 * i2 + 1], shapes[i].mesh.positions[3 * i2 + 2]);
 
-			//texture
-			glTexCoord2f(shapes[i].mesh.texcoords[2 * i3 + 0], shapes[i].mesh.texcoords[2 * i3 + 1]);
+			if (isTextured){
+				//texture
+				glTexCoord2f(shapes[i].mesh.texcoords[2 * i3 + 0], shapes[i].mesh.texcoords[2 * i3 + 1]);
+			}
 			//avg normal goes here
 			glNormal3f(shapes[i].mesh.normals[3 * i3 + 0],
 				shapes[i].mesh.normals[3 * i3 + 1],
@@ -203,8 +210,10 @@ void Model3D::VOnDraw(){
 
 			glEnd();
 
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glDisable(GL_TEXTURE_2D);
+			if (isTextured){
+				glBindTexture(GL_TEXTURE_2D, 0);
+				glDisable(GL_TEXTURE_2D);
+			}
 
 		}
 
