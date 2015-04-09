@@ -92,7 +92,7 @@ ServerNetwork::~ServerNetwork(void)
 }
 
 // accept new connections
-bool ServerNetwork::acceptNewClient(unsigned int & id)
+bool ServerNetwork::acceptNewClient(int & id)
 {
 	// if client waiting, accept the connection and save the socket
 	ClientSocket = accept(ListenSocket, NULL, NULL);
@@ -113,7 +113,7 @@ bool ServerNetwork::acceptNewClient(unsigned int & id)
 }
 
 // receive incoming data
-int ServerNetwork::receiveData(unsigned int client_id, char * recvbuf)
+int ServerNetwork::receiveData(int client_id, char * recvbuf)
 {
 	if (sessions.find(client_id) != sessions.end())
 	{
