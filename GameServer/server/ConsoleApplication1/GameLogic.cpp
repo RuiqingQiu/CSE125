@@ -20,12 +20,20 @@ unsigned int GameLogic::waitToConnect()
 {
 	int cid; 
 	cid = network->waitForConnections();
+
 	if (cid == -1) return WAIT;
-	//cout << "cid of new client = " << cid << endl;
-	GameObj * clientOb = new GameObj(cid*10, cid*10, -5, 0, 0, 0, 1, BOX);
-	this->pushGameObj(clientOb);
-	clientPair.insert(std::pair<int, GameObj*>(cid, clientOb));
-	//elist->push_back(new Events(0));
+
+	// USE CID INSTEAD OF OBJ
+	GameObj* gameObj = new GOBox(asd * 10, asd * 100, -5, 0, 0, 0, 1, 1, 1, 1, 1);
+	asd++;
+	this->pushGameObj(gameObj);
+	clientPair.insert(std::pair<int, GameObj*>(0, gameObj));
+	GameObj* gameObj1 = new GOBox(asd * 10, asd * 100, -5, 0, 0, 0, 1, 1, 1, 1, 1);
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(1, gameObj1));
+	GameObj* gameObj2 = new GOBox(asd * 10, asd * 100, -5, 0, 0, 0, 1, 1, 1, 1, 1);
+	this->pushGameObj(gameObj);
+	clientPair.insert(std::pair<int, GameObj*>(2, gameObj2));
 	network->receiveFromClients(&elist);
 
 //	if (elist == nullptr) return WAIT;
@@ -45,7 +53,7 @@ unsigned int GameLogic::waitToConnect()
 			return ADDCLIENT;
 		}
 		elist.erase(iter);
-		cout << "wait to Connect elist size = "<< elist.size() << endl;
+		//cout << "wait to Connect elist size = "<< elist.size() << endl;
 	}
 	return WAIT;
 
@@ -56,6 +64,7 @@ unsigned int GameLogic::waitToConnect()
 void GameLogic::gameStart(){
 	countDown->startCountdown(300);
 	countDown->startClock();
+	gamePhysics->initWorld(&(this->getGameObjs()));
 }
 
 
@@ -77,6 +86,19 @@ unsigned int GameLogic::gameLoop (){
 	//do physics
 
 	//after phy logic all events 
+	gamePhysics->getDynamicsWorld()->stepSimulation(1/33.0);
+
+	std::vector<GameObj*> gameObj = this->getGameObjs();
+	std::vector<GameObj*>::iterator it;
+	for (it = gameObj.begin(); it != gameObj.end(); ++it)
+	{
+		btTransform trans;
+		(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+		std::cout << "BOX WITH ID:  " << (*it)->getId() <<", HEIGHT: " << trans.getOrigin().getY() << std::endl;
+		(*it)->setY(trans.getOrigin().getY());
+	}
+	
+	
 
 	network->sendActionPackets(&gameObjs);
 	return COUNTDOWN;

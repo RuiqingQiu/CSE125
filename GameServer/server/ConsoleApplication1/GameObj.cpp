@@ -8,8 +8,8 @@ GameObj::GameObj()
 	_id = _totalId;
 }
 
-
-GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, double qZ, double qW, int type)
+// x, y, z, qX, qY, qZ, qW, type, mass
+GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, double qZ, double qW, int type, double mass)
 {
 	_totalId++;
 	_id = _totalId;
@@ -21,6 +21,7 @@ GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, do
 	_qZ = qZ;
 	_qW = qW;
 	_type = type;
+	_mass = mass;
 }
 
 GameObj::~GameObj(){
@@ -95,4 +96,23 @@ int GameObj::getType()
 void GameObj::setType(int type)
 {
 	_type = type;
+}
+
+double GameObj::getMass(){
+	return _mass;
+}
+
+
+void GameObj::setMass(double mass){
+	_mass = mass;
+}
+
+btRigidBody* GameObj::getRigidBody()
+{
+	return rigidBody;
+}
+
+void GameObj::setRigidBody(btRigidBody* RB)
+{
+	rigidBody = RB;
 }

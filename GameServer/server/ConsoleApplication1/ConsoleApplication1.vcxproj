@@ -85,6 +85,11 @@
     <ClInclude Include="GameObj.h" />
     <ClInclude Include="GamePhysics.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="GOBox.h" />
+    <ClInclude Include="GOCapsule.h" />
+    <ClInclude Include="GOCone.h" />
+    <ClInclude Include="GOCylinder.h" />
+    <ClInclude Include="GOPlane.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="NetworkData.h" />
@@ -103,6 +108,11 @@
     <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="GamePhysics.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GOBox.cpp" />
+    <ClCompile Include="GOCapsule.cpp" />
+    <ClCompile Include="GOCone.cpp" />
+    <ClCompile Include="GOCylinder.cpp" />
+    <ClCompile Include="GOPlane.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="NetworkServices.cpp" />

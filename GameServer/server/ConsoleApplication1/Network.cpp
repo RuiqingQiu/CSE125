@@ -312,7 +312,6 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		
 		temp += ' ';
 		temp += to_string((*i)->getX());
-		cout << "tostring: " << to_string((*i)->getX()) << endl;
 		temp += ' ';
 		temp += to_string((*i)->getY());
 		temp += ' ';

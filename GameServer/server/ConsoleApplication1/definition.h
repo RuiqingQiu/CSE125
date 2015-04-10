@@ -1,4 +1,5 @@
 #pragma once
+
 	//ACTIONS FOR STATE MACHINE
 	enum ACTION
 	{

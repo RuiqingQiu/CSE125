@@ -1,6 +1,7 @@
 #pragma once
 #include <btBulletDynamicsCommon.h>
 #include "GameObj.h"
+#include "GOBox.h"
 #include <vector>
 
 class GamePhysics
@@ -15,7 +16,7 @@ public:
 	btSequentialImpulseConstraintSolver* getSolver();
 	btDiscreteDynamicsWorld* getDynamicsWorld();
 
-//	void initWorld(std::vector<GameObj*>*);
+	void initWorld(std::vector<GameObj*>*);
 //	btCollisionShape* convertObj(GameObj*);
 
 

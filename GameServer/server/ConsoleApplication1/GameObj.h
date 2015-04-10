@@ -1,4 +1,6 @@
 #pragma once
+#include <btBulletDynamicsCommon.h>
+#include "definition.h"
 class GameObj
 {
 private:
@@ -11,10 +13,14 @@ private:
 	double _qW;
 	unsigned int _id;
 	int _type;
+	double _mass;
+	btRigidBody* rigidBody;
 
 public:
 	GameObj();
-	GameObj(double, double, double, double, double, double, double, int);
+
+	// x, y, z, qX, qY, qZ, qW, type, mass
+	GameObj(double, double, double, double, double, double, double, int, double);
 	~GameObj();
 
 	double getX();
@@ -26,6 +32,8 @@ public:
 	double getqW();
 	int getType();
 	unsigned int getId();
+	double getMass();
+	btRigidBody* getRigidBody();
 
 	void setX(double);
 	void setY(double);
@@ -35,5 +43,9 @@ public:
 	void setqZ(double);
 	void setqW(double);
 	void setType(int);
+	void setMass(double);
+	void setRigidBody(btRigidBody*);
+	virtual void createRigidBody() = 0;
+	
 };
 

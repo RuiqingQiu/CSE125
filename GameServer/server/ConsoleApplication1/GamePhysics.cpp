@@ -8,6 +8,7 @@ GamePhysics::GamePhysics()
 	dispatcher = new btCollisionDispatcher(collisionConfiguration);
 	solver = new btSequentialImpulseConstraintSolver;
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+
 }
 
 
@@ -44,15 +45,24 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 	return dynamicsWorld;
 }
 
-//void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
-//{
-//	dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
-//	std::vector<GameObj*>::iterator it;
-//	for (it = gameObj->begin(); it != gameObj->end(); ++it)
-//	{
-//		
-//	}
-//}
+void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
+{
+	dynamicsWorld->setGravity(btVector3(0, -1, 0));
+	btCollisionShape* ground = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+
+	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
+	btRigidBody::btRigidBodyConstructionInfo
+		groundRigidBodyCI(0, groundMotionState, ground, btVector3(0, 0, 0));
+	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
+	dynamicsWorld->addRigidBody(groundRigidBody);
+
+	std::vector<GameObj*>::iterator it;
+	for (it = gameObj->begin(); it != gameObj->end(); ++it)
+	{
+		(*it)->createRigidBody();
+		dynamicsWorld->addRigidBody((*it)->getRigidBody());
+	}
+}
 
 //btCollisionShape* GamePhysics::convertObj(GameObj* gameObj)
 //{

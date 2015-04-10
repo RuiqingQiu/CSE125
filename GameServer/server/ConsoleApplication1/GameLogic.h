@@ -14,6 +14,7 @@ private:
 	Network* network;
 	GamePhysics* gamePhysics;
 	TimeFrame* countDown;
+	int asd = 0;
 
 
 	std::vector<GameObj*> gameObjs;
