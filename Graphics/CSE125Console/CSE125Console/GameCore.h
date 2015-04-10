@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "GameView.h"
+#include "gui.h"
 #include "GamePacketManager.h"
 #include "GamePlayer.h"
 #include "GameInputInterface.h"
@@ -14,6 +15,11 @@ public:
 	~GameCore();
 
 	GameView* pGameView;
+
+	gui* mainView;
+	gui* buildView;
+	gui* battleView;
+
 	GamePacketManager* pGamePacketManager;
 	GamePlayer* pPlayer;
 	GameInputInterface* i_pInput;

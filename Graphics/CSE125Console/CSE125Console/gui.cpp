@@ -2,13 +2,25 @@
 #include "gui.h"
 
 
-gui::gui()
-{
+gui::gui() {
+}
+
+gui::gui(int w, int h) {
+	width = w;
+	height = h;
 }
 
 
-gui::~gui()
-{
+gui::~gui() {
+}
+
+void gui::VOnClientUpdate(GameInfoPacket* info) {
+	//empty for now
+}
+
+void gui::setDimensions(int w, int h) {
+	width = w;
+	height = h;
 }
 
 //this is an example of how to draw 2d stuff in opengl that isn't affected by depth
@@ -16,7 +28,7 @@ gui::~gui()
 //i want to move drawtext and other draw subroutines into a view class
 // and have a battlefieldview, buildview, and menuview extend it
 //we also need some sort of button class to store what texture goes with which button
-void gui::draw(int width, int height) {
+void gui::VOnRender() {
 	//set up 2d
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();

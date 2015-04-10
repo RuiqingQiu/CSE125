@@ -21,9 +21,6 @@
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-gui buildmode = gui();
-
-
 static Cube* cube;
 //Init server info here later
 void Window::initialize(void)
@@ -39,6 +36,9 @@ void Window::initialize(void)
 	
 	g_pCore->pGameView = view;
 	//g_pCore->pPlayer->playerid = 1;
+
+	gui * buildmode = new gui(width, height);
+	g_pCore->buildView = buildmode;
 
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
 
@@ -91,6 +91,8 @@ void Window::reshapeCallback(int w, int h)
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
 	gluPerspective(60.0, double(width)/(double)height, 1.0, 1000.0); //Set perspective projection viewing frustum
 	//glFrustum(-1, 1, -1 , 1, 1,5);
+
+	g_pCore->buildView->setDimensions(w, h);
 }
 
 //----------------------------------------------------------------------------
@@ -116,7 +118,8 @@ void Window::displayCallback()
 
 	g_pCore->pGameView->VOnRender();
 
-	buildmode.draw(width, height);
+	//if in build mode
+	g_pCore->buildView->VOnRender();
 
 	//test for camera
 	
