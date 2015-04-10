@@ -6,11 +6,15 @@
 #include <GL/glut.h>
 #include "Camera.h"
 #include "Cube.h"
+<<<<<<< HEAD
 #include "GamePlayer.h"
 //#include "GameCore.h"
 
 #ifndef CSE125_GAMEVIEW
 #define CSE125_GAMEVIEW
+=======
+
+>>>>>>> e29dfd8afdf19e5348c40766ae46614a91611c5d
 class GameView
 {
 public:
