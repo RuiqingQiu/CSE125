@@ -15,7 +15,7 @@
 #include "SkyBox.h"
 
 
-//#define TESTCAM 0
+#define TESTCAM 1
 
 
 int Window::width  = 512;   //Set window width in pixels here
@@ -69,7 +69,7 @@ void Window::idleCallback()
 void Window::processNormalKeys(unsigned char key, int x, int y){
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
 
-	/*
+	
 	if (TESTCAM){
 		if (key == ','){
 			cube->localTransform.rotation.y += 1;
@@ -78,7 +78,7 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 			cube->localTransform.rotation.y -= 1;
 		}
 	}
-	*/
+	
 }
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
@@ -119,7 +119,7 @@ void Window::displayCallback()
 	buildmode.draw(width, height);
 
 	//test for camera
-	/*
+	
 	if (TESTCAM)
 	{
 		Matrix4 trans = cube->localTransform.GetMatrix4();
@@ -134,6 +134,6 @@ void Window::displayCallback()
 
 		g_pCore->pGameView->pViewCamera->rotation = new Vector3(-cube->localTransform.rotation.x, -cube->localTransform.rotation.y, -cube->localTransform.rotation.z);
 	}
-	*/
+	
 
 }
