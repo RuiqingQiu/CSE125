@@ -6,6 +6,7 @@
 #include <GL/glut.h>
 #include "Camera.h"
 #include "Cube.h"
+
 class GameView
 {
 public:

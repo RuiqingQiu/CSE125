@@ -9,6 +9,7 @@
 
 #include "Window.h"
 #include "GameView.h"
+#include "mainmenu.h"
 #include "Cube.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
@@ -17,30 +18,32 @@
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-gui buildmode = gui();
-
 //Init server info here later
 void Window::initialize(void)
 {
 	GameView* view = new GameView();
+	mainMenu* menu = new mainMenu();
+
 	Cube* cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	//cube->identifier = 1;
-	//view->PushGeoNode(cube);
+	view->PushGeoNode(cube);
 	
-	g_pCore->pGameView = view;
+	//g_pCore->pGameView = view;
+	g_pCore->pGameView = menu;
 
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.5");
+
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.5");
 
 	//Setup the light
-	Model3D *object = new Model3D("woodcube.obj");
-	object->localTransform.position = Vector3(0, 0, 0);
+	/*Model3D *object = new Model3D("woodcube.obj");
+	/object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(90, 0, 0);
+	*/
 
-
-	view->PushGeoNode(object);
+	//view->PushGeoNode(object);
 
 
 	SkyBox *object2 = new SkyBox();
@@ -48,6 +51,7 @@ void Window::initialize(void)
 
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
+
 }
 
 //----------------------------------------------------------------------------
@@ -96,7 +100,7 @@ void Window::displayCallback()
 
 	g_pCore->pGameView->VOnRender();
 
-	buildmode.draw(width, height);
+	//buildmode.draw(width, height);
 
 	//Tell OpenGL to clear any outstanding commands in its command buffer
 	//This will make sure that all of our commands are fully executed before
