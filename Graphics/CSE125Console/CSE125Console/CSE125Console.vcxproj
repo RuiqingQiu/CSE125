@@ -89,11 +89,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
     <ClInclude Include="gui.h" />
-<<<<<<< HEAD
     <ClInclude Include="Shader.h" />
-=======
-    <ClInclude Include="mainmenu.h" />
->>>>>>> e29dfd8afdf19e5348c40766ae46614a91611c5d
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameInfoPacket.h" />
@@ -155,7 +151,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="StandardGameInput.cpp" />
     <ClCompile Include="stb_image_aug.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
