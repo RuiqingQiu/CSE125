@@ -15,7 +15,7 @@
 #include "SkyBox.h"
 
 
-#define TESTCAM 1
+#define TESTCAM 0
 
 
 int Window::width  = 512;   //Set window width in pixels here
