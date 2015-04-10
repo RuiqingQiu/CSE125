@@ -43,8 +43,6 @@ void gui::VOnRender() {
 	glDisable(GL_DEPTH_TEST);
 
 	//draw stuff here
-
-
 	/* this is the display for battlefield, create class xxxView for each
 		menu
 	  */

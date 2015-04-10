@@ -138,5 +138,11 @@ void Window::displayCallback()
 		g_pCore->pGameView->pViewCamera->rotation = new Vector3(-cube->localTransform.rotation.x, -cube->localTransform.rotation.y, -cube->localTransform.rotation.z);
 	}
 	
-
+	//glPopMatrix();
+	//Tell OpenGL to clear any outstanding commands in its command buffer
+	//This will make sure that all of our commands are fully executed before
+	//we swap buffers and show the user the freshly drawn frame
+	glFlush();
+	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
+	glutSwapBuffers();
 }
