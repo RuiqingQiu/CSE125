@@ -89,6 +89,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
     <ClInclude Include="gui.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameInfoPacket.h" />
@@ -124,6 +125,7 @@
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="gui.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameInfoPacket.cpp" />

@@ -4,11 +4,15 @@
 #include "GamePacketManager.h"
 #include "GamePlayer.h"
 #include "GameInputInterface.h"
+#ifndef CSE125_CORE
+#define CSE125_CORE
+
 class GameCore
 {
 public:
 	GameCore();
 	~GameCore();
+
 	GameView* pGameView;
 	GamePacketManager* pGamePacketManager;
 	GamePlayer* pPlayer;
@@ -17,4 +21,5 @@ public:
 
 extern GameCore* g_pCore;
 
+#endif
 

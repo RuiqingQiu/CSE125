@@ -38,9 +38,9 @@ void GameView::VOnRender()
 	//Tell OpenGL to clear any outstanding commands in its command buffer
 	//This will make sure that all of our commands are fully executed before
 	//we swap buffers and show the user the freshly drawn frame
-	//glFlush();
+	glFlush();
 	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
-	//glutSwapBuffers();
+	glutSwapBuffers();
 }
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)
@@ -48,6 +48,19 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	for each (GeoNode* node in NodeList)
 	{
 	    node->VOnClientUpdate(info);
+		
+		if (node->identifier == pPlayer->playerid ){
+			//this node is our lovely player and we do want to update our camera to follow
+			/*
+			Matrix4 trans = node->localTransform.GetMatrix4();
+			Vector4 forward = Vector4(0, 0, -1, 1);
+			Vector4 direction = trans*forward;
+			float distanceToPlayer = 5;
+			pViewCamera->position = new Vector3(node->localTransform.position.x-direction.x*distanceToPlayer, node->localTransform.position.y-direction.y*distanceToPlayer, node->localTransform.position.z-direction.z*distanceToPlayer);
+			pViewCamera->rotation = new Vector3(node->localTransform.rotation);
+			*/
+		}
+		
 	}
 	//Loop through the list to see anything that's not being processed. if so, create
 	for (int i = 0; i < info->player_infos.size(); i++){

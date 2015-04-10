@@ -6,6 +6,11 @@
 #include <GL/glut.h>
 #include "Camera.h"
 #include "Cube.h"
+#include "GamePlayer.h"
+//#include "GameCore.h"
+
+#ifndef CSE125_GAMEVIEW
+#define CSE125_GAMEVIEW
 class GameView
 {
 public:
@@ -14,6 +19,8 @@ public:
 	int gameViewId;
 	std::vector<GeoNode*> NodeList;
 	Camera* pViewCamera;
+	GamePlayer* pPlayer;
+
 	virtual void VOnRender(); //must have
 	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
 
@@ -21,3 +28,4 @@ public:
 	void PopGeoNode(GeoNode* node);
 };
 
+#endif

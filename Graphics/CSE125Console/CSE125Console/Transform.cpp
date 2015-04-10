@@ -27,10 +27,10 @@ Matrix4 Transform::GetGLMatrix4()
 	m4_rotx.makeRotateX(rotation.x);
 
 	Matrix4 m4_roty;
-	m4_roty.makeRotateX(rotation.y);
+	m4_roty.makeRotateY(rotation.y);
 
 	Matrix4 m4_rotz;
-	m4_rotz.makeRotateX(rotation.z);
+	m4_rotz.makeRotateZ(rotation.z);
 
 	Matrix4 m4_rot;
 	m4_rot = m4_rotx*m4_roty*m4_rotz;
@@ -58,10 +58,10 @@ Matrix4 Transform::GetMatrix4()
 	m4_rotx.makeRotateX(rotation.x);
 
 	Matrix4 m4_roty;
-	m4_roty.makeRotateX(rotation.y);
+	m4_roty.makeRotateY(rotation.y);
 
 	Matrix4 m4_rotz;
-	m4_rotz.makeRotateX(rotation.z);
+	m4_rotz.makeRotateZ(rotation.z);
 
 	Matrix4 m4_rot;
 	m4_rot = m4_rotx*m4_roty*m4_rotz;

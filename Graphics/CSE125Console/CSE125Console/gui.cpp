@@ -72,6 +72,9 @@ void gui::draw(int width, int height) {
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
+
+	//SET back to white color for next render pass
+	glColor3f(1, 1, 1);
 }
 
 void gui::drawText(int x, int y, std::string text, float r, float g, float b, void * font) {

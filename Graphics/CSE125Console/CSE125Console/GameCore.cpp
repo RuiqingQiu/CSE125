@@ -10,6 +10,8 @@ GameCore::GameCore()
 	pGamePacketManager = new GamePacketManager();
 	pPlayer = new GamePlayer();
 	i_pInput = new StandardGameInput();
+
+	//pGameView->pPlayer = pPlayer;
 }
 
 
