@@ -1,6 +1,5 @@
 
 #include "stdafx.h"
-#include "SOIL.h"
 #include "gui.h"
 
 class mainMenu : public gui{
@@ -18,6 +17,5 @@ public:
 private:
 	int width;
 	int height;
-	GLuint texture[1];
 
 };

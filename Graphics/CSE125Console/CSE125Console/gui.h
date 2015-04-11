@@ -2,7 +2,6 @@
 
 #include <string>
 #include <GL/glut.h>
-
 #include "GameView.h"
 #include "button.h"
 
