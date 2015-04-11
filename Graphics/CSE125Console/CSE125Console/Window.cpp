@@ -37,7 +37,7 @@ void Window::initialize(void)
 	g_pCore->pGameView = view;
 	//g_pCore->pPlayer->playerid = 1;
 
-	gui * buildmode = new gui(width, height);
+	buildView * buildmode = new buildView(width, height);
 	g_pCore->buildView = buildmode;
 
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");

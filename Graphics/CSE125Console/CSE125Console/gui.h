@@ -18,7 +18,11 @@ public:
 	void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
 
 	void setDimensions(int w, int h);
-private:
+
+	void set2d();
+	void set3d();
+
+protected:
 	int width;
 	int height;
 };

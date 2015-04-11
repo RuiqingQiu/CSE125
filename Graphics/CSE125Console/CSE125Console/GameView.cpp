@@ -34,6 +34,10 @@ void GameView::VOnRender()
 		node->VOnDraw();
 	}
 
+
+	//DON'T FLUSH HERE! if we flush we will not draw the 2d stuff later
+	//flush in window.cpp
+
 	//glPopMatrix();
 	//Tell OpenGL to clear any outstanding commands in its command buffer
 	//This will make sure that all of our commands are fully executed before

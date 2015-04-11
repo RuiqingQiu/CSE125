@@ -83,6 +83,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="buildView.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ClientGame.h" />
     <ClInclude Include="ClientNetwork.h" />
@@ -121,6 +122,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="buildView.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ClientGame.cpp" />
     <ClCompile Include="ClientNetwork.cpp" />
