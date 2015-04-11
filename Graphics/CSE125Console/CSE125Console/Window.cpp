@@ -62,11 +62,6 @@ void Window::initialize(void)
 		g_pCore->gameGui = g_pCore->defaultGui;
 	}
 
-	//if main menu
-	//g_pCore->gameGui = mainmenu;
-	//if battlemode
-	//g_pCore->gameGui = battlemode;
-
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
 
 	//Setup the light
@@ -76,6 +71,8 @@ void Window::initialize(void)
 	//object->localTransform.rotation = Vector3(90, 0, 0);
 
 	//view->PushGeoNode(object);
+
+	//see comments about switching views in gameCore.cpp
 	g_pCore->skybox = new SkyBox();
 	//no skybox for buildmode
 	if (g_pCore->viewmode != 1) {
@@ -96,7 +93,6 @@ void Window::idleCallback()
 }
 void Window::processNormalKeys(unsigned char key, int x, int y){
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
-
 	
 	if (TESTCAM){
 		if (key == ','){

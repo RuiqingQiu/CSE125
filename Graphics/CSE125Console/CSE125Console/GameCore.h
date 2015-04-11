@@ -18,18 +18,38 @@ public:
 
 	GameView* pGameView;
 
-	gui* gameGui;
-
 	GamePacketManager* pGamePacketManager;
 	GamePlayer* pPlayer;
 	GameInputInterface* i_pInput;
 
+
+	//variables for switching modes
+	
+	//changes between the different gui modes
+	gui* gameGui;
+
+	//view mode determines the mode 
 	int viewmode;
+
+	//always points to build mode
 	gui * buildmode;
+
+	//add more "static" pointers here
+	//always point to main menu
+	//always point to battle mode
+	//always point to help menu
+
+	//always points to empty gui
 	gui * defaultGui;
+
+	//we want a black background/no skybox for buildmode
+	//we check the mode and push and pop this node as needed
 	GeoNode * skybox;
 
+	//i_pInput switches between these two
+	//always points to our gui input
 	GameInputInterface* gui_Input;
+	//always points to standard input
 	GameInputInterface* standard_Input;
 };
 

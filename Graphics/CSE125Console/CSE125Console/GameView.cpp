@@ -12,7 +12,6 @@ GameView::~GameView()
 {
 }
 
-
 void GameView::VOnRender()
 {
 	//Clear color and depth buffers
@@ -24,8 +23,6 @@ void GameView::VOnRender()
 	
 	pViewCamera->setUpCamera();
 	
-	
-
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
 
@@ -97,6 +94,9 @@ void GameView::PopGeoNode(GeoNode* m_node)
 	}
 }
 
+//added this method to check if a node is already in the list,
+//used for checking whether or not we need to push up the skybox 
+//when we change modes
 bool GameView::FindGeoNode(GeoNode* m_node) {
 	for (int i = 0; i < NodeList.size(); i++)
 	{
