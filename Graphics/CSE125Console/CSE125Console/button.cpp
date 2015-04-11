@@ -3,10 +3,18 @@
 
 
 
-button::button()
-{
+button::button() {
 }
 
+button::button(char * filename) {
+	setTexture(filename);
+}
+
+button::button(char * filename, int x, int y) {
+	setTexture(filename);
+	xPos = x;
+	yPos = y;
+}
 
 button::~button()
 {
@@ -40,6 +48,11 @@ void button::draw() {
 
 }
 
-void onClick() {
+void button::onClick() {
 	//do somethin
+}
+
+void button::setPosition(int x, int y) {
+	xPos = x;
+	yPos = y;
 }

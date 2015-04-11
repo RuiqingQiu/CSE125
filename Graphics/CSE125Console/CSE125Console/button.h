@@ -6,13 +6,16 @@ class button
 {
 public:
 	button();
+	button(char * filename);
+	button(char * filename, int x, int y);
 	~button();
 
 	bool setTexture(char * filename);
 
 	void draw();
-
 	void onClick();
+
+	void setPosition(int x, int y);
 
 private:
 
