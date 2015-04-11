@@ -16,7 +16,7 @@ public:
 	~button();
 
 	bool isClicked(int x, int y);
-	void onClick(int x int y);
+	void onClick(int x, int y);
 
 private:
 

@@ -62,7 +62,8 @@ bool button::isClicked(int x, int y) {
 }
 
 void button::onClick(int x, int y) {
-	if (isClicked) {
+	if (isClicked(x, y)) {
+		//game logic here
 		std::cout << name << " was clicked!" << std::endl;
 	}
 }
