@@ -153,8 +153,8 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="buildView.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="mainmenu.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="guiGameInput.h">
       <Filter>Source Files\Input</Filter>
@@ -257,8 +257,8 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="buildView.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="mainmenu.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="guiGameInput.cpp">
       <Filter>Source Files\Input</Filter>

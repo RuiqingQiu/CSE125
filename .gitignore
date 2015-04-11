@@ -200,3 +200,4 @@ FakesAssemblies/
 *.opt
 
 .DS_Store
+*.tlog
