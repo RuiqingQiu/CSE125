@@ -15,10 +15,12 @@ public:
 	button(char * filename, int x, int y, int w, int h, bool xf, bool yf);
 	~button();
 
-	bool isClicked();
-	void onClick();
+	bool isClicked(int x, int y);
+	void onClick(int x int y);
 
 private:
+
+	char * name;
 
 };
 
