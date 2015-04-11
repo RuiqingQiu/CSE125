@@ -1,7 +1,7 @@
 #include "stdafx.h"
 //#include "GamePacketManager.h"
 #include "GameCore.h"
-#include "gui.h"
+#include "buildView.h"
 #ifndef CSE167_Window_h
 #define CSE167_Window_h
 
