@@ -2,6 +2,7 @@
 //#include "GamePacketManager.h"
 #include "GameCore.h"
 #include "buildView.h"
+#include "mainmenu.h"
 #ifndef CSE167_Window_h
 #define CSE167_Window_h
 

@@ -13,5 +13,6 @@ public:
 	~buildView();
 
 	vector<button*> listItems;
+	scrollBox * scroll;
 };
 

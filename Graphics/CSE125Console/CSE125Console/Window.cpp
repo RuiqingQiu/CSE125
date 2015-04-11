@@ -44,6 +44,8 @@ void Window::initialize(void)
 	//g_pCore->pPlayer->playerid = 1;
 
 	if (VIEWMODE == 0) {
+		mainMenu * menu = new mainMenu();
+		g_pCore->gameGui = menu;
 
 	} 
 	else if (VIEWMODE == 1) {

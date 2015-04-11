@@ -3,7 +3,9 @@
 #include <string>
 #include <GL/glut.h>
 #include "GameView.h"
+#include "guiItem.h"
 #include "button.h"
+#include "scrollBox.h"
 
 class gui : public GameView {
 public:
@@ -22,12 +24,16 @@ public:
 	void set2d();
 	void set3d();
 
-	void drawButtons();
+	void drawAllItems();
 
 protected:
 	int width;
 	int height;
 
+	//regular items, just displays
+	std::vector<guiItem*> guiItems;
+	
+	//clickable items
 	std::vector<button*> buttons;
 };
 

@@ -1,6 +1,14 @@
 #include "stdafx.h"
 #include "gui.h"
 
+/*
+ * things to implement:
+ * handling mouseclick events...
+ *		is this from g_pCore->i_pInput???
+ *		somehow need to connect buttons to core then....
+ *			i.e. g_pCore->pGamePacketManager->sendClick...??
+ *			need to ask graphics how this is done
+ */
 
 gui::gui() {
 }
@@ -23,6 +31,9 @@ void gui::setDimensions(int w, int h) {
 	int ydiff = h - height;
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons[i]->translatePos(xdiff, ydiff);
+	}
+	for (int i = 0; i < guiItems.size(); i++) {
+		guiItems[i]->translatePos(xdiff, ydiff);
 	}
 	width = w;
 	height = h;
@@ -89,7 +100,11 @@ void gui::drawText(int x, int y, std::string text, float r, float g, float b, vo
 	}
 }
 
-void gui::drawButtons() {
+void gui::drawAllItems() {
+	for (int i = 0; i < guiItems.size(); i++) {
+		guiItems[i]->draw();
+	}
+
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons[i]->draw();
 	}

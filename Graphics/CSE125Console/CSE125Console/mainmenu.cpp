@@ -24,7 +24,7 @@ void mainMenu::VOnRender(){
 	this->drawButtons();
 	*/
 
-	drawButtons();
+	drawAllItems();
 
 	set3d();
 	
