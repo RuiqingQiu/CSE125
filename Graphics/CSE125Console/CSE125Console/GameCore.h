@@ -2,6 +2,8 @@
 #include "stdafx.h"
 #include "GameView.h"
 #include "gui.h"
+#include "GeoNode.h"
+#include "SkyBox.h"
 #include "GamePacketManager.h"
 #include "GamePlayer.h"
 #include "GameInputInterface.h"
@@ -21,6 +23,14 @@ public:
 	GamePacketManager* pGamePacketManager;
 	GamePlayer* pPlayer;
 	GameInputInterface* i_pInput;
+
+	int viewmode;
+	gui * buildmode;
+	gui * defaultGui;
+	GeoNode * skybox;
+
+	GameInputInterface* gui_Input;
+	GameInputInterface* standard_Input;
 };
 
 extern GameCore* g_pCore;

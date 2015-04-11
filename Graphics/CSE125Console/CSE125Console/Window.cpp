@@ -17,17 +17,18 @@
 
 #define TESTCAM 0
 
-//0: main menu
+//in g_pCore->viewmode:
 //1: build View
 //2: battle View
 //3: help menu
-#define VIEWMODE 1
-
+//4: main menu
+//5: switch to console
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
 static Cube* cube;
+
 //Init server info here later
 void Window::initialize(void)
 {
@@ -43,20 +44,22 @@ void Window::initialize(void)
 	g_pCore->pGameView = view;
 	//g_pCore->pPlayer->playerid = 1;
 
-	if (VIEWMODE == 0) {
-		mainMenu * menu = new mainMenu();
-		g_pCore->gameGui = menu;
-
+	//default to console view
+	g_pCore->viewmode = 5;
+	g_pCore->buildmode = new buildView(width, height);
+	g_pCore->defaultGui = new gui();
+	if (g_pCore->viewmode == 0) {
+		g_pCore->gameGui = g_pCore->defaultGui;
 	} 
-	else if (VIEWMODE == 1) {
-		buildView * buildmode = new buildView(width, height);
-		g_pCore->gameGui = buildmode;
+	else if (g_pCore->viewmode == 1) {
+		g_pCore->gameGui = g_pCore->buildmode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
 	}
-	else if (VIEWMODE == 2) {
-
+	else if (g_pCore->viewmode == 2) {
+		g_pCore->gameGui = g_pCore->defaultGui;
 	}
-	else if (VIEWMODE == 3) {
-
+	else if (g_pCore->viewmode == 3) {
+		g_pCore->gameGui = g_pCore->defaultGui;
 	}
 
 	//if main menu
@@ -73,11 +76,11 @@ void Window::initialize(void)
 	//object->localTransform.rotation = Vector3(90, 0, 0);
 
 	//view->PushGeoNode(object);
-
-
-	SkyBox *object2 = new SkyBox();
+	g_pCore->skybox = new SkyBox();
 	//no skybox for buildmode
-	if (VIEWMODE != 1) view->PushGeoNode(object2);
+	if (g_pCore->viewmode != 1) {
+		view->PushGeoNode(g_pCore->skybox);
+	}
 
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);

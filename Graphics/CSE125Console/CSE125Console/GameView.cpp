@@ -96,3 +96,14 @@ void GameView::PopGeoNode(GeoNode* m_node)
 		}
 	}
 }
+
+bool GameView::FindGeoNode(GeoNode* m_node) {
+	for (int i = 0; i < NodeList.size(); i++)
+	{
+		if (NodeList[i] == m_node)
+		{
+			return true;
+		}
+	}
+	return false;
+}

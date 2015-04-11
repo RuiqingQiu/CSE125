@@ -73,4 +73,40 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 	}
 	else if (key == 'l'){
 	}
+	//in g_pCore->viewmode:
+	//1: build View
+	//2: battle View
+	//3: help menu
+	//4: main menu
+	//5: switch to console
+	else if (key == '1') {
+		//buildView * buildmode = new buildView(width, height);
+		g_pCore->gameGui = g_pCore->buildmode;
+		if(g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (key == '2') {
+		g_pCore->gameGui = g_pCore->defaultGui;
+		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->standard_Input;
+	}
+	else if (key == '3') {
+		g_pCore->gameGui = g_pCore->defaultGui;
+		if(!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
+	}
+	else if (key == '4') {
+		g_pCore->gameGui = g_pCore->defaultGui;
+		if(!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->standard_Input;
+	}
+	else if (key == '5') {
+		g_pCore->gameGui = g_pCore->defaultGui;
+		if(!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->standard_Input;
+	}
 }
