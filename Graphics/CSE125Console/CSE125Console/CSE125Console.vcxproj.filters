@@ -156,6 +156,12 @@
     <ClInclude Include="buildView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="guiGameInput.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -252,6 +258,12 @@
       <Filter>Source Files\Shader</Filter>
     </ClCompile>
     <ClCompile Include="buildView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="guiGameInput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

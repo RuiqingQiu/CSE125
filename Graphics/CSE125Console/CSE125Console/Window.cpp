@@ -38,7 +38,11 @@ void Window::initialize(void)
 	//g_pCore->pPlayer->playerid = 1;
 
 	buildView * buildmode = new buildView(width, height);
-	g_pCore->buildView = buildmode;
+	g_pCore->gameGui = buildmode;
+	//if main menu
+	//g_pCore->gameGui = mainmenu;
+	//if battlemode
+	//g_pCore->gameGui = battlemode;
 
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
 
@@ -80,6 +84,11 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 	}
 	
 }
+
+void Window::processMouseClick(int button, int state, int x, int y) {
+	//g_pCore->(some input)->(proccessmouse)
+}
+
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
 void Window::reshapeCallback(int w, int h)
@@ -92,7 +101,7 @@ void Window::reshapeCallback(int w, int h)
 	gluPerspective(60.0, double(width)/(double)height, 1.0, 1000.0); //Set perspective projection viewing frustum
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 
-	g_pCore->buildView->setDimensions(w, h);
+	g_pCore->gameGui->setDimensions(w, h);
 }
 
 //----------------------------------------------------------------------------
@@ -118,8 +127,7 @@ void Window::displayCallback()
 
 	g_pCore->pGameView->VOnRender();
 
-	//if in build mode
-	g_pCore->buildView->VOnRender();
+	g_pCore->gameGui->VOnRender();
 
 	//test for camera
 	

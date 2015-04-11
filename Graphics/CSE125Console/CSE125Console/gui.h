@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 
 #include "GameView.h"
+#include "button.h"
 
 class gui : public GameView {
 public:
@@ -22,8 +23,12 @@ public:
 	void set2d();
 	void set3d();
 
+	void drawButtons();
+
 protected:
 	int width;
 	int height;
+
+	std::vector<button*> buttons;
 };
 

@@ -83,3 +83,9 @@ void gui::drawText(int x, int y, std::string text, float r, float g, float b, vo
 		glutBitmapCharacter(font, c);
 	}
 }
+
+void gui::drawButtons() {
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons[i]->draw();
+	}
+}

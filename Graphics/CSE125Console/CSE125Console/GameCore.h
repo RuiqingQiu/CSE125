@@ -16,9 +16,7 @@ public:
 
 	GameView* pGameView;
 
-	gui* mainView;
-	gui* buildView;
-	gui* battleView;
+	gui* gameGui;
 
 	GamePacketManager* pGamePacketManager;
 	GamePlayer* pPlayer;
