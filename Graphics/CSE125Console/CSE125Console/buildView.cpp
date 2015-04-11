@@ -26,7 +26,7 @@ void buildView::createButtons() {
 	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 120));
 	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 190));
 	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 260));
-	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 310));
+	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 330));
 
 	//help button
 	buttons.push_back(new button("buttonplaceholder.jpg", 50, 50, true));
