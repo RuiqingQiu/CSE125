@@ -201,3 +201,4 @@ FakesAssemblies/
 
 .DS_Store
 *.tlog
+*.idb
