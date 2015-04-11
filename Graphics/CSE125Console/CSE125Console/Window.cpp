@@ -17,6 +17,12 @@
 
 #define TESTCAM 0
 
+//0: main menu
+//1: build View
+//2: battle View
+//3: help menu
+#define VIEWMODE 1
+
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
@@ -37,8 +43,20 @@ void Window::initialize(void)
 	g_pCore->pGameView = view;
 	//g_pCore->pPlayer->playerid = 1;
 
-	buildView * buildmode = new buildView(width, height);
-	g_pCore->gameGui = buildmode;
+	if (VIEWMODE == 0) {
+
+	} 
+	else if (VIEWMODE == 1) {
+		buildView * buildmode = new buildView(width, height);
+		g_pCore->gameGui = buildmode;
+	}
+	else if (VIEWMODE == 2) {
+
+	}
+	else if (VIEWMODE == 3) {
+
+	}
+
 	//if main menu
 	//g_pCore->gameGui = mainmenu;
 	//if battlemode

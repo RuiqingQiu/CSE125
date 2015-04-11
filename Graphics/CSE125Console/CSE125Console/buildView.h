@@ -11,5 +11,7 @@ public:
 	void createButtons();
 
 	~buildView();
+
+	vector<button*> listItems;
 };
 

@@ -19,17 +19,51 @@ buildView::~buildView()
 }
 
 void buildView::createButtons() {
-	//battle button
-	buttons.push_back(new button("buttonplaceholder.jpg", width-150, 20));
+	//hardcoded button sizes for now
 
+	//battle button
+	//button jpg dimensions: 1000x300px
+	//button texture orignal dimesntions: 1024x512
+	buttons.push_back(new button("buttons/buildView/battle.jpg", width-120, 20, 100, 30, false, true));
+
+	
+	int scale = 4;
+	
+	//scroll box
+	//button jpg dimensions: 1320x100px
+	//button texture orignal dimesntions: 1024x128
+	buttons.push_back(new button("buttons/buildView/up.jpg", width - (1320 / scale) - 20, 90 + (3320 / scale),
+															1320/scale, 100/scale, false, true));
+	//button jpg dimensions: 1320x3320px
+	//button texture orignal dimesntions: 1024x1024
+	//didn't think the resolution of opengl would be so awful, need to shrink scrollbox image later to fit 8 items instead of 11
+	//also, create scrollbox class?
+	//buttons.push_back(new button("buttons/buildView/scrollboxs.jpg", width - 300, 100, false, true));
+	buttons.push_back(new button("buttons/buildView/scrollbox.jpg", width - (1320 / scale) - 20, 100,
+																	1320/scale, 3320/scale, false, true));
+	//button jpg dimensions: 1320x100px
+	//button texture orignal dimesntions: 1024x128
+	buttons.push_back(new button("buttons/buildView/down.jpg", width - (1320 / scale) - 20, 100 - (100/scale),
+															   1320 / scale, 100/scale, false, true));
+	
+	
+	
 	//list options
-	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 120));
-	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 190));
-	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 260));
-	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 330));
+	//button jpg width 130px = 256 texture unit
+	// border is 10px on img
+	int yPos = 90 + (10/4);
+	for (int i = 0; i < 10; i++) {
+		//button jpg dimensions: 1300x300px
+		//button texture orignal dimesntions: 1024x512
+		//border is 10px on img
+		buttons.push_back(new button("buttons/buildView/wheels.jpg", width - (1310/scale) - 20, yPos, 1300/scale, 300/scale, false, true));
+		yPos += 300 / scale;
+	}
 
 	//help button
-	buttons.push_back(new button("buttonplaceholder.jpg", 20, 20, true));
+	//button jpg dimensions: 1000x300px
+	//button texture orignal dimesntions: 1024x512
+	buttons.push_back(new button("buttons/buildView/help.jpg", 20, 20, 100, 30, true, true));
 }
 
 void buildView::VOnRender() {

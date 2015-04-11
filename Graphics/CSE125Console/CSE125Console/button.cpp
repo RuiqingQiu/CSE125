@@ -1,45 +1,49 @@
 #include "stdafx.h"
 #include "button.h"
 
-
-
 button::button() {
 	xPos = 0;
 	yPos = 0;
-	fixedPosition = false;
+	xfixed = false;
+	yfixed = false;
 }
 
 button::button(char * filename) {
 	xPos = 0;
 	yPos = 0;
 	setTexture(filename);
-	fixedPosition = false;
+	xfixed = false;
+	yfixed = false;
 }
 
 button::button(char * filename, int x, int y) {
 	setTexture(filename);
 	setPosition(x, y);
-	fixedPosition = false;
+	xfixed = false;
+	yfixed = false;
 }
 
-button::button(char * filename, int x, int y, bool f) {
+button::button(char * filename, int x, int y, bool xf, bool yf) {
 	setTexture(filename);
 	setPosition(x, y);
-	fixedPosition = f;
+	xfixed = xf;
+	yfixed = yf;
 }
 
 button::button(char * filename, int x, int y, int w, int h) {
 	setTexture(filename);
 	setPosition(x, y);
 	setSize(w, h);
-	fixedPosition = false;
+	xfixed = false;
+	yfixed = false;
 }
 
-button::button(char * filename, int x, int y, int w, int h, bool f) {
+button::button(char * filename, int x, int y, int w, int h, bool xf, bool yf) {
 	setTexture(filename);
 	setPosition(x, y);
 	setSize(w, h);
-	fixedPosition = f;
+	xfixed = xf;
+	yfixed = yf;
 }
 
 button::~button()
@@ -72,7 +76,8 @@ bool button::setTexture(char * filename) {
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
-
+	std::cout << "width: " << width << std::endl;
+	std::cout << "height: " << height << std::endl;
 	//return true if successfully set texture
 	return false;
 }
@@ -116,14 +121,19 @@ void button::setPosition(int x, int y) {
 }
 
 void button::translatePos(int x, int y){
-	xPos += x;
-	yPos += y;
+	if (!xfixed) xPos += x;
+	if (!yfixed) yPos += y;
 }
 
-void button::setFixed(bool f) {
-	fixedPosition = f;
+void button::setFixed(bool x, bool y) {
+	xfixed = x;
+	yfixed = y;
 }
 
-bool button::isFixed() {
-	return fixedPosition;
+bool button::xisFixed() {
+	return xfixed;
+}
+
+bool button::yisFixed() {
+	return yfixed;
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <GL/glut.h>
 #include "SOIL.h"
 
@@ -9,9 +10,9 @@ public:
 	button();
 	button(char * filename);
 	button(char * filename, int x, int y);
-	button(char * filename, int x, int y, bool f);
+	button(char * filename, int x, int y, bool xf, bool yf);
 	button(char * filename, int x, int y, int w, int h);
-	button(char * filename, int x, int y, int w, int h, bool f);
+	button(char * filename, int x, int y, int w, int h, bool xf, bool yf);
 	~button();
 
 	bool setTexture(char * filename);
@@ -21,8 +22,10 @@ public:
 
 	void setPosition(int x, int y);
 	void setSize(int w, int h);
-	void setFixed(bool f);
-	bool isFixed();
+	void setFixed(bool x, bool y);
+
+	bool xisFixed();
+	bool yisFixed();
 
 	void translatePos(int x, int y);
 
@@ -39,6 +42,7 @@ private:
 	int width;
 	int height;
 
-	bool fixedPosition;
+	bool xfixed;
+	bool yfixed;
 };
 
