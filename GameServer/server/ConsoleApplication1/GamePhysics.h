@@ -1,8 +1,8 @@
 #pragma once
 #include <btBulletDynamicsCommon.h>
 #include "GameObj.h"
-#include "GOBox.h"
 #include <vector>
+#include <iostream>
 
 class GamePhysics
 {
@@ -17,7 +17,7 @@ public:
 	btDiscreteDynamicsWorld* getDynamicsWorld();
 
 	void initWorld(std::vector<GameObj*>*);
-//	btCollisionShape* convertObj(GameObj*);
+	void stepSimulation(std::vector<GameObj*> *);
 
 
 private:

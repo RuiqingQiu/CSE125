@@ -97,6 +97,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ServerCore.h" />
     <ClInclude Include="ServerNetwork.h" />
+    <ClInclude Include="SPacketDecoder.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeFrame.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="ServerCore.cpp" />
     <ClCompile Include="ServerNetwork.cpp" />
+    <ClCompile Include="SPacketDecoder.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TimeFrame.cpp" />
   </ItemGroup>

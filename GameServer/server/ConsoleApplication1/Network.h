@@ -5,9 +5,14 @@
 
 #include "ServerNetwork.h"
 #include "NetworkData.h"
-#include "definition.h"
+#include "GOBox.h"
+#include "GOCapsule.h"
+#include "GOCone.h"
+#include "GOCylinder.h"
+#include "GOPlane.h"
 #include "Events.h"
 #include <string>
+
 class Network {
 private:
 	// IDs for the clients connecting for table in ServerNetwork 

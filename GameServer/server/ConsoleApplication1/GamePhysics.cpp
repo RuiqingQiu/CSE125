@@ -47,7 +47,7 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 
 void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 {
-	dynamicsWorld->setGravity(btVector3(0, -1, 0));
+	dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
 	btCollisionShape* ground = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
 
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
@@ -64,20 +64,21 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	}
 }
 
-//btCollisionShape* GamePhysics::convertObj(GameObj* gameObj)
-//{
-	//switch (gameObj->getType())
-	//{
-	//	case PLANE:
-	//	{
-
-	//	}
-	//		TRIANGLE
-	//		CAPSULE
-	//		CONE
-	//		CYLINDER
-	//		BOX
-	//		CLOUD
-	//}
-//	return nullptr;
-//}
+void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
+{
+	
+	std::vector<GameObj*>::iterator it;
+	for (it = gameObj->begin(); it != gameObj->end(); ++it)
+	{
+		btTransform trans;
+		(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+		std::cout << "BOX WITH ID:  " << (*it)->getId() << ", X: " << trans.getOrigin().getX() << ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
+		(*it)->setX(trans.getOrigin().getX());
+		(*it)->setY(trans.getOrigin().getY());
+		(*it)->setZ(trans.getOrigin().getZ());
+		btVector3 vect = trans.getRotation().getAxis();
+		(*it)->setRotX(vect.getX());
+		(*it)->setRotY(vect.getY());
+		(*it)->setRotZ(vect.getZ());
+	}
+}

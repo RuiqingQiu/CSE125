@@ -309,7 +309,6 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		}
 
 		temp += to_string((*i)->getId());
-		
 		temp += ' ';
 		temp += to_string((*i)->getX());
 		temp += ' ';
@@ -317,8 +316,63 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += ' ';
 		temp += to_string((*i)->getZ());
 		temp += ' ';
+		temp += to_string((*i)->getRotX());
+		temp += ' ';
+		temp += to_string((*i)->getRotY());
+		temp += ' ';
+		temp += to_string((*i)->getRotZ());
+		temp += ' ';
+		temp += to_string((*i)->getBlockType());
+		temp += ' ';
+		temp += to_string((*i)->getType());
+		temp += ' ';
+		int type = (*i)->getType();
+		switch (type)
+		{
+			case BOX:
+			{
+				temp += to_string(((GOBox*)(*i))->getWidth());
+				temp += ' ';
+				temp += to_string(((GOBox*)(*i))->getHeight());
+				temp += ' ';
+				temp += to_string(((GOBox*)(*i))->getDepth());
+				break;
+			}
+			case CAPSULE:
+			{
+				temp += to_string(((GOCapsule*)(*i))->getRadius());
+				temp += ' ';
+				temp += to_string(((GOCapsule*)(*i))->getHeight());
+				break;
+			}
+			case CONE:
+			{
+				temp += to_string(((GOCone*)(*i))->getRadius());
+				temp += ' ';
+				temp += to_string(((GOCone*)(*i))->getHeight());
+				break;
+			}
+			case CYLINDER:
+			{
+				temp += to_string(((GOCylinder*)(*i))->getRadius());
+				temp += ' ';
+				temp += to_string(((GOCylinder*)(*i))->getHeight());
+				break;
+			}
+			case PLANE:
+			{
+				temp += to_string(((GOPlane*)(*i))->getXNorm());
+				temp += ' ';
+				temp += to_string(((GOPlane*)(*i))->getYNorm());
+				temp += ' ';
+				temp += to_string(((GOPlane*)(*i))->getZNorm());
+				temp += ' ';
+				temp += to_string(((GOPlane*)(*i))->getPlaneConst());
+				break;
+			}
+		}
+		temp += '\n';
 	}
-	
 	temp += "\0";
 	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;
 	return temp;

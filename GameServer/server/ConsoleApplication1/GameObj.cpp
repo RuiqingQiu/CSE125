@@ -39,6 +39,18 @@ double GameObj::getZ(){
 	return _z;
 }
 
+double GameObj::getRotX(){
+	return _rotX;
+}
+
+double GameObj::getRotY(){
+	return _rotY;
+}
+
+double GameObj::getRotZ(){
+	return _rotZ;
+}
+
 double GameObj::getqX(){
 	return _qX;
 }
@@ -70,6 +82,18 @@ void GameObj::setY(double posY){
 
 void GameObj::setZ(double posZ){
 	_z = posZ;
+}
+
+void GameObj::setRotX(double rotX){
+	_rotX = rotX;
+}
+
+void GameObj::setRotY(double rotY){
+	_rotY = rotY;
+}
+
+void GameObj::setRotZ(double rotZ){
+	_rotZ = rotZ;
 }
 
 void GameObj::setqX(double qX){
@@ -115,4 +139,14 @@ btRigidBody* GameObj::getRigidBody()
 void GameObj::setRigidBody(btRigidBody* RB)
 {
 	rigidBody = RB;
+}
+
+int GameObj::getBlockType()
+{
+	return _blockType;
+}
+
+void GameObj::setBlockType(int bType)
+{
+	_blockType = bType;
 }

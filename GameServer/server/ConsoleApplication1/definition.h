@@ -1,4 +1,6 @@
 #pragma once
+#include "GameObj.h"
+
 
 	//ACTIONS FOR STATE MACHINE
 	enum ACTION
@@ -8,6 +10,41 @@
 		TIMEUP = 2,
 		COUNTDOWN = 3,
 		RESTART = 4,
+	};
+
+	//TEXTURES
+	enum TEXTURE
+	{
+		ASPHALT = 0,
+		BLUE = 1,
+		BRICK = 2,
+		CLOTH = 3,
+		CONCRETE = 4,
+		GLASS = 5,
+		GOLD = 6,
+		IRON = 7,
+		LEATHER = 8,
+		METAL1 = 9,
+		METAL2 = 10,
+		METAL3 = 11,
+		RUBBER1 = 12,
+		RUBBER2 = 13,
+		SILVER = 14,
+		WARNING = 15,
+		WOOD1 = 16,
+		WOOD2 = 17,
+		WOOD3 = 18,
+
+	};
+
+	//block types
+	enum BLOCK_TYPE
+	{
+		CUBE = 0,
+		WHEEL = 1,
+		HAMMER = 2,
+		MACE = 3,
+		NEEDLE = 4,
 	};
 
 

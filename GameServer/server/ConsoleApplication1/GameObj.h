@@ -11,8 +11,12 @@ private:
 	double _qY;
 	double _qZ;
 	double _qW;
+	double _rotX;
+	double _rotY;
+	double _rotZ;
 	unsigned int _id;
 	int _type;
+	int _blockType;
 	double _mass;
 	btRigidBody* rigidBody;
 
@@ -31,9 +35,13 @@ public:
 	double getqZ();
 	double getqW();
 	int getType();
+	int getBlockType();
 	unsigned int getId();
 	double getMass();
 	btRigidBody* getRigidBody();
+	double getRotX();
+	double getRotY();
+	double getRotZ();
 
 	void setX(double);
 	void setY(double);
@@ -43,9 +51,13 @@ public:
 	void setqZ(double);
 	void setqW(double);
 	void setType(int);
+	void setBlockType(int);
 	void setMass(double);
 	void setRigidBody(btRigidBody*);
 	virtual void createRigidBody() = 0;
+	void setRotX(double);
+	void setRotY(double);
+	void setRotZ(double);
 	
 };
 

@@ -1,5 +1,5 @@
 #include "GOCone.h"
-GOCone::GOCone(double x, double y, double z, double qX, double qY, double qZ, double qW, double mass, double radius, double height)
+GOCone::GOCone(double x, double y, double z,double qX, double qY, double qZ, double qW, double mass, double radius, double height)
 	:GameObj(x, y, z, qX, qY, qZ, qW, CONE, mass)
 {
 	_radius = radius;
