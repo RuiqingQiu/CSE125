@@ -20,7 +20,7 @@ buildView::~buildView()
 
 void buildView::createButtons() {
 	//battle button
-	buttons.push_back(new button("buttonplaceholder.jpg", width-150, 50));
+	buttons.push_back(new button("buttonplaceholder.jpg", width-150, 20));
 
 	//list options
 	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 120));
@@ -29,7 +29,7 @@ void buildView::createButtons() {
 	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 330));
 
 	//help button
-	buttons.push_back(new button("buttonplaceholder.jpg", 50, 50, true));
+	buttons.push_back(new button("buttonplaceholder.jpg", 20, 20, true));
 }
 
 void buildView::VOnRender() {
