@@ -19,11 +19,16 @@ buildView::~buildView()
 }
 
 void buildView::createButtons() {
-	buttons.push_back(new button("buttonplaceholder.jpg", width-150, 100));
-	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 200));
-	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 300));
-	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 400));
+	//battle button
+	buttons.push_back(new button("buttonplaceholder.jpg", width-150, 50));
 
+	//list options
+	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 120));
+	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 190));
+	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 260));
+	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 310));
+
+	//help button
 	buttons.push_back(new button("buttonplaceholder.jpg", 50, 50, true));
 }
 

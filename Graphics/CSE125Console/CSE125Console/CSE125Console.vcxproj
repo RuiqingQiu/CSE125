@@ -93,6 +93,7 @@
     <ClInclude Include="Definition.h" />
     <ClInclude Include="gui.h" />
     <ClInclude Include="guiGameInput.h" />
+    <ClInclude Include="mainmenu.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
@@ -133,6 +134,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="gui.cpp" />
     <ClCompile Include="guiGameInput.cpp" />
+    <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GameCore.cpp" />
