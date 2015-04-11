@@ -76,7 +76,8 @@ void Window::initialize(void)
 
 
 	SkyBox *object2 = new SkyBox();
-	view->PushGeoNode(object2);
+	//no skybox for buildmode
+	if (VIEWMODE != 1) view->PushGeoNode(object2);
 
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
