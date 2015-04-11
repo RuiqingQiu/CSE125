@@ -19,6 +19,12 @@ void gui::VOnClientUpdate(GameInfoPacket* info) {
 }
 
 void gui::setDimensions(int w, int h) {
+	int xdiff = w - width;
+	int ydiff = h - height;
+	for (int i = 0; i < buttons.size(); i++) {
+		if (!buttons[i]->isFixed())
+			buttons[i]->translatePos(xdiff, ydiff);
+	}
 	width = w;
 	height = h;
 }

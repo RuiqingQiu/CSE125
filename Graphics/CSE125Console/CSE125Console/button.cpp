@@ -6,23 +6,40 @@
 button::button() {
 	xPos = 0;
 	yPos = 0;
+	fixedPosition = false;
 }
 
 button::button(char * filename) {
 	xPos = 0;
 	yPos = 0;
 	setTexture(filename);
+	fixedPosition = false;
 }
 
 button::button(char * filename, int x, int y) {
 	setTexture(filename);
 	setPosition(x, y);
+	fixedPosition = false;
+}
+
+button::button(char * filename, int x, int y, bool f) {
+	setTexture(filename);
+	setPosition(x, y);
+	fixedPosition = f;
 }
 
 button::button(char * filename, int x, int y, int w, int h) {
 	setTexture(filename);
 	setPosition(x, y);
 	setSize(w, h);
+	fixedPosition = false;
+}
+
+button::button(char * filename, int x, int y, int w, int h, bool f) {
+	setTexture(filename);
+	setPosition(x, y);
+	setSize(w, h);
+	fixedPosition = f;
 }
 
 button::~button()
@@ -96,4 +113,17 @@ void button::onClick() {
 void button::setPosition(int x, int y) {
 	xPos = x;
 	yPos = y;
+}
+
+void button::translatePos(int x, int y){
+	xPos += x;
+	yPos += y;
+}
+
+void button::setFixed(bool f) {
+	fixedPosition = f;
+}
+
+bool button::isFixed() {
+	return fixedPosition;
 }

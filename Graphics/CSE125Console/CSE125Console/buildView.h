@@ -8,6 +8,7 @@ public:
 	buildView(int w, int h);
 
 	void VOnRender();
+	void createButtons();
 
 	~buildView();
 };

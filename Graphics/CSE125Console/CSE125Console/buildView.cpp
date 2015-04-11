@@ -3,17 +3,28 @@
 
 
 buildView::buildView() {
+	width = 0;
+	height = 0;
+	createButtons();
 }
 
 buildView::buildView(int w, int h) {
 	width = w;
 	height = h;
-	buttons.push_back(new button("alpine_front.jpg", 100, 100, 100, 100));
+	createButtons();
 }
-
 
 buildView::~buildView()
 {
+}
+
+void buildView::createButtons() {
+	buttons.push_back(new button("buttonplaceholder.jpg", width-150, 100));
+	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 200));
+	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 300));
+	buttons.push_back(new button("buttonplaceholder.jpg", width - 150, 400));
+
+	buttons.push_back(new button("buttonplaceholder.jpg", 50, 50, true));
 }
 
 void buildView::VOnRender() {
