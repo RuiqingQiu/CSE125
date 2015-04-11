@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glut.h>
+#include "SOIL.h"
 
 class button
 {
@@ -8,6 +9,7 @@ public:
 	button();
 	button(char * filename);
 	button(char * filename, int x, int y);
+	button(char * filename, int x, int y, int w, int h);
 	~button();
 
 	bool setTexture(char * filename);
@@ -16,6 +18,7 @@ public:
 	void onClick();
 
 	void setPosition(int x, int y);
+	void setSize(int w, int h);
 
 private:
 

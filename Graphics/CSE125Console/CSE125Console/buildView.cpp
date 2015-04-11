@@ -8,6 +8,7 @@ buildView::buildView() {
 buildView::buildView(int w, int h) {
 	width = w;
 	height = h;
+	buttons.push_back(new button("alpine_front.jpg", 100, 100, 100, 100));
 }
 
 
@@ -34,6 +35,8 @@ void buildView::VOnRender() {
 	drawText(70, height - 15, d, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
 	drawText(70, height - 25, h, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
 	drawText(70, height - 35, r, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
+
+	drawButtons();
 
 	set3d();
 }

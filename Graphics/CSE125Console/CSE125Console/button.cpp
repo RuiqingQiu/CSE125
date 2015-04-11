@@ -4,23 +4,57 @@
 
 
 button::button() {
+	xPos = 0;
+	yPos = 0;
 }
 
 button::button(char * filename) {
+	xPos = 0;
+	yPos = 0;
 	setTexture(filename);
 }
 
 button::button(char * filename, int x, int y) {
 	setTexture(filename);
-	xPos = x;
-	yPos = y;
+	setPosition(x, y);
+}
+
+button::button(char * filename, int x, int y, int w, int h) {
+	setTexture(filename);
+	setPosition(x, y);
+	setSize(w, h);
 }
 
 button::~button()
 {
 }
 
-bool setTexture(char * filename) {
+void button::setSize(int x, int y) {
+	width = x;
+	height = y;
+}
+bool button::setTexture(char * filename) {
+	texture[0] = SOIL_load_OGL_texture
+	(
+		filename
+		,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y
+		);
+	if (texture[0] == 0)
+	{
+		printf("SOIL loading error: '%s'\n", SOIL_last_result());
+		return false;
+	}
+	else{
+		printf("SOIL loading success\n");
+	}
+
+	//get the size of the texture
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
 
 	//return true if successfully set texture
 	return false;
@@ -40,7 +74,14 @@ void button::draw() {
 	// Make sure no bytes are padded:
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-
+	// Draw a textured quad
+	glColor3f(1, 1, 1);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0); glVertex3f(xPos, yPos, 0);
+	glTexCoord2f(0, 1); glVertex3f(xPos, yPos+height, 0);
+	glTexCoord2f(1, 1); glVertex3f(xPos+width, yPos+height, 0);
+	glTexCoord2f(1, 0); glVertex3f(xPos+width, yPos, 0);
+	glEnd();
 
 	glPopMatrix();
 	//glEnable(GL_LIGHTING);
