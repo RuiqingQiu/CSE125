@@ -12,6 +12,8 @@ public:
 
 	void draw();
 
+	void onClick();
+
 private:
 
 	//store the texture

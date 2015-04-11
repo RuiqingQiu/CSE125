@@ -39,3 +39,7 @@ void button::draw() {
 	glDisable(GL_TEXTURE_2D);
 
 }
+
+void onClick() {
+	//do somethin
+}
