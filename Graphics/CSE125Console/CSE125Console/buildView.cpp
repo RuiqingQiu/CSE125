@@ -49,7 +49,7 @@ void buildView::createButtons() {
 	//button texture orignal dimesntions: 1024x1024
 	scroll = new scrollBox(width - (1320 / scale) - 20, 100,
 		1320 / scale, 2420 / scale);
-	guiItems.push_back(scroll);
+	buttons.push_back(scroll);
 	
 	//list options
 	//button jpg width 130px = 256 texture unit

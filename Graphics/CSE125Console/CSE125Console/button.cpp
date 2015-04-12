@@ -3,8 +3,6 @@
 
 /*
  * things to implement:
- * button::isClicked() 
- *		check if mouseclick coordinates are inside button coordinates
  * button::onClick()
  *		game logic: on click action
  */

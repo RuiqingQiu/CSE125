@@ -4,7 +4,7 @@
 #include "guiItem.h"
 #include "button.h"
 
-class scrollBox : public guiItem
+class scrollBox : public button
 {
 private:
 	char * BOXLOC = "uiItem/scrollbox/scrollbox.jpg";
@@ -26,8 +26,8 @@ public:
 	void init();
 	void addListItem(char * filename );
 
-	bool isClicked();
-	void onClick();
+	bool isClicked(int x, int y);
+	void onClick(int x, int y);
 
 	//regular items, just displays
 	guiItem * scrollDisplay;

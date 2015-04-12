@@ -172,7 +172,7 @@
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="scrollBox.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

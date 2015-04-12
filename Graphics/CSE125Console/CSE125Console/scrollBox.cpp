@@ -118,10 +118,21 @@ void scrollBox::addListItem(char * filename) {
 	list.push_back(new button(filename, xPos+border, yPos + (s*h) + border, w, h));
 }
 
-bool scrollBox::isClicked() {
+bool scrollBox::isClicked(int x, int y) {
+	/*
+	if (x >= xPos && x < (xPos + width)) {
+		if (y >= yPos && y < (yPos + height)) {
+			return true;
+		}
+	}
+	*/
 	return false;
 }
 
-void scrollBox::onClick() {
-
+void scrollBox::onClick(int x, int y) {
+	upButton->onClick(x, y);
+	downButton->onClick(x, y);
+	for (int i = 0; i < list.size(); i++) {
+		list[i]->onClick(x, y);
+	}
 }
