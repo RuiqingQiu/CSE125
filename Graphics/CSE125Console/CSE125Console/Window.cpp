@@ -46,7 +46,8 @@ void Window::initialize(void)
 
 	//default to console view
 	g_pCore->viewmode = 4;
-	g_pCore->buildmode = new buildView(width, height);
+	g_pCore->buildmode = new buildView(width, height); 
+	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultGui = new gui();
 	if (g_pCore->viewmode == 0) {
 		g_pCore->gameGui = g_pCore->defaultGui;
@@ -63,8 +64,8 @@ void Window::initialize(void)
 	}
 	// main menu view
 	else if (g_pCore->viewmode == 4) {
-		mainMenu* menu = new mainMenu(width, height);
-		g_pCore->gameGui = menu;
+		g_pCore->gameGui = g_pCore->menumode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
 	}
 
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
