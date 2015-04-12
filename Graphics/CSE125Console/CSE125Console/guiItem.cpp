@@ -6,6 +6,10 @@ guiItem::guiItem() {
 	yPos = 0;
 	xfixed = false;
 	yfixed = true;
+	scaleX = false;
+	scaleY = false;
+	sWidth = 0;
+	sHeight = 0;
 }
 
 guiItem::guiItem(char * filename) {
@@ -14,6 +18,10 @@ guiItem::guiItem(char * filename) {
 	setTexture(filename);
 	xfixed = false;
 	yfixed = true;
+	scaleX = false;
+	scaleY = false;
+	sWidth = 0;
+	sHeight = 0;
 }
 
 guiItem::guiItem(char * filename, int x, int y) {
@@ -21,6 +29,10 @@ guiItem::guiItem(char * filename, int x, int y) {
 	setPosition(x, y);
 	xfixed = false;
 	yfixed = true;
+	scaleX = false;
+	scaleY = false;
+	sWidth = 0;
+	sHeight = 0;
 }
 
 guiItem::guiItem(char * filename, int x, int y, bool f) {
@@ -28,6 +40,10 @@ guiItem::guiItem(char * filename, int x, int y, bool f) {
 	setPosition(x, y);
 	xfixed = f;
 	yfixed = f;
+	scaleX = false;
+	scaleY = false;
+	sWidth = 0;
+	sHeight = 0;
 }
 
 guiItem::guiItem(char * filename, int x, int y, bool xf, bool yf) {
@@ -35,6 +51,10 @@ guiItem::guiItem(char * filename, int x, int y, bool xf, bool yf) {
 	setPosition(x, y);
 	xfixed = xf;
 	yfixed = yf;
+	scaleX = false;
+	scaleY = false;
+	sWidth = 0;
+	sHeight = 0;
 }
 
 guiItem::guiItem(char * filename, int x, int y, int w, int h) {
@@ -43,6 +63,10 @@ guiItem::guiItem(char * filename, int x, int y, int w, int h) {
 	setSize(w, h);
 	xfixed = false;
 	yfixed = true;
+	scaleX = false;
+	scaleY = false;
+	sWidth = 0;
+	sHeight = 0;
 }
 
 guiItem::guiItem(char * filename, int x, int y, int w, int h, bool f) {
@@ -51,6 +75,10 @@ guiItem::guiItem(char * filename, int x, int y, int w, int h, bool f) {
 	setSize(w, h);
 	xfixed = f;
 	yfixed = f;
+	scaleX = false;
+	scaleY = false;
+	sWidth = 0;
+	sHeight = 0;
 }
 
 guiItem::guiItem(char * filename, int x, int y, int w, int h, bool xf, bool yf) {
@@ -59,6 +87,10 @@ guiItem::guiItem(char * filename, int x, int y, int w, int h, bool xf, bool yf) 
 	setSize(w, h);
 	xfixed = xf;
 	yfixed = yf;
+	scaleX = false;
+	scaleY = false;
+	sWidth = 0;
+	sHeight = 0;
 }
 
 guiItem::~guiItem()
@@ -132,9 +164,27 @@ void guiItem::setPosition(int x, int y) {
 	yPos = y;
 }
 
-void guiItem::translatePos(int x, int y){
-	if (!xfixed) xPos += x;
-	if (!yfixed) yPos += y;
+void guiItem::rePosition(int x, int y, int w, int h) {
+	//scaling mode for x
+	if (scaleX) {
+		double curr = double(xPos) / sWidth;
+		xPos = curr * w;
+		sWidth = w;
+	}
+	//translate mode for x
+	else if (!xfixed) {
+		xPos += x;
+	}
+	//scaling mode for y
+	if (scaleY) {
+		double curr = double(yPos) / sHeight;
+		yPos = curr * h;
+		sHeight = h;
+	}
+	//translate mode for y
+	else if (!yfixed) {
+		yPos += y;
+	}
 }
 
 void guiItem::setFixed(bool x, bool y) {
@@ -148,4 +198,11 @@ bool guiItem::xisFixed() {
 
 bool guiItem::yisFixed() {
 	return yfixed;
+}
+
+void guiItem::setScaling(bool xs, bool ys, int w, int h) {
+	scaleX = xs;
+	scaleY = ys;
+	sWidth = w;
+	sHeight = h;
 }

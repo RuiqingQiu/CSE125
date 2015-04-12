@@ -30,7 +30,9 @@ void buildView::createButtons() {
 	//however, transparency isn't working? might be soil converter... will have to try something else
 	//button jpg dimensions: 1000x192px
 	//button texture orignal dimesntions: 1024x256
-	//guiItems.push_back(new guiItem("uiItem/text/time.png", 20, height - 100, 110, 99, true, false));
+	guiItem * text = new guiItem("uiItem/text/time.jpg", width*0.3, height - 38, 200, 38, false, false);
+	text->setScaling(true, false, width, height);
+	guiItems.push_back(text);
 
 	//text box
 	//button jpg dimensions: 1100x990px
@@ -51,12 +53,33 @@ void buildView::createButtons() {
 		1320 / scale, 2420 / scale);
 	buttons.push_back(scroll);
 	
+
+	//sublist options, need to make collapsable....make "sublist" in scrollbox class?
+	std::string path = "uiItem/buttons/listItem/subItem/";
+	for (int i = 31; i >= 30; i--) {
+		std::string concat = path + std::to_string(i) + ".jpg";
+		char *cstr = new char[concat.length() + 1];
+		strcpy(cstr, concat.c_str());
+
+		scroll->addListItem(cstr);
+
+		delete[] cstr;
+	}
+
 	//list options
 	//button jpg width 130px = 256 texture unit
 	// border is 10px on img
-	for (int i = 0; i < 8; i++) {
-		scroll->addListItem("uiItem/buttons/listItem/wheels.jpg");
+	path = "uiItem/buttons/listItem/";
+	for (int i = 3; i >= 0; i--) {
+		std::string concat = path + std::to_string(i) + ".jpg";
+		char *cstr = new char[concat.length() + 1];
+		strcpy(cstr, concat.c_str());
+
+		scroll->addListItem(cstr);
+
+		delete[] cstr;
 	}
+
 
 	//help button
 	//button jpg dimensions: 1000x300px
@@ -70,7 +93,8 @@ void buildView::VOnRender() {
 	drawAllItems();
 
 	//display text
-	drawText(width*0.4, height - 15, "Time Left:", 1.0, 0.0, 0.0, GLUT_BITMAP_HELVETICA_18);
+	//replaced with a texture box now
+	//drawText(width*0.4, height - 15, "Time Left:", 1.0, 0.0, 0.0, GLUT_BITMAP_HELVETICA_18);
 	//replaced with a text box texture now!
 	//drawText(0, height - 15, "# of deaths:", 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
 	//drawText(0, height - 25, "# of hits:", 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);

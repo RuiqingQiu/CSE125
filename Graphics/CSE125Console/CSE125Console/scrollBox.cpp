@@ -97,12 +97,12 @@ void scrollBox::draw() {
 	}
 }
 
-void scrollBox::translatePos(int x, int y) {
-	scrollDisplay->translatePos(x, y);
-	upButton->translatePos(x, y);
-	downButton->translatePos(x, y);
+void scrollBox::rePosition(int x, int y, int w, int h) {
+	scrollDisplay->rePosition(x, y, w, h);
+	upButton->rePosition(x, y, w, h);
+	downButton->rePosition(x, y, w, h);
 	for (int i = 0; i < list.size(); i++) {
-		list[i]->translatePos(x, y);
+		list[i]->rePosition(x, y, w, h);
 	}
 }
 

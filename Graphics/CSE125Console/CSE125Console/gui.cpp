@@ -30,10 +30,10 @@ void gui::setDimensions(int w, int h) {
 	int xdiff = w - width;
 	int ydiff = h - height;
 	for (int i = 0; i < buttons.size(); i++) {
-		buttons[i]->translatePos(xdiff, ydiff);
+		buttons[i]->rePosition(xdiff, ydiff, w, h);
 	}
 	for (int i = 0; i < guiItems.size(); i++) {
-		guiItems[i]->translatePos(xdiff, ydiff);
+		guiItems[i]->rePosition(xdiff, ydiff, w, h);
 	}
 	width = w;
 	height = h;

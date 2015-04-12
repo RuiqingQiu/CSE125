@@ -23,11 +23,12 @@ public:
 	void setPosition(int x, int y);
 	void setSize(int w, int h);
 	void setFixed(bool x, bool y);
+	void setScaling(bool xs, bool ys, int w, int h);
 
 	bool xisFixed();
 	bool yisFixed();
 
-	virtual void translatePos(int x, int y);
+	virtual void rePosition(int x, int y, int w, int h);
 
 protected:
 	//store the texture
@@ -45,5 +46,10 @@ protected:
 
 	bool xfixed;
 	bool yfixed;
+
+	bool scaleX;
+	bool scaleY;
+	int sWidth;
+	int sHeight;
 };
 

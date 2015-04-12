@@ -21,7 +21,7 @@ public:
 	~scrollBox();
 
 	void draw() override;
-	void translatePos(int x, int y) override;
+	void rePosition(int x, int y, int w, int h) override;
 
 	void init();
 	void addListItem(char * filename );
