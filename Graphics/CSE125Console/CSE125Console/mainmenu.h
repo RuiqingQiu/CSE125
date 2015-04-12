@@ -14,7 +14,8 @@ public:
 
 	void onClick(int x, int y);
 
-	//void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
+	vector<button*> clickableItems;
+
 
 private:
 	int width;

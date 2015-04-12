@@ -88,6 +88,7 @@ bool guiItem::setTexture(char * filename) {
 	}
 
 	//get the size of the texture
+	
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
 	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);

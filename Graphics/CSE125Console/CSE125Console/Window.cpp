@@ -45,7 +45,7 @@ void Window::initialize(void)
 	//g_pCore->pPlayer->playerid = 1;
 
 	//default to console view
-	g_pCore->viewmode = 5;
+	g_pCore->viewmode = 4;
 	g_pCore->buildmode = new buildView(width, height);
 	g_pCore->defaultGui = new gui();
 	if (g_pCore->viewmode == 0) {
@@ -60,6 +60,11 @@ void Window::initialize(void)
 	}
 	else if (g_pCore->viewmode == 3) {
 		g_pCore->gameGui = g_pCore->defaultGui;
+	}
+	// main menu view
+	else if (g_pCore->viewmode == 4) {
+		mainMenu* menu = new mainMenu(width, height);
+		g_pCore->gameGui = menu;
 	}
 
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
@@ -148,7 +153,6 @@ void Window::displayCallback()
 	g_pCore->pGameView->VOnRender();
 
 	g_pCore->gameGui->VOnRender();
-
 	//test for camera
 	
 	if (TESTCAM)
