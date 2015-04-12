@@ -1,5 +1,6 @@
 #include "stdafx.h"
 //#include "GamePacketManager.h"
+#include "Shader.h"
 #include "GameCore.h"
 #include "gui.h"
 #ifndef CSE167_Window_h

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "Cube.h"
+#include "Window.h"
 
 #ifdef __APPLE__
     #include <GLUT/glut.h>
@@ -8,7 +9,6 @@
     #include <GL/glut.h>
 #endif
 
-#include "Window.h"
 #include "math.h"
 #include "SOIL.h"
 Cube::Cube(float size)
@@ -44,6 +44,8 @@ void Cube::VOnDraw()
 	glPushMatrix();
 	//Apply local transformation
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
+
+
 	//world.identity();
     //Push a save state onto the matrix stack, and multiply in the toWorld matrix
 	//world = world * localTransform.GetMatrix4();

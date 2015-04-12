@@ -1,0 +1,600 @@
+#include "stdafx.h"
+#include "ShadowView.h"
+#include "Plane.h"
+#include "Cube.h"
+#include "SkyBox.h"
+
+
+#define RENDER_WIDTH 512
+#define RENDER_HEIGHT 512
+#define SHADOW_MAP_COEF 0.25
+#define BLUR_COEF 0.25
+
+//Camera position
+float p_camera[4] = { 35, 25, 5, 1 };
+
+//Camera lookAt
+float l_camera[3] = { 0, -2, -10 };
+
+//Light position
+float p_light[4] = { 0, 10, 0, 1 };
+
+//Light lookAt
+float l_light[3] = { 2, 10, 0 };
+
+
+//Light mouvement circle radius
+float light_mvnt = 35.0f;
+
+// Hold id of the framebuffer for light POV rendering
+GLuint fboId;
+// Z values will be rendered to this texture when using fboId framebuffer
+GLuint depthTextureId;
+GLuint colorTextureId;
+
+// Use to activate/disable shadowShader
+GLhandleARB shadowShaderId;
+GLuint shadowMapUniform;
+GLuint shadowMapStepXUniform;
+GLuint shadowMapStepYUniform;
+
+// Used to store values during the first pass
+GLuint storeMomentsShader;
+
+// Bluring FBO
+GLuint blurFboId;
+// Z values will be rendered to this texture when using fboId framebuffer
+GLuint blurFboIdColorTextureId;
+
+// Used to blur the depth values
+GLuint blurShader;
+GLuint scaleUniform; // Used to pass blur horiz or vert
+GLuint textureSourceUniform;
+
+// Loading shader function
+GLhandleARB loadShader(char* filename, unsigned int type)
+{
+	FILE *pfile;
+	GLhandleARB handle;
+	const GLcharARB* files[1];
+
+	// shader Compilation variable
+	GLint result;				// Compilation code result
+	GLint errorLoglength;
+	char* errorLogText;
+	GLsizei actualErrorLogLength;
+
+	char buffer[400000];
+	memset(buffer, 0, 400000);
+
+	// This will raise a warning on MS compiler
+	pfile = fopen(filename, "rb");
+	if (!pfile)
+	{
+		printf("Sorry, can't open file: '%s'.\n", filename);
+		//exit(0);
+	}
+
+	fread(buffer, sizeof(char), 400000, pfile);
+	//printf("%s\n",buffer);
+
+
+	fclose(pfile);
+
+	handle = glCreateShaderObjectARB(type);
+	if (!handle)
+	{
+		//We have failed creating the vertex shader object.
+		printf("Failed creating vertex shader object from file: %s.", filename);
+		//exit(0);
+	}
+
+	files[0] = (const GLcharARB*)buffer;
+	glShaderSourceARB(
+		handle, //The handle to our shader
+		1, //The number of files.
+		files, //An array of const char * data, which represents the source code of theshaders
+		NULL);
+
+	glCompileShaderARB(handle);
+
+	//Compilation checking.
+	glGetObjectParameterivARB(handle, GL_OBJECT_COMPILE_STATUS_ARB, &result);
+
+	// If an error was detected.
+	if (!result)
+	{
+		//We failed to compile.
+		printf("Shader '%s' failed compilation.\n", filename);
+
+		//Attempt to get the length of our error log.
+		glGetObjectParameterivARB(handle, GL_OBJECT_INFO_LOG_LENGTH_ARB, &errorLoglength);
+
+		//Create a buffer to read compilation error message
+		errorLogText = (char*)malloc(sizeof(char)* errorLoglength);
+
+		//Used to get the final length of the log.
+		glGetInfoLogARB(handle, errorLoglength, &actualErrorLogLength, errorLogText);
+
+		// Display errors.
+		printf("%s\n", errorLogText);
+
+		// Free the buffer malloced earlier
+		free(errorLogText);
+	}
+	else{
+		printf("Shader '%s' successfully compiled.\n", filename);
+
+	}
+
+	return handle;
+}
+
+void loadShadowShader()
+{
+	GLhandleARB vertexShaderHandle;
+	GLhandleARB fragmentShaderHandle;
+
+
+	vertexShaderHandle = loadShader("VertexShader.vert", GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShader("FragmentShader.frag", GL_FRAGMENT_SHADER);
+	shadowShaderId = glCreateProgramObjectARB();
+	glAttachObjectARB(shadowShaderId, vertexShaderHandle);
+	glAttachObjectARB(shadowShaderId, fragmentShaderHandle);
+	glLinkProgramARB(shadowShaderId);
+	shadowMapUniform = glGetUniformLocationARB(shadowShaderId, "ShadowMap");
+	shadowMapStepXUniform = glGetUniformLocationARB(shadowShaderId, "xPixelOffset");
+	shadowMapStepYUniform = glGetUniformLocationARB(shadowShaderId, "yPixelOffset");
+
+
+	vertexShaderHandle = loadShader("StoreDepthVertexShader.vert", GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShader("StoreDepthFragmentShader.frag", GL_FRAGMENT_SHADER);
+	storeMomentsShader = glCreateProgramObjectARB();
+	glAttachObjectARB(storeMomentsShader, vertexShaderHandle);
+	glAttachObjectARB(storeMomentsShader, fragmentShaderHandle);
+	glLinkProgramARB(storeMomentsShader);
+
+	vertexShaderHandle = loadShader("BlurVertexShader.vert", GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShader("BlurFragmentShader.frag", GL_FRAGMENT_SHADER);
+	blurShader = glCreateProgramObjectARB();
+	glAttachObjectARB(blurShader, vertexShaderHandle);
+	glAttachObjectARB(blurShader, fragmentShaderHandle);
+	glLinkProgramARB(blurShader);
+	scaleUniform = glGetUniformLocationARB(blurShader, "ScaleU");
+	textureSourceUniform = glGetUniformLocationARB(blurShader, "textureSource");
+
+}
+
+void generateShadowFBO()
+{
+	int shadowMapWidth = RENDER_WIDTH * SHADOW_MAP_COEF;
+	int shadowMapHeight = RENDER_HEIGHT * SHADOW_MAP_COEF;
+
+	//GLfloat borderColor[4] = {0,0,0,0};
+
+	GLenum FBOstatus;
+
+	// Try to use a texture depth component
+	glGenTextures(1, &depthTextureId);
+	glBindTexture(GL_TEXTURE_2D, depthTextureId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	// Remove artefact on the edges of the shadowmap
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	// No need to force GL_DEPTH_COMPONENT24, drivers usually give you the max precision if available 
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowMapWidth, shadowMapHeight, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glGenTextures(1, &colorTextureId);
+	glBindTexture(GL_TEXTURE_2D, colorTextureId);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+	//glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+
+
+	// Remove artefact on the edges of the shadowmap
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F_ARB, shadowMapWidth, shadowMapHeight, 0, GL_RGB, GL_FLOAT, 0);
+	glGenerateMipmapEXT(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+	// create a framebuffer object
+	glGenFramebuffersEXT(1, &fboId);
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fboId);
+
+	// attach the texture to FBO depth attachment point
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, depthTextureId, 0);
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, colorTextureId, 0);
+
+	// check FBO status
+	FBOstatus = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+	if (FBOstatus != GL_FRAMEBUFFER_COMPLETE_EXT)
+		printf("GL_FRAMEBUFFER_COMPLETE_EXT failed for shadowmap FBO, CANNOT use FBO\n");
+
+	// switch back to window-system-provided framebuffer
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+
+
+
+	// Creating the blur FBO
+	glGenFramebuffersEXT(1, &blurFboId);
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, blurFboId);
+
+	glGenTextures(1, &blurFboIdColorTextureId);
+	glBindTexture(GL_TEXTURE_2D, blurFboIdColorTextureId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F_ARB, shadowMapWidth*BLUR_COEF, shadowMapHeight*BLUR_COEF, 0, GL_RGB, GL_FLOAT, 0);
+
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, blurFboIdColorTextureId, 0);
+	FBOstatus = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+	if (FBOstatus != GL_FRAMEBUFFER_COMPLETE_EXT)
+		printf("GL_FRAMEBUFFER_COMPLETE_EXT failed for blur FBO, CANNOT use FBO\n");
+
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+}
+
+void setupMatrices(float position_x, float position_y, float position_z, float lookAt_x, float lookAt_y, float lookAt_z)
+{
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60, RENDER_WIDTH / RENDER_HEIGHT, 1, 1000);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(position_x, position_y, position_z, lookAt_x, lookAt_y, lookAt_z, 0, 1, 0);
+}
+
+
+// This update only change the position of the light.
+//int elapsedTimeCounter = 0;
+void update(void)
+{
+	//printf("%d\n",glutGet(GLUT_ELAPSED_TIME));
+	//p_light[0] = light_mvnt * cos(glutGet(GLUT_ELAPSED_TIME) / 2000.0);
+	//p_light[2] = light_mvnt * sin(glutGet(GLUT_ELAPSED_TIME) / 2000.0);
+
+	//p_light[0] = light_mvnt * cos(4000/1000.0);
+	//p_light[2] = light_mvnt * sin(4000/1000.0);
+
+	//p_light[0] = light_mvnt * cos(3000/1000.0);
+	//p_light[2] = light_mvnt * sin(3000/1000.0);
+
+
+}
+
+
+void setTextureMatrix(void)
+{
+	static double modelView[16];
+	static double projection[16];
+
+	// This is matrix transform every coordinate x,y,z
+	// x = x* 0.5 + 0.5 
+	// y = y* 0.5 + 0.5 
+	// z = z* 0.5 + 0.5 
+	// Moving from unit cube [-1,1] to [0,1]  
+	const GLdouble bias[16] = {
+		0.5, 0.0, 0.0, 0.0,
+		0.0, 0.5, 0.0, 0.0,
+		0.0, 0.0, 0.5, 0.0,
+		0.5, 0.5, 0.5, 1.0 };
+
+	// Grab modelview and transformation matrices
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelView);
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+
+
+	glMatrixMode(GL_TEXTURE);
+	glActiveTextureARB(GL_TEXTURE7);
+
+	glLoadIdentity();
+	glLoadMatrixd(bias);
+
+	// concatating all matrice into one.
+	glMultMatrixd(projection);
+	glMultMatrixd(modelView);
+
+	// Go back to normal matrix mode
+	glMatrixMode(GL_MODELVIEW);
+}
+
+// During translation, we also have to maintain the GL_TEXTURE8, used in the shadow shader
+// to determine if a vertex is in the shadow.
+void startTranslate(float x, float y, float z)
+{
+	glPushMatrix();
+	glTranslatef(x, y, z);
+
+	glMatrixMode(GL_TEXTURE);
+	glActiveTextureARB(GL_TEXTURE7);
+	glPushMatrix();
+	glTranslatef(x, y, z);
+}
+
+void endTranslate()
+{
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+}
+
+void drawObjects(void)
+{
+	// Ground
+	glColor4f(0.3f, 0.3f, 0.3f, 1);
+	glBegin(GL_QUADS);
+	glVertex3f(-45, 2, -45);
+	glVertex3f(-45, 2, 55);
+	glVertex3f(55, 2, 55);
+	glVertex3f(55, 2, -45);
+	glEnd();
+
+	glColor4f(0.9f, 0.9f, 0.9f, 1);
+
+	// Instead of calling glTranslatef, we need a custom function that also maintain the light matrix
+	startTranslate(0, 8, -16);
+	glutSolidCube(4);
+	endTranslate();
+
+	startTranslate(-8, 4, -16);
+	glutSolidCube(4);
+	endTranslate();
+
+	startTranslate(8, 4, -16);
+	glutSolidCube(4);
+	endTranslate();
+
+	startTranslate(0, 8, -5);
+	//glutSolidCube(4);
+	glutSolidSphere(4, 40, 40);
+	endTranslate();
+
+
+}
+
+void blurShadowMap(void)
+{
+	//glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_CULL_FACE);
+
+	// Bluring the shadow map  horinzontaly
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, blurFboId);
+	glViewport(0, 0, RENDER_WIDTH * SHADOW_MAP_COEF *BLUR_COEF, RENDER_HEIGHT* SHADOW_MAP_COEF*BLUR_COEF);
+	glUseProgramObjectARB(blurShader);
+	glUniform2fARB(scaleUniform, 1.0 / (RENDER_WIDTH * SHADOW_MAP_COEF * BLUR_COEF), 0.0);		// Bluring horinzontaly
+	glUniform1iARB(textureSourceUniform, 0);
+	glActiveTextureARB(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, colorTextureId);
+
+	//Preparing to draw quad
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-RENDER_WIDTH / 2, RENDER_WIDTH / 2, -RENDER_HEIGHT / 2, RENDER_HEIGHT / 2, 1, 20);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	//Drawing quad 
+	glTranslated(0, 0, -5);
+	glBegin(GL_QUADS);
+	glTexCoord2d(0, 0); glVertex3f(-RENDER_WIDTH / 2, -RENDER_HEIGHT / 2, 0);
+	glTexCoord2d(1, 0); glVertex3f(RENDER_WIDTH / 2, -RENDER_HEIGHT / 2, 0);
+	glTexCoord2d(1, 1); glVertex3f(RENDER_WIDTH / 2, RENDER_HEIGHT / 2, 0);
+	glTexCoord2d(0, 1); glVertex3f(-RENDER_WIDTH / 2, RENDER_HEIGHT / 2, 0);
+	glEnd();
+	//glGenerateMipmapEXT(GL_TEXTURE_2D);
+
+
+	// Bluring vertically
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fboId);
+	glViewport(0, 0, RENDER_WIDTH * SHADOW_MAP_COEF, RENDER_HEIGHT* SHADOW_MAP_COEF);
+	glUniform2fARB(scaleUniform, 0.0, 1.0 / (RENDER_HEIGHT * SHADOW_MAP_COEF));
+	glBindTexture(GL_TEXTURE_2D, blurFboIdColorTextureId);
+	glBegin(GL_QUADS);
+	glTexCoord2d(0, 0); glVertex3f(-RENDER_WIDTH / 2, -RENDER_HEIGHT / 2, 0);
+	glTexCoord2d(1, 0); glVertex3f(RENDER_WIDTH / 2, -RENDER_HEIGHT / 2, 0);
+	glTexCoord2d(1, 1); glVertex3f(RENDER_WIDTH / 2, RENDER_HEIGHT / 2, 0);
+	glTexCoord2d(0, 1); glVertex3f(-RENDER_WIDTH / 2, RENDER_HEIGHT / 2, 0);
+	glEnd();
+
+}
+
+void renderScene(void)
+{
+
+}
+
+
+
+ShadowView::ShadowView()
+{
+	//plane
+	Plane* plane = new Plane(50);
+	plane->localTransform.position = Vector3(0, -10, 0);
+	plane->localTransform.rotation = Vector3(90, 0, 0);
+	this->PushGeoNode(plane);
+
+	Cube* cube = new Cube(1);
+	cube->localTransform.position = Vector3(0, 0, 0);
+	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
+	this->PushGeoNode(cube);
+
+	SkyBox *object2 = new SkyBox();
+	this->PushGeoNode(object2);
+
+	generateShadowFBO();
+	loadShadowShader();
+
+	// This is important, if not here, FBO's depthbuffer won't be populated.
+	glEnable(GL_DEPTH_TEST);
+	glClearColor(0, 0, 0, 1.0f);
+
+	glEnable(GL_CULL_FACE);
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+}
+
+
+ShadowView::~ShadowView()
+{
+}
+
+void ShadowView::VOnRender()
+{
+
+	update();
+
+	//First step: Render from the light POV to a FBO, store depth and square depth in a 32F frameBuffer
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fboId);	//Rendering offscreen
+
+	//Using the custom shader to do so
+	glUseProgramObjectARB(storeMomentsShader);
+
+	// In the case we render the shadowmap to a higher resolution, the viewport must be modified accordingly.
+	glViewport(0, 0, RENDER_WIDTH * SHADOW_MAP_COEF, RENDER_HEIGHT* SHADOW_MAP_COEF);
+
+	// Clear previous frame values
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//setupMatrices(p_light[0], p_light[1], p_light[2], l_light[0], l_light[1], l_light[2]);
+	setupMatrices(p_light[0], p_light[1], p_light[2], 0,0,0);
+
+
+	// Culling switching, rendering only backface, this is done to avoid self-shadowing
+	//glCullFace(GL_FRONT);
+	//Set the OpenGL matrix mode to ModelView
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+
+	//pViewCamera->setUpCamera();
+
+	//glPushMatrix();
+	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
+
+	
+	for each (GeoNode* node in NodeList)
+	{
+		node->VOnDraw();
+	}
+
+	//drawObjects();
+
+	glGenerateMipmapEXT(GL_TEXTURE_2D);
+	//Save modelview/projection matrice into texture7, also add a biais
+	setTextureMatrix();
+
+	blurShadowMap();
+
+	// Now rendering from the camera POV, using the FBO to generate shadows
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+
+	glViewport(0, 0, RENDER_WIDTH, RENDER_HEIGHT);
+
+	// Clear previous frame values
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Using the shadow shader
+	glUseProgramObjectARB(shadowShaderId);
+	glUniform1iARB(shadowMapUniform, 7);
+	glUniform1fARB(shadowMapStepXUniform, 1.0 / (RENDER_WIDTH * SHADOW_MAP_COEF));
+	glUniform1fARB(shadowMapStepYUniform, 1.0 / (RENDER_HEIGHT * SHADOW_MAP_COEF));
+	glActiveTextureARB(GL_TEXTURE7);
+	glBindTexture(GL_TEXTURE_2D, colorTextureId);
+
+
+	//setupMatrices(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z, l_camera[0], l_camera[1], l_camera[2]);
+	//setupMatrices(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z, 0, 0, 0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60, RENDER_WIDTH / RENDER_HEIGHT, 1, 1000);
+	
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	pViewCamera->setUpCamera();
+
+
+	glLightfv(GL_LIGHT0, GL_POSITION, p_light);
+
+	glCullFace(GL_BACK);
+	//Set the OpenGL matrix mode to ModelView
+
+	//glPushMatrix();
+	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
+	
+	for each (GeoNode* node in NodeList)
+	{
+		node->VOnDraw();
+	}
+
+	//drawObjects();
+	
+	/*
+	glUseProgramObjectARB(0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-RENDER_WIDTH / 2, RENDER_WIDTH / 2, -RENDER_HEIGHT / 2, RENDER_HEIGHT / 2, 1, 20);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glColor4f(1, 1, 1, 1);
+	glActiveTextureARB(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, blurFboIdColorTextureId);
+	glEnable(GL_TEXTURE_2D);
+	glTranslated(0, 0, -1);
+	glBegin(GL_QUADS);
+	glTexCoord2d(0, 0); glVertex3f(0, 0, 0);
+	glTexCoord2d(1, 0); glVertex3f(RENDER_WIDTH / 2, 0, 0);
+	glTexCoord2d(1, 1); glVertex3f(RENDER_WIDTH / 2, RENDER_HEIGHT / 2, 0);
+	glTexCoord2d(0, 1); glVertex3f(0, RENDER_HEIGHT / 2, 0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	*/
+
+	glutSwapBuffers();
+
+}
+
+void ShadowView::VOnClientUpdate(GameInfoPacket* info)
+{
+	for each (GeoNode* node in NodeList)
+	{
+		node->VOnClientUpdate(info);
+
+		if (node->identifier == pPlayer->playerid){
+			//this node is our lovely player and we do want to update our camera to follow
+			/*
+			Matrix4 trans = node->localTransform.GetMatrix4();
+			Vector4 forward = Vector4(0, 0, -1, 1);
+			Vector4 direction = trans*forward;
+			float distanceToPlayer = 5;
+			pViewCamera->position = new Vector3(node->localTransform.position.x-direction.x*distanceToPlayer, node->localTransform.position.y-direction.y*distanceToPlayer, node->localTransform.position.z-direction.z*distanceToPlayer);
+			pViewCamera->rotation = new Vector3(node->localTransform.rotation);
+			*/
+		}
+
+	}
+	//Loop through the list to see anything that's not being processed. if so, create
+	for (int i = 0; i < info->player_infos.size(); i++){
+		if (!info->player_infos[i]->processed){
+			double x = info->player_infos[i]->x;
+			double y = info->player_infos[i]->y;
+			double z = info->player_infos[i]->z;
+			cout << "data is not processed, need to create objects" << endl;
+			Cube* cube = new Cube(1);
+			cube->localTransform.position = Vector3(x, y, z);
+			cube->identifier = info->player_infos[i]->id;
+			NodeList.push_back(cube);
+		}
+	}
+}
+

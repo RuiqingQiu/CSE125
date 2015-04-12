@@ -1,21 +1,22 @@
 #include "stdafx.h"
 #include <iostream>
 
+#include "Window.h"
+
 #ifdef __APPLE__
     #include <GLUT/glut.h>
 #else
     #include <GL/glut.h>
 #endif
 
-#include "Window.h"
 #include "GameView.h"
 #include "Cube.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
 #include "SkyBox.h"
-
-
-#define TESTCAM 1
+#include "Plane.h"
+#include "ShadowView.h"
+#define TESTCAM 0
 
 
 int Window::width  = 512;   //Set window width in pixels here
@@ -37,25 +38,38 @@ void Window::initialize(void)
 	cube->identifier = 1;
 	view->PushGeoNode(cube);
 	
+
 	g_pCore->pGameView = view;
 	//g_pCore->pPlayer->playerid = 1;
-
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
+	
+	//test shadow view
+	ShadowView* shadowview = new ShadowView();
+	g_pCore->pGameView = shadowview;
 
 	//Setup the light
 	//Model3D *object = new Model3D("woodcube.obj");
 	//object->localTransform.position = Vector3(0, 0, 0);
 	//object->localTransform.scale = Vector3(1, 1, 1);
 	//object->localTransform.rotation = Vector3(90, 0, 0);
-
 	//view->PushGeoNode(object);
-
 
 	SkyBox *object2 = new SkyBox();
 	view->PushGeoNode(object2);
 
 	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 5);
+
+	//setup shader
+	//init shader
+	//GLuint program = LoadShader("shadow.vert", "shadow.frag");
+	//glUseProgram(program);
+
+
+	//connect to server
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
+
+
+
 }
 
 //----------------------------------------------------------------------------

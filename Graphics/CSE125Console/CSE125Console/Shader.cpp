@@ -3,110 +3,84 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
 
-Shader::Shader(const char *vert, const char *frag, bool isFile)
-{
-	if (isFile)
-	{
-		char* vv = read(vert);
-		char* vf = read(frag);
 
-		setup(vv, vf);
-		delete[] vv;
-		delete[] vf;
+std::string readFile(const char *filePath) {
+	std::string content;
+	std::ifstream fileStream(filePath, std::ios::in);
+
+	if (!fileStream.is_open()) {
+		std::cerr << "Could not read file " << filePath << ". File does not exist." << std::endl;
+		return "";
 	}
-	else
-		setup(vert, frag);
-}
 
-Shader::~Shader()
-{
-	glDeleteObjectARB(pid);
-}
-
-void
-Shader::bind()
-{
-	glUseProgramObjectARB(pid);
-}
-void
-Shader::unbind()
-{
-	glUseProgramObjectARB(0);
-}
-
-void
-Shader::printLog(const char* tag)
-{
-	char glslLog[1024];
-	GLsizei glslLogSize;
-	glGetInfoLogARB(pid, 1024, &glslLogSize, glslLog);
-	if (glslLogSize>0)
-	{
-		fprintf(stderr, "%s:shader error log: %s\n", tag, glslLog);
+	std::string line = "";
+	while (!fileStream.eof()) {
+		std::getline(fileStream, line);
+		content.append(line + "\n");
 	}
-	else
-	{
-		fprintf(stdout, "%s:shader all ok.\n", tag);
-	}
+
+	fileStream.close();
+	return content;
 }
 
-char* Shader::read(const char *filename)
-{
-	char* shaderFile = 0;
 
-	FILE* fp = fopen(filename, "rb");
-	if (!fp){ fprintf(stderr, "File doesn't exist (%s)\n", filename); std::exit(-1); }
+GLuint LoadShader(const char *vertex_path, const char *fragment_path) {
+	GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
+	GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	// obtain the file size
-	fseek(fp, 0, SEEK_END);
-	long size = ftell(fp);
-	rewind(fp);
+	// Read shaders
+	std::string vertShaderStr = readFile(vertex_path);
+	std::string fragShaderStr = readFile(fragment_path);
+	const char *vertShaderSrc = vertShaderStr.c_str();
+	const char *fragShaderSrc = fragShaderStr.c_str();
 
-	// alloc memory - will be deleted while setting the shader up
-	shaderFile = new char[size + 1];
+	GLint result = GL_FALSE;
+	int logLength;
 
-	// copy the file to the shaderFile
-	fread(shaderFile, sizeof(char), size, fp);
-	shaderFile[size] = '\0'; // eliminate the garbage at EOF
-	fclose(fp);
+	// Compile vertex shader
+	std::cout << "Compiling vertex shader." << std::endl;
+	glShaderSource(vertShader, 1, &vertShaderSrc, NULL);
+	glCompileShader(vertShader);
 
-	fprintf(stdout, "shaderfile = %p\n", shaderFile);
-	return shaderFile;
-}
+	// Check vertex shader
+	glGetShaderiv(vertShader, GL_COMPILE_STATUS, &result);
+	glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &logLength);
+	std::vector<char> vertShaderError((logLength > 1) ? logLength : 1);
+	glGetShaderInfoLog(vertShader, logLength, NULL, &vertShaderError[0]);
+	std::cout << &vertShaderError[0] << std::endl;
 
-void
-Shader::setup(const char *vs, const char *fs)
-{
-	//fprintf(stdout, "vs, fs = %p, %p\n", vs, fs);
+	// Compile fragment shader
+	std::cout << "Compiling fragment shader." << std::endl;
+	glShaderSource(fragShader, 1, &fragShaderSrc, NULL);
+	glCompileShader(fragShader);
 
-	//GLuint vid = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
-	//GLuint fid = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
-	GLhandleARB vid = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
-	GLhandleARB fid = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+	// Check fragment shader
+	glGetShaderiv(fragShader, GL_COMPILE_STATUS, &result);
+	glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logLength);
+	std::vector<char> fragShaderError((logLength > 1) ? logLength : 1);
+	glGetShaderInfoLog(fragShader, logLength, NULL, &fragShaderError[0]);
+	std::cout << &fragShaderError[0] << std::endl;
 
-	glShaderSourceARB(vid, 1, &vs, 0);
-	glShaderSourceARB(fid, 1, &fs, 0);
+	std::cout << "Linking program" << std::endl;
+	GLuint program = glCreateProgram();
+	glAttachShader(program, vertShader);
+	glAttachShader(program, fragShader);
+	glLinkProgram(program);
 
-	glCompileShaderARB(vid);
-	glCompileShaderARB(fid);
-	char glslLog[1024];
-	GLsizei glslLogSize;
-	glGetInfoLogARB(vid, 1024, &glslLogSize, glslLog);
-	if (glslLogSize)
-		printf("vertex program log: %s\n", glslLog);
-	glGetInfoLogARB(fid, 1024, &glslLogSize, glslLog);
-	if (glslLogSize)
-		printf("fragment program log: %s\n", glslLog);
+	glGetProgramiv(program, GL_LINK_STATUS, &result);
+	glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+	std::vector<char> programError((logLength > 1) ? logLength : 1);
+	glGetProgramInfoLog(program, logLength, NULL, &programError[0]);
+	std::cout << &programError[0] << std::endl;
 
-	pid = glCreateProgramObjectARB();
+	glDeleteShader(vertShader);
+	glDeleteShader(fragShader);
 
-	glAttachObjectARB(pid, vid);
-	glAttachObjectARB(pid, fid);
-
-	// delete shader objects as soon as they have been attached to a program
-	glDeleteObjectARB(vid);
-	glDeleteObjectARB(fid);
-
-	glLinkProgramARB(pid);
+	return program;
 }

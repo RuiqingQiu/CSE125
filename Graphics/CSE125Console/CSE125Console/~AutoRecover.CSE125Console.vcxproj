@@ -89,6 +89,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
     <ClInclude Include="gui.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
@@ -126,6 +127,7 @@
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="gui.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GameCore.cpp" />
@@ -172,6 +174,12 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CSE125Console.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shadow.frag" />
+    <None Include="shadow.vert" />
+    <None Include="simple.frag" />
+    <None Include="simple.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -89,8 +89,10 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
     <ClInclude Include="gui.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShadowView.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameInfoPacket.h" />
@@ -126,7 +128,9 @@
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="gui.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShadowView.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameInfoPacket.cpp" />
@@ -172,6 +176,18 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CSE125Console.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BlurFragmentShader.frag" />
+    <None Include="BlurVertexShader.vert" />
+    <None Include="FragmentShader.frag" />
+    <None Include="shadow.frag" />
+    <None Include="shadow.vert" />
+    <None Include="simple.frag" />
+    <None Include="simple.vert" />
+    <None Include="StoreDepthFragmentShader.frag" />
+    <None Include="StoreDepthVertexShader.vert" />
+    <None Include="VertexShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

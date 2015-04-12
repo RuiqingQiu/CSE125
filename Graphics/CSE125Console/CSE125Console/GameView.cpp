@@ -5,6 +5,8 @@
 GameView::GameView()
 {
 	pViewCamera = new Camera();
+
+
 }
 
 

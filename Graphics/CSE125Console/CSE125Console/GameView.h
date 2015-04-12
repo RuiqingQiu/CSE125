@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "Shader.h"
 #include <vector>
 #include "GeoNode.h"
 #include "GameInfoPacket.h"

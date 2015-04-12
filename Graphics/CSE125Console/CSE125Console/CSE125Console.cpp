@@ -55,7 +55,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Initialize the Window:
 	//The body of this function is a great place to load textures, shaders, etc.
 	//and do any operations/calculations/configurations that only need to happen once.
-
+	glewInit();
 	//remove seam
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
