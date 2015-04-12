@@ -20,23 +20,23 @@ unsigned int GameLogic::waitToConnect()
 {
 	int cid; 
 	cid = network->waitForConnections();
-	GameObj* gameObj = new GOBox(10, asd * 15, -5, 0, 0, 0, 1, 1, 1, 1, 1);
+
+
+    if (cid == -1) return WAIT;
+	GameObj* gameObj = new GOBox(10, 100, -5, 0, 0, 0, 1, 1, 1, 1, 1);
 	gameObj->setBlockType(CUBE);
 	asd++;
 	this->pushGameObj(gameObj);
 	clientPair.insert(std::pair<int, GameObj*>(cid, gameObj));
-	GameObj* gameObj1 = new GOBox(10, asd * 15, -5, 0, 0, 0, 1, 1, 1, 1, 1);
-	gameObj1->setBlockType(WHEEL);
-	asd++;
-	this->pushGameObj(gameObj1);
-	clientPair.insert(std::pair<int, GameObj*>(cid + 1, gameObj1));
-	GameObj* gameObj2 = new GOBox(10, asd * 15, -5, 0, 0, 0, 1, 1, 1, 1, 1);
-	gameObj2->setBlockType(NEEDLE);
-	this->pushGameObj(gameObj2);
-	clientPair.insert(std::pair<int, GameObj*>(cid + 2, gameObj2));
-    if (cid == -1) return WAIT;
-
-	// USE CID INSTEAD OF OBJ
+	//GameObj* gameObj1 = new GOBox(10, asd * 15, -5, 0, 0, 0, 1, 1, 1, 1, 1);
+	//gameObj1->setBlockType(WHEEL);
+	//asd++;
+	//this->pushGameObj(gameObj1);
+	//clientPair.insert(std::pair<int, GameObj*>(cid + 1, gameObj1));
+	//GameObj* gameObj2 = new GOBox(10, asd * 15, -5, 0, 0, 0, 1, 1, 1, 1, 1);
+	//gameObj2->setBlockType(NEEDLE);
+	//this->pushGameObj(gameObj2);
+	//clientPair.insert(std::pair<int, GameObj*>(cid + 2, gameObj2));
 
 	network->receiveFromClients(&elist);
 
@@ -68,6 +68,9 @@ unsigned int GameLogic::waitToConnect()
 void GameLogic::gameStart(){
 	countDown->startCountdown(300);
 	countDown->startClock();
+	//Events * e = new Events(MOVE_BACKWARD);
+	//e->setCid(0);
+	//elist.push_back(e);
 	gamePhysics->initWorld(&(this->getGameObjs()));
 }
 
@@ -114,71 +117,11 @@ void GameLogic::prePhyLogic(){
 
 		unsigned int type = (*iter)->getEvent();
 		int cid = (*iter)->getCid();
-		switch (type) {
-		case MOVE_LEFT: {
-
-							printf("Server in MOVE_LEFT prephysics\n");
-							std::map<int, GameObj *>::iterator it;
-							it = clientPair.find(cid);
-							if (it == clientPair.end()) cout << "not found\n" << endl;
-							GameObj*  cob = it->second;
-							cob->setX(cob->getX() - oneStep);
-							cout << cob->getX() << endl;
-							break;
-		}
-		case MOVE_RIGHT: {
-							 printf("Server in MOVE_RIGHT prephysics\n");
-							 std::map< int, GameObj *>::iterator it;
-							 it = clientPair.find(cid);
-							 GameObj*  cob = it->second;
-							 cob->setX(cob->getX() + oneStep);
-							 cout << cob->getX() << endl;
-							 break;
-		}
-		case MOVE_BACKWARD: {
-								printf("Server in MOVE_BACKWARD prephysics\n");
-								std::map< int, GameObj *>::iterator it;
-								it = clientPair.find(cid);
-								GameObj*  cob = it->second;
-								cob->setZ(cob->getZ() + oneStep);
-								cout << cob->getX() << endl;
-								break;
-		}
-		case MOVE_FORWARD: {
-
-							   std::map<int, GameObj *>::iterator it;
-							   it = clientPair.find(cid);
-							   GameObj*  cob = it->second;
-							   cob->setZ(cob->getZ() - oneStep);
-							   cout << cob->getX() << endl;
-							   break;
-		}
-		case MOVE_UP: {
-
-						  std::map<int, GameObj *>::iterator it;
-						  it = clientPair.find(cid);
-						  GameObj*  cob = it->second;
-						  cob->setY(cob->getY() + oneStep);
-						  cout << cob->getX() << endl;
-						  break;
-		}
-
-		case MOVE_DOWN: {
-							std::map<int, GameObj *>::iterator it;
-							it = clientPair.find(cid);
-							GameObj*  cob = it->second;
-							cob->setY(cob->getY() - oneStep);
-							cout << cob->getX() << endl;
-							break;
-		}
-
-
-		default:{
-					printf("error in packet types\n");
-					break;
-		}
-		}
-
+		std::map<int, GameObj *>::iterator it;
+		it = clientPair.find(cid);
+		GameObj*  cob = it->second;
+		btRigidBody *rb = cob->getRigidBody();
+		gamePhysics->createPhysicsEvent(type, rb);
 		iter++;
 	
 	}

@@ -47,15 +47,16 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 
 void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 {
-	dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
+	dynamicsWorld->setGravity(btVector3(0, 0, 0));
 	btCollisionShape* ground = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
 
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI(0, groundMotionState, ground, btVector3(0, 0, 0));
+	groundRigidBodyCI.m_friction = 0.8f;
 	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 	dynamicsWorld->addRigidBody(groundRigidBody);
-
+	//dynamicsWorld->clearForces();
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObj->begin(); it != gameObj->end(); ++it)
 	{
@@ -80,5 +81,77 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
 		(*it)->setRotX(vect.getX());
 		(*it)->setRotY(vect.getY());
 		(*it)->setRotZ(vect.getZ());
+	}
+}
+
+void GamePhysics::createPhysicsEvent(int eventType, btRigidBody* rb)
+{
+
+	switch (eventType) {
+	case MOVE_LEFT: {
+		btScalar x = rb->getOrientation().getX();
+		btScalar y = rb->getOrientation().getY();
+		btScalar z = rb->getOrientation().getZ();
+		btScalar w = rb->getOrientation().getW();
+		std::cout << "qx: " << x << std::endl;
+		std::cout << "qy: " << y << std::endl;
+		std::cout << "qz: " << z << std::endl;
+		std::cout << "qw: " << w << std::endl;
+		btVector3 relativeForce = btVector3(-MOVE_SPEED, 0, 0);
+		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
+		btVector3 correctedForce = boxRot * relativeForce;
+		rb->applyCentralForce(correctedForce);
+		break;
+	}
+	case MOVE_RIGHT: {
+		btScalar x = rb->getOrientation().getX();
+		btScalar y = rb->getOrientation().getY();
+		btScalar z = rb->getOrientation().getZ();
+		btScalar w = rb->getOrientation().getW();
+		std::cout << "qx: " << x << std::endl;
+		std::cout << "qy: " << y << std::endl;
+		std::cout << "qz: " << z << std::endl;
+		std::cout << "qw: " << w << std::endl;
+		btVector3 relativeForce = btVector3(MOVE_SPEED, 0, 0);
+		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
+		btVector3 correctedForce = boxRot * relativeForce;
+		rb->applyCentralForce(correctedForce);
+		break;
+	}
+	case MOVE_BACKWARD: {
+		btVector3 relativeForce = btVector3(0, 0, MOVE_SPEED);
+		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
+		btVector3 correctedForce = boxRot * relativeForce;
+		rb->applyCentralForce(correctedForce);
+		break;
+	}
+	case MOVE_FORWARD: {
+		btVector3 relativeForce = btVector3(0, 0, -MOVE_SPEED);
+		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
+		btVector3 correctedForce = boxRot * relativeForce;
+		rb->applyCentralForce(correctedForce);
+		break;
+	}
+	case MOVE_UP: {
+		btVector3 relativeForce = btVector3(0, MOVE_SPEED*2, 0);
+		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
+		btVector3 correctedForce = boxRot * relativeForce;
+		rb->applyCentralForce(correctedForce);
+		break;
+	}
+
+	case MOVE_DOWN: {
+		btVector3 relativeForce = btVector3(0, -MOVE_SPEED*2, 0);
+		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
+		btVector3 correctedForce = boxRot * relativeForce;
+		rb->applyCentralForce(correctedForce);
+		break;
+	}
+
+
+	default:{
+		printf("error in packet types\n");
+		break;
+	}
 	}
 }

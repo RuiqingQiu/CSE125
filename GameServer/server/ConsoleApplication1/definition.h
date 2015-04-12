@@ -1,5 +1,8 @@
 #pragma once
 #include "GameObj.h"
+#include "Events.h"
+
+#define MOVE_SPEED 10
 
 
 	//ACTIONS FOR STATE MACHINE

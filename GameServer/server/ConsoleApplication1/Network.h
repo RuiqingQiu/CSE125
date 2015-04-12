@@ -10,7 +10,6 @@
 #include "GOCone.h"
 #include "GOCylinder.h"
 #include "GOPlane.h"
-#include "Events.h"
 #include <string>
 
 class Network {

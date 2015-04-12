@@ -2,6 +2,8 @@
 #include <btBulletDynamicsCommon.h>
 #include "GameObj.h"
 #include <vector>
+#include <map>
+#include "definition.h"
 #include <iostream>
 
 class GamePhysics
@@ -17,6 +19,7 @@ public:
 	btDiscreteDynamicsWorld* getDynamicsWorld();
 
 	void initWorld(std::vector<GameObj*>*);
+	void createPhysicsEvent(int, btRigidBody*);
 	void stepSimulation(std::vector<GameObj*> *);
 
 

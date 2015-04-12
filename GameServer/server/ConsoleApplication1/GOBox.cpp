@@ -48,5 +48,10 @@ void GOBox::createRigidBody()
 	btVector3 fallInertia(0, 0, 0);
 	fallShape->calculateLocalInertia(mass, fallInertia);
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
-	this->setRigidBody(new btRigidBody(fallRigidBodyCI));
+	fallRigidBodyCI.m_friction = 0.8f;
+	fallRigidBodyCI.m_restitution = 0.0f;
+	fallRigidBodyCI.m_linearDamping = 0.2f;
+	fallRigidBodyCI.m_angularDamping = 0.1f;
+	btRigidBody* rb = new btRigidBody(fallRigidBodyCI);
+	this->setRigidBody(rb);
 }

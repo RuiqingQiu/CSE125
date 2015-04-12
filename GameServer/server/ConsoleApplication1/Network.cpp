@@ -316,7 +316,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += ' ';
 		temp += to_string((*i)->getZ());
 		temp += ' ';
-		temp += to_string((*i)->getRotX());
+		/*temp += to_string((*i)->getRotX());
 		temp += ' ';
 		temp += to_string((*i)->getRotY());
 		temp += ' ';
@@ -370,7 +370,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 				temp += to_string(((GOPlane*)(*i))->getPlaneConst());
 				break;
 			}
-		}
+		}*/
 		temp += '\n';
 	}
 	temp += "\0";
