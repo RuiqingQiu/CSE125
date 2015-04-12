@@ -5,11 +5,11 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.vcxproj", "{1FE13DE8-D67A-4E3C-8AB6-C9B9EBA593E3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletCollision", "..\..\..\..\..\Bullet Engine\src\BulletCollision\BulletCollision.vcxproj", "{B8EC0F92-FA26-4559-BD7B-097B5179950F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletCollision", "Bullet Src\BulletCollision\BulletCollision.vcxproj", "{B8EC0F92-FA26-4559-BD7B-097B5179950F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletDynamics", "..\..\..\..\..\Bullet Engine\src\BulletDynamics\BulletDynamics.vcxproj", "{877E31BA-B5FB-4B9F-9243-5069A31BF962}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BulletDynamics", "Bullet Src\BulletDynamics\BulletDynamics.vcxproj", "{877E31BA-B5FB-4B9F-9243-5069A31BF962}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearMath", "..\..\..\..\..\Bullet Engine\src\LinearMath\LinearMath.vcxproj", "{54B0DB0D-426C-4063-AC25-42734E91E80A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LinearMath", "Bullet Src\LinearMath\LinearMath.vcxproj", "{54B0DB0D-426C-4063-AC25-42734E91E80A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
