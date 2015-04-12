@@ -5,22 +5,22 @@
 #include "SkyBox.h"
 
 
-#define RENDER_WIDTH 512
-#define RENDER_HEIGHT 512
-#define SHADOW_MAP_COEF 0.25
+#define RENDER_WIDTH 1024.0
+#define RENDER_HEIGHT 768.0
+#define SHADOW_MAP_COEF 0.5
 #define BLUR_COEF 0.25
 
 //Camera position
 float p_camera[4] = { 35, 25, 5, 1 };
 
 //Camera lookAt
-float l_camera[3] = { 0, -2, -10 };
+float l_camera[3] = { 0, 0, -10 };
 
 //Light position
-float p_light[4] = { 0, 10, 0, 1 };
+float p_light[4] = { 3, 18, 0, 1 };
 
 //Light lookAt
-float l_light[3] = { 2, 10, 0 };
+float l_light[3] = { 0, 0, -5 };
 
 
 //Light mouvement circle radius
@@ -249,7 +249,7 @@ void setupMatrices(float position_x, float position_y, float position_z, float l
 {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60, RENDER_WIDTH / RENDER_HEIGHT, 1, 1000);
+	gluPerspective(45, RENDER_WIDTH / RENDER_HEIGHT, 10, 120);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(position_x, position_y, position_z, lookAt_x, lookAt_y, lookAt_z, 0, 1, 0);
@@ -261,8 +261,8 @@ void setupMatrices(float position_x, float position_y, float position_z, float l
 void update(void)
 {
 	//printf("%d\n",glutGet(GLUT_ELAPSED_TIME));
-	//p_light[0] = light_mvnt * cos(glutGet(GLUT_ELAPSED_TIME) / 2000.0);
-	//p_light[2] = light_mvnt * sin(glutGet(GLUT_ELAPSED_TIME) / 2000.0);
+	p_light[0] = light_mvnt * cos(glutGet(GLUT_ELAPSED_TIME) / 2000.0);
+	p_light[2] = light_mvnt * sin(glutGet(GLUT_ELAPSED_TIME) / 2000.0);
 
 	//p_light[0] = light_mvnt * cos(4000/1000.0);
 	//p_light[2] = light_mvnt * sin(4000/1000.0);
@@ -316,15 +316,19 @@ void startTranslate(float x, float y, float z)
 	glPushMatrix();
 	glTranslatef(x, y, z);
 
+	/*
 	glMatrixMode(GL_TEXTURE);
 	glActiveTextureARB(GL_TEXTURE7);
 	glPushMatrix();
 	glTranslatef(x, y, z);
+	*/
 }
 
 void endTranslate()
 {
+	/*
 	glPopMatrix();
+	*/
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 }
@@ -332,6 +336,7 @@ void endTranslate()
 void drawObjects(void)
 {
 	// Ground
+	/*
 	glColor4f(0.3f, 0.3f, 0.3f, 1);
 	glBegin(GL_QUADS);
 	glVertex3f(-45, 2, -45);
@@ -339,7 +344,7 @@ void drawObjects(void)
 	glVertex3f(55, 2, 55);
 	glVertex3f(55, 2, -45);
 	glEnd();
-
+	*/
 	glColor4f(0.9f, 0.9f, 0.9f, 1);
 
 	// Instead of calling glTranslatef, we need a custom function that also maintain the light matrix
@@ -419,18 +424,19 @@ void renderScene(void)
 ShadowView::ShadowView()
 {
 	//plane
+	
 	Plane* plane = new Plane(50);
-	plane->localTransform.position = Vector3(0, -10, 0);
-	plane->localTransform.rotation = Vector3(90, 0, 0);
+	plane->localTransform.position = Vector3(0, 2, 0);
+	plane->localTransform.rotation = Vector3(0, 0, 0);
 	this->PushGeoNode(plane);
-
+	
 	Cube* cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	this->PushGeoNode(cube);
 
 	SkyBox *object2 = new SkyBox();
-	this->PushGeoNode(object2);
+	//this->PushGeoNode(object2);
 
 	generateShadowFBO();
 	loadShadowShader();
@@ -467,29 +473,17 @@ void ShadowView::VOnRender()
 	// Clear previous frame values
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//setupMatrices(p_light[0], p_light[1], p_light[2], l_light[0], l_light[1], l_light[2]);
-	setupMatrices(p_light[0], p_light[1], p_light[2], 0,0,0);
-
+	setupMatrices(p_light[0], p_light[1], p_light[2], l_light[0], l_light[1], l_light[2]);
 
 	// Culling switching, rendering only backface, this is done to avoid self-shadowing
 	//glCullFace(GL_FRONT);
-	//Set the OpenGL matrix mode to ModelView
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
-
-	//pViewCamera->setUpCamera();
-
-	//glPushMatrix();
-	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
-
-	
+	drawObjects();
 	for each (GeoNode* node in NodeList)
 	{
 		node->VOnDraw();
 	}
 
-	//drawObjects();
-
+	
 	glGenerateMipmapEXT(GL_TEXTURE_2D);
 	//Save modelview/projection matrice into texture7, also add a biais
 	setTextureMatrix();
@@ -512,34 +506,17 @@ void ShadowView::VOnRender()
 	glActiveTextureARB(GL_TEXTURE7);
 	glBindTexture(GL_TEXTURE_2D, colorTextureId);
 
-
-	//setupMatrices(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z, l_camera[0], l_camera[1], l_camera[2]);
-	//setupMatrices(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z, 0, 0, 0);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60, RENDER_WIDTH / RENDER_HEIGHT, 1, 1000);
-	
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	pViewCamera->setUpCamera();
-
+	setupMatrices(p_camera[0], p_camera[1], p_camera[2], l_camera[0], l_camera[1], l_camera[2]);
 
 	glLightfv(GL_LIGHT0, GL_POSITION, p_light);
 
 	glCullFace(GL_BACK);
-	//Set the OpenGL matrix mode to ModelView
-
-	//glPushMatrix();
-	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
-	
+	drawObjects();
 	for each (GeoNode* node in NodeList)
 	{
 		node->VOnDraw();
 	}
-
-	//drawObjects();
 	
-	/*
 	glUseProgramObjectARB(0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -548,7 +525,7 @@ void ShadowView::VOnRender()
 	glLoadIdentity();
 	glColor4f(1, 1, 1, 1);
 	glActiveTextureARB(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, blurFboIdColorTextureId);
+	glBindTexture(GL_TEXTURE_2D, colorTextureId);
 	glEnable(GL_TEXTURE_2D);
 	glTranslated(0, 0, -1);
 	glBegin(GL_QUADS);
@@ -558,8 +535,7 @@ void ShadowView::VOnRender()
 	glTexCoord2d(0, 1); glVertex3f(0, RENDER_HEIGHT / 2, 0);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
-	*/
-
+	
 	glutSwapBuffers();
 
 }

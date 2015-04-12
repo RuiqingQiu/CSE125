@@ -37,30 +37,30 @@ void Plane::VOnClientUpdate(GameInfoPacket* pData){
 void Plane::VOnDraw()
 {
 	float halfSize = size / 2.0;
-	glColor3f(1, 0, 0);
 
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	//Apply local transformation
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
+	glColor4f(0.3f, 0.3f, 0.3f, 1);
 
 	glBegin(GL_QUADS);
 	//glTranslated(0, 0, 5);
 	// Draw front face:
-	glNormal3f(0.0, 0.0, 1.0);
-	glVertex3f(-halfSize,  halfSize,  0);
-	glVertex3f( halfSize,  halfSize,  0);
-	glVertex3f( halfSize, -halfSize,  0);
-	glVertex3f(-halfSize, -halfSize,  0);
+	glNormal3f(0.0, 10, 0.0);
+	glVertex3f(-45, 0, -45);
+	glVertex3f(-45, 0, 55);
+	glVertex3f(55, 0, 55);
+	glVertex3f(55, 0, -45);
 
 	glEnd();
+	glColor4f(0.3f, 0.3f, 0.3f, 1);
 
 
 	//Pop the save state off the matrix stack
 	//This will undo the multiply we did earlier
 	glPopMatrix();
-	glColor3f(1, 1, 1);
 
 }
 

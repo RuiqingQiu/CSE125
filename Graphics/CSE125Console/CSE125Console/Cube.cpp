@@ -37,8 +37,7 @@ void Cube::VOnClientUpdate(GameInfoPacket* pData){
 void Cube::VOnDraw()
 {
     float halfSize = size/2.0;
-	glColor3f(0, 1, 0);
-    
+
     //Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
     glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -106,14 +105,15 @@ void Cube::VOnDraw()
     glEnd();
     */
 
+	glColor4f(0.9f, 0.9f, 0.9f, 1);
 
     //The above glBegin, glEnd, glNormal and glVertex calls can be replaced with a glut convenience function
     glutSolidCube(size);
-    
+	glColor4f(0.9f, 0.9f, 0.9f, 1);
+
     //Pop the save state off the matrix stack
     //This will undo the multiply we did earlier
     glPopMatrix();
-	glColor3f(1, 1, 1);
 
 }
 
