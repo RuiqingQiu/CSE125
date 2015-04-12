@@ -7,6 +7,7 @@
 #include "GamePacketManager.h"
 #include "GamePlayer.h"
 #include "GameInputInterface.h"
+
 #ifndef CSE125_CORE
 #define CSE125_CORE
 
@@ -33,6 +34,7 @@ public:
 
 	//always points to build mode
 	gui * buildmode;
+	gui * menumode;
 
 	//add more "static" pointers here
 	//always point to main menu
