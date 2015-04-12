@@ -108,6 +108,7 @@ void scrollBox::rePosition(int x, int y, int w, int h) {
 
 void scrollBox::addListItem(char * filename) {
 	int s = list.size();
+	s = 7 - s;
 	//button jpg dimensions: 1300x300px
 	//button texture orignal dimesntions: 1024x512
 	//border is 10px on img

@@ -52,11 +52,12 @@ void buildView::createButtons() {
 	scroll = new scrollBox(width - (1320 / scale) - 20, 100,
 		1320 / scale, 2420 / scale);
 	buttons.push_back(scroll);
-	
 
-	//sublist options, need to make collapsable....make "sublist" in scrollbox class?
-	std::string path = "uiItem/buttons/listItem/subItem/";
-	for (int i = 31; i >= 30; i--) {
+	//list options
+	//button jpg width 130px = 256 texture unit
+	// border is 10px on img
+	std::string  path = "uiItem/buttons/listItem/";
+	for (int i = 0; i < 4; i++) {
 		std::string concat = path + std::to_string(i) + ".jpg";
 		char *cstr = new char[concat.length() + 1];
 		strcpy(cstr, concat.c_str());
@@ -66,11 +67,9 @@ void buildView::createButtons() {
 		delete[] cstr;
 	}
 
-	//list options
-	//button jpg width 130px = 256 texture unit
-	// border is 10px on img
-	path = "uiItem/buttons/listItem/";
-	for (int i = 3; i >= 0; i--) {
+	//sublist options, need to make collapsable....make "sublist" in scrollbox class?
+	path = "uiItem/buttons/listItem/subItem/";
+	for (int i = 30; i < 32; i++) {
 		std::string concat = path + std::to_string(i) + ".jpg";
 		char *cstr = new char[concat.length() + 1];
 		strcpy(cstr, concat.c_str());

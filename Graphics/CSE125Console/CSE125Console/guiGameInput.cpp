@@ -41,8 +41,8 @@ void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 	else if (key == '4') {
 		g_pCore->viewmode = 4;
 		g_pCore->gameGui = g_pCore->defaultGui;
-		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
-			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
+		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
 	}
 	else if (key == '5') {
 		g_pCore->viewmode = 5;

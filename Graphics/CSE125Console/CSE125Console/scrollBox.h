@@ -29,6 +29,7 @@ public:
 	bool isClicked(int x, int y);
 	void onClick(int x, int y);
 
+private:
 	//regular items, just displays
 	guiItem * scrollDisplay;
 	button * upButton;
@@ -36,5 +37,6 @@ public:
 
 	//clickable items
 	std::vector<button*> list;
+	int displayIdx;
 };
 
