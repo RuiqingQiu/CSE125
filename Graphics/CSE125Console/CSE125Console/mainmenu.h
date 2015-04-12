@@ -12,6 +12,8 @@ public:
 
 	void VOnClientUpdate(GameInfoPacket* info); //must have
 
+	void onClick(int x, int y);
+
 	//void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
 
 private:

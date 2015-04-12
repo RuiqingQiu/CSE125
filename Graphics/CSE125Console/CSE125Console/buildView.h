@@ -10,6 +10,8 @@ public:
 	void VOnRender();
 	void createButtons();
 
+	void onClick(int x, int y);
+
 	~buildView();
 
 	vector<button*> listItems;

@@ -34,3 +34,10 @@ void mainMenu::VOnClientUpdate(GameInfoPacket* info){
 
 }
 
+void mainMenu::onClick(int x, int y) {
+	for (int i = 0; i < buttons.size(); i++) {
+		//y is goes top to bottom for mouse,
+		//and bottom to top for texture >.<
+		buttons[i]->onClick(x, height-y);
+	}
+}

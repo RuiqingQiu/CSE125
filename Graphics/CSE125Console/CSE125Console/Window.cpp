@@ -106,7 +106,7 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 }
 
 void Window::processMouseClick(int button, int state, int x, int y) {
-	//g_pCore->(some input)->(proccessmouse)
+	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
 }
 
 //----------------------------------------------------------------------------

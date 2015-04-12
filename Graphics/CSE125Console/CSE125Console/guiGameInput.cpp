@@ -54,4 +54,5 @@ void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 
 void guiGameInput::VProcessMouseClick(int button, int state, int x, int y) {
 	//check which button was pressed here
+	g_pCore->gameGui->onClick(x, y);
 }

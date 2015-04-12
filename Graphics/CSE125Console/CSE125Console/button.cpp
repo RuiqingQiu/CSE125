@@ -10,7 +10,7 @@
  */
 
 button::button() : guiItem() {
-	name = "no name";
+	name = "noname";
 }
 
 button::button(char * filename) : 
@@ -35,6 +35,7 @@ guiItem(filename, x, y, xf, yf) {
 
 button::button(char * filename, int x, int y, int w, int h) :
 guiItem(filename, x, y, w, h) {
+	name = filename;
 }
 
 button::button(char * filename, int x, int y, int w, int h, bool f) :

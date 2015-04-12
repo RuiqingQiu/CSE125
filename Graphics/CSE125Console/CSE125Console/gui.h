@@ -19,6 +19,8 @@ public:
 
 	void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
 
+	virtual void onClick(int x, int y);
+
 	void setDimensions(int w, int h);
 
 	void set2d();

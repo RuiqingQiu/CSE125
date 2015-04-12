@@ -10,5 +10,7 @@ public:
 
 	virtual void VProcessKeyInput(unsigned char key, int x, int y);
 
+	void VProcessMouseClick(int button, int state, int x, int y);
+
 };
 

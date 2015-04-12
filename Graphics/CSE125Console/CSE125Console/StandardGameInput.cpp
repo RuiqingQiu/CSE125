@@ -11,6 +11,10 @@ StandardGameInput::~StandardGameInput()
 {
 }
 
+void StandardGameInput::VProcessMouseClick(int button, int state, int x, int y) {
+	//do nothing for now, need this function in gui
+}
+
 void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 {
 	if (key == 27){
