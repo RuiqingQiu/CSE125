@@ -89,10 +89,10 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
     <ClInclude Include="gui.h" />
+    <ClInclude Include="HardShadowView.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShadowView.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameInfoPacket.h" />
@@ -128,9 +128,9 @@
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="gui.cpp" />
+    <ClCompile Include="HardShadowView.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShadowView.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameInfoPacket.cpp" />
@@ -181,6 +181,8 @@
     <None Include="BlurFragmentShader.frag" />
     <None Include="BlurVertexShader.vert" />
     <None Include="FragmentShader.frag" />
+    <None Include="hard_shadow.frag" />
+    <None Include="hard_shadow.vert" />
     <None Include="shadow.frag" />
     <None Include="shadow.vert" />
     <None Include="simple.frag" />

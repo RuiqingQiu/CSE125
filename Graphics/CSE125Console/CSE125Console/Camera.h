@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdafx.h"
+//#include "Window.h"
 #include "Transform.h"
 #include <GL/glut.h>
 
@@ -28,6 +29,7 @@ public:
 	Camera();
 	~Camera();
 	void setUpCamera();
+	void setUpCameraWithGL(float position_x, float position_y, float position_z, float lookAt_x, float lookAt_y, float lookAt_z);
 };
 
 

@@ -16,6 +16,7 @@
 #include "SkyBox.h"
 #include "Plane.h"
 #include "ShadowView.h"
+#include "HardShadowView.h"
 #define TESTCAM 0
 
 
@@ -33,7 +34,7 @@ void Window::initialize(void)
 	//glColor3f(1, 1, 1);
 	GameView* view = new GameView();
 	cube = new Cube(1);
-	cube->localTransform.position = Vector3(0, 0, 0);
+	cube->localTransform.position = Vector3(0, 0, -10);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
 	view->PushGeoNode(cube);
@@ -43,7 +44,7 @@ void Window::initialize(void)
 	//g_pCore->pPlayer->playerid = 1;
 	
 	//test shadow view
-	ShadowView* shadowview = new ShadowView();
+	HardShadowView* shadowview = new HardShadowView();
 	g_pCore->pGameView = shadowview;
 
 	//Setup the light
@@ -98,12 +99,13 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 // Callback method called by GLUT when graphics window is resized by the user
 void Window::reshapeCallback(int w, int h)
 {
-    width = w;                                                       //Set the window width
-    height = h;                                                      //Set the window height
+    Window::width = w;                                                       //Set the window width
+	Window::height = h;                                                      //Set the window height
     glViewport(0, 0, w, h);                                          //Set new viewport size
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(60.0, double(width)/(double)height, 1.0, 1000.0); //Set perspective projection viewing frustum
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 10, 1000.0); //Set perspective projection viewing frustum
+
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 }
 
@@ -130,7 +132,7 @@ void Window::displayCallback()
 
 	g_pCore->pGameView->VOnRender();
 
-	buildmode.draw(width, height);
+	buildmode.draw(Window::width, Window::height);
 
 	//test for camera
 	

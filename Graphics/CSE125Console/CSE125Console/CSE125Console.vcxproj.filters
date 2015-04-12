@@ -156,8 +156,8 @@
     <ClInclude Include="Plane.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="ShadowView.h">
-      <Filter>Source Files\GameView</Filter>
+    <ClInclude Include="HardShadowView.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -257,8 +257,8 @@
     <ClCompile Include="Plane.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowView.cpp">
-      <Filter>Source Files\GameView</Filter>
+    <ClCompile Include="HardShadowView.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +295,12 @@
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="VertexShader.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="hard_shadow.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="hard_shadow.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
   </ItemGroup>
