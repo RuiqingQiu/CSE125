@@ -77,6 +77,7 @@ scrollBox::~scrollBox()
 
 
 void scrollBox::init() {
+	displayIdx = 0;
 	//keep ratio to scroll box dimensions: 1320x2420px
 	int ratio = height / 24.2;
 	//button jpg dimensions: 1320x100px
@@ -92,7 +93,7 @@ void scrollBox::draw() {
 	scrollDisplay->draw();
 	upButton->draw();
 	downButton->draw();
-	for (int i = 0; i < list.size(); i++) {
+	for (int i = displayIdx; i < displayIdx+8; i++) {
 		list[i]->draw();
 	}
 }
@@ -131,6 +132,27 @@ bool scrollBox::isClicked(int x, int y) {
 }
 
 void scrollBox::onClick(int x, int y) {
+	int border = ceil((10.0 / 1320.0) * width);
+	int h = ceil((300.0 / 2420.0) * height);
+
+	if (upButton->isClicked(x, y)) {
+		if (list.size() <= 8) return;
+		if (displayIdx == 0) return;
+		displayIdx--;
+		for (int i = 0; i < list.size(); i++) {
+			list[i]->translate(0, -(h + border));
+		}
+	}
+	if (downButton->isClicked(x, y)) {
+		int s = list.size();
+		if (s <= 8) return;
+		if ((s - displayIdx) <= 8) return;
+		displayIdx++;
+		for (int i = 0; i < list.size(); i++) {
+			list[i]->translate(0, h+border);
+		}
+	}
+
 	upButton->onClick(x, y);
 	downButton->onClick(x, y);
 	for (int i = 0; i < list.size(); i++) {

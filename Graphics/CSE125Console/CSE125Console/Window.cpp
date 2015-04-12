@@ -51,6 +51,7 @@ void Window::initialize(void)
 	g_pCore->defaultGui = new gui();
 	if (g_pCore->viewmode == 0) {
 		g_pCore->gameGui = g_pCore->defaultGui;
+		g_pCore->i_pInput = g_pCore->standard_Input;
 	} 
 	else if (g_pCore->viewmode == 1) {
 		g_pCore->gameGui = g_pCore->buildmode;
@@ -58,9 +59,11 @@ void Window::initialize(void)
 	}
 	else if (g_pCore->viewmode == 2) {
 		g_pCore->gameGui = g_pCore->defaultGui;
+		g_pCore->i_pInput = g_pCore->standard_Input;
 	}
 	else if (g_pCore->viewmode == 3) {
 		g_pCore->gameGui = g_pCore->defaultGui;
+		g_pCore->i_pInput = g_pCore->standard_Input;
 	}
 	// main menu view
 	else if (g_pCore->viewmode == 4) {
@@ -81,7 +84,7 @@ void Window::initialize(void)
 	//see comments about switching views in gameCore.cpp
 	g_pCore->skybox = new SkyBox();
 	//no skybox for buildmode
-	if (g_pCore->viewmode != 1) {
+	if (g_pCore->viewmode != 1 && g_pCore->viewmode != 4) {
 		view->PushGeoNode(g_pCore->skybox);
 	}
 

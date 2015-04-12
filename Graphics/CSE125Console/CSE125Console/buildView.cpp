@@ -79,6 +79,10 @@ void buildView::createButtons() {
 		delete[] cstr;
 	}
 
+	for (int i = 0; i < 3; i++) {
+		scroll->addListItem("uiItem/buttons/listItem/0.jpg");
+	}
+
 
 	//help button
 	//button jpg dimensions: 1000x300px

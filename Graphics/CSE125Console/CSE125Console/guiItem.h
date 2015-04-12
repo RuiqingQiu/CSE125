@@ -24,6 +24,7 @@ public:
 	void setSize(int w, int h);
 	void setFixed(bool x, bool y);
 	void setScaling(bool xs, bool ys, int w, int h);
+	void translate(int x, int y);
 
 	bool xisFixed();
 	bool yisFixed();

@@ -7,13 +7,13 @@ mainMenu::mainMenu(){
 	height = 0;
 	// right now whole main menu is clickable, single texture
 	// need to add more buttons later
-	buttons.push_back(new button("uiItem/images/background.jpg", 150, 330, 150, 100, true));
+	buttons.push_back(new button("uiItem/buttons/menuItem/2.jpg", 150, 330, 150, 100, true));
 }
 
 mainMenu::mainMenu(int w, int h){
 	width = w;
 	height = h;
-	buttons.push_back(new button("uiItem/images/background.jpg", 150, 330, 150, 100, true));
+	buttons.push_back(new button("uiItem/buttons/menuItem/2.jpg", 150, 330, 150, 100, true));
 }
 
 mainMenu::~mainMenu(){
