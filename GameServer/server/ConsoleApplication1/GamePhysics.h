@@ -6,6 +6,8 @@
 #include "definition.h"
 #include <iostream>
 
+
+
 class GamePhysics
 {
 public:
@@ -29,6 +31,8 @@ private:
 	btCollisionDispatcher* dispatcher;
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld* dynamicsWorld;
+
+	const btVector3 yAxis = btVector3(0.0f,1.0f,0.0f);
 };
 
 

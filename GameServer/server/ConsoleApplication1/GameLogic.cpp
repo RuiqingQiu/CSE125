@@ -21,13 +21,13 @@ unsigned int GameLogic::waitToConnect()
 	int cid; 
 	cid = network->waitForConnections();
 
-
-    if (cid == -1) return WAIT;
 	GameObj* gameObj = new GOBox(10, 100, -5, 0, 0, 0, 1, 1, 1, 1, 1);
 	gameObj->setBlockType(CUBE);
 	asd++;
 	this->pushGameObj(gameObj);
-	clientPair.insert(std::pair<int, GameObj*>(cid, gameObj));
+	clientPair.insert(std::pair<int, GameObj*>(0, gameObj));
+    if (cid == -1) return WAIT;
+
 	//GameObj* gameObj1 = new GOBox(10, asd * 15, -5, 0, 0, 0, 1, 1, 1, 1, 1);
 	//gameObj1->setBlockType(WHEEL);
 	//asd++;
@@ -68,9 +68,12 @@ unsigned int GameLogic::waitToConnect()
 void GameLogic::gameStart(){
 	countDown->startCountdown(300);
 	countDown->startClock();
-	//Events * e = new Events(MOVE_BACKWARD);
-	//e->setCid(0);
-	//elist.push_back(e);
+	Events * e = new Events(MOVE_RIGHT);
+	e->setCid(0);
+	elist.push_back(e);
+	Events * e1 = new Events(MOVE_FORWARD);
+	e1->setCid(0);
+	elist.push_back(e1);
 	gamePhysics->initWorld(&(this->getGameObjs()));
 }
 

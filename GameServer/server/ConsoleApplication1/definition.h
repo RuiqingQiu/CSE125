@@ -3,6 +3,8 @@
 #include "Events.h"
 
 #define MOVE_SPEED 10
+#define TURN_SPEED 0.5
+# define M_PI  3.14159265358979323846
 
 
 	//ACTIONS FOR STATE MACHINE

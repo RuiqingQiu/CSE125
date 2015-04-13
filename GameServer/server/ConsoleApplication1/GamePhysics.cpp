@@ -89,33 +89,18 @@ void GamePhysics::createPhysicsEvent(int eventType, btRigidBody* rb)
 
 	switch (eventType) {
 	case MOVE_LEFT: {
-		btScalar x = rb->getOrientation().getX();
-		btScalar y = rb->getOrientation().getY();
-		btScalar z = rb->getOrientation().getZ();
-		btScalar w = rb->getOrientation().getW();
-		std::cout << "qx: " << x << std::endl;
-		std::cout << "qy: " << y << std::endl;
-		std::cout << "qz: " << z << std::endl;
-		std::cout << "qw: " << w << std::endl;
-		btVector3 relativeForce = btVector3(-MOVE_SPEED, 0, 0);
-		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
-		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralForce(correctedForce);
+
+		btQuaternion* dQ = new btQuaternion(yAxis, TURN_SPEED*((0.5*M_PI)));
+		btTransform T = rb->getWorldTransform();
+		T.setRotation(*dQ * rb->getWorldTransform().getRotation());
+		rb->setWorldTransform(T);
 		break;
 	}
 	case MOVE_RIGHT: {
-		btScalar x = rb->getOrientation().getX();
-		btScalar y = rb->getOrientation().getY();
-		btScalar z = rb->getOrientation().getZ();
-		btScalar w = rb->getOrientation().getW();
-		std::cout << "qx: " << x << std::endl;
-		std::cout << "qy: " << y << std::endl;
-		std::cout << "qz: " << z << std::endl;
-		std::cout << "qw: " << w << std::endl;
-		btVector3 relativeForce = btVector3(MOVE_SPEED, 0, 0);
-		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
-		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralForce(correctedForce);
+		btQuaternion* dQ = new btQuaternion(yAxis, -TURN_SPEED*((0.5*M_PI)));
+		btTransform T = rb->getWorldTransform();
+		T.setRotation(*dQ * rb->getWorldTransform().getRotation());
+		rb->setWorldTransform(T);
 		break;
 	}
 	case MOVE_BACKWARD: {
