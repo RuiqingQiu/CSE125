@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameInputInterface.h"
 #include "GameCore.h"
+
 #pragma once
 class StandardGameInput: public GameInputInterface
 {
@@ -12,5 +13,6 @@ public:
 
 	void VProcessMouseClick(int button, int state, int x, int y);
 
+	void setGui();
 };
 

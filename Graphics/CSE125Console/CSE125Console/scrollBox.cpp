@@ -122,13 +122,13 @@ void scrollBox::addListItem(char * filename) {
 }
 
 bool scrollBox::isClicked(int x, int y) {
-	/*
-	if (x >= xPos && x < (xPos + width)) {
-		if (y >= yPos && y < (yPos + height)) {
-			return true;
-		}
+	if (upButton->isClicked(x, y)) return true;
+	if (downButton->isClicked(x, y)) return true;
+
+	for (int i = 0; i < list.size(); i++) {
+		if (list[i]->isClicked(x, y)) return true;
 	}
-	*/
+
 	return false;
 }
 
@@ -156,7 +156,8 @@ void scrollBox::onClick(int x, int y) {
 
 	upButton->onClick(x, y);
 	downButton->onClick(x, y);
-	for (int i = 0; i < list.size(); i++) {
+	for (int i = displayIdx; i < displayIdx+8; i++) {
+		if (i >= list.size()) return;
 		list[i]->onClick(x, y);
 	}
 }

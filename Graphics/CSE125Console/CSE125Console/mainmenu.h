@@ -6,6 +6,7 @@ class mainMenu : public gui{
 public:
 	mainMenu();
 	mainMenu(int w, int h);
+	mainMenu(int w, int h, gui * hp, gui * s);
 	~mainMenu();
 
 	void VOnRender(); //must have

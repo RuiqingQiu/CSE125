@@ -16,6 +16,12 @@ mainMenu::mainMenu(int w, int h){
 	buttons.push_back(new button("uiItem/buttons/menuItem/2.jpg", 150, 330, 150, 100, true));
 }
 
+mainMenu::mainMenu(int w, int h, gui * hp, gui * s){
+	width = w;
+	height = h;
+	buttons.push_back(new button("uiItem/buttons/menuItem/2.jpg", 150, 330, 150, 100, true));
+}
+
 mainMenu::~mainMenu(){
 
 }
@@ -34,6 +40,6 @@ void mainMenu::onClick(int x, int y) {
 	for (int i = 0; i < buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
-		buttons[i]->onClick(x, height-y);
+		buttons[i]->onClick(x, height - y);
 	}
 }

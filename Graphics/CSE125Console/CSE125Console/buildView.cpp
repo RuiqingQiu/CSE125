@@ -18,6 +18,13 @@ buildView::buildView(int w, int h) {
 	createButtons();
 }
 
+buildView::buildView(int w, int h, gui * hp, gui * s) {
+	width = w;
+	height = h;
+	createButtons(); 
+}
+
+
 buildView::~buildView()
 {
 }
@@ -125,4 +132,19 @@ void buildView::onClick(int x, int y) {
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(x, height-y);
 	}
+}
+
+int buildView::switchClicked(int x, int y) {
+	//battle button
+	if (buttons[0]->isClicked(x, height - y)) {
+		return BATTLE;
+	}
+	else {
+		return BUILD;
+	}
+}
+
+bool buildView::helpClicked(int x, int y) {
+	//help button
+	return buttons[buttons.size() - 1]->isClicked(x, height - y);
 }

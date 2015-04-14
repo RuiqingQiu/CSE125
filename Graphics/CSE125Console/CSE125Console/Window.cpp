@@ -46,8 +46,11 @@ void Window::initialize(void)
 
 	//default to console view
 	g_pCore->viewmode = 4;
+	g_pCore->helpMenu = new gui();
+	g_pCore->battlemode = new gui();
 	g_pCore->buildmode = new buildView(width, height); 
 	g_pCore->menumode = new mainMenu(width, height);
+
 	g_pCore->defaultGui = new gui();
 	if (g_pCore->viewmode == 0) {
 		g_pCore->gameGui = g_pCore->defaultGui;
@@ -130,7 +133,11 @@ void Window::reshapeCallback(int w, int h)
 	gluPerspective(60.0, double(width)/(double)height, 1.0, 1000.0); //Set perspective projection viewing frustum
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 
-	g_pCore->gameGui->setDimensions(w, h);
+	g_pCore->buildmode->setDimensions(w, h);
+	g_pCore->menumode->setDimensions(w, h);
+	g_pCore->helpMenu->setDimensions(w, h);
+	g_pCore->battlemode->setDimensions(w, h);
+
 }
 
 //----------------------------------------------------------------------------

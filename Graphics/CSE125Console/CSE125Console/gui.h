@@ -7,6 +7,17 @@
 #include "button.h"
 #include "scrollBox.h"
 
+//1: build View
+//2: battle View
+//3: help menu
+//4: main menu
+//5: switch to console
+#define BUILD 1
+#define BATTLE 2
+#define HELP 3
+#define MENU 4
+#define CONSOLE 5
+
 class gui : public GameView {
 public:
 	gui();
@@ -27,6 +38,9 @@ public:
 	void set3d();
 
 	void drawAllItems();
+
+	virtual int switchClicked(int x, int y);
+	virtual bool helpClicked(int x, int y);
 
 protected:
 	int width;
