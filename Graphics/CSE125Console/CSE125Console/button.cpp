@@ -62,11 +62,6 @@ bool button::isClicked(int x, int y) {
 
 void button::onClick(int x, int y) {
 	if (isClicked(x, y)) {
-		//game logic here
-		if (name == "uiItem/images/background.jpg"){
-			printf("need to switch to build mode");
-			//g_pCore->viewmode = 1;
-		}
 		std::cout << name << " was clicked!" << std::endl;
 	}
 }
