@@ -29,9 +29,9 @@ public:
 	void sendClientConfirmationPacket(const char* clientName, int client_ID);
 	int waitForConnections();
 	string convertData(vector<GameObj*> * gameObjs);
-	void receiveFromClients(std::vector<Events*>*);
+	void receiveFromClients(std::vector<ObjectEvents*>*);
 	void sendActionPackets(vector<GameObj*> * gameObjs);
-	void convertEvents(CPacket packet, std::vector<Events*>* eventList);
+	void convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* eventList);
 };
 #endif
 

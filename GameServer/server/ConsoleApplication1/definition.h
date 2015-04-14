@@ -1,10 +1,36 @@
 #pragma once
 #include "GameObj.h"
-#include "Events.h"
+#include "ObjectEvents.h"
 
-#define MOVE_SPEED 10
+#define MOVE_SPEED 100
 #define TURN_SPEED 0.5
 # define M_PI  3.14159265358979323846
+
+// Packet Types
+enum PacketTypes {
+	INIT_CONNECTION = 0,
+	GAME_STATE = 1,
+	MOVE_LEFT = 2,
+	MOVE_RIGHT = 3,
+	MOVE_FORWARD = 4,
+	MOVE_BACKWARD = 5,
+	MOVE_UP = 6,
+	MOVE_DOWN = 7,
+	INIT_CLIENT = 8,
+	CONFIRM_CONNECTION = 9,
+};
+
+//Game Events
+enum GameEvents {
+	EXPLOSION = 0,
+	RESUME = 1,
+	PAUSE = 2,
+	SCOREBOARD = 3,
+
+
+
+};
+
 
 
 	//ACTIONS FOR STATE MACHINE

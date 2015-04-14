@@ -61,7 +61,7 @@ int Network::waitForConnections(){
 
 
 
-void Network::receiveFromClients(std::vector<Events*>* eventList){
+void Network::receiveFromClients(std::vector<ObjectEvents*>* eventList){
 	CPacket packet;
 	//cout << gameObjs.size() << endl;
 
@@ -84,7 +84,7 @@ void Network::receiveFromClients(std::vector<Events*>* eventList){
 		{
 			packet.deserialize(&(network_data[i]));
 			i += sizeof(CPacket);
-			convertEvents(packet, eventList);
+			convertObjectEvents(packet, eventList);
 		}
 	}
 
@@ -137,12 +137,12 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 
 
 
-void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
+void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* eventList){
 
 	cout << "packet type : " << packet.packet_type << endl;
 	switch (packet.packet_type) {
 		case INIT_CONNECTION: {
-								  Events * e = new Events(INIT_CONNECTION);
+								  ObjectEvents * e = new ObjectEvents(INIT_CONNECTION);
 								  string packetInfoStr = "";
 								  int i;
 								  for (i = 0;; i++)
@@ -162,7 +162,7 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 							      break;
 		}
 		case MOVE_LEFT: {
-						Events * e = new Events(MOVE_LEFT);
+						ObjectEvents * e = new ObjectEvents(MOVE_LEFT);
 						string packetInfoStr = "";
 						int i;
 						for (i = 0;; i++)
@@ -183,7 +183,7 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 						break;
 		}
 		case MOVE_RIGHT: {
-							 Events * e = new Events(MOVE_RIGHT);
+							 ObjectEvents * e = new ObjectEvents(MOVE_RIGHT);
 							 string packetInfoStr = "";
 							 int i;
 							 for (i = 0;; i++)
@@ -202,7 +202,7 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 	
 		}
 		case MOVE_BACKWARD: {
-								Events * e = new Events(MOVE_BACKWARD);
+								ObjectEvents * e = new ObjectEvents(MOVE_BACKWARD);
 								string packetInfoStr = "";
 								int i;
 								for (i = 0;; i++)
@@ -221,7 +221,7 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 
 		}
 		case MOVE_FORWARD: {
-							   Events * e = new Events(MOVE_FORWARD);
+							   ObjectEvents * e = new ObjectEvents(MOVE_FORWARD);
 							   string packetInfoStr = "";
 							   int i;
 							   for (i = 0;; i++)
@@ -242,7 +242,7 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 						   break;
 		}
 		case MOVE_UP: {
-						  Events * e = new Events(MOVE_UP);
+						  ObjectEvents * e = new ObjectEvents(MOVE_UP);
 						  string packetInfoStr = "";
 						  int i;
 						  for (i = 0;; i++)
@@ -262,7 +262,7 @@ void Network::convertEvents(CPacket packet, std::vector<Events*>* eventList){
 		}
 
 		case MOVE_DOWN: {
-							Events * e = new Events(MOVE_DOWN);
+							ObjectEvents * e = new ObjectEvents(MOVE_DOWN);
 							string packetInfoStr = "";
 							int i;
 							for (i = 0;; i++)
@@ -316,13 +316,23 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += ' ';
 		temp += to_string((*i)->getZ());
 		temp += ' ';
+		btTransform trans;
+		(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+		float mat[16];
+		trans.getOpenGLMatrix(mat);
+		int j;
+		for (j = 0; j < 16; j++)
+		{
+			temp += to_string(mat[j]);
+			temp += ' ';
+		}
 		/*temp += to_string((*i)->getRotX());
 		temp += ' ';
 		temp += to_string((*i)->getRotY());
 		temp += ' ';
 		temp += to_string((*i)->getRotZ());
-		temp += ' ';
-		temp += to_string((*i)->getBlockType());
+		temp += ' ';*/
+		/*temp += to_string((*i)->getBlockType());
 		temp += ' ';
 		temp += to_string((*i)->getType());
 		temp += ' ';

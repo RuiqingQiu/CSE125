@@ -66,9 +66,6 @@
     <ClInclude Include="GamePhysics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Events.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GOBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -85,6 +82,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SPacketDecoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEvents.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,9 +128,6 @@
     <ClCompile Include="GamePhysics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Events.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GOBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -144,6 +144,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SPacketDecoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEvents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEvents.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

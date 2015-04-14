@@ -80,7 +80,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="definition.h" />
-    <ClInclude Include="Events.h" />
+    <ClInclude Include="GameEvents.h" />
+    <ClInclude Include="ObjectEvents.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObj.h" />
     <ClInclude Include="GamePhysics.h" />
@@ -104,7 +105,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="definition.cpp" />
-    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="GameEvents.cpp" />
+    <ClCompile Include="ObjectEvents.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="GamePhysics.cpp" />

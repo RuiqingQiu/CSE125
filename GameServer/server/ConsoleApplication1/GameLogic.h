@@ -19,7 +19,8 @@ private:
 
 	std::vector<GameObj*> gameObjs;
 	std::map<int, GameObj *> clientPair;
-	std::vector<Events *> elist;
+	std::vector<ObjectEvents *> objEventList;
+	//std::vector<GameEvents *> gameEventList;
 public:
 	GameLogic();
 	~GameLogic();

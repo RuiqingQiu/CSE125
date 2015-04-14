@@ -2,15 +2,15 @@
 #include <string>
 #include "NetworkData.h"
 
-class Events
+class ObjectEvents
 {
 	unsigned int _event_type;
 	unsigned int _cid;
 	std::string _name;
 
 public:
-	Events(unsigned int type);
-	~Events();
+	ObjectEvents(unsigned int type);
+	~ObjectEvents();
 	void setCid(unsigned int cid);
 	void setName(std::string name);
 	unsigned int getEvent();

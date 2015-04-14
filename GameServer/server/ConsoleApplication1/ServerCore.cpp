@@ -30,7 +30,6 @@ void ServerCore::serverLoop()
 		{
 		case INIT_STATE0:{
 			action = gameLogic->waitToConnect();
-			action = ADDCLIENT;
 			cout << "action for init0: " << action << endl;
 			break;
 		}

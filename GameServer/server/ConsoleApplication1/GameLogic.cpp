@@ -21,29 +21,37 @@ unsigned int GameLogic::waitToConnect()
 	int cid; 
 	cid = network->waitForConnections();
 
-	GameObj* gameObj = new GOBox(10, 100, -5, 0, 0, 0, 1, 1, 1, 1, 1);
+
+    if (cid == -1) return WAIT;
+	GameObj* gameObj = new GOBox(10, 5, 0, 0, 0, 0, 1, 1, 1, 1, 1);
 	gameObj->setBlockType(CUBE);
 	asd++;
 	this->pushGameObj(gameObj);
-	clientPair.insert(std::pair<int, GameObj*>(0, gameObj));
-    if (cid == -1) return WAIT;
+	clientPair.insert(std::pair<int, GameObj*>(cid, gameObj));
 
-	//GameObj* gameObj1 = new GOBox(10, asd * 15, -5, 0, 0, 0, 1, 1, 1, 1, 1);
-	//gameObj1->setBlockType(WHEEL);
+	//GameObj* gameObj1 = new GOBox(10, 5, 0, 0, 0, 0, 1, 1, 1, 1, 1);
+	//gameObj1->setBlockType(CUBE);
 	//asd++;
 	//this->pushGameObj(gameObj1);
 	//clientPair.insert(std::pair<int, GameObj*>(cid + 1, gameObj1));
-	//GameObj* gameObj2 = new GOBox(10, asd * 15, -5, 0, 0, 0, 1, 1, 1, 1, 1);
-	//gameObj2->setBlockType(NEEDLE);
-	//this->pushGameObj(gameObj2);
-	//clientPair.insert(std::pair<int, GameObj*>(cid + 2, gameObj2));
+	int i, j;
+	for (i = 0; i < 1; i++)
+	{
+		for (j = 0; j < 10; j++)
+		{
+			GameObj* gameObj2 = new GOBox(i*1-10, j*1, -5, 0, 0, 0, 1, 1, 1, 1, 1);
+			gameObj2->setBlockType(CUBE);
+			this->pushGameObj(gameObj2);
+		}
+	}
 
-	network->receiveFromClients(&elist);
 
-//	if (elist == nullptr) return WAIT;
-	std::vector<Events *>::iterator iter;
+	network->receiveFromClients(&objEventList);
 
-	for (iter = elist.begin(); iter != elist.end(); iter++)
+//	if (objEventList == nullptr) return WAIT;
+	std::vector<ObjectEvents *>::iterator iter;
+
+	for (iter = objEventList.begin(); iter != objEventList.end(); iter++)
 	{
 		unsigned int type = (*iter)->getEvent();
 		switch (type) {
@@ -53,11 +61,11 @@ unsigned int GameLogic::waitToConnect()
 			(*iter)->setCid(cid);
 			//cout << name << endl;
 			network->sendClientConfirmationPacket(name.c_str(), cid);
-			elist.erase(iter);
+			objEventList.erase(iter);
 			return ADDCLIENT;
 		}
-		elist.erase(iter);
-		//cout << "wait to Connect elist size = "<< elist.size() << endl;
+		objEventList.erase(iter);
+		//cout << "wait to Connect objEventList size = "<< objEventList.size() << endl;
 	}
 	return WAIT;
 
@@ -68,23 +76,23 @@ unsigned int GameLogic::waitToConnect()
 void GameLogic::gameStart(){
 	countDown->startCountdown(300);
 	countDown->startClock();
-	Events * e = new Events(MOVE_RIGHT);
-	e->setCid(0);
-	elist.push_back(e);
-	Events * e1 = new Events(MOVE_FORWARD);
-	e1->setCid(0);
-	elist.push_back(e1);
+	//ObjectEvents * e = new ObjectEvents(MOVE_LEFT);
+	//e->setCid(0);
+	//objEventList.push_back(e);
+	//ObjectEvents * e1 = new ObjectEvents(MOVE_FORWARD);
+	//e1->setCid(0);
+	//objEventList.push_back(e1);
 	gamePhysics->initWorld(&(this->getGameObjs()));
 }
 
 
 unsigned int GameLogic::gameLoop (){
-	network->receiveFromClients(&elist);
+	network->receiveFromClients(&objEventList);
 	
 
 	//if (countDown->checkCountdown()) return TIMEUP;
 	
-	//do gamelogic for all events
+	//do gamelogic for all ObjectEvents
 	prePhyLogic();
 	
 	//pass the time into physics
@@ -96,11 +104,11 @@ unsigned int GameLogic::gameLoop (){
 	//do physics
 
 	
-	gamePhysics->getDynamicsWorld()->stepSimulation(1/33.0);
+	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/33.0));
 
 	gamePhysics->stepSimulation(&this->getGameObjs());
 
-	//after phy logic all events 
+	//after phy logic all ObjectEvents 
 	
 	network->sendActionPackets(&gameObjs);
 	return COUNTDOWN;
@@ -113,9 +121,9 @@ unsigned int GameLogic::gameLoop (){
 
 
 void GameLogic::prePhyLogic(){
-	std::vector<Events *>::iterator iter;
-	iter = elist.begin();
-	while (iter != elist.end()) 
+	std::vector<ObjectEvents *>::iterator iter;
+	iter = objEventList.begin();
+	while (iter != objEventList.end()) 
 	{
 
 		unsigned int type = (*iter)->getEvent();
@@ -129,8 +137,8 @@ void GameLogic::prePhyLogic(){
 	
 	}
 
-	elist.clear();
-	//cout << "elist size == " << elist.size() << endl;
+	objEventList.clear();
+	//cout << "objEventList size == " << objEventList.size() << endl;
 }
 
 
