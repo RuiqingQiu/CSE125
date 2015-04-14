@@ -37,9 +37,6 @@
     <Filter Include="Third Party">
       <UniqueIdentifier>{6a6e0345-1ec5-4180-9a7d-168ecb08ff3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Shader">
-      <UniqueIdentifier>{96fe5bb7-8212-4286-ad15-7827028bef4d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{3d96ef7b-cb59-40b8-b84c-381c5f581a4a}</UniqueIdentifier>
     </Filter>
@@ -146,9 +143,6 @@
     </ClInclude>
     <ClInclude Include="SkyBox.h">
       <Filter>Source Files\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Source Files\Shader</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
@@ -262,9 +256,6 @@
     </ClCompile>
     <ClCompile Include="SkyBox.cpp">
       <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files\Shader</Filter>
     </ClCompile>
     <ClCompile Include="guiGameInput.cpp">
       <Filter>Source Files\Input</Filter>
