@@ -115,8 +115,8 @@ void scrollBox::addListItem(char * filename) {
 	//button texture orignal dimesntions: 1024x512
 	//border is 10px on img
 	int border = ceil ( (5.0 / 660.0) * width );
-	int w = ( (650.0 / 660.0) * width ) -1;
-	int h = ceil ( (150.0 / 1210.0) * height );
+	int w = ( (1000.0 / 1020.0) * width ) -1;
+	int h = ceil ( (200.0 / 1680.0) * height );
 
 	list.push_back(new button(filename, xPos+border, yPos + (s*h) + border, w, h));
 }

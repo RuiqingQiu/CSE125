@@ -61,6 +61,8 @@ bool button::isClicked(int x, int y) {
 }
 
 void button::onClick(int x, int y) {
+	std::cout << "x: " << x << std::endl;
+	std::cout << "y: " << y << std::endl;
 	if (isClicked(x, y)) {
 		std::cout << name << " was clicked!" << std::endl;
 	}

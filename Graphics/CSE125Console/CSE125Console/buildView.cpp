@@ -18,12 +18,6 @@ buildView::buildView(int w, int h) {
 	createButtons();
 }
 
-buildView::buildView(int w, int h, gui * hp, gui * s) {
-	width = w;
-	height = h;
-	createButtons(); 
-}
-
 
 buildView::~buildView()
 {
@@ -56,8 +50,8 @@ void buildView::createButtons() {
 	//scroll box
 	//button jpg dimensions: 1320x2420px
 	//button texture orignal dimesntions: 1024x1024
-	scroll = new scrollBox(width - (1320 / scale) - 20, 100,
-		1320 / scale, 2420 / scale);
+	scroll = new scrollBox(width - (1020 / scale) - 20, 100,
+		1020 / scale, 2420 / scale);
 	buttons.push_back(scroll);
 
 	//list options

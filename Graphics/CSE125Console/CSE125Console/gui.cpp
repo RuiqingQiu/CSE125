@@ -11,9 +11,11 @@
  */
 
 gui::gui() {
+	buttons = std::vector<button*>();
 }
 
 gui::gui(int w, int h) {
+	buttons = std::vector<button*>();
 	width = w;
 	height = h;
 }
@@ -76,13 +78,6 @@ void gui::VOnRender() {
 
 	//draw stuff here
 
-	/* note for gui people:
-		make button class with atributes:
-			texture
-			on click
-			size
-			position
-	*/
 	set3d();
 }
 
