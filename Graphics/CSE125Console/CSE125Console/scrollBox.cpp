@@ -114,9 +114,9 @@ void scrollBox::addListItem(char * filename) {
 	//button jpg dimensions: 1300x300px
 	//button texture orignal dimesntions: 1024x512
 	//border is 10px on img
-	int border = ceil ( (10.0 / 1320.0) * width );
-	int w = ( (1300.0 / 1320.0) * width ) -1;
-	int h = ceil ( (300.0 / 2420.0) * height );
+	int border = ceil ( (5.0 / 660.0) * width );
+	int w = ( (650.0 / 660.0) * width ) -1;
+	int h = ceil ( (150.0 / 1210.0) * height );
 
 	list.push_back(new button(filename, xPos+border, yPos + (s*h) + border, w, h));
 }
@@ -133,8 +133,8 @@ bool scrollBox::isClicked(int x, int y) {
 }
 
 void scrollBox::onClick(int x, int y) {
-	int border = ceil((10.0 / 1320.0) * width);
-	int h = ceil((300.0 / 2420.0) * height);
+	int border = ceil((5.0 / 660.0) * width);
+	int h = ceil((150.0 / 1210.0) * height);
 
 	if (upButton->isClicked(x, y)) {
 		if (list.size() <= 8) return;
