@@ -114,27 +114,27 @@ void scrollBox::addListItem(char * filename) {
 	//button jpg dimensions: 1300x300px
 	//button texture orignal dimesntions: 1024x512
 	//border is 10px on img
-	int border = ceil ( (10.0 / 1320.0) * width );
-	int w = ( (1300.0 / 1320.0) * width ) -1;
-	int h = ceil ( (300.0 / 2420.0) * height );
+	int border = ceil ( (5.0 / 660.0) * width );
+	int w = ( (650.0 / 660.0) * width ) -1;
+	int h = ceil ( (150.0 / 1210.0) * height );
 
 	list.push_back(new button(filename, xPos+border, yPos + (s*h) + border, w, h));
 }
 
 bool scrollBox::isClicked(int x, int y) {
-	/*
-	if (x >= xPos && x < (xPos + width)) {
-		if (y >= yPos && y < (yPos + height)) {
-			return true;
-		}
+	if (upButton->isClicked(x, y)) return true;
+	if (downButton->isClicked(x, y)) return true;
+
+	for (int i = 0; i < list.size(); i++) {
+		if (list[i]->isClicked(x, y)) return true;
 	}
-	*/
+
 	return false;
 }
 
 void scrollBox::onClick(int x, int y) {
-	int border = ceil((10.0 / 1320.0) * width);
-	int h = ceil((300.0 / 2420.0) * height);
+	int border = ceil((5.0 / 660.0) * width);
+	int h = ceil((150.0 / 1210.0) * height);
 
 	if (upButton->isClicked(x, y)) {
 		if (list.size() <= 8) return;
@@ -156,7 +156,8 @@ void scrollBox::onClick(int x, int y) {
 
 	upButton->onClick(x, y);
 	downButton->onClick(x, y);
-	for (int i = 0; i < list.size(); i++) {
+	for (int i = displayIdx; i < displayIdx+8; i++) {
+		if (i >= list.size()) return;
 		list[i]->onClick(x, y);
 	}
 }

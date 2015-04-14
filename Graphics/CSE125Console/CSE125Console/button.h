@@ -19,8 +19,8 @@ public:
 	virtual bool isClicked(int x, int y);
 	virtual void onClick(int x, int y);
 
-private:
-
+//private:
+	//debugging
 	char * name;
 
 };

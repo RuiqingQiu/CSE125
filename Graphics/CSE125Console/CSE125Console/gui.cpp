@@ -18,7 +18,6 @@ gui::gui(int w, int h) {
 	height = h;
 }
 
-
 gui::~gui() {
 }
 
@@ -116,4 +115,12 @@ void gui::onClick(int x, int y) {
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(x, height-y);
 	}
+}
+
+int gui::switchClicked(int x, int y) {
+	return 0;
+}
+
+bool gui::helpClicked(int x, int y) {
+	return false;
 }

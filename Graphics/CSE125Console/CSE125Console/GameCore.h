@@ -35,6 +35,8 @@ public:
 	//always points to build mode
 	gui * buildmode;
 	gui * menumode;
+	gui * helpMenu;
+	gui * battlemode;
 
 	//add more "static" pointers here
 	//always point to main menu
