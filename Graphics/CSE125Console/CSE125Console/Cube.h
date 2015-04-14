@@ -10,7 +10,6 @@ class Cube : public GeoNode
 public: 
     
     float size;
-
 	std::vector<ComponentNode> components;
 
     Cube(float);

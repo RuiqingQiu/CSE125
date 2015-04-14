@@ -10,7 +10,7 @@ public:
 	double x;
 	double y;
 	double z;
-
+	float mat[16];
 	bool processed = false;
 	void print();
 	PlayerInfo();

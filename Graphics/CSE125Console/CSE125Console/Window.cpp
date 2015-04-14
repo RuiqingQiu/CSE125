@@ -45,15 +45,16 @@ void Window::initialize(void)
 	
 	//test shadow view
 	HardShadowView* shadowview = new HardShadowView();
-	g_pCore->pGameView = shadowview;
+	//g_pCore->pGameView = shadowview;
 
 	//Setup the light
-	//Model3D *object = new Model3D("woodcube.obj");
-	//object->localTransform.position = Vector3(0, 0, 0);
-	//object->localTransform.scale = Vector3(1, 1, 1);
-	//object->localTransform.rotation = Vector3(90, 0, 0);
-	//view->PushGeoNode(object);
-
+	/*
+	Model3D *object = new Model3D("woodcube.obj");
+	object->localTransform.position = Vector3(0, 0, -10);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	*/
 	SkyBox *object2 = new SkyBox();
 	view->PushGeoNode(object2);
 
@@ -67,7 +68,7 @@ void Window::initialize(void)
 
 
 	//connect to server
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.70");
 
 
 

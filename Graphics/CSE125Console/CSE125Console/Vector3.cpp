@@ -108,5 +108,6 @@ void Vector3::normalize() {
 }//normalize the vector (make it so that its length is equal to one)
 
 void Vector3::print(string comment){
+	printf("%s : ", comment);
 	printf("%f %f %f\n", x, y, z);
 }// print x,y and z components of the vector after a comment string

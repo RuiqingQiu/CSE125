@@ -22,7 +22,7 @@ enum PacketTypes {
 struct CPacket {
 
 	unsigned int packet_type;
-	char data[1024];
+	char data[10000];
 
 
 	void serialize(char * data) {
@@ -38,7 +38,7 @@ struct SPacket {
 
 	unsigned int packet_type;
 
-	char data[1024];
+	char data[10000];
 
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(SPacket));

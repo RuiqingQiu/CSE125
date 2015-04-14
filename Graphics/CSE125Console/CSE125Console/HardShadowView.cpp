@@ -242,7 +242,6 @@ void setTextureMatrix(void)
 
 HardShadowView::HardShadowView()
 {
-	generateShadowFBO();
 	loadShadowShader();
 
 	// This is important, if not here, FBO's depthbuffer won't be populated.
@@ -275,6 +274,7 @@ HardShadowView::HardShadowView()
 
 	//SkyBox *object2 = new SkyBox();
 	//this->PushGeoNode(object2);
+	//glDisable(GL_CULL_FACE);
 
 
 }
@@ -342,6 +342,8 @@ void drawObjects(void)
 
 void HardShadowView::VOnRender(void)
 {
+	generateShadowFBO();
+
 	update();
 
 	//First step: Render from the light POV to a FBO, story depth values only

@@ -109,7 +109,7 @@ GameInfoPacket* ClientGame::update()
 		case GAME_STATE:
 				{
 							 printf("client received game state packet from server\n");
-							 std::cout << packet.data << std::endl;
+							 //std::cout << packet.data << std::endl;
 							 std::string result = std::string(packet.data);
 							 if (result == ""){
 								 return nullptr;
@@ -118,20 +118,29 @@ GameInfoPacket* ClientGame::update()
 							 else{
 								 std::vector<std::string> v;
 								 split(result, v, ' ');
+								 /*
 								 for (int i = 0; i < v.size(); i++){
 									 cout << v[i] << endl;
-								 }
-								 for (int i = 0; i < v.size()-1; i += 4){
+								 }*/
+								 //1 + 3 + 16
+								 for (int i = 0; i < v.size()-1; i += 20){
 									 PlayerInfo* p = new PlayerInfo();
 									 p->id = stof(v[i]);
 									 p->x = stof(v[i+1]);
 									 p->y = stof(v[i+2]);
 									 p->z = stof(v[i+3]);
 									 p->processed = false;
-									 p->print();
+									 //p->print();
+									 for (int j = 0; j < 16; j++){
+										 p->mat[j] = stof(v[i + 4 + j]);
+										// printf("%f, ", p->mat[j]);
+										 if (j % 4 == 0){
+											 //printf("\n");
+										 }
+									 }
 									 g->player_infos.push_back(p);
 								 }
-								 std::cout << "pushing " << g->player_infos.size() << " on to the list" << std::endl;
+								 //std::cout << "pushing " << g->player_infos.size() << " on to the list" << std::endl;
 								 g->packet_types = packet.packet_type;
 							 }
 							 //sendActionPackets();
