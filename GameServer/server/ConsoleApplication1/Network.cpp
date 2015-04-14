@@ -331,8 +331,8 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += to_string((*i)->getRotY());
 		temp += ' ';
 		temp += to_string((*i)->getRotZ());
-		temp += ' ';*/
-		/*temp += to_string((*i)->getBlockType());
+		temp += ' ';
+		temp += to_string((*i)->getBlockType());
 		temp += ' ';
 		temp += to_string((*i)->getType());
 		temp += ' ';

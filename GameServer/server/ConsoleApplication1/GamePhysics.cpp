@@ -107,7 +107,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
 	{
 		btTransform trans;
 		(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
-		std::cout << "BOX WITH ID:  " << (*it)->getId() << ", X: " << trans.getOrigin().getX() << ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
+		//std::cout << "BOX WITH ID:  " << (*it)->getId() << ", X: " << trans.getOrigin().getX() << ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
 		(*it)->setZ(trans.getOrigin().getZ());
