@@ -94,6 +94,7 @@ void scrollBox::draw() {
 	upButton->draw();
 	downButton->draw();
 	for (int i = displayIdx; i < displayIdx+8; i++) {
+		if (i >= list.size()) break;
 		list[i]->draw();
 	}
 }
@@ -145,8 +146,8 @@ void scrollBox::onClick(int x, int y) {
 	}
 	if (downButton->isClicked(x, y)) {
 		int s = list.size();
-		if (s <= 8) return;
-		if ((s - displayIdx) <= 8) return;
+		if (s <= 4) return;
+		if ((s - displayIdx) <= 4) return;
 		displayIdx++;
 		for (int i = 0; i < list.size(); i++) {
 			list[i]->translate(0, h+border);
