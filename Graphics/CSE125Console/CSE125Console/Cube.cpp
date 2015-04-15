@@ -29,18 +29,8 @@ void Cube::VOnUpdate(GameInfoPacket* pData)
 void Cube::VOnClientUpdate(GameInfoPacket* pData){ 
 	PlayerInfo* p = pData->get_player_info(this->identifier);
 	if (p){
-		this->localTransform.position = Vector3(mat[12], mat[13], mat[14]);
 		/*
-		float r11 = mat[0];
-		float r21 = mat[4];
-		float r31 = mat[8];
-		float r12 = mat[1];
-		float r22 = mat[5];
-		float r32 = mat[9];
-		float r13 = mat[2];
-		float r23 = mat[6];
-		float r33 = mat[10];
-		*/
+		this->localTransform.position = Vector3(mat[12], mat[13], mat[14]);
 		float r11 = mat[0];
 		float r21 = mat[1];
 		float r31 = mat[2];
@@ -58,7 +48,15 @@ void Cube::VOnClientUpdate(GameInfoPacket* pData){
 		//localTransform.rotation.print("local transform rotation: ");
 		for (int i = 0; i < 16; i++){
 			mat[i] = p->mat[i];
-		}
+		}*/
+
+		localTransform.position.x = p->x;
+		localTransform.position.y = p->y;
+		localTransform.position.z = p->z;
+
+		localTransform.rotation.x = p->rx;
+		localTransform.rotation.y = p->ry;
+		localTransform.rotation.z = p->rz;
 		p->processed = true;
 	}
 }
@@ -91,20 +89,26 @@ void Cube::VOnDraw()
 	glBegin(GL_QUADS);
 	//glTranslated(0, 0, 5);
     // Draw front face:
+	//red
 	glColor3f(1, 0, 0);
     glNormal3f(0.0, 0.0, 1.0);
     glVertex3f(-halfSize,  halfSize,  halfSize);
     glVertex3f( halfSize,  halfSize,  halfSize);
     glVertex3f( halfSize, -halfSize,  halfSize);
     glVertex3f(-halfSize, -halfSize,  halfSize);
+	//green
 	glColor3f(0, 1, 0);
     // Draw left side:
+	
     glNormal3f(-1.0, 0.0, 0.0);
     glVertex3f(-halfSize,  halfSize,  halfSize);
     glVertex3f(-halfSize,  halfSize, -halfSize);
     glVertex3f(-halfSize, -halfSize, -halfSize);
     glVertex3f(-halfSize, -halfSize,  halfSize);
     
+	//green + blue
+	glColor3f(0.0, 1.0, 1.0);
+
     // Draw right side:
     glNormal3f(1.0, 0.0, 0.0);
     glVertex3f( halfSize,  halfSize,  halfSize);
@@ -112,6 +116,8 @@ void Cube::VOnDraw()
     glVertex3f( halfSize, -halfSize, -halfSize);
     glVertex3f( halfSize, -halfSize,  halfSize);
     
+	//yellow
+	glColor3f(1.0, 1.0, 0.0);
     // Draw back face:
     glNormal3f(0.0, 0.0, -1.0);
     glVertex3f(-halfSize,  halfSize, -halfSize);
@@ -119,6 +125,7 @@ void Cube::VOnDraw()
     glVertex3f( halfSize, -halfSize, -halfSize);
     glVertex3f(-halfSize, -halfSize, -halfSize);
     
+	glColor3f(0.0, 0.0, 1.0);
     // Draw top side:
     glNormal3f(0.0, 1.0, 0.0);
     glVertex3f(-halfSize,  halfSize,  halfSize);
@@ -126,6 +133,7 @@ void Cube::VOnDraw()
     glVertex3f( halfSize,  halfSize, -halfSize);
     glVertex3f(-halfSize,  halfSize, -halfSize);
     
+	glColor3f(1.0, 1.0, 1.0);
     // Draw bottom side:
     glNormal3f(0.0, -1.0, 0.0);
     glVertex3f(-halfSize, -halfSize, -halfSize);

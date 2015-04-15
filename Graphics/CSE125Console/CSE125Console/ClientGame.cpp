@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ClientGame.h"
-
+#define RAD_TO_DEGREE_MULT 57.2957795
 ClientGame::ClientGame(void)
 {
 
@@ -123,21 +123,25 @@ GameInfoPacket* ClientGame::update()
 									 cout << v[i] << endl;
 								 }*/
 								 //1 + 3 + 16
-								 for (int i = 0; i < v.size()-1; i += 20){
+								 for (int i = 0; i < v.size()-1; i += 7){
 									 PlayerInfo* p = new PlayerInfo();
 									 p->id = stof(v[i]);
 									 p->x = stof(v[i+1]);
 									 p->y = stof(v[i+2]);
 									 p->z = stof(v[i+3]);
+									 p->rx = stof(v[i + 4])*RAD_TO_DEGREE_MULT;
+									 p->ry = stof(v[i + 5])*RAD_TO_DEGREE_MULT;
+									 p->rz = stof(v[i + 6])*RAD_TO_DEGREE_MULT;
 									 p->processed = false;
 									 //p->print();
+									 /*
 									 for (int j = 0; j < 16; j++){
 										 p->mat[j] = stof(v[i + 4 + j]);
 										// printf("%f, ", p->mat[j]);
 										 if (j % 4 == 0){
 											 //printf("\n");
 										 }
-									 }
+									 }*/
 									 g->player_infos.push_back(p);
 								 }
 								 //std::cout << "pushing " << g->player_infos.size() << " on to the list" << std::endl;
@@ -166,7 +170,8 @@ GameInfoPacket* ClientGame::update()
 		
 		default:{
 
-					printf("error in packet types\n");
+					printf("error in packet types : %i\n", packet.packet_type);
+					std::cout << packet.data << std::endl;
 
 					break;
 		}

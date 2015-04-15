@@ -27,6 +27,7 @@ gui buildmode = gui();
 
 
 static Cube* cube;
+static Cube* cube2;
 //Init server info here later
 void Window::initialize(void)
 {
@@ -34,11 +35,14 @@ void Window::initialize(void)
 	//glColor3f(1, 1, 1);
 	GameView* view = new GameView();
 	cube = new Cube(1);
-	cube->localTransform.position = Vector3(0, 0, -10);
+	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	view->PushGeoNode(cube);
-	
+	//view->PushGeoNode(cube);
+
+	cube2 = new Cube(1);
+	cube2->localTransform.position = Vector3(5, 0, -10);
+	//view->PushGeoNode(cube2);
 
 	g_pCore->pGameView = view;
 	//g_pCore->pPlayer->playerid = 1;
@@ -68,7 +72,7 @@ void Window::initialize(void)
 
 
 	//connect to server
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.70");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 
 
 
@@ -139,17 +143,17 @@ void Window::displayCallback()
 	
 	if (TESTCAM)
 	{
-		Matrix4 trans = cube->localTransform.GetMatrix4();
-		trans.print("transformation matrix, ");
+		Matrix4 trans = cube->localTransform.GetRotMatrix4();
 		Vector4 forward = Vector4(0, 0, -1, 1);
-		Vector4 direction = trans*forward;
-		printf("dir : %f %f %f\n", direction.x , direction.y,direction.z);
-		float distanceToPlayer = 20;
+		Vector4 direction_temp = trans*forward;
+		Vector3 direction = Vector3(direction_temp.get_x(), direction_temp.get_y(), direction_temp.get_z());
+		direction.normalize();
+		printf("direction : %f %f %f\n", direction.x,direction.y,direction.z);
+		float distanceToPlayer = 5;
 		g_pCore->pGameView->pViewCamera->position = new Vector3(cube->localTransform.position.x - direction.x*distanceToPlayer, cube->localTransform.position.y - direction.y*distanceToPlayer, cube->localTransform.position.z - direction.z*distanceToPlayer);
-		
-		printf("pos : %f %f %f\n", g_pCore->pGameView->pViewCamera->position->x, g_pCore->pGameView->pViewCamera->position->y, g_pCore->pGameView->pViewCamera->position->z);
-
 		g_pCore->pGameView->pViewCamera->rotation = new Vector3(-cube->localTransform.rotation.x, -cube->localTransform.rotation.y, -cube->localTransform.rotation.z);
+		//cube2->localTransform.position = Vector3(cube->localTransform.position.x - direction.x*distanceToPlayer, cube->localTransform.position.y - direction.y*distanceToPlayer, cube->localTransform.position.z - direction.z*distanceToPlayer);
+		//cube2->localTransform.rotation = Vector3(cube->localTransform.rotation.x, cube->localTransform.rotation.y, cube->localTransform.rotation.z);
 	}
 	
 
