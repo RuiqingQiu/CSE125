@@ -1,55 +1,88 @@
 #include "stdafx.h"
 #include "button.h"
 
-/*
- * things to implement:
- * button::onClick()
- *		game logic: on click action
- */
-
-button::button() : guiItem() {
-	name = "noname";
+button::button() {
+	init();
 }
 
-button::button(char * filename) : 
-guiItem(filename) {
+button::button(string filename) {
+	init();
 	name = filename;
+	setTexture(filename, false);
+	texture[1] = texture[0];
 }
 
-button::button(char * filename, int x, int y) : 
-guiItem(filename, x, y) {
+button::button(string filename, int x, int y) {
+	init();
 	name = filename;
+	setTexture(filename, false);
+	setPosition(x, y);
+	texture[1] = texture[0];
 }
 
-button::button(char * filename, int x, int y, bool f) :
-guiItem(filename, x, y, f) {
+button::button(string filename, int x, int y, bool f) {
+	init();
 	name = filename;
+	setTexture(filename, false);
+	setPosition(x, y);
+	setFixed(f, f);
+	texture[1] = texture[0];
 }
 
-button::button(char * filename, int x, int y, bool xf, bool yf) : 
-guiItem(filename, x, y, xf, yf) {
+button::button(string filename, int x, int y, bool xf, bool yf) {
+	init();
 	name = filename;
+	setTexture(filename, false);
+	setPosition(x, y);
+	setFixed(xf, yf);
+	texture[1] = texture[0];
 }
 
-button::button(char * filename, int x, int y, int w, int h) :
-guiItem(filename, x, y, w, h) {
+button::button(string filename, int x, int y, int w, int h) {
+	init();
 	name = filename;
+	setTexture(filename, false);
+	setPosition(x, y);
+	setSize(w, h);
+	texture[1] = texture[0];
 }
 
-button::button(char * filename, int x, int y, int w, int h, bool f) :
-guiItem(filename, x, y, w, h, f) {
+button::button(string filename, int x, int y, int w, int h, bool f) {
+	init();
 	name = filename;
+	setTexture(filename, false);
+	setPosition(x, y);
+	setSize(w, h);
+	setFixed(f, f);
+	texture[1] = texture[0];
 }
 
-button::button(char * filename, int x, int y, int w, int h, bool xf, bool yf) :
-guiItem(filename, x, y, w, h, xf, yf) {
+button::button(string filename, int x, int y, int w, int h, bool xf, bool yf) {
+	init();
 	name = filename;
+	setTexture(filename, false);
+	setPosition(x, y);
+	setSize(w, h);
+	setFixed(xf, yf);
+	texture[1] = texture[0];
 }
 
 button::~button()
 {
 }
 
+void button::init() {
+	name = "noname";
+	setPosition(0, 0);
+	setSize(100, 100);
+	setFixed(false, true);
+	sWidth = 0;
+	sHeight = 0;
+	selected = false;
+	scaleX = false;
+	scaleY = false;
+	path = "uiItem/buttons/";
+}
 
 bool button::isClicked(int x, int y) {
 	if (x >= xPos && x < (xPos + width)) {
@@ -60,10 +93,17 @@ bool button::isClicked(int x, int y) {
 	return false;
 }
 
-void button::onClick(int x, int y) {
+void button::onClick(int state, int x, int y) {
 	std::cout << "x: " << x << std::endl;
 	std::cout << "y: " << y << std::endl;
+
 	if (isClicked(x, y)) {
-		std::cout << name << " was clicked!" << std::endl;
+		if (state == GLUT_DOWN) {
+			selected = true;
+		}
+		if (state == GLUT_UP) {
+			selected = false;
+		}
+		std::cout << name.c_str() << " was clicked!" << std::endl;
 	}
 }

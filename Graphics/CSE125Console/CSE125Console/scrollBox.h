@@ -3,6 +3,9 @@
 #include <cmath>
 #include "guiItem.h"
 #include "button.h"
+#include "listItem.h"
+
+#define MAXDISPLAY 8
 
 class scrollBox : public button
 {
@@ -24,19 +27,23 @@ public:
 	void rePosition(int x, int y, int w, int h) override;
 
 	void init();
-	void addListItem(char * filename );
+	void addListItem(string filename );
+	void addsubListItem(string filename);
 
 	bool isClicked(int x, int y);
-	void onClick(int x, int y);
+	void onClick(int state, int x, int y);
 
+	//clickable items
+	std::vector<listItem*> list;
 private:
+
+	int getTotalSize();
+
 	//regular items, just displays
 	guiItem * scrollDisplay;
 	button * upButton;
 	button * downButton;
 
-	//clickable items
-	std::vector<button*> list;
 	int displayIdx;
 };
 

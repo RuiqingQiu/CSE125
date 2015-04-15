@@ -31,64 +31,50 @@ void buildView::createButtons() {
 	//however, transparency isn't working? might be soil converter... will have to try something else
 	//button jpg dimensions: 1000x192px
 	//button texture orignal dimesntions: 1024x256
-	guiItem * text = new guiItem("uiItem/text/time.jpg", width*0.3, height - 38, 200, 38, false, false);
+	guiItem * text = new guiItem("text/time.jpg", width*0.3, height - 38, 200, 38, false, false);
 	text->setScaling(true, false, width, height);
 	guiItems.push_back(text);
 
 	//text box
 	//button jpg dimensions: 1100x990px
 	//button texture orignal dimesntions: 1024x1024
-	guiItems.push_back(new guiItem("uiItem/text/textbox.jpg", 20,height-100, 110, 99, true, false));
+	guiItems.push_back(new guiItem("text/textbox.jpg", 20,height-100, 110, 99, true, false));
 
 	//battle button
 	//button jpg dimensions: 1000x300px
 	//button texture orignal dimesntions: 1024x512
-	buttons.push_back(new button("uiItem/buttons/menuItem/battle.jpg", width-120, 20, 100, 30));
+	button * battle = new button("menuItem/battle.jpg", width - 120, 20, 100, 30);
+	battle->setTexture("menuItem/battle_sel.jpg", true);
+	buttons.push_back(battle);
 	
 	int scale = 4;
 	
 	//scroll box
-	//button jpg dimensions: 1320x2420px
-	//button texture orignal dimesntions: 1024x1024
-	scroll = new scrollBox(width - (1020 / scale) - 20, 100,
-		1020 / scale, 2420 / scale);
+	//scrollbox jpg dimensions: 1000x1600px
+	scroll = new scrollBox(width - 250 - 20, 100,
+		250, 400);
 	buttons.push_back(scroll);
 
 	//list options
 	//button jpg width 130px = 256 texture unit
 	// border is 10px on img
-	std::string  path = "uiItem/buttons/listItem/";
-	for (int i = 0; i < 4; i++) {
-		std::string concat = path + std::to_string(i) + ".jpg";
-		char *cstr = new char[concat.length() + 1];
-		strcpy(cstr, concat.c_str());
-
-		scroll->addListItem(cstr);
-
-		delete[] cstr;
-	}
-
-	//sublist options, need to make collapsable....make "sublist" in scrollbox class?
-	path = "uiItem/buttons/listItem/subItem/";
-	for (int i = 30; i < 32; i++) {
-		std::string concat = path + std::to_string(i) + ".jpg";
-		char *cstr = new char[concat.length() + 1];
-		strcpy(cstr, concat.c_str());
-
-		scroll->addListItem(cstr);
-
-		delete[] cstr;
-	}
-
 	for (int i = 0; i < 3; i++) {
-		scroll->addListItem("uiItem/buttons/listItem/0.jpg");
+		std::string concat = std::to_string(i) + ".jpg";
+		scroll->addListItem(concat);
+		//sublist, must be added right after the parent list
+		for (int j = 0; j < 2; j++) {
+			concat = std::to_string((i * 10) + j) + ".jpg";
+			scroll->addsubListItem(concat);
+		}
 	}
-
 
 	//help button
 	//button jpg dimensions: 1000x300px
 	//button texture orignal dimesntions: 1024x512
-	buttons.push_back(new button("uiItem/buttons/menuItem/help.jpg", 20, 20, 100, 30, true));
+	button * help = new button("menuItem/help.jpg", 20, 20, 100, 30, true);
+	help->setTexture("menuItem/help_sel.jpg", true);
+	buttons.push_back(help);
+
 }
 
 void buildView::VOnRender() {
@@ -120,25 +106,27 @@ void buildView::VOnRender() {
 	set3d();
 }
 
-void buildView::onClick(int x, int y) {
+void buildView::onClick(int state, int x, int y) {
 	for (int i = 0; i < buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
-		buttons[i]->onClick(x, height-y);
+		buttons[i]->onClick(state, x, height-y);
 	}
 }
 
-int buildView::switchClicked(int x, int y) {
+guiType buildView::switchClicked(int state, int x, int y) {
 	//battle button
-	if (buttons[0]->isClicked(x, height - y)) {
-		return BATTLE;
+	if (buttons[0]->isClicked(x, height - y) &&
+		state == GLUT_UP) {
+		return guiType::BATTLE;
 	}
 	else {
-		return BUILD;
+		return guiType::BUILD;
 	}
 }
 
-bool buildView::helpClicked(int x, int y) {
+bool buildView::helpClicked(int state, int x, int y) {
 	//help button
+	if (state != GLUT_UP) return false;
 	return buttons[buttons.size() - 1]->isClicked(x, height - y);
 }

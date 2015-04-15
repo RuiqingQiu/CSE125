@@ -104,18 +104,20 @@ void gui::drawAllItems() {
 	}
 }
 
-void gui::onClick(int x, int y) {
+void gui::onClick(int state, int x, int y) {
 	for (int i = 0; i < buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
-		buttons[i]->onClick(x, height-y);
+		buttons[i]->onClick(state, x, height-y);
 	}
 }
 
-int gui::switchClicked(int x, int y) {
-	return 0;
+guiType gui::switchClicked(int state, int x, int y) {
+	std::cout << "need to implement!" << std::endl;
+	return guiType::CONSOLE;
 }
 
-bool gui::helpClicked(int x, int y) {
+bool gui::helpClicked(int state, int x, int y) {
+	std::cout << "need to implement!" << std::endl;
 	return false;
 }

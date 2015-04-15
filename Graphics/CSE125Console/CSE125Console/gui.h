@@ -7,16 +7,13 @@
 #include "button.h"
 #include "scrollBox.h"
 
-//1: build View
-//2: battle View
-//3: help menu
-//4: main menu
-//5: switch to console
-#define BUILD 1
-#define BATTLE 2
-#define HELP 3
-#define MENU 4
-#define CONSOLE 5
+enum class guiType {
+	BUILD,
+	BATTLE,
+	HELP,
+	MENU,
+	CONSOLE
+};
 
 class gui : public GameView {
 public:
@@ -30,7 +27,7 @@ public:
 
 	void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
 
-	virtual void onClick(int x, int y);
+	virtual void onClick(int state, int x, int y);
 
 	void setDimensions(int w, int h);
 
@@ -39,8 +36,8 @@ public:
 
 	void drawAllItems();
 
-	virtual int switchClicked(int x, int y);
-	virtual bool helpClicked(int x, int y);
+	virtual guiType switchClicked(int state, int x, int y);
+	virtual bool helpClicked(int state, int x, int y);
 
 protected:
 	int width;

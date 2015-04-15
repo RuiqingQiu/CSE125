@@ -2,95 +2,74 @@
 #include "guiItem.h"
 
 guiItem::guiItem() {
-	xPos = 0;
-	yPos = 0;
-	xfixed = false;
-	yfixed = true;
-	scaleX = false;
-	scaleY = false;
-	sWidth = 0;
-	sHeight = 0;
+	init();
 }
 
-guiItem::guiItem(char * filename) {
-	xPos = 0;
-	yPos = 0;
-	setTexture(filename);
-	xfixed = false;
-	yfixed = true;
-	scaleX = false;
-	scaleY = false;
-	sWidth = 0;
-	sHeight = 0;
+guiItem::guiItem(string filename) {
+	init();
+	setTexture(filename, false);
+	texture[1] = texture[0];
 }
 
-guiItem::guiItem(char * filename, int x, int y) {
-	setTexture(filename);
+guiItem::guiItem(string filename, int x, int y) {
+	init();
+	setTexture(filename, false);
 	setPosition(x, y);
-	xfixed = false;
-	yfixed = true;
-	scaleX = false;
-	scaleY = false;
-	sWidth = 0;
-	sHeight = 0;
+	texture[1] = texture[0];
 }
 
-guiItem::guiItem(char * filename, int x, int y, bool f) {
-	setTexture(filename);
+guiItem::guiItem(string filename, int x, int y, bool f) {
+	init();
+	setTexture(filename, false);
 	setPosition(x, y);
-	xfixed = f;
-	yfixed = f;
-	scaleX = false;
-	scaleY = false;
-	sWidth = 0;
-	sHeight = 0;
+	setFixed(f, f);
+	texture[1] = texture[0];
 }
 
-guiItem::guiItem(char * filename, int x, int y, bool xf, bool yf) {
-	setTexture(filename);
+guiItem::guiItem(string filename, int x, int y, bool xf, bool yf) {
+	init();
+	setTexture(filename, false);
 	setPosition(x, y);
-	xfixed = xf;
-	yfixed = yf;
-	scaleX = false;
-	scaleY = false;
-	sWidth = 0;
-	sHeight = 0;
+	setFixed(xf, yf);
+	texture[1] = texture[0];
 }
 
-guiItem::guiItem(char * filename, int x, int y, int w, int h) {
-	setTexture(filename);
+guiItem::guiItem(string filename, int x, int y, int w, int h) {
+	init();
+	setTexture(filename, false);
 	setPosition(x, y);
 	setSize(w, h);
-	xfixed = false;
-	yfixed = true;
-	scaleX = false;
-	scaleY = false;
-	sWidth = 0;
-	sHeight = 0;
+	texture[1] = texture[0];
 }
 
-guiItem::guiItem(char * filename, int x, int y, int w, int h, bool f) {
-	setTexture(filename);
+guiItem::guiItem(string filename, int x, int y, int w, int h, bool f) {
+	init();
+	setTexture(filename, false);
 	setPosition(x, y);
 	setSize(w, h);
-	xfixed = f;
-	yfixed = f;
-	scaleX = false;
-	scaleY = false;
-	sWidth = 0;
-	sHeight = 0;
+	setFixed(f, f);
+	texture[1] = texture[0];
 }
 
-guiItem::guiItem(char * filename, int x, int y, int w, int h, bool xf, bool yf) {
-	setTexture(filename);
+guiItem::guiItem(string filename, int x, int y, int w, int h, bool xf, bool yf) {
+	init();
+	setTexture(filename, false);
 	setPosition(x, y);
 	setSize(w, h);
-	xfixed = xf;
-	yfixed = yf;
-	scaleX = false;
-	scaleY = false;
+	setFixed(xf, yf);
+	texture[1] = texture[0];
+}
+
+void guiItem::init() {
+	setPosition(0, 0);
+	setSize(100, 100);
+	setFixed(false, true);
 	sWidth = 0;
 	sHeight = 0;
+	selected = false;
+	scaleX = false;
+	scaleY = false;
+	path = "uiItem/";
 }
 
 guiItem::~guiItem()
@@ -101,34 +80,36 @@ void guiItem::setSize(int x, int y) {
 	width = x;
 	height = y;
 }
-bool guiItem::setTexture(char * filename) {
-	texture[0] = SOIL_load_OGL_texture
+
+bool guiItem::setTexture(string filename, bool select) {
+	GLuint * t;
+	string concat = path + filename;
+	if (select) {
+		t = &texture[1];
+	}
+	else {
+		t = &texture[0];
+	}
+	*t = SOIL_load_OGL_texture
 		(
-		filename
+		concat.c_str()
 		,
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
 		);
-	if (texture[0] == 0)
+	if (*t == 0)
 	{
+		std::cout << concat.c_str() << std::endl;
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
-	else{
-		printf("SOIL loading success\n");
-	}
 
-	//get the size of the texture
-	
-	glBindTexture(GL_TEXTURE_2D, texture[0]);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
 	//return true if successfully set texture
 	//std::cout << filename << std::endl;
 	//std::cout << "width: " << width << std::endl;
 	//std::cout << "height: " << height << std::endl;
-	return false;
+	return true;
 }
 
 void guiItem::draw() {
@@ -141,7 +122,12 @@ void guiItem::draw() {
 	glEnable(GL_TEXTURE_2D);
 	//glActiveTexture(GL_TEXTURE1);
 
-	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	if (selected) {
+		glBindTexture(GL_TEXTURE_2D, texture[1]);
+	}
+	else {
+		glBindTexture(GL_TEXTURE_2D, texture[0]);
+	}
 	// Make sure no bytes are padded:
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 

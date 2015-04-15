@@ -30,7 +30,7 @@ public:
 	gui* gameGui;
 
 	//view mode determines the mode 
-	int viewmode;
+	guiType viewmode;
 
 	//always points to build mode
 	gui * buildmode;

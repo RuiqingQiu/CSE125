@@ -3,7 +3,7 @@
 
 
 scrollBox::scrollBox(){
-	scrollDisplay = new guiItem("uiItem/scrollbox/scrollbox.jpg");
+	scrollDisplay = new guiItem("scrollbox/scrollbox.jpg");
 	xPos = 0;
 	yPos = 0;
 	xfixed = false;
@@ -12,7 +12,7 @@ scrollBox::scrollBox(){
 }
 
 scrollBox::scrollBox(int x, int y) {
-	scrollDisplay = new guiItem("uiItem/scrollbox/scrollbox.jpg", x, y);
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y);
 	xPos = x;
 	yPos = y;
 	xfixed = false;
@@ -21,7 +21,7 @@ scrollBox::scrollBox(int x, int y) {
 }
 
 scrollBox::scrollBox(int x, int y, bool f) {
-	scrollDisplay = new guiItem("uiItem/scrollbox/scrollbox.jpg", x, y, f);
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y, f);
 	xPos = x;
 	yPos = y;
 	xfixed = f;
@@ -30,7 +30,7 @@ scrollBox::scrollBox(int x, int y, bool f) {
 }
 
 scrollBox::scrollBox(int x, int y, bool xf, bool yf) {
-	scrollDisplay = new guiItem("uiItem/scrollbox/scrollbox.jpg", x, y, xf, yf);
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y, xf, yf);
 	xPos = x;
 	yPos = y;
 	xfixed = xf;
@@ -39,7 +39,7 @@ scrollBox::scrollBox(int x, int y, bool xf, bool yf) {
 }
 
 scrollBox::scrollBox(int x, int y, int w, int h) {
-	scrollDisplay = new guiItem("uiItem/scrollbox/scrollbox.jpg", x, y, w, h);
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y, w, h);
 	xPos = x;
 	yPos = y;
 	xfixed = false;
@@ -50,7 +50,7 @@ scrollBox::scrollBox(int x, int y, int w, int h) {
 }
 
 scrollBox::scrollBox(int x, int y, int w, int h, bool f) {
-	scrollDisplay = new guiItem("uiItem/scrollbox/scrollbox.jpg", x, y, w, h, f);
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y, w, h, f);
 	xPos = x;
 	yPos = y;
 	width = w;
@@ -61,7 +61,7 @@ scrollBox::scrollBox(int x, int y, int w, int h, bool f) {
 }
 
 scrollBox::scrollBox(int x, int y, int w, int h, bool xf, bool yf) {
-	scrollDisplay = new guiItem("uiItem/scrollbox/scrollbox.jpg", x, y, w, h, xf, yf);
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y, w, h, xf, yf);
 	xPos = x;
 	yPos = y;
 	width = w;
@@ -82,18 +82,20 @@ void scrollBox::init() {
 	int ratio = height / 24.2;
 	//button jpg dimensions: 1320x100px
 	//button texture orignal dimesntions: 1024x128
-	upButton = new button("uiItem/scrollbox/up.jpg", xPos, yPos+height, width, ratio);
+	upButton = new button("scrollbox/up.jpg", xPos, yPos+height, width, ratio);
+	upButton->setTexture("scrollbox/up_sel.jpg", true);
 
 	//button jpg dimensions: 1320x100px
 	//button texture orignal dimesntions: 1024x128
-	downButton = new button("uiItem/scrollbox/down.jpg", xPos, yPos-ratio, width, ratio);
+	downButton = new button("scrollbox/down.jpg", xPos, yPos-ratio, width, ratio);
+	downButton->setTexture("scrollbox/down_sel.jpg", true);
 }
 
 void scrollBox::draw() {
 	scrollDisplay->draw();
 	upButton->draw();
 	downButton->draw();
-	for (int i = displayIdx; i < displayIdx+8; i++) {
+	for (int i = displayIdx; i < displayIdx + MAXDISPLAY; i++) {
 		if (i >= list.size()) break;
 		list[i]->draw();
 	}
@@ -108,17 +110,28 @@ void scrollBox::rePosition(int x, int y, int w, int h) {
 	}
 }
 
-void scrollBox::addListItem(char * filename) {
+int scrollBox::getTotalSize() {
 	int s = list.size();
-	s = 7 - s;
-	//button jpg dimensions: 1300x300px
-	//button texture orignal dimesntions: 1024x512
-	//border is 10px on img
-	int border = ceil ( (5.0 / 660.0) * width );
-	int w = ( (1000.0 / 1020.0) * width ) -1;
-	int h = ceil ( (200.0 / 1680.0) * height );
+	for (int i = 0; i < list.size(); i++) {
+		s += list[i]->subList.size();
+	}
+	return s;
+}
 
-	list.push_back(new button(filename, xPos+border, yPos + (s*h) + border, w, h));
+void scrollBox::addListItem(string filename) {
+	int s = list.size();
+	s = MAXDISPLAY - 1 - s;
+	int h = height / MAXDISPLAY;
+
+	list.push_back(new listItem(filename, xPos, yPos + (s*h), width, h));
+}
+
+void scrollBox::addsubListItem(string filename) {
+	int s = list.size()+ list[list.size()-1]->subList.size();
+	s = MAXDISPLAY -1 - s;
+	int h = height / MAXDISPLAY;
+
+	list[list.size()-1]->subList.push_back(new listItem("subItem/"+filename, xPos, yPos + (s*h), width, h));
 }
 
 bool scrollBox::isClicked(int x, int y) {
@@ -132,32 +145,42 @@ bool scrollBox::isClicked(int x, int y) {
 	return false;
 }
 
-void scrollBox::onClick(int x, int y) {
-	int border = ceil((5.0 / 660.0) * width);
-	int h = ceil((150.0 / 1210.0) * height);
+void scrollBox::onClick(int state, int x, int y) {
+	int h = height / MAXDISPLAY;
 
 	if (upButton->isClicked(x, y)) {
-		if (list.size() <= 8) return;
+		if (list.size() <= MAXDISPLAY) return;
 		if (displayIdx == 0) return;
 		displayIdx--;
 		for (int i = 0; i < list.size(); i++) {
-			list[i]->translate(0, -(h + border));
+			list[i]->translate(0, -h);
 		}
 	}
 	if (downButton->isClicked(x, y)) {
 		int s = list.size();
-		if (s <= 4) return;
-		if ((s - displayIdx) <= 4) return;
+		if (s <= MAXDISPLAY/2) return;
+		if ((s - displayIdx) <= MAXDISPLAY/2) return;
 		displayIdx++;
 		for (int i = 0; i < list.size(); i++) {
-			list[i]->translate(0, h+border);
+			list[i]->translate(0, h);
 		}
 	}
 
-	upButton->onClick(x, y);
-	downButton->onClick(x, y);
-	for (int i = displayIdx; i < displayIdx+8; i++) {
+	upButton->onClick(state, x, y);
+	downButton->onClick(state, x, y);
+	for (int i = displayIdx; i < displayIdx+MAXDISPLAY; i++) {
 		if (i >= list.size()) return;
-		list[i]->onClick(x, y);
+		list[i]->onClick(state, x, y);
+		int s = list[i]->subList.size();
+		if (list[i]->showSubList && state == GLUT_UP) {
+			for (int j = i + 1; j < list.size(); j++) {
+				list[j]->translate(0, -h*s);
+			}
+		}
+		else if (!list[i]->showSubList && list[i]->showPrev && state == GLUT_UP) {
+			for (int j = i + 1; j < list.size(); j++) {
+				list[j]->translate(0, h*s);
+			}
+		}
 	}
 }

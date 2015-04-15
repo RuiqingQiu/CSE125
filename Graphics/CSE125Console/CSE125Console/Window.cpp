@@ -45,31 +45,31 @@ void Window::initialize(void)
 	//g_pCore->pPlayer->playerid = 1;
 
 	//default to console view
-	g_pCore->viewmode = 4;
+	g_pCore->viewmode = guiType::CONSOLE;
 	g_pCore->helpMenu = new gui();
 	g_pCore->battlemode = new gui();
 	g_pCore->buildmode = new buildView(width, height); 
 	g_pCore->menumode = new mainMenu(width, height);
-
 	g_pCore->defaultGui = new gui();
-	if (g_pCore->viewmode == 0) {
+
+	if (g_pCore->viewmode == guiType::CONSOLE) {
 		g_pCore->gameGui = g_pCore->defaultGui;
 		g_pCore->i_pInput = g_pCore->standard_Input;
 	} 
-	else if (g_pCore->viewmode == 1) {
+	else if (g_pCore->viewmode == guiType::BUILD) {
 		g_pCore->gameGui = g_pCore->buildmode;
 		g_pCore->i_pInput = g_pCore->gui_Input;
 	}
-	else if (g_pCore->viewmode == 2) {
-		g_pCore->gameGui = g_pCore->defaultGui;
-		g_pCore->i_pInput = g_pCore->standard_Input;
+	else if (g_pCore->viewmode == guiType::BATTLE) {
+		g_pCore->gameGui = g_pCore->battlemode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
 	}
-	else if (g_pCore->viewmode == 3) {
-		g_pCore->gameGui = g_pCore->defaultGui;
-		g_pCore->i_pInput = g_pCore->standard_Input;
+	else if (g_pCore->viewmode == guiType::HELP) {
+		g_pCore->gameGui = g_pCore->helpMenu;
+		g_pCore->i_pInput = g_pCore->gui_Input;
 	}
 	// main menu view
-	else if (g_pCore->viewmode == 4) {
+	else if (g_pCore->viewmode == guiType::MENU) {
 		g_pCore->gameGui = g_pCore->menumode;
 		g_pCore->i_pInput = g_pCore->gui_Input;
 	}
@@ -86,8 +86,10 @@ void Window::initialize(void)
 
 	//see comments about switching views in gameCore.cpp
 	g_pCore->skybox = new SkyBox();
-	//no skybox for buildmode
-	if (g_pCore->viewmode != 1 && g_pCore->viewmode != 4) {
+	
+	//only need skybox for battle mode and console mode right now
+	if (g_pCore->viewmode == guiType::CONSOLE ||
+		g_pCore->viewmode == guiType::BATTLE) {
 		view->PushGeoNode(g_pCore->skybox);
 	}
 

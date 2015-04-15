@@ -3,38 +3,45 @@
 #include <GL/glut.h>
 #include "SOIL.h"
 
+using namespace std;
+
 class guiItem
 {
 public:
+	//constructors
 	guiItem();
-	guiItem(char * filename);
-	guiItem(char * filename, int x, int y);
-	guiItem(char * filename, int x, int y, bool f);
-	guiItem(char * filename, int x, int y, bool xf, bool yf);
-	guiItem(char * filename, int x, int y, int w, int h);
-	guiItem(char * filename, int x, int y, int w, int h, bool f);
-	guiItem(char * filename, int x, int y, int w, int h, bool xf, bool yf);
+	guiItem(string filename);
+	guiItem(string filename, int x, int y);
+	guiItem(string filename, int x, int y, bool f);
+	guiItem(string filename, int x, int y, bool xf, bool yf);
+	guiItem(string filename, int x, int y, int w, int h);
+	guiItem(string filename, int x, int y, int w, int h, bool f);
+	guiItem(string filename, int x, int y, int w, int h, bool xf, bool yf);
 	~guiItem();
 
-	bool setTexture(char * filename);
-
-	virtual void draw();
-
+	virtual void init();
+	
+	//setters
+	bool setTexture(string filename, bool select);
 	void setPosition(int x, int y);
 	void setSize(int w, int h);
 	void setFixed(bool x, bool y);
 	void setScaling(bool xs, bool ys, int w, int h);
-	void translate(int x, int y);
 
+	//getters
 	bool xisFixed();
 	bool yisFixed();
 
+	//drawing functions
+	virtual void draw();
+	void translate(int x, int y);
 	virtual void rePosition(int x, int y, int w, int h);
 
 protected:
+	string path;
 	//store the texture
 	// [0] is main texture
-	// [1] is clicked/hovered texture? (not implemented yet)
+	// [1] is clicked/hovered texture
 	GLuint texture[2];
 
 	//top left corner position of texture
@@ -44,13 +51,18 @@ protected:
 	//size of the texture
 	int width;
 	int height;
-
+	
+	//fixed position on screen
 	bool xfixed;
 	bool yfixed;
 
+	//for scale (if scaling) instead of translating on resize
 	bool scaleX;
 	bool scaleY;
 	int sWidth;
 	int sHeight;
+
+	//for selecting which texture
+	bool selected;
 };
 

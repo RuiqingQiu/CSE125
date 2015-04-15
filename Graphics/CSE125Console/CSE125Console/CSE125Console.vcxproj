@@ -94,6 +94,7 @@
     <ClInclude Include="gui.h" />
     <ClInclude Include="guiGameInput.h" />
     <ClInclude Include="guiItem.h" />
+    <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="scrollBox.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="gui.cpp" />
     <ClCompile Include="guiGameInput.cpp" />
     <ClCompile Include="guiItem.cpp" />
+    <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="scrollBox.cpp" />
     <ClCompile Include="SkyBox.cpp" />
