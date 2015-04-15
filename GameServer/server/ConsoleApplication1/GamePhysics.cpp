@@ -177,8 +177,9 @@ void GamePhysics::createPhysicsEvent(int eventType, btRigidBody* rb)
 		rb->applyCentralForce(correctedForce);
 		break;
 	}
-
-
+	case WEAPON1:{
+		break;
+	}
 	default:{
 		printf("error in packet types\n");
 		break;

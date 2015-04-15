@@ -125,7 +125,6 @@ void GameLogic::prePhyLogic(){
 	iter = objEventList.begin();
 	while (iter != objEventList.end()) 
 	{
-
 		unsigned int type = (*iter)->getEvent();
 		int cid = (*iter)->getCid();
 		std::map<int, GameObj *>::iterator it;

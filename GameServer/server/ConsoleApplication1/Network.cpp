@@ -279,8 +279,26 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							eventList->push_back(e);
 							break;
 		}
+		//case WEAPON1:{
+		//	ObjectEvents * e = new ObjectEvents(WEAPON1);
+		//	string packetInfoStr = "";
+		//	int i;
+		//	for (i = 0;; i++)
+		//	{
+		//		if (packet.data[i] != '\n')
+		//			packetInfoStr += packet.data[i];
+		//		else
+		//		{
+		//			break;
+		//		}
+		//	}
+		//	unsigned int cid = stoul(packetInfoStr);
+		//	e->setCid(cid);
+		//	eventList->push_back(e);
+		//	break;
+		//}
 		default:{
-					printf("error in packet types 222222\n");
+					printf("error in packet types\n");
 					break;
 		}
 	}
@@ -318,14 +336,26 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += ' ';
 		btTransform trans;
 		(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);
-		float mat[16];
-		trans.getOpenGLMatrix(mat);
-		int j;
-		for (j = 0; j < 16; j++)
-		{
-			temp += to_string(mat[j]);
-			temp += ' ';
-		}
+		//float mat[16];
+		//trans.getOpenGLMatrix(mat);
+		//int j;
+		//for (j = 0; j < 16; j++)
+		//{
+		//	temp += to_string(mat[j]);
+		//	temp += ' ';
+		//}
+		btScalar yaw = 0, pitch = 0, roll = 0;
+
+		trans.getBasis().getEulerZYX(yaw, pitch, roll);
+		cout << "yaw : " << yaw << endl;
+		cout << "pitch : " << pitch << endl;
+		cout << "roll : " << roll << endl;
+		temp += to_string((float)yaw);
+		temp += ' ';
+		temp += to_string((float)pitch);
+		temp += ' ';
+		temp += to_string((float)roll);
+		temp += ' ';
 		/*temp += to_string((*i)->getRotX());
 		temp += ' ';
 		temp += to_string((*i)->getRotY());

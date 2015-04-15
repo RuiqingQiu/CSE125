@@ -6,8 +6,7 @@
 #include "definition.h"
 
 
-//#define MAX_PACKET_SIZE 1000000
-#define MAX_PACKET_SIZE   1000000
+#define MAX_PACKET_SIZE 1000000
 
 //NetworkData.h
 

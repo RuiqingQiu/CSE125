@@ -18,6 +18,7 @@ enum PacketTypes {
 	MOVE_DOWN = 7,
 	INIT_CLIENT = 8,
 	CONFIRM_CONNECTION = 9,
+	WEAPON1 = 10,
 };
 
 //Game Events
