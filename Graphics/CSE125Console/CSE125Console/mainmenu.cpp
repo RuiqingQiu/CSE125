@@ -19,14 +19,15 @@ mainMenu::~mainMenu(){
 }
 
 void mainMenu::createButtons() {
-	button * help = new button("menuItem/help.jpg", width*0.5, height * 0.3, 100, 30);
-	help->setScaling(true, true, width, height);
 
+	button * robo = new button("menuItem/enterRobotName.jpg", width*0.2, height*0.5, 300, 70);
+	robo->setScaling(true, true, width, height);
+	
 	button * play = new button("menuItem/play.jpg", width*0.5, height*0.4, 100, 30);
 	play->setScaling(true, true, width, height);
 
-	button * robo = new button("menuItem/enterRobotName.jpg", width*0.4, height*0.5, 300, 70);
-	robo->setScaling(true, true, width, height);
+	button * help = new button("menuItem/help.jpg", width*0.5, height * 0.3, 100, 30);
+	help->setScaling(true, true, width, height);
 
 	buttons.push_back(robo);
 	buttons.push_back(play);
@@ -54,7 +55,6 @@ void mainMenu::onClick(int state, int x, int y) {
 
 guiType mainMenu::switchClicked(int state, int x, int y){
 	//play button
-	std::cout << "Height: " << height << std::endl;
 	if (state != GLUT_UP) return guiType::MENU;
 	if (buttons[1]->isClicked(x, height - y)) {
 		return guiType::BUILD;
