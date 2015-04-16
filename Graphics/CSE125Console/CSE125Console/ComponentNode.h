@@ -1,4 +1,7 @@
 #include "stdafx.h"
+
+#ifndef CSE125_COMPONENT
+#define CSE125_COMPONENT
 class ComponentNode
 {
 public:
@@ -6,3 +9,5 @@ public:
 	~ComponentNode();
 
 };
+
+#endif

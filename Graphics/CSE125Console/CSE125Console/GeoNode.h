@@ -10,6 +10,7 @@ public:
 	~GeoNode();
 	int identifier;
 	Transform localTransform;
+	float mat[16];
 
 	virtual void VOnDraw(){ };
 	virtual void VOnUpdate(GameInfoPacket* pData){ };

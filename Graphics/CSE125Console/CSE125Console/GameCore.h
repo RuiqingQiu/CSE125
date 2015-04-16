@@ -12,7 +12,7 @@ class GameCore
 public:
 	GameCore();
 	~GameCore();
-
+	static float width, height;
 	GameView* pGameView;
 	GamePacketManager* pGamePacketManager;
 	GamePlayer* pPlayer;

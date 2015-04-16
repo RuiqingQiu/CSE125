@@ -19,6 +19,17 @@ void Camera::setUpCamera(){
 	glTranslatef(-position->x, -position->y, -position->z);
 }
 
+
+void  Camera::setUpCameraWithGL(float position_x, float position_y, float position_z, float lookAt_x, float lookAt_y, float lookAt_z){
+	/*
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60, width / height, 10, 40000);*/
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(position_x, position_y, position_z, lookAt_x, lookAt_y, lookAt_z, 0, 1, 0);
+}
+
 /*
 Matrix4 Camera::GetCameraMatrix()
 {

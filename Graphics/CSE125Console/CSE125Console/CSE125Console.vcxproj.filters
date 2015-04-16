@@ -153,6 +153,12 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="HardShadowView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -248,10 +254,54 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="HardShadowView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CSE125Console.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="simple.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="simple.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="shadow.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="shadow.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="BlurVertexShader.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="FragmentShader.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="StoreDepthFragmentShader.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="StoreDepthVertexShader.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="BlurFragmentShader.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="VertexShader.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="hard_shadow.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="hard_shadow.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

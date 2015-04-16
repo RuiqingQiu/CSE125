@@ -1,21 +1,23 @@
 #include "stdafx.h"
 #include <iostream>
 
+#include "Window.h"
+
 #ifdef __APPLE__
     #include <GLUT/glut.h>
 #else
     #include <GL/glut.h>
 #endif
 
-#include "Window.h"
 #include "GameView.h"
 #include "Cube.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
 #include "SkyBox.h"
-
-
-#define TESTCAM 1
+#include "Plane.h"
+#include "ShadowView.h"
+#include "HardShadowView.h"
+#define TESTCAM 0
 
 
 int Window::width  = 512;   //Set window width in pixels here
@@ -25,6 +27,7 @@ gui buildmode = gui();
 
 
 static Cube* cube;
+static Cube* cube2;
 //Init server info here later
 void Window::initialize(void)
 {
@@ -32,30 +35,47 @@ void Window::initialize(void)
 	//glColor3f(1, 1, 1);
 	GameView* view = new GameView();
 	cube = new Cube(1);
-	cube->localTransform.position = Vector3(0, 0, 0);
+	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	view->PushGeoNode(cube);
-	
+	//view->PushGeoNode(cube);
+
+	cube2 = new Cube(1);
+	cube2->localTransform.position = Vector3(5, 0, -10);
+	//view->PushGeoNode(cube2);
+
 	g_pCore->pGameView = view;
 	//g_pCore->pPlayer->playerid = 1;
-
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.84");
+	
+	//test shadow view
+	HardShadowView* shadowview = new HardShadowView();
+	//g_pCore->pGameView = shadowview;
 
 	//Setup the light
-	//Model3D *object = new Model3D("woodcube.obj");
-	//object->localTransform.position = Vector3(0, 0, 0);
-	//object->localTransform.scale = Vector3(1, 1, 1);
-	//object->localTransform.rotation = Vector3(90, 0, 0);
-
-	//view->PushGeoNode(object);
-
-
+	/*
+	Model3D *object = new Model3D("woodcube.obj");
+	object->localTransform.position = Vector3(0, 0, -10);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	*/
 	SkyBox *object2 = new SkyBox();
 	view->PushGeoNode(object2);
 
 	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 5);
+
+	//setup shader
+	//init shader
+	//GLuint program = LoadShader("shadow.vert", "shadow.frag");
+	//glUseProgram(program);
+
+
+	//connect to server
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
+
+
+
 }
 
 //----------------------------------------------------------------------------
@@ -84,12 +104,13 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 // Callback method called by GLUT when graphics window is resized by the user
 void Window::reshapeCallback(int w, int h)
 {
-    width = w;                                                       //Set the window width
-    height = h;                                                      //Set the window height
+    Window::width = w;                                                       //Set the window width
+	Window::height = h;                                                      //Set the window height
     glViewport(0, 0, w, h);                                          //Set new viewport size
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(60.0, double(width)/(double)height, 1.0, 1000.0); //Set perspective projection viewing frustum
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 10, 1000.0); //Set perspective projection viewing frustum
+
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 }
 
@@ -116,23 +137,23 @@ void Window::displayCallback()
 
 	g_pCore->pGameView->VOnRender();
 
-	buildmode.draw(width, height);
+	buildmode.draw(Window::width, Window::height);
 
 	//test for camera
 	
 	if (TESTCAM)
 	{
-		Matrix4 trans = cube->localTransform.GetMatrix4();
-		trans.print("transformation matrix, ");
+		Matrix4 trans = cube->localTransform.GetRotMatrix4();
 		Vector4 forward = Vector4(0, 0, -1, 1);
-		Vector4 direction = trans*forward;
-		printf("dir : %f %f %f\n", direction.x , direction.y,direction.z);
-		float distanceToPlayer = 20;
+		Vector4 direction_temp = trans*forward;
+		Vector3 direction = Vector3(direction_temp.get_x(), direction_temp.get_y(), direction_temp.get_z());
+		direction.normalize();
+		printf("direction : %f %f %f\n", direction.x,direction.y,direction.z);
+		float distanceToPlayer = 5;
 		g_pCore->pGameView->pViewCamera->position = new Vector3(cube->localTransform.position.x - direction.x*distanceToPlayer, cube->localTransform.position.y - direction.y*distanceToPlayer, cube->localTransform.position.z - direction.z*distanceToPlayer);
-		
-		printf("pos : %f %f %f\n", g_pCore->pGameView->pViewCamera->position->x, g_pCore->pGameView->pViewCamera->position->y, g_pCore->pGameView->pViewCamera->position->z);
-
 		g_pCore->pGameView->pViewCamera->rotation = new Vector3(-cube->localTransform.rotation.x, -cube->localTransform.rotation.y, -cube->localTransform.rotation.z);
+		//cube2->localTransform.position = Vector3(cube->localTransform.position.x - direction.x*distanceToPlayer, cube->localTransform.position.y - direction.y*distanceToPlayer, cube->localTransform.position.z - direction.z*distanceToPlayer);
+		//cube2->localTransform.rotation = Vector3(cube->localTransform.rotation.x, cube->localTransform.rotation.y, cube->localTransform.rotation.z);
 	}
 	
 

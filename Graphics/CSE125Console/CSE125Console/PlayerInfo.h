@@ -11,6 +11,10 @@ public:
 	double y;
 	double z;
 
+	double rx;
+	double ry;
+	double rz;
+	float mat[16];
 	bool processed = false;
 	void print();
 	PlayerInfo();

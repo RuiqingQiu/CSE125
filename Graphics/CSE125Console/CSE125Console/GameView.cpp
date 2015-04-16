@@ -5,6 +5,8 @@
 GameView::GameView()
 {
 	pViewCamera = new Camera();
+
+
 }
 
 
@@ -58,6 +60,17 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			float distanceToPlayer = 5;
 			pViewCamera->position = new Vector3(node->localTransform.position.x-direction.x*distanceToPlayer, node->localTransform.position.y-direction.y*distanceToPlayer, node->localTransform.position.z-direction.z*distanceToPlayer);
 			pViewCamera->rotation = new Vector3(node->localTransform.rotation);
+			*/
+			/*
+			Matrix4 trans = node->localTransform.GetRotMatrix4();
+			Vector4 forward = Vector4(0, 0, -1, 1);
+			Vector4 direction_temp = trans*forward;
+			Vector3 direction = Vector3(direction_temp.get_x(), direction_temp.get_y(), direction_temp.get_z());
+			direction.normalize();
+			printf("direction : %f %f %f\n", direction.x, direction.y, direction.z);
+			float distanceToPlayer = 5;
+			pViewCamera->position = new Vector3(node->localTransform.position.x - direction.x*distanceToPlayer, node->localTransform.position.y - direction.y*distanceToPlayer, node->localTransform.position.z - direction.z*distanceToPlayer);
+			pViewCamera->rotation = new Vector3(-node->localTransform.rotation.x, -node->localTransform.rotation.y, -node->localTransform.rotation.z);
 			*/
 		}
 		

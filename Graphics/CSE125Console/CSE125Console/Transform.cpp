@@ -74,3 +74,32 @@ Matrix4 Transform::GetMatrix4()
 
 	return ret;
 }
+
+
+Matrix4 Transform::GetRotMatrix4()
+{
+	//	printf("pos %f %f %f\n", position.x,position.y,position.z);
+
+	Matrix4 ret;
+	ret.identity();
+
+	Matrix4 m4_pos;
+	m4_pos.makeTranslate(position.x, position.y, position.z);
+
+	Matrix4 m4_rotx;
+	m4_rotx.makeRotateX(rotation.x);
+
+	Matrix4 m4_roty;
+	m4_roty.makeRotateY(rotation.y);
+
+	Matrix4 m4_rotz;
+	m4_rotz.makeRotateZ(rotation.z);
+
+	Matrix4 m4_rot;
+	m4_rot = m4_rotx*m4_roty*m4_rotz;
+
+	ret = m4_rot;
+	//ret.transpose();
+
+	return ret;
+}
