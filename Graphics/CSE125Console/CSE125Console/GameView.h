@@ -27,6 +27,8 @@ public:
 
 	void PushGeoNode(GeoNode* node);
 	void PopGeoNode(GeoNode* node);
+	bool FindGeoNode(GeoNode* node);
+
 };
 
 #endif
