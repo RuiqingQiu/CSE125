@@ -23,11 +23,17 @@ unsigned int GameLogic::waitToConnect()
 
 
     if (cid == -1) return WAIT;
-	GameObj* gameObj = new GOBox(10, 5, 0, 0, 0, 0, 1, 1, 1, 1, 1);
+	GameObj* gameObj = new GOBox(0, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1);
 	gameObj->setBlockType(CUBE);
 	asd++;
 	this->pushGameObj(gameObj);
 	clientPair.insert(std::pair<int, GameObj*>(cid, gameObj));
+
+	GameObj* gameObj1 = new GOBox(1, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1);
+	gameObj1->setBlockType(CUBE);
+	asd++;
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(cid+1, gameObj1));
 
 	//GameObj* gameObj1 = new GOBox(10, 5, 0, 0, 0, 0, 1, 1, 1, 1, 1);
 	//gameObj1->setBlockType(CUBE);
@@ -37,7 +43,7 @@ unsigned int GameLogic::waitToConnect()
 	int i, j;
 	for (i = 0; i < 1; i++)
 	{
-		for (j = 0; j < 10; j++)
+		for (j = 0; j < 20; j++)
 		{
 			GameObj* gameObj2 = new GOBox(i*1-10, j*1, -5, 0, 0, 0, 1, 1, 1, 1, 1);
 			gameObj2->setBlockType(CUBE);
@@ -83,6 +89,24 @@ void GameLogic::gameStart(){
 	//e1->setCid(0);
 	//objEventList.push_back(e1);
 	gamePhysics->initWorld(&(this->getGameObjs()));
+
+	Constraint* b = new Constraint();
+	b->addConstraint(clientPair.find(0)->second, clientPair.find(1)->second);
+	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+	std::vector<GameObj*>::iterator it;
+	for (it = gameObjs.begin(); it != gameObjs.end(); it++)
+	{
+		
+		Constraint* b = new Constraint();
+		if (it + 1 == gameObjs.end()){
+			break;
+		}
+		b->addConstraint((*it++), (*it));
+		gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
+	}
+	//gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
 }
 
 
@@ -104,7 +128,7 @@ unsigned int GameLogic::gameLoop (){
 	//do physics
 
 	
-	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/33.0));
+	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/66.0));
 
 	gamePhysics->stepSimulation(&this->getGameObjs());
 
@@ -130,6 +154,7 @@ void GameLogic::prePhyLogic(){
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
 		GameObj*  cob = it->second;
+		std::cout << "x: " << cob->getX() << "y: " << cob->getY() << "z: " << cob->getZ() << std::endl;
 		btRigidBody *rb = cob->getRigidBody();
 		gamePhysics->createPhysicsEvent(type, rb);
 		iter++;

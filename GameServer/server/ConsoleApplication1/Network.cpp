@@ -38,7 +38,8 @@ void Network::sendClientConfirmationPacket(const char* clientName, int client_ID
 	}
 	packetInfoStr += to_string(client_ID);
 	packetInfoStr += '\n';
-	memcpy(packet.data, packetInfoStr.c_str(), sizeof(packet.data));
+	memset(packet.data, 0, sizeof(packet.data));
+	memcpy(packet.data, packetInfoStr.c_str(), packetInfoStr.length());
 
 	packet.serialize(packet_data);
 	network->sendToOne(packet_data, packet_size, client_ID);
@@ -119,7 +120,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 	//char* str = new char[sizeof(des) + 1];
 	//std::strcpy(str, des.c_str());
 	//cout << "packet size is : "<< sizeof(des) << endl;
-	memcpy(packet.data, des.c_str(), des.length()+1);
+	memcpy(packet.data, des.c_str(), des.length());
 	//cout << "size of des: " << sizeof(des) << endl;
 	//cout << "des.cstr: " << des.c_str() << endl;
 	//cout << "``packet.data: " << packet.data << endl;
@@ -128,7 +129,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 
 	packet.serialize(packet_data);
 	//cout << "BERFORE SEND TO ALL" << endl;
-
+	//cout << packet.packet_type << endl;
 	network->sendToAll(packet_data, packet_size);
 
 	//cout << "AFTER SEND TO ALL" << endl;
@@ -139,7 +140,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 
 void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* eventList){
 
-	cout << "packet type : " << packet.packet_type << endl;
+	//cout << "packet type : " << packet.packet_type << endl;
 	switch (packet.packet_type) {
 		case INIT_CONNECTION: {
 								  ObjectEvents * e = new ObjectEvents(INIT_CONNECTION);
@@ -347,9 +348,9 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		btScalar yaw = 0, pitch = 0, roll = 0;
 
 		trans.getBasis().getEulerZYX(yaw, pitch, roll);
-		cout << "yaw : " << yaw << endl;
-		cout << "pitch : " << pitch << endl;
-		cout << "roll : " << roll << endl;
+		//cout << "yaw : " << yaw << endl;
+		//cout << "pitch : " << pitch << endl;
+		//cout << "roll : " << roll << endl;
 		temp += to_string((float)yaw);
 		temp += ' ';
 		temp += to_string((float)pitch);
@@ -411,9 +412,10 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 				break;
 			}
 		}*/
-		temp += '\n';
+		//temp += '\n';
 	}
 	temp += "\0";
+	//cout << temp << endl;
 	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;
 	return temp;
 }

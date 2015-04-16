@@ -16,7 +16,6 @@ struct CPacket {
 	//char data[1024];
 	char data[10000];
 
-
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(CPacket));
 	}

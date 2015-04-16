@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Constraint.h" />
     <ClInclude Include="definition.h" />
     <ClInclude Include="GameEvents.h" />
     <ClInclude Include="ObjectEvents.h" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="definition.cpp" />
     <ClCompile Include="GameEvents.cpp" />
     <ClCompile Include="ObjectEvents.cpp" />

@@ -1,6 +1,7 @@
 #pragma once
 #include <btBulletDynamicsCommon.h>
 #include "GameObj.h"
+#include "Constraint.h"
 #include <vector>
 #include <map>
 #include "definition.h"
