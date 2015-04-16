@@ -108,9 +108,10 @@ GameInfoPacket* ClientGame::update()
 
 		case GAME_STATE:
 				{
-							 printf("client received game state packet from server\n");
+							 //printf("client received game state packet from server\n");
 							 //std::cout << packet.data << std::endl;
-							 std::string result = std::string(packet.data);
+						   cout << "game_state" << endl;
+						    std::string result = std::string(packet.data);
 							 if (result == ""){
 								 return nullptr;
 							 }
@@ -153,6 +154,7 @@ GameInfoPacket* ClientGame::update()
 				}
 		case CONFIRM_CONNECTION:
 		{
+								   cout << "fonfirm_packet" << endl;
 			std::string result = std::string(packet.data);
 			std::vector<std::string> v;
 			split(result, v, '\n');
@@ -170,9 +172,9 @@ GameInfoPacket* ClientGame::update()
 		
 		default:{
 
-					printf("error in packet types : %i\n", packet.packet_type);
-					std::cout << packet.data << std::endl;
-
+					printf("error in packet types : %i with length: %i\n", packet.packet_type, data_length);
+					//std::cout << packet.data << std::endl;
+					return nullptr;
 					break;
 		}
 		}

@@ -111,6 +111,10 @@ void Window::initialize(void)
 
 
 
+	//connect to server
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+
+
 
 
 }
@@ -169,15 +173,19 @@ void Window::displayCallback()
 
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
-	if (p){
+	if (p!=nullptr){
 		switch (p->packet_types){
-		case GAME_STATE:
+		case GAME_STATE:{
 			g_pCore->pGameView->VOnClientUpdate(p);
-
 			break;
-		case CONFIRM_CONNECTION:
+		}
+		case CONFIRM_CONNECTION:{
 			g_pCore->pPlayer->playerid = p->player_infos[0]->id;
-
+			break;
+		}
+		default:{
+			break;
+		}
 		}
 		//update
 	}
