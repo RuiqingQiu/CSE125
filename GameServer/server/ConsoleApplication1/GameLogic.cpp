@@ -23,25 +23,59 @@ unsigned int GameLogic::waitToConnect()
 
 
     if (cid == -1) return WAIT;
-	GameObj* gameObj = new GOBox(0, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1);
+	GameObj* gameObj = new GOBox(0, 5, 0, 0, 0, 0, 1, 1, 1, 1, 1);
 	gameObj->setBlockType(CUBE);
 	asd++;
 	this->pushGameObj(gameObj);
 	clientPair.insert(std::pair<int, GameObj*>(cid, gameObj));
 
-	GameObj* gameObj1 = new GOBox(1, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1);
+	GameObj* gameObj1 = new GOBox(1, 5, 0, 0, 0, 0, 1, 1, 1, 1, 1);
 	gameObj1->setBlockType(CUBE);
-	asd++;
 	this->pushGameObj(gameObj1);
 	clientPair.insert(std::pair<int, GameObj*>(cid+1, gameObj1));
+
+	gameObj1 = new GOBox(-1, 5, 0, 0, 0, 0, 1, 1, 1, 1, 1);
+	gameObj1->setBlockType(CUBE);
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(cid + 2, gameObj1));
+
+	gameObj1 = new GOBox(0, 5, 1, 0, 0, 0, 1, 1, 1, 1, 1);
+	gameObj1->setBlockType(CUBE);
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(cid + 3, gameObj1));
+
+	gameObj1 = new GOBox(0, 5, -1, 0, 0, 0, 1, 1, 1, 1, 1);
+	gameObj1->setBlockType(CUBE);
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(cid + 4, gameObj1));
+
+	gameObj1 = new GOBox(1, 5, -1, 0, 0, 0, 1, 1, 1, 1, 1);
+	gameObj1->setBlockType(CUBE);
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(cid + 5, gameObj1));
+
+	gameObj1 = new GOBox(-1, 5, -1, 0, 0, 0, 1, 1, 1, 1, 1);
+	gameObj1->setBlockType(CUBE);
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(cid + 6, gameObj1));
+
+	gameObj1 = new GOBox(1, 5, 1, 0, 0, 0, 1, 1, 1, 1, 1);
+	gameObj1->setBlockType(CUBE);
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(cid + 7, gameObj1));
+
+	gameObj1 = new GOBox(-1, 5, 1, 0, 0, 0, 1, 1, 1, 1, 1);
+	gameObj1->setBlockType(CUBE);
+	this->pushGameObj(gameObj1);
+	clientPair.insert(std::pair<int, GameObj*>(cid + 8, gameObj1));
 
 	//GameObj* gameObj1 = new GOBox(10, 5, 0, 0, 0, 0, 1, 1, 1, 1, 1);
 	//gameObj1->setBlockType(CUBE);
 	//asd++;
 	//this->pushGameObj(gameObj1);
 	//clientPair.insert(std::pair<int, GameObj*>(cid + 1, gameObj1));
-	int i, j;
-	for (i = 0; i < 1; i++)
+	//int i, j;
+	/*for (i = 0; i < 1; i++)
 	{
 		for (j = 0; j < 20; j++)
 		{
@@ -49,7 +83,7 @@ unsigned int GameLogic::waitToConnect()
 			gameObj2->setBlockType(CUBE);
 			this->pushGameObj(gameObj2);
 		}
-	}
+	}*/
 
 
 	network->receiveFromClients(&objEventList);
@@ -93,7 +127,31 @@ void GameLogic::gameStart(){
 	Constraint* b = new Constraint();
 	b->addConstraint(clientPair.find(0)->second, clientPair.find(1)->second);
 	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
-	std::vector<GameObj*>::iterator it;
+
+	b->addConstraint(clientPair.find(0)->second, clientPair.find(2)->second);
+	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
+
+	b->addConstraint(clientPair.find(0)->second, clientPair.find(3)->second);
+	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
+	b->addConstraint(clientPair.find(0)->second, clientPair.find(4)->second);
+	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
+	b->addConstraint(clientPair.find(0)->second, clientPair.find(5)->second);
+	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
+	b->addConstraint(clientPair.find(0)->second, clientPair.find(6)->second);
+	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
+
+	b->addConstraint(clientPair.find(0)->second, clientPair.find(7)->second);
+	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
+	b->addConstraint(clientPair.find(0)->second, clientPair.find(8)->second);
+	gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
+
+	/*std::vector<GameObj*>::iterator it;
 	for (it = gameObjs.begin(); it != gameObjs.end(); it++)
 	{
 		
@@ -104,7 +162,7 @@ void GameLogic::gameStart(){
 		b->addConstraint((*it++), (*it));
 		gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
 
-	}
+	}*/
 	//gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF);
 
 }
@@ -128,7 +186,7 @@ unsigned int GameLogic::gameLoop (){
 	//do physics
 
 	
-	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/66.0));
+	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/66.0),2);
 
 	gamePhysics->stepSimulation(&this->getGameObjs());
 

@@ -30,9 +30,8 @@ void Constraint::addConstraint(GameObj* a, GameObj* b){
 
 	joint6DOF = new btFixedConstraint(*(a->getRigidBody()), *(b->getRigidBody()), frameInA, frameInB);
 
-
-	/*
-	joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 0);
+		
+	/*joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 0);
 	joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 1);
 	joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 2);
 	joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 3);
@@ -48,8 +47,8 @@ void Constraint::addConstraint(GameObj* a, GameObj* b){
 
 	joint6DOF->setParam(BT_CONSTRAINT_STOP_ERP, 0.5f, 4);
 
-	joint6DOF->setParam(BT_CONSTRAINT_STOP_ERP, 0.5f, 5);
-	*/
+	joint6DOF->setParam(BT_CONSTRAINT_STOP_ERP, 0.5f, 5);*/
+	
 }
 
 Constraint::~Constraint()

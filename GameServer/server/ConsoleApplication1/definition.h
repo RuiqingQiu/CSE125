@@ -2,8 +2,8 @@
 #include "GameObj.h"
 #include "ObjectEvents.h"
 
-#define MOVE_SPEED 40
-#define TURN_SPEED 5
+#define MOVE_SPEED 50
+#define TURN_SPEED 20
 # define M_PI  3.14159265358979323846
 
 // Packet Types

@@ -36,11 +36,11 @@ public:
 
 	virtual	void	setParam(int num, btScalar value, int axis = -1)
 	{
-		btAssert(0);
+		//btAssert(0);
 	}
 	virtual	btScalar getParam(int num, int axis = -1) const
 	{
-		btAssert(0);
+		//btAssert(0);
 		return 0.f;
 	}
 

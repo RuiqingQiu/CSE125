@@ -47,7 +47,7 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 
 void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 {
-	dynamicsWorld->setGravity(btVector3(0, -1, 0));
+	dynamicsWorld->setGravity(btVector3(0, -5, 0));
 	btCollisionShape* ground = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 	btRigidBody::btRigidBodyConstructionInfo
@@ -60,7 +60,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	dynamicsWorld->addRigidBody(groundRigidBody);
 
 	btCollisionShape* ground7 = new btStaticPlaneShape(btVector3(0, -1, 0), 1);
-	btDefaultMotionState* groundMotionState7 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 80, 0)));
+	btDefaultMotionState* groundMotionState7 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 20, 0)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI7(0, groundMotionState7, ground7, btVector3(0, 0, 0));
 	groundRigidBodyCI7.m_friction = 0.1f;
@@ -70,7 +70,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 
 
 	btCollisionShape* ground1 = new btStaticPlaneShape(btVector3(0, 0, 1), 1);
-	btDefaultMotionState* groundMotionState1 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, -30)));
+	btDefaultMotionState* groundMotionState1 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, -20)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI1(0, groundMotionState1, ground1, btVector3(0, 0, 0));
 	groundRigidBodyCI1.m_friction = 0.2f;
@@ -79,7 +79,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	dynamicsWorld->addRigidBody(groundRigidBody1);
 
 	btCollisionShape* ground2 = new btStaticPlaneShape(btVector3(0, 0, -1), 1);
-	btDefaultMotionState* groundMotionState2 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 30)));
+	btDefaultMotionState* groundMotionState2 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 20)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI2(0, groundMotionState2, ground2, btVector3(0, 0, 0));
 	groundRigidBodyCI2.m_friction = 0.2f;
@@ -88,7 +88,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	dynamicsWorld->addRigidBody(groundRigidBody2);
 
 	btCollisionShape* ground3 = new btStaticPlaneShape(btVector3(1, 0, 0), 1);
-	btDefaultMotionState* groundMotionState3 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(-30, 0, 0)));
+	btDefaultMotionState* groundMotionState3 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(-20, 0, 0)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI3(0, groundMotionState3, ground3, btVector3(0, 0, 0));
 	groundRigidBodyCI3.m_friction = 0.2f;
@@ -97,7 +97,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	dynamicsWorld->addRigidBody(groundRigidBody3);
 
 	btCollisionShape* ground4 = new btStaticPlaneShape(btVector3(-1, 0, 0), 1);
-	btDefaultMotionState* groundMotionState4 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(30, 0, 0)));
+	btDefaultMotionState* groundMotionState4 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(20, 0, 0)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI4(0, groundMotionState4, ground4, btVector3(0, 0, 0));
 	groundRigidBodyCI4.m_friction = 0.2f;
@@ -176,21 +176,21 @@ void GamePhysics::createPhysicsEvent(int eventType, btRigidBody* rb)
 		btVector3 relativeForce = btVector3(0, 0, MOVE_SPEED);
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralForce(correctedForce);
+		rb->applyCentralImpulse(correctedForce);
 		break;
 	}
 	case MOVE_FORWARD: {
 		btVector3 relativeForce = btVector3(0, 0, -MOVE_SPEED);
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralForce(correctedForce);
+		rb->applyCentralImpulse(correctedForce);
 		break;
 	}
 	case MOVE_UP: {
 		btVector3 relativeForce = btVector3(0, MOVE_SPEED*2, 0);
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralForce(correctedForce);
+		rb->applyCentralImpulse(correctedForce);
 		break;
 	}
 
@@ -198,7 +198,7 @@ void GamePhysics::createPhysicsEvent(int eventType, btRigidBody* rb)
 		btVector3 relativeForce = btVector3(0, -MOVE_SPEED*2, 0);
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralForce(correctedForce);
+		rb->applyCentralImpulse(correctedForce);
 		break;
 	}
 	case WEAPON1:{
