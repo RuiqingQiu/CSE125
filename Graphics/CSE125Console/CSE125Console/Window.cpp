@@ -15,7 +15,6 @@
 #include "Model3D.h"
 #include "SkyBox.h"
 #include "Plane.h"
-#include "ShadowView.h"
 #include "HardShadowView.h"
 #define TESTCAM 0
 
@@ -38,18 +37,47 @@ void Window::initialize(void)
 	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	//view->PushGeoNode(cube);
+	view->PushGeoNode(cube);
 
-	cube2 = new Cube(1);
-	cube2->localTransform.position = Vector3(5, 0, -10);
+	//cube2 = new Cube(1);
+	//cube2->localTransform.position = Vector3(5, 0, -10);
 	//view->PushGeoNode(cube2);
 
 	g_pCore->pGameView = view;
 	//g_pCore->pPlayer->playerid = 1;
 	
-	//test shadow view
-	HardShadowView* shadowview = new HardShadowView();
-	//g_pCore->pGameView = shadowview;
+	//default to console view
+	g_pCore->viewmode = guiType::CONSOLE;
+	g_pCore->helpMenu = new gui();
+	g_pCore->battlemode = new gui();
+	g_pCore->buildmode = new buildView(width, height);
+	g_pCore->menumode = new mainMenu(width, height);
+	g_pCore->defaultGui = new gui();
+
+	if (g_pCore->viewmode == guiType::CONSOLE) {
+		g_pCore->gameGui = g_pCore->defaultGui;
+		g_pCore->i_pInput = g_pCore->standard_Input;
+	}
+	else if (g_pCore->viewmode == guiType::BUILD) {
+		g_pCore->gameGui = g_pCore->buildmode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::BATTLE) {
+		g_pCore->gameGui = g_pCore->battlemode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::HELP) {
+		g_pCore->gameGui = g_pCore->helpMenu;
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	// main menu view
+	else if (g_pCore->viewmode == guiType::MENU) {
+		g_pCore->gameGui = g_pCore->menumode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+
+	//connect to server
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 
 	//Setup the light
 	/*
@@ -59,11 +87,22 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	*/
-	SkyBox *object2 = new SkyBox();
-	view->PushGeoNode(object2);
+
+	//test shadow view
+	//HardShadowView* shadowview = new HardShadowView();
+	//g_pCore->pGameView = shadowview;
+
+	//see comments about switching views in gameCore.cpp
+	g_pCore->skybox = new SkyBox();
+	//only need skybox for battle mode and console mode right now
+	if (g_pCore->viewmode == guiType::CONSOLE ||
+		g_pCore->viewmode == guiType::BATTLE) {
+		view->PushGeoNode(g_pCore->skybox);
+	}
 
 	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 5);
+	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
+
 
 	//setup shader
 	//init shader
@@ -71,8 +110,10 @@ void Window::initialize(void)
 	//glUseProgram(program);
 
 
+
 	//connect to server
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+
 
 
 
@@ -100,6 +141,12 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 	}
 	
 }
+
+
+void Window::processMouseClick(int button, int state, int x, int y) {
+	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
+}
+
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
 void Window::reshapeCallback(int w, int h)
@@ -110,7 +157,11 @@ void Window::reshapeCallback(int w, int h)
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
 	gluPerspective(60.0, double(Window::width) / (double)Window::height, 10, 1000.0); //Set perspective projection viewing frustum
-
+	g_pCore->buildmode->setDimensions(w, h);
+	g_pCore->menumode->setDimensions(w, h);
+	g_pCore->helpMenu->setDimensions(w, h);
+	g_pCore->battlemode->setDimensions(w, h);
+	
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 }
 
@@ -141,7 +192,8 @@ void Window::displayCallback()
 
 	g_pCore->pGameView->VOnRender();
 
-	buildmode.draw(Window::width, Window::height);
+	g_pCore->gameGui->VOnRender();
+
 
 	//test for camera
 	
@@ -159,6 +211,12 @@ void Window::displayCallback()
 		//cube2->localTransform.position = Vector3(cube->localTransform.position.x - direction.x*distanceToPlayer, cube->localTransform.position.y - direction.y*distanceToPlayer, cube->localTransform.position.z - direction.z*distanceToPlayer);
 		//cube2->localTransform.rotation = Vector3(cube->localTransform.rotation.x, cube->localTransform.rotation.y, cube->localTransform.rotation.z);
 	}
-	
+	//glPopMatrix();
+	//Tell OpenGL to clear any outstanding commands in its command buffer
+	//This will make sure that all of our commands are fully executed before
+	//we swap buffers and show the user the freshly drawn frame
+	glFlush();
+	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
+	glutSwapBuffers();
 
 }

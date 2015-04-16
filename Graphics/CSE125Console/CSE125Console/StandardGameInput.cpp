@@ -11,6 +11,10 @@ StandardGameInput::~StandardGameInput()
 {
 }
 
+void StandardGameInput::VProcessMouseClick(int button, int state, int x, int y) {
+	//do nothing for now, need this function in gui
+}
+
 void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 {
 	if (key == 27){
@@ -72,5 +76,54 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 	else if (key == 'k'){
 	}
 	else if (key == 'l'){
+	}
+	else if (key == '1') {
+		g_pCore->viewmode = guiType::BUILD;
+	}
+	else if (key == '2') {
+		g_pCore->viewmode = guiType::BATTLE;
+	}
+	else if (key == '3') {
+		g_pCore->viewmode = guiType::HELP;
+	}
+	else if (key == '4') {
+		g_pCore->viewmode = guiType::MENU;
+	}
+	else if (key == '5') {
+		g_pCore->viewmode = guiType::CONSOLE;
+	}
+	setGui();
+}
+
+void StandardGameInput::setGui() {
+	if (g_pCore->viewmode == guiType::BUILD) {
+		g_pCore->gameGui = g_pCore->buildmode;
+		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::BATTLE) {
+		g_pCore->gameGui = g_pCore->battlemode;
+		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::HELP) {
+		g_pCore->gameGui = g_pCore->helpMenu;
+		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::MENU) {
+		g_pCore->gameGui = g_pCore->menumode;
+		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::CONSOLE) {
+		g_pCore->gameGui = g_pCore->defaultGui;
+		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->standard_Input;
 	}
 }

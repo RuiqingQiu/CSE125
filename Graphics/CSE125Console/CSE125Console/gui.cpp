@@ -1,22 +1,46 @@
 #include "stdafx.h"
 #include "gui.h"
 
+/*
+* things to implement:
+* handling mouseclick events...
+*		is this from g_pCore->i_pInput???
+*		somehow need to connect buttons to core then....
+*			i.e. g_pCore->pGamePacketManager->sendClick...??
+*			need to ask graphics how this is done
+*/
 
-gui::gui()
-{
+gui::gui() {
+	buttons = std::vector<button*>();
 }
 
-
-gui::~gui()
-{
+gui::gui(int w, int h) {
+	buttons = std::vector<button*>();
+	width = w;
+	height = h;
 }
 
-//this is an example of how to draw 2d stuff in opengl that isn't affected by depth
-// i am putting it all in gui class for 2d "setup"
-//i want to move drawtext and other draw subroutines into a view class
-// and have a battlefieldview, buildview, and menuview extend it
-//we also need some sort of button class to store what texture goes with which button
-void gui::draw(int width, int height) {
+gui::~gui() {
+}
+
+void gui::VOnClientUpdate(GameInfoPacket* info) {
+	//empty for now
+}
+
+void gui::setDimensions(int w, int h) {
+	int xdiff = w - width;
+	int ydiff = h - height;
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons[i]->rePosition(xdiff, ydiff, w, h);
+	}
+	for (int i = 0; i < guiItems.size(); i++) {
+		guiItems[i]->rePosition(xdiff, ydiff, w, h);
+	}
+	width = w;
+	height = h;
+}
+
+void gui::set2d() {
 	//set up 2d
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
@@ -29,41 +53,9 @@ void gui::draw(int width, int height) {
 
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
+}
 
-	//draw stuff here
-
-
-	/* this is the display for battlefield, create class xxxView for each
-		menu
-	  */
-
-	//display text
-	drawText(width*0.4, width - 15, "Time Left:", 1.0, 0.0, 0.0, GLUT_BITMAP_HELVETICA_18);
-	drawText(0, width - 15, "# of deaths:", 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-	drawText(0, width - 25, "# of hits:", 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-	drawText(0, width - 35, "Rank:", 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-
-	//display number vals for text
-	int deaths = 0;
-	int hits = 0;
-	int rank = 0;
-	std::string d = " " + deaths;
-	std::string h = " " + hits;
-	std::string r = " " + rank;
-	drawText(70, width - 15, d, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-	drawText(70, width - 25, h, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-	drawText(70, width - 35, r, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-
-	//display 2d textures for buttons here
-	/* note for gui people:
-		make button class with atributes:
-			texture
-			on click
-			size
-			position
-	*/
-
-
+void gui::set3d() {
 	// Making sure we can render 3d again
 	glEnable(GL_DEPTH_TEST);
 	//glEnable(GL_LIGHTING);
@@ -75,6 +67,18 @@ void gui::draw(int width, int height) {
 
 	//SET back to white color for next render pass
 	glColor3f(1, 1, 1);
+}
+//this is an example of how to draw 2d stuff in opengl that isn't affected by depth
+// i am putting it all in gui class for 2d "setup"
+//i want to move drawtext and other draw subroutines into a view class
+// and have a battlefieldview, buildview, and menuview extend it
+//we also need some sort of button class to store what texture goes with which button
+void gui::VOnRender() {
+	set2d();
+
+	//draw stuff here
+
+	set3d();
 }
 
 void gui::drawText(int x, int y, std::string text, float r, float g, float b, void * font) {
@@ -88,4 +92,32 @@ void gui::drawText(int x, int y, std::string text, float r, float g, float b, vo
 		//glColor3f(1.0, 0.0, 1.0);
 		glutBitmapCharacter(font, c);
 	}
+}
+
+void gui::drawAllItems() {
+	for (int i = 0; i < guiItems.size(); i++) {
+		guiItems[i]->draw();
+	}
+
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons[i]->draw();
+	}
+}
+
+void gui::onClick(int state, int x, int y) {
+	for (int i = 0; i < buttons.size(); i++) {
+		//y is goes top to bottom for mouse,
+		//and bottom to top for texture >.<
+		buttons[i]->onClick(state, x, height - y);
+	}
+}
+
+guiType gui::switchClicked(int state, int x, int y) {
+	std::cout << "need to implement!" << std::endl;
+	return guiType::CONSOLE;
+}
+
+bool gui::helpClicked(int state, int x, int y) {
+	std::cout << "need to implement!" << std::endl;
+	return false;
 }

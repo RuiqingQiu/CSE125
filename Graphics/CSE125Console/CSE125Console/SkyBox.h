@@ -1,6 +1,6 @@
 #pragma once
 #include "GeoNode.h"
-#include "Shader.h"
+//#include "Shader.h"
 #include <GL/glut.h>
 #include "Transform.h"
 #include <gl\GL.h>

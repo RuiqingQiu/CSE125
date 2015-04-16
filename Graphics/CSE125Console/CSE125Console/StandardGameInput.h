@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "GameInputInterface.h"
 #include "GameCore.h"
+
 #pragma once
-class StandardGameInput: public GameInputInterface
+class StandardGameInput : public GameInputInterface
 {
 public:
 	StandardGameInput();
@@ -10,5 +11,8 @@ public:
 
 	virtual void VProcessKeyInput(unsigned char key, int x, int y);
 
+	void VProcessMouseClick(int button, int state, int x, int y);
+
+	void setGui();
 };
 

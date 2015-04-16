@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include "Shader.h"
+//#include "Shader.h"
 #include "GeoNode.h"
 #include "tiny_obj_loader.h"
 #include <GL/glut.h>
