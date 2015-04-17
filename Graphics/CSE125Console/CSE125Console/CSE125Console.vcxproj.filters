@@ -198,6 +198,9 @@
     <ClInclude Include="block.h">
       <Filter>Source Files\buildMode</Filter>
     </ClInclude>
+    <ClInclude Include="battleView.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -331,6 +334,9 @@
     </ClCompile>
     <ClCompile Include="block.cpp">
       <Filter>Source Files\buildMode</Filter>
+    </ClCompile>
+    <ClCompile Include="battleView.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
