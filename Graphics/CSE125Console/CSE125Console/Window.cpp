@@ -48,33 +48,11 @@ void Window::initialize(void)
 	
 	//default to console view
 	g_pCore->viewmode = guiType::CONSOLE;
-	g_pCore->helpMenu = new gui();
+	g_pCore->helpMenu = new helpMenu(width, height);
 	g_pCore->battlemode = new gui();
 	g_pCore->buildmode = new buildView(width, height);
 	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultGui = new gui();
-
-	if (g_pCore->viewmode == guiType::CONSOLE) {
-		g_pCore->gameGui = g_pCore->defaultGui;
-		g_pCore->i_pInput = g_pCore->standard_Input;
-	}
-	else if (g_pCore->viewmode == guiType::BUILD) {
-		g_pCore->gameGui = g_pCore->buildmode;
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	else if (g_pCore->viewmode == guiType::BATTLE) {
-		g_pCore->gameGui = g_pCore->battlemode;
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	else if (g_pCore->viewmode == guiType::HELP) {
-		g_pCore->gameGui = g_pCore->helpMenu;
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	// main menu view
-	else if (g_pCore->viewmode == guiType::MENU) {
-		g_pCore->gameGui = g_pCore->menumode;
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
@@ -92,13 +70,9 @@ void Window::initialize(void)
 	//HardShadowView* shadowview = new HardShadowView();
 	//g_pCore->pGameView = shadowview;
 
-	//see comments about switching views in gameCore.cpp
+	//see gui switch and skybox reqs
 	g_pCore->skybox = new SkyBox();
-	//only need skybox for battle mode and console mode right now
-	if (g_pCore->viewmode == guiType::CONSOLE ||
-		g_pCore->viewmode == guiType::BATTLE) {
-		view->PushGeoNode(g_pCore->skybox);
-	}
+	g_pCore->setGui();
 
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
@@ -142,9 +116,16 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 	
 }
 
+void Window::processSpecialKeys(int key, int x, int y) {
+	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
+}
 
 void Window::processMouseClick(int button, int state, int x, int y) {
 	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
+}
+
+void Window::processPassiveMouse(int x, int y) {
+	g_pCore->i_pInput->VProcessPassiveMouse(x, y);
 }
 
 //----------------------------------------------------------------------------

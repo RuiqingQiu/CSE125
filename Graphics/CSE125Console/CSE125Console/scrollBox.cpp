@@ -3,71 +3,58 @@
 
 
 scrollBox::scrollBox(){
-	scrollDisplay = new guiItem("scrollbox/scrollbox.jpg");
-	xPos = 0;
-	yPos = 0;
-	xfixed = false;
-	yfixed = true;
+	scrollDisplay = new guiItem("scrollbox.jpg");
+	setPosition(0, 0);
+	setFixed(false, true);
+	scale = 1;
 	init();
 }
 
 scrollBox::scrollBox(int x, int y) {
 	scrollDisplay = new guiItem("scrollbox.jpg", x, y);
-	xPos = x;
-	yPos = y;
-	xfixed = false;
-	yfixed = true;
+	setPosition(x, y);
+	setFixed(false, true);
+	scale = 1;
 	init();
 }
 
 scrollBox::scrollBox(int x, int y, bool f) {
 	scrollDisplay = new guiItem("scrollbox.jpg", x, y, f);
-	xPos = x;
-	yPos = y;
-	xfixed = f;
-	yfixed = f;
+	setPosition(x, y);
+	setFixed(f, f);
+	scale = 1;
 	init();
 }
 
 scrollBox::scrollBox(int x, int y, bool xf, bool yf) {
 	scrollDisplay = new guiItem("scrollbox.jpg", x, y, xf, yf);
-	xPos = x;
-	yPos = y;
-	xfixed = xf;
-	yfixed = yf;
+	setPosition(x, y);
+	setFixed(xf, yf);
+	scale = 1;
 	init();
 }
 
-scrollBox::scrollBox(int x, int y, int w, int h) {
-	scrollDisplay = new guiItem("scrollbox.jpg", x, y, w, h);
-	xPos = x;
-	yPos = y;
-	xfixed = false;
-	yfixed = true;
-	width = w;
-	height = h;
+scrollBox::scrollBox(int x, int y, double s) {
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y, int(default_w*s), int(default_h*s));
+	setPosition(x, y);
+	setFixed(false, true);
+	scale = s;
 	init();
 }
 
-scrollBox::scrollBox(int x, int y, int w, int h, bool f) {
-	scrollDisplay = new guiItem("scrollbox.jpg", x, y, w, h, f);
-	xPos = x;
-	yPos = y;
-	width = w;
-	height = h;
-	xfixed = f;
-	yfixed = f;
+scrollBox::scrollBox(int x, int y, double s, bool f) {
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y, default_w*s, default_h*s, f);
+	setPosition(x, y);
+	setFixed(f, f);
+	scale = s;
 	init();
 }
 
-scrollBox::scrollBox(int x, int y, int w, int h, bool xf, bool yf) {
-	scrollDisplay = new guiItem("scrollbox.jpg", x, y, w, h, xf, yf);
-	xPos = x;
-	yPos = y;
-	width = w;
-	height = h;
-	xfixed = xf;
-	yfixed = yf;
+scrollBox::scrollBox(int x, int y, double s, bool xf, bool yf) {
+	scrollDisplay = new guiItem("scrollbox.jpg", x, y, default_w*s, default_h*s, xf, yf);
+	setPosition(x, y);
+	setFixed(xf, yf);
+	scale = s;
 	init();
 }
 
@@ -78,23 +65,39 @@ scrollBox::~scrollBox()
 
 void scrollBox::init() {
 	displayIdx = 0;
+	setSize(1000 * scale, 1000 * scale);
+
+	//create "add and "remove" buttons
+	int xoff = xPos + (100 * scale);
+	int yoff = yPos + (35 * scale);
+	addButton = new button("scrollbox/add.jpg", xoff, yoff);
+	addButton->setTexture("scrollbox/add_sel.jpg", btnState::SELECTED);
+	addButton->setTexture("scrollbox/add_press.jpg", btnState::PRESSED);
+
+	xoff += (600 * scale);
+	removeButton = new button("scrollbox/remove.jpg", xoff, yoff);
+	removeButton->setTexture("scrollbox/remove_sel.jpg", btnState::SELECTED);
+	removeButton->setTexture("scrollbox/remove_press.jpg", btnState::PRESSED);
+
 	//keep ratio to scroll box dimensions: 1320x2420px
-	int ratio = height / 24.2;
+	//int ratio = height / 24.2;
 	//button jpg dimensions: 1320x100px
 	//button texture orignal dimesntions: 1024x128
-	upButton = new button("scrollbox/up.jpg", xPos, yPos+height, width, ratio);
-	upButton->setTexture("scrollbox/up_sel.jpg", true);
+	//upButton = new button("scrollbox/up.jpg", xPos, yPos+height, width, ratio);
+	//upButton->setTexture("scrollbox/up_sel.jpg", true);
 
 	//button jpg dimensions: 1320x100px
 	//button texture orignal dimesntions: 1024x128
-	downButton = new button("scrollbox/down.jpg", xPos, yPos-ratio, width, ratio);
-	downButton->setTexture("scrollbox/down_sel.jpg", true);
+	//downButton = new button("scrollbox/down.jpg", xPos, yPos-ratio, width, ratio);
+	//downButton->setTexture("scrollbox/down_sel.jpg", true);
 }
 
 void scrollBox::draw() {
 	scrollDisplay->draw();
-	upButton->draw();
-	downButton->draw();
+	//upButton->draw();
+	//downButton->draw();
+	addButton->draw();
+	removeButton->draw();
 	for (int i = displayIdx; i < displayIdx + MAXDISPLAY; i++) {
 		if (i >= list.size()) break;
 		list[i]->draw();
@@ -103,8 +106,10 @@ void scrollBox::draw() {
 
 void scrollBox::rePosition(int x, int y, int w, int h) {
 	scrollDisplay->rePosition(x, y, w, h);
-	upButton->rePosition(x, y, w, h);
-	downButton->rePosition(x, y, w, h);
+	//upButton->rePosition(x, y, w, h);
+	//downButton->rePosition(x, y, w, h);
+	addButton->rePosition(x, y, w, h);
+	removeButton->rePosition(x, y, w, h);
 	for (int i = 0; i < list.size(); i++) {
 		list[i]->rePosition(x, y, w, h);
 	}
@@ -118,28 +123,42 @@ int scrollBox::getTotalSize() {
 	return s;
 }
 
-void scrollBox::addListItem(string filename) {
+void scrollBox::addListItem(string filename, string selName) {
 	int s = list.size();
 	s = MAXDISPLAY - 1 - s;
-	int h = height / MAXDISPLAY;
+	//header area is 100 pixels, footer area is 100 pixels
+	double hf = 200.0 * scale;
+	double h = ((height - hf) / MAXDISPLAY);
 
-	list.push_back(new listItem(filename, xPos, yPos + (s*h), width, h));
+	listItem * newL = new listItem(filename, xPos, yPos + int(s*h + (hf / 2.0)), scale);
+	if (selName.compare("") != 0) {
+		newL->setTexture(selName, btnState::SELECTED);
+	}
+	list.push_back(newL);
 }
 
-void scrollBox::addsubListItem(string filename) {
-	int s = list.size()+ list[list.size()-1]->subList.size();
-	s = MAXDISPLAY -1 - s;
-	int h = height / MAXDISPLAY;
+void scrollBox::addsubListItem(string filename, string selName) {
+	int s = list[list.size()-1]->subList.size();
+	s = MAXDISPLAY - 1 - s;
+	//header area is 100 pixels, footer area is 100 pixels
+	double hf = 200.0 * scale;
+	double h = ((height - hf) / MAXDISPLAY);
+	//halfway point width wise is 500 on original image
+	double half = 500.0 * scale;
 
-	list[list.size()-1]->subList.push_back(new listItem("subItem/"+filename, xPos, yPos + (s*h), width, h));
+	listItem * newSl = new listItem("subItem/" + filename, int(xPos + half), yPos + int(s*h + (hf / 2.0)), scale);
+	if (selName.compare("") != 0) {
+		newSl->setTexture("subItem/" + selName, btnState::SELECTED);
+	}
+	list[list.size() - 1]->subList.push_back(newSl);
 }
 
-bool scrollBox::isClicked(int x, int y) {
-	if (upButton->isClicked(x, y)) return true;
-	if (downButton->isClicked(x, y)) return true;
+bool scrollBox::isSelected(int x, int y) {
+	//if (upButton->isSelected(x, y)) return true;
+	//if (downButton->isSelected(x, y)) return true;
 
 	for (int i = 0; i < list.size(); i++) {
-		if (list[i]->isClicked(x, y)) return true;
+		if (list[i]->isSelected(x, y)) return true;
 	}
 
 	return false;
@@ -148,7 +167,8 @@ bool scrollBox::isClicked(int x, int y) {
 void scrollBox::onClick(int state, int x, int y) {
 	int h = height / MAXDISPLAY;
 
-	if (upButton->isClicked(x, y)) {
+	/*
+	if (upButton->isSelected(x, y)) {
 		if (list.size() <= MAXDISPLAY) return;
 		if (displayIdx == 0) return;
 		displayIdx--;
@@ -156,7 +176,7 @@ void scrollBox::onClick(int state, int x, int y) {
 			list[i]->translate(0, -h);
 		}
 	}
-	if (downButton->isClicked(x, y)) {
+	if (downButton->isSelected(x, y)) {
 		int s = list.size();
 		if (s <= MAXDISPLAY/2) return;
 		if ((s - displayIdx) <= MAXDISPLAY/2) return;
@@ -165,22 +185,26 @@ void scrollBox::onClick(int state, int x, int y) {
 			list[i]->translate(0, h);
 		}
 	}
+	*/
 
-	upButton->onClick(state, x, y);
-	downButton->onClick(state, x, y);
+	//upButton->onClick(state, x, y);
+	//downButton->onClick(state, x, y);
+	addButton->onClick(state, x, y);
+	removeButton->onClick(state, x, y);
 	for (int i = displayIdx; i < displayIdx+MAXDISPLAY; i++) {
 		if (i >= list.size()) return;
+		list[i]->showSubList = false;
+		if (list[i]->isSelected(x, y) && state == GLUT_UP) {
+			list[i]->showSubList = true;
+		}
 		list[i]->onClick(state, x, y);
-		int s = list[i]->subList.size();
-		if (list[i]->showSubList && state == GLUT_UP) {
-			for (int j = i + 1; j < list.size(); j++) {
-				list[j]->translate(0, -h*s);
-			}
-		}
-		else if (!list[i]->showSubList && list[i]->showPrev && state == GLUT_UP) {
-			for (int j = i + 1; j < list.size(); j++) {
-				list[j]->translate(0, h*s);
-			}
-		}
 	}
+}
+
+void scrollBox::onHover(int x, int y) {
+	for (int i = 0; i < list.size(); i++) {
+		list[i]->onHover(x, y);
+	}
+	addButton->onHover(x, y);
+	removeButton->onHover(x, y);
 }

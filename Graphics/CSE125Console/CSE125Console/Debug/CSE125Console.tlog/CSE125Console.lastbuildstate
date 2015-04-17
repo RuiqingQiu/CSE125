@@ -1,2 +1,6 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v120:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit
+<<<<<<< HEAD
 Debug|Win32|C:\Users\miw034\Desktop\CSE125\Graphics\CSE125Console\|
+=======
+Debug|Win32|C:\Users\tsuruko\Documents\GitHub\CSE125\Graphics\CSE125Console\|
+>>>>>>> fb255e3265ea516a4ff681c27a81839137e5eddb

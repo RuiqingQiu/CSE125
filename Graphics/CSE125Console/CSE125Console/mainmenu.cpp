@@ -3,15 +3,11 @@
 #include <iostream>
 #include <string>
 
-mainMenu::mainMenu(){
-	width = 0;
-	height = 0;
+mainMenu::mainMenu() : gui() {
 	createButtons();
 }
 
-mainMenu::mainMenu(int w, int h){
-	width = w;
-	height = h;
+mainMenu::mainMenu(int w, int h) : gui(w, h) {
 	createButtons();
 }
 
@@ -24,10 +20,14 @@ void mainMenu::createButtons() {
 	button * robo = new button("menuItem/enterRobotName.jpg", width*0.2, height*0.5, 300, 70);
 	robo->setScaling(true, true, width, height);
 	
-	button * play = new button("menuItem/play.jpg", width*0.5, height*0.4, 100, 30);
+	button * play = new button("menuItem/play.jpg", width*0.5, height*0.4);
+	play->setTexture("menuItem/play_sel.jpg", btnState::SELECTED);
+	play->setTexture("menuItem/play_press.jpg", btnState::PRESSED);
 	play->setScaling(true, true, width, height);
 
-	button * help = new button("menuItem/help.jpg", width*0.5, height * 0.3, 100, 30);
+	button * help = new button("menuItem/help.jpg", width*0.5, height * 0.3);
+	help->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
+	help->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
 	help->setScaling(true, true, width, height);
 
 	buttons.push_back(robo);
@@ -37,9 +37,7 @@ void mainMenu::createButtons() {
 
 
 void mainMenu::VOnRender(){
-	set2d();
-	drawAllItems(); 
-	set3d();
+	gui::VOnRender();
 }
 
 void mainMenu::VOnClientUpdate(GameInfoPacket* info){
@@ -57,6 +55,7 @@ void mainMenu::onClick(int state, int x, int y) {
 guiType mainMenu::switchClicked(int state, int x, int y){
 	
 	if (state != GLUT_UP) return guiType::MENU;
+<<<<<<< HEAD
 	
 	if (buttons[0]->isClicked(x, height - y)){
 		string name;
@@ -67,10 +66,13 @@ guiType mainMenu::switchClicked(int state, int x, int y){
 	}
 	//play button
 	else if (buttons[1]->isClicked(x, height - y)) {
+=======
+	if (buttons[1]->isSelected(x, height - y)) {
+>>>>>>> fb255e3265ea516a4ff681c27a81839137e5eddb
 		return guiType::BUILD;
 	}
 	// help button
-	else if((buttons[buttons.size() - 1]->isClicked(x, height - y))){
+	else if((buttons[buttons.size() - 1]->isSelected(x, height - y))){
 		return guiType::HELP;
 	}
 	// stay at the menu button
@@ -82,5 +84,5 @@ guiType mainMenu::switchClicked(int state, int x, int y){
 bool mainMenu::helpClicked(int state, int x, int y){
 	//help button
 	if (state != GLUT_UP) return false;
-	return buttons[buttons.size() - 1]->isClicked(x, height - y);
+	return buttons[buttons.size() - 1]->isSelected(x, height - y);
 }

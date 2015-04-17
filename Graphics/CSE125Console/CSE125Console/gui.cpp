@@ -12,6 +12,8 @@
 
 gui::gui() {
 	buttons = std::vector<button*>();
+	width = 0;
+	height = 0;
 }
 
 gui::gui(int w, int h) {
@@ -75,9 +77,7 @@ void gui::set3d() {
 //we also need some sort of button class to store what texture goes with which button
 void gui::VOnRender() {
 	set2d();
-
-	//draw stuff here
-
+	drawAllItems();
 	set3d();
 }
 
@@ -120,4 +120,10 @@ guiType gui::switchClicked(int state, int x, int y) {
 bool gui::helpClicked(int state, int x, int y) {
 	std::cout << "need to implement!" << std::endl;
 	return false;
+}
+
+void gui::passiveMouseFunc(int x, int y) {
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons[i]->onHover(x, height - y);
+	}
 }

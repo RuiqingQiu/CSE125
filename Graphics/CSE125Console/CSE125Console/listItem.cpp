@@ -6,24 +6,27 @@ listItem::listItem() {
 }
 
 listItem::listItem(string filename) {
+	scale = 1;
 	init();
 	name = filename;
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	texture[1] = texture[0];
 }
 
 listItem::listItem(string filename, int x, int y) {
+	scale = 1;
 	init();
 	name = filename;
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	texture[1] = texture[0];
 }
 
 listItem::listItem(string filename, int x, int y, bool f) {
+	scale = 1;
 	init();
 	name = filename;
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(f, f);
 	texture[1] = texture[0];
@@ -32,37 +35,37 @@ listItem::listItem(string filename, int x, int y, bool f) {
 listItem::listItem(string filename, int x, int y, bool xf, bool yf) {
 	init();
 	name = filename;
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(xf, yf);
 	texture[1] = texture[0];
 }
 
-listItem::listItem(string filename, int x, int y, int w, int h) {
+listItem::listItem(string filename, int x, int y, double s) {
+	scale = s;
 	init();
 	name = filename;
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	setSize(w, h);
 	texture[1] = texture[0];
 }
 
-listItem::listItem(string filename, int x, int y, int w, int h, bool f) {
+listItem::listItem(string filename, int x, int y, double s, bool f) {
+	scale = s;
 	init();
 	name = filename;
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	setSize(w, h);
 	setFixed(f, f);
 	texture[1] = texture[0];
 }
 
-listItem::listItem(string filename, int x, int y, int w, int h, bool xf, bool yf) {
+listItem::listItem(string filename, int x, int y, double s, bool xf, bool yf) {
+	scale = s;
 	init();
 	name = filename;
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	setSize(w, h);
 	setFixed(xf, yf);
 	texture[1] = texture[0];
 }
@@ -74,11 +77,12 @@ listItem::~listItem()
 void listItem::init() {
 	name = "noname";
 	setPosition(0, 0);
-	setSize(100, 100);
+	//default list item size
+	setSize(500*scale, 100*scale);
 	setFixed(false, true);
 	sWidth = 0;
 	sHeight = 0;
-	selected = false;
+	currState = btnState::NORMAL;
 	scaleX = false;
 	scaleY = false;
 	path = "uiItem/buttons/listItem/";
@@ -87,6 +91,9 @@ void listItem::init() {
 }
 
 void listItem::draw() {
+	if (showSubList) {
+		currState = btnState::SELECTED;
+	}
 	button::draw();
 	if (showSubList) {
 		for (int i = 0; i < subList.size(); i++) {
@@ -96,22 +103,19 @@ void listItem::draw() {
 }
 
 void listItem::onClick(int state, int x, int y) {
-	if (isClicked(x, y)) {
-		if (state == GLUT_DOWN) {
-			selected = true;
-		}
-		if (state == GLUT_UP) {
-			selected = false;
-			showPrev = showSubList;
-			showSubList = !showSubList;
-		}
-		std::cout << name.c_str() << " was clicked!" << std::endl;
-	}
+	button::onClick(state, x, y);
 }
 
 void listItem::rePosition(int x, int y, int w, int h) {
 	button::rePosition(x, y, w, h);
 	for (int i = 0; i < subList.size(); i++) {
 		subList[i]->rePosition(x, y, w, h);
+	}
+}
+
+void listItem::onHover(int x, int y) {
+	button::onHover(x, y);
+	for (int i = 0; i < subList.size(); i++) {
+		subList[i]->onHover(x, y);
 	}
 }

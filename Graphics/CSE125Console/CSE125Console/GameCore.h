@@ -54,8 +54,8 @@ public:
 	//always points to standard input
 	GameInputInterface* standard_Input;
 
-
-
+	//a gui switch 
+	void setGui();
 
 
 
