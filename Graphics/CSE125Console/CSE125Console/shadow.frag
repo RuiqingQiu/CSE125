@@ -12,15 +12,25 @@ varying vec3 mode;
 void main (void) 
 { 
 
+//compute displaced texture coordinate
+float height = texture2D(norm, gl_TexCoord[0].st).a;
+float v = height * scaleBias.r - scaleBias.g;
+vec3 eye = normalize(eyeVec);
+vec2 newCoords = gl_TexCoord[0].st + (v*eye.xy);
+
+
 	   vec3 norm1 = texture2D(norm, gl_TexCoord[0].st).rgb * 2.0 - 1.0;
 	   vec3 baseColor = texture2D(tex, gl_TexCoord[0].st).rgb;
+
 	   vec4 finalColor = vec4(0,0,0,0);
 	   float dist = length(lightvec);
 
 	   vec3 lightVector = normalize(lightvec);
+
 	   float nxDir = max(0.0, dot(norm1, lightVector));
 	   vec4 diffuse = gl_LightSource[0].diffuse * nxDir;
 	   diffuse = clamp(diffuse, 0.0, 1.0);
+	   
 	   float specularPower = 0.0;
 	   if(nxDir != 0.0)
 	   {
