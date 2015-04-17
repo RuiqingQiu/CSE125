@@ -2,9 +2,11 @@
 //#include "GamePacketManager.h"
 
 #include "Shader.h"
-#include "mainmenu.h"
 
 #include "GameCore.h"
+
+#include "mainmenu.h"
+#include "helpMenu.h"
 #include "buildView.h"
 
 #ifndef CSE167_Window_h
@@ -21,7 +23,9 @@ public:
     static void reshapeCallback(int, int);
     static void displayCallback(void);
 	static void processNormalKeys(unsigned char key, int x, int y);
+	static void processSpecialKeys(int key, int x, int y);
 	static void processMouseClick(int button, int state, int x, int y);
+	static void processPassiveMouse(int x, int y);
 };
 
 #endif

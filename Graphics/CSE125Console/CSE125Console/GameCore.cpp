@@ -25,4 +25,41 @@ GameCore::~GameCore()
 
 }
 
+//a gui factory
+void GameCore::setGui() {
+	//sky boxes needed for battle mode and console.
+	//not needed for menus and build mode
+	if (g_pCore->viewmode == guiType::BUILD) {
+		g_pCore->helpMenu->returnTo = guiType::BUILD;
+		g_pCore->gameGui = g_pCore->buildmode;
+		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::BATTLE) {
+		g_pCore->gameGui = g_pCore->battlemode;
+		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::HELP) {
+		g_pCore->gameGui = g_pCore->helpMenu;
+		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::MENU) {
+		g_pCore->helpMenu->returnTo = guiType::MENU;
+		g_pCore->gameGui = g_pCore->menumode;
+		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::CONSOLE) {
+		g_pCore->gameGui = g_pCore->defaultGui;
+		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
+			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
+		g_pCore->i_pInput = g_pCore->standard_Input;
+	}
+}
 

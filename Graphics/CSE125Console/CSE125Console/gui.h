@@ -24,9 +24,9 @@ public:
 	gui(int w, int h);
 	~gui();
 
-	void VOnRender(); //must have
+	virtual void VOnRender(); //must have
 
-	void VOnClientUpdate(GameInfoPacket* info); //must have
+	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
 
 	void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
 
@@ -37,10 +37,14 @@ public:
 	void set2d();
 	void set3d();
 
-	void drawAllItems();
+	virtual void drawAllItems();
 
 	virtual guiType switchClicked(int state, int x, int y);
 	virtual bool helpClicked(int state, int x, int y);
+	virtual void passiveMouseFunc(int x, int y);
+
+	//this is for help menu, this is a hack
+	guiType returnTo;
 
 protected:
 	int width;

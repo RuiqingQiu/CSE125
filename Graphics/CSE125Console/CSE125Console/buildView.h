@@ -6,7 +6,6 @@ class buildView : public gui {
 public:
 	buildView();
 	buildView(int w, int h);
-	buildView(int w, int h, gui * hp, gui * s);
 
 	void VOnRender();
 	void createButtons();
