@@ -29,7 +29,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	glEnable(GL_LIGHTING);                                      //Enable lighting
 
 	//light
-	float position[] = { 0.0, 1.0, 0.0, 0.0 };	// lightsource position
+	float position[] = { 1.0, 1.0, -20.0, 0.0 };	// lightsource position
 	GLfloat  ambientLight[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 	GLfloat  diffuseLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	GLfloat  specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };

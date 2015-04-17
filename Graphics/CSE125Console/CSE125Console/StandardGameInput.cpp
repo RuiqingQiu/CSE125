@@ -96,6 +96,7 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 }
 
 void StandardGameInput::setGui() {
+	/*
 	if (g_pCore->viewmode == guiType::BUILD) {
 		g_pCore->gameGui = g_pCore->buildmode;
 		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
@@ -126,4 +127,5 @@ void StandardGameInput::setGui() {
 			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->standard_Input;
 	}
+	*/
 }

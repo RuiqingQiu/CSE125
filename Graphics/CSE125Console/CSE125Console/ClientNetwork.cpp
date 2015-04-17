@@ -131,7 +131,7 @@ int ClientNetwork::receivePackets(char * recvbuf)
 			recvbuf = '\0';
 			return 0;
 		}
-		printf("FAIL receive data: %i\n", errorno);
+		//printf("FAIL receive data: %i\n", errorno);
 
 		return -1;
 	}

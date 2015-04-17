@@ -1,5 +1,7 @@
 #pragma once
 #include "stdafx.h"
+#include "glew.h"
+
 //#include "Shader.h"
 #include "GeoNode.h"
 #include "tiny_obj_loader.h"
@@ -9,7 +11,8 @@ class Model3D: public GeoNode
 public:
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
-
+	GLhandleARB shader_id;
+	GLuint texturaID[2];
 	Model3D();
 	Model3D(string filename);
 	~Model3D();
