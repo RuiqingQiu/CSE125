@@ -82,6 +82,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="block.h" />
+    <ClInclude Include="buildGameView.h" />
     <ClInclude Include="buildView.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
@@ -99,6 +101,7 @@
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="robot.h" />
     <ClInclude Include="scrollBox.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
@@ -130,6 +133,8 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="block.cpp" />
+    <ClCompile Include="buildGameView.cpp" />
     <ClCompile Include="buildView.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -145,6 +150,7 @@
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="robot.cpp" />
     <ClCompile Include="scrollBox.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />

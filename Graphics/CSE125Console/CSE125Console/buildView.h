@@ -15,6 +15,10 @@ public:
 	guiType switchClicked(int state, int x, int y);
 	bool helpClicked(int state, int x, int y);
 
+	//gameplay logic
+	bool addBlock(int state, int x, int y);
+	bool removeBlock(int state, int x , int y);
+
 	~buildView();
 
 	vector<button*> listItems;
