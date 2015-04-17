@@ -31,8 +31,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	//light
 	float position[] = { 1.0, 1.0, -20.0, 0.0 };	// lightsource position
 	GLfloat  ambientLight[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-	GLfloat  diffuseLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	GLfloat  specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat  diffuseLight[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	GLfloat  specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,ambientLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, position);

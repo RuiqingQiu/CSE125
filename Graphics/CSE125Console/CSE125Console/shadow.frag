@@ -1,3 +1,74 @@
+/* Working version of a shader with normal and texture */
+
+uniform sampler2D tex;
+uniform sampler2D norm;
+uniform vec3 CAMERA_POSITION; 
+varying vec3 position;
+varying vec3 lightvec;
+varying vec3 mode;
+
+
+varying vec3 vN;
+varying vec3 v; 
+#define MAX_LIGHTS 3 
+
+void main (void) 
+{ 
+
+	   vec3 norm1 = texture2D(norm, gl_TexCoord[0].st).rgb * 2.0 - 1.0;
+	   vec3 baseColor = texture2D(tex, gl_TexCoord[0].st).rgb;
+	   vec4 finalColor = vec4(0,0,0,0);
+	   float dist = length(lightvec);
+
+	   vec3 lightVector = normalize(lightvec);
+	   float nxDir = max(0.0, dot(norm1, lightVector));
+	   vec4 diffuse = gl_LightSource[0].diffuse * nxDir;
+	   diffuse = clamp(diffuse, 0.0, 1.0);
+	   float specularPower = 0.0;
+	   if(nxDir != 0.0)
+	   {
+		 vec3 cameraVector = normalize(CAMERA_POSITION - position.xyz);
+		 vec3 halfVector = normalize(lightVector + cameraVector);
+		 float nxHalf = max(0.0,dot(norm1, halfVector));
+		 specularPower = pow(nxHalf, gl_FrontMaterial.shininess);
+	   }
+		vec4 specular = gl_LightSource[0].specular * specularPower;
+		//vec4 specular = gl_FrontLightProduct[0].specular * specularPower;
+		specular = clamp(specular, 0.0, 1.0); 
+		//gl_FragColor = vec4(norm1, 1);
+		//gl_FragColor = vec4(baseColor, 1);
+
+		finalColor = gl_LightSource[0].ambient +diffuse + specular;
+		//gl_FragColor = vec4(baseColor, 1.0) + gl_FrontLightModelProduct.sceneColor + finalColor;
+		gl_FragColor = vec4(baseColor, 1.0)  + finalColor;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Working fragment shader */
+/*
 varying vec3 vN;
 varying vec3 v; 
 #define MAX_LIGHTS 3 
@@ -37,75 +108,5 @@ void main (void)
    //gl_FragColor = color*color2;
    gl_FragColor = color + gl_FrontLightModelProduct.sceneColor + finalColor;
    //gl_FragColor = vec4(vN, 1);
-}
-
-
-
-
-/*
-varying vec3 N;
-varying vec3 v;    
-void main (void)  
-{  
-   vec3 L = normalize(gl_LightSource[0].position.xyz - v);   
-   vec3 E = normalize(-v); // we are in Eye Coordinates, so EyePos is (0,0,0)  
-   vec3 R = normalize(-reflect(L,N));  
- 
-   //calculate Ambient Term:  
-   vec4 Iamb = gl_FrontLightProduct[0].ambient;    
-
-   //calculate Diffuse Term:  
-   vec4 Idiff = gl_FrontLightProduct[0].diffuse * max(dot(N,L), 0.0);
-   Idiff = clamp(Idiff, 0.0, 1.0);     
-   
-   // calculate Specular Term:
-   vec4 Ispec = gl_FrontLightProduct[0].specular 
-                * pow(max(dot(R,E),0.0),0.3*gl_FrontMaterial.shininess);
-   Ispec = clamp(Ispec, 0.0, 1.0); 
-   // write Total Color:  
-   gl_FragColor = gl_FrontLightModelProduct.sceneColor + Iamb + Idiff + Ispec;     
-}
-*/          
-
-		  
-
-
-/*
-precision highp float;
-uniform float time;
-uniform vec2 resolution;
-varying vec3 fPosition;
-varying vec3 fNormal;
-
-
-varying vec3 Color;
-varying vec2 Texcoord;
-
-uniform sampler2D texKitten;
-uniform sampler2D texPuppy;
-
-void main()
-{
-    vec4 colKitten = texture(texKitten, 0.5,0);
-    vec4 colPuppy = texture(texPuppy, 0.5,0);
-	gl_FragColor = colKitten;
-    //gl_FragColor = vec4(1, 0, 0 , 1);
-	//gl_FragColor = mix(colKitten, colPuppy, 0.5);
-}
-*/
-
-/*
-uniform sampler2D tex;
-
-varying vec3 Normal;
-
-varying vec3 camera;
-varying vec3 position;
-void main()
-{
-  gl_FragColor = texture(tex, Texcoord) * vec4(Color, 1.0);
-  //gl_FragColor = vec4(1,0,0, 1.0);
-  //gl_FragColor =  textureCube(cube, position.xyz);
-
 }
 */
