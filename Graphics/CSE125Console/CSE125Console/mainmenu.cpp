@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "mainmenu.h"
-
+#include <iostream>
+#include <string>
 
 mainMenu::mainMenu(){
 	width = 0;
@@ -54,9 +55,18 @@ void mainMenu::onClick(int state, int x, int y) {
 }
 
 guiType mainMenu::switchClicked(int state, int x, int y){
-	//play button
+	
 	if (state != GLUT_UP) return guiType::MENU;
-	if (buttons[1]->isClicked(x, height - y)) {
+	
+	if (buttons[0]->isClicked(x, height - y)){
+		string name;
+		cout << "Enter Robot name " << endl;
+		cin >> name;
+		cout << "Name is " << name << endl;
+		return guiType::MENU;
+	}
+	//play button
+	else if (buttons[1]->isClicked(x, height - y)) {
 		return guiType::BUILD;
 	}
 	// help button
