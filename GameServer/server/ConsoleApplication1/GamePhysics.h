@@ -6,6 +6,8 @@
 #include <map>
 #include "definition.h"
 #include <iostream>
+#define MOVE_SPEED 700
+#define TURN_SPEED 7000
 
 
 
