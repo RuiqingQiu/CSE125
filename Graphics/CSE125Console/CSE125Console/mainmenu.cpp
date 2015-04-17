@@ -18,7 +18,7 @@ mainMenu::~mainMenu(){
 
 void mainMenu::createButtons() {
 
-	button * robo = new button("menuItem/enterRobotName.jpg", width*0.2, height*0.5, 300, 70);
+	button * robo = new button("menuItem/enterRobotName.jpg", width*0.4, height*0.5, 360, 70);
 	robo->setScaling(true, true, width, height);
 	
 	button * play = new button("menuItem/play.jpg", width*0.5, height*0.4);
@@ -42,7 +42,7 @@ void mainMenu::VOnRender(){
 
 	drawAllItems();
 	//using drawtext for now... ugly font though
-	drawText(300, 300, name , 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
+	drawText(width * 0.6, height * 0.5, name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
 
 	set3d();
 }
