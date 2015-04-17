@@ -43,9 +43,6 @@ public:
 	virtual bool helpClicked(int state, int x, int y);
 	virtual void passiveMouseFunc(int x, int y);
 
-	//this is for help menu, this is a hack
-	guiType returnTo;
-
 protected:
 	int width;
 	int height;

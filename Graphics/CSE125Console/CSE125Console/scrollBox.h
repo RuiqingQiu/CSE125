@@ -37,6 +37,10 @@ public:
 
 	//clickable items
 	std::vector<listItem*> list;
+
+	button * addButton;
+	button * removeButton;
+
 private:
 	double scale;
 	int getTotalSize();
@@ -45,8 +49,7 @@ private:
 	guiItem * scrollDisplay;
 	//button * upButton;
 	//button * downButton;
-	button * addButton;
-	button * removeButton;
+
 
 	int displayIdx;
 };

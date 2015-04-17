@@ -43,6 +43,9 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{f185199d-8262-43ae-b8b9-0c9d1d18a112}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\buildMode">
+      <UniqueIdentifier>{5cf7a510-31f9-4194-a05b-17b1517a8a9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -186,6 +189,15 @@
     <ClInclude Include="helpMenu.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="robot.h">
+      <Filter>Source Files\buildMode</Filter>
+    </ClInclude>
+    <ClInclude Include="buildGameView.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="block.h">
+      <Filter>Source Files\buildMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -310,6 +322,15 @@
     </ClCompile>
     <ClCompile Include="helpMenu.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="robot.cpp">
+      <Filter>Source Files\buildMode</Filter>
+    </ClCompile>
+    <ClCompile Include="buildGameView.cpp">
+      <Filter>Source Files\GameView</Filter>
+    </ClCompile>
+    <ClCompile Include="block.cpp">
+      <Filter>Source Files\buildMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

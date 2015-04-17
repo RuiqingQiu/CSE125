@@ -14,5 +14,6 @@ public:
 
 	guiType switchClicked(int state, int x, int y);
 	
+	guiType returnTo;
 };
 

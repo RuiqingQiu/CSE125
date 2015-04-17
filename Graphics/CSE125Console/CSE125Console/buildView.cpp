@@ -111,3 +111,11 @@ bool buildView::helpClicked(int state, int x, int y) {
 	if (state != GLUT_UP) return false;
 	return buttons[buttons.size() - 1]->isSelected(x, height - y);
 }
+
+bool buildView::addBlock(int state, int x, int y) {
+	return scroll->addButton->isSelected(x, y) && state == GLUT_UP;
+}
+
+bool buildView::removeBlock(int state, int x, int y) {
+	return scroll->removeButton->isSelected(x, y) && state == GLUT_UP;
+}
