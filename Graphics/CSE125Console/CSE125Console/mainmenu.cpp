@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+string name = " ";
 mainMenu::mainMenu() : gui() {
 	createButtons();
 }
@@ -37,7 +38,13 @@ void mainMenu::createButtons() {
 
 
 void mainMenu::VOnRender(){
-	gui::VOnRender();
+	set2d();
+
+	drawAllItems();
+	//using drawtext for now... ugly font though
+	drawText(300, 300, name , 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
+
+	set3d();
 }
 
 void mainMenu::VOnClientUpdate(GameInfoPacket* info){
@@ -55,20 +62,15 @@ void mainMenu::onClick(int state, int x, int y) {
 guiType mainMenu::switchClicked(int state, int x, int y){
 	
 	if (state != GLUT_UP) return guiType::MENU;
-<<<<<<< HEAD
 	
-	if (buttons[0]->isClicked(x, height - y)){
-		string name;
+	if (buttons[0]->isSelected(x, height - y)){
 		cout << "Enter Robot name " << endl;
 		cin >> name;
 		cout << "Name is " << name << endl;
 		return guiType::MENU;
 	}
 	//play button
-	else if (buttons[1]->isClicked(x, height - y)) {
-=======
-	if (buttons[1]->isSelected(x, height - y)) {
->>>>>>> fb255e3265ea516a4ff681c27a81839137e5eddb
+	else if (buttons[1]->isSelected(x, height - y)) {
 		return guiType::BUILD;
 	}
 	// help button
