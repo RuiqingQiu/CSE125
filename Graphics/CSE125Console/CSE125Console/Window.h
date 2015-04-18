@@ -4,10 +4,10 @@
 #include "Shader.h"
 
 #include "GameCore.h"
-
 #include "mainmenu.h"
 #include "helpMenu.h"
 #include "buildView.h"
+#include "battleView.h"
 
 #ifndef CSE167_Window_h
 #define CSE167_Window_h

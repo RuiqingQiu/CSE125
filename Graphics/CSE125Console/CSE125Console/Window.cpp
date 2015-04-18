@@ -49,7 +49,7 @@ void Window::initialize(void)
 	//default to console view
 	g_pCore->viewmode = guiType::CONSOLE;
 	g_pCore->helpMenu = new helpMenu(width, height);
-	g_pCore->battlemode = new gui();
+	g_pCore->battlemode = new battleView();
 	g_pCore->buildmode = new buildView(width, height);
 	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultGui = new gui();
@@ -142,7 +142,6 @@ void Window::reshapeCallback(int w, int h)
 	g_pCore->menumode->setDimensions(w, h);
 	g_pCore->helpMenu->setDimensions(w, h);
 	g_pCore->battlemode->setDimensions(w, h);
-	
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 }
 
@@ -172,10 +171,7 @@ void Window::displayCallback()
 	}
 
 	g_pCore->pGameView->VOnRender();
-
 	g_pCore->gameGui->VOnRender();
-
-
 	//test for camera
 	
 	if (TESTCAM)
