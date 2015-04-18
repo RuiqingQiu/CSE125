@@ -84,13 +84,8 @@ void Window::initialize(void)
 	//glUseProgram(program);
 
 
-
 	//connect to server
 	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
-
-
-
-
 }
 
 //----------------------------------------------------------------------------

@@ -11,6 +11,7 @@ buildView::buildView() : gui() {
 }
 
 buildView::buildView(int w, int h) : gui(w, h) {
+
 	createButtons();
 }
 

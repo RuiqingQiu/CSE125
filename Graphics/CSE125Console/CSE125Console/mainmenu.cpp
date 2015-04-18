@@ -18,15 +18,15 @@ mainMenu::~mainMenu(){
 
 void mainMenu::createButtons() {
 
-	button * robo = new button("menuItem/enterRobotName.jpg", width*0.4, height*0.5, 360, 70);
+	button * robo = new button("menuItem/enterRobotName.jpg", width*0.25, height*0.5, 700, 100);
 	robo->setScaling(true, true, width, height);
 	
-	button * play = new button("menuItem/play.jpg", width*0.5, height*0.4);
+	button * play = new button("menuItem/play.jpg", width*0.35, height*0.3,300,50);
 	play->setTexture("menuItem/play_sel.jpg", btnState::SELECTED);
 	play->setTexture("menuItem/play_press.jpg", btnState::PRESSED);
 	play->setScaling(true, true, width, height);
 
-	button * help = new button("menuItem/help.jpg", width*0.5, height * 0.3);
+	button * help = new button("menuItem/help.jpg", width*0.35, height * 0.2,300,50);
 	help->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
 	help->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
 	help->setScaling(true, true, width, height);

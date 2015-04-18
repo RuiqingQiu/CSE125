@@ -5,8 +5,6 @@
 GameView::GameView()
 {
 	pViewCamera = new Camera();
-
-
 }
 
 
@@ -25,8 +23,6 @@ void GameView::VOnRender()
 	glLoadIdentity();
 	
 	pViewCamera->setUpCamera();
-	
-	
 
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());

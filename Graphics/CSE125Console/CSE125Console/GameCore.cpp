@@ -15,7 +15,6 @@ GameCore::GameCore()
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
 	i_pInput = standard_Input;
-
 	//pGameView->pPlayer = pPlayer;
 }
 
