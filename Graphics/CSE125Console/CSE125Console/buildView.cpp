@@ -70,7 +70,7 @@ void buildView::createButtons() {
 
 void buildView::VUpdate() {
 	gui::VUpdate();
-	if (!updateview && isCurrentView) {
+	if (!updateview && isCurrentView) {// || true) { //use true to disable timer
 		timer->start = std::clock();
 	}
 	for (int i = 0; i < guiItems.size(); i++) {

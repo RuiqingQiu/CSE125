@@ -26,12 +26,7 @@ public:
 	int timeLeft;
 private:
 	void createNumbers();
-	bool setTexture(int i);
 
 	numbers * digits[NUM_DIGITS];
-
-	//multiple number instances not working... try different way
-	//this way doesn't work either...still only displays right when time < 10
-	GLuint nums[10];
 };
 

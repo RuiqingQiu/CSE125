@@ -47,9 +47,6 @@ void buildTimer::createNumbers() {
 	start = std::clock();
 	double off = (10.0 / 100.0) * height;
 	int nSize = height - (off*2.0);
-	for (int i = 0; i < 10; i++) {
-		setTexture(i);
-	}
 	for (int i = 0; i < NUM_DIGITS; i++) {
 		digits[i] = new numbers((xPos + width - off) - (nSize*(i+1)), yPos + off, nSize, nSize, xfixed, yfixed);
 	}
@@ -57,16 +54,15 @@ void buildTimer::createNumbers() {
 
 void buildTimer::update() {
 	timeLeft = MAX_TIME - ((std::clock() - start) / CLOCKS_PER_SEC);
-	std::cout << "time: " << timeLeft << std::endl;
 	int idx = timeLeft;
 	for (int i = 0; i < NUM_DIGITS; i++) {
 		if (!(idx >= 0)) break;
 		int digit = idx % 10;
-		std::cout << "digit: " << digit << std::endl;
-		digits[i]->numIdx = idx;
+		digits[i]->numIdx = digit;
 		idx /= 10;
 	}
 }
+
 void buildTimer::draw() {
 	guiItem::draw();
 	for (int i = 0; i < NUM_DIGITS; i++) {
@@ -98,26 +94,4 @@ void buildTimer::rePosition(int x, int y, int w, int h) {
 	for (int i = 0; i < NUM_DIGITS; i++) {
 		digits[i]->setPosition((xPos + width - off) - (nSize*(i+1)), yPos + off);
 	}
-}
-
-bool buildTimer::setTexture(int i) {
-	if (i > 9 || i < 0) return false;
-	GLuint * t = &nums[i];
-	string concat = "uiItem/text/numbers/" + std::to_string(i) + ".jpg";
-	*t = SOIL_load_OGL_texture
-		(
-		concat.c_str()
-		,
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_INVERT_Y
-		);
-	if (*t == 0) {
-		std::cout << concat.c_str() << std::endl;
-		printf("SOIL loading error: '%s'\n", SOIL_last_result());
-		return false;
-	}
-
-	//return true if successfully set texture
-	return true;
 }
