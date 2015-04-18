@@ -82,6 +82,8 @@ void numbers::init() {
 }
 
 bool numbers::setTexture(int i) {
+	//this was setting the individual object's texture, for some reason
+	//the multpile instances didn't let display ones
 	return false;
 	if (i > 9 || i < 0) return false;
 	GLuint * t = &nums[i];
@@ -105,6 +107,8 @@ bool numbers::setTexture(int i) {
 }
 
 void numbers::draw() {
+	//this was drawing the number object's individual texture
+
 	return;
 	//bind the texture and draw it
 
@@ -135,6 +139,9 @@ void numbers::draw() {
 }
 
 void numbers::draw(GLuint * t) {
+	//this is attempt to make them draw referencing the same stored texture,
+	//but it didn't change anything
+
 	//bind the texture and draw it
 
 	glDisable(GL_LIGHTING);
