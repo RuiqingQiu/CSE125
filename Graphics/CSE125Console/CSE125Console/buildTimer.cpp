@@ -71,7 +71,8 @@ void buildTimer::draw() {
 	guiItem::draw();
 	for (int i = 0; i < NUM_DIGITS; i++) {
 		int idx = digits[i]->numIdx;
-		digits[i]->draw(&nums[idx]);
+		digits[i]->draw();
+		//digits[i]->draw(&nums[idx]);
 	}
 }
 

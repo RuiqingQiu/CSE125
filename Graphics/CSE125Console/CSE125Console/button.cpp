@@ -9,7 +9,8 @@ button::button(string filename) {
 	init();
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 button::button(string filename, int x, int y) {
@@ -17,7 +18,8 @@ button::button(string filename, int x, int y) {
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 button::button(string filename, int x, int y, bool f) {
@@ -26,7 +28,8 @@ button::button(string filename, int x, int y, bool f) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(f, f);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 button::button(string filename, int x, int y, bool xf, bool yf) {
@@ -42,29 +45,32 @@ button::button(string filename, int x, int y, int w, int h) {
 	init();
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 	setPosition(x, y);
 	setSize(w, h);
-	texture[1] = texture[0];
 }
 
 button::button(string filename, int x, int y, int w, int h, bool f) {
 	init();
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 	setPosition(x, y);
 	setSize(w, h);
 	setFixed(f, f);
-	texture[1] = texture[0];
 }
 
 button::button(string filename, int x, int y, int w, int h, bool xf, bool yf) {
 	init();
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 	setPosition(x, y);
 	setSize(w, h);
 	setFixed(xf, yf);
-	texture[1] = texture[0];
 }
 
 button::~button()

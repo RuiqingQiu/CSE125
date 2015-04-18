@@ -10,7 +10,8 @@ listItem::listItem(string filename) {
 	init();
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y) {
@@ -19,7 +20,8 @@ listItem::listItem(string filename, int x, int y) {
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, bool f) {
@@ -29,7 +31,8 @@ listItem::listItem(string filename, int x, int y, bool f) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(f, f);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, bool xf, bool yf) {
@@ -38,7 +41,8 @@ listItem::listItem(string filename, int x, int y, bool xf, bool yf) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(xf, yf);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, double s) {
@@ -47,7 +51,8 @@ listItem::listItem(string filename, int x, int y, double s) {
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, double s, bool f) {
@@ -57,7 +62,8 @@ listItem::listItem(string filename, int x, int y, double s, bool f) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(f, f);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, double s, bool xf, bool yf) {
@@ -67,7 +73,8 @@ listItem::listItem(string filename, int x, int y, double s, bool xf, bool yf) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(xf, yf);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 listItem::~listItem()
