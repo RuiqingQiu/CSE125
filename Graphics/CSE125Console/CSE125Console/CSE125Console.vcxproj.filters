@@ -198,9 +198,6 @@
     <ClInclude Include="block.h">
       <Filter>Source Files\buildMode</Filter>
     </ClInclude>
-    <ClInclude Include="battleView.h">
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -335,9 +332,6 @@
     <ClCompile Include="block.cpp">
       <Filter>Source Files\buildMode</Filter>
     </ClCompile>
-    <ClCompile Include="battleView.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CSE125Console.rc">
@@ -379,6 +373,12 @@
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="hard_shadow.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="super.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="super.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
   </ItemGroup>

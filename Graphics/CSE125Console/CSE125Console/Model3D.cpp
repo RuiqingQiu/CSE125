@@ -7,7 +7,7 @@ Model3D::Model3D()
 {
 
 }
-Model3D::Model3D(string filename){
+Model3D::Model3D(string filename, string matname, string rough, string metal, string normal){
 
 	localTransform = Transform();
 
@@ -39,30 +39,8 @@ Model3D::Model3D(string filename){
 				shapes[i].mesh.positions[3 * v + 2]);
 		}
 	}
-
-	for (size_t i = 0; i < materials.size(); i++) {
-		printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
-		printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);
-		printf("  material.Kd = (%f, %f ,%f)\n", materials[i].diffuse[0], materials[i].diffuse[1], materials[i].diffuse[2]);
-		printf("  material.Ks = (%f, %f ,%f)\n", materials[i].specular[0], materials[i].specular[1], materials[i].specular[2]);
-		printf("  material.Tr = (%f, %f ,%f)\n", materials[i].transmittance[0], materials[i].transmittance[1], materials[i].transmittance[2]);
-		printf("  material.Ke = (%f, %f ,%f)\n", materials[i].emission[0], materials[i].emission[1], materials[i].emission[2]);
-		printf("  material.Ns = %f\n", materials[i].shininess);
-		printf("  material.Ni = %f\n", materials[i].ior);
-		printf("  material.dissolve = %f\n", materials[i].dissolve);
-		printf("  material.illum = %d\n", materials[i].illum);
-		printf("  material.map_Ka = %s\n", materials[i].ambient_texname.c_str());
-		printf("  material.map_Kd = %s\n", materials[i].diffuse_texname.c_str());
-		printf("  material.map_Ks = %s\n", materials[i].specular_texname.c_str());
-		printf("  material.map_Ns = %s\n", materials[i].normal_texname.c_str());
-		std::map<std::string, std::string>::const_iterator it(materials[i].unknown_parameter.begin());
-		std::map<std::string, std::string>::const_iterator itEnd(materials[i].unknown_parameter.end());
-		for (; it != itEnd; it++) {
-			printf("  material.%s = %s\n", it->first.c_str(), it->second.c_str());
-		}
-		printf("\n");
-
-
+		
+		/*
 		if (materials[i].diffuse_texname.c_str())
 		{
 			GLuint tex_2d = SOIL_load_OGL_texture
@@ -75,7 +53,6 @@ Model3D::Model3D(string filename){
 				SOIL_FLAG_INVERT_Y
 				);
 
-			/* check for an error during the load process */
 			if (0 == tex_2d)
 			{
 				printf("SOIL loading error: '%s'\n", SOIL_last_result());
@@ -85,8 +62,113 @@ Model3D::Model3D(string filename){
 				printf("SOIL loading success %i\n", tex_2d);
 				isTextured = true;
 			}
+		}*/
+		printf("load texture\n");
+
+		if (true)
+		{
+			GLuint tex_2d = SOIL_load_OGL_texture
+				(
+				//strcat(pre,name),
+				//"Texture/mygod.tga",
+				matname.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+			/* check for an error during the load process */
+			if (0 == tex_2d)
+			{
+				printf("SOIL loading error: '%s'\n", SOIL_last_result());
+				isTextured = false;
+			}
+			else{
+				printf("SOIL loading success material %i\n", tex_2d);
+				isTextured = true;
+				textureId = tex_2d;
+			}
 		}
-	}
+
+		if (true)
+		{
+			GLuint tex_2d = SOIL_load_OGL_texture
+				(
+				//strcat(pre,name),
+				//"Texture/mygod.tga",
+				normal.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+			/* check for an error during the load process */
+			if (0 == tex_2d)
+			{
+				printf("SOIL loading error: '%s'\n", SOIL_last_result());
+				isTextured = false;
+			}
+			else{
+				printf("SOIL loading success material %i\n", tex_2d);
+				isTextured = true;
+				normalId = tex_2d;
+			}
+		}
+
+		if (true)
+		{
+			GLuint tex_2d = SOIL_load_OGL_texture
+				(
+				//strcat(pre,name),
+				//"Texture/mygod.tga",
+				metal.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+			/* check for an error during the load process */
+			if (0 == tex_2d)
+			{
+				printf("SOIL loading error: '%s'\n", SOIL_last_result());
+				isTextured = false;
+			}
+			else{
+				printf("SOIL loading success material %i\n", tex_2d);
+				isTextured = true;
+				metalId = tex_2d;
+			}
+		}
+
+		if (true)
+		{
+			GLuint tex_2d = SOIL_load_OGL_texture
+				(
+				//strcat(pre,name),
+				//"Texture/mygod.tga",
+				rough.c_str(),
+				SOIL_LOAD_AUTO,
+				SOIL_CREATE_NEW_ID,
+				SOIL_FLAG_INVERT_Y
+				);
+
+			/* check for an error during the load process */
+			if (0 == tex_2d)
+			{
+				printf("SOIL loading error: '%s'\n", SOIL_last_result());
+				isTextured = false;
+			}
+			else{
+				printf("SOIL loading success material %i\n", tex_2d);
+				isTextured = true;
+				roughId = tex_2d;
+			}
+		}
+
+
+
+		//load the fucking shader
+		loadObjShader();
 }
 
 
@@ -97,42 +179,7 @@ Model3D::~Model3D()
 void Model3D::VOnClientUpdate(GameInfoPacket* pData){
 
 }
-/*
-typedef struct {
-std::vector<float> positions;
-std::vector<float> normals;
-std::vector<float> texcoords;
-std::vector<unsigned int> indices;
-std::vector<int> material_ids; // per-mesh material ID
-} mesh_t;
 
-typedef struct {
-std::string name;
-mesh_t mesh;
-} shape_t;
-
-typedef struct {
-std::string name;
-
-float ambient[3];
-float diffuse[3];
-float specular[3];
-float transmittance[3];
-float emission[3];
-float shininess;
-float ior;      // index of refraction
-float dissolve; // 1 == opaque; 0 == fully transparent
-// illumination model (see http://www.fileformat.info/format/material/)
-int illum;
-
-std::string ambient_texname;
-std::string diffuse_texname;
-std::string specular_texname;
-std::string normal_texname;
-std::map<std::string, std::string> unknown_parameter;
-} material_t;
-
-*/
 void Model3D::VOnDraw(){
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
@@ -148,25 +195,47 @@ void Model3D::VOnDraw(){
 			int m1 = shapes[i].mesh.material_ids[f];
 			
 			if (isTextured){
-				//material goes here
-				//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
-				//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
-				glBindTexture(GL_TEXTURE_2D, m1 + 1);
-				// Make sure no bytes are padded:
-				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-				// Select GL_MODULATE to mix texture with polygon color for shading:
-				glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-				// Use bilinear interpolation:
-				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				
 				glEnable(GL_TEXTURE_2D);
+				glUseProgram(shaderId);
 
-				glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
-				glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
-				glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
+				// Bind our diffuse texture in Texture Unit 0
+				glActiveTexture(GL_TEXTURE1);
+				glBindTexture(GL_TEXTURE_2D, textureId);
+				// Set our "texture" sampler to user Texture Unit 0
+				glUniform1i(textureUniform, 1);
+
+				
+				// Bind our diffuse texture in Texture Unit 1
+				glActiveTexture(GL_TEXTURE2);
+				glBindTexture(GL_TEXTURE_2D, normalId);
+				// Set our "Normal    TextureSampler" sampler to user Texture Unit 0
+				glUniform1i(normalUniform, 2);
+				
+
+				// Bind our diffuse texture in Texture Unit 1
+				glActiveTexture(GL_TEXTURE3);
+				glBindTexture(GL_TEXTURE_2D, metalId);
+				// Set our "Normal    TextureSampler" sampler to user Texture Unit 0
+				glUniform1i(metalUniform, 3);
+
+				// Bind our diffuse texture in Texture Unit 1
+				glActiveTexture(GL_TEXTURE4);
+				glBindTexture(GL_TEXTURE_2D, roughId);
+				// Set our "Normal    TextureSampler" sampler to user Texture Unit 0
+				glUniform1i(roughUniform, 4);
+
+
+				Vector3* cam = g_pCore->pGameView->pViewCamera->position;
+				float campos[3] = {-cam->x,-cam->y,-cam->z};
+				// Set our "normalmap" sampler to user Texture Unit 1
+				glUniform3fv(cameraUniform, 1, campos);
+				
+//				GLfloat* matrix;
+//				matrix = (float*)localTransform.GetMatrix4().getPointer();
+//				glUniformMatrix4fv(worldMatUniform, 1, false, matrix);
+
+				
 			}
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//THIS LINE OF CODE MUST BE AFTER THE TEXTURE LOADING CODE
@@ -213,6 +282,8 @@ void Model3D::VOnDraw(){
 			if (isTextured){
 				glBindTexture(GL_TEXTURE_2D, 0);
 				glDisable(GL_TEXTURE_2D);
+				glActiveTexture(GL_TEXTURE0);
+				glUseProgram(0);
 			}
 
 		}
@@ -220,7 +291,111 @@ void Model3D::VOnDraw(){
 	}
 
 	glPopMatrix();
+
+	//rotate
+	localTransform.rotation.y += 2;
 }
 void Model3D::VOnUpdate(GameInfoPacket* pData){
 
+}
+
+GLhandleARB Model3D::loadShader(char* filename, unsigned int type)
+{
+	FILE *pfile;
+	GLhandleARB handle;
+	const GLcharARB* files[1];
+
+	// shader Compilation variable
+	GLint result;				// Compilation code result
+	GLint errorLoglength;
+	char* errorLogText;
+	GLsizei actualErrorLogLength;
+
+	char buffer[400000];
+	memset(buffer, 0, 400000);
+
+	// This will raise a warning on MS compiler
+	pfile = fopen(filename, "rb");
+	if (!pfile)
+	{
+		printf("Sorry, can't open file: '%s'.\n", filename);
+		exit(0);
+	}
+
+	fread(buffer, sizeof(char), 400000, pfile);
+	//printf("%s\n",buffer);
+
+
+	fclose(pfile);
+
+	handle = glCreateShaderObjectARB(type);
+	if (!handle)
+	{
+		//We have failed creating the vertex shader object.
+		printf("Failed creating vertex shader object from file: %s.", filename);
+		exit(0);
+	}
+
+	files[0] = (const GLcharARB*)buffer;
+	glShaderSourceARB(
+		handle, //The handle to our shader
+		1, //The number of files.
+		files, //An array of const char * data, which represents the source code of theshaders
+		NULL);
+
+	glCompileShaderARB(handle);
+
+	//Compilation checking.
+	glGetObjectParameterivARB(handle, GL_OBJECT_COMPILE_STATUS_ARB, &result);
+
+	// If an error was detected.
+	if (!result)
+	{
+		//We failed to compile.
+		printf("Shader '%s' failed compilation.\n", filename);
+
+		//Attempt to get the length of our error log.
+		glGetObjectParameterivARB(handle, GL_OBJECT_INFO_LOG_LENGTH_ARB, &errorLoglength);
+
+		//Create a buffer to read compilation error message
+		errorLogText = (char*)malloc(sizeof(char)* errorLoglength);
+
+		//Used to get the final length of the log.
+		glGetInfoLogARB(handle, errorLoglength, &actualErrorLogLength, errorLogText);
+
+		// Display errors.
+		printf("%s\n", errorLogText);
+
+		// Free the buffer malloced earlier
+		free(errorLogText);
+	}
+
+	return handle;
+}
+
+void Model3D::loadObjShader()
+{
+	GLhandleARB vertexShaderHandle;
+	GLhandleARB fragmentShaderHandle;
+
+	vertexShaderHandle = loadShader("super.vert", GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShader("super.frag", GL_FRAGMENT_SHADER);
+
+	shaderId = glCreateProgramObjectARB();
+
+	glAttachObjectARB(shaderId, vertexShaderHandle);
+	glAttachObjectARB(shaderId, fragmentShaderHandle);
+	glLinkProgramARB(shaderId);
+
+
+	textureUniform = glGetUniformLocationARB(shaderId, "textureMap");
+	normalUniform = glGetUniformLocationARB(shaderId, "normalMap");
+	metalUniform = glGetUniformLocationARB(shaderId, "metalMap");
+	roughUniform = glGetUniformLocationARB(shaderId, "roughMap");
+	//worldMatUniform = glGetUniformLocationARB(shaderId, "model_view_projection_matrix");
+
+	//cameraUniform = glGetUniformLocationARB(shaderId, "CAMERA_POSITION");
+
+
+	//shadowMapUniform = glGetUniformLocationARB(shaderId, "ShadowMap");
 }

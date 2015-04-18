@@ -16,13 +16,14 @@
 #include "SkyBox.h"
 #include "Plane.h"
 #include "HardShadowView.h"
+#include "StandardGameInput.h"
 #define TESTCAM 0
 
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-gui buildmode = gui();
+//gui buildmode = gui();
 
 
 static Cube* cube;
@@ -37,7 +38,7 @@ void Window::initialize(void)
 	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	view->PushGeoNode(cube);
+	//view->PushGeoNode(cube);
 
 	//cube2 = new Cube(1);
 	//cube2->localTransform.position = Vector3(5, 0, -10);
@@ -47,33 +48,61 @@ void Window::initialize(void)
 	//g_pCore->pPlayer->playerid = 1;
 	
 	//default to console view
+	/*
 	g_pCore->viewmode = guiType::CONSOLE;
-	g_pCore->helpMenu = new helpMenu(width, height);
+	g_pCore->helpMenu = new helpMenu();
 	g_pCore->battlemode = new gui();
 	g_pCore->buildmode = new buildView(width, height);
 	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultGui = new gui();
 
+	if (g_pCore->viewmode == guiType::CONSOLE) {
+		g_pCore->gameGui = g_pCore->defaultGui;
+		g_pCore->i_pInput = g_pCore->standard_Input;
+	}
+	else if (g_pCore->viewmode == guiType::BUILD) {
+		g_pCore->gameGui = g_pCore->buildmode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::BATTLE) {
+		g_pCore->gameGui = g_pCore->battlemode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	else if (g_pCore->viewmode == guiType::HELP) {
+		g_pCore->gameGui = g_pCore->helpMenu;
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}
+	// main menu view
+	else if (g_pCore->viewmode == guiType::MENU) {
+		g_pCore->gameGui = g_pCore->menumode;
+		g_pCore->i_pInput = g_pCore->gui_Input;
+	}*/
+
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 
+	StandardGameInput* input = new StandardGameInput();
+	g_pCore->i_pInput = input;
+
 	//Setup the light
-	/*
-	Model3D *object = new Model3D("woodcube.obj");
+
+	Model3D *object = new Model3D("Hatchet.obj","Albedo.png", "Gloss.png" , "Metalness.png", "Normal_Clrear.png");
 	object->localTransform.position = Vector3(0, 0, -10);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->localTransform.scale = Vector3(0.3, 0.3, 0.3);
+	object->localTransform.rotation = Vector3(0, 0, 10);
 	view->PushGeoNode(object);
-	*/
+
 
 	//test shadow view
 	//HardShadowView* shadowview = new HardShadowView();
 	//g_pCore->pGameView = shadowview;
 
-	//see gui switch and skybox reqs
+	//see comments about switching views in gameCore.cpp
+	
 	g_pCore->skybox = new SkyBox();
-	g_pCore->setGui();
-
+	//only need skybox for battle mode and console mode right now
+	view->PushGeoNode(g_pCore->skybox);
+	
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
 
@@ -86,7 +115,7 @@ void Window::initialize(void)
 
 
 	//connect to server
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
 
 
 
@@ -116,16 +145,9 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 	
 }
 
-void Window::processSpecialKeys(int key, int x, int y) {
-	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
-}
 
 void Window::processMouseClick(int button, int state, int x, int y) {
 	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
-}
-
-void Window::processPassiveMouse(int x, int y) {
-	g_pCore->i_pInput->VProcessPassiveMouse(x, y);
 }
 
 //----------------------------------------------------------------------------
@@ -138,10 +160,6 @@ void Window::reshapeCallback(int w, int h)
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
 	gluPerspective(60.0, double(Window::width) / (double)Window::height, 10, 1000.0); //Set perspective projection viewing frustum
-	g_pCore->buildmode->setDimensions(w, h);
-	g_pCore->menumode->setDimensions(w, h);
-	g_pCore->helpMenu->setDimensions(w, h);
-	g_pCore->battlemode->setDimensions(w, h);
 	
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 }
@@ -172,8 +190,6 @@ void Window::displayCallback()
 	}
 
 	g_pCore->pGameView->VOnRender();
-
-	g_pCore->gameGui->VOnRender();
 
 
 	//test for camera
