@@ -24,7 +24,8 @@ void GameView::VOnRender()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	pViewCamera->setUpCamera();
+	//pViewCamera->setUpCamera();
+	gluLookAt(0, 0, 20, 0, 0, 0, 0, 1, 0);
 
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());

@@ -25,7 +25,7 @@ int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
 //gui buildmode = gui();
-
+static Vector4 light = Vector4(0.0, 0.0, 5.0, 0.0);
 static int counter = 0;
 static Cube* cube;
 static Cube* cube2;
@@ -124,7 +124,7 @@ void Window::initialize(void)
 	Teapot* t = new Teapot(2);
 
 	object = new Model3D("Hatchet.obj");
-	object->localTransform.position = Vector3(0, 0, -10);
+	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 90, 0);
 	view->PushGeoNode(object);
@@ -280,7 +280,7 @@ void Window::initialize(void)
 	}
 	
 	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 10);
+	//*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 10);
 
 
 	//setup shader
@@ -351,6 +351,17 @@ void Window::reshapeCallback(int w, int h)
 void Window::displayCallback()
 {
 	counter = (counter + 1) % 360;
+	
+	Matrix4 rot;
+	rot.makeRotateY(-counter);
+	light = rot * light;
+	light.print("light");
+	//float LightPosition[] = { light.x, light.y, light.z };
+	float LightPosition[] = { 0, 5, 0 };
+
+	glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
+	//glEnable(GL_LIGHT0);
+
 	object->localTransform.rotation = Vector3(0, counter, 0);
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
@@ -370,6 +381,7 @@ void Window::displayCallback()
 		}
 		//update
 	}
+
 	//cout << "on display " << endl;
 	g_pCore->pGameView->VOnRender();
 

@@ -178,10 +178,10 @@ Model3D::Model3D(string filename){
 	glAttachObjectARB(shader_id, fragmentShaderHandle);
 	glLinkProgramARB(shader_id);
 
-	glUseProgramObjectARB(shader_id);
+	//glUseProgramObjectARB(shader_id);
 
 
-	glGenTextures(2, texturaID);
+	glGenTextures(3, texturaID);
 	int width, height;
 	//unsigned char* image;
 
@@ -214,6 +214,28 @@ Model3D::Model3D(string filename){
 		cout << "error 1" << endl;
 	}
 
+	glBindTexture(GL_TEXTURE_2D, texturaID[2]);
+	texturaID[2] = SOIL_load_OGL_texture("Gloss.PNG", SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//SOIL_free_image_data(image);
+	if (texturaID[2] == 0)
+	{
+		cout << "error 2" << endl;
+	}
+
+	glBindTexture(GL_TEXTURE_2D, texturaID[3]);
+	texturaID[3] = SOIL_load_OGL_texture("Metalness.PNG", SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//SOIL_free_image_data(image);
+	if (texturaID[3] == 0)
+	{
+		cout << "error 3" << endl;
+	}
+
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texturaID[0]);
@@ -221,9 +243,17 @@ Model3D::Model3D(string filename){
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texturaID[1]);
 
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, texturaID[2]);
+
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, texturaID[3]);
+
 	glUniform1i(glGetUniformLocation(shader_id, "tex"), 0);
 	glUniform1i(glGetUniformLocation(shader_id, "norm"), 1);
+	glUniform1i(glGetUniformLocation(shader_id, "gloss"), 2);
 
+	glUniform1i(glGetUniformLocation(shader_id, "metallic"), 3);
 
 
 
@@ -277,7 +307,9 @@ void Model3D::VOnDraw(){
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
+	//glLoadIdentity();
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
+	
 	glColor3f(1, 1, 1);
 	for (size_t i = 0; i < shapes.size(); i++) {
 		
@@ -298,8 +330,17 @@ void Model3D::VOnDraw(){
 				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, texturaID[1]);
 
+
+				glActiveTexture(GL_TEXTURE2);
+				glBindTexture(GL_TEXTURE_2D, texturaID[2]);
+
+				glActiveTexture(GL_TEXTURE3);
+				glBindTexture(GL_TEXTURE_2D, texturaID[3]);
+
 				glUniform1i(glGetUniformLocation(shader_id, "tex"), 0);
 				glUniform1i(glGetUniformLocation(shader_id, "norm"), 1);
+				glUniform1i(glGetUniformLocation(shader_id, "gloss"), 2);
+				glUniform1i(glGetUniformLocation(shader_id, "metallic"), 3);
 
 
 				//glActiveTexture(GL_TEXTURE1);
@@ -318,11 +359,11 @@ void Model3D::VOnDraw(){
 				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				//glEnable(GL_TEXTURE_2D);
-				/*
-				glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
-				glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
-				glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);*/
+				
+				//glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
+				//glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
+				//glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
+				//glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
 			}
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//THIS LINE OF CODE MUST BE AFTER THE TEXTURE LOADING CODE
@@ -374,10 +415,13 @@ void Model3D::VOnDraw(){
 		}
 
 	}
+	
 	glUseProgramObjectARB(0);
 
 	glActiveTexture(GL_TEXTURE0);
 	glPopMatrix();
+
+	
 }
 void Model3D::VOnUpdate(GameInfoPacket* pData){
 

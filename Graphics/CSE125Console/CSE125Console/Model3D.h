@@ -12,7 +12,7 @@ public:
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
 	GLhandleARB shader_id;
-	GLuint texturaID[2];
+	GLuint texturaID[4];
 	Model3D();
 	Model3D(string filename);
 	~Model3D();
