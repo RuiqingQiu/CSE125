@@ -26,6 +26,10 @@ GameCore::~GameCore()
 
 //a gui factory
 void GameCore::setGui() {
+	//hacky quick fix
+	g_pCore->buildmode->updateview = false;
+
+	g_pCore->gameGui->isCurrentView = false;
 	//sky boxes needed for battle mode and console.
 	//not needed for menus and build mode
 	if (g_pCore->viewmode == guiType::BUILD) {
@@ -60,5 +64,6 @@ void GameCore::setGui() {
 			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->standard_Input;
 	}
+	g_pCore->gameGui->isCurrentView = true;
 }
 

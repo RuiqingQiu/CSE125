@@ -24,6 +24,7 @@ public:
 
 	virtual void VOnRender(); //must have
 	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
+	virtual void VUpdate();
 
 	void PushGeoNode(GeoNode* node);
 	void PopGeoNode(GeoNode* node);

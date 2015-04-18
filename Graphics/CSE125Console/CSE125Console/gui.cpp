@@ -11,12 +11,14 @@
 */
 
 gui::gui() {
+	isCurrentView = false;
 	buttons = std::vector<button*>();
 	width = 0;
 	height = 0;
 }
 
 gui::gui(int w, int h) {
+	isCurrentView = false;
 	buttons = std::vector<button*>();
 	width = w;
 	height = h;
@@ -72,9 +74,13 @@ void gui::set3d() {
 }
 //this is an example of how to draw 2d stuff in opengl that isn't affected by depth
 // i am putting it all in gui class for 2d "setup"
-//i want to move drawtext and other draw subroutines into a view class
-// and have a battlefieldview, buildview, and menuview extend it
-//we also need some sort of button class to store what texture goes with which button
+
+void gui::VUpdate() {
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons[i]->update();
+	}
+}
+
 void gui::VOnRender() {
 	set2d();
 	drawAllItems();

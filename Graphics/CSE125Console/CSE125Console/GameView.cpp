@@ -3,7 +3,7 @@
 
 
 GameView::GameView()
-{
+{	
 	pViewCamera = new Camera();
 }
 
@@ -12,6 +12,9 @@ GameView::~GameView()
 {
 }
 
+void GameView::VUpdate() {
+
+}
 
 void GameView::VOnRender()
 {

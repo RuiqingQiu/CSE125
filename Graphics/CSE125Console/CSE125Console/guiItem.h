@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <GL/glut.h>
 #include "SOIL.h"
 
@@ -32,11 +33,14 @@ public:
 	void setPosition(int x, int y);
 	void setSize(int w, int h);
 	void setFixed(bool x, bool y);
-	void setScaling(bool xs, bool ys, int w, int h);
+	virtual void setScaling(bool xs, bool ys, int w, int h);
 
 	//getters
 	bool xisFixed();
 	bool yisFixed();
+
+	//update
+	virtual void update();
 
 	//drawing functions
 	virtual void draw();

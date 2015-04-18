@@ -10,6 +10,7 @@ public:
 	~buildGameView();
 
 	void VOnRender();
+	void VUpdate();
 
 	robot * robo;
 };

@@ -121,6 +121,10 @@ bool guiItem::setTexture(string filename, btnState state) {
 	return true;
 }
 
+void guiItem::update() {
+	//do nothing as default
+}
+
 void guiItem::draw() {
 	//bind the texture and draw it
 

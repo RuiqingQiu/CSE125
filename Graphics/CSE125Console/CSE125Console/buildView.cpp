@@ -7,11 +7,12 @@
  */
 
 buildView::buildView() : gui() {
+	updateview = false;
 	createButtons();
 }
 
 buildView::buildView(int w, int h) : gui(w, h) {
-
+	updateview = false;
 	createButtons();
 }
 
@@ -25,9 +26,9 @@ void buildView::createButtons() {
 
 	//text displays
 	//time.jpg dimensions: 800x100
-	guiItem * text = new guiItem("text/time.jpg", width*0.3, height - 50, 400, 50, false, false);
-	text->setScaling(true, false, width, height);
-	guiItems.push_back(text);
+	timer = new buildTimer("text/time.jpg", width*0.3, height - 50, 400, 50, false, false);
+	timer->setScaling(true, false, width, height);
+	guiItems.push_back(timer);
 
 	//text box
 	//textbox.jpg dimensions: 600x400
@@ -67,6 +68,17 @@ void buildView::createButtons() {
 
 }
 
+void buildView::VUpdate() {
+	gui::VUpdate();
+	if (!updateview && isCurrentView) {
+		timer->start = std::clock();
+	}
+	for (int i = 0; i < guiItems.size(); i++) {
+		guiItems[i]->update();
+	}
+	updateview = isCurrentView;
+}
+
 void buildView::VOnRender() {
 	set2d();
 
@@ -98,8 +110,10 @@ void buildView::onClick(int state, int x, int y) {
 
 guiType buildView::switchClicked(int state, int x, int y) {
 	//battle button
-	if (buttons[0]->isSelected(x, height - y) &&
-		state == GLUT_UP) {
+	if ( (buttons[0]->isSelected(x, height - y) &&
+		state == GLUT_UP) || (timer->timeLeft < 0)) {
+		updateview = false;
+		isCurrentView = false;
 		return guiType::BATTLE;
 	}
 	else {
@@ -110,7 +124,11 @@ guiType buildView::switchClicked(int state, int x, int y) {
 bool buildView::helpClicked(int state, int x, int y) {
 	//help button
 	if (state != GLUT_UP) return false;
-	return buttons[buttons.size() - 1]->isSelected(x, height - y);
+	if (buttons[buttons.size() - 1]->isSelected(x, height - y)) {
+		updateview = false;
+		return true;
+	}
+	return false;
 }
 
 bool buildView::addBlock(int state, int x, int y) {

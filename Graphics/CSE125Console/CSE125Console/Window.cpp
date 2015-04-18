@@ -93,6 +93,14 @@ void Window::initialize(void)
 // This is called at the start of every new "frame" (qualitatively)
 void Window::idleCallback()
 {
+	g_pCore->gameGui->VUpdate();
+	g_pCore->pGameView->VUpdate();
+
+	guiType s = g_pCore->gameGui->switchClicked(0, 0, 0);
+	if (s != g_pCore->viewmode) {
+		g_pCore->viewmode = s;
+		g_pCore->setGui();
+	}
     //Call the display routine to draw the cube
     displayCallback();
 }

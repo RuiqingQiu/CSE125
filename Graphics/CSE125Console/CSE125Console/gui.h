@@ -27,6 +27,7 @@ public:
 	virtual void VOnRender(); //must have
 
 	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
+	virtual void VUpdate();
 
 	void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
 
@@ -42,6 +43,8 @@ public:
 	virtual guiType switchClicked(int state, int x, int y);
 	virtual bool helpClicked(int state, int x, int y);
 	virtual void passiveMouseFunc(int x, int y);
+
+	bool isCurrentView;
 
 protected:
 	int width;

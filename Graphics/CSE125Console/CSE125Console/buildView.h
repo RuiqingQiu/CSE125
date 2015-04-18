@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gui.h"
+#include "buildTimer.h"
 
 class buildView : public gui {
 public:
@@ -8,6 +9,7 @@ public:
 	buildView(int w, int h);
 
 	void VOnRender();
+	void VUpdate();
 	void createButtons();
 
 	void onClick(int state, int x, int y);
@@ -23,5 +25,7 @@ public:
 
 	vector<button*> listItems;
 	scrollBox * scroll;
+	buildTimer * timer;
+	bool updateview;
 };
 

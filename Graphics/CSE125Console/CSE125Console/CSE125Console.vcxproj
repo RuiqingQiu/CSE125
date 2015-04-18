@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="block.h" />
-    <ClInclude Include="buildGameView.h" />
+    <ClInclude Include="buildTimer.h" />
     <ClInclude Include="buildView.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
@@ -100,6 +100,7 @@
     <ClInclude Include="helpMenu.h" />
     <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
+    <ClInclude Include="numbers.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="robot.h" />
@@ -135,7 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="block.cpp" />
-    <ClCompile Include="buildGameView.cpp" />
+    <ClCompile Include="buildTimer.cpp" />
     <ClCompile Include="buildView.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="helpMenu.cpp" />
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
+    <ClCompile Include="numbers.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="robot.cpp" />
     <ClCompile Include="scrollBox.cpp" />

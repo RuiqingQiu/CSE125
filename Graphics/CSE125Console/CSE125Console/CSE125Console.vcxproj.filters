@@ -46,6 +46,12 @@
     <Filter Include="Source Files\buildMode">
       <UniqueIdentifier>{5cf7a510-31f9-4194-a05b-17b1517a8a9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GUI\views">
+      <UniqueIdentifier>{a320b1df-4e52-4874-a987-93cc06a6f01a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\guiItems">
+      <UniqueIdentifier>{c130471c-e318-4bef-9e13-1a6a1b1e2de2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -156,29 +162,8 @@
     <ClInclude Include="Plane.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="buildView.h">
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="button.h">
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="listItem.h">
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="mainmenu.h">
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="scrollBox.h">
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="guiItem.h">
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="guiGameInput.h">
       <Filter>Source Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="gui.h">
-      <Filter>Source Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="HardShadowView.h">
       <Filter>Source Files</Filter>
@@ -186,20 +171,44 @@
     <ClInclude Include="Shader.h">
       <Filter>Source Files\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="helpMenu.h">
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="robot.h">
       <Filter>Source Files\buildMode</Filter>
-    </ClInclude>
-    <ClInclude Include="buildGameView.h">
-      <Filter>Source Files\GameView</Filter>
     </ClInclude>
     <ClInclude Include="block.h">
       <Filter>Source Files\buildMode</Filter>
     </ClInclude>
     <ClInclude Include="battleView.h">
-      <Filter>Source Files\GUI</Filter>
+      <Filter>Source Files\GUI\views</Filter>
+    </ClInclude>
+    <ClInclude Include="helpMenu.h">
+      <Filter>Source Files\GUI\views</Filter>
+    </ClInclude>
+    <ClInclude Include="buildView.h">
+      <Filter>Source Files\GUI\views</Filter>
+    </ClInclude>
+    <ClInclude Include="mainmenu.h">
+      <Filter>Source Files\GUI\views</Filter>
+    </ClInclude>
+    <ClInclude Include="gui.h">
+      <Filter>Source Files\GUI\views</Filter>
+    </ClInclude>
+    <ClInclude Include="buildTimer.h">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClInclude>
+    <ClInclude Include="guiItem.h">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClInclude>
+    <ClInclude Include="listItem.h">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClInclude>
+    <ClInclude Include="numbers.h">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClInclude>
+    <ClInclude Include="scrollBox.h">
+      <Filter>Source Files\GUI\guiItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,47 +305,50 @@
     <ClCompile Include="HardShadowView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="buildView.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="button.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="listItem.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="mainmenu.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="scrollBox.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="guiItem.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="guiGameInput.cpp">
       <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="gui.cpp">
-      <Filter>Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="helpMenu.cpp">
-      <Filter>Source Files\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="robot.cpp">
       <Filter>Source Files\buildMode</Filter>
-    </ClCompile>
-    <ClCompile Include="buildGameView.cpp">
-      <Filter>Source Files\GameView</Filter>
     </ClCompile>
     <ClCompile Include="block.cpp">
       <Filter>Source Files\buildMode</Filter>
     </ClCompile>
     <ClCompile Include="battleView.cpp">
-      <Filter>Source Files\GUI</Filter>
+      <Filter>Source Files\GUI\views</Filter>
+    </ClCompile>
+    <ClCompile Include="helpMenu.cpp">
+      <Filter>Source Files\GUI\views</Filter>
+    </ClCompile>
+    <ClCompile Include="buildView.cpp">
+      <Filter>Source Files\GUI\views</Filter>
+    </ClCompile>
+    <ClCompile Include="mainmenu.cpp">
+      <Filter>Source Files\GUI\views</Filter>
+    </ClCompile>
+    <ClCompile Include="gui.cpp">
+      <Filter>Source Files\GUI\views</Filter>
+    </ClCompile>
+    <ClCompile Include="buildTimer.cpp">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClCompile>
+    <ClCompile Include="guiItem.cpp">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClCompile>
+    <ClCompile Include="listItem.cpp">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClCompile>
+    <ClCompile Include="numbers.cpp">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClCompile>
+    <ClCompile Include="scrollBox.cpp">
+      <Filter>Source Files\GUI\guiItems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
