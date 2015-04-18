@@ -1,4 +1,5 @@
 #pragma once
+#include "definition.h"
 #include "GameObj.h"
 class GOPlane : public GameObj
 {

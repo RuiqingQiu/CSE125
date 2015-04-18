@@ -1,21 +1,21 @@
 #pragma once
+#include "GameObj.h"
 #include "Weapon.h"
-#include "definition.h"
-class Robot
+class Robot : public GameObj
 {
 private:
-	int _cid;
+	int _r_cid;
 	int _takedowns;
 	int _deaths;
 	char* _name;
-	GameObj * centerBlock;
+	btRaycastVehicle *vehicle;
 	Weapon *_w1;
 	Weapon *_w2;
 	Weapon *_w3;
 
 
 public:
-	Robot(int, char*, Weapon*, Weapon*, Weapon*);
+	Robot(int, char*);
 	~Robot();
 
 	void setID(int);
@@ -34,6 +34,9 @@ public:
 	Weapon* getWeapon2();
 	Weapon* getWeapon3();
 
-
+	btRaycastVehicle * getVehicle();
+	void createVehicle(btDynamicsWorld*, double, double, double, double, double, double, double, double, double, double, double);
+	void createRigidBody();
+	btRigidBody* getRigidBody();
 };
 

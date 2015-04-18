@@ -24,7 +24,7 @@ public:
 	btDiscreteDynamicsWorld* getDynamicsWorld();
 
 	void initWorld(std::vector<GameObj*>*);
-	void createPhysicsEvent(int, btRigidBody*);
+	void createPhysicsEvent(int, GameObj*);
 	void stepSimulation(std::vector<GameObj*> *);
 
 

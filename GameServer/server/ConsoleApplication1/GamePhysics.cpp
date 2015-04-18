@@ -47,9 +47,9 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 
 void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 {
-	dynamicsWorld->setGravity(btVector3(0, -9.8	, 0));
-	btCollisionShape* ground = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
+	dynamicsWorld->setGravity(btVector3(0, -9.8,0));
+	btCollisionShape* ground = new btBoxShape(btVector3(10000, 1, 10000));
+	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI(0, groundMotionState, ground, btVector3(0, 0, 0));
 	groundRigidBodyCI.m_friction = 0.1f;
@@ -110,8 +110,8 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObj->begin(); it != gameObj->end(); ++it)
 	{
-		(*it)->createRigidBody();
-		dynamicsWorld->addRigidBody((*it)->getRigidBody());
+		((Robot *)(*it))->createVehicle(dynamicsWorld, 0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
+		//dynamicsWorld->addRigidBody((*it)->getRigidBody());
 	}
 }
 
@@ -121,12 +121,12 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObj->begin(); it != gameObj->end(); ++it)
 	{
-		btTransform trans;
-		(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+		btTransform trans = ((Robot*)(*it))->getVehicle()->getChassisWorldTransform();
 		//std::cout << "BOX WITH ID:  " << (*it)->getId() << ", X: " << trans.getOrigin().getX() << ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
 		(*it)->setZ(trans.getOrigin().getZ());
+
 		//btVector3 vect = trans.getRotation().getAxis();
 		//(*it)->setRotX(vect.getX());
 		//(*it)->setRotY(vect.getY());
@@ -134,7 +134,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
 	}
 }
 
-void GamePhysics::createPhysicsEvent(int eventType, btRigidBody* rb)
+void GamePhysics::createPhysicsEvent(int eventType, GameObj* rb)
 {
 
 	switch (eventType) {
@@ -147,11 +147,13 @@ void GamePhysics::createPhysicsEvent(int eventType, btRigidBody* rb)
 		//btTransform transform;
 		//rb->getMotionState()->getWorldTransform(transform);
 		//rb->setAngularVelocity(btVector3(0, 1, 0));
-		btVector3 torque = btVector3(0, 1, 0);
+		/*btVector3 torque = btVector3(0, 1, 0);
 		torque = torque*TURN_SPEED;
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
-		rb->applyTorque(boxRot*torque);
+		rb->applyTorque(boxRot*torque);*/
 		//rb->applyTorque(btVector3(transform.getOrigin().getX(), transform.getOrigin().getY(), transform.getOrigin().getZ()).cross(btVector3(1, 1, 1)));
+		((Robot*)rb)->getVehicle()->applyEngineForce(TURN_SPEED, 1);
+		((Robot*)rb)->getVehicle()->applyEngineForce(TURN_SPEED, 3);
 		std::cout << "move left" << std::endl;
 		break;
 	}
@@ -165,40 +167,46 @@ void GamePhysics::createPhysicsEvent(int eventType, btRigidBody* rb)
 		//rb->applyTorque(btVector3(transform.getOrigin().getX(), transform.getOrigin().getY(), transform.getOrigin().getZ()).cross(btVector3(-1, 1, 1)));
 		//rb->applyTorque(btVector3(TURN_SPEED*10, 1, 1));
 		//rb->setAngularVelocity(btVector3(0, -1, 0));
-		btVector3 torque = btVector3(0, -1, 0);
+		/*btVector3 torque = btVector3(0, -1, 0);
 		torque = torque*TURN_SPEED;
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		rb->applyTorque(boxRot*torque);
-		std::cout << "move right" << std::endl;
+		std::cout << "move right" << std::endl;*/
+		((Robot*)rb)->getVehicle()->applyEngineForce(TURN_SPEED, 0);
+		((Robot*)rb)->getVehicle()->applyEngineForce(TURN_SPEED, 2);
 		break;
 	}
 	case MOVE_BACKWARD: {
-		btVector3 relativeForce = btVector3(0, 0, MOVE_SPEED);
+		/*btVector3 relativeForce = btVector3(0, 0, MOVE_SPEED);
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralImpulse(correctedForce);
+		rb->applyCentralImpulse(correctedForce);*/
+		((Robot*)rb)->getVehicle()->applyEngineForce(-MOVE_SPEED, 2);
+		((Robot*)rb)->getVehicle()->applyEngineForce(-MOVE_SPEED, 3);
 		break;
 	}
 	case MOVE_FORWARD: {
-		btVector3 relativeForce = btVector3(0, 0, -MOVE_SPEED);
+		/*btVector3 relativeForce = btVector3(0, 0, -MOVE_SPEED);
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralImpulse(correctedForce);
+		rb->applyCentralImpulse(correctedForce);*/
+		((Robot*)rb)->getVehicle()->applyEngineForce(MOVE_SPEED, 2);
+		((Robot*)rb)->getVehicle()->applyEngineForce(MOVE_SPEED, 3);
 		break;
 	}
 	case MOVE_UP: {
-		btVector3 relativeForce = btVector3(0, MOVE_SPEED*2, 0);
+		/*btVector3 relativeForce = btVector3(0, MOVE_SPEED*2, 0);
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralImpulse(correctedForce);
+		rb->applyCentralImpulse(correctedForce);*/
 		break;
 	}
 
 	case MOVE_DOWN: {
-		btVector3 relativeForce = btVector3(0, -MOVE_SPEED*2, 0);
+		/*btVector3 relativeForce = btVector3(0, -MOVE_SPEED*2, 0);
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
-		rb->applyCentralImpulse(correctedForce);
+		rb->applyCentralImpulse(correctedForce);*/
 		break;
 	}
 	case WEAPON1:{

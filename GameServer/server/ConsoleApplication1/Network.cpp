@@ -335,8 +335,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += ' ';
 		temp += to_string((*i)->getZ());
 		temp += ' ';
-		btTransform trans;
-		(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+		btTransform trans = ((Robot*)(*i))->getVehicle()->getChassisWorldTransform();
 		//float mat[16];
 		//trans.getOpenGLMatrix(mat);
 		//int j;

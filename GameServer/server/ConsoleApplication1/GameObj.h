@@ -1,6 +1,10 @@
 #pragma once
+#ifndef GAME_OBJ_H
+#define GAME_OBJ_H
+
+
+
 #include <btBulletDynamicsCommon.h>
-#include "definition.h"
 class GameObj
 {
 private:
@@ -61,3 +65,5 @@ public:
 	
 };
 
+
+#endif

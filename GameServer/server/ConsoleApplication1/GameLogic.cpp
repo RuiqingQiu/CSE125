@@ -23,31 +23,32 @@ unsigned int GameLogic::waitToConnect()
 
 
     if (cid == -1) return WAIT;
-	GameObj* gameObj = new GOBox(0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
-	gameObj->setBlockType(CUBE);
-	asd++;
-	this->pushGameObj(gameObj);
-	clientPair.insert(std::pair<int, GameObj*>(cid, gameObj));
+	//GameObj* gameObj = new GOBox(0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
+	//ameObj->setBlockType(CUBE);
+	//asd++;
+	GameObj* robot = new Robot(cid, "testname");
+	this->pushGameObj(robot);
+	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
 
-	GameObj* gameObj1;
+	//GameObj* gameObj1;
 
-	int k, l;
-	int p = 1;
-	for (k = -2; k <= 2; k++)
-	{
-		for (l = -2; l <= 2; l++)
-		{
-			if (k == 2 || k == -2 || l == 2 || l == -2)
-			{
-				gameObj1 = new GOBox(k, 5, l, 0, 0, 0, 1, 75, 1, 1, 1);
-				gameObj1->setBlockType(CUBE);
-				this->pushGameObj(gameObj1);
-				clientPair.insert(std::pair<int, GameObj*>(cid + p, gameObj1));
-				cout << "p:" << p << endl;
-				p++;
-			}
-		}
-	}
+	//int k, l;
+	//int p = 1;
+	//for (k = -2; k <= 2; k++)
+	//{
+	//	for (l = -2; l <= 2; l++)
+	//	{
+	//		if (k == 2 || k == -2 || l == 2 || l == -2)
+	//		{
+	//			gameObj1 = new GOBox(k, 5, l, 0, 0, 0, 1, 75, 1, 1, 1);
+	//			gameObj1->setBlockType(CUBE);
+	//			this->pushGameObj(gameObj1);
+	//			clientPair.insert(std::pair<int, GameObj*>(cid + p, gameObj1));
+	//			cout << "p:" << p << endl;
+	//			p++;
+	//		}
+	//	}
+	//}
 
 
 
@@ -107,21 +108,21 @@ void GameLogic::gameStart(){
 	//objEventList.push_back(e1);
 	gamePhysics->initWorld(&(this->getGameObjs()));
 
-	int i,j,k;
+	//int i,j,k;
 
-	for (i = 0; i < 17; i++)
-	{
-		clientPair.find(i)->second->getRigidBody()->setAngularFactor(0.3);
-		for (j = i + 1; j < 17; j++)
-		{
-			for (k = 0; k < 7; k++)
-			{
-				Constraint* b = new Constraint();
-				b->addConstraint(clientPair.find(i)->second, clientPair.find(j)->second);
-				gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF, true);
-			}
-		}
-	}
+	//for (i = 0; i < 17; i++)
+	//{
+	//	clientPair.find(i)->second->getRigidBody()->setAngularFactor(0.3);
+	//	for (j = i + 1; j < 17; j++)
+	//	{
+	//		for (k = 0; k < 7; k++)
+	//		{
+	//			Constraint* b = new Constraint();
+	//			b->addConstraint(clientPair.find(i)->second, clientPair.find(j)->second);
+	//			gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF, true);
+	//		}
+	//	}
+	//}
 
 
 	/*std::vector<GameObj*>::iterator it;
@@ -187,7 +188,7 @@ void GameLogic::prePhyLogic(){
 		GameObj*  cob = it->second;
 		std::cout << "x: " << cob->getX() << "y: " << cob->getY() << "z: " << cob->getZ() << std::endl;
 		btRigidBody *rb = cob->getRigidBody();
-		gamePhysics->createPhysicsEvent(type, rb);
+		gamePhysics->createPhysicsEvent(type, cob);
 		iter++;
 	
 	}

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObj.h"
+#include "definition.h"
 class GOBox : public GameObj
 {
 private:
