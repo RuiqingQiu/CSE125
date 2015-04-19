@@ -28,6 +28,7 @@ void Vector4::dehomogenize(){
 	this->w = this->w / factor;
 }// dehomogenize the vector (scale it so that its fourth component is equal to one)
 void Vector4::print(string comment){
+	cout << this->x << " " << this->y << " " << this->z << endl;
 }
 double Vector4::length(){
 	return sqrt(this->x*this->x + this->y*this->y + this->z*this->z);

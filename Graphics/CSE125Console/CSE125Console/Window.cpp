@@ -16,20 +16,35 @@
 #include "SkyBox.h"
 #include "Plane.h"
 #include "HardShadowView.h"
+#include "TestView.h"
+#include "Teapot.h"
 #define TESTCAM 0
 
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-gui buildmode = gui();
-
-
+//gui buildmode = gui();
+static int counter = 0;
 static Cube* cube;
 static Cube* cube2;
+static Model3D*object;
 //Init server info here later
+
+
+
 void Window::initialize(void)
-{
+{	
+	g_pCore->defaultView = new GameView();
+
+	GameView* view = new GameView();
+	//cube = new Cube(1);
+	//cube->localTransform.position = Vector3(0, 0, -5);
+	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
+	//cube->identifier = 1;
+	//view->PushGeoNode(cube);
+	//Teapot* t = new Teapot(2);
+
 	//set color
 	//glColor3f(1, 1, 1);
 	cube = new Cube(1);
@@ -38,13 +53,29 @@ void Window::initialize(void)
 	cube->identifier = 1;
 	g_pCore->defaultView->PushGeoNode(cube);
 
+	object = new Model3D("Hatchet.obj");
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	view->PushGeoNode(g_pCore->light);
+
+	Plane* p = new Plane(50);
+	p->localTransform.position = Vector3(0, 0, 0);
+	view->PushGeoNode(p);
+	//t->localTransform.position = Vector3(0, 0, -5);
+	//view->PushGeoNode(t);
 	//cube2 = new Cube(1);
 	//cube2->localTransform.position = Vector3(5, 0, -10);
 	//view->PushGeoNode(cube2);
+
+	g_pCore->defaultView = view;
+	g_pCore->pGameView = view;
+	g_pCore->pPlayer->playerid = 1;
+
 	
-	//g_pCore->pPlayer->playerid = 1;
 	
-	//default to console view
+	
 	g_pCore->viewmode = guiType::CONSOLE;
 	g_pCore->viewmode = guiType::HELP;
 	g_pCore->helpMenu = new helpMenu(width, height);
@@ -53,17 +84,17 @@ void Window::initialize(void)
 	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultGui = new gui();
 
+
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 
 	//Setup the light
-	/*
-	Model3D *object = new Model3D("woodcube.obj");
-	object->localTransform.position = Vector3(0, 0, -10);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	*/
+	
+	//Model3D *object = new Model3D("woodcube.obj");
+	//object->localTransform.position = Vector3(0, 0, -10);
+	//object->localTransform.scale = Vector3(1, 1, 1);
+	//object->localTransform.rotation = Vector3(0, 0, 0);
+	//view->PushGeoNode(object);
 
 	//test shadow view
 	//HardShadowView* shadowview = new HardShadowView();
@@ -71,10 +102,13 @@ void Window::initialize(void)
 
 	//see gui switch and skybox reqs
 	g_pCore->skybox = new SkyBox();
+
+
+
 	g_pCore->setGui();
 
 	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 5);
+	//*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 10);
 
 
 	//setup shader
@@ -84,7 +118,19 @@ void Window::initialize(void)
 
 
 	//connect to server
+
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+	
+
+
+
+
+
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+
+
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+
 }
 
 //----------------------------------------------------------------------------
@@ -139,7 +185,7 @@ void Window::reshapeCallback(int w, int h)
     glViewport(0, 0, w, h);                                          //Set new viewport size
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(60.0, double(Window::width) / (double)Window::height, 10, 1000.0); //Set perspective projection viewing frustum
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 1, 1000.0); //Set perspective projection viewing frustum
 	g_pCore->buildmode->setDimensions(w, h);
 	g_pCore->menumode->setDimensions(w, h);
 	g_pCore->helpMenu->setDimensions(w, h);
@@ -152,7 +198,9 @@ void Window::reshapeCallback(int w, int h)
 
 void Window::displayCallback()
 {
-
+	counter = (counter + 1) % 360;
+	
+	object->localTransform.rotation.y = counter;
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
 	if (p!=nullptr){
@@ -175,6 +223,9 @@ void Window::displayCallback()
 	
 	if (! g_pCore->guiOnly || true) g_pCore->pGameView->VOnRender();
 
+
+	//cout << "on display " << endl;
+	//g_pCore->pGameView->VOnRender();
 	g_pCore->gameGui->VOnRender();
 	//test for camera
 	

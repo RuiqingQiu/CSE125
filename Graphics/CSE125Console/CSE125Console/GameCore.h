@@ -8,7 +8,7 @@
 #include "GamePacketManager.h"
 #include "GamePlayer.h"
 #include "GameInputInterface.h"
-
+#include "Light.h"
 #ifndef CSE125_CORE
 #define CSE125_CORE
 
@@ -24,6 +24,10 @@ public:
 	GamePacketManager* pGamePacketManager;
 	GamePlayer* pPlayer;
 	GameInputInterface* i_pInput;
+
+
+	Light* light;
+	
 
 
 	//an empty view for switching to in menus that dont need 3d

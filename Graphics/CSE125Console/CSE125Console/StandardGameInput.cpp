@@ -102,4 +102,5 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		g_pCore->viewmode = guiType::CONSOLE;
 	}
 	g_pCore->setGui();
+
 }

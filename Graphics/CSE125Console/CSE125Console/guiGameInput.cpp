@@ -185,6 +185,7 @@ void guiGameInput::VProcessMouseClick(int button, int state, int x, int y) {
 	//buildmode input for game logic checks
 	if (g_pCore->gameGui != g_pCore->buildmode) return;
 
+
 	if (g_pCore->buildmode->addBlock(state, x, y)) {
 		//add geonode to robot
 	}

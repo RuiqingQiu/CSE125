@@ -10,13 +10,15 @@ GameCore::GameCore()
 {
 	guiOnly = false;
 	gameGui = new gui();
-	defaultView = new GameView();
-	pGameView = defaultView;
+	pGameView = new GameView();
 	pGamePacketManager = new GamePacketManager();
 	pPlayer = new GamePlayer();
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
+	light = new Light();
 	i_pInput = standard_Input;
+
+	light->setPosition(10, 0, 5);
 	//pGameView->pPlayer = pPlayer;
 }
 
@@ -48,7 +50,6 @@ void GameCore::setGui() {
 		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
 			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->gui_Input;
-		g_pCore->pGameView = defaultView;
 	}
 	else if (g_pCore->viewmode == guiType::HELP) {
 		g_pCore->gameGui = g_pCore->helpMenu;
@@ -70,7 +71,6 @@ void GameCore::setGui() {
 		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
 			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->standard_Input;
-		g_pCore->pGameView = defaultView;
 	}
 	g_pCore->gameGui->isCurrentView = true;
 }
