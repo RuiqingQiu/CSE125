@@ -30,6 +30,7 @@ GameCore::~GameCore()
 
 //a gui factory
 void GameCore::setGui() {
+	/*
 	guiOnly = false;
 	//hacky quick fix
 	g_pCore->buildmode->updateview = false;
@@ -73,5 +74,6 @@ void GameCore::setGui() {
 		g_pCore->i_pInput = g_pCore->standard_Input;
 	}
 	g_pCore->gameGui->isCurrentView = true;
+	*/
 }
 

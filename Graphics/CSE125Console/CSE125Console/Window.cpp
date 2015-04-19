@@ -75,7 +75,7 @@ void Window::initialize(void)
 
 	
 	
-	
+	/*
 	g_pCore->viewmode = guiType::CONSOLE;
 	g_pCore->viewmode = guiType::HELP;
 	g_pCore->helpMenu = new helpMenu(width, height);
@@ -83,7 +83,7 @@ void Window::initialize(void)
 	g_pCore->buildmode = new buildView(width, height);
 	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultGui = new gui();
-
+	*/
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
@@ -105,7 +105,7 @@ void Window::initialize(void)
 
 
 
-	g_pCore->setGui();
+	//g_pCore->setGui();
 
 	//setup camera
 	//*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 10);
@@ -186,10 +186,10 @@ void Window::reshapeCallback(int w, int h)
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
 	gluPerspective(60.0, double(Window::width) / (double)Window::height, 1, 1000.0); //Set perspective projection viewing frustum
-	g_pCore->buildmode->setDimensions(w, h);
-	g_pCore->menumode->setDimensions(w, h);
-	g_pCore->helpMenu->setDimensions(w, h);
-	g_pCore->battlemode->setDimensions(w, h);
+	//g_pCore->buildmode->setDimensions(w, h);
+	//g_pCore->menumode->setDimensions(w, h);
+	//g_pCore->helpMenu->setDimensions(w, h);
+	//g_pCore->battlemode->setDimensions(w, h);
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 }
 
@@ -203,6 +203,8 @@ void Window::displayCallback()
 	object->localTransform.rotation.y = counter;
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
+
+	/*
 	if (p!=nullptr){
 		switch (p->packet_types){
 		case GAME_STATE:{
@@ -220,13 +222,13 @@ void Window::displayCallback()
 		}
 		//update
 	}
-	
-	if (! g_pCore->guiOnly || true) g_pCore->pGameView->VOnRender();
+	*/
+	//if (! g_pCore->guiOnly || true) g_pCore->pGameView->VOnRender();
 
 
 	//cout << "on display " << endl;
-	//g_pCore->pGameView->VOnRender();
-	g_pCore->gameGui->VOnRender();
+	g_pCore->pGameView->VOnRender();
+	//g_pCore->gameGui->VOnRender();
 	//test for camera
 	
 	if (TESTCAM)
