@@ -29,7 +29,12 @@ void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 		case '5':
 			g_pCore->viewmode = guiType::CONSOLE;
 			break;
-			// need to read input for robot name, inheritanted from GameInputInterface
+	    
+	    // "backspace is treated as ASCII 8 in opengl"
+		case 8:
+			name.pop_back(); 
+			break;
+	  // need to read input for robot name, inheritanted from GameInputInterface
 		case 'a':
 			name.append("a");
 			cout << "Enter !!!! in guiGameInput.cpp" << endl;
