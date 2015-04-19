@@ -119,12 +119,12 @@ void gui::onClick(int state, int x, int y) {
 }
 
 guiType gui::switchClicked(int state, int x, int y) {
-	std::cout << "need to implement!" << std::endl;
+	//std::cout << "need to implement!" << std::endl;
 	return guiType::CONSOLE;
 }
 
 bool gui::helpClicked(int state, int x, int y) {
-	std::cout << "need to implement!" << std::endl;
+	//std::cout << "need to implement!" << std::endl;
 	return false;
 }
 

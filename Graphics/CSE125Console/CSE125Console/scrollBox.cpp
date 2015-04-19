@@ -193,7 +193,8 @@ void scrollBox::onClick(int state, int x, int y) {
 	removeButton->onClick(state, x, y);
 	for (int i = displayIdx; i < displayIdx+MAXDISPLAY; i++) {
 		if (i >= list.size()) return;
-		list[i]->showSubList = false;
+		if (!list[i]->subSel(x, y))
+			list[i]->showSubList = false;
 		if (list[i]->isSelected(x, y) && state == GLUT_UP) {
 			list[i]->showSubList = true;
 		}

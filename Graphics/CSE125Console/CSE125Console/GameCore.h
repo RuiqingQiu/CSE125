@@ -25,6 +25,11 @@ public:
 	GamePlayer* pPlayer;
 	GameInputInterface* i_pInput;
 
+
+	//an empty view for switching to in menus that dont need 3d
+	//i.e. main menu and help menu
+	GameView * defaultView;
+
 	//changes between the different gui modes
 	gui* gameGui;
 
@@ -57,6 +62,8 @@ public:
 
 	//a gui switch 
 	void setGui();
+
+	bool guiOnly;
 
 
 

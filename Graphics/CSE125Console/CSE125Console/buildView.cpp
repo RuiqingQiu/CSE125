@@ -22,6 +22,10 @@ buildView::~buildView()
 }
 
 void buildView::createButtons() {
+	static Cube * cube = new Cube(1);
+	cube->localTransform.position = Vector3(0, 0, -5);
+	cube->identifier = 1;
+	PushGeoNode(cube);
 	//hardcoded button sizes for now
 
 	//text displays
@@ -80,6 +84,7 @@ void buildView::VUpdate() {
 }
 
 void buildView::VOnRender() {
+	GameView::VOnRender();
 	set2d();
 
 	drawAllItems();
@@ -106,6 +111,19 @@ void buildView::onClick(int state, int x, int y) {
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height-y);
 	}
+	if (scroll->addButton->isSelected(x, height-y) && state == GLUT_UP) {
+		std::cout << "adding" << std::endl;
+		int s = NodeList.size() + 1;
+		Cube * cube = new Cube(1);
+		cube->localTransform.position = Vector3(0, 0, 0);
+		cube->identifier = s;
+		PushGeoNode(cube);
+	}
+	else if (scroll->removeButton->isSelected(x, height - y) && state == GLUT_UP) {
+		if (NodeList.size() > 1)
+			NodeList.pop_back();
+	}
+
 }
 
 guiType buildView::switchClicked(int state, int x, int y) {

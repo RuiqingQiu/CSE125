@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 #include "gui.h"
+#include "background.h"
 
 class mainMenu : public gui {
 public:
@@ -20,5 +21,7 @@ public:
 	bool helpClicked(int state, int x, int y);
 
 	vector<button*> clickableItems;
+
+	background * backimg;
 
 };

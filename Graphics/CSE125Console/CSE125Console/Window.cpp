@@ -32,22 +32,21 @@ void Window::initialize(void)
 {
 	//set color
 	//glColor3f(1, 1, 1);
-	GameView* view = new GameView();
 	cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	view->PushGeoNode(cube);
+	g_pCore->defaultView->PushGeoNode(cube);
 
 	//cube2 = new Cube(1);
 	//cube2->localTransform.position = Vector3(5, 0, -10);
 	//view->PushGeoNode(cube2);
-
-	g_pCore->pGameView = view;
+	
 	//g_pCore->pPlayer->playerid = 1;
 	
 	//default to console view
 	g_pCore->viewmode = guiType::CONSOLE;
+	g_pCore->viewmode = guiType::HELP;
 	g_pCore->helpMenu = new helpMenu(width, height);
 	g_pCore->battlemode = new battleView();
 	g_pCore->buildmode = new buildView(width, height);
@@ -85,7 +84,7 @@ void Window::initialize(void)
 
 
 	//connect to server
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
 }
 
 //----------------------------------------------------------------------------
@@ -160,6 +159,7 @@ void Window::displayCallback()
 		switch (p->packet_types){
 		case GAME_STATE:{
 			g_pCore->pGameView->VOnClientUpdate(p);
+			g_pCore->gameGui->VOnClientUpdate(p);
 			break;
 		}
 		case CONFIRM_CONNECTION:{
@@ -172,8 +172,9 @@ void Window::displayCallback()
 		}
 		//update
 	}
+	
+	if (! g_pCore->guiOnly || true) g_pCore->pGameView->VOnRender();
 
-	g_pCore->pGameView->VOnRender();
 	g_pCore->gameGui->VOnRender();
 	//test for camera
 	

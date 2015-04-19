@@ -34,12 +34,15 @@ void mainMenu::createButtons() {
 	buttons.push_back(robo);
 	buttons.push_back(play);
 	buttons.push_back(help);
+
+	backimg = new background("background1.jpg", width, height);
+	guiItems.push_back(backimg);
 }
 
 
 void mainMenu::VOnRender(){
+	GameView::VOnRender();
 	set2d();
-
 	drawAllItems();
 	//using drawtext for now... ugly font though
 	drawText(width * 0.6, height * 0.5, name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);

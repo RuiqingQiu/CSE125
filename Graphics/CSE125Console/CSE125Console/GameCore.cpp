@@ -8,8 +8,10 @@ float GameCore::width = 512;   //Set window width in pixels here
 float GameCore::height = 512;   //Set window height in pixels here
 GameCore::GameCore()
 {
+	guiOnly = false;
 	gameGui = new gui();
-	pGameView = new GameView();
+	defaultView = new GameView();
+	pGameView = defaultView;
 	pGamePacketManager = new GamePacketManager();
 	pPlayer = new GamePlayer();
 	gui_Input = new guiGameInput();
@@ -26,6 +28,7 @@ GameCore::~GameCore()
 
 //a gui factory
 void GameCore::setGui() {
+	guiOnly = false;
 	//hacky quick fix
 	g_pCore->buildmode->updateview = false;
 
@@ -38,18 +41,21 @@ void GameCore::setGui() {
 		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
 			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->gui_Input;
+		guiOnly = true;
 	}
 	else if (g_pCore->viewmode == guiType::BATTLE) {
 		g_pCore->gameGui = g_pCore->battlemode;
 		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
 			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->gui_Input;
+		g_pCore->pGameView = defaultView;
 	}
 	else if (g_pCore->viewmode == guiType::HELP) {
 		g_pCore->gameGui = g_pCore->helpMenu;
 		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
 			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->gui_Input;
+		guiOnly = true;
 	}
 	else if (g_pCore->viewmode == guiType::MENU) {
 		g_pCore->helpMenu->returnTo = guiType::MENU;
@@ -57,12 +63,14 @@ void GameCore::setGui() {
 		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
 			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->gui_Input;
+		guiOnly = true;
 	}
 	else if (g_pCore->viewmode == guiType::CONSOLE) {
 		g_pCore->gameGui = g_pCore->defaultGui;
 		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
 			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
 		g_pCore->i_pInput = g_pCore->standard_Input;
+		g_pCore->pGameView = defaultView;
 	}
 	g_pCore->gameGui->isCurrentView = true;
 }
