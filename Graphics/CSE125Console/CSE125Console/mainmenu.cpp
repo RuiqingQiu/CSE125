@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-string name = " ";
+
 mainMenu::mainMenu() : gui() {
 	createButtons();
 }
@@ -18,15 +18,15 @@ mainMenu::~mainMenu(){
 
 void mainMenu::createButtons() {
 
-	button * robo = new button("menuItem/enterRobotName.jpg", width*0.25, height*0.5, 700, 100);
+	button * robo = new button("menuItem/enterRobotName.jpg", width*0.3, height*0.5, 750, 100);
 	robo->setScaling(true, true, width, height);
 	
-	button * play = new button("menuItem/play.jpg", width*0.35, height*0.3,300,50);
+	button * play = new button("menuItem/play.jpg", width*0.43, height*0.3,260,50);
 	play->setTexture("menuItem/play_sel.jpg", btnState::SELECTED);
 	play->setTexture("menuItem/play_press.jpg", btnState::PRESSED);
 	play->setScaling(true, true, width, height);
 
-	button * help = new button("menuItem/help.jpg", width*0.35, height * 0.2,300,50);
+	button * help = new button("menuItem/help.jpg", width*0.43, height * 0.2,260,50);
 	help->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
 	help->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
 	help->setScaling(true, true, width, height);
@@ -45,7 +45,7 @@ void mainMenu::VOnRender(){
 	set2d();
 	drawAllItems();
 	//using drawtext for now... ugly font though
-	drawText(width * 0.6, height * 0.5, name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
+	drawText(width * 0.6, height * 0.5, g_pCore->gui_Input->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
 
 	set3d();
 }
@@ -66,14 +66,8 @@ guiType mainMenu::switchClicked(int state, int x, int y){
 	
 	if (state != GLUT_UP) return guiType::MENU;
 	
-	if (buttons[0]->isSelected(x, height - y)){
-		cout << "Enter Robot name " << endl;
-		cin >> name;
-		cout << "Name is " << name << endl;
-		return guiType::MENU;
-	}
 	//play button
-	else if (buttons[1]->isSelected(x, height - y)) {
+	if (buttons[1]->isSelected(x, height - y)) {
 		return guiType::BUILD;
 	}
 	// help button

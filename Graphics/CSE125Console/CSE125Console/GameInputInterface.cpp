@@ -4,6 +4,7 @@
 
 GameInputInterface::GameInputInterface()
 {
+	name = "";
 }
 
 
