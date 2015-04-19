@@ -45,8 +45,7 @@ vec3 EnvBRDFApprox( vec3 SpecularColor, float Roughness, float NoV )
 
 
 void main (void) 
-{ 
-	
+{ 	
 	float specular = texture2D(gloss, gl_TexCoord[0].st).r;
 	float metallic = texture2D(metallic, gl_TexCoord[0].st).r;
 	vec3 baseColor = texture2D(tex, gl_TexCoord[0].st).rgb;
@@ -62,7 +61,8 @@ void main (void)
 	vec3 cameraVector = normalize(CAMERA_POSITION - position.xyz);
 	float NoV = max(dot(norm1, cameraVector), 0);
 	
-	specular_color = EnvBRDFApprox(specular_color, specular, NoV);
+	float roughness = 0.5;
+	specular_color = EnvBRDFApprox(specular_color, roughness, NoV);
 	//specular_color = EnvBRDFApproxNonmetal( specular, NoV );
 	vec3 color = 0;
 	float IndirectIrradiance = 0;
@@ -71,6 +71,7 @@ void main (void)
 
 	float nxDir = max(0.0, dot(norm1, lightVector));
 	vec4 light_diffuse = gl_LightSource[0].diffuse * nxDir;
+	
 	light_diffuse = clamp(light_diffuse, 0.0, 1.0);
 	   
 	float specularPower = 0.0;
@@ -85,6 +86,8 @@ void main (void)
     vec4 light_specular = gl_LightSource[0].specular * specularPower;
     light_specular = clamp(light_specular, 0.0, 1.0); 
 	finalColor = gl_LightSource[0].ambient +light_diffuse + light_specular;
+
+
 	color += finalColor.rgb * diffuse_color;
 	IndirectIrradiance = finalColor.a;
 	
@@ -93,14 +96,14 @@ void main (void)
 	vec3 tmp = normalize(position.xyz - CAMERA_POSITION);
 	vec3 reflection = normalize(reflect(vN.xyz, normalize(tmp)));
 	float RoL = max(0, dot(reflection, lightVector));
-	float roughness = specular;
 	color += NoL * finalColor.rgb * (diffuse_color + specular_color * PhongApprox(roughness, RoL));
 
 	
 	vec4 color_without_light = vec4(mix(color, diffuse_color + specular_color, 0.7), 1);
-	
+	//tmp = sqrt(color_without_light.rgb);
 
-	gl_FragColor = color_without_light;
+	gl_FragColor = vec4(color_without_light.rgb, IndirectIrradiance);
+	//gl_FragColor = vec4(color_without_light, IndirectIrradiance);
 	//gl_FragColor = color_without_light + finalColor;
 	//gl_FragColor = vec4(lightvec, 1);
 }

@@ -29,8 +29,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	glDisable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHTING);                                      //Enable lighting
 
+	
 	//light
-	float position[] = {0.0, 0.0, 5.0, 0.0 };	// lightsource position
+	float position[] = {10.0, 0.0, 5.0, 0.0 };	// lightsource position
 	GLfloat  ambientLight[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 	GLfloat  diffuseLight[] = { 0.1f, 0.1f, 0.1f, 1.0f };
 	GLfloat  specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
@@ -41,6 +42,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 
 	glEnable(GL_LIGHT0);
+	
 	//mat
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);

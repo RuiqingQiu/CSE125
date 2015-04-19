@@ -13,6 +13,10 @@ varying vec3 lightvec;
 //Mode = 1 for texture only
 //Mode = 2 for normal and texture
 varying vec3 mode;
+
+uniform float light_x;
+uniform float light_y;
+uniform float light_z;
 void main(void)  
 {     
    v = vec3(gl_ModelViewMatrix * gl_Vertex);       
@@ -30,12 +34,12 @@ void main(void)
 
    //lightvec = gl_LightSource[0].position.xyz;
    //Compute light vector
-   lightvec = gl_LightSource[0].position.xyz - position;
-   //lightvec = v - vec3(5,5,5);
+   lightvec = vec3(light_x, light_y, light_z) - position;
+   //lightvec = gl_LightSource[0].position.xyz - position;
    lightvec *= TBNMatrix;
-
+   //lightvec = gl_LightSource[0].position.xyz;
    mode = vec3(2,0,0);
-
+   //lightvec = vec3(light_x, light_y, light_z);
 }
 
 

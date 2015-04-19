@@ -14,8 +14,9 @@ GameCore::GameCore()
 	pPlayer = new GamePlayer();
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
+	light = new Light();
 	i_pInput = standard_Input;
-
+	light->setPosition(10, 0, 5);
 	//pGameView->pPlayer = pPlayer;
 }
 

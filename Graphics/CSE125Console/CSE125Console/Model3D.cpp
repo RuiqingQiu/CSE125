@@ -1,12 +1,25 @@
 #include "stdafx.h"
+#include "Window.h"
+
 #include "SOIL.h"
 #include "Model3D.h"
 
-
 Model3D::Model3D()
 {
-
 }
+void Model3D::setTextureMap(string pathname){
+	texture_map = pathname;
+}
+void Model3D::setNormalMap(string pathname){
+	normal_map = pathname;
+}
+void Model3D::setGlossMap(string pathname){
+	gloss_map = pathname;
+}
+void Model3D::setMetallicMap(string pathname){
+	metallic_map = pathname;
+}
+
 
 GLhandleARB loadShader1(char* filename, unsigned int type)
 {
@@ -84,7 +97,10 @@ GLhandleARB loadShader1(char* filename, unsigned int type)
 
 
 Model3D::Model3D(string filename){
-
+	setTextureMap("Albedo.PNG");
+	setNormalMap("Normal_Clrear.png");
+	setGlossMap("Gloss.PNG");
+	setMetallicMap("Metalness.PNG");
 	localTransform = Transform();
 
 	std::string inputfile = filename;
@@ -165,7 +181,6 @@ Model3D::Model3D(string filename){
 	}
 
 
-
 	GLhandleARB vertexShaderHandle;
 	GLhandleARB fragmentShaderHandle;
 
@@ -187,8 +202,7 @@ Model3D::Model3D(string filename){
 
 	glBindTexture(GL_TEXTURE_2D, texturaID[0]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	texturaID[0] = SOIL_load_OGL_texture("Albedo.PNG", SOIL_LOAD_AUTO,
+	texturaID[0] = SOIL_load_OGL_texture(texture_map.c_str(), SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y);
 	if (texturaID[0] == 0)
@@ -204,7 +218,7 @@ Model3D::Model3D(string filename){
 
 
 	glBindTexture(GL_TEXTURE_2D, texturaID[1]);
-	texturaID[1] = SOIL_load_OGL_texture("Normal_Clrear.png", SOIL_LOAD_AUTO,
+	texturaID[1] = SOIL_load_OGL_texture(normal_map.c_str() , SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y);
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -215,7 +229,7 @@ Model3D::Model3D(string filename){
 	}
 
 	glBindTexture(GL_TEXTURE_2D, texturaID[2]);
-	texturaID[2] = SOIL_load_OGL_texture("Gloss.PNG", SOIL_LOAD_AUTO,
+	texturaID[2] = SOIL_load_OGL_texture(gloss_map.c_str(), SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y);
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -226,7 +240,7 @@ Model3D::Model3D(string filename){
 	}
 
 	glBindTexture(GL_TEXTURE_2D, texturaID[3]);
-	texturaID[3] = SOIL_load_OGL_texture("Metalness.PNG", SOIL_LOAD_AUTO,
+	texturaID[3] = SOIL_load_OGL_texture(metallic_map.c_str(), SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y);
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -252,10 +266,8 @@ Model3D::Model3D(string filename){
 	glUniform1i(glGetUniformLocation(shader_id, "tex"), 0);
 	glUniform1i(glGetUniformLocation(shader_id, "norm"), 1);
 	glUniform1i(glGetUniformLocation(shader_id, "gloss"), 2);
-
 	glUniform1i(glGetUniformLocation(shader_id, "metallic"), 3);
-
-
+	glUniform1i(glGetUniformLocation(shader_id, "light_position"), 4);	
 
 }
 
@@ -342,13 +354,12 @@ void Model3D::VOnDraw(){
 				glUniform1i(glGetUniformLocation(shader_id, "gloss"), 2);
 				glUniform1i(glGetUniformLocation(shader_id, "metallic"), 3);
 
-
-				//glActiveTexture(GL_TEXTURE1);
-				//glBindTexture(GL_TEXTURE_2D, texturaID[1]);
-
-				//glUniform1i(glGetUniformLocation(shader_id, "tex"), 0);
-				//glUniform1i(glGetUniformLocation(shader_id, "norm"), 1);
-
+				GLint l_x = glGetUniformLocation(shader_id, "light_x");
+				GLint l_y = glGetUniformLocation(shader_id, "light_y");
+				GLint l_z = glGetUniformLocation(shader_id, "light_z");
+				glUniform1f(l_x, g_pCore->light->localTransform.position.x);
+				glUniform1f(l_y, g_pCore->light->localTransform.position.y);
+				glUniform1f(l_z, g_pCore->light->localTransform.position.z);
 				// Make sure no bytes are padded:
 				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 

@@ -48,14 +48,14 @@ void Plane::VOnDraw()
 	glBegin(GL_QUADS);
 	//glTranslated(0, 0, 5);
 	// Draw front face:
-	glNormal3f(0.0, 10, 0.0);
+	glNormal3f(0.0, 1, 0.0);
 	glVertex3f(-45, 0, -45);
 	glVertex3f(-45, 0, 55);
 	glVertex3f(55, 0, 55);
 	glVertex3f(55, 0, -45);
 
 	glEnd();
-	glColor4f(0.3f, 0.3f, 0.3f, 1);
+	glColor4f(1, 1, 1, 1);
 
 
 	//Pop the save state off the matrix stack

@@ -94,6 +94,7 @@
     <ClInclude Include="guiGameInput.h" />
     <ClInclude Include="guiItem.h" />
     <ClInclude Include="HardShadowView.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="Plane.h" />
@@ -142,6 +143,7 @@
     <ClCompile Include="guiGameInput.cpp" />
     <ClCompile Include="guiItem.cpp" />
     <ClCompile Include="HardShadowView.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="Plane.cpp" />
