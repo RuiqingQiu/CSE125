@@ -35,6 +35,7 @@ static Model3D*object;
 
 void Window::initialize(void)
 {	
+	//Default view
 	g_pCore->defaultView = new GameView();
 
 	GameView* view = new GameView();
@@ -52,6 +53,8 @@ void Window::initialize(void)
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
 	g_pCore->defaultView->PushGeoNode(cube);
+	view->PushGeoNode(cube);
+
 
 	//object = new Model3D("Hatchet.obj");
 	//object->localTransform.position = Vector3(0, 0, -20);
@@ -105,7 +108,7 @@ void Window::initialize(void)
 	g_pCore->setGui();
 
 	//setup camera
-	//*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 10);
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
 
 
 	//setup shader
@@ -115,7 +118,7 @@ void Window::initialize(void)
 
 
 	//connect to server
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 }
 
 //----------------------------------------------------------------------------
@@ -206,7 +209,8 @@ void Window::displayCallback()
 		//update
 	}
 	
-	if (! g_pCore->guiOnly || true) g_pCore->pGameView->VOnRender();
+	if (! g_pCore->guiOnly || true) 
+		g_pCore->pGameView->VOnRender();
 
 
 	//cout << "on display " << endl;

@@ -49,7 +49,7 @@ void GameCore::setGui() {
 		g_pCore->gameGui = g_pCore->battlemode;
 		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
 			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
-		g_pCore->i_pInput = g_pCore->gui_Input;
+		g_pCore->i_pInput = g_pCore->standard_Input;
 		guiOnly = true;
 	}
 	else if (g_pCore->viewmode == guiType::HELP) {
