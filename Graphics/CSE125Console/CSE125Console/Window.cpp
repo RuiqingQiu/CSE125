@@ -24,17 +24,18 @@
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-//gui buildmode = gui();
 static int counter = 0;
 static Cube* cube;
-static Cube* cube2;
 static Model3D*object;
 //Init server info here later
 
-
-
 void Window::initialize(void)
-{	
+{
+	g_pCore->viewmode = viewType::CONSOLE;
+	g_pCore->helpMenu = new helpMenu(width, height);
+	g_pCore->battlemode = new battleView();
+	g_pCore->buildmode = new buildView(width, height);
+	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultView = new GameView();
 
 	GameView* view = new GameView();
@@ -59,10 +60,12 @@ void Window::initialize(void)
 	//object->localTransform.rotation = Vector3(0, 0, 0);
 	//view->PushGeoNode(object);
 	view->PushGeoNode(g_pCore->light);
+	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
 
 	Plane* p = new Plane(50);
 	p->localTransform.position = Vector3(0, 0, 0);
 	view->PushGeoNode(p);
+	//g_pCore->battlemode->PushGeoNode(p);
 	//t->localTransform.position = Vector3(0, 0, -5);
 	//view->PushGeoNode(t);
 	//cube2 = new Cube(1);
@@ -73,27 +76,20 @@ void Window::initialize(void)
 	g_pCore->pGameView = view;
 	g_pCore->pPlayer->playerid = 1;
 
-	
-	
-	
-	g_pCore->viewmode = guiType::CONSOLE;
-	g_pCore->viewmode = guiType::BUILD;
-	g_pCore->helpMenu = new helpMenu(width, height);
-	g_pCore->battlemode = new battleView();
-	g_pCore->buildmode = new buildView(width, height);
-	g_pCore->menumode = new mainMenu(width, height);
-	g_pCore->defaultGui = new gui();
-
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 
 	//Setup the light
 	
-	//Model3D *object = new Model3D("woodcube.obj");
-	//object->localTransform.position = Vector3(0, 0, -10);
-	//object->localTransform.scale = Vector3(1, 1, 1);
-	//object->localTransform.rotation = Vector3(0, 0, 0);
-	//view->PushGeoNode(object);
+	Model3D *object = new Model3D("woodcube.obj");
+	object->localTransform.position = Vector3(0, 0, -10);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	g_pCore->battlemode->PushGeoNode(object);
+	g_pCore->battlemode->PushGeoNode(g_pCore->light);
+	g_pCore->battlemode->PushGeoNode(p);
 
 	//test shadow view
 	//HardShadowView* shadowview = new HardShadowView();
@@ -101,12 +97,10 @@ void Window::initialize(void)
 
 	//see gui switch and skybox reqs
 	g_pCore->skybox = new SkyBox();
-
-	g_pCore->setGui();
+	g_pCore->setView();
 
 	//setup camera
 	//*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 10);
-
 
 	//setup shader
 	//init shader
@@ -123,20 +117,21 @@ void Window::initialize(void)
 // This is called at the start of every new "frame" (qualitatively)
 void Window::idleCallback()
 {
-	g_pCore->gameGui->VUpdate();
 	g_pCore->pGameView->VUpdate();
 
-	guiType s = g_pCore->gameGui->switchClicked(0, 0, 0);
-	if (s != g_pCore->viewmode) {
-		g_pCore->viewmode = s;
-		g_pCore->setGui();
+	if (g_pCore->viewmode == viewType::BUILD) {
+		viewType s = g_pCore->buildmode->checkTimeOut();
+		if (s != g_pCore->viewmode) {
+			g_pCore->viewmode = s;
+			g_pCore->setView();
+		}
 	}
+
     //Call the display routine to draw the cube
     displayCallback();
 }
 void Window::processNormalKeys(unsigned char key, int x, int y){
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
-
 	
 	if (TESTCAM){
 		if (key == ','){
@@ -192,7 +187,6 @@ void Window::displayCallback()
 		switch (p->packet_types){
 		case GAME_STATE:{
 			g_pCore->pGameView->VOnClientUpdate(p);
-			g_pCore->gameGui->VOnClientUpdate(p);
 			break;
 		}
 		case CONFIRM_CONNECTION:{
@@ -206,12 +200,10 @@ void Window::displayCallback()
 		//update
 	}
 	
-	if (! g_pCore->guiOnly || true) g_pCore->pGameView->VOnRender();
-
+	g_pCore->pGameView->VOnRender();
 
 	//cout << "on display " << endl;
-	//g_pCore->pGameView->VOnRender();
-	g_pCore->gameGui->VOnRender();
+
 	//test for camera
 	
 	if (TESTCAM)

@@ -4,15 +4,15 @@
 
 helpMenu::helpMenu() : gui() {
 	createButtons();
-	returnTo = guiType::MENU;
+	returnTo = viewType::MENU;
 }
 
 helpMenu::helpMenu(int w, int h) : gui(w, h) {
 	createButtons();
-	returnTo = guiType::MENU;
+	returnTo = viewType::MENU;
 }
 
-helpMenu::helpMenu(int w, int h, guiType r) : gui(w, h) {
+helpMenu::helpMenu(int w, int h, viewType r) : gui(w, h) {
 	createButtons();
 	returnTo = r;
 }
@@ -32,18 +32,17 @@ void helpMenu::createButtons() {
 	buttons.push_back(back);
 }
 
-guiType helpMenu::switchClicked(int state, int x, int y) {
+viewType helpMenu::mouseClickFunc(int state, int x, int y) {
 	//back button
 	if (buttons[0]->isSelected(x, height - y) &&
 		state == GLUT_UP) {
 		return returnTo;
 	}
 	else {
-		return guiType::HELP;
+		return viewType::HELP;
 	}
 }
 
 void helpMenu::VOnRender() {
-	GameView::VOnRender();
 	gui::VOnRender();
 }

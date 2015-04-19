@@ -15,7 +15,6 @@ battleView::battleView(int w, int h) : gui(w, h) {
 	guiItems.push_back(text);
 }
 
-
 battleView::~battleView()
 {
 }
@@ -31,8 +30,8 @@ void battleView:: createButtons(){
 }
 
 void battleView::VOnRender() {
+	GameView::VOnRender();
 	set2d();
-
 	drawAllItems();
 
 	//display the time left
@@ -45,17 +44,6 @@ void battleView::VOnRender() {
 	set3d();
 }
 
-
-void battleView::onClick(int state, int x, int y)
-
-{}
-
-
-guiType battleView::switchClicked(int state, int x, int y){
-	return guiType::BATTLE;
-}
-
-// no help button in battleView
-bool battleView::helpClicked(int state, int x, int y){
-	return false;
+viewType battleView::mouseClickFunc(int state, int x, int y){
+	return viewType::BATTLE;
 }

@@ -87,20 +87,20 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 
 
 	else if (key == '1') {
-		g_pCore->viewmode = guiType::BUILD;
+		g_pCore->viewmode = viewType::BUILD;
 	}
 	else if (key == '2') {
-		g_pCore->viewmode = guiType::BATTLE;
+		g_pCore->viewmode = viewType::BATTLE;
 	}
 	else if (key == '3') {
-		g_pCore->viewmode = guiType::HELP;
+		g_pCore->viewmode = viewType::HELP;
 	}
 	else if (key == '4') {
-		g_pCore->viewmode = guiType::MENU;
+		g_pCore->viewmode = viewType::MENU;
 	}
 	else if (key == '5') {
-		g_pCore->viewmode = guiType::CONSOLE;
+		g_pCore->viewmode = viewType::CONSOLE;
 	}
-	g_pCore->setGui();
+	g_pCore->setView();
 
 }

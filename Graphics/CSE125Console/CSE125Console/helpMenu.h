@@ -8,15 +8,15 @@ class helpMenu : public gui {
 public:
 	helpMenu();
 	helpMenu(int w, int h);
-	helpMenu(int w, int h, guiType r);
+	helpMenu(int w, int h, viewType r);
 	~helpMenu();
 
 	void createButtons();
 	virtual void VOnRender();
 
-	guiType switchClicked(int state, int x, int y);
+	viewType mouseClickFunc(int state, int x, int y);
 	
-	guiType returnTo;
+	viewType returnTo;
 
 	background * backimg;
 };

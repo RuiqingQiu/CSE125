@@ -11,6 +11,7 @@
 */
 
 gui::gui() {
+	NodeList = std::vector<GeoNode*>();
 	isCurrentView = false;
 	buttons = std::vector<button*>();
 	width = 0;
@@ -18,6 +19,7 @@ gui::gui() {
 }
 
 gui::gui(int w, int h) {
+	NodeList = std::vector<GeoNode*>();
 	isCurrentView = false;
 	buttons = std::vector<button*>();
 	width = w;
@@ -72,8 +74,6 @@ void gui::set3d() {
 	//SET back to white color for next render pass
 	glColor3f(1, 1, 1);
 }
-//this is an example of how to draw 2d stuff in opengl that isn't affected by depth
-// i am putting it all in gui class for 2d "setup"
 
 void gui::VUpdate() {
 	for (int i = 0; i < buttons.size(); i++) {
@@ -82,6 +82,7 @@ void gui::VUpdate() {
 }
 
 void gui::VOnRender() {
+	GameView::VOnRender();
 	set2d();
 	drawAllItems();
 	set3d();
@@ -110,22 +111,13 @@ void gui::drawAllItems() {
 	}
 }
 
-void gui::onClick(int state, int x, int y) {
+viewType gui::mouseClickFunc(int state, int x, int y) {
 	for (int i = 0; i < buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height - y);
 	}
-}
-
-guiType gui::switchClicked(int state, int x, int y) {
-	//std::cout << "need to implement!" << std::endl;
-	return guiType::CONSOLE;
-}
-
-bool gui::helpClicked(int state, int x, int y) {
-	//std::cout << "need to implement!" << std::endl;
-	return false;
+	return viewType::CONSOLE;
 }
 
 void gui::passiveMouseFunc(int x, int y) {

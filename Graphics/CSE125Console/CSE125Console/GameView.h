@@ -12,6 +12,15 @@
 
 #ifndef CSE125_GAMEVIEW
 #define CSE125_GAMEVIEW
+
+enum class viewType {
+	BUILD,
+	BATTLE,
+	HELP,
+	MENU,
+	CONSOLE
+};
+
 class GameView
 {
 public:
@@ -26,9 +35,16 @@ public:
 	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
 	virtual void VUpdate();
 
-	void PushGeoNode(GeoNode* node);
-	void PopGeoNode(GeoNode* node);
-	bool FindGeoNode(GeoNode* node);
+	//node manipulation functions
+	virtual void PushGeoNode(GeoNode* node);
+	virtual void PopGeoNode(GeoNode* node);
+	virtual bool FindGeoNode(GeoNode* node);
+
+	//input functions
+	virtual void passiveMouseFunc(int x, int y);
+	virtual viewType mouseClickFunc(int state, int x, int y);
+
+	bool isCurrentView;
 
 };
 

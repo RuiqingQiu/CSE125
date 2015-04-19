@@ -14,12 +14,9 @@ public:
 
 	void VOnClientUpdate(GameInfoPacket* info); //must have
 
-	void onClick(int state, int x, int y);
-
 	void createButtons();
 
-	guiType switchClicked(int state, int x, int y);
-	bool helpClicked(int state, int x, int y);
+	viewType mouseClickFunc(int state, int x, int y);
 
 	vector<button*> clickableItems;
 

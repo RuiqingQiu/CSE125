@@ -95,16 +95,25 @@ void GameView::PopGeoNode(GeoNode* m_node)
 			NodeList.erase(NodeList.begin() + i);
 		}
 	}
-}//added this method to check if a node is already in the list,
+}
+
+//added this method to check if a node is already in the list,
 //used for checking whether or not we need to push up the skybox 
 //when we change modes
 bool GameView::FindGeoNode(GeoNode* m_node) {
-	for (int i = 0; i < NodeList.size(); i++)
-	{
+	for (int i = 0; i < NodeList.size(); i++) {
 		if (NodeList[i] == m_node)
 		{
 			return true;
 		}
 	}
 	return false;
+}
+
+void GameView::passiveMouseFunc(int x, int y) {
+
+}
+
+viewType GameView::mouseClickFunc(int state, int x, int y) {
+	return viewType::CONSOLE;
 }
