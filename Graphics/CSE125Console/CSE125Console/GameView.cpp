@@ -3,10 +3,8 @@
 
 
 GameView::GameView()
-{
+{	
 	pViewCamera = new Camera();
-
-
 }
 
 
@@ -14,6 +12,9 @@ GameView::~GameView()
 {
 }
 
+void GameView::VUpdate() {
+
+}
 
 void GameView::VOnRender()
 {
@@ -23,9 +24,6 @@ void GameView::VOnRender()
 	//Set the OpenGL matrix mode to ModelView
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
-	//pViewCamera->setUpCamera();
-	gluLookAt(0, 0, 20, 0, 0, 0, 0, 1, 0);
 
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());

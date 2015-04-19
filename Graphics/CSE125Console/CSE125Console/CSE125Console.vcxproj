@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -82,6 +82,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="block.h" />
+    <ClInclude Include="buildTimer.h" />
     <ClInclude Include="buildView.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
@@ -94,11 +96,18 @@
     <ClInclude Include="guiGameInput.h" />
     <ClInclude Include="guiItem.h" />
     <ClInclude Include="HardShadowView.h" />
+
     <ClInclude Include="Light.h" />
+
+    <ClInclude Include="battleView.h" />
+    <ClInclude Include="helpMenu.h" />
+
     <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
+    <ClInclude Include="numbers.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="robot.h" />
     <ClInclude Include="scrollBox.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
@@ -132,6 +141,8 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="block.cpp" />
+    <ClCompile Include="buildTimer.cpp" />
     <ClCompile Include="buildView.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -143,10 +154,16 @@
     <ClCompile Include="guiGameInput.cpp" />
     <ClCompile Include="guiItem.cpp" />
     <ClCompile Include="HardShadowView.cpp" />
+
     <ClCompile Include="Light.cpp" />
+
+    <ClCompile Include="helpMenu.cpp" />
+
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
+    <ClCompile Include="numbers.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="robot.cpp" />
     <ClCompile Include="scrollBox.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
@@ -174,6 +191,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="battleView.cpp" />
     <ClCompile Include="StandardGameInput.cpp" />
     <ClCompile Include="stb_image_aug.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

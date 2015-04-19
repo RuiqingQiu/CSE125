@@ -7,57 +7,64 @@ guiItem::guiItem() {
 
 guiItem::guiItem(string filename) {
 	init();
-	setTexture(filename, false);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::NORMAL);
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 guiItem::guiItem(string filename, int x, int y) {
 	init();
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 guiItem::guiItem(string filename, int x, int y, bool f) {
 	init();
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(f, f);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 guiItem::guiItem(string filename, int x, int y, bool xf, bool yf) {
 	init();
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(xf, yf);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 guiItem::guiItem(string filename, int x, int y, int w, int h) {
 	init();
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setSize(w, h);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 guiItem::guiItem(string filename, int x, int y, int w, int h, bool f) {
 	init();
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setSize(w, h);
 	setFixed(f, f);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 guiItem::guiItem(string filename, int x, int y, int w, int h, bool xf, bool yf) {
 	init();
-	setTexture(filename, false);
+	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setSize(w, h);
 	setFixed(xf, yf);
-	texture[1] = texture[0];
+	setTexture(filename, btnState::SELECTED);
+	setTexture(filename, btnState::PRESSED);
 }
 
 void guiItem::init() {
@@ -66,7 +73,7 @@ void guiItem::init() {
 	setFixed(false, true);
 	sWidth = 0;
 	sHeight = 0;
-	selected = false;
+	currState = btnState::NORMAL;
 	scaleX = false;
 	scaleY = false;
 	path = "uiItem/";
@@ -81,10 +88,13 @@ void guiItem::setSize(int x, int y) {
 	height = y;
 }
 
-bool guiItem::setTexture(string filename, bool select) {
+bool guiItem::setTexture(string filename, btnState state) {
 	GLuint * t;
 	string concat = path + filename;
-	if (select) {
+	if (state == btnState::PRESSED) {
+		t = &texture[2];
+	}
+	else if (state == btnState::SELECTED) {
 		t = &texture[1];
 	}
 	else {
@@ -112,6 +122,10 @@ bool guiItem::setTexture(string filename, bool select) {
 	return true;
 }
 
+void guiItem::update() {
+	//do nothing as default
+}
+
 void guiItem::draw() {
 	//bind the texture and draw it
 
@@ -122,7 +136,10 @@ void guiItem::draw() {
 	glEnable(GL_TEXTURE_2D);
 	//glActiveTexture(GL_TEXTURE1);
 
-	if (selected) {
+	if (currState == btnState::PRESSED) {
+		glBindTexture(GL_TEXTURE_2D, texture[2]);
+	}
+	else if (currState == btnState::SELECTED) {
 		glBindTexture(GL_TEXTURE_2D, texture[1]);
 	}
 	else {

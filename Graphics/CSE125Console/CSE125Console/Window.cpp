@@ -66,34 +66,13 @@ void Window::initialize(void)
 	
 	
 	g_pCore->viewmode = guiType::CONSOLE;
-	g_pCore->helpMenu = new gui();
-	g_pCore->battlemode = new gui();
+	g_pCore->helpMenu = new helpMenu(width, height);
+	g_pCore->battlemode = new battleView();
 	g_pCore->buildmode = new buildView(width, height);
 	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultGui = new gui();
 
-	if (g_pCore->viewmode == guiType::CONSOLE) {
-		g_pCore->gameGui = g_pCore->defaultGui;
-		g_pCore->i_pInput = g_pCore->standard_Input;
-	}
-	else if (g_pCore->viewmode == guiType::BUILD) {
-		g_pCore->gameGui = g_pCore->buildmode;
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	else if (g_pCore->viewmode == guiType::BATTLE) {
-		g_pCore->gameGui = g_pCore->battlemode;
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	else if (g_pCore->viewmode == guiType::HELP) {
-		g_pCore->gameGui = g_pCore->helpMenu;
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	// main menu view
-	else if (g_pCore->viewmode == guiType::MENU) {
-		g_pCore->gameGui = g_pCore->menumode;
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	
+
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 
@@ -109,15 +88,13 @@ void Window::initialize(void)
 	//HardShadowView* shadowview = new HardShadowView();
 	//g_pCore->pGameView = shadowview;
 
-	//see comments about switching views in gameCore.cpp
+	//see gui switch and skybox reqs
 	g_pCore->skybox = new SkyBox();
 
-	//only need skybox for battle mode and console mode right now
-	if (g_pCore->viewmode == guiType::CONSOLE ||
-		g_pCore->viewmode == guiType::BATTLE) {
-		view->PushGeoNode(g_pCore->skybox);
-	}
-	
+
+
+	g_pCore->setGui();
+
 	//setup camera
 	//*g_pCore->pGameView->pViewCamera->position = Vector3(1, 0, 10);
 
@@ -128,13 +105,16 @@ void Window::initialize(void)
 	//glUseProgram(program);
 
 
-
 	//connect to server
+
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
 	
 
 
 
+
+
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.184");
 
 }
 
@@ -143,6 +123,14 @@ void Window::initialize(void)
 // This is called at the start of every new "frame" (qualitatively)
 void Window::idleCallback()
 {
+	g_pCore->gameGui->VUpdate();
+	g_pCore->pGameView->VUpdate();
+
+	guiType s = g_pCore->gameGui->switchClicked(0, 0, 0);
+	if (s != g_pCore->viewmode) {
+		g_pCore->viewmode = s;
+		g_pCore->setGui();
+	}
     //Call the display routine to draw the cube
     displayCallback();
 }
@@ -161,9 +149,16 @@ void Window::processNormalKeys(unsigned char key, int x, int y){
 	
 }
 
+void Window::processSpecialKeys(int key, int x, int y) {
+	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
+}
 
 void Window::processMouseClick(int button, int state, int x, int y) {
 	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
+}
+
+void Window::processPassiveMouse(int x, int y) {
+	g_pCore->i_pInput->VProcessPassiveMouse(x, y);
 }
 
 //----------------------------------------------------------------------------
@@ -180,7 +175,6 @@ void Window::reshapeCallback(int w, int h)
 	g_pCore->menumode->setDimensions(w, h);
 	g_pCore->helpMenu->setDimensions(w, h);
 	g_pCore->battlemode->setDimensions(w, h);
-	
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 }
 
@@ -213,10 +207,7 @@ void Window::displayCallback()
 
 	//cout << "on display " << endl;
 	g_pCore->pGameView->VOnRender();
-
 	g_pCore->gameGui->VOnRender();
-
-
 	//test for camera
 	
 	if (TESTCAM)

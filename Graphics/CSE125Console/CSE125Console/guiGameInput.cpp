@@ -13,23 +13,43 @@ guiGameInput::~guiGameInput()
 
 void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 	//no key input yet except switching modes
+	switch (key) {
+		case '1':
+			g_pCore->viewmode = guiType::BUILD;
+			break;
+		case '2':
+			g_pCore->viewmode = guiType::BATTLE;
+			break;
+		case '3':
+			g_pCore->viewmode = guiType::HELP;
+			break;
+		case '4':
+			g_pCore->viewmode = guiType::MENU;
+			break;
+		case '5':
+			g_pCore->viewmode = guiType::CONSOLE;
+			break;
+		default:
+			break;
+	}
+	g_pCore->setGui();
+}
 
-	if (key == '1') {
-		g_pCore->viewmode = guiType::BUILD;
+void guiGameInput::VProcessSpecialKey(int key, int x, int y) {
+	switch (key) {
+		//move the new block to be added to the robot
+		case GLUT_KEY_DOWN:
+			break;
+		case GLUT_KEY_UP:
+			break;
+		case GLUT_KEY_LEFT:
+			break;
+		case GLUT_KEY_RIGHT:
+			break;
+		default:
+			break;
 	}
-	else if (key == '2') {
-		g_pCore->viewmode = guiType::BATTLE;
-	}
-	else if (key == '3') {
-		g_pCore->viewmode = guiType::HELP;
-	}
-	else if (key == '4') {
-		g_pCore->viewmode = guiType::MENU;
-	}
-	else if (key == '5') {
-		g_pCore->viewmode = guiType::CONSOLE;
-	}
-	setGui();
+
 }
 
 void guiGameInput::VProcessMouseClick(int button, int state, int x, int y) {
@@ -39,45 +59,27 @@ void guiGameInput::VProcessMouseClick(int button, int state, int x, int y) {
 	guiType s = g_pCore->gameGui->switchClicked(state, x, y);
 	if (s != g_pCore->viewmode) {
 		g_pCore->viewmode = s;
-		setGui();
+		g_pCore->setGui();
 	}
 	else if (g_pCore->gameGui->helpClicked(state, x, y)) {
 		g_pCore->viewmode = guiType::HELP;
-		setGui();
+		g_pCore->setGui();
 	}
+
+	//buildmode input for game logic checks
+	if (g_pCore->gameGui != g_pCore->buildmode) return;
+
+
+	if (g_pCore->buildmode->addBlock(state, x, y)) {
+		//add geonode to robot
+	}
+	else if (g_pCore->buildmode->removeBlock(state, x, y)) {
+		//remove geonode from robot
+	}
+
+	//if no button was pressed, rotate the robot
 }
 
-
-void guiGameInput::setGui() {
-	
-	if (g_pCore->viewmode == guiType::BUILD) {
-		g_pCore->gameGui = g_pCore->buildmode;
-		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
-			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	else if (g_pCore->viewmode == guiType::BATTLE) {
-		g_pCore->gameGui = g_pCore->battlemode;
-		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
-			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	else if (g_pCore->viewmode == guiType::HELP) {
-		g_pCore->gameGui = g_pCore->helpMenu;
-		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
-			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	else if (g_pCore->viewmode == guiType::MENU) {
-		g_pCore->gameGui = g_pCore->menumode;
-		if (g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
-			g_pCore->pGameView->PopGeoNode(g_pCore->skybox);
-		g_pCore->i_pInput = g_pCore->gui_Input;
-	}
-	else if (g_pCore->viewmode == guiType::CONSOLE) {
-		g_pCore->gameGui = g_pCore->defaultGui;
-		if (!g_pCore->pGameView->FindGeoNode(g_pCore->skybox))
-			g_pCore->pGameView->PushGeoNode(g_pCore->skybox);
-		g_pCore->i_pInput = g_pCore->standard_Input;
-	}
+void guiGameInput::VProcessPassiveMouse(int x, int y) {
+	g_pCore->gameGui->passiveMouseFunc(x, y);
 }

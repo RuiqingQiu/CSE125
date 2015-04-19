@@ -1,7 +1,8 @@
 #pragma once
 #include "stdafx.h"
 #include "GameView.h"
-#include "gui.h"
+#include "buildView.h"
+#include "helpMenu.h"
 #include "GeoNode.h"
 #include "SkyBox.h"
 #include "GamePacketManager.h"
@@ -33,9 +34,9 @@ public:
 	guiType viewmode;
 
 	//always points to build mode
-	gui * buildmode;
+	buildView * buildmode;
 	gui * menumode;
-	gui * helpMenu;
+	helpMenu * helpMenu;
 	gui * battlemode;
 
 	//add more "static" pointers here
@@ -56,8 +57,8 @@ public:
 	//always points to standard input
 	GameInputInterface* standard_Input;
 
-
-
+	//a gui switch 
+	void setGui();
 
 
 

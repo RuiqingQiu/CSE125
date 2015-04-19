@@ -18,7 +18,8 @@ public:
 
 	virtual void init() override;
 
-	virtual bool isClicked(int x, int y);
+	virtual bool isSelected(int x, int y);
+	virtual void onHover(int x, int y);
 	virtual void onClick(int state, int x, int y);
 
 //private:
