@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "gui.h"
 #include "background.h"
+#include "GameCore.h"
 
 class mainMenu : public gui {
 public:

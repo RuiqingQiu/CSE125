@@ -1,14 +1,106 @@
 #include "stdafx.h"
+#include "Window.h"
+
 #include "SOIL.h"
 #include "Model3D.h"
 
-
 Model3D::Model3D()
 {
-
 }
-Model3D::Model3D(string filename){
+void Model3D::setTextureMap(string pathname){
+	texture_map = pathname;
+}
+void Model3D::setNormalMap(string pathname){
+	normal_map = pathname;
+}
+void Model3D::setGlossMap(string pathname){
+	gloss_map = pathname;
+}
+void Model3D::setMetallicMap(string pathname){
+	metallic_map = pathname;
+}
 
+
+GLhandleARB loadShader1(char* filename, unsigned int type)
+{
+	FILE *pfile;
+	GLhandleARB handle;
+	const GLcharARB* files[1];
+
+	// shader Compilation variable
+	GLint result;				// Compilation code result
+	GLint errorLoglength;
+	char* errorLogText;
+	GLsizei actualErrorLogLength;
+
+	char buffer[400000];
+	memset(buffer, 0, 400000);
+
+	// This will raise a warning on MS compiler
+	pfile = fopen(filename, "rb");
+	if (!pfile)
+	{
+		printf("Sorry, can't open file: '%s'.\n", filename);
+		exit(0);
+	}
+
+	fread(buffer, sizeof(char), 400000, pfile);
+	//printf("%s\n",buffer);
+
+
+	fclose(pfile);
+
+	handle = glCreateShaderObjectARB(type);
+	if (!handle)
+	{
+		//We have failed creating the vertex shader object.
+		printf("Failed creating vertex shader object from file: %s.", filename);
+		exit(0);
+	}
+
+	files[0] = (const GLcharARB*)buffer;
+	glShaderSourceARB(
+		handle, //The handle to our shader
+		1, //The number of files.
+		files, //An array of const char * data, which represents the source code of theshaders
+		NULL);
+
+	glCompileShaderARB(handle);
+
+	//Compilation checking.
+	glGetObjectParameterivARB(handle, GL_OBJECT_COMPILE_STATUS_ARB, &result);
+
+	// If an error was detected.
+	if (!result)
+	{
+		//We failed to compile.
+		printf("Shader '%s' failed compilation.\n", filename);
+
+		//Attempt to get the length of our error log.
+		glGetObjectParameterivARB(handle, GL_OBJECT_INFO_LOG_LENGTH_ARB, &errorLoglength);
+
+		//Create a buffer to read compilation error message
+		errorLogText = (char*)malloc(sizeof(char)* errorLoglength);
+
+		//Used to get the final length of the log.
+		glGetInfoLogARB(handle, errorLoglength, &actualErrorLogLength, errorLogText);
+
+		// Display errors.
+		printf("%s\n", errorLogText);
+
+		// Free the buffer malloced earlier
+		free(errorLogText);
+	}
+	printf("Shader loaded done\n");
+	return handle;
+}
+
+
+Model3D::Model3D(string filename){
+	setTextureMap("Albedo.PNG");
+	setNormalMap("Normal_Clrear.png");
+	setGlossMap("Gloss.PNG");
+	setMetallicMap("Metalness.PNG");
 	localTransform = Transform();
 
 	std::string inputfile = filename;
@@ -87,6 +179,96 @@ Model3D::Model3D(string filename){
 			}
 		}
 	}
+
+
+	GLhandleARB vertexShaderHandle;
+	GLhandleARB fragmentShaderHandle;
+
+	vertexShaderHandle = loadShader1("shadow.vert", GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShader1("shadow.frag", GL_FRAGMENT_SHADER);
+
+	shader_id = glCreateProgramObjectARB();
+
+	glAttachObjectARB(shader_id, vertexShaderHandle);
+	glAttachObjectARB(shader_id, fragmentShaderHandle);
+	glLinkProgramARB(shader_id);
+
+	//glUseProgramObjectARB(shader_id);
+
+
+	glGenTextures(3, texturaID);
+	int width, height;
+	//unsigned char* image;
+
+	glBindTexture(GL_TEXTURE_2D, texturaID[0]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	texturaID[0] = SOIL_load_OGL_texture(texture_map.c_str(), SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y);
+	if (texturaID[0] == 0)
+	{
+		cout << "error" << endl;
+	}
+	else{
+		cout << texturaID[0] << endl;
+		isTextured = true;
+	}
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//SOIL_free_image_data(image);
+
+
+	glBindTexture(GL_TEXTURE_2D, texturaID[1]);
+	texturaID[1] = SOIL_load_OGL_texture(normal_map.c_str() , SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//SOIL_free_image_data(image);
+	if (texturaID[1] == 0)
+	{
+		cout << "error 1" << endl;
+	}
+
+	glBindTexture(GL_TEXTURE_2D, texturaID[2]);
+	texturaID[2] = SOIL_load_OGL_texture(gloss_map.c_str(), SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//SOIL_free_image_data(image);
+	if (texturaID[2] == 0)
+	{
+		cout << "error 2" << endl;
+	}
+
+	glBindTexture(GL_TEXTURE_2D, texturaID[3]);
+	texturaID[3] = SOIL_load_OGL_texture(metallic_map.c_str(), SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	//SOIL_free_image_data(image);
+	if (texturaID[3] == 0)
+	{
+		cout << "error 3" << endl;
+	}
+
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texturaID[0]);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texturaID[1]);
+
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, texturaID[2]);
+
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, texturaID[3]);
+
+	glUniform1i(glGetUniformLocation(shader_id, "tex"), 0);
+	glUniform1i(glGetUniformLocation(shader_id, "norm"), 1);
+	glUniform1i(glGetUniformLocation(shader_id, "gloss"), 2);
+	glUniform1i(glGetUniformLocation(shader_id, "metallic"), 3);
+	glUniform1i(glGetUniformLocation(shader_id, "light_position"), 4);	
+
 }
 
 
@@ -137,7 +319,9 @@ void Model3D::VOnDraw(){
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
+	//glLoadIdentity();
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
+	
 	glColor3f(1, 1, 1);
 	for (size_t i = 0; i < shapes.size(); i++) {
 		
@@ -151,7 +335,31 @@ void Model3D::VOnDraw(){
 				//material goes here
 				//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
 				//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
-				glBindTexture(GL_TEXTURE_2D, m1 + 1);
+				glUseProgramObjectARB(shader_id);
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, texturaID[0]);
+
+				glActiveTexture(GL_TEXTURE1);
+				glBindTexture(GL_TEXTURE_2D, texturaID[1]);
+
+
+				glActiveTexture(GL_TEXTURE2);
+				glBindTexture(GL_TEXTURE_2D, texturaID[2]);
+
+				glActiveTexture(GL_TEXTURE3);
+				glBindTexture(GL_TEXTURE_2D, texturaID[3]);
+
+				glUniform1i(glGetUniformLocation(shader_id, "tex"), 0);
+				glUniform1i(glGetUniformLocation(shader_id, "norm"), 1);
+				glUniform1i(glGetUniformLocation(shader_id, "gloss"), 2);
+				glUniform1i(glGetUniformLocation(shader_id, "metallic"), 3);
+
+				GLint l_x = glGetUniformLocation(shader_id, "light_x");
+				GLint l_y = glGetUniformLocation(shader_id, "light_y");
+				GLint l_z = glGetUniformLocation(shader_id, "light_z");
+				glUniform1f(l_x, g_pCore->light->localTransform.position.x);
+				glUniform1f(l_y, g_pCore->light->localTransform.position.y);
+				glUniform1f(l_z, g_pCore->light->localTransform.position.z);
 				// Make sure no bytes are padded:
 				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -161,12 +369,12 @@ void Model3D::VOnDraw(){
 				// Use bilinear interpolation:
 				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glEnable(GL_TEXTURE_2D);
-
-				glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
-				glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
-				glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
-				glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
+				//glEnable(GL_TEXTURE_2D);
+				
+				//glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
+				//glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
+				//glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
+				//glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
 			}
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//THIS LINE OF CODE MUST BE AFTER THE TEXTURE LOADING CODE
@@ -218,8 +426,13 @@ void Model3D::VOnDraw(){
 		}
 
 	}
+	
+	glUseProgramObjectARB(0);
 
+	glActiveTexture(GL_TEXTURE0);
 	glPopMatrix();
+
+	
 }
 void Model3D::VOnUpdate(GameInfoPacket* pData){
 
