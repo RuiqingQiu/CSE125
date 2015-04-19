@@ -107,9 +107,9 @@ void buildView::onClick(int state, int x, int y) {
 	}
 	if (scroll->addButton->isSelected(x, height-y) && state == GLUT_UP) {
 		std::cout << "adding" << std::endl;
-		int s = NodeList.size() + 1;
+		int s = NodeList.size();
 		Cube * cube = new Cube(1);
-		cube->localTransform.position = Vector3(0, 0, 0);
+		cube->localTransform.position = Vector3(-s, 0, -5);
 		cube->identifier = s;
 		PushGeoNode(cube);
 	}

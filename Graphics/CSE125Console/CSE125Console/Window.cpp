@@ -53,11 +53,11 @@ void Window::initialize(void)
 	cube->identifier = 1;
 	g_pCore->defaultView->PushGeoNode(cube);
 
-	object = new Model3D("Hatchet.obj");
-	object->localTransform.position = Vector3(0, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
+	//object = new Model3D("Hatchet.obj");
+	//object->localTransform.position = Vector3(0, 0, -20);
+	//object->localTransform.scale = Vector3(1, 1, 1);
+	//object->localTransform.rotation = Vector3(0, 0, 0);
+	//view->PushGeoNode(object);
 	view->PushGeoNode(g_pCore->light);
 
 	Plane* p = new Plane(50);
@@ -185,7 +185,7 @@ void Window::displayCallback()
 {
 	counter = (counter + 1) % 360;
 	
-	object->localTransform.rotation.y = counter;
+	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
 	if (p!=nullptr){
