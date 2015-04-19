@@ -110,7 +110,8 @@ void listItem::draw() {
 }
 
 void listItem::onClick(int state, int x, int y) {
-	button::onClick(state, x, y);
+	if (button::isSelected(x, y))
+		button::onClick(state, x, y);
 }
 
 void listItem::rePosition(int x, int y, int w, int h) {
@@ -125,4 +126,16 @@ void listItem::onHover(int x, int y) {
 	for (int i = 0; i < subList.size(); i++) {
 		subList[i]->onHover(x, y);
 	}
+}
+
+bool listItem::isSelected(int x, int y) {
+	return button::isSelected(x, y);
+}
+
+bool listItem::subSel(int x, int y) {
+	for (int i = 0; i < subList.size(); i++) {
+		if (subList[i]->isSelected(x, y))
+			return true;
+	}
+	return false;
 }

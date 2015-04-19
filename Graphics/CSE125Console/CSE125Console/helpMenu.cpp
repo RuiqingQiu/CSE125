@@ -22,11 +22,13 @@ helpMenu::~helpMenu()
 }
 
 void helpMenu::createButtons() {
-	button * back = new button("menuItem/back.jpg", width*0.5, height * 0.3);
+	backimg = new background("help.jpg", width, height);
+	button * back = new button("menuItem/back.jpg", width*0.45, height * 0.1);
 	back->setTexture("menuItem/back_sel.jpg", btnState::SELECTED);
 	back->setTexture("menuItem/back_press.jpg", btnState::PRESSED);
 	back->setScaling(true, true, width, height);
 
+	guiItems.push_back(backimg);
 	buttons.push_back(back);
 }
 
@@ -39,4 +41,9 @@ guiType helpMenu::switchClicked(int state, int x, int y) {
 	else {
 		return guiType::HELP;
 	}
+}
+
+void helpMenu::VOnRender() {
+	GameView::VOnRender();
+	gui::VOnRender();
 }

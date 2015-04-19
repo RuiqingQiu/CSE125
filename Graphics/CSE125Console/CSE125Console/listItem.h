@@ -19,6 +19,8 @@ public:
 	virtual void draw();
 	virtual void rePosition(int x, int y, int w, int h);
 
+	virtual bool isSelected(int x, int y);
+	virtual bool subSel(int x, int y);
 	virtual void onClick(int state, int x, int y);
 	virtual void onHover(int x, int y);
 

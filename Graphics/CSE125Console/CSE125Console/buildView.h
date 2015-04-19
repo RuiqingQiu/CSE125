@@ -2,6 +2,7 @@
 
 #include "gui.h"
 #include "buildTimer.h"
+#include "Cube.h"
 
 class buildView : public gui {
 public:

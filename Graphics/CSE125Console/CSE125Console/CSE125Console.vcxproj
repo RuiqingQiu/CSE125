@@ -82,6 +82,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="background.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="buildTimer.h" />
     <ClInclude Include="buildView.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="background.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="buildTimer.cpp" />
     <ClCompile Include="buildView.cpp" />
