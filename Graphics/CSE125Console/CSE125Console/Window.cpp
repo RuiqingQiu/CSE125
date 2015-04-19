@@ -30,6 +30,7 @@ static Cube* cube2;
 //Init server info here later
 void Window::initialize(void)
 {
+	g_pCore->defaultView = new GameView();
 	//set color
 	//glColor3f(1, 1, 1);
 	cube = new Cube(1);
@@ -46,13 +47,14 @@ void Window::initialize(void)
 	
 	//default to console view
 	g_pCore->viewmode = guiType::CONSOLE;
-	g_pCore->viewmode = guiType::HELP;
+	g_pCore->viewmode = guiType::BUILD;
 	g_pCore->helpMenu = new helpMenu(width, height);
 	g_pCore->battlemode = new battleView();
 	g_pCore->buildmode = new buildView(width, height);
 	g_pCore->menumode = new mainMenu(width, height);
 	g_pCore->defaultGui = new gui();
 
+	g_pCore->pGameView = g_pCore->defaultView;
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 

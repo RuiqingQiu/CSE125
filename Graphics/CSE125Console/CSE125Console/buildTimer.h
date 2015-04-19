@@ -8,13 +8,12 @@
 class buildTimer : public guiItem {
 public:
 	buildTimer();
-	buildTimer(string filename);
-	buildTimer(string filename, int x, int y);
-	buildTimer(string filename, int x, int y, bool f);
-	buildTimer(string filename, int x, int y, bool xf, bool yf);
-	buildTimer(string filename, int x, int y, int w, int h);
-	buildTimer(string filename, int x, int y, int w, int h, bool f);
-	buildTimer(string filename, int x, int y, int w, int h, bool xf, bool yf);
+	buildTimer(int x, int y);
+	buildTimer(int x, int y, bool f);
+	buildTimer(int x, int y, bool xf, bool yf);
+	buildTimer(int x, int y, int w, int h);
+	buildTimer(int x, int y, int w, int h, bool f);
+	buildTimer(int x, int y, int w, int h, bool xf, bool yf);
 	~buildTimer();
 
 	void update();
@@ -24,6 +23,8 @@ public:
 
 	std::clock_t start;
 	int timeLeft;
+
+	static string textPath;
 private:
 	void createNumbers();
 

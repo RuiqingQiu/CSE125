@@ -2,6 +2,7 @@
 
 #include "gui.h"
 #include "buildTimer.h"
+#include "scoreBox.h"
 #include "Cube.h"
 
 class buildView : public gui {
@@ -27,6 +28,7 @@ public:
 	vector<button*> listItems;
 	scrollBox * scroll;
 	buildTimer * timer;
+	scoreBox * score;
 	bool updateview;
 };
 

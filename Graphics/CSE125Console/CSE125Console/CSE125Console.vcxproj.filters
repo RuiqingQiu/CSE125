@@ -213,6 +213,9 @@
     <ClInclude Include="background.h">
       <Filter>Source Files\GUI\guiItems</Filter>
     </ClInclude>
+    <ClInclude Include="scoreBox.h">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -354,6 +357,9 @@
       <Filter>Source Files\GUI\guiItems</Filter>
     </ClCompile>
     <ClCompile Include="background.cpp">
+      <Filter>Source Files\GUI\guiItems</Filter>
+    </ClCompile>
+    <ClCompile Include="scoreBox.cpp">
       <Filter>Source Files\GUI\guiItems</Filter>
     </ClCompile>
   </ItemGroup>

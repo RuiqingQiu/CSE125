@@ -30,13 +30,14 @@ void buildView::createButtons() {
 
 	//text displays
 	//time.jpg dimensions: 800x100
-	timer = new buildTimer("text/time.jpg", width*0.3, height - 50, 400, 50, false, false);
+	timer = new buildTimer(width*0.3, height - 50, 400, 50, false, false);
 	timer->setScaling(true, false, width, height);
 	guiItems.push_back(timer);
 
 	//text box
 	//textbox.jpg dimensions: 600x400
-	guiItems.push_back(new guiItem("text/textbox.jpg", 20,height-100, 150, 100, true, false));
+	score = new scoreBox(20, height - 100, 150, 100, true, false);
+		guiItems.push_back(score);
 
 	//battle button
 	button * battle = new button("menuItem/battle.jpg", width - 120, 20);
@@ -81,27 +82,20 @@ void buildView::VUpdate() {
 		guiItems[i]->update();
 	}
 	updateview = isCurrentView;
+
+	//update scores here
+	score->deaths += 1;
+	score->hits += 1;
+	score->rank += 1;
+	if (score->deaths == 100) score->deaths = 0;
+	if (score->hits == 100) score->hits = 0;
+	if (score->rank == 100) score->rank = 0;
 }
 
 void buildView::VOnRender() {
 	GameView::VOnRender();
 	set2d();
-
 	drawAllItems();
-
-	//display number vals for text... please replace with game logic numbers
-	int deaths = 0;
-	int hits = 0;
-	int rank = 0;
-
-	std::string d = " " + std::to_string(deaths);
-	std::string h = " " + std::to_string(hits);
-	std::string r = " " + std::to_string(rank);
-	//using drawtext for now... ugly font though
-	drawText(70, height - 15, d, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-	drawText(70, height - 25, h, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-	drawText(70, height - 35, r, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-
 	set3d();
 }
 

@@ -1,41 +1,38 @@
 #include "stdafx.h"
 #include "buildTimer.h"
 
+string buildTimer::textPath = "text/time.jpg";
 
 buildTimer::buildTimer() : guiItem() {
 	createNumbers();
 }
 
-buildTimer::buildTimer(string filename) : guiItem(filename) {
+buildTimer::buildTimer(int x, int y) : 
+guiItem(textPath, x, y) {
 	createNumbers();
 }
 
-buildTimer::buildTimer(string filename, int x, int y) : 
-guiItem(filename, x, y) {
+buildTimer::buildTimer(int x, int y, bool f) : 
+guiItem(textPath, x, y, f) {
 	createNumbers();
 }
 
-buildTimer::buildTimer(string filename, int x, int y, bool f) : 
-guiItem(filename, x, y, f) {
+buildTimer::buildTimer(int x, int y, bool xf, bool yf) : 
+guiItem(textPath, x, y, xf, yf) {
+	createNumbers();
+}
+buildTimer::buildTimer(int x, int y, int w, int h) : 
+guiItem(textPath, x, y, w, h) {
 	createNumbers();
 }
 
-buildTimer::buildTimer(string filename, int x, int y, bool xf, bool yf) : 
-guiItem(filename, x, y, xf, yf) {
-	createNumbers();
-}
-buildTimer::buildTimer(string filename, int x, int y, int w, int h) : 
-guiItem(filename, x, y, w, h) {
+buildTimer::buildTimer(int x, int y, int w, int h, bool f) : 
+guiItem(textPath, x, y, w, h, f) {
 	createNumbers();
 }
 
-buildTimer::buildTimer(string filename, int x, int y, int w, int h, bool f) : 
-guiItem(filename, x, y, w, h, f) {
-	createNumbers();
-}
-
-buildTimer::buildTimer(string filename, int x, int y, int w, int h, bool xf, bool yf) :
-guiItem(filename, x, y, w, h, xf, yf) {
+buildTimer::buildTimer(int x, int y, int w, int h, bool xf, bool yf) :
+guiItem(textPath, x, y, w, h, xf, yf) {
 	createNumbers();
 }
 
@@ -66,9 +63,7 @@ void buildTimer::update() {
 void buildTimer::draw() {
 	guiItem::draw();
 	for (int i = 0; i < NUM_DIGITS; i++) {
-		int idx = digits[i]->numIdx;
 		digits[i]->draw();
-		//digits[i]->draw(&nums[idx]);
 	}
 }
 

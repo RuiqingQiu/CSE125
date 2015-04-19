@@ -105,6 +105,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="robot.h" />
+    <ClInclude Include="scoreBox.h" />
     <ClInclude Include="scrollBox.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SkyBox.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="numbers.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="robot.cpp" />
+    <ClCompile Include="scoreBox.cpp" />
     <ClCompile Include="scrollBox.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SkyBox.cpp" />
