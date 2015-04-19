@@ -27,6 +27,7 @@ unsigned int GameLogic::waitToConnect()
 	//ameObj->setBlockType(CUBE);
 	//asd++;
 	GameObj* robot = new Robot(cid, "testname");
+	robot->setType(CUBE);
 	this->pushGameObj(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
 
@@ -72,7 +73,6 @@ unsigned int GameLogic::waitToConnect()
 
 	network->receiveFromClients(&objEventList);
 
-//	if (objEventList == nullptr) return WAIT;
 	std::vector<ObjectEvents *>::iterator iter;
 
 	for (iter = objEventList.begin(); iter != objEventList.end(); iter++)
@@ -83,13 +83,11 @@ unsigned int GameLogic::waitToConnect()
 		case INIT_CONNECTION:
 			string name = (*iter)->getName();
 			(*iter)->setCid(cid);
-			//cout << name << endl;
 			network->sendClientConfirmationPacket(name.c_str(), cid);
 			objEventList.erase(iter);
 			return ADDCLIENT;
 		}
 		objEventList.erase(iter);
-		//cout << "wait to Connect objEventList size = "<< objEventList.size() << endl;
 	}
 	return WAIT;
 
@@ -100,12 +98,10 @@ unsigned int GameLogic::waitToConnect()
 void GameLogic::gameStart(){
 	countDown->startCountdown(300);
 	countDown->startClock();
-	//ObjectEvents * e = new ObjectEvents(MOVE_LEFT);
-	//e->setCid(0);
-	//objEventList.push_back(e);
-	//ObjectEvents * e1 = new ObjectEvents(MOVE_FORWARD);
-	//e1->setCid(0);
-	//objEventList.push_back(e1);
+
+	addGround();
+	addWalls();
+
 	gamePhysics->initWorld(&(this->getGameObjs()));
 
 	//int i,j,k;
@@ -186,11 +182,8 @@ void GameLogic::prePhyLogic(){
 		int cid = (*iter)->getCid();
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
-		GameObj*  rb = it->second;
-		//std::cout << "Speed: " << ((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() << std::endl;
-        //cout << "x: " << cob->getX() << "y: " << cob->getY() << "z: " << cob->getZ() << std::endl;
-		btRigidBody *asd = rb->getRigidBody();
-		gamePhysics->createPhysicsEvent(type, rb);
+		GameObj* gObj = it->second;
+		gamePhysics->createPhysicsEvent(type, gObj);
 		iter++;
 	
 	}
@@ -199,12 +192,29 @@ void GameLogic::prePhyLogic(){
 		std::vector<GameObj*>::iterator it;
 		for (it = gameObjs.begin(); it != gameObjs.end(); ++it)
 		{
-
+			if ((*it)->getIsRobot() != 0)
+			{
 				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 0);
 				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 1);
 				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 2);
 				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 3);
+			}
+		}
+	}
 
+	std::vector<GameObj*>::iterator it;
+	for (it = gameObjs.begin(); it != gameObjs.end(); ++it)
+	{
+		if ((*it)->getIsRobot() != 0)
+		{
+			if (((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering > 0)
+				((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering += -TURN_SPEED / 2;
+			if (((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering > 0)
+				((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += -TURN_SPEED / 2;
+			if (((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering < 0)
+				((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering += TURN_SPEED / 2;
+			if (((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering < 0)
+				((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += TURN_SPEED / 2;
 		}
 	}
 
@@ -224,4 +234,31 @@ void GameLogic::pushGameObj(GameObj* obj)
 	gameObjs.push_back(obj);
 }
 
+
+void GameLogic::addWalls()
+{
+	GameObj* ceiling = new GOPlane(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0, -1, 0, 1);
+	GameObj* leftWall = new GOPlane(-FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
+	GameObj* rightWall = new GOPlane(FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, -1, 0, 0, 1);
+	GameObj* frontWall = new GOPlane(0, 0, FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, -1, 1);
+	GameObj* backWall = new GOPlane(0, 0, -FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, 1, 1);
+
+	ceiling->setType(WALL);
+	leftWall->setType(WALL);
+	rightWall->setType(WALL);
+	frontWall->setType(WALL);
+	backWall->setType(WALL);
+
+	pushGameObj(ceiling);
+	pushGameObj(leftWall);
+	pushGameObj(rightWall);
+	pushGameObj(frontWall);
+	pushGameObj(backWall);
+}
+void GameLogic::addGround()
+{
+	GameObj* ground = new GOPlane(0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
+	ground->setType(WALL);
+	pushGameObj(ground);
+}
 

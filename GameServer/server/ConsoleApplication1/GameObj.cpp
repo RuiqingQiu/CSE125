@@ -22,6 +22,7 @@ GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, do
 	_qW = qW;
 	_type = type;
 	_mass = mass;
+	_isRobot = 0;
 }
 
 GameObj::~GameObj(){
@@ -149,4 +150,14 @@ int GameObj::getBlockType()
 void GameObj::setBlockType(int bType)
 {
 	_blockType = bType;
+}
+
+void GameObj::setIsRobot(int b)
+{
+	_isRobot = b;
+}
+
+int GameObj::getIsRobot()
+{
+	return _isRobot;
 }

@@ -22,6 +22,7 @@ private:
 	int _type;
 	int _blockType;
 	double _mass;
+	int _isRobot;
 	btRigidBody* rigidBody;
 
 public:
@@ -62,6 +63,8 @@ public:
 	void setRotX(double);
 	void setRotY(double);
 	void setRotZ(double);
+	void setIsRobot(int);
+	int getIsRobot();
 	
 };
 

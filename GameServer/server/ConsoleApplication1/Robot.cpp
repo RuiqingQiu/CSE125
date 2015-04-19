@@ -5,6 +5,7 @@ Robot::Robot(int cid, char* name)
 {
 	_r_cid = cid;
 	_name = name;
+	setIsRobot(1);
 }
 
 
@@ -100,19 +101,19 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double x, double y, dou
 	btScalar connectionHeight = 0.2f;
 
 	{
-		btVector3 connectionPointCS0(0.88f, connectionHeight, 1.6f);
+		btVector3 connectionPointCS0(1.5f, connectionHeight, 1.5f);
 		m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, true);
 	}
 {
-	btVector3 connectionPointCS0(-0.88f, connectionHeight, 1.6f);
+	btVector3 connectionPointCS0(-1.5f, connectionHeight, 1.5f);
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, true);
 }
 {
-	btVector3 connectionPointCS0(0.88f, connectionHeight, -1.6f);
+	btVector3 connectionPointCS0(1.5f, connectionHeight, -1.5f);
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, false);
 }
 {
-	btVector3 connectionPointCS0(-0.88f, connectionHeight, -1.6f);
+	btVector3 connectionPointCS0(-1.5f, connectionHeight, -1.5f);
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, false);
 }
 

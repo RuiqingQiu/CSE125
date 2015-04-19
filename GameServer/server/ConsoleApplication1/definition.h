@@ -75,6 +75,7 @@ enum GameEvents {
 		HAMMER = 2,
 		MACE = 3,
 		NEEDLE = 4,
+		WALL = 5,
 	};
 
 

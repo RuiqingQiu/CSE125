@@ -1,6 +1,7 @@
 #pragma once
 #include <btBulletDynamicsCommon.h>
 #include "GameObj.h"
+#include "GOPlane.h"
 #include "Constraint.h"
 #include <vector>
 #include <map>
@@ -8,10 +9,12 @@
 #include <iostream>
 #define MOVE_SPEED 1000
 #define CAP_BRAKE_SPEED 1000
-#define BRAKE_SPEED 100
-#define TURN_SPEED 100
-#define MAX_TURN_SPEED 100
+#define BRAKE_SPEED 5
+#define TURN_SPEED 0.02
+#define MAX_TURN_SPEED M_PI/10
 #define MAX_SPEED 80
+#define GRAVITY -30
+
 
 
 
@@ -39,7 +42,12 @@ private:
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld* dynamicsWorld;
 
-	const btVector3 yAxis = btVector3(0.0f,1.0f,0.0f);
+	void robotTurnLeft(Robot*);
+	void robotTurnRight(Robot*);
+	void robotForward(Robot*);
+	void robotBackward(Robot*);
+
+
 };
 
 

@@ -8,6 +8,10 @@
 #include "definition.h"
 #include "TimeFrame.h"
 
+#define FIELD_WIDTH 40
+#define FIELD_HEIGHT 40
+
+
 class GameLogic {
 private:
 	Network* network;
@@ -30,5 +34,8 @@ public:
 	unsigned int gameLoop();
 	void gameStart();
 	void prePhyLogic();
+	void addWalls();
+	void addGround();
+
 };
 #endif

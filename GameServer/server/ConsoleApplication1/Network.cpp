@@ -335,15 +335,23 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += ' ';
 		temp += to_string((*i)->getZ());
 		temp += ' ';
-		btTransform trans = ((Robot*)(*i))->getVehicle()->getChassisWorldTransform();
-		//float mat[16];
-		//trans.getOpenGLMatrix(mat);
-		//int j;
-		//for (j = 0; j < 16; j++)
-		//{
-		//	temp += to_string(mat[j]);
-		//	temp += ' ';
-		//}
+		btTransform trans;
+		if ((*i)->getIsRobot() != 0){
+
+			trans = ((Robot*)(*i))->getVehicle()->getChassisWorldTransform();
+			//float mat[16];
+			//trans.getOpenGLMatrix(mat);
+			//int j;
+			//for (j = 0; j < 16; j++)
+			//{
+			//	temp += to_string(mat[j]);
+			//	temp += ' ';
+			//}
+		}
+		else
+		{
+			(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+		}
 		btScalar yaw = 0, pitch = 0, roll = 0;
 
 		trans.getBasis().getEulerZYX(yaw, pitch, roll);
