@@ -45,7 +45,7 @@ void mainMenu::VOnRender(){
 	set2d();
 	drawAllItems();
 	//using drawtext for now... ugly font though
-	drawText(width * 0.6, height * 0.5, g_pCore->gui_Input->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
+	drawText(width * 0.5, height * 0.55, g_pCore->gui_Input->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
 
 	set3d();
 }

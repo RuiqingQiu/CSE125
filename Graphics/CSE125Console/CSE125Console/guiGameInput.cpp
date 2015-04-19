@@ -32,7 +32,12 @@ void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 	    
 	    // "backspace is treated as ASCII 8 in opengl"
 		case 8:
-			name.pop_back(); 
+			if (name.length() != 0){
+				name.pop_back();
+			}
+			break;
+		case 27:
+			exit(0);
 			break;
 	  // need to read input for robot name, inheritanted from GameInputInterface
 		case 'a':
