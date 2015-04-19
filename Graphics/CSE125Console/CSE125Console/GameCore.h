@@ -8,7 +8,7 @@
 #include "GamePacketManager.h"
 #include "GamePlayer.h"
 #include "GameInputInterface.h"
-
+#include "Light.h"
 #ifndef CSE125_CORE
 #define CSE125_CORE
 
@@ -25,6 +25,8 @@ public:
 	GamePlayer* pPlayer;
 	GameInputInterface* i_pInput;
 
+	Light* light;
+	
 	//changes between the different gui modes
 	gui* gameGui;
 

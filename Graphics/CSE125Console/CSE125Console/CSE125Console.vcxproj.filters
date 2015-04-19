@@ -210,6 +210,15 @@
     <ClInclude Include="scrollBox.h">
       <Filter>Source Files\GUI\guiItems</Filter>
     </ClInclude>
+    <ClInclude Include="TestView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Teapot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -349,6 +358,15 @@
     </ClCompile>
     <ClCompile Include="scrollBox.cpp">
       <Filter>Source Files\GUI\guiItems</Filter>
+    </ClCompile>
+    <ClCompile Include="TestView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Teapot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
