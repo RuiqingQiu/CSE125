@@ -47,8 +47,8 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 
 void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 {
-	dynamicsWorld->setGravity(btVector3(0, -9.8,0));
-	btCollisionShape* ground = new btBoxShape(btVector3(10000, 1, 10000));
+	dynamicsWorld->setGravity(btVector3(0, -30,0));
+	btCollisionShape* ground = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI(0, groundMotionState, ground, btVector3(0, 0, 0));
@@ -59,7 +59,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 	dynamicsWorld->addRigidBody(groundRigidBody);
 
-	btCollisionShape* ground7 = new btStaticPlaneShape(btVector3(0, -1, 0), 1);
+	/*btCollisionShape* ground7 = new btStaticPlaneShape(btVector3(0, -1, 0), 1);
 	btDefaultMotionState* groundMotionState7 = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 20, 0)));
 	btRigidBody::btRigidBodyConstructionInfo
 		groundRigidBodyCI7(0, groundMotionState7, ground7, btVector3(0, 0, 0));
@@ -103,7 +103,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	groundRigidBodyCI4.m_friction = 0.2f;
 	groundRigidBodyCI4.m_restitution = 0.0f;
 	btRigidBody* groundRigidBody4 = new btRigidBody(groundRigidBodyCI4);
-	dynamicsWorld->addRigidBody(groundRigidBody4);
+	dynamicsWorld->addRigidBody(groundRigidBody4);*/
 
 
 	//dynamicsWorld->clearForces();
@@ -117,12 +117,14 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 
 void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
 {
-	
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObj->begin(); it != gameObj->end(); ++it)
 	{
+
+
 		btTransform trans = ((Robot*)(*it))->getVehicle()->getChassisWorldTransform();
 		//std::cout << "BOX WITH ID:  " << (*it)->getId() << ", X: " << trans.getOrigin().getX() << ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
+		std::cout << "Speed: " << ((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour() << std::endl;
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
 		(*it)->setZ(trans.getOrigin().getZ());
@@ -152,8 +154,15 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* rb)
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		rb->applyTorque(boxRot*torque);*/
 		//rb->applyTorque(btVector3(transform.getOrigin().getX(), transform.getOrigin().getY(), transform.getOrigin().getZ()).cross(btVector3(1, 1, 1)));
-		((Robot*)rb)->getVehicle()->applyEngineForce(TURN_SPEED, 1);
-		((Robot*)rb)->getVehicle()->applyEngineForce(TURN_SPEED, 3);
+		
+		
+
+		((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(1).m_engineForce + TURN_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getWheelInfo(1).m_engineForce / MAX_TURN_SPEED)), 1);
+		((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(2).m_engineForce - TURN_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getWheelInfo(2).m_engineForce / MAX_TURN_SPEED)), 2);
+		((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(0).m_engineForce)*(1 - (((Robot*)rb)->getVehicle()->getWheelInfo(0).m_engineForce / MAX_TURN_SPEED)), 0);
+		((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(3).m_engineForce)*(1 - (((Robot*)rb)->getVehicle()->getWheelInfo(3).m_engineForce / MAX_TURN_SPEED)), 3);
+		//((Robot*)rb)->getVehicle()->setBrake(TURN_SPEED, 0);
+		//((Robot*)rb)->getVehicle()->setBrake(TURN_SPEED, 2);
 		std::cout << "move left" << std::endl;
 		break;
 	}
@@ -172,8 +181,13 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* rb)
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		rb->applyTorque(boxRot*torque);
 		std::cout << "move right" << std::endl;*/
-		((Robot*)rb)->getVehicle()->applyEngineForce(TURN_SPEED, 0);
-		((Robot*)rb)->getVehicle()->applyEngineForce(TURN_SPEED, 2);
+		((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(0).m_engineForce + TURN_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getWheelInfo(0).m_engineForce / MAX_TURN_SPEED)), 0);
+		((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(3).m_engineForce - TURN_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getWheelInfo(3).m_engineForce / MAX_TURN_SPEED)), 3);
+		((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(1).m_engineForce)*(1 - (((Robot*)rb)->getVehicle()->getWheelInfo(1).m_engineForce / MAX_TURN_SPEED)), 1);
+		((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(2).m_engineForce)*(1 - (((Robot*)rb)->getVehicle()->getWheelInfo(2).m_engineForce / MAX_TURN_SPEED)), 2);
+		
+		//((Robot*)rb)->getVehicle()->setBrake(TURN_SPEED, 1);
+		//((Robot*)rb)->getVehicle()->setBrake(TURN_SPEED, 3);
 		break;
 	}
 	case MOVE_BACKWARD: {
@@ -181,8 +195,32 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* rb)
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
 		rb->applyCentralImpulse(correctedForce);*/
-		((Robot*)rb)->getVehicle()->applyEngineForce(-MOVE_SPEED, 2);
-		((Robot*)rb)->getVehicle()->applyEngineForce(-MOVE_SPEED, 3);
+
+		if (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() < -MAX_SPEED)
+		{
+			std::cout << "breaking backward " << std::endl;
+			((Robot*)rb)->getVehicle()->applyEngineForce(CAP_BRAKE_SPEED*((((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour()/-MAX_SPEED)-1), 0);
+			((Robot*)rb)->getVehicle()->applyEngineForce(CAP_BRAKE_SPEED*((((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour()/-MAX_SPEED)-1), 1);
+			((Robot*)rb)->getVehicle()->applyEngineForce(CAP_BRAKE_SPEED*((((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / -MAX_SPEED) - 1), 2);
+			((Robot*)rb)->getVehicle()->applyEngineForce(CAP_BRAKE_SPEED*((((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / -MAX_SPEED) - 1), 3);
+		}
+		/*else if (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() > 0)
+		{
+
+			((Robot*)rb)->getVehicle()->applyEngineForce(((Robot*)rb)->getVehicle()->getWheelInfo(0).m_engineForce - MOVE_SPEED, 0);
+			((Robot*)rb)->getVehicle()->applyEngineForce(((Robot*)rb)->getVehicle()->getWheelInfo(1).m_engineForce - MOVE_SPEED, 1);
+			((Robot*)rb)->getVehicle()->applyEngineForce(((Robot*)rb)->getVehicle()->getWheelInfo(2).m_engineForce - MOVE_SPEED, 2);
+			((Robot*)rb)->getVehicle()->applyEngineForce(((Robot*)rb)->getVehicle()->getWheelInfo(3).m_engineForce - MOVE_SPEED, 3);
+		}*/
+		else
+		{
+			std::cout << "scaling: " << (1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / -MAX_SPEED)) << std::endl;
+			((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(0).m_engineForce - MOVE_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / -MAX_SPEED)), 0);
+			((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(1).m_engineForce - MOVE_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / -MAX_SPEED)), 1);
+			((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(2).m_engineForce - MOVE_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / -MAX_SPEED)), 2);
+			((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(3).m_engineForce - MOVE_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / -MAX_SPEED)), 3);
+
+		}
 		break;
 	}
 	case MOVE_FORWARD: {
@@ -190,8 +228,32 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* rb)
 		btMatrix3x3& boxRot = rb->getWorldTransform().getBasis();
 		btVector3 correctedForce = boxRot * relativeForce;
 		rb->applyCentralImpulse(correctedForce);*/
-		((Robot*)rb)->getVehicle()->applyEngineForce(MOVE_SPEED, 2);
-		((Robot*)rb)->getVehicle()->applyEngineForce(MOVE_SPEED, 3);
+
+		if (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() > MAX_SPEED)
+		{
+			std::cout << "breaking forward" << std::endl;
+			((Robot*)rb)->getVehicle()->applyEngineForce(-CAP_BRAKE_SPEED*((((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED) - 1), 0);
+			((Robot*)rb)->getVehicle()->applyEngineForce(-CAP_BRAKE_SPEED*((((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED) - 1), 1);
+			((Robot*)rb)->getVehicle()->applyEngineForce(-CAP_BRAKE_SPEED*((((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED) - 1), 2);
+			((Robot*)rb)->getVehicle()->applyEngineForce(-CAP_BRAKE_SPEED*((((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED) - 1), 3);
+		}
+		//else if (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() < 0)
+		//{
+
+		//	((Robot*)rb)->getVehicle()->applyEngineForce(((Robot*)rb)->getVehicle()->getWheelInfo(0).m_engineForce + MOVE_SPEED, 0);
+		//	((Robot*)rb)->getVehicle()->applyEngineForce(((Robot*)rb)->getVehicle()->getWheelInfo(1).m_engineForce + MOVE_SPEED, 1);
+		//	((Robot*)rb)->getVehicle()->applyEngineForce(((Robot*)rb)->getVehicle()->getWheelInfo(2).m_engineForce + MOVE_SPEED, 2);
+		//	((Robot*)rb)->getVehicle()->applyEngineForce(((Robot*)rb)->getVehicle()->getWheelInfo(3).m_engineForce + MOVE_SPEED, 3);
+		//}
+		else
+		{
+			std::cout << "scaling: " << (1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED)) << std::endl;
+			((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(0).m_engineForce + MOVE_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED)), 0);
+			((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(1).m_engineForce + MOVE_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED)), 1);
+			((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(2).m_engineForce + MOVE_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED)), 2);
+			((Robot*)rb)->getVehicle()->applyEngineForce((((Robot*)rb)->getVehicle()->getWheelInfo(3).m_engineForce + MOVE_SPEED)*(1 - (((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() / MAX_SPEED)), 3);
+
+		}
 		break;
 	}
 	case MOVE_UP: {

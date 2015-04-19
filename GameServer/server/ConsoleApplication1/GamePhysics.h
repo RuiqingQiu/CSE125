@@ -6,8 +6,12 @@
 #include <map>
 #include "definition.h"
 #include <iostream>
-#define MOVE_SPEED 700
-#define TURN_SPEED 7000
+#define MOVE_SPEED 1000
+#define CAP_BRAKE_SPEED 1000
+#define BRAKE_SPEED 100
+#define TURN_SPEED 100
+#define MAX_TURN_SPEED 100
+#define MAX_SPEED 80
 
 
 

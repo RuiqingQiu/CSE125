@@ -148,6 +148,7 @@ unsigned int GameLogic::gameLoop (){
 
 	//if (countDown->checkCountdown()) return TIMEUP;
 	
+
 	//do gamelogic for all ObjectEvents
 	prePhyLogic();
 	
@@ -185,12 +186,26 @@ void GameLogic::prePhyLogic(){
 		int cid = (*iter)->getCid();
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
-		GameObj*  cob = it->second;
-		std::cout << "x: " << cob->getX() << "y: " << cob->getY() << "z: " << cob->getZ() << std::endl;
-		btRigidBody *rb = cob->getRigidBody();
-		gamePhysics->createPhysicsEvent(type, cob);
+		GameObj*  rb = it->second;
+		//std::cout << "Speed: " << ((Robot*)rb)->getVehicle()->getCurrentSpeedKmHour() << std::endl;
+        //cout << "x: " << cob->getX() << "y: " << cob->getY() << "z: " << cob->getZ() << std::endl;
+		btRigidBody *asd = rb->getRigidBody();
+		gamePhysics->createPhysicsEvent(type, rb);
 		iter++;
 	
+	}
+	if (objEventList.size() == 0)
+	{
+		std::vector<GameObj*>::iterator it;
+		for (it = gameObjs.begin(); it != gameObjs.end(); ++it)
+		{
+
+				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 0);
+				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 1);
+				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 2);
+				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 3);
+
+		}
 	}
 
 	objEventList.clear();
