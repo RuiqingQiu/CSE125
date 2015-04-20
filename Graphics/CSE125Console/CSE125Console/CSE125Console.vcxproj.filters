@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -162,9 +162,6 @@
     <ClInclude Include="guiGameInput.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="HardShadowView.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Source Files\Shader</Filter>
     </ClInclude>
@@ -213,7 +210,20 @@
     <ClInclude Include="listItem.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="numbers.h">
+     <ClInclude Include="HardShadowView.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="TestView.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="Teapot.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketDecoder.h">
+      <Filter>Header Files</Filter>
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="scoreBox.h">
@@ -317,9 +327,6 @@
     <ClCompile Include="Plane.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="HardShadowView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="guiGameInput.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
@@ -348,12 +355,15 @@
       <Filter>Source Files\GameView\GuiViews</Filter>
     </ClCompile>
     <ClCompile Include="TestView.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameView</Filter>
     </ClCompile>
     <ClCompile Include="Teapot.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketDecoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="background.cpp">
