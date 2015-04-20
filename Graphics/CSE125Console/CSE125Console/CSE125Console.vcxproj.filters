@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -210,7 +210,7 @@
     <ClInclude Include="listItem.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
-     <ClInclude Include="HardShadowView.h">
+    <ClInclude Include="HardShadowView.h">
       <Filter>Source Files\GameView</Filter>
     </ClInclude>
     <ClInclude Include="TestView.h">
@@ -234,6 +234,9 @@
     </ClInclude>
     <ClInclude Include="viewFactory.h">
       <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="numbers.h">
+      <Filter>Source Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +395,9 @@
     </ClCompile>
     <ClCompile Include="viewFactory.cpp">
       <Filter>Source Files\GameView</Filter>
+    </ClCompile>
+    <ClCompile Include="HardShadowView.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

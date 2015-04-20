@@ -1,6 +1,10 @@
 #pragma once
 #include "guiItem.h"
 
+//global static variables to load numbers only once
+static bool nums_set = false;
+static GLuint nums[10];
+
 class numbers : public guiItem
 {
 public:
@@ -17,8 +21,8 @@ public:
 	void draw();
 	void draw(GLuint * t);
 	bool setTexture(int i);
+	bool setAllNumbers();
 
 	int numIdx;
-	GLuint nums[10];
 };
 
