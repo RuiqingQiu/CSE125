@@ -369,13 +369,14 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += to_string((*i)->getRotY());
 		temp += ' ';
 		temp += to_string((*i)->getRotZ());
-		temp += ' ';
+		temp += ' ';*/
 		temp += to_string((*i)->getBlockType());
 		temp += ' ';
+		/*
 		temp += to_string((*i)->getType());
-		temp += ' ';
-		int type = (*i)->getType();
-		switch (type)
+		temp += ' ';*/
+		//int type = (*i)->getBlockType();
+		/*switch (type)
 		{
 			case BOX:
 			{

@@ -7,6 +7,7 @@
 #include "GamePhysics.h"
 #include "definition.h"
 #include "TimeFrame.h"
+#include <math.h>
 
 #define FIELD_WIDTH 40
 #define FIELD_HEIGHT 40

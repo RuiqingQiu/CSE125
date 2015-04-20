@@ -27,7 +27,20 @@ unsigned int GameLogic::waitToConnect()
 	//ameObj->setBlockType(CUBE);
 	//asd++;
 	GameObj* robot = new Robot(cid, "testname");
-	robot->setType(CUBE);
+	//0, 0
+	//5, 0
+	//0, 5
+	//5, 5
+	robot->setX((cid%2)*10);
+	robot->setY(3);
+	robot->setZ(cid-2<0?0:10);
+	robot->setqX(0);
+	robot->setqY(0);
+	robot->setqZ(0);
+	robot->setqW(1);
+	robot->setMass(50);
+	robot->setType(BOX);
+	robot->setBlockType(CUBE3x3);
 	this->pushGameObj(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
 
@@ -243,11 +256,11 @@ void GameLogic::addWalls()
 	GameObj* frontWall = new GOPlane(0, 0, FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, -1, 1);
 	GameObj* backWall = new GOPlane(0, 0, -FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, 1, 1);
 
-	ceiling->setType(WALL);
-	leftWall->setType(WALL);
-	rightWall->setType(WALL);
-	frontWall->setType(WALL);
-	backWall->setType(WALL);
+	ceiling->setBlockType(WALL);
+	leftWall->setBlockType(WALL);
+	rightWall->setBlockType(WALL);
+	frontWall->setBlockType(WALL);
+	backWall->setBlockType(WALL);
 
 	pushGameObj(ceiling);
 	pushGameObj(leftWall);
@@ -258,7 +271,7 @@ void GameLogic::addWalls()
 void GameLogic::addGround()
 {
 	GameObj* ground = new GOPlane(0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
-	ground->setType(WALL);
+	ground->setBlockType(BATTLEFIELD);
 	pushGameObj(ground);
 }
 

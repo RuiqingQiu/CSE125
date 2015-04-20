@@ -71,11 +71,10 @@ enum GameEvents {
 	enum BLOCK_TYPE
 	{
 		CUBE = 0,
-		WHEEL = 1,
-		HAMMER = 2,
-		MACE = 3,
+		BATTLEFIELD = 1,
+		WALL = 2,
+		CUBE3x3 = 3,
 		NEEDLE = 4,
-		WALL = 5,
 	};
 
 

@@ -43,17 +43,17 @@ btRaycastVehicle * Robot::getVehicle()
 	return vehicle;
 }
 
-void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double x, double y, double z, double qX, double qY, double qZ, double qW, double mass, double width, double height, double depth)
+void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth)
 {
 	//GOBox* boxShape = new GOBox( x,  y,  z,  qX,  qY,  qZ,  qW,  mass,  width,  height,  depth);
-	this->setX(x);
-	this->setY(y);
-	this->setZ(z);
-	this->setqX(qX);
-	this->setqY(qY);
-	this->setqZ(qZ);
-	this->setqW(qW);
-	this->setMass(mass);
+	double x = this->getX();
+	double y= this->getY();
+	double z= this->getZ();
+	double qX= this->getqX();
+	double qY= this->getqY();
+	double qZ= this->getqZ();
+	double qW= this->getqW();
+	double mass = this->getMass();
 	btBoxShape* m_pBoxShape = new btBoxShape(btVector3(width, height, depth));
 	
 

@@ -39,8 +39,8 @@ public:
 	double getqY();
 	double getqZ();
 	double getqW();
-	int getType();
-	int getBlockType();
+	int getType(); // Physics world
+	int getBlockType(); // Client world type
 	unsigned int getId();
 	double getMass();
 	btRigidBody* getRigidBody();

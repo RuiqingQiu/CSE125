@@ -53,7 +53,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	{
 		if ((*it)->getIsRobot() != 0)
 		{
-			((Robot *)(*it))->createVehicle(dynamicsWorld, 0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
+			((Robot *)(*it))->createVehicle(dynamicsWorld, 3,1,3);
 		}
 		else
 		{

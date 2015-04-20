@@ -35,7 +35,7 @@ public:
 	Weapon* getWeapon3();
 
 	btRaycastVehicle * getVehicle();
-	void createVehicle(btDynamicsWorld*, double, double, double, double, double, double, double, double, double, double, double);
+	void createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth);
 	void createRigidBody();
 	btRigidBody* getRigidBody();
 };
