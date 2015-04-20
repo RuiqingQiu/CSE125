@@ -5,20 +5,30 @@
 viewFactory::viewFactory()
 {
 	viewmode = viewType::CONSOLE;
-
+	defaultView = new GameView();
 	helpview = new helpMenu();
 	battlemode = new battleView();
 	buildmode = new buildView();
 	menumode = new mainMenu();
+	currentView = defaultView;
+
+	gui_Input = new guiGameInput();
+	standard_Input = new StandardGameInput();
+	currentInput = standard_Input;
 }
 
 viewFactory::viewFactory(int w, int h) {
 	viewmode = viewType::CONSOLE;
-
+	defaultView = new GameView();
 	helpview = new helpMenu(w, h);
 	battlemode = new battleView(w, h);
 	buildmode = new buildView(w, h);
 	menumode = new mainMenu(w, h);
+	currentView = defaultView;
+
+	gui_Input = new guiGameInput();
+	standard_Input = new StandardGameInput();
+	currentInput = standard_Input;
 }
 
 viewFactory::~viewFactory()
@@ -98,5 +108,13 @@ void viewFactory::idleFunc() {
 			viewmode = s;
 			setView();
 		}
+	}
+}
+
+void viewFactory::mouseFunc(int button, int state, int x, int y) {
+	viewType s = currentView->mouseClickFunc(state, x, y);
+	if (s != viewmode) {
+		viewmode = s;
+		setView();
 	}
 }

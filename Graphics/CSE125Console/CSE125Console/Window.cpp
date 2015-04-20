@@ -9,7 +9,7 @@
     #include <GL/glut.h>
 #endif
 
-#include "GameView.h"
+#include "viewFactory.h"
 #include "Cube.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
@@ -24,7 +24,7 @@
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-viewFactory * Window::factory = new viewFactory(Window::width, Window::height);
+static viewFactory * factory;
 
 static int counter = 0;
 static Cube* cube;
@@ -33,7 +33,8 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	//factory = new viewFactory(width, height);
+	factory = new viewFactory(width, height);
+	g_pCore->skybox = new SkyBox();
 
 	GameView* view = new GameView();
 	//cube = new Cube(1);
@@ -49,9 +50,10 @@ void Window::initialize(void)
 	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	//factory->defaultView->PushGeoNode(cube);
-	view->PushGeoNode(cube);
+	//view->PushGeoNode(cube);
 
+	
+	view->PushGeoNode(g_pCore->skybox);
 
 	//object = new Model3D("Hatchet.obj");
 	//object->localTransform.position = Vector3(0, 0, -20);
@@ -71,32 +73,29 @@ void Window::initialize(void)
 	//cube2->localTransform.position = Vector3(5, 0, -10);
 	//view->PushGeoNode(cube2);
 
-	//factory->defaultView = view;
-	g_pCore->pGameView = view;
+	//g_pCore->pGameView = view;
 	g_pCore->pPlayer->playerid = 1;
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 
 	//Setup the light
-	
+	/*
 	Model3D *object = new Model3D("woodcube.obj");
 	object->localTransform.position = Vector3(0, 0, -10);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
+	*/
 
+	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->battlemode->PushGeoNode(object);
-	//factory->battlemode->PushGeoNode(g_pCore->light);
-	//factory->battlemode->PushGeoNode(p);
+	factory->battlemode->PushGeoNode(g_pCore->light);
+	factory->battlemode->PushGeoNode(p);
 
 	//test shadow view
 	//HardShadowView* shadowview = new HardShadowView();
 	//g_pCore->pGameView = shadowview;
-
-	//see gui switch and skybox reqs
-	g_pCore->skybox = new SkyBox();
-	factory->setView();
 
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
@@ -106,7 +105,10 @@ void Window::initialize(void)
 	//GLuint program = LoadShader("shadow.vert", "shadow.frag");
 	//glUseProgram(program);
 
-
+	factory->defaultView = view;
+	factory->setView();
+	g_pCore->pGameView = factory->currentView;
+	g_pCore->i_pInput = factory->currentInput;
 	//connect to server
 	g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 }
@@ -118,6 +120,8 @@ void Window::idleCallback()
 {
 	g_pCore->pGameView->VUpdate();
 	factory->idleFunc();
+	g_pCore->pGameView = factory->currentView;
+	g_pCore->i_pInput = factory->currentInput;
 
     //Call the display routine to draw the cube
     displayCallback();
@@ -125,6 +129,8 @@ void Window::idleCallback()
 void Window::processNormalKeys(unsigned char key, int x, int y){
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
 	factory->switchView(key);
+	g_pCore->pGameView = factory->currentView;
+	g_pCore->i_pInput = factory->currentInput;
 	
 	if (TESTCAM){
 		if (key == ','){
@@ -143,12 +149,9 @@ void Window::processSpecialKeys(int key, int x, int y) {
 
 void Window::processMouseClick(int button, int state, int x, int y) {
 	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
-	/*
-	if (s != factory->viewmode) {
-		factory->viewmode = s;
-		factory->setView();
-	}
-	*/
+	factory->mouseFunc(button, state, x, y);
+	g_pCore->pGameView = factory->currentView;
+	g_pCore->i_pInput = factory->currentInput;
 }
 
 void Window::processPassiveMouse(int x, int y) {
@@ -180,19 +183,19 @@ void Window::displayCallback()
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
-	if (p!=nullptr){
+	if (p!=nullptr) {
 		switch (p->packet_types){
-		case GAME_STATE:{
-			g_pCore->pGameView->VOnClientUpdate(p);
-			break;
-		}
-		case CONFIRM_CONNECTION:{
-			g_pCore->pPlayer->playerid = p->player_infos[0]->id;
-			break;
-		}
-		default:{
-			break;
-		}
+			case GAME_STATE:{
+				g_pCore->pGameView->VOnClientUpdate(p);
+				break;
+			}
+			case CONFIRM_CONNECTION:{
+				g_pCore->pPlayer->playerid = p->player_infos[0]->id;
+				break;
+			}
+			default:{
+				break;
+			}
 		}
 		//update
 	}

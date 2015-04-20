@@ -43,5 +43,6 @@ public:
 	void switchView(unsigned char key);
 	void reshapeFunc(int w, int h);
 	void idleFunc();
+	void mouseFunc(int button, int state, int x, int y);
 };
 
