@@ -14,22 +14,6 @@ guiGameInput::~guiGameInput()
 void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 	//no key input yet except switching modes
 	switch (key) {
-		case '1':
-			g_pCore->viewmode = viewType::BUILD;
-			break;
-		case '2':
-			g_pCore->viewmode = viewType::BATTLE;
-			break;
-		case '3':
-			g_pCore->viewmode = viewType::HELP;
-			break;
-		case '4':
-			g_pCore->viewmode = viewType::MENU;
-			break;
-		case '5':
-			g_pCore->viewmode = viewType::CONSOLE;
-			break;
-	    
 	    // "backspace is treated as ASCII 8 in opengl"
 		case 8:
 			if (name.length() != 0){
@@ -148,7 +132,6 @@ void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 		default:
 			break;
 	}
-	g_pCore->setView();
 }
 
 void guiGameInput::VProcessSpecialKey(int key, int x, int y) {
@@ -171,10 +154,6 @@ void guiGameInput::VProcessSpecialKey(int key, int x, int y) {
 void guiGameInput::VProcessMouseClick(int button, int state, int x, int y) {
 	//check which button was pressed here
 	viewType s = g_pCore->pGameView->mouseClickFunc(state, x, y);
-	if (s != g_pCore->viewmode) {
-		g_pCore->viewmode = s;
-		g_pCore->setView();
-	}
 }
 
 void guiGameInput::VProcessPassiveMouse(int x, int y) {

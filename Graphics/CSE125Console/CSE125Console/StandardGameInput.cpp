@@ -84,23 +84,4 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 	}
 	else if (key == 'l'){
 	}
-
-
-	else if (key == '1') {
-		g_pCore->viewmode = viewType::BUILD;
-	}
-	else if (key == '2') {
-		g_pCore->viewmode = viewType::BATTLE;
-	}
-	else if (key == '3') {
-		g_pCore->viewmode = viewType::HELP;
-	}
-	else if (key == '4') {
-		g_pCore->viewmode = viewType::MENU;
-	}
-	else if (key == '5') {
-		g_pCore->viewmode = viewType::CONSOLE;
-	}
-	g_pCore->setView();
-
 }

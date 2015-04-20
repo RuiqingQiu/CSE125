@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "helpMenu.h"
 
-
 helpMenu::helpMenu() : gui() {
 	createButtons();
 	returnTo = viewType::MENU;

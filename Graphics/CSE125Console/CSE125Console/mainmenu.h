@@ -5,6 +5,7 @@
 #include "GameCore.h"
 
 class mainMenu : public gui {
+
 public:
 	mainMenu();
 	mainMenu(int w, int h);

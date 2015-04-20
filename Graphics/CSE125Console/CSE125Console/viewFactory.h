@@ -1,0 +1,47 @@
+#pragma once
+
+#include "GameView.h"
+#include "helpMenu.h"
+#include "buildView.h"
+#include "battleView.h"
+#include "mainmenu.h"
+
+#include "GameInputInterface.h"
+#include "guiGameInput.h"
+#include "StandardGameInput.h"
+
+class viewFactory
+{
+public:
+	viewFactory();
+	viewFactory(int w, int h);
+	~viewFactory();
+
+
+	GameView * currentView;
+
+	//view mode determines the mode, changes pGameView
+	viewType viewmode;
+	//always points to a specific mode, pGameView switches between these
+	GameView * defaultView;
+	buildView * buildmode;
+	mainMenu * menumode;
+	helpMenu * helpview;
+	battleView * battlemode;
+
+	GameInputInterface * currentInput;
+	guiGameInput* gui_Input;
+	StandardGameInput* standard_Input;
+
+	//getters
+	//GameView * getView();
+	//GameInputInterface * getInput();
+
+	//set view
+	void setView();
+
+	void switchView(unsigned char key);
+	void reshapeFunc(int w, int h);
+	void idleFunc();
+};
+

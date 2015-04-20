@@ -1,5 +1,5 @@
 #pragma once
-
+#include "stdafx.h"
 #include "gui.h"
 #include "background.h"
 
@@ -17,7 +17,6 @@ public:
 	viewType mouseClickFunc(int state, int x, int y);
 	
 	viewType returnTo;
-
 	background * backimg;
 };
 

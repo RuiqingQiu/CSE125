@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -97,12 +97,9 @@
     <ClInclude Include="guiGameInput.h" />
     <ClInclude Include="guiItem.h" />
     <ClInclude Include="HardShadowView.h" />
-
     <ClInclude Include="Light.h" />
-
     <ClInclude Include="battleView.h" />
     <ClInclude Include="helpMenu.h" />
-
     <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="numbers.h" />
@@ -140,6 +137,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Vector4.h" />
+    <ClInclude Include="viewFactory.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -157,11 +155,8 @@
     <ClCompile Include="guiGameInput.cpp" />
     <ClCompile Include="guiItem.cpp" />
     <ClCompile Include="HardShadowView.cpp" />
-
     <ClCompile Include="Light.cpp" />
-
     <ClCompile Include="helpMenu.cpp" />
-
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="numbers.cpp" />
@@ -214,6 +209,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Vector4.cpp" />
+    <ClCompile Include="viewFactory.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
