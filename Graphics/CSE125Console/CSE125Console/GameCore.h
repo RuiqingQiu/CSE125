@@ -27,32 +27,19 @@ public:
 
 
 	Light* light;
-	
-
-
-	//an empty view for switching to in menus that dont need 3d
-	//i.e. main menu and help menu
-	GameView * defaultView;
 
 	//changes between the different gui modes
 	gui* gameGui;
 
-	//view mode determines the mode 
-	guiType viewmode;
+	//view mode determines the mode, changes pGameView
+	viewType viewmode;
 
-	//always points to build mode
+	//always points to a specific mode, pGameView switches between these
+	GameView * defaultView;
 	buildView * buildmode;
 	gui * menumode;
 	helpMenu * helpMenu;
 	gui * battlemode;
-
-	//add more "static" pointers here
-	//always point to main menu
-	//always point to battle mode
-	//always point to help menu
-
-	//always points to empty gui
-	gui * defaultGui;
 
 	//we want a black background/no skybox for buildmode
 	//we check the mode and push and pop this node as needed
@@ -65,12 +52,7 @@ public:
 	GameInputInterface* standard_Input;
 
 	//a gui switch 
-	void setGui();
-
-	bool guiOnly;
-
-
-
+	void setView();
 };
 
 extern GameCore* g_pCore;

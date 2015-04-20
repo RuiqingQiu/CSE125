@@ -24,19 +24,16 @@
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-//gui buildmode = gui();
+viewFactory * Window::factory = new viewFactory(Window::width, Window::height);
+
 static int counter = 0;
 static Cube* cube;
-static Cube* cube2;
 static Model3D*object;
 //Init server info here later
 
-
-
 void Window::initialize(void)
-{	
-	//Default view
-	g_pCore->defaultView = new GameView();
+{
+	//factory = new viewFactory(width, height);
 
 	GameView* view = new GameView();
 	//cube = new Cube(1);
@@ -52,7 +49,7 @@ void Window::initialize(void)
 	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	g_pCore->defaultView->PushGeoNode(cube);
+	//factory->defaultView->PushGeoNode(cube);
 	view->PushGeoNode(cube);
 
 
@@ -62,41 +59,36 @@ void Window::initialize(void)
 	//object->localTransform.rotation = Vector3(0, 0, 0);
 	//view->PushGeoNode(object);
 	view->PushGeoNode(g_pCore->light);
+	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
 
 	Plane* p = new Plane(50);
 	p->localTransform.position = Vector3(0, 0, 0);
 	view->PushGeoNode(p);
+	//g_pCore->battlemode->PushGeoNode(p);
 	//t->localTransform.position = Vector3(0, 0, -5);
 	//view->PushGeoNode(t);
 	//cube2 = new Cube(1);
 	//cube2->localTransform.position = Vector3(5, 0, -10);
 	//view->PushGeoNode(cube2);
 
-	g_pCore->defaultView = view;
+	//factory->defaultView = view;
 	g_pCore->pGameView = view;
 	g_pCore->pPlayer->playerid = 1;
-
-	
-	
-	
-	g_pCore->viewmode = guiType::CONSOLE;
-	g_pCore->viewmode = guiType::BUILD;
-	g_pCore->helpMenu = new helpMenu(width, height);
-	g_pCore->battlemode = new battleView();
-	g_pCore->buildmode = new buildView(width, height);
-	g_pCore->menumode = new mainMenu(width, height);
-	g_pCore->defaultGui = new gui();
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 
 	//Setup the light
 	
-	//Model3D *object = new Model3D("woodcube.obj");
-	//object->localTransform.position = Vector3(0, 0, -10);
-	//object->localTransform.scale = Vector3(1, 1, 1);
-	//object->localTransform.rotation = Vector3(0, 0, 0);
-	//view->PushGeoNode(object);
+	Model3D *object = new Model3D("woodcube.obj");
+	object->localTransform.position = Vector3(0, 0, -10);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	//factory->battlemode->PushGeoNode(object);
+	//factory->battlemode->PushGeoNode(g_pCore->light);
+	//factory->battlemode->PushGeoNode(p);
 
 	//test shadow view
 	//HardShadowView* shadowview = new HardShadowView();
@@ -104,12 +96,10 @@ void Window::initialize(void)
 
 	//see gui switch and skybox reqs
 	g_pCore->skybox = new SkyBox();
-
-	g_pCore->setGui();
+	factory->setView();
 
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
-
 
 	//setup shader
 	//init shader
@@ -126,20 +116,15 @@ void Window::initialize(void)
 // This is called at the start of every new "frame" (qualitatively)
 void Window::idleCallback()
 {
-	g_pCore->gameGui->VUpdate();
 	g_pCore->pGameView->VUpdate();
+	factory->idleFunc();
 
-	guiType s = g_pCore->gameGui->switchClicked(0, 0, 0);
-	if (s != g_pCore->viewmode) {
-		g_pCore->viewmode = s;
-		g_pCore->setGui();
-	}
     //Call the display routine to draw the cube
     displayCallback();
 }
 void Window::processNormalKeys(unsigned char key, int x, int y){
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
-
+	factory->switchView(key);
 	
 	if (TESTCAM){
 		if (key == ','){
@@ -158,6 +143,12 @@ void Window::processSpecialKeys(int key, int x, int y) {
 
 void Window::processMouseClick(int button, int state, int x, int y) {
 	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
+	/*
+	if (s != factory->viewmode) {
+		factory->viewmode = s;
+		factory->setView();
+	}
+	*/
 }
 
 void Window::processPassiveMouse(int x, int y) {
@@ -174,11 +165,9 @@ void Window::reshapeCallback(int w, int h)
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
 	gluPerspective(60.0, double(Window::width) / (double)Window::height, 1, 1000.0); //Set perspective projection viewing frustum
-	g_pCore->buildmode->setDimensions(w, h);
-	g_pCore->menumode->setDimensions(w, h);
-	g_pCore->helpMenu->setDimensions(w, h);
-	g_pCore->battlemode->setDimensions(w, h);
 	//glFrustum(-1, 1, -1 , 1, 1,5);
+
+	factory->reshapeFunc(w, h);
 }
 
 //----------------------------------------------------------------------------
@@ -195,7 +184,6 @@ void Window::displayCallback()
 		switch (p->packet_types){
 		case GAME_STATE:{
 			g_pCore->pGameView->VOnClientUpdate(p);
-			g_pCore->gameGui->VOnClientUpdate(p);
 			break;
 		}
 		case CONFIRM_CONNECTION:{
@@ -209,13 +197,10 @@ void Window::displayCallback()
 		//update
 	}
 	
-	if (! g_pCore->guiOnly || true) 
-		g_pCore->pGameView->VOnRender();
-
+	g_pCore->pGameView->VOnRender();
 
 	//cout << "on display " << endl;
-	//g_pCore->pGameView->VOnRender();
-	g_pCore->gameGui->VOnRender();
+
 	//test for camera
 	
 	if (TESTCAM)

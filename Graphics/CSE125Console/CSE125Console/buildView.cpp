@@ -17,8 +17,7 @@ buildView::buildView(int w, int h) : gui(w, h) {
 }
 
 
-buildView::~buildView()
-{
+buildView::~buildView() {
 }
 
 void buildView::createButtons() {
@@ -93,13 +92,10 @@ void buildView::VUpdate() {
 }
 
 void buildView::VOnRender() {
-	GameView::VOnRender();
-	set2d();
-	drawAllItems();
-	set3d();
+	gui::VOnRender();
 }
 
-void buildView::onClick(int state, int x, int y) {
+viewType buildView::mouseClickFunc(int state, int x, int y) {
 	for (int i = 0; i < buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
@@ -118,35 +114,21 @@ void buildView::onClick(int state, int x, int y) {
 			NodeList.pop_back();
 	}
 
-}
-
-guiType buildView::switchClicked(int state, int x, int y) {
-	//battle button
-	if ( (buttons[0]->isSelected(x, height - y) &&
-		state == GLUT_UP) || (timer->timeLeft < 0)) {
+	if ((buttons[0]->isSelected(x, height - y) &&
+		state == GLUT_UP)) {
 		updateview = false;
 		isCurrentView = false;
-		return guiType::BATTLE;
+		return viewType::BATTLE;
 	}
-	else {
-		return guiType::BUILD;
+	else if (buttons[buttons.size() - 1]->isSelected(x, height - y)) {
+		return viewType::HELP;
 	}
+	return viewType::BUILD;
 }
 
-bool buildView::helpClicked(int state, int x, int y) {
-	//help button
-	if (state != GLUT_UP) return false;
-	if (buttons[buttons.size() - 1]->isSelected(x, height - y)) {
-		updateview = false;
-		return true;
+viewType buildView::checkTimeOut() {
+	if (timer->timeLeft < 0) {
+		return viewType::BATTLE;
 	}
-	return false;
-}
-
-bool buildView::addBlock(int state, int x, int y) {
-	return scroll->addButton->isSelected(x, y) && state == GLUT_UP;
-}
-
-bool buildView::removeBlock(int state, int x, int y) {
-	return scroll->removeButton->isSelected(x, y) && state == GLUT_UP;
+	return viewType::BUILD;
 }
