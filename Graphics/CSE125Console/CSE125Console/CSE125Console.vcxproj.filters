@@ -222,10 +222,6 @@
     <ClInclude Include="Light.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="PacketDecoder.h">
-      <Filter>Header Files</Filter>
-      <Filter>Source Files\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="scoreBox.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
@@ -237,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="numbers.h">
       <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketDecoder.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

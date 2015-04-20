@@ -34,6 +34,8 @@ static Model3D*object;
 void Window::initialize(void)
 {
 	factory = new viewFactory(width, height);
+	//factory = new viewFactory(true);  //for no gui
+
 	g_pCore->skybox = new SkyBox();
 
 	GameView* view = new GameView();
@@ -60,6 +62,8 @@ void Window::initialize(void)
 	//object->localTransform.scale = Vector3(1, 1, 1);
 	//object->localTransform.rotation = Vector3(0, 0, 0);
 	//view->PushGeoNode(object);
+
+	//setup light
 	view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
 
@@ -76,20 +80,16 @@ void Window::initialize(void)
 	//g_pCore->pGameView = view;
 	g_pCore->pPlayer->playerid = 1;
 
-	//connect to server
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-
-	//Setup the light
 	/*
 	Model3D *object = new Model3D("woodcube.obj");
 	object->localTransform.position = Vector3(0, 0, -10);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
+	factory->battlemode->PushGeoNode(object);
 	*/
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
-	//factory->battlemode->PushGeoNode(object);
 	factory->battlemode->PushGeoNode(g_pCore->light);
 	factory->battlemode->PushGeoNode(p);
 
@@ -105,11 +105,14 @@ void Window::initialize(void)
 	//GLuint program = LoadShader("shadow.vert", "shadow.frag");
 	//glUseProgram(program);
 
+	//setup factory
 	factory->defaultView = view;
 	factory->setView();
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
+
 	//connect to server
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 }
 

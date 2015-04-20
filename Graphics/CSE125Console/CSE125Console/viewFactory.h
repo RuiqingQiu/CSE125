@@ -15,8 +15,10 @@ class viewFactory
 public:
 	viewFactory();
 	viewFactory(int w, int h);
+	viewFactory(bool d);
 	~viewFactory();
 
+	bool debug;
 
 	GameView * currentView;
 

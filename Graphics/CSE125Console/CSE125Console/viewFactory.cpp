@@ -15,6 +15,8 @@ viewFactory::viewFactory()
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
 	currentInput = standard_Input;
+
+	debug = false;
 }
 
 viewFactory::viewFactory(int w, int h) {
@@ -25,6 +27,26 @@ viewFactory::viewFactory(int w, int h) {
 	buildmode = new buildView(w, h);
 	menumode = new mainMenu(w, h);
 	currentView = defaultView;
+
+	gui_Input = new guiGameInput();
+	standard_Input = new StandardGameInput();
+	currentInput = standard_Input;
+
+	debug = false;
+}
+
+viewFactory::viewFactory(bool d) {
+	debug = d;
+	viewmode = viewType::CONSOLE;
+	defaultView = new GameView();
+	battlemode = new battleView();
+
+	if (!debug) {
+		helpview = new helpMenu();
+		buildmode = new buildView();
+		menumode = new mainMenu();
+		currentView = defaultView;
+	}
 
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
@@ -42,6 +64,10 @@ GameView * viewFactory::getView() {
 */
 //a gui factory
 void viewFactory::setView() {
+	if (debug) {
+		currentView = defaultView;
+		return;
+	}
 	//hacky quick fix
 	buildmode->updateview = false;
 
@@ -74,6 +100,7 @@ void viewFactory::setView() {
 }
 
 void viewFactory::switchView(unsigned char key) {
+	if (debug) return;
 	switch (key) {
 	case '1':
 		viewmode = viewType::BUILD;
@@ -95,6 +122,7 @@ void viewFactory::switchView(unsigned char key) {
 }
 
 void viewFactory::reshapeFunc(int w, int h) {
+	if (debug) return;
 	buildmode->setDimensions(w, h);
 	menumode->setDimensions(w, h);
 	helpview->setDimensions(w, h);
@@ -112,6 +140,7 @@ void viewFactory::idleFunc() {
 }
 
 void viewFactory::mouseFunc(int button, int state, int x, int y) {
+	if (debug) return;
 	viewType s = currentView->mouseClickFunc(state, x, y);
 	if (s != viewmode) {
 		viewmode = s;
