@@ -35,15 +35,10 @@ void Window::initialize(void)
 {
 	factory = new viewFactory(width, height);
 	//factory = new viewFactory(true);  //for no gui
-
 	g_pCore->skybox = new SkyBox();
-
+	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
-	//cube = new Cube(1);
-	//cube->localTransform.position = Vector3(0, 0, -5);
-	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
-	//cube->identifier = 1;
-	//view->PushGeoNode(cube);
+
 	//Teapot* t = new Teapot(2);
 
 	//set color
@@ -52,9 +47,8 @@ void Window::initialize(void)
 	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	//view->PushGeoNode(cube);
+	view->PushGeoNode(cube);
 
-	
 	view->PushGeoNode(g_pCore->skybox);
 
 	//object = new Model3D("Hatchet.obj");
@@ -70,24 +64,13 @@ void Window::initialize(void)
 	Plane* p = new Plane(50);
 	p->localTransform.position = Vector3(0, 0, 0);
 	view->PushGeoNode(p);
-	//g_pCore->battlemode->PushGeoNode(p);
-	//t->localTransform.position = Vector3(0, 0, -5);
-	//view->PushGeoNode(t);
-	//cube2 = new Cube(1);
-	//cube2->localTransform.position = Vector3(5, 0, -10);
-	//view->PushGeoNode(cube2);
 
-	//g_pCore->pGameView = view;
-	g_pCore->pPlayer->playerid = 1;
-
-	/*
 	Model3D *object = new Model3D("woodcube.obj");
 	object->localTransform.position = Vector3(0, 0, -10);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	factory->battlemode->PushGeoNode(object);
-	*/
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	factory->battlemode->PushGeoNode(g_pCore->light);
@@ -95,7 +78,7 @@ void Window::initialize(void)
 
 	//test shadow view
 	//HardShadowView* shadowview = new HardShadowView();
-	//g_pCore->pGameView = shadowview;
+	//factory->defaultView = shadowview;
 
 	//setup camera
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
@@ -119,7 +102,7 @@ void Window::initialize(void)
 //----------------------------------------------------------------------------
 // Callback method called when system is idle.
 // This is called at the start of every new "frame" (qualitatively)
-void Window::idleCallback()
+void Window::idleCallback() 
 {
 	g_pCore->pGameView->VUpdate();
 	factory->idleFunc();
@@ -129,7 +112,9 @@ void Window::idleCallback()
     //Call the display routine to draw the cube
     displayCallback();
 }
-void Window::processNormalKeys(unsigned char key, int x, int y){
+
+void Window::processNormalKeys(unsigned char key, int x, int y) 
+{
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
 	factory->switchView(key);
 	g_pCore->pGameView = factory->currentView;
@@ -163,8 +148,7 @@ void Window::processPassiveMouse(int x, int y) {
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
-void Window::reshapeCallback(int w, int h)
-{
+void Window::reshapeCallback(int w, int h) {
     Window::width = w;                                                       //Set the window width
 	Window::height = h;                                                      //Set the window height
     glViewport(0, 0, w, h);                                          //Set new viewport size
@@ -179,8 +163,7 @@ void Window::reshapeCallback(int w, int h)
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
 
-void Window::displayCallback()
-{
+void Window::displayCallback() {
 	counter = (counter + 1) % 360;
 	
 	//object->localTransform.rotation.y = counter;

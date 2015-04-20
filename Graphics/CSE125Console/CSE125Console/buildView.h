@@ -5,6 +5,8 @@
 #include "scoreBox.h"
 #include "Cube.h"
 
+#define MAX_BLOCKS 28
+
 class buildView : public gui {
 public:
 	buildView();

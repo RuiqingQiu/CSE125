@@ -92,7 +92,10 @@ void buildView::VUpdate() {
 }
 
 void buildView::VOnRender() {
-	gui::VOnRender();
+	GameView::VOnRender();
+	set2d();
+	drawAllItems();
+	set3d();
 }
 
 viewType buildView::mouseClickFunc(int state, int x, int y) {
@@ -101,13 +104,14 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height-y);
 	}
-	if (scroll->addButton->isSelected(x, height-y) && state == GLUT_UP) {
-		std::cout << "adding" << std::endl;
+	if (scroll->addButton->isSelected(x, height - y) && state == GLUT_UP) {
 		int s = NodeList.size();
-		Cube * cube = new Cube(1);
-		cube->localTransform.position = Vector3(-s, 0, -5);
-		cube->identifier = s;
-		PushGeoNode(cube);
+		if (s < MAX_BLOCKS) {
+			Cube * cube = new Cube(1);
+			cube->localTransform.position = Vector3(-s, 0, -5);
+			cube->identifier = s;
+			PushGeoNode(cube);
+		}
 	}
 	else if (scroll->removeButton->isSelected(x, height - y) && state == GLUT_UP) {
 		if (NodeList.size() > 1)
