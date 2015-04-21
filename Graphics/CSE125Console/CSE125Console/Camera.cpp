@@ -51,7 +51,6 @@ void Camera::UpdateCamera()
 	Vector4 direction_temp = trans*forward;
 	Vector3 direction = Vector3(direction_temp.get_x(), direction_temp.get_y(), direction_temp.get_z());
 	direction.normalize();
-	printf("direction : %f %f %f\n", direction.x, direction.y, direction.z);
 	float distanceToPlayer = 15;
 	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
 	Vector3* newrotation = new Vector3(-FollowingTarget->localTransform.rotation.x, -FollowingTarget->localTransform.rotation.y, -FollowingTarget->localTransform.rotation.z);

@@ -51,19 +51,27 @@ void Window::initialize(void)
 
 	view->PushGeoNode(g_pCore->skybox);
 
-	//object = new Model3D("Hatchet.obj");
-	//object->localTransform.position = Vector3(0, 0, -20);
-	//object->localTransform.scale = Vector3(1, 1, 1);
-	//object->localTransform.rotation = Vector3(0, 90, 0);
-	//view->PushGeoNode(object);
-
 	//setup light
 	view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
 
 	Plane* p = new Plane(50);
-	p->localTransform.position = Vector3(0, 0, 0);
+	p->setColor(1, 1, 0);
+	p->localTransform.position = Vector3(0, -5, 0);
+	p->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(p);
+	/*
+	p = new Plane(50);
+	p->setColor(1, 0, 0);
+	p->localTransform.position = Vector3(20, 0, 0);
+	p->localTransform.rotation = Vector3(0, 0, 90);
+	view->PushGeoNode(p);
+
+	p = new Plane(50);
+	p->setColor(0, 1, 0);
+	p->localTransform.position = Vector3(-20, 0, 0);
+	p->localTransform.rotation = Vector3(0, 0, -90);
+	view->PushGeoNode(p);*/
 	/*
 	Model3D *object = new Model3D("woodcube.obj");
 	object->localTransform.position = Vector3(0, 0, -10);
