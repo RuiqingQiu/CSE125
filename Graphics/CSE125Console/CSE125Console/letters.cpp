@@ -55,7 +55,6 @@ letters::~letters() {
 
 }
 
-
 void letters::init() {
 	setPosition(0, 0);
 	setSize(100, 100);
@@ -79,8 +78,8 @@ bool letters::setAllLetters() {
 	return true;
 }
 
+// set the texture
 bool letters::setTexture(int i) {
-
 	if (i > 122 || i < 97) return false;
 	int index = i - 97;
 	GLuint * t = &letter[index];
@@ -103,4 +102,63 @@ bool letters::setTexture(int i) {
 
 	//return true if successfully set texture
 	return true;
+}
+
+
+//this was drawing the number object's individual texture
+//bind the texture and draw it
+void letters::draw() {
+	glDisable(GL_LIGHTING);
+	glPushMatrix();
+	//glLoadMatrixd(glmatrix.getPointer());
+
+	glEnable(GL_TEXTURE_2D);
+	//glActiveTexture(GL_TEXTURE1);
+
+	// bind the texture to be the right letter to display
+	glBindTexture(GL_TEXTURE_2D, letter[letterToShow]);
+	// Make sure no bytes are padded:
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	// Draw a textured quad
+	glColor3f(1, 1, 1);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0); glVertex3f(xPos, yPos, 0);
+	glTexCoord2f(0, 1); glVertex3f(xPos, yPos + height, 0);
+	glTexCoord2f(1, 1); glVertex3f(xPos + width, yPos + height, 0);
+	glTexCoord2f(1, 0); glVertex3f(xPos + width, yPos, 0);
+	glEnd();
+
+	glPopMatrix();
+	//glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+}
+
+//this is attempt to make them draw referencing the same stored texture,
+//but it didn't change anything
+void letters::draw(GLuint * t) {
+	//bind the texture and draw it
+	glDisable(GL_LIGHTING);
+	glPushMatrix();
+	//glLoadMatrixd(glmatrix.getPointer());
+
+	glEnable(GL_TEXTURE_2D);
+	//glActiveTexture(GL_TEXTURE1);
+
+	glBindTexture(GL_TEXTURE_2D, *t);
+	// Make sure no bytes are padded:
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	// Draw a textured quad
+	glColor3f(1, 1, 1);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0); glVertex3f(xPos, yPos, 0);
+	glTexCoord2f(0, 1); glVertex3f(xPos, yPos + height, 0);
+	glTexCoord2f(1, 1); glVertex3f(xPos + width, yPos + height, 0);
+	glTexCoord2f(1, 0); glVertex3f(xPos + width, yPos, 0);
+	glEnd();
+
+	glPopMatrix();
+	//glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 }

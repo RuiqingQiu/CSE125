@@ -17,9 +17,10 @@ class letters : public guiItem{
 		letters(int x, int y, int w, int h, bool xf, bool yf);
 		~letters();
 
+		int letterToShow;
 		void init();
-		//void draw();
-		//void draw(GLuint * t);
+		void draw();
+		void draw(GLuint * t);
 		bool setTexture(int i);
 		bool setAllLetters();
 
