@@ -5,6 +5,7 @@
 GameView::GameView()
 {	
 	pViewCamera = new Camera();
+	currentNode = nullptr;
 }
 
 
@@ -166,4 +167,16 @@ void GameView::passiveMouseFunc(int x, int y) {
 
 viewType GameView::mouseClickFunc(int state, int x, int y) {
 	return viewType::CONSOLE;
+}
+
+void GameView::keyPressFunc(unsigned char key, int x, int y) {
+
+}
+void GameView::specialKeyFunc(int key, int x, int y) {
+
+}
+
+Vector3 GameView::translateNode(Vector3 t, GeoNode * node) {
+	node->localTransform.position = node->localTransform.position + t;
+	return node->localTransform.position;
 }

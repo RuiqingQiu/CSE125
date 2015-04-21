@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -235,9 +235,9 @@
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="PacketDecoder.h">
-      <Filter>Source Files\NetPacket</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mainmenuinput.h">
+    <ClInclude Include="buildViewInput.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
@@ -368,6 +368,9 @@
     <ClCompile Include="Light.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="PacketDecoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="background.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -398,12 +401,8 @@
     <ClCompile Include="HardShadowView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-
-    <ClCompile Include="mainmenuinput.cpp">
+    <ClCompile Include="buildViewInput.cpp">
       <Filter>Source Files\Input</Filter>
-</ClCompile>
-    <ClCompile Include="PacketDecoder.cpp">
-      <Filter>Source Files\NetPacket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

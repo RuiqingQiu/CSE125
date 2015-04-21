@@ -86,6 +86,7 @@
     <ClInclude Include="block.h" />
     <ClInclude Include="buildTimer.h" />
     <ClInclude Include="buildView.h" />
+    <ClInclude Include="buildViewInput.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ClientGame.h" />
@@ -147,6 +148,7 @@
     <ClCompile Include="block.cpp" />
     <ClCompile Include="buildTimer.cpp" />
     <ClCompile Include="buildView.cpp" />
+    <ClCompile Include="buildViewInput.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ClientGame.cpp" />

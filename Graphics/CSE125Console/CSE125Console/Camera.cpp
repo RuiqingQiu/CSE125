@@ -23,7 +23,7 @@ void Camera::setUpCamera(){
 	glRotatef(rotation->x, 1, 0, 0);
 	glRotatef(rotation->y, 0, 1, 0);
 	glRotatef(rotation->z, 0, 0, 1);
-	glTranslatef(-position->x, -position->y, -position->z);
+	glTranslatef(position->x, position->y, position->z);
 }
 
 
@@ -33,7 +33,6 @@ void  Camera::setUpCameraWithGL(float position_x, float position_y, float positi
 		UpdateCamera();
 	}
 	else{
-		printf("nah\n");
 	}
 	/*
 	glMatrixMode(GL_PROJECTION);
@@ -54,6 +53,8 @@ void Camera::UpdateCamera()
 	float distanceToPlayer = 15;
 	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
 	Vector3* newrotation = new Vector3(-FollowingTarget->localTransform.rotation.x, -FollowingTarget->localTransform.rotation.y, -FollowingTarget->localTransform.rotation.z);
+	newposition->negate();
+	newrotation->negate();
 	*this->position = VectorLerp(position, newposition, 0.1);
 	*this->rotation = VectorLerp(rotation, newrotation, 0.056);
 }
