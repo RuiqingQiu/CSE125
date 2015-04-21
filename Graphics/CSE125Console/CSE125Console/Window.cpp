@@ -97,7 +97,7 @@ void Window::initialize(void)
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
 }
 
 //----------------------------------------------------------------------------

@@ -235,7 +235,7 @@
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="PacketDecoder.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\NetPacket</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,9 +365,6 @@
     <ClCompile Include="Light.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="PacketDecoder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="background.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -397,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="HardShadowView.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketDecoder.cpp">
+      <Filter>Source Files\NetPacket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
