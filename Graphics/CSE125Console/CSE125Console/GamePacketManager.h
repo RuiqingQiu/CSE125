@@ -23,6 +23,5 @@ public:
 	bool SendMoveToBackward(int id);
 
 	GameInfoPacket* tryGetGameInfo();
-	
 };
 

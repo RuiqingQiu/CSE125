@@ -2,7 +2,10 @@
 
 #include "gui.h"
 #include "buildTimer.h"
+#include "scoreBox.h"
 #include "Cube.h"
+
+#define MAX_BLOCKS 28
 
 class buildView : public gui {
 public:
@@ -13,20 +16,16 @@ public:
 	void VUpdate();
 	void createButtons();
 
-	void onClick(int state, int x, int y);
+	viewType mouseClickFunc(int state, int x, int y);
 
-	guiType switchClicked(int state, int x, int y);
-	bool helpClicked(int state, int x, int y);
-
-	//gameplay logic
-	bool addBlock(int state, int x, int y);
-	bool removeBlock(int state, int x , int y);
+	viewType checkTimeOut();
 
 	~buildView();
 
 	vector<button*> listItems;
 	scrollBox * scroll;
 	buildTimer * timer;
+	scoreBox * score;
 	bool updateview;
 };
 

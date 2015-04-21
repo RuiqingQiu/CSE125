@@ -4,44 +4,34 @@
 
 numbers::numbers() {
 	init();
-	for (int i = 0; i < 10; i++) {
-		setTexture(i);
-	}
+	setAllNumbers();
 }
 
 numbers::numbers(int x, int y) {
 	init();
 	setPosition(x, y);
-	for (int i = 0; i < 10; i++) {
-		setTexture(i);
-	}
+	setAllNumbers();
 }
 
 numbers::numbers(int x, int y, bool f) {
 	init();
 	setPosition(x, y);
 	setFixed(f, f);
-	for (int i = 0; i < 10; i++) {
-		setTexture(i);
-	}
+	setAllNumbers();
 }
 
 numbers::numbers(int x, int y, bool xf, bool yf) {
 	init();
 	setPosition(x, y);
 	setFixed(xf, yf);
-	for (int i = 0; i < 10; i++) {
-		setTexture(i);
-	}
+	setAllNumbers();
 }
 
 numbers::numbers(int x, int y, int w, int h) {
 	init();
 	setPosition(x, y);
 	setSize(w, h);
-	for (int i = 0; i < 10; i++) {
-		setTexture(i);
-	}
+	setAllNumbers();
 }
 
 numbers::numbers(int x, int y, int w, int h, bool f) {
@@ -49,9 +39,7 @@ numbers::numbers(int x, int y, int w, int h, bool f) {
 	setPosition(x, y);
 	setSize(w, h);
 	setFixed(f, f);
-	for (int i = 0; i < 10; i++) {
-		setTexture(i);
-	}
+	setAllNumbers();
 }
 
 numbers::numbers(int x, int y, int w, int h, bool xf, bool yf) {
@@ -59,9 +47,7 @@ numbers::numbers(int x, int y, int w, int h, bool xf, bool yf) {
 	setPosition(x, y);
 	setSize(w, h);
 	setFixed(xf, yf);
-	for (int i = 0; i < 10; i++) {
-		setTexture(i);
-	}
+	setAllNumbers();
 }
 
 numbers::~numbers() {
@@ -79,6 +65,15 @@ void numbers::init() {
 	scaleX = false;
 	scaleY = false;
 	path = "uiItem/text/numbers/";
+}
+
+bool numbers::setAllNumbers() {
+	if (nums_set) return false;
+	for (int i = 0; i < 10; i++) {
+		setTexture(i);
+	}
+	nums_set = true;
+	return true;
 }
 
 bool numbers::setTexture(int i) {

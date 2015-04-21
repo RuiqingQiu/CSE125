@@ -10,7 +10,7 @@ class SkyBox :
 	public GeoNode
 {
 public:
-	float size_of_texture_cube = 50;
+	float size_of_texture_cube = 100;
 
 	SkyBox();
 	SkyBox(char* filename);

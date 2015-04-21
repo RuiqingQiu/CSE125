@@ -12,10 +12,7 @@ public:
 	void VOnRender();
 	void createButtons();
 
-	void onClick(int state, int x, int y);
-
-	guiType switchClicked(int state, int x, int y);
-	bool helpClicked(int state, int x, int y);
+	viewType mouseClickFunc(int state, int x, int y);
 
 	~battleView();
 

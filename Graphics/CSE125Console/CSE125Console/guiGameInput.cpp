@@ -2,7 +2,7 @@
 #include "guiGameInput.h"
 
 
-guiGameInput::guiGameInput()
+guiGameInput::guiGameInput() : GameInputInterface()
 {
 }
 
@@ -12,24 +12,19 @@ guiGameInput::~guiGameInput()
 }
 
 void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
+	/*
 	//no key input yet except switching modes
 	switch (key) {
-		case '1':
-			g_pCore->viewmode = guiType::BUILD;
+	    // "backspace is treated as ASCII 8 in opengl"
+		case 8:
+			if (name.length() != 0){
+				name.pop_back();
+			}
 			break;
-		case '2':
-			g_pCore->viewmode = guiType::BATTLE;
+		case 27:
+			exit(0);
 			break;
-		case '3':
-			g_pCore->viewmode = guiType::HELP;
-			break;
-		case '4':
-			g_pCore->viewmode = guiType::MENU;
-			break;
-		case '5':
-			g_pCore->viewmode = guiType::CONSOLE;
-			break;
-			// need to read input for robot name, inheritanted from GameInputInterface
+	  // need to read input for robot name, inheritanted from GameInputInterface
 		case 'a':
 			name.append("a");
 			cout << "Enter !!!! in guiGameInput.cpp" << endl;
@@ -138,7 +133,7 @@ void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 		default:
 			break;
 	}
-	g_pCore->setGui();
+	*/
 }
 
 void guiGameInput::VProcessSpecialKey(int key, int x, int y) {
@@ -160,32 +155,9 @@ void guiGameInput::VProcessSpecialKey(int key, int x, int y) {
 
 void guiGameInput::VProcessMouseClick(int button, int state, int x, int y) {
 	//check which button was pressed here
-	g_pCore->gameGui->onClick(state, x, y);
-
-	guiType s = g_pCore->gameGui->switchClicked(state, x, y);
-	if (s != g_pCore->viewmode) {
-		g_pCore->viewmode = s;
-		g_pCore->setGui();
-	}
-	else if (g_pCore->gameGui->helpClicked(state, x, y)) {
-		g_pCore->viewmode = guiType::HELP;
-		g_pCore->setGui();
-	}
-
-	//buildmode input for game logic checks
-	if (g_pCore->gameGui != g_pCore->buildmode) return;
-
-
-	if (g_pCore->buildmode->addBlock(state, x, y)) {
-		//add geonode to robot
-	}
-	else if (g_pCore->buildmode->removeBlock(state, x, y)) {
-		//remove geonode from robot
-	}
-
-	//if no button was pressed, rotate the robot
+	viewType s = g_pCore->pGameView->mouseClickFunc(state, x, y);
 }
 
 void guiGameInput::VProcessPassiveMouse(int x, int y) {
-	g_pCore->gameGui->passiveMouseFunc(x, y);
+	g_pCore->pGameView->passiveMouseFunc(x, y);
 }

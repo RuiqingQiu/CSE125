@@ -4,10 +4,6 @@
 #include "Shader.h"
 
 #include "GameCore.h"
-#include "mainmenu.h"
-#include "helpMenu.h"
-#include "buildView.h"
-#include "battleView.h"
 
 #ifndef CSE167_Window_h
 #define CSE167_Window_h
@@ -16,7 +12,7 @@ class Window	  // OpenGL output window related routines
 {
     
 public:
-
+	//static viewFactory * factory;
     static int width, height; 	            // window size
     static void initialize(void);
     static void idleCallback(void);

@@ -10,14 +10,6 @@
 #include "button.h"
 #include "scrollBox.h"
 
-enum class guiType {
-	BUILD,
-	BATTLE,
-	HELP,
-	MENU,
-	CONSOLE
-};
-
 class gui : public GameView {
 public:
 	gui();
@@ -25,26 +17,20 @@ public:
 	~gui();
 
 	virtual void VOnRender(); //must have
-
 	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
 	virtual void VUpdate();
 
-	void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
-
-	virtual void onClick(int state, int x, int y);
-
 	void setDimensions(int w, int h);
 
+	//draw 2d ui functions
 	void set2d();
 	void set3d();
-
 	virtual void drawAllItems();
+	void drawText(int x, int y, std::string text, float r, float g, float b, void * font);
 
-	virtual guiType switchClicked(int state, int x, int y);
-	virtual bool helpClicked(int state, int x, int y);
+	//mouse click functions
+	virtual viewType mouseClickFunc(int state, int x, int y);
 	virtual void passiveMouseFunc(int x, int y);
-
-	bool isCurrentView;
 
 protected:
 	int width;

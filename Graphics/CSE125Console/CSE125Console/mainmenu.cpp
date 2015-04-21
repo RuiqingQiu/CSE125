@@ -45,8 +45,8 @@ void mainMenu::VOnRender(){
 	set2d();
 	drawAllItems();
 	//using drawtext for now... ugly font though
-	drawText(width * 0.6, height * 0.5, g_pCore->gui_Input->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
-
+	cout << "name is in mainmenu.cpp " << g_pCore->i_pInput->name << endl;
+	drawText(width * 0.5, height * 0.55, g_pCore->i_pInput->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
 	set3d();
 }
 
@@ -54,34 +54,23 @@ void mainMenu::VOnClientUpdate(GameInfoPacket* info){
 
 }
 
-void mainMenu::onClick(int state, int x, int y) {
+viewType mainMenu::mouseClickFunc(int state, int x, int y){
 	for (int i = 0; i < buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height - y);
 	}
-}
 
-guiType mainMenu::switchClicked(int state, int x, int y){
-	
-	if (state != GLUT_UP) return guiType::MENU;
+	if (state != GLUT_UP) return viewType::MENU;
 	
 	//play button
 	if (buttons[1]->isSelected(x, height - y)) {
-		return guiType::BUILD;
+		return viewType::BUILD;
 	}
 	// help button
 	else if((buttons[buttons.size() - 1]->isSelected(x, height - y))){
-		return guiType::HELP;
+		return viewType::HELP;
 	}
 	// stay at the menu button
-	else{
-		return guiType::MENU;
-	}
-}
-
-bool mainMenu::helpClicked(int state, int x, int y){
-	//help button
-	if (state != GLUT_UP) return false;
-	return buttons[buttons.size() - 1]->isSelected(x, height - y);
+	return viewType::MENU;
 }

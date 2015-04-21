@@ -46,11 +46,8 @@
     <Filter Include="Source Files\buildMode">
       <UniqueIdentifier>{5cf7a510-31f9-4194-a05b-17b1517a8a9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GUI\views">
+    <Filter Include="Source Files\GameView\GuiViews">
       <UniqueIdentifier>{a320b1df-4e52-4874-a987-93cc06a6f01a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GUI\guiItems">
-      <UniqueIdentifier>{c130471c-e318-4bef-9e13-1a6a1b1e2de2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,9 +162,6 @@
     <ClInclude Include="guiGameInput.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="HardShadowView.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Source Files\Shader</Filter>
     </ClInclude>
@@ -178,39 +172,20 @@
       <Filter>Source Files\buildMode</Filter>
     </ClInclude>
     <ClInclude Include="battleView.h">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClInclude>
     <ClInclude Include="helpMenu.h">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClInclude>
     <ClInclude Include="buildView.h">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClInclude>
     <ClInclude Include="mainmenu.h">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClInclude>
     <ClInclude Include="gui.h">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClInclude>
-    <ClInclude Include="buildTimer.h">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClInclude>
-    <ClInclude Include="button.h">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClInclude>
-    <ClInclude Include="guiItem.h">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClInclude>
-    <ClInclude Include="listItem.h">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClInclude>
-    <ClInclude Include="numbers.h">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClInclude>
-    <ClInclude Include="scrollBox.h">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClInclude>
-
     <ClInclude Include="TestView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -219,9 +194,51 @@
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Header Files</Filter>
-</ClInclude>
+    </ClInclude>
     <ClInclude Include="background.h">
-      <Filter>Source Files\GUI\guiItems</Filter>
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="buildTimer.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="guiItem.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="listItem.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="HardShadowView.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="TestView.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="Teapot.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="scoreBox.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="scrollBox.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="viewFactory.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="numbers.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketDecoder.h">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="mainmenuinput.h">
+      <Filter>Source Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -315,9 +332,6 @@
     <ClCompile Include="Plane.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="HardShadowView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="guiGameInput.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
@@ -331,51 +345,65 @@
       <Filter>Source Files\buildMode</Filter>
     </ClCompile>
     <ClCompile Include="battleView.cpp">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClCompile>
     <ClCompile Include="helpMenu.cpp">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClCompile>
     <ClCompile Include="buildView.cpp">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClCompile>
     <ClCompile Include="mainmenu.cpp">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClCompile>
     <ClCompile Include="gui.cpp">
-      <Filter>Source Files\GUI\views</Filter>
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClCompile>
-    <ClCompile Include="buildTimer.cpp">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClCompile>
-    <ClCompile Include="button.cpp">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClCompile>
-    <ClCompile Include="guiItem.cpp">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClCompile>
-    <ClCompile Include="listItem.cpp">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClCompile>
-    <ClCompile Include="numbers.cpp">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClCompile>
-    <ClCompile Include="scrollBox.cpp">
-      <Filter>Source Files\GUI\guiItems</Filter>
-    </ClCompile>
-
     <ClCompile Include="TestView.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameView</Filter>
     </ClCompile>
     <ClCompile Include="Teapot.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="background.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="buildTimer.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="guiItem.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="listItem.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="numbers.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="scoreBox.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="scrollBox.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="viewFactory.cpp">
+      <Filter>Source Files\GameView</Filter>
+    </ClCompile>
+    <ClCompile Include="HardShadowView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
 
-    <ClCompile Include="background.cpp">
-      <Filter>Source Files\GUI\guiItems</Filter>
+    <ClCompile Include="mainmenuinput.cpp">
+      <Filter>Source Files\Input</Filter>
+</ClCompile>
+    <ClCompile Include="PacketDecoder.cpp">
+      <Filter>Source Files\NetPacket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
