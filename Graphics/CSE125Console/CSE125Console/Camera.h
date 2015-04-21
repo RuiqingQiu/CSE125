@@ -19,7 +19,7 @@ public:
 	Matrix4 camera_matrix;
 
 	GeoNode* FollowingTarget = nullptr;
-	bool IsFollowingEnabled = true;
+	bool IsFollowingEnabled;
 	/*
 	Vector3 *e = new Vector3(0, 0, -10);
 	//Look at vector

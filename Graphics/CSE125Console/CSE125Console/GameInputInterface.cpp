@@ -36,3 +36,9 @@ void GameInputInterface::VProcessPassiveMouse(int x, int y) {
 	//implement here just to avoid compiler error
 	printf("This need to be implemented please FIX\n");
 }
+
+void GameInputInterface::VProcessMouse(int x, int y) {
+	//This method should always be overrided!
+	//implement here just to avoid compiler error
+	printf("This need to be implemented please FIX\n");
+}

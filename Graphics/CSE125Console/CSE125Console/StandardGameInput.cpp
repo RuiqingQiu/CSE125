@@ -10,9 +10,22 @@ StandardGameInput::StandardGameInput()
 StandardGameInput::~StandardGameInput()
 {
 }
-
+static int mx,my;
 void StandardGameInput::VProcessMouseClick(int button, int state, int x, int y) {
 	//do nothing for now, need this function in gui
+	if (button == GLUT_RIGHT_BUTTON&&state==GLUT_DOWN)
+	{
+		printf("right mouse\n");
+		g_pCore->pGameView->pViewCamera->IsFollowingEnabled = false;
+		mx = x;
+		my = y;
+	}
+
+	if (button == GLUT_RIGHT_BUTTON&&state == GLUT_UP)
+	{
+		g_pCore->pGameView->pViewCamera->IsFollowingEnabled = true;
+		printf("release mouse\n");
+	}
 }
 
 void StandardGameInput::VProcessSpecialKey(int key, int x, int y) {
@@ -20,7 +33,23 @@ void StandardGameInput::VProcessSpecialKey(int key, int x, int y) {
 }
 void StandardGameInput::VProcessPassiveMouse(int x, int y) {
 	//do nothing for now, need this function in gui
+
+
 }
+
+void StandardGameInput::VProcessMouse(int x, int y)
+{
+	if (g_pCore->pGameView->pViewCamera->IsFollowingEnabled == false){
+		int delx = x - mx;
+		int dely = y - my;
+		float deltaAnglex = (delx) * 0.001f;
+		float deltaAngley = (dely)* 0.001f;
+		g_pCore->pGameView->pViewCamera->rotation->x = dely%360;
+		g_pCore->pGameView->pViewCamera->rotation->y = delx%360;
+
+	}
+}
+
 
 void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 {

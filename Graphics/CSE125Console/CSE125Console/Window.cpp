@@ -147,6 +147,12 @@ void Window::processSpecialKeys(int key, int x, int y) {
 	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
 }
 
+void Window::processMouse(int x, int y)
+{
+	g_pCore->i_pInput->VProcessMouse(x, y);
+}
+
+
 void Window::processMouseClick(int button, int state, int x, int y) {
 	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
 	factory->mouseFunc(button, state, x, y);

@@ -5,6 +5,7 @@ Camera::Camera()
 {
 	//localTransform = Transform();
 	//localTransform.position = Vector3(1, 1, 0);
+	IsFollowingEnabled = true;
 }
 
 
@@ -13,12 +14,11 @@ Camera::~Camera()
 }
 
 void Camera::setUpCamera(){
-	if (FollowingTarget != nullptr)
+	if (IsFollowingEnabled&&FollowingTarget != nullptr)
 	{
 		UpdateCamera();
 	}
 	else{
-		printf("nah\n");
 	}
 	glRotatef(rotation->x, 1, 0, 0);
 	glRotatef(rotation->y, 0, 1, 0);
@@ -28,7 +28,7 @@ void Camera::setUpCamera(){
 
 
 void  Camera::setUpCameraWithGL(float position_x, float position_y, float position_z, float lookAt_x, float lookAt_y, float lookAt_z){
-	if (FollowingTarget != nullptr)
+	if (IsFollowingEnabled&&FollowingTarget != nullptr)
 	{
 		UpdateCamera();
 	}
@@ -55,7 +55,7 @@ void Camera::UpdateCamera()
 	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
 	Vector3* newrotation = new Vector3(-FollowingTarget->localTransform.rotation.x, -FollowingTarget->localTransform.rotation.y, -FollowingTarget->localTransform.rotation.z);
 	*this->position = VectorLerp(position, newposition, 0.1);
-	*this->rotation = VectorLerp(rotation, newrotation, 0.01);
+	*this->rotation = VectorLerp(rotation, newrotation, 0.056);
 }
 
 Vector3 Camera::VectorLerp(Vector3* v1, Vector3* v2, float t)

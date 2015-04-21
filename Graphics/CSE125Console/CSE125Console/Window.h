@@ -22,6 +22,8 @@ public:
 	static void processSpecialKeys(int key, int x, int y);
 	static void processMouseClick(int button, int state, int x, int y);
 	static void processPassiveMouse(int x, int y);
+	static void processMouse(int x, int y);
+
 };
 
 #endif
