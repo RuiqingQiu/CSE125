@@ -237,6 +237,9 @@
     <ClInclude Include="PacketDecoder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="buildViewInput.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -397,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="HardShadowView.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="buildViewInput.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

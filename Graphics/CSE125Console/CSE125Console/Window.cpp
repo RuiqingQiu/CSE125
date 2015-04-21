@@ -38,7 +38,7 @@ void Window::initialize(void)
 	g_pCore->skybox = new SkyBox();
 	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
-
+	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
 
 	//set color
@@ -49,31 +49,33 @@ void Window::initialize(void)
 	cube->identifier = 1;
 	view->PushGeoNode(cube);
 
-	view->PushGeoNode(g_pCore->skybox);
-
-	//object = new Model3D("Hatchet.obj");
-	//object->localTransform.position = Vector3(0, 0, -20);
-	//object->localTransform.scale = Vector3(1, 1, 1);
-	//object->localTransform.rotation = Vector3(0, 0, 0);
-	//view->PushGeoNode(object);
+	/*
+	object = new Model3D("Hatchet.obj");
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	*/
 
 	//setup light
-	view->PushGeoNode(g_pCore->light);
+	//view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
 
 	Plane* p = new Plane(50);
 	p->localTransform.position = Vector3(0, 0, 0);
-	view->PushGeoNode(p);
+	//view->PushGeoNode(p);
 
+	/*
 	Model3D *object = new Model3D("woodcube.obj");
 	object->localTransform.position = Vector3(0, 0, -10);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-	factory->battlemode->PushGeoNode(object);
+	*/
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	factory->battlemode->PushGeoNode(g_pCore->light);
+	//factory->battlemode->PushGeoNode(object);
 	factory->battlemode->PushGeoNode(p);
 
 	//test shadow view
@@ -96,7 +98,7 @@ void Window::initialize(void)
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 }
 
 //----------------------------------------------------------------------------

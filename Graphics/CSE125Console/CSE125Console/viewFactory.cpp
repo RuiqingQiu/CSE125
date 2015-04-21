@@ -14,6 +14,7 @@ viewFactory::viewFactory()
 
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
+	build_Input = new buildViewInput();
 	currentInput = standard_Input;
 
 	debug = false;
@@ -30,6 +31,7 @@ viewFactory::viewFactory(int w, int h) {
 
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
+	build_Input = new buildViewInput();
 	currentInput = standard_Input;
 
 	debug = false;
@@ -77,7 +79,7 @@ void viewFactory::setView() {
 	if (viewmode == viewType::BUILD) {
 		helpview->returnTo = viewType::BUILD;
 		currentView = buildmode;
-		currentInput = gui_Input;
+		currentInput = build_Input;
 	}
 	else if (viewmode == viewType::BATTLE) {
 		currentView = battlemode;

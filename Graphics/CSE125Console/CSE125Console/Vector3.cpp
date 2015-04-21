@@ -111,3 +111,10 @@ void Vector3::print(string comment){
 	printf("%s : ", comment);
 	printf("%f %f %f\n", x, y, z);
 }// print x,y and z components of the vector after a comment string
+
+bool Vector3::equals(const Vector3& v) {
+	if (this->x == v.x && this->y == v.y && this->z == v.z) {
+		return true;
+	}
+	return false;
+}
