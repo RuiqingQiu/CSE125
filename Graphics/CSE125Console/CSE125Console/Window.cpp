@@ -33,8 +33,8 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	factory = new viewFactory(width, height);
-	//factory = new viewFactory(true);  //for no gui
+	//factory = new viewFactory(width, height);
+	factory = new viewFactory(true);  //for no gui
 	g_pCore->skybox = new SkyBox();
 	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
@@ -50,20 +50,35 @@ void Window::initialize(void)
 	view->PushGeoNode(cube);
 
 	view->PushGeoNode(g_pCore->skybox);
-
+	/*
 	object = new Model3D("Hatchet.obj");
 	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 90, 0);
 	view->PushGeoNode(object);
-
+	*/
 	//setup light
 	view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
 
 	Plane* p = new Plane(50);
-	p->localTransform.position = Vector3(0, 0, 0);
+	p->setColor(1, 1, 0);
+	p->localTransform.position = Vector3(20, 0, 0);
+	p->localTransform.rotation = Vector3(0, 0, 0);
+	p->normal = Vector3(1, 0, 0);
 	view->PushGeoNode(p);
+	/*
+	p = new Plane(50);
+	p->setColor(1, 0, 0);
+	p->localTransform.position = Vector3(20, 0, 0);
+	p->localTransform.rotation = Vector3(0, 0, 90);
+	view->PushGeoNode(p);
+
+	p = new Plane(50);
+	p->setColor(0, 1, 0);
+	p->localTransform.position = Vector3(-20, 0, 0);
+	p->localTransform.rotation = Vector3(0, 0, -90);
+	view->PushGeoNode(p);*/
 	/*
 	Model3D *object = new Model3D("woodcube.obj");
 	object->localTransform.position = Vector3(0, 0, -10);
@@ -97,7 +112,7 @@ void Window::initialize(void)
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
 }
 
 //----------------------------------------------------------------------------
@@ -167,7 +182,7 @@ void Window::reshapeCallback(int w, int h) {
 void Window::displayCallback() {
 	counter = (counter + 1) % 360;
 	
-	object->localTransform.rotation.y = counter;
+	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
 	if (p!=nullptr) {
