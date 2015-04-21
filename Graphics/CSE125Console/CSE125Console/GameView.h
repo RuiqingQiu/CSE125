@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Cube.h"
 #include "GamePlayer.h"
+#include "Plane.h"
 //#include "GameCore.h"
 
 #ifndef CSE125_GAMEVIEW

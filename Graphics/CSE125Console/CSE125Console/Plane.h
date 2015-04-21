@@ -10,10 +10,11 @@ class Plane : public GeoNode
 public:
 
 	float size;
-
+	Vector3 color;
 	std::vector<ComponentNode> components;
-
+	Vector3 normal;
 	Plane(float);
+	void setColor(float r, float g, float b);
 	virtual ~Plane(void);
 	virtual void VOnClientUpdate(GameInfoPacket* pData);
 

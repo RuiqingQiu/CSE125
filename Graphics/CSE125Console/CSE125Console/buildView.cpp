@@ -22,6 +22,7 @@ buildView::~buildView() {
 
 void buildView::createButtons() {
 	center = Vector3(-5, -5, -5);
+	//center = Vector3(0, 0, -5);
 	static Cube * cube = new Cube(1);
 	cube->localTransform.position = center;
 	cube->identifier = 4;

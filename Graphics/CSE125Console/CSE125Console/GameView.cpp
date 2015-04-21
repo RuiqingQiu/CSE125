@@ -70,14 +70,64 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	//Loop through the list to see anything that's not being processed. if so, create
 	for (int i = 0; i < info->player_infos.size(); i++){
 		if (!info->player_infos[i]->processed){
-			double x = info->player_infos[i]->x;
-			double y = info->player_infos[i]->y;
-			double z = info->player_infos[i]->z;
-			cout << "data is not processed, need to create objects" << endl;
-			Cube* cube = new Cube(1);
-			cube->localTransform.position = Vector3(x, y, z);
-			cube->identifier = info->player_infos[i]->id;
-			NodeList.push_back(cube);
+			switch (info->player_infos[i]->type){
+				cout << "data is not processed, need to create objects" << endl;
+				//CUBE = 0
+				case 0:{
+					double x = info->player_infos[i]->x;
+					double y = info->player_infos[i]->y;
+					double z = info->player_infos[i]->z;
+					Cube* cube = new Cube(1);
+					cube->localTransform.position = Vector3(x, y, z);
+					cube->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+					cube->identifier = info->player_infos[i]->id;
+					NodeList.push_back(cube);
+					break;
+				}
+				//BATTLEFIELD = 1
+				case 1:{
+					cout << "enter battlefield" << endl;
+					Plane* plane = new Plane(100);
+					plane->setColor(0, 1, 0);
+					plane->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+					plane->normal = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+					plane->identifier = info->player_infos[i]->id;
+					NodeList.push_back(plane);
+					break;
+				}
+				//WALL = 2
+				case 2:{
+					cout << "enter wall" << endl;
+					Plane* plane = new Plane(10);
+					plane->setColor(1, 0, 0);
+					plane->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+					plane->normal = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+					plane->identifier = info->player_infos[i]->id;
+					NodeList.push_back(plane);
+					break;
+				}
+			
+				//CUBE3x3 = 3
+				case 3:{
+					double x = info->player_infos[i]->x;
+					double y = info->player_infos[i]->y;
+					double z = info->player_infos[i]->z;
+					Cube* cube = new Cube(3);
+					cube->localTransform.position = Vector3(x, y, z);
+					cube->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+					cube->identifier = info->player_infos[i]->id;
+					NodeList.push_back(cube);
+					break;
+				}
+				//Needle=4
+				case 4:{
+						   break;
+				}
+				default:{
+							cout << "Should not go into here in gameview.cpp" << endl;
+							break;
+				}
+			}
 		}
 	}
 }

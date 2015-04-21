@@ -2,7 +2,7 @@
 #include "guiGameInput.h"
 
 
-guiGameInput::guiGameInput()
+guiGameInput::guiGameInput() : GameInputInterface()
 {
 }
 

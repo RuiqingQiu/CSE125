@@ -18,13 +18,13 @@
 #include "HardShadowView.h"
 #include "TestView.h"
 #include "Teapot.h"
-#define TESTCAM 0
+#define TESTCAM 1
 
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-static viewFactory * factory;
+static viewFactory * factory; // factory of gui
 
 static int counter = 0;
 static Cube* cube;
@@ -62,9 +62,22 @@ void Window::initialize(void)
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
 
 	Plane* p = new Plane(50);
-	p->localTransform.position = Vector3(0, 0, 0);
-	//view->PushGeoNode(p);
+	p->setColor(1, 1, 0);
+	p->localTransform.position = Vector3(0, -5, 0);
+	p->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(p);
+	/*
+	p = new Plane(50);
+	p->setColor(1, 0, 0);
+	p->localTransform.position = Vector3(20, 0, 0);
+	p->localTransform.rotation = Vector3(0, 0, 90);
+	view->PushGeoNode(p);
 
+	p = new Plane(50);
+	p->setColor(0, 1, 0);
+	p->localTransform.position = Vector3(-20, 0, 0);
+	p->localTransform.rotation = Vector3(0, 0, -90);
+	view->PushGeoNode(p);*/
 	/*
 	Model3D *object = new Model3D("woodcube.obj");
 	object->localTransform.position = Vector3(0, 0, -10);
@@ -99,6 +112,11 @@ void Window::initialize(void)
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
+	if (TESTCAM)
+	{
+		g_pCore->pGameView->pViewCamera->FollowingTarget = cube;
+	}
 }
 
 //----------------------------------------------------------------------------
@@ -194,20 +212,6 @@ void Window::displayCallback() {
 
 	//test for camera
 	
-	if (TESTCAM)
-	{
-		Matrix4 trans = cube->localTransform.GetRotMatrix4();
-		Vector4 forward = Vector4(0, 0, -1, 1);
-		Vector4 direction_temp = trans*forward;
-		Vector3 direction = Vector3(direction_temp.get_x(), direction_temp.get_y(), direction_temp.get_z());
-		direction.normalize();
-		printf("direction : %f %f %f\n", direction.x,direction.y,direction.z);
-		float distanceToPlayer = 5;
-		g_pCore->pGameView->pViewCamera->position = new Vector3(cube->localTransform.position.x - direction.x*distanceToPlayer, cube->localTransform.position.y - direction.y*distanceToPlayer, cube->localTransform.position.z - direction.z*distanceToPlayer);
-		g_pCore->pGameView->pViewCamera->rotation = new Vector3(-cube->localTransform.rotation.x, -cube->localTransform.rotation.y, -cube->localTransform.rotation.z);
-		//cube2->localTransform.position = Vector3(cube->localTransform.position.x - direction.x*distanceToPlayer, cube->localTransform.position.y - direction.y*distanceToPlayer, cube->localTransform.position.z - direction.z*distanceToPlayer);
-		//cube2->localTransform.rotation = Vector3(cube->localTransform.rotation.x, cube->localTransform.rotation.y, cube->localTransform.rotation.z);
-	}
 	//glPopMatrix();
 	//Tell OpenGL to clear any outstanding commands in its command buffer
 	//This will make sure that all of our commands are fully executed before
