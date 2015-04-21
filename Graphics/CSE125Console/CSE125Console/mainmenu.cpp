@@ -45,8 +45,8 @@ void mainMenu::VOnRender(){
 	set2d();
 	drawAllItems();
 	//using drawtext for now... ugly font though
+	cout << "name is in mainmenu.cpp " << g_pCore->i_pInput->name << endl;
 	drawText(width * 0.5, height * 0.55, g_pCore->i_pInput->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
-
 	set3d();
 }
 

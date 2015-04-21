@@ -14,6 +14,7 @@ viewFactory::viewFactory()
 
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
+	meunInput = new mainMenuInput();
 	currentInput = standard_Input;
 
 	debug = false;
@@ -31,6 +32,7 @@ viewFactory::viewFactory(int w, int h) {
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
 	currentInput = standard_Input;
+	meunInput = new mainMenuInput();
 
 	debug = false;
 }
@@ -50,6 +52,7 @@ viewFactory::viewFactory(bool d) {
 
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
+	meunInput = new mainMenuInput();
 	currentInput = standard_Input;
 }
 
@@ -90,7 +93,8 @@ void viewFactory::setView() {
 	else if (viewmode == viewType::MENU) {
 		helpview->returnTo = viewType::MENU;
 		currentView = menumode;
-		currentInput = gui_Input;
+		// in menu mode, change ic mainMenuInputmeunInput
+		currentInput = meunInput;
 	}
 	else if (viewmode == viewType::CONSOLE) {
 		currentView = defaultView;
