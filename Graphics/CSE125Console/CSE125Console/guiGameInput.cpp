@@ -2,7 +2,7 @@
 #include "guiGameInput.h"
 
 
-guiGameInput::guiGameInput()
+guiGameInput::guiGameInput() : GameInputInterface()
 {
 }
 
@@ -12,6 +12,7 @@ guiGameInput::~guiGameInput()
 }
 
 void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
+	/*
 	//no key input yet except switching modes
 	switch (key) {
 	    // "backspace is treated as ASCII 8 in opengl"
@@ -132,6 +133,7 @@ void guiGameInput::VProcessKeyInput(unsigned char key, int x, int y) {
 		default:
 			break;
 	}
+	*/
 }
 
 void guiGameInput::VProcessSpecialKey(int key, int x, int y) {

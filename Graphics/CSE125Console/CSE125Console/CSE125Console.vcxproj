@@ -97,6 +97,7 @@
     <ClInclude Include="guiGameInput.h" />
     <ClInclude Include="guiItem.h" />
     <ClInclude Include="HardShadowView.h" />
+    <ClInclude Include="mainmenuinput.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="battleView.h" />
     <ClInclude Include="helpMenu.h" />
@@ -193,6 +194,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="battleView.cpp" />
+    <ClCompile Include="mainmenuinput.cpp" />
     <ClCompile Include="StandardGameInput.cpp" />
     <ClCompile Include="stb_image_aug.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

@@ -24,7 +24,7 @@
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
-static viewFactory * factory;
+static viewFactory * factory; // factory of gui
 
 static int counter = 0;
 static Cube* cube;
@@ -72,7 +72,6 @@ void Window::initialize(void)
 	view->PushGeoNode(object);
 	*/
 	factory->battlemode->PushGeoNode(object);
-
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	factory->battlemode->PushGeoNode(g_pCore->light);
 	factory->battlemode->PushGeoNode(p);

@@ -9,6 +9,7 @@
 #include "GameInputInterface.h"
 #include "guiGameInput.h"
 #include "StandardGameInput.h"
+#include "mainmenuinput.h"
 
 class viewFactory
 {
@@ -34,6 +35,7 @@ public:
 	GameInputInterface * currentInput;
 	guiGameInput* gui_Input;
 	StandardGameInput* standard_Input;
+	mainMenuInput* meunInput; // add menu input
 
 	//getters
 	//GameView * getView();
