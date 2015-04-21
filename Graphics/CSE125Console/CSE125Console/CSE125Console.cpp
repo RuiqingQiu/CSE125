@@ -54,7 +54,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	glutSpecialFunc(Window::processSpecialKeys);
 	glutMouseFunc(Window::processMouseClick);
 	glutPassiveMotionFunc(Window::processPassiveMouse);
-
+	glutMotionFunc(Window::processMouse);
 	//Register the callback for the keyboard
 	//Register the callback for the keyboard function keys
 	//Register the callback for the mouse

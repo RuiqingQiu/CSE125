@@ -15,6 +15,7 @@ Plane::Plane(float size)
 {
 	localTransform = Transform();
 	this->size = size;
+	color = Vector3(0.3, 0.3, 0.3);
 }
 
 Plane::~Plane()
@@ -34,6 +35,12 @@ void Plane::VOnClientUpdate(GameInfoPacket* pData){
 	}
 }
 
+void Plane::setColor(float r, float g, float b){
+	color.x = r;
+	color.y = g;
+	color.z = b;
+}
+
 void Plane::VOnDraw()
 {
 	float halfSize = size / 2.0;
@@ -43,16 +50,27 @@ void Plane::VOnDraw()
 	glPushMatrix();
 	//Apply local transformation
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
-	glColor4f(0.3f, 1.0f, 0.3f, 1);
+	glColor4f(color.x, color.y, color.z, 1);
 
 	glBegin(GL_QUADS);
 	//glTranslated(0, 0, 5);
 	// Draw front face:
-	glNormal3f(0.0, 1, 0.0);
-	glVertex3f(-halfSize, 0, -halfSize);
-	glVertex3f(-halfSize, 0, halfSize);
-	glVertex3f(halfSize, 0, halfSize);
-	glVertex3f(halfSize, 0, -halfSize);
+	if (normal.x == 1.0 && normal.y == 0.0 && normal.z == 0.0){
+		cout << "normal is 1, 0, 0" << endl;
+		glNormal3f(1.0, 0.0, 0.0);
+		glVertex3f(0, -halfSize, -halfSize);
+		glVertex3f(0, -halfSize, halfSize);
+		glVertex3f(0, halfSize, halfSize);
+		glVertex3f(0, halfSize, -halfSize);
+
+	}
+	else{
+		glNormal3f(0.0, 1, 0.0);
+		glVertex3f(-halfSize, 0, -halfSize);
+		glVertex3f(-halfSize, 0, halfSize);
+		glVertex3f(halfSize, 0, halfSize);
+		glVertex3f(halfSize, 0, -halfSize);
+	}
 
 	glEnd();
 	glColor4f(1, 1, 1, 1);

@@ -21,10 +21,15 @@ buildView::~buildView() {
 }
 
 void buildView::createButtons() {
+	center = Vector3(-5, -5, -5);
+	//center = Vector3(0, 0, -5);
 	static Cube * cube = new Cube(1);
-	cube->localTransform.position = Vector3(0, 0, -5);
-	cube->identifier = 1;
+	cube->localTransform.position = center;
+	cube->identifier = 4;
+	mappings[4] = true;
+	currentBlock = 4;
 	PushGeoNode(cube);
+	currentNode = nullptr;  //not allowed to move base cube
 	//hardcoded button sizes for now
 
 	//text displays
@@ -74,7 +79,7 @@ void buildView::createButtons() {
 
 void buildView::VUpdate() {
 	gui::VUpdate();
-	if (!updateview && isCurrentView) {// || true) { //use true to disable timer
+	if (!updateview && isCurrentView || true) { //use true to disable timer
 		timer->start = std::clock();
 	}
 	for (int i = 0; i < guiItems.size(); i++) {
@@ -98,25 +103,46 @@ void buildView::VOnRender() {
 	set3d();
 }
 
+Vector3 buildView::addNewNodePos() {
+	//for now, just add to the right of current node
+	//logic here for finding place to start new node
+	Vector3 check;
+
+	if (currentNode == nullptr)
+		check = translateNode(Vector3(1, 0, 0), NodeList[0]);
+	else
+		check = translateNode(Vector3(1, 0, 0), currentNode);
+
+	if (currentNode != nullptr) {
+		Vector3 temp = currentNode->localTransform.position;
+		//if we got same position, try to the left
+		if (check.equals(temp)) {
+			check = translateNode(Vector3(-1, 0, 0), currentNode);
+			//if still invalid, fuck it just don't add for now
+			if (check.equals(temp)) {
+				return center;
+			}
+		}
+	}
+	return check;
+}
+
 viewType buildView::mouseClickFunc(int state, int x, int y) {
 	for (int i = 0; i < buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height-y);
 	}
-	if (scroll->addButton->isSelected(x, height - y) && state == GLUT_UP) {
-		int s = NodeList.size();
-		if (s < MAX_BLOCKS) {
-			Cube * cube = new Cube(1);
-			cube->localTransform.position = Vector3(-s, 0, -5);
-			cube->identifier = s;
-			PushGeoNode(cube);
+	if (state == GLUT_UP && prevMouseState != GLUT_UP) {
+		if (scroll->addButton->isSelected(x, height - y) ) {
+			addNode();
+		}
+		else if (scroll->removeButton->isSelected(x, height - y)) {
+			removeNode();
 		}
 	}
-	else if (scroll->removeButton->isSelected(x, height - y) && state == GLUT_UP) {
-		if (NodeList.size() > 1)
-			NodeList.pop_back();
-	}
+
+	prevMouseState = state;
 
 	if ((buttons[0]->isSelected(x, height - y) &&
 		state == GLUT_UP)) {
@@ -130,9 +156,109 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 	return viewType::BUILD;
 }
 
+void buildView::keyPressFunc(unsigned char key, int x, int y) {
+	switch (key) {
+	case 8: //backsapce
+		//delete block
+		removeNode();
+		break;
+	case 13: //enter
+		//add block
+		addNode();
+		break;
+	}
+}
+
 viewType buildView::checkTimeOut() {
 	if (timer->timeLeft < 0) {
 		return viewType::BATTLE;
 	}
 	return viewType::BUILD;
+}
+
+void buildView::addNode() {
+	int s = NodeList.size();
+	if (s < MAX_BLOCKS) {
+		//screw it if it isn't valid, don't add
+		Vector3 check = addNewNodePos();
+		if (check.equals(center)) {
+			return;
+		}
+		Cube * cube = new Cube(1);
+		cube->localTransform.position = addNewNodePos();
+		cube->identifier = s;
+		PushGeoNode(cube);
+		//for now, we just move the last added node
+		currentNode = NodeList[NodeList.size() - 1];
+	}
+}
+
+void buildView::removeNode() {
+	if (NodeList.size() > 1) {
+		NodeList.pop_back();
+		if (NodeList.size() == 1) {
+			currentNode = nullptr;  //not allowed to move base block
+		}
+		else {
+			currentNode = NodeList[NodeList.size() - 1];
+		}
+	}
+}
+
+bool buildView::validPos(Vector3 t, GeoNode * node) {
+	Vector3 check = node->localTransform.position + t;
+	if (check.x > center.x + HALF_GRID) {
+		return false;
+	}
+	if (check.x < center.x - HALF_GRID) {
+		return false;
+	}
+	if (check.z > center.z + HALF_GRID) {
+		return false;
+	}
+	if (check.z < center.z - HALF_GRID) {
+		return false;
+	}
+	if (check.y > center.y + HALF_GRID) {
+		return false;
+	}
+	if (check.y < center.y - HALF_GRID) {
+		return false;
+	}
+	return true;
+}
+
+Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
+	//this works for now with our small 3x3x3, until mouse raycast is implemented
+	Vector3 check = node->localTransform.position + t;
+	if (!validPos(t, node)) return node->localTransform.position;
+	int checkBelow = check.y;
+	while (checkBelow > center.y) {
+		bool foundMatchBelow = false;
+		for (int i = 0; i < NodeList.size(); i++) {
+			Vector3 temp = NodeList[i]->localTransform.position;
+			if (temp.x == check.x && temp.z == check.z) {
+				if (temp.y == check.y - 1) {
+					foundMatchBelow = true;
+				}
+			}
+		}
+		if (!foundMatchBelow) {
+			check.y -= 1;
+		}
+		checkBelow--;
+	}
+	bool foundMatch = true;
+	while (foundMatch) {
+		foundMatch = false;
+		for (int i = 0; i < NodeList.size(); i++) {
+			Vector3 temp = NodeList[i]->localTransform.position;
+			if (check.equals(temp)) {
+				foundMatch = true;
+				break;
+			}
+		}
+		if (foundMatch) check.y += 1;
+	}
+	return check;
 }
