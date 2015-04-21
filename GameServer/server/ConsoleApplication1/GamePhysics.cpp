@@ -45,7 +45,7 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 	return dynamicsWorld;
 }
 
-void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
+void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::vector<Collision*>* collisionList, std::map< btCollisionObject*, GameObj*>* objcpair)
 {
 	dynamicsWorld->setGravity(btVector3(0,GRAVITY,0));
 	std::vector<GameObj*>::iterator it;
@@ -53,14 +53,15 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)
 	{
 		if ((*it)->getIsRobot() != 0)
 		{
-			((Robot *)(*it))->createVehicle(dynamicsWorld, 3,1,3);
+			((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
 		}
 		else
 		{
-			(*it)->createRigidBody();
-			dynamicsWorld->addRigidBody((*it)->getRigidBody());
+			(*it)->createRigidBody(objcpair);
+			dynamicsWorld->addRigidBody((*it)->getRigidBody(), COL_OBJECT, objectCollisions);
 		}
 	}
+	collisionCallback(dynamicsWorld, collisionList);
 }
 
 void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
@@ -80,7 +81,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
 		(*it)->setZ(trans.getOrigin().getZ());
-		std::cout << "X: " << trans.getOrigin().getX() << ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
+		//std::cout << "X: " << trans.getOrigin().getX() << ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
 	}
 }
 
@@ -197,3 +198,31 @@ void GamePhysics::robotBackward(Robot* rb){
 
 
 
+
+
+void GamePhysics::collisionCallback(btDynamicsWorld* world, std::vector<Collision*> * collisionList)
+{
+	//std::cout << "dispatch" << std::endl;
+	int numManifolds = world->getDispatcher()->getNumManifolds();
+	//std::cout << "dispatch end" << std::endl;
+	for (int i = 0; i<numManifolds; i++)
+	{
+		btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
+		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
+		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+
+		Collision* col = new Collision(obA, obB);
+		//collisionList->push_back(col);
+		//int numContacts = contactManifold->getNumContacts();
+		//for (int j = 0; j<numContacts; j++)
+		//{
+		//	btManifoldPoint& pt = contactManifold->getContactPoint(j);
+		//	if (pt.getDistance()<0.f)
+		//	{
+		//		const btVector3& ptA = pt.getPositionWorldOnA();
+		//		const btVector3& ptB = pt.getPositionWorldOnB();
+		//		const btVector3& normalOnB = pt.m_normalWorldOnB;
+		//	}
+		//}
+	}
+}

@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObj.h"
 #include "ObjectEvents.h"
-#include "Robot.h"
 # define M_PI  3.14159265358979323846
 
 // Packet Types
@@ -108,7 +107,13 @@ enum GameEvents {
 		COL_GROUND = BIT(1), //<Collide with ground
 		COL_WALL = BIT(2), //<Collide with walls
 		COL_PLAYER = BIT(3),
+		COL_OBJECT = BIT(4),
 	};
+
+	static const int playerCollisions = COL_PLAYER | COL_WALL | COL_GROUND | COL_OBJECT;
+	static const int groundCollisions = COL_NOTHING;
+	static const int wallCollisions = COL_NOTHING;
+	static const int objectCollisions = COL_PLAYER | COL_WALL | COL_GROUND | COL_OBJECT;
 
 
 #define oneStep 0.1

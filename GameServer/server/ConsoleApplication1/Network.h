@@ -5,6 +5,7 @@
 
 #include "ServerNetwork.h"
 #include "NetworkData.h"
+#include "Robot.h"
 #include "GOBox.h"
 #include "GOCapsule.h"
 #include "GOCone.h"

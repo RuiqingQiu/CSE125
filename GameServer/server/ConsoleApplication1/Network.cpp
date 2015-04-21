@@ -347,23 +347,57 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//	temp += to_string(mat[j]);
 			//	temp += ' ';
 			//}
+			btScalar yaw = 0, pitch = 0, roll = 0;
+
+			trans.getBasis().getEulerZYX(yaw, pitch, roll);
+			//cout << "yaw : " << yaw << endl;
+			//cout << "pitch : " << pitch << endl;
+			//cout << "roll : " << roll << endl;
+			temp += to_string((float)yaw);
+			temp += ' ';
+			temp += to_string((float)pitch);
+			temp += ' ';
+			temp += to_string((float)roll);
+			temp += ' ';
+		}
+		else if ((*i)->getType() == PLANE)
+		{
+
+			temp += to_string((float)((GOPlane*)(*i))->getXNorm());
+			temp += ' ';
+			temp += to_string((float)((GOPlane*)(*i))->getYNorm());
+			temp += ' ';
+			temp += to_string((float)((GOPlane*)(*i))->getZNorm());
+			temp += ' ';
 		}
 		else
 		{
 			(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);
-		}
-		btScalar yaw = 0, pitch = 0, roll = 0;
+			btScalar yaw = 0, pitch = 0, roll = 0;
 
-		trans.getBasis().getEulerZYX(yaw, pitch, roll);
+			trans.getBasis().getEulerZYX(yaw, pitch, roll);
+			//cout << "yaw : " << yaw << endl;
+			//cout << "pitch : " << pitch << endl;
+			//cout << "roll : " << roll << endl;
+			temp += to_string((float)yaw);
+			temp += ' ';
+			temp += to_string((float)pitch);
+			temp += ' ';
+			temp += to_string((float)roll);
+			temp += ' ';
+		}
+		//btScalar yaw = 0, pitch = 0, roll = 0;
+
+		//trans.getBasis().getEulerZYX(yaw, pitch, roll);
 		//cout << "yaw : " << yaw << endl;
 		//cout << "pitch : " << pitch << endl;
 		//cout << "roll : " << roll << endl;
-		temp += to_string((float)yaw);
-		temp += ' ';
-		temp += to_string((float)pitch);
-		temp += ' ';
-		temp += to_string((float)roll);
-		temp += ' ';
+		//temp += to_string((float)yaw);
+		//temp += ' ';
+		//temp += to_string((float)pitch);
+		//temp += ' ';
+		//temp += to_string((float)roll);
+		//temp += ' ';
 		/*temp += to_string((*i)->getRotX());
 		temp += ' ';
 		temp += to_string((*i)->getRotY());
@@ -424,7 +458,8 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 	}
 	temp += "\0";
 	//cout << temp << endl;
-	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;
+	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;\
+
 	return temp;
 }
 

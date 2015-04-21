@@ -3,7 +3,8 @@
 #define GAME_OBJ_H
 
 
-
+#include "definition.h"
+#include <map>
 #include <btBulletDynamicsCommon.h>
 class GameObj
 {
@@ -59,7 +60,7 @@ public:
 	void setBlockType(int);
 	void setMass(double);
 	void setRigidBody(btRigidBody*);
-	virtual void createRigidBody() = 0;
+	virtual void createRigidBody(std::map< btCollisionObject*, GameObj*>*) = 0;
 	void setRotX(double);
 	void setRotY(double);
 	void setRotZ(double);

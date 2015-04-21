@@ -23,8 +23,10 @@ private:
 
 	std::vector<GameObj*> gameObjs;
 	std::map<int, GameObj *> clientPair;
+	std::map< btCollisionObject*, GameObj*> objCollisionPair;
 	std::vector<Constraint*> constraints;
 	std::vector<ObjectEvents *> objEventList;
+	std::vector<Collision*> collisionList;
 	//std::vector<GameEvents *> gameEventList;
 public:
 	GameLogic();

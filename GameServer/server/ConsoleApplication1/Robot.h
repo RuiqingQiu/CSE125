@@ -35,8 +35,8 @@ public:
 	Weapon* getWeapon3();
 
 	btRaycastVehicle * getVehicle();
-	void createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth);
-	void createRigidBody();
+	void createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> *);
+	void createRigidBody(std::map< btCollisionObject*, GameObj*> *);
 	btRigidBody* getRigidBody();
 };
 

@@ -39,7 +39,7 @@ double GOBox::getDepth()
 }
 
 
-void GOBox::createRigidBody() 
+void GOBox::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 {
 	btCollisionShape* fallShape = new btBoxShape(btVector3(this->getWidth()/2, this->getHeight()/2, this->getDepth()/2));
 	btDefaultMotionState* fallMotionState =
@@ -53,5 +53,6 @@ void GOBox::createRigidBody()
 	fallRigidBodyCI.m_linearDamping = 0.2f;
 	fallRigidBodyCI.m_angularDamping = 0.1f;
 	btRigidBody* rb = new btRigidBody(fallRigidBodyCI);
+	map->insert(std::pair<btCollisionObject*, GameObj*> (rb, this));
 	this->setRigidBody(rb);
 }

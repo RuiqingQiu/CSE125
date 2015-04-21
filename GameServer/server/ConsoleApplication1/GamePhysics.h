@@ -1,8 +1,10 @@
 #pragma once
 #include <btBulletDynamicsCommon.h>
 #include "GameObj.h"
+#include "Robot.h"
 #include "GOPlane.h"
 #include "Constraint.h"
+#include "CollisionDetector.h"
 #include <vector>
 #include <map>
 #include "definition.h"
@@ -14,7 +16,6 @@
 #define MAX_TURN_SPEED M_PI/10
 #define MAX_SPEED 80
 #define GRAVITY -30
-
 
 
 
@@ -30,12 +31,15 @@ public:
 	btSequentialImpulseConstraintSolver* getSolver();
 	btDiscreteDynamicsWorld* getDynamicsWorld();
 
-	void initWorld(std::vector<GameObj*>*);
+	void initWorld(std::vector<GameObj*>*, std::vector<Collision*>*, std::map< btCollisionObject*, GameObj*>*);
 	void createPhysicsEvent(int, GameObj*);
 	void stepSimulation(std::vector<GameObj*> *);
 
 
 private:
+
+
+
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
@@ -46,7 +50,7 @@ private:
 	void robotTurnRight(Robot*);
 	void robotForward(Robot*);
 	void robotBackward(Robot*);
-
+	void GamePhysics::collisionCallback(btDynamicsWorld* world, std::vector<Collision*> *);
 
 };
 

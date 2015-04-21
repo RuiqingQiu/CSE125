@@ -2,6 +2,7 @@
 
 
 Robot::Robot(int cid, char* name)
+	:GameObj()
 {
 	_r_cid = cid;
 	_name = name;
@@ -43,8 +44,9 @@ btRaycastVehicle * Robot::getVehicle()
 	return vehicle;
 }
 
-void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth)
+void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> * map)
 {
+
 	//GOBox* boxShape = new GOBox( x,  y,  z,  qX,  qY,  qZ,  qW,  mass,  width,  height,  depth);
 	double x = this->getX();
 	double y= this->getY();
@@ -55,7 +57,6 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	double qW= this->getqW();
 	double mass = this->getMass();
 	btBoxShape* m_pBoxShape = new btBoxShape(btVector3(width, height, depth));
-	
 
 	btTransform chassisLS;
 	chassisLS.setIdentity();
@@ -63,8 +64,10 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 
 	btCompoundShape * m_pCompoundShape = new btCompoundShape();
 	m_pCompoundShape->addChildShape(chassisLS, m_pBoxShape);
+	
 
-	btDefaultMotionState* pMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 2, 0)));
+
+	btDefaultMotionState* pMotionState = new btDefaultMotionState(btTransform(btQuaternion(-4, -2, -4, 1), btVector3(0, 2, 0)));
 	btVector3 intertia;
 	m_pBoxShape->calculateLocalInertia(mass, intertia);
 
@@ -89,8 +92,11 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	btRaycastVehicle* m_pVehicle = new btRaycastVehicle(tuning, m_pBody, m_pVehicleRaycaster);
 
 	this->vehicle = m_pVehicle;
-	dynamicWorld->addRigidBody(m_pBody);
+	dynamicWorld->addRigidBody(m_pBody, COL_PLAYER, playerCollisions);
 	dynamicWorld->addAction(m_pVehicle);
+
+	map->insert(std::pair<btCollisionObject*, GameObj*>(m_pBody, this));
+
 
 	m_pVehicle->setCoordinateSystem(0, 1, 2);
 
@@ -130,7 +136,7 @@ for ( i = 0; i < m_pVehicle->getNumWheels(); ++i)
 }
 }
 
-void Robot::createRigidBody()
+void Robot::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 {
 	return;
 }

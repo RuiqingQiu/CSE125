@@ -53,7 +53,7 @@ double GOPlane::getPlaneConst()
 }
 
 
-void GOPlane::createRigidBody()
+void GOPlane::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 {
 	btCollisionShape* fallShape = new btStaticPlaneShape(btVector3(this->getXNorm(), this->getYNorm(), this->getZNorm()), this->getPlaneConst());
 	btDefaultMotionState* fallMotionState =
@@ -66,5 +66,7 @@ void GOPlane::createRigidBody()
 	fallRigidBodyCI.m_restitution = 0.1f;
 	fallRigidBodyCI.m_linearDamping = 0.2f;
 	fallRigidBodyCI.m_angularDamping = 0.1f;
-	this->setRigidBody(new btRigidBody(fallRigidBodyCI));
+	btRigidBody* rb = new btRigidBody(fallRigidBodyCI);
+	map->insert(std::pair<btCollisionObject*, GameObj*>(rb, this));
+	this->setRigidBody(rb);
 }

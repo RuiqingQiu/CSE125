@@ -20,20 +20,17 @@ unsigned int GameLogic::waitToConnect()
 {
 	int cid; 
 	cid = network->waitForConnections();
-
-
-    if (cid == -1) return WAIT;
-	//GameObj* gameObj = new GOBox(0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
-	//ameObj->setBlockType(CUBE);
-	//asd++;
+	
+	//remove this part after wait
+	cid = 0;
 	GameObj* robot = new Robot(cid, "testname");
 	//0, 0
 	//5, 0
 	//0, 5
 	//5, 5
-	robot->setX((cid%2)*10);
+	robot->setX((cid % 2) * 10);
 	robot->setY(3);
-	robot->setZ(cid-2<0?0:10);
+	robot->setZ(cid - 2<0 ? 0 : 10);
 	robot->setqX(0);
 	robot->setqY(0);
 	robot->setqZ(0);
@@ -43,6 +40,11 @@ unsigned int GameLogic::waitToConnect()
 	robot->setBlockType(CUBE3x3);
 	this->pushGameObj(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
+    if (cid == -1) return WAIT;
+	//GameObj* gameObj = new GOBox(0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
+	//ameObj->setBlockType(CUBE);
+	//asd++;
+	
 
 	//GameObj* gameObj1;
 
@@ -115,8 +117,7 @@ void GameLogic::gameStart(){
 	addGround();
 	addWalls();
 
-	gamePhysics->initWorld(&(this->getGameObjs()));
-
+	gamePhysics->initWorld(&(this->getGameObjs()), &collisionList, &objCollisionPair);
 	//int i,j,k;
 
 	//for (i = 0; i < 17; i++)
@@ -173,6 +174,23 @@ unsigned int GameLogic::gameLoop (){
 	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/66.0),4);
 
 	gamePhysics->stepSimulation(&this->getGameObjs());
+
+
+
+	std::vector<Collision *>::iterator it;
+	for (it = collisionList.begin(); it != collisionList.end(); it++)
+	{
+		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
+		btCollisionObject* obj2 = static_cast<btCollisionObject*>((*it)->getObj2());
+		GameObj* GO1 = objCollisionPair.find(obj1)->second;
+		GameObj* GO2 = objCollisionPair.find(obj2)->second;
+
+		std::cout << "Collision: GO1 cid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 cid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
+
+	}
+
+	collisionList.clear();
+
 
 	//after phy logic all ObjectEvents 
 	
@@ -260,7 +278,7 @@ void GameLogic::addWalls()
 	leftWall->setBlockType(WALL);
 	rightWall->setBlockType(WALL);
 	frontWall->setBlockType(WALL);
-	backWall->setBlockType(WALL);
+	backWall->setBlockType(WALL);	
 
 	pushGameObj(ceiling);
 	pushGameObj(leftWall);

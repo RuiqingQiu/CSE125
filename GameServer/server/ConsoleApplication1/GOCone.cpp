@@ -29,7 +29,7 @@ double GOCone::getHeight()
 	return _height;
 }
 
-void GOCone::createRigidBody()
+void GOCone::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 {
 	btCollisionShape* fallShape = new btCapsuleShape(this->getRadius(), this->getHeight());
 	btDefaultMotionState* fallMotionState =
@@ -42,5 +42,7 @@ void GOCone::createRigidBody()
 	fallRigidBodyCI.m_restitution = 0.1f;
 	fallRigidBodyCI.m_linearDamping = 0.2f;
 	fallRigidBodyCI.m_angularDamping = 0.1f;
-	this->setRigidBody(new btRigidBody(fallRigidBodyCI));
+	btRigidBody* rb = new btRigidBody(fallRigidBodyCI);
+	map->insert(std::pair<btCollisionObject*, GameObj*>(rb, this));
+	this->setRigidBody(rb);
 }

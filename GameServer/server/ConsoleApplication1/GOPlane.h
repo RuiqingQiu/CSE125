@@ -20,6 +20,6 @@ public:
 	double getYNorm();
 	double getZNorm();
 	double getPlaneConst();
-	void createRigidBody() override;
+	void createRigidBody(std::map< btCollisionObject*, GameObj*> *) override;
 };
 
