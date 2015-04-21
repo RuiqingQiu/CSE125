@@ -97,10 +97,10 @@ GLhandleARB loadShader1(char* filename, unsigned int type)
 
 
 Model3D::Model3D(string filename){
-	setTextureMap("Albedo.PNG");
-	setNormalMap("Normal_Clrear.png");
-	setGlossMap("Gloss.PNG");
-	setMetallicMap("Metalness.PNG");
+	setTextureMap("./Assets/Texture/Albedo.PNG");
+	setNormalMap("./Assets/Normal/Normal_Clrear.png");
+	setGlossMap("./Assets/Gloss/Gloss.PNG");
+	setMetallicMap("./Assets/Metallic/Metalness.PNG");
 	localTransform = Transform();
 
 	std::string inputfile = filename;

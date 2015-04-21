@@ -51,11 +51,11 @@ void Window::initialize(void)
 
 	view->PushGeoNode(g_pCore->skybox);
 
-	//object = new Model3D("Hatchet.obj");
-	//object->localTransform.position = Vector3(0, 0, -20);
-	//object->localTransform.scale = Vector3(1, 1, 1);
-	//object->localTransform.rotation = Vector3(0, 0, 0);
-	//view->PushGeoNode(object);
+	object = new Model3D("Hatchet.obj");
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 90, 0);
+	view->PushGeoNode(object);
 
 	//setup light
 	view->PushGeoNode(g_pCore->light);
@@ -64,12 +64,13 @@ void Window::initialize(void)
 	Plane* p = new Plane(50);
 	p->localTransform.position = Vector3(0, 0, 0);
 	view->PushGeoNode(p);
-
+	/*
 	Model3D *object = new Model3D("woodcube.obj");
 	object->localTransform.position = Vector3(0, 0, -10);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
+	*/
 	factory->battlemode->PushGeoNode(object);
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
@@ -96,7 +97,7 @@ void Window::initialize(void)
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 }
 
 //----------------------------------------------------------------------------
@@ -166,7 +167,7 @@ void Window::reshapeCallback(int w, int h) {
 void Window::displayCallback() {
 	counter = (counter + 1) % 360;
 	
-	//object->localTransform.rotation.y = counter;
+	object->localTransform.rotation.y = counter;
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
 	if (p!=nullptr) {
