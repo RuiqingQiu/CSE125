@@ -14,8 +14,6 @@ public:
 	//std::vector<tinyobj::shape_t> shapes;
 	//std::vector<tinyobj::material_t> materials;
 	RenderObject* render_obj;
-	GLhandleARB shader_id;
-	GLuint texturaID[4];
 
 	//File path for the vertex and fragment shader
 	string vertex_shader;
@@ -26,8 +24,7 @@ public:
 	string gloss_map;
 	string metallic_map;
 	Model3D();
-	Model3D(RenderObject* render_obj, string texture, string normal, string gloss,
-		string metal);
+	Model3D(RenderObject* render_obj);
 	~Model3D();
 	void setTextureMap(string pathname);
 	void setNormalMap(string pathname);

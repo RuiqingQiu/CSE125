@@ -27,7 +27,7 @@ int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
 static viewFactory * factory; // factory of gui
-static Model3DFactory m_factory;
+static Model3DFactory* m_factory;
 static int counter = 0;
 static Cube* cube;
 static Model3D*object;
@@ -37,6 +37,7 @@ void Window::initialize(void)
 {
 	factory = new viewFactory(width, height);
 	//factory = new viewFactory(true);  //for no gui
+	m_factory = new  Model3DFactory();
 	g_pCore->skybox = new SkyBox();
 	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
@@ -51,25 +52,25 @@ void Window::initialize(void)
 	cube->identifier = 1;
 	view->PushGeoNode(cube);
 
-	/*
-	object = new Model3D("Assets/Obj/Hatchet.obj", "./Assets/Texture/Albedo.PNG", "./Assets/Normal/Normal_Clrear.png", "./Assets/Gloss/Gloss.PNG", "./Assets/Metallic/Metalness.PNG");
-	object->localTransform.position = Vector3(0, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	*/
-	vector<string> pathnames;
 	object = Model3DFactory::generateObjectWithType(Hammer);
 	object->localTransform.position = Vector3(5, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-
+	
 	object = Model3DFactory::generateObjectWithType(Mace);
 	object->localTransform.position = Vector3(3, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
+	/*
+	for (int i = 0; i < 20; i++){
+		object = Model3DFactory::generateObjectWithType(Mace);
+		object->localTransform.position = Vector3(i-10, 0, -10);
+		object->localTransform.scale = Vector3(1, 1, 1);
+		object->localTransform.rotation = Vector3(0, 0, 0);
+		view->PushGeoNode(object);
+	}*/
 
 	object = Model3DFactory::generateObjectWithType(MetalWheel);
 	object->localTransform.position = Vector3(0, 0, -20);
@@ -112,16 +113,6 @@ void Window::initialize(void)
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-		/*
-	for (int i = 0; i < 100; i++){
-		object = Model3DFactory::generateObjectWithType(0);
-		//object = CREATEOBG(Assets/Hammer/, Hammer.obj, tex.png, metallic.png, normals.png, gloss.png);
-		object->localTransform.position = Vector3(i-20, 0, -20);
-		object->localTransform.scale = Vector3(1, 1, 1);
-		object->localTransform.rotation = Vector3(0, 0, 0);
-		view->PushGeoNode(object);
-	}
-	*/
 
 	//setup light
 	//view->PushGeoNode(g_pCore->light);
@@ -257,8 +248,8 @@ void Window::reshapeCallback(int w, int h) {
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
 
 void Window::displayCallback() {
-	counter = (counter + 1) % 360;
-	
+	clock_t startTime = clock();
+
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
@@ -292,5 +283,6 @@ void Window::displayCallback() {
 	glFlush();
 	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
 	glutSwapBuffers();
-
+	clock_t endTime = clock();
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }
