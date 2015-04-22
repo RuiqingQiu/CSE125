@@ -3,7 +3,6 @@
 #include <ctime>
 #include "numbers.h"
 
-
 #define NUM_DIGITS 2
 #define MAX_TIME 60
 
@@ -27,7 +26,7 @@ public:
 	int timeLeft;
 
 	static string textPath;
-private:
+protected:
 	void createNumbers();
 	numbers * digits[NUM_DIGITS];
 };
