@@ -27,8 +27,6 @@ void buildView::createButtons() {
 	static Cube * cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	cube->identifier = 0;
-	mappings[4] = true;
-	currentBlock = 4;
 	PushGeoNode(cube);
 	currentNode = nullptr;  //not allowed to move base cube
 	//hardcoded button sizes for now

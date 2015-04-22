@@ -35,8 +35,6 @@ public:
 	buildTimer * timer;
 	scoreBox * score;
 	bool updateview;
-	bool mappings[MAX_BLOCKS];
-	int currentBlock;
 	float yRotation;
 	Matrix4 rotateY;
 	int prevMouseState;
