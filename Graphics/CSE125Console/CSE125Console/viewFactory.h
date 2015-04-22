@@ -1,5 +1,5 @@
 #pragma once
-
+#include "stdafx.h"
 #include "GameView.h"
 #include "helpMenu.h"
 #include "buildView.h"

@@ -1,6 +1,8 @@
 #pragma once
+#include "stdafx.h"
 #include <ctime>
 #include "numbers.h"
+
 
 #define NUM_DIGITS 2
 #define MAX_TIME 20
@@ -27,7 +29,6 @@ public:
 	static string textPath;
 private:
 	void createNumbers();
-
 	numbers * digits[NUM_DIGITS];
 };
 

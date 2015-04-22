@@ -2,17 +2,21 @@
 #include "battleView.h"
 
 battleView::battleView(): gui(){
+	/*
 	guiItem * text = new guiItem("text/time.jpg", 300, 300, 400, 50, false, false);
 	text->setScaling(true, false, width, height);
 	guiItems.push_back(text);
-	//createButtons();
+	*/
+	createButtons();
 }
 
 battleView::battleView(int w, int h) : gui(w, h) {
-	//createButtons();
+	createButtons();
+	/*
 	guiItem * text = new guiItem("text/time.jpg", 300, 300, 400, 50, false, false);
 	text->setScaling(true, false, width, height);
 	guiItems.push_back(text);
+	*/
 }
 
 battleView::~battleView()
@@ -22,25 +26,28 @@ battleView::~battleView()
 // create all the buttons on the battle view
 void battleView:: createButtons(){
 	// display the time left
-	cout << "Enters ! !!! in battleView.cpp" << endl;
-	guiItem * text = new guiItem("text/time.jpg", 300, 300, 400, 50, false, false);
-	text->setScaling(true, false, width, height);
-	guiItems.push_back(text);
+	timer = new buildTimer(width*0.3, height - 50, 400, 50, false, false);
+	timer->setScaling(true, false, width, height);
+	guiItems.push_back(timer);
 
 }
 
+void battleView::VUpdate() {
+	gui::VUpdate();
+	if (!updateview && isCurrentView || false) { //use true to disable timer
+		timer->start = std::clock();
+	}
+	for (int i = 0; i < guiItems.size(); i++) {
+		guiItems[i]->update();
+	}
+	updateview = isCurrentView;
+}
+
+	
 void battleView::VOnRender() {
 	GameView::VOnRender();
 	set2d();
 	drawAllItems();
-
-	//display the time left
-	int time;
-
-	//using drawtext for now... ugly font though
-	//drawText(70, height - 15, d, 1.0, 1.0, 0.0, GLUT_BITMAP_HELVETICA_12);
-
-
 	set3d();
 }
 
