@@ -21,13 +21,12 @@ buildView::~buildView() {
 }
 
 void buildView::createButtons() {
+	yRotation = 0;
+	rotateY.identity();
 	center = Vector3(-5, -5, -5);
-	//center = Vector3(0, 0, -5);
 	static Cube * cube = new Cube(1);
-	cube->localTransform.position = center;
-	cube->identifier = 4;
-	mappings[4] = true;
-	currentBlock = 4;
+	cube->localTransform.position = Vector3(0, 0, 0);
+	cube->identifier = 0;
 	PushGeoNode(cube);
 	currentNode = nullptr;  //not allowed to move base cube
 	//hardcoded button sizes for now
@@ -75,11 +74,14 @@ void buildView::createButtons() {
 	help->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
 	buttons.push_back(help);
 
+	//grid textures
+	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
+	setTexture("uiItem/images/blackgrid.jpg", &grids[1]);
 }
 
 void buildView::VUpdate() {
 	gui::VUpdate();
-	if (!updateview && isCurrentView || true) { //use true to disable timer
+	if (!updateview && isCurrentView){// || true) { //use true to disable timer
 		timer->start = std::clock();
 	}
 	for (int i = 0; i < guiItems.size(); i++) {
@@ -97,7 +99,69 @@ void buildView::VUpdate() {
 }
 
 void buildView::VOnRender() {
-	GameView::VOnRender();
+	//Clear color and depth buffers
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Set the OpenGL matrix mode to ModelView
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	pViewCamera->setUpCamera();
+	//glPushMatrix();
+	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
+
+	glPushMatrix();
+	glTranslatef(center.x, center.y, center.z);
+	glRotatef(yRotation, 0.0, 1.0, 0.0);
+
+	for each (GeoNode* node in NodeList) {
+		node->VOnDraw();
+	};
+	glPopMatrix();
+
+	//draw grid plane quad
+	glColor3f(1, 1, 1);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, grids[0]);
+	glBegin(GL_QUADS);
+	//bottom
+	glTexCoord2f(0, 0); 
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glTexCoord2f(0, 1); 
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z + HALF_GRID + 0.5);
+	glTexCoord2f(1, 1); 
+	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5, center.z + HALF_GRID + 0.5);
+	glTexCoord2f(1, 0); 
+	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, grids[1]);
+	glBegin(GL_QUADS);
+	//back
+	glTexCoord2f(0, 0);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glTexCoord2f(0, 1);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y + GRID_SIZE - 0.5, center.z - HALF_GRID - 0.5);
+	glTexCoord2f(1, 1);
+	glVertex3f(center.x + HALF_GRID + 0.5, center.y + GRID_SIZE - 0.5, center.z - HALF_GRID - 0.5);
+	glTexCoord2f(1, 0);
+	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+
+	//to the left
+	glTexCoord2f(0, 0);
+	//glNormal3f(1, 0, 0);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glTexCoord2f(0, 1);
+	//glNormal3f(1, 0, 0);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z + HALF_GRID + 0.5);
+	glTexCoord2f(1, 1);
+	//glNormal3f(1, 0, 0);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y + GRID_SIZE - 0.5, center.z + HALF_GRID + 0.5);
+	glTexCoord2f(1, 0);
+	//glNormal3f(1, 0, 0);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y + GRID_SIZE - 0.5, center.z - HALF_GRID - 0.5);
+	glEnd();
+
+
 	set2d();
 	drawAllItems();
 	set3d();
@@ -120,7 +184,7 @@ Vector3 buildView::addNewNodePos() {
 			check = translateNode(Vector3(-1, 0, 0), currentNode);
 			//if still invalid, fuck it just don't add for now
 			if (check.equals(temp)) {
-				return center;
+				return Vector3(0,0,0);
 			}
 		}
 	}
@@ -181,7 +245,7 @@ void buildView::addNode() {
 	if (s < MAX_BLOCKS) {
 		//screw it if it isn't valid, don't add
 		Vector3 check = addNewNodePos();
-		if (check.equals(center)) {
+		if (check.equals(Vector3(0,0,0))) {
 			return;
 		}
 		Cube * cube = new Cube(1);
@@ -207,22 +271,13 @@ void buildView::removeNode() {
 
 bool buildView::validPos(Vector3 t, GeoNode * node) {
 	Vector3 check = node->localTransform.position + t;
-	if (check.x > center.x + HALF_GRID) {
+	if (check.x > HALF_GRID || check.x < -HALF_GRID) {
 		return false;
 	}
-	if (check.x < center.x - HALF_GRID) {
+	if (check.z > HALF_GRID || check.z < -HALF_GRID) {
 		return false;
 	}
-	if (check.z > center.z + HALF_GRID) {
-		return false;
-	}
-	if (check.z < center.z - HALF_GRID) {
-		return false;
-	}
-	if (check.y > center.y + HALF_GRID) {
-		return false;
-	}
-	if (check.y < center.y - HALF_GRID) {
+	if (check.y > GRID_SIZE - 1 || check.y < 0) {
 		return false;
 	}
 	return true;
@@ -230,10 +285,28 @@ bool buildView::validPos(Vector3 t, GeoNode * node) {
 
 Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
 	//this works for now with our small 3x3x3, until mouse raycast is implemented
+	//std::cout << "old: " << t.x << " " << t.y << " " << t.z << std::endl;
+	//t = rotateY.transform(t);
+	//std::cout << t.x << " " << t.y << " " << t.z << std::endl;
+	if (yRotation == 180) {
+		t.x = -t.x;
+		t.z = -t.z;
+	} 
+	else if (yRotation == 90) {
+		double temp = t.x;
+		t.x = -t.z;
+		t.z = temp;
+	}
+	else if (yRotation == 270) {
+		double temp = t.x;
+		t.x = t.z;
+		t.z = -temp;
+	}
+
 	Vector3 check = node->localTransform.position + t;
 	if (!validPos(t, node)) return node->localTransform.position;
 	int checkBelow = check.y;
-	while (checkBelow > center.y) {
+	while (checkBelow > 0) {
 		bool foundMatchBelow = false;
 		for (int i = 0; i < NodeList.size(); i++) {
 			Vector3 temp = NodeList[i]->localTransform.position;
@@ -258,7 +331,37 @@ Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
 				break;
 			}
 		}
-		if (foundMatch) check.y += 1;
+		if (foundMatch) {
+			check.y += 1;
+			t.y += 1;
+		}
+		if (!validPos(t, node)) {
+			return node->localTransform.position;
+		}
 	}
 	return check;
+}
+
+
+bool buildView::setTexture(string filename, GLuint * t) {
+	*t = SOIL_load_OGL_texture
+		(
+		filename.c_str()
+		,
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_INVERT_Y
+		);
+	if (*t == 0)
+	{
+		std::cout << filename.c_str() << std::endl;
+		printf("SOIL loading error: '%s'\n", SOIL_last_result());
+		return false;
+	}
+
+	//return true if successfully set texture
+	//std::cout << filename << std::endl;
+	//std::cout << "width: " << width << std::endl;
+	//std::cout << "height: " << height << std::endl;
+	return true;
 }

@@ -1,7 +1,6 @@
-#include "stdafx.h"
 
 #pragma once
-
+#include "stdafx.h"
 #include <string>
 #include "GameView.h"
 

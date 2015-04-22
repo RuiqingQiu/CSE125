@@ -35,8 +35,8 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	//factory = new viewFactory(width, height);
-	factory = new viewFactory(true);  //for no gui
+	factory = new viewFactory(width, height);
+	//factory = new viewFactory(true);  //for no gui
 	g_pCore->skybox = new SkyBox();
 	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
@@ -203,6 +203,7 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 {
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
 	factory->switchView(key);
+	factory->keyboardFunc(key, x, y);
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 	

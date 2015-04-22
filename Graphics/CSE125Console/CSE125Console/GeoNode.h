@@ -9,6 +9,7 @@ public:
 	GeoNode();
 	~GeoNode();
 	int identifier;
+	int textureType;
 	Transform localTransform;
 	float mat[16];
 

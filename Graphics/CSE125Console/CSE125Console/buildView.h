@@ -1,5 +1,5 @@
 #pragma once
-
+#include "stdafx.h"
 #include "gui.h"
 #include "buildTimer.h"
 #include "scoreBox.h"
@@ -35,13 +35,15 @@ public:
 	buildTimer * timer;
 	scoreBox * score;
 	bool updateview;
-	bool mappings[MAX_BLOCKS];
-	int currentBlock;
+	float yRotation;
+	Matrix4 rotateY;
+	int prevMouseState;
 
 private:
 	void addNode();
 	void removeNode();
+	bool setTexture(string filename, GLuint * t);
 
-	int prevMouseState;
+	GLuint grids[2];
 };
 

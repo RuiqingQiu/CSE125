@@ -1,5 +1,5 @@
 #pragma once
-
+#include "stdafx.h"
 #include "GameView.h"
 #include "helpMenu.h"
 #include "buildView.h"
@@ -50,5 +50,9 @@ public:
 	void reshapeFunc(int w, int h);
 	void idleFunc();
 	void mouseFunc(int button, int state, int x, int y);
+	void keyboardFunc(unsigned char key, int x, int y);
+
+private:
+	int prevMouseState;
 };
 
