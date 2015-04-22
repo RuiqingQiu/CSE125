@@ -3,14 +3,15 @@
 #include <iostream>
 #include <string>
 
-int span = 0.2; // remember end of the string that has already been added to the guiItem array
+int span = 20; // the space between each letter
 int start_w; // start to display robot name
-int start_h;
+int start_h; // height should be the same
+
 mainMenu::mainMenu() : gui() {
 	w = width;
 	h = height;
 	start_w = w * 0.5;
-	start_h = h * 0.55;
+	start_h = h * 0.54; 
 	createButtons();
 }
 
@@ -18,7 +19,7 @@ mainMenu::mainMenu(int w, int h) : gui(w, h) {
 	w = width;
 	h = height;
 	start_w = w * 0.5;
-	start_h = h * 0.55;
+	start_h = h * 0.54;
 	createButtons();
 }
 
@@ -50,19 +51,32 @@ void mainMenu::createButtons() {
 	guiTexts.push_back(backimg); // push in to the guiTexts vector
 }
 
+// overwrite the gui drawAllItems function
+void mainMenu::drawAllItems(){
+	// but need to draw background first 
+
+	// exchange the order, draw button first and then draw guiItems 
+	for (int i = 0; i < buttons.size(); i++) {
+		buttons[i]->draw();
+	}
+	for (int i = 0; i < guiItems.size(); i++) {
+		guiItems[i]->draw();
+	}
+}
+
 // add letters to the guiItem array
 void mainMenu::addLetters(){
 	w = width;
 	h = height;
 	start_w = width * 0.5;
-	start_h = height * 0.55;
+	start_h = h * 0.54;
 
 	string n = g_pCore->i_pInput->name; // get the name of game core
 	guiLetters.clear(); // clear the guiLetters every time and start over
 	int counter = 0;
 	// loop through the string
 	for (string::iterator it = n.begin(); it != n.end(); ++it) {
-		letters *l = new letters(start_w + counter * span, start_h + counter * span); // pass in x,y position
+		letters *l = new letters(start_w + counter * span, start_h,22,22); // pass in x,y position and its size
 		counter++;
 		l->letterToShow = int(*it) - 97; // from char to array index
 		guiLetters.push_back(l);
@@ -84,7 +98,7 @@ void mainMenu::VOnRender(){
 	set2d();
 	addLetters();
 	drawAllItems();
-	drawText(width * 0.5, height * 0.55, g_pCore->i_pInput->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
+	//drawText(width * 0.5, height * 0.55, g_pCore->i_pInput->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
 	set3d();
 }
 

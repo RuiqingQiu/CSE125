@@ -18,7 +18,8 @@ public:
 
 	void createButtons();
 
-	void addLetters();
+	void addLetters(); // helper function
+	void drawAllItems(); // overwrite the gui drawAllItems function
 
 	viewType mouseClickFunc(int state, int x, int y);
 
@@ -27,6 +28,7 @@ public:
 	std::vector<guiItem*> guiTexts; // keep track of all the text displayed on the main menu
 
 	background * backimg;
+
 	int w; // local variables to remembr the width and height
 	int h; 
 
