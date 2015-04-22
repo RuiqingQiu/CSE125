@@ -25,7 +25,7 @@ public:
 
 	vector<button*> clickableItems;
 	std::vector<guiItem*> guiLetters; // keep track of the letter in the string, later combined with guiItems vector
-	std::vector<guiItem*> guiTexts; // keep track of all the text displayed on the main menu
+	
 
 	background * backimg;
 

@@ -48,18 +48,19 @@ void mainMenu::createButtons() {
 
 	backimg = new background("background1.jpg", width, height);
 	//guiItems.push_back(backimg);
-	guiTexts.push_back(backimg); // push in to the guiTexts vector
+	guiItems.push_back(backimg); // push in to the guiTexts vector
 }
 
 // overwrite the gui drawAllItems function
 void mainMenu::drawAllItems(){
-	// but need to draw background first 
+	// but need to draw background first
+	guiItems[0]->draw();
 
 	// exchange the order, draw button first and then draw guiItems 
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons[i]->draw();
 	}
-	for (int i = 0; i < guiItems.size(); i++) {
+	for (int i = 1; i < guiItems.size(); i++) {
 		guiItems[i]->draw();
 	}
 }
@@ -82,13 +83,15 @@ void mainMenu::addLetters(){
 		guiLetters.push_back(l);
 	}
 
+
+	// Deletes the 2nd through 3rd elements (vec[1], vec[2])
+	//guiItems.erase(guiItems.begin() + 1, guiItems.begin() + guiItems.size);
+
+
+	
 	guiItems.clear(); // clear the guiItem to avoid adding elements all more than once
-	// combine guiTexts and guiLetters
-	for (std::vector<guiItem*>::iterator it = guiTexts.begin(); it != guiTexts.end(); ++it) {
-		guiItems.push_back(*it); // add guiTexts first 
-	}
-	// add guiletters afterwards
-	for (std::vector<guiItem*>::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){
+	guiItems.push_back(backimg); // backimg render first every time
+	for (std::vector<guiItem*> ::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){
 		guiItems.push_back(*it);
 	}
 }
