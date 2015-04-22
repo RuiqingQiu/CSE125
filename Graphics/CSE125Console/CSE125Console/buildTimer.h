@@ -5,7 +5,7 @@
 
 
 #define NUM_DIGITS 2
-#define MAX_TIME 20
+#define MAX_TIME 60
 
 class buildTimer : public guiItem {
 public:
