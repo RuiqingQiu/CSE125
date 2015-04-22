@@ -7,6 +7,7 @@
 #include <Windows.h>
 #include "ClientNetwork.h"
 #include "NetworkData.h"
+#include "GeoNode.h"
 
 class GamePacketManager
 {
@@ -21,6 +22,8 @@ public:
 	bool SendMoveToDown(int id);
 	bool SendMoveToForward(int id);
 	bool SendMoveToBackward(int id);
+	
+	bool SendRobotBuild(int id, std::vector<GeoNode *> nodeList);
 
 	GameInfoPacket* tryGetGameInfo();
 };

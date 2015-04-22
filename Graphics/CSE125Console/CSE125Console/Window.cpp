@@ -137,6 +137,7 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 {
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
 	factory->switchView(key);
+	factory->keyboardFunc(key, x, y);
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 	
