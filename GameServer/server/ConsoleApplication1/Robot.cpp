@@ -50,6 +50,7 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	//GOBox* boxShape = new GOBox( x,  y,  z,  qX,  qY,  qZ,  qW,  mass,  width,  height,  depth);
 	double x = this->getX();
 	double y= this->getY();
+	std::cout << "create Vehicle" <<y << std::endl;
 	double z= this->getZ();
 	double qX= this->getqX();
 	double qY= this->getqY();
@@ -67,7 +68,7 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	
 
 
-	btDefaultMotionState* pMotionState = new btDefaultMotionState(btTransform(btQuaternion(-4, -2, -4, 1), btVector3(0, 2, 0)));
+	btDefaultMotionState* pMotionState = new btDefaultMotionState(btTransform(btQuaternion(qX, qY, qZ, qW), btVector3(0, y, 0)));
 	btVector3 intertia;
 	m_pBoxShape->calculateLocalInertia(mass, intertia);
 
@@ -92,7 +93,8 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	btRaycastVehicle* m_pVehicle = new btRaycastVehicle(tuning, m_pBody, m_pVehicleRaycaster);
 
 	this->vehicle = m_pVehicle;
-	dynamicWorld->addRigidBody(m_pBody, COL_PLAYER, playerCollisions);
+	//dynamicWorld->addRigidBody(m_pBody, COL_PLAYER, playerCollisions);
+	dynamicWorld->addRigidBody(m_pBody);
 	dynamicWorld->addAction(m_pVehicle);
 
 	map->insert(std::pair<btCollisionObject*, GameObj*>(m_pBody, this));

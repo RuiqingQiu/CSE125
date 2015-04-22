@@ -15,7 +15,7 @@
 #define TURN_SPEED 0.02
 #define MAX_TURN_SPEED M_PI/10
 #define MAX_SPEED 80
-#define GRAVITY -30
+#define GRAVITY -10
 
 
 class GamePhysics

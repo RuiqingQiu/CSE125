@@ -26,12 +26,15 @@ unsigned int GameLogic::waitToConnect()
 	//remove this part after wait
 	cid = 0;
 	GameObj* robot = new Robot(cid, "testname");
+	/*GameObj* box = new GOBox(1, 2, 1, 0, 0, 0, 1, 50, 1, 1, 1);
+	box->setIsRobot(1);
+	gameObjs.push_back(box);*/
 	//0, 0
 	//5, 0
 	//0, 5
 	//5, 5
 	robot->setX((cid % 2) * 10);
-	robot->setY(20);
+	robot->setY(10);
 	robot->setZ(cid - 2<0 ? 0 : 10);
 	robot->setqX(0);
 	robot->setqY(0);

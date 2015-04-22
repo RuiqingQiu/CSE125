@@ -60,7 +60,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisio
 		else
 		{
 			(*it)->createRigidBody(objcpair);
-			dynamicsWorld->addRigidBody((*it)->getRigidBody(), COL_OBJECT, objectCollisions);
+			dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
 		}
 	}
 	dynamicsWorld->setInternalTickCallback((btInternalTickCallback)collisionCallback, &dynamicsWorld, (void*)1);
@@ -76,7 +76,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 		if ((*it)->getIsRobot() != 0)
 		{
 			trans = ((Robot*)(*it))->getVehicle()->getChassisWorldTransform();
-			std::cout << "Y: " << trans.getOrigin().getY() << std::endl;
+			//std::cout << "Y: " << trans.getOrigin().getY() << std::endl;
 		}
 		else
 		{
@@ -210,7 +210,7 @@ void GamePhysics::collisionCallback(btDynamicsWorld* world, btScalar timestep)//
 {
 	//std::cout << "dispatch" << std::endl;
 	int numManifolds = world->getDispatcher()->getNumManifolds();
-	std::cout << numManifolds << std::endl;
+	//std::cout << numManifolds << std::endl;
 	for (int i = 0; i<numManifolds; i++)
 	{
 		//std::cout << "static-static collision!" << std::endl;
