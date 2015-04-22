@@ -74,4 +74,25 @@ bool GamePacketManager::SendMoveToBackward(int id)
 	return client->sendPacket(cp);
 }
 
+bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
+{
+	CPacket cp;
+	cp.packet_type = BUILD_ROBOT;
+	string tmp = "";
+	for (int i = 0; i < nodeList.size(); i++) {
+		//clientID objectID x y z EullerX EullerY EullerZ block_type\n (0 for 1x1 nontexture cube) (1 for nontexture battlefield) (2 for nontexture wall) (3 for nontexture 3x3 cube) \n
+		tmp += to_string(id) + " ";
+		tmp += to_string(nodeList[i]->identifier) + " ";
+		tmp += to_string(nodeList[i]->localTransform.position.x) + " ";
+		tmp += to_string(nodeList[i]->localTransform.position.y) + " ";
+		tmp += to_string(nodeList[i]->localTransform.position.z) + " ";
+		tmp += to_string(nodeList[i]->localTransform.rotation.x) + " ";
+		tmp += to_string(nodeList[i]->localTransform.rotation.y) + " ";
+		tmp += to_string(nodeList[i]->localTransform.rotation.z) + " ";
+		tmp += to_string(nodeList[i]->textureType) + "\n\0";
+	}
+	strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
+	return client->sendPacket(cp);
+}
+
 

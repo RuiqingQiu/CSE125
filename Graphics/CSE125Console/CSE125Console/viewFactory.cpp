@@ -136,20 +136,51 @@ void viewFactory::reshapeFunc(int w, int h) {
 }
 
 void viewFactory::idleFunc() {
+	//can't check from pGameView, so must do in factory
+	//function specific to buildmode
 	if (viewmode == viewType::BUILD) {
 		viewType s = buildmode->checkTimeOut();
 		if (s != viewmode) {
 			viewmode = s;
+			if (s == viewType::BATTLE) {
+				g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList);
+			}
 			setView();
 		}
 	}
+}
+
+void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
+	//can't check from pGameView, so must do in factory
+	//function specific to buildmode
+	if (viewmode != viewType::BUILD) return;
+	switch (key) {
+	case ',':
+		buildmode->yRotation -= 90;
+		break;
+	case '.':
+		buildmode->yRotation += 90;
+		break;
+	default:
+		break;
+	}
+	if (buildmode->yRotation < 0) buildmode->yRotation += 360;
+	if (buildmode->yRotation == 360) buildmode->yRotation = 0;
+	std::cout << buildmode->yRotation << std::endl;
+	buildmode->rotateY.makeRotateY(buildmode->yRotation*M_PI / 180.0);
 }
 
 void viewFactory::mouseFunc(int button, int state, int x, int y) {
 	if (debug) return;
 	viewType s = currentView->mouseClickFunc(state, x, y);
 	if (s != viewmode) {
+		if (viewmode == viewType::BUILD && s == viewType::BATTLE) {
+			if (state == GLUT_UP && prevMouseState != GLUT_UP) {
+				g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList);
+			}
+		}
 		viewmode = s;
 		setView();
 	}
+	prevMouseState = state;
 }
