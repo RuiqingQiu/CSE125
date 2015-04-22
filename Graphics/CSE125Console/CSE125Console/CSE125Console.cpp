@@ -1,4 +1,4 @@
-// CSE125Console.cpp : Defines the entry point for the console application.
+﻿// CSE125Console.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -68,6 +68,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	Window::initialize();
 
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 	//Start up the render loop!
 	glutMainLoop();
 	return 0;
