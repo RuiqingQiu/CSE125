@@ -3,6 +3,9 @@
 #include "numbers.h"
 #include <ctime>
 
+// for display seconds, use buildTimer
+#define MIN 10 // game lasts 10 minutes
+
 // battle view timer extends buildTimer
 class battleTimer : public buildTimer{
 
@@ -20,8 +23,8 @@ public:
 	void draw();
 	void rePosition(int x, int y, int w, int h);
 
-	std::clock_t start;
-	int timeLeft;
+	//std::clock_t start;
+	//int timeLeft;
 
 	static string textPath;
 
