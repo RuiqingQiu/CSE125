@@ -47,9 +47,7 @@ void battleTimer::update(){
 		digits[i]->numIdx = digit;
 		idx /= 10;
 	}
-
-	// need to update minutes as well
-
+    // need to update minutes as well
 }
 
 
@@ -58,6 +56,9 @@ void battleTimer::draw(){
 	for (int i = 0; i < NUM_DIGITS; i++) {
 		digits[i]->draw();
 	}
+	//add one comma and draw
+	guiItem* comma = new guiItem("text/symbols/colon.jpg", 300,300);
+	comma->draw();
 
 }
 

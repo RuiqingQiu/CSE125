@@ -11,7 +11,7 @@ mainMenu::mainMenu() : gui() {
 	w = width;
 	h = height;
 	start_w = w * 0.5;
-	start_h = h * 0.54; 
+	start_h = h * 0.53; 
 	createButtons();
 }
 
@@ -19,7 +19,7 @@ mainMenu::mainMenu(int w, int h) : gui(w, h) {
 	w = width;
 	h = height;
 	start_w = w * 0.5;
-	start_h = h * 0.54;
+	start_h = h * 0.53;
 	createButtons();
 }
 
@@ -70,7 +70,7 @@ void mainMenu::addLetters(){
 	w = width;
 	h = height;
 	start_w = width * 0.5;
-	start_h = h * 0.54;
+	start_h = h * 0.53;
 
 	string n = g_pCore->i_pInput->name; // get the name of game core
 	guiLetters.clear(); // clear the guiLetters every time and start over
