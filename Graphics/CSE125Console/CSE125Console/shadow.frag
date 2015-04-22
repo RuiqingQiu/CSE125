@@ -51,7 +51,7 @@ void main (void)
 	vec3 baseColor = texture2D(tex, gl_TexCoord[0].st).rgb;
 	vec3 norm1 = texture2D(norm, gl_TexCoord[0].st).rgb * 2.0 - 1.0;
 
-
+	gl_FragColor = vec4(baseColor, 1);
 	vec3 diffuse_color;
 	vec3 specular_color;
 	
@@ -102,7 +102,7 @@ void main (void)
 	vec4 color_without_light = vec4(mix(color, diffuse_color + specular_color, 0.7), 1);
 	//tmp = sqrt(color_without_light.rgb);
 
-	gl_FragColor = vec4(color_without_light.rgb, IndirectIrradiance);
+	//gl_FragColor = vec4(color_without_light.rgb, IndirectIrradiance);
 	//gl_FragColor = vec4(color_without_light, IndirectIrradiance);
 	//gl_FragColor = color_without_light + finalColor;
 	//gl_FragColor = vec4(lightvec, 1);

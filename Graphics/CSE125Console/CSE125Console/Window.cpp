@@ -18,14 +18,16 @@
 #include "HardShadowView.h"
 #include "TestView.h"
 #include "Teapot.h"
-#define TESTCAM 1
+#include "Model3DFactory.h"
+#define TESTCAM 0
 
+#define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
 static viewFactory * factory; // factory of gui
-
+static Model3DFactory m_factory;
 static int counter = 0;
 static Cube* cube;
 static Model3D*object;
@@ -33,8 +35,8 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	factory = new viewFactory(width, height);
-	//factory = new viewFactory(true);  //for no gui
+	//factory = new viewFactory(width, height);
+	factory = new viewFactory(true);  //for no gui
 	g_pCore->skybox = new SkyBox();
 	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
@@ -50,11 +52,75 @@ void Window::initialize(void)
 	view->PushGeoNode(cube);
 
 	/*
-	object = new Model3D("Hatchet.obj");
+	object = new Model3D("Assets/Obj/Hatchet.obj", "./Assets/Texture/Albedo.PNG", "./Assets/Normal/Normal_Clrear.png", "./Assets/Gloss/Gloss.PNG", "./Assets/Metallic/Metalness.PNG");
 	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
+	*/
+	vector<string> pathnames;
+	object = Model3DFactory::generateObjectWithType(Hammer);
+	object->localTransform.position = Vector3(5, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Mace);
+	object->localTransform.position = Vector3(3, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(MetalWheel);
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Needle);
+	object->localTransform.position = Vector3(-3, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(BasicCube);
+	object->localTransform.position = Vector3(-5, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(WoodenCube);
+	object->localTransform.position = Vector3(-8, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	
+	object = Model3DFactory::generateObjectWithType(WoodenWheel);
+	object->localTransform.position = Vector3(-10, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Tire);
+	object->localTransform.position = Vector3(-13, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	
+	object = Model3DFactory::generateObjectWithType(WhiteCube);
+	object->localTransform.position = Vector3(-15, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+		/*
+	for (int i = 0; i < 100; i++){
+		object = Model3DFactory::generateObjectWithType(0);
+		//object = CREATEOBG(Assets/Hammer/, Hammer.obj, tex.png, metallic.png, normals.png, gloss.png);
+		object->localTransform.position = Vector3(i-20, 0, -20);
+		object->localTransform.scale = Vector3(1, 1, 1);
+		object->localTransform.rotation = Vector3(0, 0, 0);
+		view->PushGeoNode(object);
+	}
 	*/
 
 	//setup light

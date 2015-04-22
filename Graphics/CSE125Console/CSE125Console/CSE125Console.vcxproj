@@ -105,9 +105,11 @@
     <ClInclude Include="helpMenu.h" />
     <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
+    <ClInclude Include="Model3DFactory.h" />
     <ClInclude Include="numbers.h" />
     <ClInclude Include="PacketDecoder.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="RenderObject.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="robot.h" />
     <ClInclude Include="scoreBox.h" />
@@ -164,9 +166,11 @@
     <ClCompile Include="helpMenu.cpp" />
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
+    <ClCompile Include="Model3DFactory.cpp" />
     <ClCompile Include="numbers.cpp" />
     <ClCompile Include="PacketDecoder.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="robot.cpp" />
     <ClCompile Include="scoreBox.cpp" />
     <ClCompile Include="scrollBox.cpp" />

@@ -3,7 +3,7 @@
 
 #include "SOIL.h"
 #include "Model3D.h"
-
+static int counter = 0;
 Model3D::Model3D()
 {
 }
@@ -19,6 +19,13 @@ void Model3D::setGlossMap(string pathname){
 void Model3D::setMetallicMap(string pathname){
 	metallic_map = pathname;
 }
+void Model3D::setVertexShader(string pathname){
+	vertex_shader = pathname;
+}
+void Model3D::setFragmentShader(string pathname){
+	fragment_shader = pathname;
+}
+
 
 
 GLhandleARB loadShader1(char* filename, unsigned int type)
@@ -96,96 +103,26 @@ GLhandleARB loadShader1(char* filename, unsigned int type)
 }
 
 
-Model3D::Model3D(string filename){
-	setTextureMap("./Assets/Texture/Albedo.PNG");
-	setNormalMap("./Assets/Normal/Normal_Clrear.png");
-	setGlossMap("./Assets/Gloss/Gloss.PNG");
-	setMetallicMap("./Assets/Metallic/Metalness.PNG");
+Model3D::Model3D(RenderObject* r, string texture, string normal, string gloss,
+			string metal){
+	render_obj = r;
+	setTextureMap(texture);
+	setNormalMap(normal);
+	setGlossMap(gloss);
+	setMetallicMap(metal);
+	
+	setVertexShader("shadow.vert");
+	setFragmentShader("shadow.frag");
 	localTransform = Transform();
-
-	std::string inputfile = filename;
-
-	std::string err = tinyobj::LoadObj(shapes, materials, inputfile.c_str(), NULL);
-
-	if (!err.empty()) {
-		std::cerr << err << std::endl;
-		exit(1);
-	}
-
-	std::cout << "# of shapes    : " << shapes.size() << std::endl;
-	std::cout << "# of materials : " << materials.size() << std::endl;
-
-	for (size_t i = 0; i < shapes.size(); i++) {
-		printf("shape[%ld].name = %s\n", i, shapes[i].name.c_str());
-		printf("Size of shape[%ld].indices: %ld\n", i, shapes[i].mesh.indices.size());
-		printf("Size of shape[%ld].material_ids: %ld\n", i, shapes[i].mesh.material_ids.size());
-		for (size_t f = 0; f < shapes[i].mesh.indices.size() / 3; f++) {
-			printf("  idx[%ld] = %d, %d, %d. mat_id = %d\n", f, shapes[i].mesh.indices[3 * f + 0], shapes[i].mesh.indices[3 * f + 1], shapes[i].mesh.indices[3 * f + 2], shapes[i].mesh.material_ids[f]);
-		}
-
-		printf("shape[%ld].vertices: %ld\n", i, shapes[i].mesh.positions.size());
-		for (size_t v = 0; v < shapes[i].mesh.positions.size() / 3; v++) {
-			printf("  v[%ld] = (%f, %f, %f)\n", v,
-				shapes[i].mesh.positions[3 * v + 0],
-				shapes[i].mesh.positions[3 * v + 1],
-				shapes[i].mesh.positions[3 * v + 2]);
-		}
-	}
-
-	for (size_t i = 0; i < materials.size(); i++) {
-		printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
-		printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);
-		printf("  material.Kd = (%f, %f ,%f)\n", materials[i].diffuse[0], materials[i].diffuse[1], materials[i].diffuse[2]);
-		printf("  material.Ks = (%f, %f ,%f)\n", materials[i].specular[0], materials[i].specular[1], materials[i].specular[2]);
-		printf("  material.Tr = (%f, %f ,%f)\n", materials[i].transmittance[0], materials[i].transmittance[1], materials[i].transmittance[2]);
-		printf("  material.Ke = (%f, %f ,%f)\n", materials[i].emission[0], materials[i].emission[1], materials[i].emission[2]);
-		printf("  material.Ns = %f\n", materials[i].shininess);
-		printf("  material.Ni = %f\n", materials[i].ior);
-		printf("  material.dissolve = %f\n", materials[i].dissolve);
-		printf("  material.illum = %d\n", materials[i].illum);
-		printf("  material.map_Ka = %s\n", materials[i].ambient_texname.c_str());
-		printf("  material.map_Kd = %s\n", materials[i].diffuse_texname.c_str());
-		printf("  material.map_Ks = %s\n", materials[i].specular_texname.c_str());
-		printf("  material.map_Ns = %s\n", materials[i].normal_texname.c_str());
-		std::map<std::string, std::string>::const_iterator it(materials[i].unknown_parameter.begin());
-		std::map<std::string, std::string>::const_iterator itEnd(materials[i].unknown_parameter.end());
-		for (; it != itEnd; it++) {
-			printf("  material.%s = %s\n", it->first.c_str(), it->second.c_str());
-		}
-		printf("\n");
-
-
-		if (materials[i].diffuse_texname.c_str())
-		{
-			GLuint tex_2d = SOIL_load_OGL_texture
-				(
-				//strcat(pre,name),
-				//"Texture/mygod.tga",
-			    materials[i].diffuse_texname.c_str(),
-				SOIL_LOAD_AUTO,
-				SOIL_CREATE_NEW_ID,
-				SOIL_FLAG_INVERT_Y
-				);
-
-			/* check for an error during the load process */
-			if (0 == tex_2d)
-			{
-				printf("SOIL loading error: '%s'\n", SOIL_last_result());
-				isTextured = false;
-			}
-			else{
-				printf("SOIL loading success %i\n", tex_2d);
-				isTextured = true;
-			}
-		}
-	}
-
 
 	GLhandleARB vertexShaderHandle;
 	GLhandleARB fragmentShaderHandle;
-
-	vertexShaderHandle = loadShader1("shadow.vert", GL_VERTEX_SHADER);
-	fragmentShaderHandle = loadShader1("shadow.frag", GL_FRAGMENT_SHADER);
+	char *v_str = new char[vertex_shader.length() + 1];
+	strcpy(v_str, vertex_shader.c_str());
+	char *f_str = new char[fragment_shader.length() + 1];
+	strcpy(f_str, fragment_shader.c_str());
+	vertexShaderHandle = loadShader1(v_str, GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShader1(f_str, GL_FRAGMENT_SHADER);
 
 	shader_id = glCreateProgramObjectARB();
 
@@ -319,17 +256,19 @@ void Model3D::VOnDraw(){
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
+	counter = (counter + 1) % 360;
+	localTransform.rotation.y = counter;
 	//glLoadIdentity();
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
 	
 	glColor3f(1, 1, 1);
-	for (size_t i = 0; i < shapes.size(); i++) {
+	for (size_t i = 0; i < render_obj->shapes.size(); i++) {
 		
-		for (size_t f = 0; f < shapes[i].mesh.indices.size() / 3; f++) {
-			int i1 = shapes[i].mesh.indices[3 * f + 0];
-			int i2 = shapes[i].mesh.indices[3 * f + 1];
-			int i3 = shapes[i].mesh.indices[3 * f + 2];
-			int m1 = shapes[i].mesh.material_ids[f];
+		for (size_t f = 0; f < render_obj->shapes[i].mesh.indices.size() / 3; f++) {
+			int i1 = render_obj->shapes[i].mesh.indices[3 * f + 0];
+			int i2 = render_obj->shapes[i].mesh.indices[3 * f + 1];
+			int i3 = render_obj->shapes[i].mesh.indices[3 * f + 2];
+			int m1 = render_obj->shapes[i].mesh.material_ids[f];
 			
 			if (isTextured){
 				//material goes here
@@ -385,36 +324,36 @@ void Model3D::VOnDraw(){
 			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			if (isTextured){
 				//texture
-				glTexCoord2f(shapes[i].mesh.texcoords[2 * i1 + 0], shapes[i].mesh.texcoords[2 * i1 + 1]);
+				glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i1 + 0], render_obj->shapes[i].mesh.texcoords[2 * i1 + 1]);
 			}
 			//avg normal goes here
-			glNormal3f(shapes[i].mesh.normals[3 * i1 + 0],
-				       shapes[i].mesh.normals[3 * i1 + 1],
-					   shapes[i].mesh.normals[3 * i1 + 2]
+			glNormal3f(render_obj->shapes[i].mesh.normals[3 * i1 + 0],
+				render_obj->shapes[i].mesh.normals[3 * i1 + 1],
+				render_obj->shapes[i].mesh.normals[3 * i1 + 2]
 					  );
-			glVertex3f(shapes[i].mesh.positions[3 * i1 + 0], shapes[i].mesh.positions[3 * i1 + 1], shapes[i].mesh.positions[3 * i1 + 2]);
+			glVertex3f(render_obj->shapes[i].mesh.positions[3 * i1 + 0], render_obj->shapes[i].mesh.positions[3 * i1 + 1], render_obj->shapes[i].mesh.positions[3 * i1 + 2]);
 
 			if (isTextured){
 				//texture
-				glTexCoord2f(shapes[i].mesh.texcoords[2 * i2 + 0], shapes[i].mesh.texcoords[2 * i2 + 1]);
+				glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i2 + 0], render_obj->shapes[i].mesh.texcoords[2 * i2 + 1]);
 			}
 			//avg normal goes here
-			glNormal3f(shapes[i].mesh.normals[3 * i2 + 0],
-				shapes[i].mesh.normals[3 * i2 + 1],
-				shapes[i].mesh.normals[3 * i2 + 2]
+			glNormal3f(render_obj->shapes[i].mesh.normals[3 * i2 + 0],
+				render_obj->shapes[i].mesh.normals[3 * i2 + 1],
+				render_obj->shapes[i].mesh.normals[3 * i2 + 2]
 				);
-			glVertex3f(shapes[i].mesh.positions[3 * i2 + 0], shapes[i].mesh.positions[3 * i2 + 1], shapes[i].mesh.positions[3 * i2 + 2]);
+			glVertex3f(render_obj->shapes[i].mesh.positions[3 * i2 + 0], render_obj->shapes[i].mesh.positions[3 * i2 + 1], render_obj->shapes[i].mesh.positions[3 * i2 + 2]);
 
 			if (isTextured){
 				//texture
-				glTexCoord2f(shapes[i].mesh.texcoords[2 * i3 + 0], shapes[i].mesh.texcoords[2 * i3 + 1]);
+				glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i3 + 0], render_obj->shapes[i].mesh.texcoords[2 * i3 + 1]);
 			}
 			//avg normal goes here
-			glNormal3f(shapes[i].mesh.normals[3 * i3 + 0],
-				shapes[i].mesh.normals[3 * i3 + 1],
-				shapes[i].mesh.normals[3 * i3 + 2]
+			glNormal3f(render_obj->shapes[i].mesh.normals[3 * i3 + 0],
+				render_obj->shapes[i].mesh.normals[3 * i3 + 1],
+				render_obj->shapes[i].mesh.normals[3 * i3 + 2]
 				);
-			glVertex3f(shapes[i].mesh.positions[3 * i3 + 0], shapes[i].mesh.positions[3 * i3 + 1], shapes[i].mesh.positions[3 * i3 + 2]);
+			glVertex3f(render_obj->shapes[i].mesh.positions[3 * i3 + 0], render_obj->shapes[i].mesh.positions[3 * i3 + 1], render_obj->shapes[i].mesh.positions[3 * i3 + 2]);
 
 			glEnd();
 
