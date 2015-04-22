@@ -2,21 +2,11 @@
 #include "battleView.h"
 
 battleView::battleView(): gui(){
-	/*
-	guiItem * text = new guiItem("text/time.jpg", 300, 300, 400, 50, false, false);
-	text->setScaling(true, false, width, height);
-	guiItems.push_back(text);
-	*/
 	createButtons();
 }
 
 battleView::battleView(int w, int h) : gui(w, h) {
 	createButtons();
-	/*
-	guiItem * text = new guiItem("text/time.jpg", 300, 300, 400, 50, false, false);
-	text->setScaling(true, false, width, height);
-	guiItems.push_back(text);
-	*/
 }
 
 battleView::~battleView()
@@ -26,7 +16,7 @@ battleView::~battleView()
 // create all the buttons on the battle view
 void battleView:: createButtons(){
 	// display the time left
-	timer = new buildTimer(width*0.3, height - 50, 400, 50, false, false);
+	timer = new battleTimer(width*0.3, height - 50, 400, 50, false, false);
 	timer->setScaling(true, false, width, height);
 	guiItems.push_back(timer);
 

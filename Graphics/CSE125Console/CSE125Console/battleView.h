@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "gui.h"
-#include "buildTimer.h"
+#include "battletimer.h"
 
 class battleView : public gui {
 public:
@@ -16,6 +16,6 @@ public:
 	viewType mouseClickFunc(int state, int x, int y);
 	
 	vector<button*> listItems;
-	buildTimer * timer;
+	battleTimer * timer;
 	bool updateview;
 };
