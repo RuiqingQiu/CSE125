@@ -53,7 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(MSBuildStartupDirectory)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\zhxia\Desktop\bullet\src;$(MSBuildStartupDirectory)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,14 +137,14 @@
     <ResourceCompile Include="ConsoleApplication1.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bullet Src\BulletCollision\BulletCollision.vcxproj">
-      <Project>{b8ec0f92-fa26-4559-bd7b-097b5179950f}</Project>
+    <ProjectReference Include="C:\Users\zhxia\Desktop\src\BulletCollision\BulletCollision.vcxproj">
+      <Project>{9493aba9-1da9-49b1-a74e-756949223f8b}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Bullet Src\BulletDynamics\BulletDynamics.vcxproj">
-      <Project>{877e31ba-b5fb-4b9f-9243-5069a31bf962}</Project>
+    <ProjectReference Include="C:\Users\zhxia\Desktop\src\BulletDynamics\BulletDynamics.vcxproj">
+      <Project>{75b540b2-1859-4d69-b29c-2be82247755f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Bullet Src\LinearMath\LinearMath.vcxproj">
-      <Project>{54b0db0d-426c-4063-ac25-42734e91e80a}</Project>
+    <ProjectReference Include="C:\Users\zhxia\Desktop\src\LinearMath\LinearMath.vcxproj">
+      <Project>{52d8f9b4-5837-4d14-8bd8-b891e02ec06e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

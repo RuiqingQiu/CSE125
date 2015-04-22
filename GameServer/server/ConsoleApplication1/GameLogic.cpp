@@ -1,6 +1,8 @@
 
 /* GameLogic.cpp */
 #include "GameLogic.h"
+
+
 GameLogic::GameLogic()
 {
 	network = new Network();
@@ -29,7 +31,7 @@ unsigned int GameLogic::waitToConnect()
 	//0, 5
 	//5, 5
 	robot->setX((cid % 2) * 10);
-	robot->setY(3);
+	robot->setY(20);
 	robot->setZ(cid - 2<0 ? 0 : 10);
 	robot->setqX(0);
 	robot->setqY(0);
@@ -117,7 +119,7 @@ void GameLogic::gameStart(){
 	addGround();
 	addWalls();
 
-	gamePhysics->initWorld(&(this->getGameObjs()), &collisionList, &objCollisionPair);
+	gamePhysics->initWorld(&(this->getGameObjs()), &objCollisionPair);
 	//int i,j,k;
 
 	//for (i = 0; i < 17; i++)
@@ -173,12 +175,12 @@ unsigned int GameLogic::gameLoop (){
 	
 	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/66.0),4);
 
-	gamePhysics->stepSimulation(&this->getGameObjs());
+	gamePhysics->stepSimulation(&(this->getGameObjs()), &GamePhysics::collisionList1);
 
 
-
+	
 	std::vector<Collision *>::iterator it;
-	for (it = collisionList.begin(); it != collisionList.end(); it++)
+	for (it = GamePhysics::collisionList1.begin(); it != GamePhysics::collisionList1.end(); it++)
 	{
 		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
 		btCollisionObject* obj2 = static_cast<btCollisionObject*>((*it)->getObj2());
@@ -189,8 +191,9 @@ unsigned int GameLogic::gameLoop (){
 
 	}
 
-	collisionList.clear();
 
+	GamePhysics::collisionList1.clear();
+	std::cout << "after clear check size " << GamePhysics::collisionList1.size() << std::endl;
 
 	//after phy logic all ObjectEvents 
 	

@@ -1,5 +1,6 @@
 #include "GamePhysics.h"
 
+std::vector<Collision*> GamePhysics::collisionList1;
 
 GamePhysics::GamePhysics()
 {
@@ -8,7 +9,7 @@ GamePhysics::GamePhysics()
 	dispatcher = new btCollisionDispatcher(collisionConfiguration);
 	solver = new btSequentialImpulseConstraintSolver;
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-
+	GamePhysics::collisionList1 = std::vector<Collision*>();
 }
 
 
@@ -19,6 +20,7 @@ GamePhysics::~GamePhysics()
 	delete dispatcher;
 	delete solver;
 	delete dynamicsWorld;
+
 }
 
 btBroadphaseInterface* GamePhysics::getBroadphase()
@@ -45,7 +47,7 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 	return dynamicsWorld;
 }
 
-void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::vector<Collision*>* collisionList, std::map< btCollisionObject*, GameObj*>* objcpair)
+void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisionObject*, GameObj*>* objcpair)
 {
 	dynamicsWorld->setGravity(btVector3(0,GRAVITY,0));
 	std::vector<GameObj*>::iterator it;
@@ -61,10 +63,11 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::vector<Collisio
 			dynamicsWorld->addRigidBody((*it)->getRigidBody(), COL_OBJECT, objectCollisions);
 		}
 	}
-	collisionCallback(dynamicsWorld, collisionList);
+	dynamicsWorld->setInternalTickCallback((btInternalTickCallback)collisionCallback, &dynamicsWorld, (void*)1);
+
 }
 
-void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
+void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Collision*> * collisionList)
 {
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObj->begin(); it != gameObj->end(); ++it)
@@ -73,6 +76,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
 		if ((*it)->getIsRobot() != 0)
 		{
 			trans = ((Robot*)(*it))->getVehicle()->getChassisWorldTransform();
+			std::cout << "Y: " << trans.getOrigin().getY() << std::endl;
 		}
 		else
 		{
@@ -81,8 +85,10 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj)
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
 		(*it)->setZ(trans.getOrigin().getZ());
-		//std::cout << "X: " << trans.getOrigin().getX() << ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
+		//std::cout << "Y: " << trans.getOrigin().getY() << std::endl;//<< ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
 	}
+	dynamicsWorld->performDiscreteCollisionDetection();
+	//collisionCallback(dynamicsWorld, collisionList);
 }
 
 void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
@@ -200,19 +206,40 @@ void GamePhysics::robotBackward(Robot* rb){
 
 
 
-void GamePhysics::collisionCallback(btDynamicsWorld* world, std::vector<Collision*> * collisionList)
+void GamePhysics::collisionCallback(btDynamicsWorld* world, btScalar timestep)// std::vector<Collision*> * collisionList)
 {
 	//std::cout << "dispatch" << std::endl;
 	int numManifolds = world->getDispatcher()->getNumManifolds();
-	//std::cout << "dispatch end" << std::endl;
+	std::cout << numManifolds << std::endl;
 	for (int i = 0; i<numManifolds; i++)
 	{
+		//std::cout << "static-static collision!" << std::endl;
 		btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
 		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
 		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+		//std::cout << "static-static collision! finial" << std::endl;
 
-		Collision* col = new Collision(obA, obB);
-		//collisionList->push_back(col);
+		//std::cout << obA->getCollisionShape() << std::endl;
+		//std::cout << obB->getCollisionShape() << std::endl;
+		int numContacts = contactManifold->getNumContacts();
+		for (int j = 0; j<numContacts; j++)
+		{
+			int countDis = 0;
+			btManifoldPoint& pt = contactManifold->getContactPoint(j);
+			if (pt.getDistance()<0.f)
+			{
+				countDis++;
+				Collision* col = new Collision(obA, obB);
+				 GamePhysics::collisionList1.push_back(col);
+				
+				const btVector3& ptA = pt.getPositionWorldOnA();
+				const btVector3& ptB = pt.getPositionWorldOnB();
+				const btVector3& normalOnB = pt.m_normalWorldOnB;
+			}
+			std::cout << countDis << std::endl;
+			
+		}
+
 		//int numContacts = contactManifold->getNumContacts();
 		//for (int j = 0; j<numContacts; j++)
 		//{

@@ -18,12 +18,13 @@
 #define GRAVITY -30
 
 
-
 class GamePhysics
 {
 public:
 	GamePhysics();
 	~GamePhysics();
+
+	static void collisionCallback(btDynamicsWorld* world, btScalar);
 
 	btBroadphaseInterface* getBroadphase();
 	btDefaultCollisionConfiguration* getCollisionConfiguration();
@@ -31,10 +32,10 @@ public:
 	btSequentialImpulseConstraintSolver* getSolver();
 	btDiscreteDynamicsWorld* getDynamicsWorld();
 
-	void initWorld(std::vector<GameObj*>*, std::vector<Collision*>*, std::map< btCollisionObject*, GameObj*>*);
+	void initWorld(std::vector<GameObj*>*,  std::map< btCollisionObject*, GameObj*>*);
 	void createPhysicsEvent(int, GameObj*);
-	void stepSimulation(std::vector<GameObj*> *);
-
+	void stepSimulation(std::vector<GameObj*>*, std::vector<Collision*> *);
+	static std::vector<Collision*> collisionList1;
 
 private:
 
@@ -50,7 +51,7 @@ private:
 	void robotTurnRight(Robot*);
 	void robotForward(Robot*);
 	void robotBackward(Robot*);
-	void GamePhysics::collisionCallback(btDynamicsWorld* world, std::vector<Collision*> *);
+
 
 };
 
