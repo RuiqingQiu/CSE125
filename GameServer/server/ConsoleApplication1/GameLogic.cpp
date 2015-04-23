@@ -24,7 +24,7 @@ unsigned int GameLogic::waitToConnect()
 	cid = network->waitForConnections();
 	if (cid == -1) return WAIT;
 	//remove this part after wait
-	cid = 0;
+//	cid = 0;
 	GameObj* robot = new Robot(cid, "testname");
 	/*GameObj* box = new GOBox(1, 2, 1, 0, 0, 0, 1, 50, 1, 1, 1);
 	box->setIsRobot(1);
@@ -33,22 +33,34 @@ unsigned int GameLogic::waitToConnect()
 	//5, 0
 	//0, 5
 	//5, 5
-	robot->setX((cid % 2) * 10);
+	robot->setZ((cid % 2) * 10);
 	robot->setY(10);
-	robot->setZ(cid - 2<0 ? 0 : 10);
+	robot->setX(cid - 2<0 ? 0 : 10);
 	robot->setqX(0);
 	robot->setqY(-50);
 	robot->setqZ(0);
 	robot->setqW(1);
 	robot->setMass(50);
 	robot->setType(BOX);
-	robot->setBlockType(CUBE3x3);
-	this->pushGameObj(robot);
+	if (cid == 0){
+		robot->setBlockType(BASICCUBE);
+	}
+	else{
+		robot->setBlockType(GLOWINGCUBE);
+	}
+		this->pushGameObj(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
    
 	//GameObj* gameObj = new GOBox(0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
-	//ameObj->setBlockType(CUBE);
-	//asd++;
+	//gameObj->setBlockType(WOODENCUBE);
+	//pushGameObj(gameObj);
+	//gameObj = new GOBox(2, 5, -2, 0, 0, 0, 1, 50, 7, 1, 7);
+	//gameObj->setBlockType(MALLET);
+	//pushGameObj(gameObj);
+	//gameObj = new GOBox(-5, 5, 5, 0, 0, 0, 1, 50, 7, 1, 7);
+	//gameObj->setBlockType(MACE);
+	//pushGameObj(gameObj);
+	////asd++;
 	
 
 	//GameObj* gameObj1;
@@ -181,45 +193,7 @@ unsigned int GameLogic::gameLoop (){
 	gamePhysics->stepSimulation(&(this->getGameObjs()), &GamePhysics::collisionList1);
 
 
-	
-	std::vector<Collision *>::iterator it;
-	for (it = GamePhysics::collisionList1.begin(); it != GamePhysics::collisionList1.end(); it++)
-	{
-		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
-		btCollisionObject* obj2 = static_cast<btCollisionObject*>((*it)->getObj2());
-		GameObj* GO1 = objCollisionPair.find(obj1)->second;
-		GameObj* GO2 = objCollisionPair.find(obj2)->second;
-		/*enum OBJECT_TYPE
-		{
-			PLANE = 0,
-			TRIANGLE = 1,
-			CAPSULE = 2,
-			CONE = 3,
-			CYLINDER = 4,
-			BOX = 5,
-			CLOUD = 6,
-		};*/
-
-		if (GO1->getType() == PLANE && GO2->getIsRobot())
-		{
-			//gameP
-			//((Robot*)GO2)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
-			//((Robot*)GO2)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
-
-		}
-
-		if (GO2->getType() == PLANE && GO1->getIsRobot())
-		{
-			//gameP
-			//((Robot*)GO1)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
-			//((Robot*)GO1)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
-			
-		}
-
-			std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
-
-	}
-
+	postPhyLogic();
 
 	GamePhysics::collisionList1.clear();
 	//std::cout << "after clear check size " << GamePhysics::collisionList1.size() << std::endl;
@@ -285,6 +259,38 @@ void GameLogic::prePhyLogic(){
 	//cout << "objEventList size == " << objEventList.size() << endl;
 }
 
+
+void GameLogic::postPhyLogic(){
+	std::vector<Collision *>::iterator it;
+	for (it = GamePhysics::collisionList1.begin(); it != GamePhysics::collisionList1.end(); it++)
+	{
+		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
+		btCollisionObject* obj2 = static_cast<btCollisionObject*>((*it)->getObj2());
+		GameObj* GO1 = objCollisionPair.find(obj1)->second;
+		GameObj* GO2 = objCollisionPair.find(obj2)->second;
+
+
+		if (GO1->getType() == PLANE && GO2->getIsRobot())
+		{
+			//gameP
+			//((Robot*)GO2)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+			//((Robot*)GO2)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
+
+		}
+
+		if (GO2->getType() == PLANE && GO1->getIsRobot())
+		{
+			//gameP
+			//((Robot*)GO1)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+			//((Robot*)GO1)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
+
+		}
+
+		std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
+
+	}
+
+}
 
 
 std::vector<GameObj*> GameLogic::getGameObjs()

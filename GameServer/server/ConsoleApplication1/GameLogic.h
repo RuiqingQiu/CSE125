@@ -39,6 +39,7 @@ public:
 	void prePhyLogic();
 	void addWalls();
 	void addGround();
+	void postPhyLogic();
 
 };
 #endif

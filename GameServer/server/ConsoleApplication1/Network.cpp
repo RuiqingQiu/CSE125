@@ -326,6 +326,10 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			cout << "NULL" << endl;
 			break;
 		}
+		if ((*i)->getType() == PLANE)
+		{
+			continue;
+		}
 
 		temp += to_string((*i)->getId());
 		temp += ' ';
@@ -336,7 +340,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += to_string((*i)->getZ());
 		temp += ' ';
 		btTransform trans;
-		if ((*i)->getIsRobot() != 0){
+		if ((*i)->getIsRobot()){
 
 			trans = ((Robot*)(*i))->getVehicle()->getChassisWorldTransform();
 			//float mat[16];
@@ -353,11 +357,11 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//cout << "yaw : " << yaw << endl;
 			//cout << "pitch : " << pitch << endl;
 			//cout << "roll : " << roll << endl;
-			temp += to_string((float)yaw);
+			temp += to_string((float)roll);
 			temp += ' ';
 			temp += to_string((float)pitch);
 			temp += ' ';
-			temp += to_string((float)roll);
+			temp += to_string((float)yaw);
 			temp += ' ';
 		}
 		else if ((*i)->getType() == PLANE)
@@ -379,11 +383,11 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//cout << "yaw : " << yaw << endl;
 			//cout << "pitch : " << pitch << endl;
 			//cout << "roll : " << roll << endl;
-			temp += to_string((float)yaw);
+			temp += to_string((float)roll);
 			temp += ' ';
 			temp += to_string((float)pitch);
 			temp += ' ';
-			temp += to_string((float)roll);
+			temp += to_string((float)yaw);
 			temp += ' ';
 		}
 		//btScalar yaw = 0, pitch = 0, roll = 0;
@@ -458,38 +462,47 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 
 
 		if ((*i)->getIsRobot()){
-			
-				//int k;
-				//for (k = 0; k < 4; k++){
-				//	btTransform tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(i).m_worldTransform;
-				//
-				//	//temp += //Robot;
-				//	//temp += tran0.getOrigin().getX();
-				//	//temp += ' ';
-				//	//temp += 
-				//	//temp += ' ';
-				//	//temp += 
-				//	//temp += ' ';
-				//	//temp += 
-				//	//temp += ' ';
+				int k;
+				for (k = 0; k < 4; k++){
+					btTransform tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(k).m_worldTransform;
+				
+					temp += to_string((*i)->getId() + k + 1);
+					temp += ' ';
+					temp += to_string(tran0.getOrigin().getX());
+					temp += ' ';
+					temp += to_string(tran0.getOrigin().getY());
+					temp += ' ';
+					temp += to_string(tran0.getOrigin().getZ());
+					temp += ' ';
 
-				//		(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+					btScalar yaw0 = 0, pitch0 = 0, roll0 = 0;
 
-				//	trans.getBasis().getEulerZYX(yaw, pitch, roll);
-				//	//cout << "yaw : " << yaw << endl;
-				//	//cout << "pitch : " << pitch << endl;
-				//	//cout << "roll : " << roll << endl;
-				//	temp += to_string((float)yaw);
-				//	temp += ' ';
-				//	temp += to_string((float)pitch);
-				//	temp += ' ';
-				//	temp += to_string((float)roll);
-				//	temp += ' ';
-				//}
+					tran0.getBasis().getEulerZYX(yaw0, pitch0, roll0);
+					//cout << "yaw : " << yaw << endl;
+					//cout << "pitch : " << pitch << endl;
+					//cout << "roll : " << roll << endl;
+					temp += to_string((float)roll0);
+					temp += ' ';
+					temp += to_string((float)pitch0);
+					temp += ' ';
+					temp += to_string((float)yaw0);
+					temp += ' ';
+					if (k % 3 == 1){
+						temp += to_string(WOODENWHEEL);
+					}
+					else if (k % 3 == 2){
+						temp += to_string(TIRE);
+					}
+					else{
+						temp += to_string(NEEDLE);
+					}
+					//temp += to_string(BASICCUBE);
+					temp += ' ';
+				}
 			}
 	}
 	temp += "\0";
-	//cout << temp << endl;
+	cout << temp << endl;
 	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;\
 
 	return temp;

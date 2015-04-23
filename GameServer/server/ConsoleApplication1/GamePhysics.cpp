@@ -55,7 +55,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisio
 	{
 		if ((*it)->getIsRobot() != 0)
 		{
-			((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
+			((Robot *)(*it))->createVehicle(dynamicsWorld, 6, 1, 6, objcpair);
 
 		}
 		else

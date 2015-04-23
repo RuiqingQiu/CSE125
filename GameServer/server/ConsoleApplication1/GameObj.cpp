@@ -1,6 +1,6 @@
 #include "GameObj.h"
 
-//static unsigned int _totalId;
+unsigned int GameObj::_totalId;
 
 GameObj::GameObj()
 {

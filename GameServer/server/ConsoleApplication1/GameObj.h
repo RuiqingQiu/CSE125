@@ -7,10 +7,10 @@
 #include <map>
 #include <btBulletDynamicsCommon.h>
 
-static unsigned int _totalId;
 
 class GameObj
 {
+	
 private:
 	double _x;
 	double _y;
@@ -30,6 +30,8 @@ private:
 	btRigidBody* rigidBody;
 
 public:
+	static unsigned int _totalId;
+
 	GameObj();
 
 	// x, y, z, qX, qY, qZ, qW, type, mass

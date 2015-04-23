@@ -7,6 +7,7 @@ Robot::Robot(int cid, char* name)
 	_r_cid = cid;
 	_name = name;
 	setIsRobot(1);
+	incOid(4);
 }
 
 
@@ -74,7 +75,7 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 
 	btRigidBody::btRigidBodyConstructionInfo bodyInfo(mass, pMotionState, m_pCompoundShape, intertia);
 	bodyInfo.m_friction = 0.6f;
-	bodyInfo.m_restitution = 0.6f;
+	bodyInfo.m_restitution = 0.1f;
 	bodyInfo.m_linearDamping = 0.2f;
 	bodyInfo.m_angularDamping = 0.2f;
 
@@ -85,9 +86,9 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 
 	tuning.m_maxSuspensionTravelCm = 500.0f;
 	tuning.m_suspensionCompression = 4.4f;
-	tuning.m_suspensionDamping = 2.3f;
+	tuning.m_suspensionDamping = 0.3f;
 	tuning.m_frictionSlip = 1000.0f;
-	tuning.m_suspensionStiffness = 20.0f;
+	tuning.m_suspensionStiffness = 5.0f;
 
 	btDefaultVehicleRaycaster* m_pVehicleRaycaster = new btDefaultVehicleRaycaster(dynamicWorld);
 	btRaycastVehicle* m_pVehicle = new btRaycastVehicle(tuning, m_pBody, m_pVehicleRaycaster);
@@ -134,8 +135,8 @@ for ( i = 0; i < m_pVehicle->getNumWheels(); ++i)
 	rWheel.m_suspensionStiffness = 100.0f;
 	rWheel.m_frictionSlip = 1000.0f;
 	rWheel.m_rollInfluence = 0.1f;
-	rWheel.m_wheelsDampingCompression = 0.0f;
-	rWheel.m_wheelsDampingRelaxation = 0.0f;
+	rWheel.m_wheelsDampingCompression = 1.01f;
+	rWheel.m_wheelsDampingRelaxation = 100.01f;
 }
 
 
