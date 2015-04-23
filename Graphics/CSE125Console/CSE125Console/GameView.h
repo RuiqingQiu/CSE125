@@ -9,7 +9,7 @@
 #include "Cube.h"
 #include "GamePlayer.h"
 #include "Plane.h"
-//#include "GameCore.h"
+#include "Model3DFactory.h"
 
 #ifndef CSE125_GAMEVIEW
 #define CSE125_GAMEVIEW

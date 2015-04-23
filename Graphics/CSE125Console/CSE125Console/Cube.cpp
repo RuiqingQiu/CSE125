@@ -29,26 +29,6 @@ void Cube::VOnUpdate(GameInfoPacket* pData)
 void Cube::VOnClientUpdate(GameInfoPacket* pData){ 
 	PlayerInfo* p = pData->get_player_info(this->identifier);
 	if (p){
-		/*
-		this->localTransform.position = Vector3(mat[12], mat[13], mat[14]);
-		float r11 = mat[0];
-		float r21 = mat[1];
-		float r31 = mat[2];
-		float r12 = mat[4];
-		float r22 = mat[5];
-		float r32 = mat[6];
-		float r13 = mat[8];
-		float r23 = mat[9];
-		float r33 = mat[10];
-		
-		float x = atan2(r32, r33);
-		float y = atan2(-r31, sqrt(r32*r32 + r33*r33));
-		float z = atan2(r21, r11);
-		this->localTransform.rotation = Vector3(x, y, z);
-		//localTransform.rotation.print("local transform rotation: ");
-		for (int i = 0; i < 16; i++){
-			mat[i] = p->mat[i];
-		}*/
 
 		localTransform.position.x = p->x;
 		localTransform.position.y = p->y;

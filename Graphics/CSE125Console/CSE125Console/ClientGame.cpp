@@ -110,8 +110,8 @@ GameInfoPacket* ClientGame::update()
 
 		case GAME_STATE:
 				{
-							printf("client received game state packet from server\n");
-							std::cout << packet.data << std::endl;
+							//printf("client received game state packet from server\n");
+							//std::cout << packet.data << std::endl;
 						    //cout << "game_state" << endl;
 						    std::string result = std::string(packet.data);
 

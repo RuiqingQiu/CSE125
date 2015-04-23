@@ -15,7 +15,6 @@ GameCore::GameCore()
 	i_pInput = new GameInputInterface();
 
 	light->setPosition(10, 0, 5);
-	//pGameView->pPlayer = pPlayer;
 }
 
 

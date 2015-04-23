@@ -3,7 +3,7 @@
 #include "glew.h"
 
 //#include "Shader.h"
-#include "GameCore.h"
+//#include "GameCore.h"
 #include "GeoNode.h"
 #include "tiny_obj_loader.h"
 #include <GL/glut.h>

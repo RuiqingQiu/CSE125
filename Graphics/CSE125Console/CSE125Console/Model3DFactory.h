@@ -1,4 +1,7 @@
 #pragma once
+
+#ifndef MODEL3DFACTORY
+#define MODEL3DFACTORY
 #include "stdafx.h"
 #include "Model3D.h"
 #include <vector>
@@ -15,4 +18,5 @@ public:
 
 	static Model3D* generateObjectWithType(int type);
 };
+#endif
 
