@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "listItem.h"
+#include "Definition.h"
 
 listItem::listItem() {
 	init();

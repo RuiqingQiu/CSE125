@@ -23,6 +23,9 @@ void SkyBox::VOnClientUpdate(GameInfoPacket* pData){
 }
 
 void SkyBox::VOnDraw(){
+	glUseProgramObjectARB(0);
+
+	glActiveTexture(GL_TEXTURE0);
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
 	//glLoadMatrixd(glmatrix.getPointer());

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "GeoNode.h"
+#include "glew.h"
 //#include "Shader.h"
 #include <GL/glut.h>
 #include "Transform.h"

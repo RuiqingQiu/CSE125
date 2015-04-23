@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "buildView.h"
+#include "Model3DFactory.h"
 
 /*
  * things to implement:
  * on click actions
  */
+
+static Model3DFactory* m_factory;
 
 buildView::buildView() : gui() {
 	updateview = false;
@@ -21,10 +24,11 @@ buildView::~buildView() {
 }
 
 void buildView::createButtons() {
+	selectedType = BasicCube;
 	yRotation = 0;
 	rotateY.identity();
 	center = Vector3(-3, -5, -3);
-	static Cube * cube = new Cube(1);
+	GeoNode * cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	cube->identifier = 0;
 	PushGeoNode(cube);
@@ -248,10 +252,10 @@ void buildView::addNode() {
 		if (check.equals(Vector3(0,0,0))) {
 			return;
 		}
-		Cube * cube = new Cube(1);
-		cube->localTransform.position = addNewNodePos();
-		cube->identifier = s;
-		PushGeoNode(cube);
+		GeoNode * object = Model3DFactory::generateObjectWithType(BasicCube);
+		object->localTransform.position = addNewNodePos();
+		object->identifier = s;
+		PushGeoNode(object);
 		//for now, we just move the last added node
 		currentNode = NodeList[NodeList.size() - 1];
 	}

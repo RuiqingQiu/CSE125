@@ -84,8 +84,8 @@ void Model3D::VOnDraw(){
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-	counter = (counter + 1) % 360;
-	localTransform.rotation.y = counter;
+	//counter = (counter + 1) % 360;
+	//localTransform.rotation.y = counter;
 	//glLoadIdentity();
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
 	

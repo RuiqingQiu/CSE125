@@ -3,7 +3,6 @@
 #include "gui.h"
 #include "buildTimer.h"
 #include "scoreBox.h"
-#include "Cube.h"
 
 #define MAX_BLOCKS 27
 #define GRID_SIZE 5
@@ -45,5 +44,7 @@ private:
 	bool setTexture(string filename, GLuint * t);
 
 	GLuint grids[2];
+
+	int selectedType;
 };
 
