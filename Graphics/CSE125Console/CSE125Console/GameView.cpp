@@ -43,7 +43,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	{
 	    node->VOnClientUpdate(info);	
 		if (node->identifier == pPlayer->playerid ){
-			this->pViewCamera->FollowingTarget = node;
+			//this->pViewCamera->FollowingTarget = node;
 		}
 		
 	}
@@ -134,7 +134,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							break;
 			}
 				default:{
-							cout << "Should not go into here in gameview.cpp" << endl;
+							//cout << "Should not go into here in gameview.cpp" << endl;
 							break;
 				}
 			}

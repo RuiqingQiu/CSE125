@@ -91,9 +91,15 @@ Vector3 Camera::VectorLerp(Vector3* v1, Vector3* v2, float t, bool isangle)
 		rety = ((1 - t)*v1y + t*v2y);
 	}
 	else{
-		cout <<"2 " << v1y << ":" << v2y << endl;
+		if (v2y>v1y){
+			rety = ((1 - t)*(v1y+360) + t*(v2y));
 
-		rety = ((1 - t)*v1y + t*(v2y + 360));
+		}
+		else{
+			rety = ((1 - t)*v1y + t*(v2y + 360));
+
+		}
+		cout <<"2 " << v1y << ":" << v2y << endl;
 	}
 	/*
 	if (abs((int)(-v1y + v2y)) % 360  < 180)
