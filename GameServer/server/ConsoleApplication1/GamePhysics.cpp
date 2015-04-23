@@ -56,6 +56,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisio
 		if ((*it)->getIsRobot() != 0)
 		{
 			((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
+
 		}
 		else
 		{
@@ -166,6 +167,8 @@ void GamePhysics::robotForward(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle();
 	if (v->getCurrentSpeedKmHour() > MAX_SPEED)
 	{
+		std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		std::cout << "forward: " <<v->getWheelInfo(0).m_engineForce << std::endl;
 		double scale = (v->getCurrentSpeedKmHour() / MAX_SPEED) - 1;
 	v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 0);
 	v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 1);
@@ -174,11 +177,32 @@ void GamePhysics::robotForward(Robot* rb){
 	}
 	else
 	{
+
+		std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		std::cout << "forward: " << v->getWheelInfo(0).m_engineForce << std::endl;
 		double scale = 1 - (v->getCurrentSpeedKmHour() / MAX_SPEED);
+		//std::cout << v->getWheelInfo(0).m_engineForce << std::endl;
 		v->applyEngineForce((v->getWheelInfo(0).m_engineForce + MOVE_SPEED)*(scale), 0);
 		v->applyEngineForce((v->getWheelInfo(1).m_engineForce + MOVE_SPEED)*(scale), 1);
 		v->applyEngineForce((v->getWheelInfo(2).m_engineForce + MOVE_SPEED)*(scale), 2);
 		v->applyEngineForce((v->getWheelInfo(3).m_engineForce + MOVE_SPEED)*(scale), 3);
+	}
+
+	if (v->getWheelInfo(0).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 0);
+	}
+	if (v->getWheelInfo(1).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 1);
+	}
+	if (v->getWheelInfo(2).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 2);
+	}
+	if (v->getWheelInfo(3).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 3);
 	}
 }
 void GamePhysics::robotBackward(Robot* rb){
@@ -200,7 +224,23 @@ void GamePhysics::robotBackward(Robot* rb){
 		v->applyEngineForce((v->getWheelInfo(2).m_engineForce - MOVE_SPEED)*(scale), 2);
 		v->applyEngineForce((v->getWheelInfo(3).m_engineForce - MOVE_SPEED)*(scale), 3);
 	}
+	if (v->getWheelInfo(0).m_engineForce < -MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(-MAX_ENGINE_SPEED, 0);
 	}
+	if (v->getWheelInfo(1).m_engineForce < -MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(-MAX_ENGINE_SPEED, 1);
+	}
+	if (v->getWheelInfo(2).m_engineForce < -MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(-MAX_ENGINE_SPEED, 2);
+	}
+	if (v->getWheelInfo(3).m_engineForce < -MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(-MAX_ENGINE_SPEED, 3);
+	}
+}
 
 
 
@@ -224,19 +264,19 @@ void GamePhysics::collisionCallback(btDynamicsWorld* world, btScalar timestep)//
 		int numContacts = contactManifold->getNumContacts();
 		for (int j = 0; j<numContacts; j++)
 		{
-			int countDis = 0;
+			//int countDis = 0;
 			btManifoldPoint& pt = contactManifold->getContactPoint(j);
 			if (pt.getDistance()<0.f)
 			{
-				countDis++;
 				Collision* col = new Collision(obA, obB);
-				 GamePhysics::collisionList1.push_back(col);
+				GamePhysics::collisionList1.push_back(col);
 				
+
 				const btVector3& ptA = pt.getPositionWorldOnA();
 				const btVector3& ptB = pt.getPositionWorldOnB();
 				const btVector3& normalOnB = pt.m_normalWorldOnB;
 			}
-			std::cout << countDis << std::endl;
+			//std::cout << countDis << std::endl;
 			
 		}
 

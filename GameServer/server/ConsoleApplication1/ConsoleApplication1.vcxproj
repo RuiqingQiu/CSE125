@@ -137,14 +137,14 @@
     <ResourceCompile Include="ConsoleApplication1.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\zhxia\Desktop\src\BulletCollision\BulletCollision.vcxproj">
-      <Project>{9493aba9-1da9-49b1-a74e-756949223f8b}</Project>
+    <ProjectReference Include="C:\Users\zhxia\Desktop\bullet\src\BulletCollision\BulletCollision.vcxproj">
+      <Project>{97773ac5-7f21-4ef7-a34e-8a31fb40bfac}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\zhxia\Desktop\src\BulletDynamics\BulletDynamics.vcxproj">
-      <Project>{75b540b2-1859-4d69-b29c-2be82247755f}</Project>
+    <ProjectReference Include="C:\Users\zhxia\Desktop\bullet\src\BulletDynamics\BulletDynamics.vcxproj">
+      <Project>{7c42f223-0d03-4043-91a1-3f0e7904307a}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\zhxia\Desktop\src\LinearMath\LinearMath.vcxproj">
-      <Project>{52d8f9b4-5837-4d14-8bd8-b891e02ec06e}</Project>
+    <ProjectReference Include="C:\Users\zhxia\Desktop\bullet\src\LinearMath\LinearMath.vcxproj">
+      <Project>{ae98298b-e4eb-4fcf-b779-b79ad02804e9}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

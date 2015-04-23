@@ -6,6 +6,9 @@
 #include "definition.h"
 #include <map>
 #include <btBulletDynamicsCommon.h>
+
+static unsigned int _totalId;
+
 class GameObj
 {
 private:
@@ -66,7 +69,9 @@ public:
 	void setRotZ(double);
 	void setIsRobot(int);
 	int getIsRobot();
-	
+	static int getOid(){ return _totalId; }
+
+	void incOid(int i){ _totalId += i; }
 };
 
 

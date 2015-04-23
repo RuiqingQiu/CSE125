@@ -22,7 +22,7 @@ unsigned int GameLogic::waitToConnect()
 {
 	int cid; 
 	cid = network->waitForConnections();
-	
+	if (cid == -1) return WAIT;
 	//remove this part after wait
 	cid = 0;
 	GameObj* robot = new Robot(cid, "testname");
@@ -37,7 +37,7 @@ unsigned int GameLogic::waitToConnect()
 	robot->setY(10);
 	robot->setZ(cid - 2<0 ? 0 : 10);
 	robot->setqX(0);
-	robot->setqY(0);
+	robot->setqY(-50);
 	robot->setqZ(0);
 	robot->setqW(1);
 	robot->setMass(50);
@@ -45,7 +45,7 @@ unsigned int GameLogic::waitToConnect()
 	robot->setBlockType(CUBE3x3);
 	this->pushGameObj(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
-    if (cid == -1) return WAIT;
+   
 	//GameObj* gameObj = new GOBox(0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
 	//ameObj->setBlockType(CUBE);
 	//asd++;
@@ -189,14 +189,40 @@ unsigned int GameLogic::gameLoop (){
 		btCollisionObject* obj2 = static_cast<btCollisionObject*>((*it)->getObj2());
 		GameObj* GO1 = objCollisionPair.find(obj1)->second;
 		GameObj* GO2 = objCollisionPair.find(obj2)->second;
+		/*enum OBJECT_TYPE
+		{
+			PLANE = 0,
+			TRIANGLE = 1,
+			CAPSULE = 2,
+			CONE = 3,
+			CYLINDER = 4,
+			BOX = 5,
+			CLOUD = 6,
+		};*/
 
-		std::cout << "Collision: GO1 cid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 cid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
+		if (GO1->getType() == PLANE && GO2->getIsRobot())
+		{
+			//gameP
+			//((Robot*)GO2)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+			//((Robot*)GO2)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
+
+		}
+
+		if (GO2->getType() == PLANE && GO1->getIsRobot())
+		{
+			//gameP
+			//((Robot*)GO1)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+			//((Robot*)GO1)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
+			
+		}
+
+			std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
 
 	}
 
 
 	GamePhysics::collisionList1.clear();
-	std::cout << "after clear check size " << GamePhysics::collisionList1.size() << std::endl;
+	//std::cout << "after clear check size " << GamePhysics::collisionList1.size() << std::endl;
 
 	//after phy logic all ObjectEvents 
 	

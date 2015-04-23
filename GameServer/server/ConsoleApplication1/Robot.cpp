@@ -97,6 +97,7 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	dynamicWorld->addRigidBody(m_pBody);
 	dynamicWorld->addAction(m_pVehicle);
 
+
 	map->insert(std::pair<btCollisionObject*, GameObj*>(m_pBody, this));
 
 
@@ -130,12 +131,14 @@ for ( i = 0; i < m_pVehicle->getNumWheels(); ++i)
 {
 	btWheelInfo& rWheel = m_pVehicle->getWheelInfo(i);
 
-	rWheel.m_suspensionStiffness = 20.0f;
+	rWheel.m_suspensionStiffness = 100.0f;
 	rWheel.m_frictionSlip = 1000.0f;
 	rWheel.m_rollInfluence = 0.1f;
-	rWheel.m_wheelsDampingCompression = 4.4f;
-	rWheel.m_wheelsDampingRelaxation = 2.3f;
+	rWheel.m_wheelsDampingCompression = 0.0f;
+	rWheel.m_wheelsDampingRelaxation = 0.0f;
 }
+
+
 }
 
 void Robot::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
@@ -147,3 +150,4 @@ btRigidBody* Robot::getRigidBody()
 {
 	return this->vehicle->getRigidBody();
 }
+

@@ -455,6 +455,38 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			}
 		}*/
 		//temp += '\n';
+
+
+		if ((*i)->getIsRobot()){
+			
+				//int k;
+				//for (k = 0; k < 4; k++){
+				//	btTransform tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(i).m_worldTransform;
+				//
+				//	//temp += //Robot;
+				//	//temp += tran0.getOrigin().getX();
+				//	//temp += ' ';
+				//	//temp += 
+				//	//temp += ' ';
+				//	//temp += 
+				//	//temp += ' ';
+				//	//temp += 
+				//	//temp += ' ';
+
+				//		(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+
+				//	trans.getBasis().getEulerZYX(yaw, pitch, roll);
+				//	//cout << "yaw : " << yaw << endl;
+				//	//cout << "pitch : " << pitch << endl;
+				//	//cout << "roll : " << roll << endl;
+				//	temp += to_string((float)yaw);
+				//	temp += ' ';
+				//	temp += to_string((float)pitch);
+				//	temp += ' ';
+				//	temp += to_string((float)roll);
+				//	temp += ' ';
+				//}
+			}
 	}
 	temp += "\0";
 	//cout << temp << endl;

@@ -1,18 +1,20 @@
 #include "GameObj.h"
 
-static unsigned int _totalId;
+//static unsigned int _totalId;
 
 GameObj::GameObj()
 {
-	_totalId++;
 	_id = _totalId;
+
+	_totalId++;
 }
 
 // x, y, z, qX, qY, qZ, qW, type, mass
 GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, double qZ, double qW, int type, double mass)
 {
-	_totalId++;
+	
 	_id = _totalId;
+	_totalId++;
 	_x = posX;
 	_y = posY;
 	_z = posZ;
@@ -161,3 +163,4 @@ int GameObj::getIsRobot()
 {
 	return _isRobot;
 }
+
