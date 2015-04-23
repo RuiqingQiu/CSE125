@@ -1,10 +1,14 @@
 #pragma once
 #include "stdafx.h"
 #include "glew.h"
-#include "GameCore.h"
+//#include "GameCore.h"
 #include "tiny_obj_loader.h"
 #include <GL/glut.h>
-#include "GeoNode.h"
+#include <string>
+#include <iostream>
+#include "SOIL.h"
+using namespace std;
+//#include "GeoNode.h"
 class RenderObject
 {
 

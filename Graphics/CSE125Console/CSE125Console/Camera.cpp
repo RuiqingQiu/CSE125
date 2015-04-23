@@ -52,16 +52,58 @@ void Camera::UpdateCamera()
 	direction.normalize();
 	float distanceToPlayer = 15;
 	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
-	Vector3* newrotation = new Vector3(-FollowingTarget->localTransform.rotation.x, -FollowingTarget->localTransform.rotation.y, -FollowingTarget->localTransform.rotation.z);
+	Vector3* newrotation = new Vector3(FollowingTarget->localTransform.rotation.x, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);
 	newposition->negate();
 	newrotation->negate();
-	*this->position = VectorLerp(position, newposition, 0.1);
-	*this->rotation = VectorLerp(rotation, newrotation, 0.056);
+	*this->position = VectorLerp(position, newposition, 0.1,false );
+	*this->rotation = VectorLerp(rotation, newrotation, 0.056,true);
 }
 
-Vector3 Camera::VectorLerp(Vector3* v1, Vector3* v2, float t)
+Vector3 Camera::VectorLerp(Vector3* v1, Vector3* v2, float t, bool isangle)
 {
-	return Vector3(((1 - t)*v1->x + t*v2->x), ((1 - t)*v1->y + t*v2->y), ((1 - t)*v1->z + t*v2->z));
+	float v1x = fmod(v1->x, 360); //((int)v1->x) % 360;
+	float v1y = fmod(v1->y, 360); //((int)v1->y) % 360;
+	float v1z = fmod(v2->z, 360); //((int)v1->z) % 360;
+
+	float v2x = fmod(v2->x, 360); //((int)v2->x) % 360;
+	float v2y = fmod(v2->y, 360); //((int)v2->y) % 360;
+	float v2z = fmod(v2->z, 360); //((int)v2->z) % 360;
+
+	if (!isangle)
+	{
+		return Vector3(((1 - t)*v1->x + t*v2->x), 0, ((1 - t)*v1->z + t*v2->z));
+	}
+	
+	float retx, rety, retz;
+	/*
+	if (abs((int)(-v1x + v2x)) % 360  < 180)
+	{
+		retx = ((1 - t)*v1x + t*v2x);
+	}
+	else{
+		retx = ((1 - t)*v1x + t*(v2x + 360));
+	}
+	*/
+
+	if (fmod(v2y-v1y,360) < 180)
+	{
+		cout <<"1 " <<  v1y << ":" << v2y << endl;
+		rety = ((1 - t)*v1y + t*v2y);
+	}
+	else{
+		cout <<"2 " << v1y << ":" << v2y << endl;
+
+		rety = ((1 - t)*v1y + t*(v2y + 360));
+	}
+	/*
+	if (abs((int)(-v1y + v2y)) % 360  < 180)
+	{
+		retz = ((1 - t)*v1z + t*v2z);
+	}
+	else{
+		retz = ((1 - t)*v1z + t*(v2z + 360));
+	}*/
+	return Vector3(0,rety,0);
 }
 /*
 Matrix4 Camera::GetCameraMatrix()

@@ -36,7 +36,7 @@ public:
 	void setUpCameraWithGL(float position_x, float position_y, float position_z, float lookAt_x, float lookAt_y, float lookAt_z);
 private:
 	void UpdateCamera();
-	Vector3 VectorLerp(Vector3* v1, Vector3* v2, float lerp);
+	Vector3 VectorLerp(Vector3* v1, Vector3* v2, float lerp, bool isangle);
 };
 
 

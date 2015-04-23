@@ -19,7 +19,7 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#define TESTCAM 0
+#define TESTCAM 1
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
@@ -38,6 +38,7 @@ void Window::initialize(void)
 	factory = new viewFactory(width, height);
 	//factory = new viewFactory(true);  //for no gui
 	m_factory = new  Model3DFactory();
+	//g_pCore->skybox = new SkyBox();
 	g_pCore->skybox = new SkyBox("skyboxes/space");
 	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
@@ -47,12 +48,16 @@ void Window::initialize(void)
 	
 	//set color
 	//glColor3f(1, 1, 1);
+	
 	cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, -5);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
 	view->PushGeoNode(cube);
 
+	
+	/*
+	object = Model3DFactory::generateObjectWithType(Hammer);
 	object = Model3DFactory::generateObjectWithType(Mallet);
 	object->localTransform.position = Vector3(5, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
@@ -111,11 +116,12 @@ void Window::initialize(void)
 	//view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
 
+	/*
 	Plane* p = new Plane(50);
 	p->setColor(1, 1, 0);
 	p->localTransform.position = Vector3(0, -5, 0);
 	p->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(p);
+	view->PushGeoNode(p);*/
 	/*
 	p = new Plane(50);
 	p->setColor(1, 0, 0);
@@ -139,7 +145,7 @@ void Window::initialize(void)
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	factory->battlemode->PushGeoNode(g_pCore->light);
 	//factory->battlemode->PushGeoNode(object);
-	factory->battlemode->PushGeoNode(p);
+	//factory->battlemode->PushGeoNode(p);
 
 	//test shadow view
 	//HardShadowView* shadowview = new HardShadowView();
@@ -154,19 +160,20 @@ void Window::initialize(void)
 	//glUseProgram(program);
 
 	//setup factory
+	//g_pCore->pGameView = view;
 	factory->defaultView = view;
 	factory->setView();
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 
+
+	view->pViewCamera->FollowingTarget = cube;
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
-	if (TESTCAM)
-	{
-		g_pCore->pGameView->pViewCamera->FollowingTarget = cube;
-	}
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.19");
+
 }
 
 //----------------------------------------------------------------------------
@@ -197,6 +204,15 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 		}
 		else if (key == '.'){
 			cube->localTransform.rotation.y -= 1;
+		}
+	}
+
+	if (TESTCAM){
+		if (key == 'l'){
+			cube->localTransform.rotation.y += 180;
+		}
+		else if (key == ';'){
+			cube->localTransform.rotation.y += 360;
 		}
 	}
 	
@@ -254,6 +270,9 @@ void Window::displayCallback() {
 			}
 			case CONFIRM_CONNECTION:{
 				g_pCore->pPlayer->playerid = p->player_infos[0]->id;
+				g_pCore->pGameView->pPlayer = g_pCore->pPlayer;
+				cout << "player id " << p->player_infos[0]->id << endl;
+
 				break;
 			}
 			default:{

@@ -42,7 +42,18 @@ Model3D::~Model3D()
 }
 
 void Model3D::VOnClientUpdate(GameInfoPacket* pData){
+	PlayerInfo* p = pData->get_player_info(this->identifier);
+	if (p){
 
+		localTransform.position.x = p->x;
+		localTransform.position.y = p->y;
+		localTransform.position.z = p->z;
+
+		localTransform.rotation.x = p->rx;
+		localTransform.rotation.y = p->ry;
+		localTransform.rotation.z = p->rz;
+		p->processed = true;
+	}
 }
 /*
 typedef struct {
@@ -202,5 +213,5 @@ void Model3D::VOnDraw(){
 	
 }
 void Model3D::VOnUpdate(GameInfoPacket* pData){
-
+	
 }
