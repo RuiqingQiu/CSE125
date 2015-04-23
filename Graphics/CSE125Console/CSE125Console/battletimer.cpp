@@ -42,7 +42,7 @@ battleTimer::~battleTimer() {
 
 void battleTimer::createNumbers(){
 	secLeft = MAX_TIME;
-	minLeft = MIN;
+	//minLeft = MIN;
 	start = std::clock();
 	double off = (10.0 / 100.0) * height;
 	int nSize = height - (off*2.0);
@@ -55,9 +55,6 @@ void battleTimer::createNumbers(){
 	for (int i = DIGITS; i < NUM_DIGITS; i++) {
 		digits[i] = new numbers((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
 	}
-
-
-
 }
 
 void battleTimer::update(){
@@ -71,6 +68,9 @@ void battleTimer::update(){
 	int idx_sec = secLeft;
 	int idx = minLeft;
 
+	if (minLeft <= 0 && secLeft <=0){
+		return;
+	}
 	 // update sec first
 	for (int i = 0; i < DIGITS; i++) {
 		if (!(idx_sec >= 0)) break;

@@ -4,7 +4,7 @@
 #include <ctime>
 
 // for display seconds, use buildTimer
-#define MIN 10 // game lasts 10 minutes
+#define MIN 0 // game lasts 10 minutes
 #define MAX_TIME 60
 #define NUM_DIGITS 4
 #define DIGITS 2
