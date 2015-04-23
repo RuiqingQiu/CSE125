@@ -137,7 +137,7 @@ void scrollBox::addListItem(string filename, string selName) {
 	list.push_back(newL);
 }
 
-void scrollBox::addsubListItem(string filename, string selName) {
+void scrollBox::addsubListItem(string filename, string selName, int id) {
 	int s = list[list.size()-1]->subList.size();
 	s = MAXDISPLAY - 1 - s;
 	//header area is 100 pixels, footer area is 100 pixels
@@ -150,6 +150,7 @@ void scrollBox::addsubListItem(string filename, string selName) {
 	if (selName.compare("") != 0) {
 		newSl->setTexture("subItem/" + selName, btnState::SELECTED);
 	}
+	newSl->identifier = id;
 	list[list.size() - 1]->subList.push_back(newSl);
 }
 
@@ -191,6 +192,7 @@ void scrollBox::onClick(int state, int x, int y) {
 	//downButton->onClick(state, x, y);
 	addButton->onClick(state, x, y);
 	removeButton->onClick(state, x, y);
+	if (addButton->isSelected(x, y) || removeButton->isSelected(x, y)) return;
 	for (int i = displayIdx; i < displayIdx+MAXDISPLAY; i++) {
 		if (i >= list.size()) return;
 		if (!list[i]->subSel(x, y))
@@ -199,6 +201,17 @@ void scrollBox::onClick(int state, int x, int y) {
 			list[i]->showSubList = true;
 		}
 		list[i]->onClick(state, x, y);
+		if (list[i]->showSubList) {
+			for (int j = 0; j < list[i]->subList.size(); j++) {
+				list[i]->subList[j]->showSubList = false;
+				list[i]->subList[j]->onClick(state, x, y);
+				if (list[i]->subList[j]->isSelected(x, y) && state == GLUT_UP) {
+					list[i]->subList[j]->showSubList = true;
+					currentSelection = list[i]->subList[j]->identifier;
+					break;
+				}
+			}
+		}
 	}
 }
 

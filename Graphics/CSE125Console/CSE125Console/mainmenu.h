@@ -1,7 +1,6 @@
 
 #include "stdafx.h"
 #include "gui.h"
-#include "background.h"
 #include "GameCore.h"
 #include "letters.h" // display textured letter
 

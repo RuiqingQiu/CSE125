@@ -29,6 +29,7 @@ public:
 	bool showSubList;
 
 	std::vector<listItem *> subList;
+	int identifier;
 private:
 	double scale;
 };

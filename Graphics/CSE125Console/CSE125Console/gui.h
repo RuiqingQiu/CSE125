@@ -4,9 +4,10 @@
 #include <string>
 #include "GameView.h"
 
-#include <GL/glut.h>
+#include <GL/glut.h>\
 #include "guiItem.h"
 #include "button.h"
+#include "background.h"
 #include "scrollBox.h"
 
 class gui : public GameView {

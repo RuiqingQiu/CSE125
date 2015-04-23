@@ -29,7 +29,7 @@ public:
 
 	void init();
 	void addListItem(string filename, string selName);
-	void addsubListItem(string filename, string selName);
+	void addsubListItem(string filename, string selName, int id);
 
 	bool isSelected(int x, int y);
 	void onClick(int state, int x, int y);
@@ -40,6 +40,7 @@ public:
 
 	button * addButton;
 	button * removeButton;
+	int currentSelection;
 
 private:
 	double scale;

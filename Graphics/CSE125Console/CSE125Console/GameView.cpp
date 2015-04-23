@@ -64,8 +64,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 					break;
 				}
 				//BATTLEFIELD = 1
-			case WhiteCube:{
-							   Model3D* object = Model3DFactory::generateObjectWithType(WhiteCube);
+			case GlowingCube:{
+								 Model3D* object = Model3DFactory::generateObjectWithType(GlowingCube);
 							   object->identifier = info->player_infos[i]->id;
 							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -92,8 +92,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						  NodeList.push_back(object);
 					break;
 				}
-			case Hammer:{
-							Model3D* object = Model3DFactory::generateObjectWithType(Hammer);
+			case Mallet:{
+							Model3D* object = Model3DFactory::generateObjectWithType(Mallet);
 							
 							object->identifier = info->player_infos[i]->id;
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
@@ -109,8 +109,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							NodeList.push_back(object);
 							break;
 			}
-			case MetalWheel:{
-								Model3D* object = Model3DFactory::generateObjectWithType(MetalWheel);
+			case Discount:{
+							  Model3D* object = Model3DFactory::generateObjectWithType(Discount);
 								object->identifier = info->player_infos[i]->id;
 								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);

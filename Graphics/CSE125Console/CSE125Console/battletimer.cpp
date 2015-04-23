@@ -1,53 +1,91 @@
 #include "stdafx.h"
 #include "battletimer.h"
 
-battleTimer::battleTimer() : buildTimer() {
+
+string battleTimer::textPath = "text/time_long.jpg";
+battleTimer::battleTimer() : guiItem() {
 	createNumbers();
 }
 
 battleTimer::battleTimer(int x, int y) :
-buildTimer(x, y) {
+guiItem(textPath, x, y) {
 	createNumbers();
 }
 
 battleTimer::battleTimer(int x, int y, bool f) :
-buildTimer(x, y, f) {
+guiItem(textPath, x, y, f) {
 	createNumbers();
 }
 
 battleTimer::battleTimer(int x, int y, bool xf, bool yf) :
-buildTimer(x, y, xf, yf) {
+guiItem(textPath, x, y, xf, yf) {
 	createNumbers();
 }
 battleTimer::battleTimer(int x, int y, int w, int h) :
-buildTimer(x, y, w, h) {
+guiItem(textPath, x, y, w, h) {
 	createNumbers();
 }
 
 battleTimer::battleTimer(int x, int y, int w, int h, bool f) :
-buildTimer(x, y, w, h, f) {
+guiItem(textPath, x, y, w, h, f) {
 	createNumbers();
 }
 
 battleTimer::battleTimer(int x, int y, int w, int h, bool xf, bool yf) :
-buildTimer(x, y, w, h, xf, yf) {
+guiItem(textPath, x, y, w, h, xf, yf) {
 	createNumbers();
 }
 
 battleTimer::~battleTimer() {
 }
 
+
+void battleTimer::createNumbers(){
+	secLeft = MAX_TIME;
+	minLeft = MIN;
+	start = std::clock();
+	double off = (10.0 / 100.0) * height;
+	int nSize = height - (off*2.0);
+
+	for (int i = 0; i < DIGITS; i++){
+		digits[i] = new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
+	}
+	int off_comma = off + nSize;
+
+	for (int i = DIGITS; i < NUM_DIGITS; i++) {
+		digits[i] = new numbers((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
+	}
+
+
+
+}
+
 void battleTimer::update(){
-	// this is updating seconds
-	timeLeft = MAX_TIME - ((std::clock() - start) / CLOCKS_PER_SEC);
-	int idx = timeLeft;
-	for (int i = 0; i < NUM_DIGITS; i++) {
+	// convert the time used to second
+	int timeUsed = (std::clock() - start) / CLOCKS_PER_SEC;
+	// mod gives the reminder
+	int sec = timeUsed % MAX_TIME; // sec used
+	int min = (timeUsed - sec) / MAX_TIME;// mins used
+	minLeft = MIN - min;
+	secLeft = MAX_TIME - sec;
+	int idx_sec = secLeft;
+	int idx = minLeft;
+
+	 // update sec first
+	for (int i = 0; i < DIGITS; i++) {
+		if (!(idx_sec >= 0)) break;
+		int digit = idx_sec % 10;
+		digits[i]->numIdx = digit;
+		idx_sec /= 10;
+
+	}
+	// then update minutes
+	for (int i = DIGITS; i < NUM_DIGITS; i++) {
 		if (!(idx >= 0)) break;
 		int digit = idx % 10;
 		digits[i]->numIdx = digit;
 		idx /= 10;
 	}
-    // need to update minutes as well
 }
 
 
@@ -56,25 +94,25 @@ void battleTimer::draw(){
 	for (int i = 0; i < NUM_DIGITS; i++) {
 		digits[i]->draw();
 	}
+	double off = (10.0 / 100.0) * height;
+	int nSize = height - (off*2.0);
 	//add one comma and draw
-	guiItem* comma = new guiItem("text/symbols/colon.jpg", 300,300);
+	guiItem* comma = new guiItem("text/symbols/colon.jpg", 950,970,nSize,nSize); // all things have the same size 
 	comma->draw();
-
 }
 
 
 void battleTimer::rePosition(int x, int y, int w, int h){
 	guiItem::rePosition(x, y, w, h);
-	/*
-	for (int i = 0; i < NUM_DIGITS; i++) {
-	digits[i].rePosition(x, y, w, h);
-	}
-	*/
 	double off = (10.0 / 100.0) * height;
 	int nSize = height - (off*2.0);
-	//want to manually make sure it stays relative to time left box
-	for (int i = 0; i < NUM_DIGITS; i++) {
-		digits[i]->setPosition((xPos + width - off) - (nSize*(i + 1)), yPos + off);
+	for (int i = 0; i < DIGITS; i++){
+		digits[i] = new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
+	}
+	int off_comma = off + nSize;
+
+	for (int i = DIGITS; i < NUM_DIGITS; i++) {
+		digits[i] = new numbers((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
 	}
 }
 

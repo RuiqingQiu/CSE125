@@ -16,7 +16,7 @@ battleView::~battleView()
 // create all the buttons on the battle view
 void battleView:: createButtons(){
 	// display the time left
-	timer = new battleTimer(width*0.3, height - 50, 400, 50, false, false);
+	timer = new battleTimer(width*0.3, height - 50, 500, 50, false, false);
 	timer->setScaling(true, false, width, height);
 	guiItems.push_back(timer);
 
@@ -25,7 +25,7 @@ void battleView:: createButtons(){
 void battleView::VUpdate() {
 	gui::VUpdate();
 	if (!updateview && isCurrentView || false) { //use true to disable timer
-		timer->start = std::clock();
+		//timer->start = std::clock();
 	}
 	for (int i = 0; i < guiItems.size(); i++) {
 		guiItems[i]->update();
