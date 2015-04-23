@@ -38,12 +38,13 @@ void Window::initialize(void)
 	factory = new viewFactory(width, height);
 	//factory = new viewFactory(true);  //for no gui
 	m_factory = new  Model3DFactory();
-	g_pCore->skybox = new SkyBox();
+	g_pCore->skybox = new SkyBox("skyboxes/space");
 	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
 
+	
 	//set color
 	//glColor3f(1, 1, 1);
 	cube = new Cube(1);
@@ -51,8 +52,8 @@ void Window::initialize(void)
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
 	view->PushGeoNode(cube);
-	/*
-	object = Model3DFactory::generateObjectWithType(Hammer);
+
+	object = Model3DFactory::generateObjectWithType(Mallet);
 	object->localTransform.position = Vector3(5, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
@@ -64,7 +65,7 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 
-	object = Model3DFactory::generateObjectWithType(MetalWheel);
+	object = Model3DFactory::generateObjectWithType(Discount);
 	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
@@ -100,12 +101,12 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	
-	object = Model3DFactory::generateObjectWithType(WhiteCube);
+	object = Model3DFactory::generateObjectWithType(GlowingCube);
 	object->localTransform.position = Vector3(-15, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-	*/
+	
 	//setup light
 	//view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
@@ -276,5 +277,5 @@ void Window::displayCallback() {
 	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

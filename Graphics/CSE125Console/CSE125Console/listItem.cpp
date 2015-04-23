@@ -111,8 +111,10 @@ void listItem::draw() {
 }
 
 void listItem::onClick(int state, int x, int y) {
-	if (button::isSelected(x, y))
+	if (button::isSelected(x, y)) {
 		button::onClick(state, x, y);
+		std::cout << identifier << std::endl;
+	}
 }
 
 void listItem::rePosition(int x, int y, int w, int h) {

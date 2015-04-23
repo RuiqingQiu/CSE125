@@ -31,6 +31,7 @@ void buildView::createButtons() {
 	GeoNode * cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	cube->identifier = 0;
+	cube->textureType = BasicCube;
 	PushGeoNode(cube);
 	currentNode = nullptr;  //not allowed to move base cube
 	//hardcoded button sizes for now
@@ -60,6 +61,7 @@ void buildView::createButtons() {
 	buttons.push_back(scroll);
 
 	//list options
+	int identifier = 0;
 	for (int i = 0; i < 3; i++) {
 		std::string concat = std::to_string(i) + ".jpg";
 		std::string selC = std::to_string(i) + "_sel.jpg";
@@ -68,7 +70,8 @@ void buildView::createButtons() {
 		for (int j = 0; j < 3; j++) {
 			concat = std::to_string((i * 10) + j) + ".jpg";
 			 selC = std::to_string((i * 10) + j) + "_sel.jpg";
-			scroll->addsubListItem(concat, selC);
+			 scroll->addsubListItem(concat, selC, identifier);
+			 identifier++;
 		}
 	}
 
@@ -93,16 +96,13 @@ void buildView::VUpdate() {
 	}
 	updateview = isCurrentView;
 
-	//update scores here
-	score->deaths += 1;
-	score->hits += 1;
-	score->rank += 1;
 	if (score->deaths == 100) score->deaths = 0;
 	if (score->hits == 100) score->hits = 0;
 	if (score->rank == 100) score->rank = 0;
 }
 
 void buildView::VOnRender() {
+
 	//Clear color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -209,7 +209,7 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 			removeNode();
 		}
 	}
-
+	selectedType = scroll->currentSelection;
 	prevMouseState = state;
 
 	if ((buttons[0]->isSelected(x, height - y) &&
@@ -252,9 +252,10 @@ void buildView::addNode() {
 		if (check.equals(Vector3(0,0,0))) {
 			return;
 		}
-		GeoNode * object = Model3DFactory::generateObjectWithType(BasicCube);
+		GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
 		object->localTransform.position = addNewNodePos();
 		object->identifier = s;
+		object->textureType = selectedType;
 		PushGeoNode(object);
 		//for now, we just move the last added node
 		currentNode = NodeList[NodeList.size() - 1];

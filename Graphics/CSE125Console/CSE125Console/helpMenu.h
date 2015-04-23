@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "gui.h"
-#include "background.h"
 
 class helpMenu : public gui {
 

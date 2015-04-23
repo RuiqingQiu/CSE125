@@ -27,7 +27,7 @@ Model3DFactory::~Model3DFactory()
 
 Model3D* Model3DFactory::generateObjectWithType(int type){
 	switch (type){
-		case Hammer:{
+		case Mallet:{
 			return new Model3D(render_obj_lst[type]);
 			break;
 		}
@@ -35,7 +35,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			return new Model3D(render_obj_lst[type]);
 			break;
 		}
-		case MetalWheel:{
+		case Discount:{
 			return new Model3D(render_obj_lst[type]);
 			break;
 		}
@@ -59,7 +59,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			return new Model3D(render_obj_lst[type]);
 			break;
 		}
-		case WhiteCube:{
+		case GlowingCube:{
 			return new Model3D(render_obj_lst[type]);
 			break;
 		}

@@ -1,16 +1,16 @@
 enum ModelType{
 	//blocks
 	BasicCube = 0,
-	WhiteCube = 1,
+	GlowingCube = 1,
 	WoodenCube = 2,
 
 	//weapons
 	Mace = 3,
-	Hammer = 4,
+	Mallet = 4,
 	Needle = 5,
 
 	//wheels
-	MetalWheel = 6,
+	Discount = 6,
 	Tire = 7,
 	WoodenWheel = 8,
 };
