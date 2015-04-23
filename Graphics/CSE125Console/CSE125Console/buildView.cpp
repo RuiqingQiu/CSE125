@@ -23,7 +23,7 @@ buildView::~buildView() {
 void buildView::createButtons() {
 	yRotation = 0;
 	rotateY.identity();
-	center = Vector3(-5, -5, -5);
+	center = Vector3(-3, -5, -3);
 	static Cube * cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	cube->identifier = 0;

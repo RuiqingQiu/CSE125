@@ -4,15 +4,14 @@
 
 SkyBox::SkyBox()
 {
+	skyBoxName = "skyboxes/alpine";
 	initSkyBox();
 }
 
-SkyBox::SkyBox(char* filename)
+SkyBox::SkyBox(std::string filename)
 {
-	// Change the following filename to a suitable filename value.
-	const char* lFilename = filename;
-
-	
+	skyBoxName = filename;
+	initSkyBox();
 }
 
 SkyBox::~SkyBox()
@@ -154,100 +153,79 @@ void SkyBox::VOnUpdate(GameInfoPacket* pData){
 
 bool SkyBox::initSkyBox()
 {
+	std::string concat = skyBoxName + "_front.jpg";
 	texture[0] = SOIL_load_OGL_texture
 		(
-		"alpine_front.jpg"
-		//"/Users/ruiqingqiu/Desktop/Qiu_Code/CSE167/CSE167 Final Project/()airFT.tga"
-		//"/Users/Ennuma/Desktop/CSE167_Final_Project/nightsky_north.bmp"
-
-		,
+		concat.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
 		);
 	if (texture[0] == 0)
 	{
+		std::cout << concat << std::endl;
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
-	else{
-		printf("SOIL loading success\n");
-	}
+
+	concat = skyBoxName + "_back.jpg";
 	texture[1] = SOIL_load_OGL_texture
 		(
-		"alpine_back.jpg"
-		//"/Users/ruiqingqiu/Desktop/Qiu_Code/CSE167/CSE167 Final Project/()airBK.tga"
-		//"/Users/Ennuma/Desktop/CSE167_Final_Project/nightsky_south.bmp"
-
-		,
+		concat.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
 		);
 	if (texture[1] == 0)
 	{
+		std::cout << concat << std::endl;
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
-	else{
-		printf("SOIL loading success\n");
-	}
 
+	concat = skyBoxName + "_left.jpg";
 	texture[2] = SOIL_load_OGL_texture
 		(
-		"alpine_left.jpg"
-
-		//"/Users/ruiqingqiu/Desktop/Qiu_Code/CSE167/CSE167 Final Project/()airRT.tga"
-		//"/Users/Ennuma/Desktop/CSE167_Final_Project/nightsky_west.bmp"
-
-		,
+		concat.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
 		);
 	if (texture[2] == 0)
 	{
+		std::cout << concat << std::endl;
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
-	else{
-		printf("SOIL loading success\n");
-	}
+
+	concat = skyBoxName + "_right.jpg";
 	texture[3] = SOIL_load_OGL_texture
 		(
-		"alpine_right.jpg"
-		//"/Users/ruiqingqiu/Desktop/Qiu_Code/CSE167/CSE167 Final Project/()airLT.tga"
-		//"/Users/Ennuma/Desktop/CSE167_Final_Project/nightsky_east.bmp"
-
-		,
+		concat.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
 		);
 	if (texture[3] == 0)
 	{
+		std::cout << concat << std::endl;
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
-	else{
-		printf("SOIL loading success\n");
-	}
+
+	concat = skyBoxName + "_top.jpg";
 	texture[4] = SOIL_load_OGL_texture
 		(
-		"alpine_top.jpg"
-		//"/Users/Ennuma/Desktop/CSE167_Final_Project/nightsky_up.bmp"
-
-		,
+		concat.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
 		);
 	if (texture[4] == 0)
 	{
+		std::cout << concat << std::endl;
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
-	else{
-		printf("SOIL loading success\n");
-	}
+	return true;
 }

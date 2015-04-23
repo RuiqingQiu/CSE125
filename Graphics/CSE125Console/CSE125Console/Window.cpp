@@ -38,7 +38,7 @@ void Window::initialize(void)
 	factory = new viewFactory(width, height);
 	//factory = new viewFactory(true);  //for no gui
 	m_factory = new  Model3DFactory();
-	g_pCore->skybox = new SkyBox();
+	g_pCore->skybox = new SkyBox("skyboxes/space");
 	g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
 	view->PushGeoNode(g_pCore->skybox);
