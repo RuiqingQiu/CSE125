@@ -42,7 +42,7 @@ battleTimer::~battleTimer() {
 
 void battleTimer::createNumbers(){
 	secLeft = MAX_TIME;
-	//minLeft = MIN;
+	minLeft = MIN;
 	start = std::clock();
 	double off = (10.0 / 100.0) * height;
 	int nSize = height - (off*2.0);
@@ -63,14 +63,23 @@ void battleTimer::update(){
 	// mod gives the reminder
 	int sec = timeUsed % MAX_TIME; // sec used
 	int min = (timeUsed - sec) / MAX_TIME;// mins used
-	minLeft = MIN - min;
-	secLeft = MAX_TIME - sec;
+
+	// if minLeft is less then 0, don't update anymore
+	if (minLeft <= -1){
+		secLeft = 0;
+		cout << "Enter " << endl;
+		//return;
+	}
+	// if still time left 
+	else{
+		minLeft = MIN - min; // calcualte the min left
+		cout << "minLeft " << minLeft << endl;
+		secLeft = MAX_TIME - sec;
+		cout << "secLeft " << secLeft << endl;
+	}
 	int idx_sec = secLeft;
 	int idx = minLeft;
 
-	if (minLeft <= 0 && secLeft <=0){
-		return;
-	}
 	 // update sec first
 	for (int i = 0; i < DIGITS; i++) {
 		if (!(idx_sec >= 0)) break;
@@ -97,7 +106,7 @@ void battleTimer::draw(){
 	double off = (10.0 / 100.0) * height;
 	int nSize = height - (off*2.0);
 	//add one comma and draw
-	guiItem* comma = new guiItem("text/symbols/colon.jpg", 950,970,nSize,nSize); // all things have the same size 
+	guiItem* comma = new guiItem("text/symbols/colon.jpg", 945,970,nSize,nSize); // all things have the same size 
 	comma->draw();
 }
 

@@ -16,7 +16,7 @@ class SkyBox :
 	public GeoNode
 {
 public:
-	float size_of_texture_cube = 1000;
+	float size_of_texture_cube = 100;
 
 	SkyBox();
 	//pass in format: [path]/[skytexture name] do not pass in [_front.jpg] segment

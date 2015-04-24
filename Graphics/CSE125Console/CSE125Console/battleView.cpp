@@ -24,18 +24,8 @@ void battleView:: createButtons(){
 
 void battleView::VUpdate() {
 	gui::VUpdate();
-	if (timer->minLeft == 0 && timer->secLeft == 0){
-		/*
-		timer->secLeft = 0;
-		for (int i = 0; i < guiItems.size(); i++) {
-			guiItems[i]->update();
-		}
-		return;
-		*/
-		return;
-	}
-	if (!updateview && isCurrentView || false) { //use true to disable timer
-	
+	if (!updateview && isCurrentView){
+		//timer->start = std::clock();
 	}
 	for (int i = 0; i < guiItems.size(); i++) {
 		guiItems[i]->update();
