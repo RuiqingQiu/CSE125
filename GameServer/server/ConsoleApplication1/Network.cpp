@@ -487,16 +487,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 					temp += ' ';
 					temp += to_string((float)yaw0);
 					temp += ' ';
-					if (k % 3 == 1){
-						temp += to_string(WOODENWHEEL);
-					}
-					else if (k % 3 == 2){
-						temp += to_string(TIRE);
-					}
-					else{
-						temp += to_string(NEEDLE);
-					}
-					//temp += to_string(BASICCUBE);
+					temp += to_string(BASICCUBE);
 					temp += ' ';
 				}
 			}

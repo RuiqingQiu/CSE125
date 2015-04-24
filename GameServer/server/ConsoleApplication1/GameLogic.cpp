@@ -8,6 +8,7 @@ GameLogic::GameLogic()
 	network = new Network();
 	gamePhysics = new GamePhysics();
 	countDown = new TimeFrame();
+	damageSystem = new DamageSystem();
 }
 
 GameLogic::~GameLogic()
@@ -15,6 +16,7 @@ GameLogic::~GameLogic()
 	delete network;
 	delete gamePhysics;
 	delete countDown;
+	delete damageSystem;
 
 }
 
@@ -23,16 +25,7 @@ unsigned int GameLogic::waitToConnect()
 	int cid; 
 	cid = network->waitForConnections();
 	if (cid == -1) return WAIT;
-	//remove this part after wait
-//	cid = 0;
 	GameObj* robot = new Robot(cid, "testname");
-	/*GameObj* box = new GOBox(1, 2, 1, 0, 0, 0, 1, 50, 1, 1, 1);
-	box->setIsRobot(1);
-	gameObjs.push_back(box);*/
-	//0, 0
-	//5, 0
-	//0, 5
-	//5, 5
 	robot->setZ((cid % 2) * 10);
 	robot->setY(10);
 	robot->setX(cid - 2<0 ? 0 : 10);
@@ -42,13 +35,8 @@ unsigned int GameLogic::waitToConnect()
 	robot->setqW(1);
 	robot->setMass(50);
 	robot->setType(BOX);
-	if (cid == 0){
-		robot->setBlockType(BASICCUBE);
-	}
-	else{
-		robot->setBlockType(GLOWINGCUBE);
-	}
-		this->pushGameObj(robot);
+	robot->setBlockType(BASICCUBE);
+	this->pushGameObj(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
    
 	//GameObj* gameObj = new GOBox(0, 5, 0, 0, 0, 0, 1, 50, 7, 1, 7);
@@ -270,21 +258,23 @@ void GameLogic::postPhyLogic(){
 		GameObj* GO2 = objCollisionPair.find(obj2)->second;
 
 
-		if (GO1->getType() == PLANE && GO2->getIsRobot())
-		{
-			//gameP
-			//((Robot*)GO2)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
-			//((Robot*)GO2)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
+		//if (GO1->getType() == PLANE && GO2->getIsRobot())
+		//{
+		//	//gameP
+		//	//((Robot*)GO2)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+		//	//((Robot*)GO2)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
 
-		}
+		//}
 
-		if (GO2->getType() == PLANE && GO1->getIsRobot())
-		{
-			//gameP
-			//((Robot*)GO1)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
-			//((Robot*)GO1)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
+		//if (GO2->getType() == PLANE && GO1->getIsRobot())
+		//{
+		//	//gameP
+		//	//((Robot*)GO1)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+		//	//((Robot*)GO1)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
 
-		}
+		//}
+
+		//damageSystem->functionCall();
 
 		std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
 

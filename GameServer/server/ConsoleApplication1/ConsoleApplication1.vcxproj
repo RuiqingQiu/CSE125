@@ -53,7 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\zhxia\Desktop\bullet\src;$(MSBuildStartupDirectory)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Jason\Desktop\Bullet\src;$(MSBuildStartupDirectory)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,8 +81,10 @@
   <ItemGroup>
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Constraint.h" />
+    <ClInclude Include="DamageSystem.h" />
     <ClInclude Include="definition.h" />
     <ClInclude Include="GameEvents.h" />
+    <ClInclude Include="GERobotDeath.h" />
     <ClInclude Include="ObjectEvents.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObj.h" />
@@ -110,8 +112,10 @@
   <ItemGroup>
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Constraint.cpp" />
+    <ClCompile Include="DamageSystem.cpp" />
     <ClCompile Include="definition.cpp" />
     <ClCompile Include="GameEvents.cpp" />
+    <ClCompile Include="GERobotDeath.cpp" />
     <ClCompile Include="ObjectEvents.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObj.cpp" />
@@ -137,14 +141,14 @@
     <ResourceCompile Include="ConsoleApplication1.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\zhxia\Desktop\bullet2\src\BulletCollision\BulletCollision.vcxproj">
-      <Project>{cff03b56-6bcb-4bc0-8b4b-c0e93c86d152}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\Bullet\src\BulletCollision\BulletCollision.vcxproj">
+      <Project>{17d48ca1-6c8f-4f61-aa4e-0e1062c97a42}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\zhxia\Desktop\bullet2\src\BulletDynamics\BulletDynamics.vcxproj">
-      <Project>{9d6d609b-c4ad-4e3d-ac0d-345481a19eb1}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\Bullet\src\BulletDynamics\BulletDynamics.vcxproj">
+      <Project>{193d7e2a-d6f4-44e5-b2ef-99270d899806}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\zhxia\Desktop\bullet2\src\LinearMath\LinearMath.vcxproj">
-      <Project>{a444d6c6-5b30-4023-a0e6-8a8ab86c89b3}</Project>
+    <ProjectReference Include="..\..\..\..\..\..\Bullet\src\LinearMath\LinearMath.vcxproj">
+      <Project>{12d4fe06-ea07-4a31-a1e9-494fc636081e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

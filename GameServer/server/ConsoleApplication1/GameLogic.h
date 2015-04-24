@@ -7,6 +7,7 @@
 #include "GamePhysics.h"
 #include "definition.h"
 #include "TimeFrame.h"
+#include "DamageSystem.h"
 #include <math.h>
 
 #define FIELD_WIDTH 40
@@ -18,6 +19,7 @@ private:
 	Network* network;
 	GamePhysics* gamePhysics;
 	TimeFrame* countDown;
+	DamageSystem* damageSystem;
 	int asd = 1;
 
 
@@ -26,8 +28,8 @@ private:
 	std::map< btCollisionObject*, GameObj*> objCollisionPair;
 	std::vector<Constraint*> constraints;
 	std::vector<ObjectEvents *> objEventList;
+    std::vector<GameEvents *> gameEventList;
 
-	//std::vector<GameEvents *> gameEventList;
 public:
 	GameLogic();
 	~GameLogic();

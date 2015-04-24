@@ -18,27 +18,14 @@ enum PacketTypes {
 	WEAPON1 = 10,
 };
 
-//Game Events
-enum GameEvents {
-	EXPLOSION = 0,
-	RESUME = 1,
-	PAUSE = 2,
-	SCOREBOARD = 3,
 
-
-
-};
-
-
-
-	//ACTIONS FOR STATE MACHINE
-	enum ACTION
-	{
-		WAIT = 0,
-		ADDCLIENT = 1,
-		TIMEUP = 2,
-		COUNTDOWN = 3,
-		RESTART = 4,
+	//Game Events
+	enum GameEventType {
+		EXPLOSION = 0,
+		RESUME = 1,
+		PAUSE = 2,
+		SCOREBOARD = 3,
+		PLAYER_DEATH = 4,
 	};
 
 	//TEXTURES
@@ -83,30 +70,6 @@ enum GameEvents {
 		
 	};
 
-
-	//game states
-	enum STATE {
-		INIT_STATE0 = 0,
-		INIT_STATE1 = 1,
-		INIT_STATE2 = 2,
-		INIT_STATE3 = 3,
-		BUILD_STATE = 4,
-		GAME_STATE0 = 5,
-		END_STATE = 8,
-
-	};
-
-	// GameObj (physical) types
-	enum OBJECT_TYPE
-	{
-		PLANE = 0,
-		TRIANGLE = 1,
-		CAPSULE = 2,
-		CONE = 3,
-		CYLINDER = 4,
-		BOX = 5,
-		CLOUD = 6,
-	};
 
 #define BIT(x) (1<<(x))
 	enum COLLISION_TYPE {

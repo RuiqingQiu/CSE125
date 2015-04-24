@@ -3,10 +3,22 @@
 #define GAME_OBJ_H
 
 
-#include "definition.h"
 #include <map>
 #include <btBulletDynamicsCommon.h>
 
+
+
+// GameObj (physical) types
+enum OBJECT_TYPE
+{
+	PLANE = 0,
+	TRIANGLE = 1,
+	CAPSULE = 2,
+	CONE = 3,
+	CYLINDER = 4,
+	BOX = 5,
+	CLOUD = 6,
+};
 
 class GameObj
 {
