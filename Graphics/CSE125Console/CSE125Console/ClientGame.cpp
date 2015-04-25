@@ -111,7 +111,7 @@ GameInfoPacket* ClientGame::update()
 		case GAME_STATE:
 				{
 							//printf("client received game state packet from server\n");
-							std::cout << packet.data << std::endl;
+							//std::cout << packet.data << std::endl;
 						    //cout << "game_state" << endl;
 						    std::string result = std::string(packet.data);
 
@@ -140,8 +140,8 @@ GameInfoPacket* ClientGame::update()
 			std::string result = std::string(packet.data);
 			std::vector<std::string> v;
 			split(result, v, '\n');
-			std::cout << "from confirm connection" << std::endl;
-			std::cout << packet.data << std::endl;
+			//std::cout << "from confirm connection" << std::endl;
+			//std::cout << packet.data << std::endl;
 			g->packet_types = packet.packet_type;
 			PlayerInfo* p = new PlayerInfo();
 			std::cout << v[1] << std::endl;

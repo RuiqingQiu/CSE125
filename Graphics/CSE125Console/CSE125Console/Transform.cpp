@@ -101,5 +101,5 @@ Matrix4 Transform::GetRotMatrix4()
 	ret = m4_rot;
 	//ret.transpose();
 
-	return ret;
+	return m4_roty;
 }

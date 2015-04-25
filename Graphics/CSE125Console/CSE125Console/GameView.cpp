@@ -26,6 +26,9 @@ void GameView::VOnRender()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	pViewCamera->setUpCamera();
+	glPushMatrix();
+	//glutSolidTeapot(5);
+	glPopMatrix();
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
 
@@ -43,7 +46,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	{
 	    node->VOnClientUpdate(info);	
 		if (node->identifier == pPlayer->playerid ){
-			//this->pViewCamera->FollowingTarget = node;
+			this->pViewCamera->FollowingTarget = node;
 		}
 		
 	}

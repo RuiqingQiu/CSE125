@@ -45,17 +45,18 @@ void Window::initialize(void)
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
 
-	
 	//set color
 	//glColor3f(1, 1, 1);
 	/*
 	cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, -5);
+	cube->localTransform.rotation = Vector3(10, 0, 0);
+
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
 	cube->identifier = 1;
-	view->PushGeoNode(cube);*/
-
-	
+	view->PushGeoNode(cube);
+	view->pViewCamera->FollowingTarget = cube;
+	*/
 	/*
 	object = Model3DFactory::generateObjectWithType(Mace);
 	object->localTransform.position = Vector3(3, 0, -20);
@@ -160,12 +161,11 @@ void Window::initialize(void)
 	g_pCore->i_pInput = factory->currentInput;
 
 
-	//view->pViewCamera->FollowingTarget = cube;
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 
 }
 
@@ -196,16 +196,16 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 			cube->localTransform.rotation.y += 1;
 		}
 		else if (key == '.'){
-			cube->localTransform.rotation.y -= 1;
+			cube->localTransform.rotation.y -= 10;
 		}
 	}
 
 	if (TESTCAM){
 		if (key == 'l'){
-			cube->localTransform.rotation.y += 180;
+			cube->localTransform.rotation.x += 20;
 		}
 		else if (key == ';'){
-			cube->localTransform.rotation.y += 360;
+			cube->localTransform.rotation.z += 20;
 		}
 	}
 	
