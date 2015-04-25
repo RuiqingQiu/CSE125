@@ -45,19 +45,49 @@ btRaycastVehicle * Robot::getVehicle()
 	return vehicle;
 }
 
+void Robot::setWidth(double w)
+{
+	_width = w;
+}
+void Robot::setHeight(double h)
+{
+	_height = h;
+}
+void Robot::setDepth(double d)
+{
+	_depth = d;
+}
+
+double Robot::getWidth()
+{
+	return _width;
+}
+
+double Robot::getHeight()
+{
+	return _height;
+}
+double Robot::getDepth()
+{
+	return _depth;
+}
+
 void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> * map)
 {
 
 	//GOBox* boxShape = new GOBox( x,  y,  z,  qX,  qY,  qZ,  qW,  mass,  width,  height,  depth);
 	double x = this->getX();
 	double y= this->getY();
-	std::cout << "create Vehicle" <<y << std::endl;
+
 	double z= this->getZ();
 	double qX= this->getqX();
 	double qY= this->getqY();
 	double qZ= this->getqZ();
 	double qW= this->getqW();
 	double mass = this->getMass();
+	setWidth(width);
+	setHeight(height);
+	setDepth(depth);
 	btBoxShape* m_pBoxShape = new btBoxShape(btVector3(width, height, depth));
 
 	btTransform chassisLS;

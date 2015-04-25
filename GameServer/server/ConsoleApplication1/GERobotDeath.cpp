@@ -12,3 +12,7 @@ GERobotDeath::~GERobotDeath()
 {
 }
 
+
+void GERobotDeath::to_string(char* st){
+
+}

@@ -27,7 +27,7 @@ unsigned int GameLogic::waitToConnect()
 	if (cid == -1) return WAIT;
 	GameObj* robot = new Robot(cid, "testname");
 	robot->setZ((cid % 2) * 10);
-	robot->setY(10);
+	robot->setY(4);
 	robot->setX(cid - 2<0 ? 0 : 10);
 	robot->setqX(0);
 	robot->setqY(-50);
@@ -91,6 +91,16 @@ unsigned int GameLogic::waitToConnect()
 	}*/
 
 
+
+	//objEvent = new ObjectEvents(SHOOT);
+	//objEventList.push_back(objEvent);
+	//objEvent = new ObjectEvents(SHOOT);
+	//objEventList.push_back(objEvent);
+	//objEvent = new ObjectEvents(SHOOT);
+	//objEventList.push_back(objEvent);
+	//objEvent = new ObjectEvents(SHOOT);
+
+
 	network->receiveFromClients(&objEventList);
 
 	std::vector<ObjectEvents *>::iterator iter;
@@ -123,6 +133,11 @@ void GameLogic::gameStart(){
 	addWalls();
 
 	gamePhysics->initWorld(&(this->getGameObjs()), &objCollisionPair);
+	ObjectEvents* objEvent = new ObjectEvents(SHOOT);
+
+
+	objEvent->setCid(0);
+	objEventList.push_back(objEvent);
 	//int i,j,k;
 
 	//for (i = 0; i < 17; i++)
@@ -158,6 +173,8 @@ void GameLogic::gameStart(){
 
 
 unsigned int GameLogic::gameLoop (){
+
+
 	network->receiveFromClients(&objEventList);
 	
 
@@ -208,9 +225,43 @@ void GameLogic::prePhyLogic(){
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
 		GameObj* gObj = it->second;
-		gamePhysics->createPhysicsEvent(type, gObj);
+
+		switch(type) {
+		case SHOOT:{
+					   double initBulletSpd = 1;
+					   double bulletMass = 10;
+					   double bulletWidth = 0.3;
+					   double bulletHeight = 0.3;
+					   double bulletdepth = 0.5;
+					   double rbWidth = ((Robot*)gObj)->getWidth();
+					   btTransform rbTrans = ((Robot*)gObj)->getRigidBody()->getWorldTransform();
+					   btVector3 relativeForce = btVector3(0, 0, rbWidth/2);
+					   btVector3 boxRot = rbTrans.getBasis()[2];
+					   boxRot.normalize();
+					   btVector3 correctedForce = boxRot * rbWidth/2;
+					   double x = rbTrans.getOrigin().getX() + correctedForce.getX();
+					   double y = rbTrans.getOrigin().getY() + correctedForce.getY();
+					   double z = rbTrans.getOrigin().getZ() + correctedForce.getZ();
+					   /*btScalar qx;
+					   double qy;
+					   double qz;
+					   rbTrans.getBasis().getEulerZYX(qz, qy, qx);
+*/
+					   GameObj* bullet = new GOBox(x, y, z, rbTrans.getRotation().getX(), rbTrans.getRotation().getY(), rbTrans.getRotation().getZ(), rbTrans.getRotation().getW(),
+						 bulletMass  , bulletWidth, bulletHeight, bulletdepth);
+					   bullet->setBlockType(NEEDLE);
+					   pushGameObj(bullet);
+					   gamePhysics->createPhysicsProjectile(type, bullet, &objCollisionPair);
+				break;
+		}
+		default:{
+					gamePhysics->createPhysicsEvent(type, gObj);
+					break;
+		}
+
+		}
+
 		iter++;
-	
 	}
 	if (objEventList.size() == 0)
 	{
@@ -276,8 +327,10 @@ void GameLogic::postPhyLogic(){
 
 		//damageSystem->functionCall();
 
-		std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
-
+		if ((GO2->getType() == BOX && GO1->getType() == PLANE) || (GO1->getType() == BOX && GO2->getType() == PLANE))
+		{
+			std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
+		}
 	}
 
 }

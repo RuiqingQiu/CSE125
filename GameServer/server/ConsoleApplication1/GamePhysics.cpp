@@ -92,9 +92,30 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 	//collisionCallback(dynamicsWorld, collisionList);
 }
 
+void GamePhysics::createPhysicsProjectile(int eventType, GameObj* projectile, std::map< btCollisionObject*, GameObj*>* map)
+{
+	std::cout << "Projectile Event Type: " << eventType << std::endl;
+	switch (eventType) {
+	case SHOOT: {
+					projectile->createRigidBody(map);
+					dynamicsWorld->addRigidBody(projectile->getRigidBody());
+					btVector3 relativeForce = btVector3(0, 0, 10000);
+					btMatrix3x3& boxRot = projectile->getRigidBody()->getWorldTransform().getBasis();
+					btVector3 correctedForce = boxRot * relativeForce;
+					projectile->getRigidBody()->applyCentralForce(correctedForce);
+					break;
+	}
+	default:{
+				printf("error in packet types\n");
+				break;
+	}
+	}
+
+}
+
 void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
 {
-	std::cout << "Event Type: " << eventType << std::endl;
+	//std::cout << "Event Type: " << eventType << std::endl;
 	switch (eventType) {
 	case MOVE_LEFT: {
 		if (gameObj->getIsRobot()!= 0)
@@ -139,9 +160,9 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
 		rb->applyCentralImpulse(correctedForce);*/
 		break;
 	}
-	case WEAPON1:{
-		break;
-	}
+	//case WEAPON1:{
+	//	break;
+	//}
 	default:{
 		printf("error in packet types\n");
 		break;
@@ -155,6 +176,46 @@ void GamePhysics::robotTurnLeft(Robot* rb){
 		v->getWheelInfo(0).m_steering += TURN_SPEED;
 	if (v->getWheelInfo(1).m_steering < MAX_TURN_SPEED)
 		v->getWheelInfo(1).m_steering += TURN_SPEED;
+
+	if (v->getCurrentSpeedKmHour() > MAX_SPEED)
+	{
+		//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		//std::cout << "forward: " <<v->getWheelInfo(0).m_engineForce << std::endl;
+		double scale = (v->getCurrentSpeedKmHour() / MAX_SPEED) - 1;
+		v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 0);
+		v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 1);
+		v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 2);
+		v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 3);
+	}
+	else
+	{
+
+		//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		//std::cout << "forward: " << v->getWheelInfo(0).m_engineForce << std::endl;
+		double scale = 1 - (v->getCurrentSpeedKmHour() / MAX_SPEED);
+		//std::cout << v->getWheelInfo(0).m_engineForce << std::endl;
+		v->applyEngineForce((v->getWheelInfo(0).m_engineForce + MOVE_SPEED)*(scale), 0);
+		v->applyEngineForce((v->getWheelInfo(1).m_engineForce + MOVE_SPEED)*(scale), 1);
+		v->applyEngineForce((v->getWheelInfo(2).m_engineForce + MOVE_SPEED)*(scale), 2);
+		v->applyEngineForce((v->getWheelInfo(3).m_engineForce + MOVE_SPEED)*(scale), 3);
+	}
+
+	if (v->getWheelInfo(0).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 0);
+	}
+	if (v->getWheelInfo(1).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 1);
+	}
+	if (v->getWheelInfo(2).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 2);
+	}
+	if (v->getWheelInfo(3).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 3);
+	}
 }
 void GamePhysics::robotTurnRight(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle();
@@ -162,13 +223,53 @@ void GamePhysics::robotTurnRight(Robot* rb){
 		v->getWheelInfo(0).m_steering += -TURN_SPEED;
 	if (v->getWheelInfo(1).m_steering > -MAX_TURN_SPEED)
 		v->getWheelInfo(1).m_steering += -TURN_SPEED;
+
+	if (v->getCurrentSpeedKmHour() > MAX_SPEED)
+	{
+		//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		//std::cout << "forward: " <<v->getWheelInfo(0).m_engineForce << std::endl;
+		double scale = (v->getCurrentSpeedKmHour() / MAX_SPEED) - 1;
+		v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 0);
+		v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 1);
+		v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 2);
+		v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 3);
+	}
+	else
+	{
+
+		//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		//std::cout << "forward: " << v->getWheelInfo(0).m_engineForce << std::endl;
+		double scale = 1 - (v->getCurrentSpeedKmHour() / MAX_SPEED);
+		//std::cout << v->getWheelInfo(0).m_engineForce << std::endl;
+		v->applyEngineForce((v->getWheelInfo(0).m_engineForce + MOVE_SPEED)*(scale), 0);
+		v->applyEngineForce((v->getWheelInfo(1).m_engineForce + MOVE_SPEED)*(scale), 1);
+		v->applyEngineForce((v->getWheelInfo(2).m_engineForce + MOVE_SPEED)*(scale), 2);
+		v->applyEngineForce((v->getWheelInfo(3).m_engineForce + MOVE_SPEED)*(scale), 3);
+	}
+
+	if (v->getWheelInfo(0).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 0);
+	}
+	if (v->getWheelInfo(1).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 1);
+	}
+	if (v->getWheelInfo(2).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 2);
+	}
+	if (v->getWheelInfo(3).m_engineForce > MAX_ENGINE_SPEED)
+	{
+		v->applyEngineForce(MAX_ENGINE_SPEED, 3);
+	}
 }
 void GamePhysics::robotForward(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle();
 	if (v->getCurrentSpeedKmHour() > MAX_SPEED)
 	{
-		std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
-		std::cout << "forward: " <<v->getWheelInfo(0).m_engineForce << std::endl;
+		//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		//std::cout << "forward: " <<v->getWheelInfo(0).m_engineForce << std::endl;
 		double scale = (v->getCurrentSpeedKmHour() / MAX_SPEED) - 1;
 	v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 0);
 	v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 1);
@@ -178,8 +279,8 @@ void GamePhysics::robotForward(Robot* rb){
 	else
 	{
 
-		std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
-		std::cout << "forward: " << v->getWheelInfo(0).m_engineForce << std::endl;
+		//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		//std::cout << "forward: " << v->getWheelInfo(0).m_engineForce << std::endl;
 		double scale = 1 - (v->getCurrentSpeedKmHour() / MAX_SPEED);
 		//std::cout << v->getWheelInfo(0).m_engineForce << std::endl;
 		v->applyEngineForce((v->getWheelInfo(0).m_engineForce + MOVE_SPEED)*(scale), 0);

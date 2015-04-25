@@ -8,10 +8,12 @@
 #include "definition.h"
 #include "TimeFrame.h"
 #include "DamageSystem.h"
+#include "GameEvents.h"
+#include "GameState.h"
 #include <math.h>
 
-#define FIELD_WIDTH 40
-#define FIELD_HEIGHT 40
+#define FIELD_WIDTH 50
+#define FIELD_HEIGHT 50
 
 
 class GameLogic {

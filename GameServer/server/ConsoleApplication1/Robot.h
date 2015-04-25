@@ -12,6 +12,10 @@ private:
 	Weapon *_w1;
 	Weapon *_w2;
 	Weapon *_w3;
+	
+	double _width;
+	double _height;
+	double _depth;
 
 
 public:
@@ -25,6 +29,14 @@ public:
 	void setWeapon1(Weapon*);
 	void setWeapon2(Weapon*);
 	void setWeapon3(Weapon*);
+
+	void setWidth(double);
+	void setHeight(double);
+	void setDepth(double);
+
+	double getWidth();
+	double getHeight();
+	double getDepth();
 
 	int getID();
 	int getTakeDowns();

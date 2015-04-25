@@ -175,10 +175,10 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 								break;
 							}
 						}
-						cout << packet.data << endl;
-						cout << "recieved string "<< packetInfoStr << endl;
+						//cout << packet.data << endl;
+						//cout << "recieved string "<< packetInfoStr << endl;
 						int cid = stoi(packetInfoStr);
-						cout << "recived cid = " << cid << endl;
+						//cout << "recived cid = " << cid << endl;
 						e->setCid(cid);
 						eventList->push_back(e);
 						break;
@@ -280,24 +280,24 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							eventList->push_back(e);
 							break;
 		}
-		//case WEAPON1:{
-		//	ObjectEvents * e = new ObjectEvents(WEAPON1);
-		//	string packetInfoStr = "";
-		//	int i;
-		//	for (i = 0;; i++)
-		//	{
-		//		if (packet.data[i] != '\n')
-		//			packetInfoStr += packet.data[i];
-		//		else
-		//		{
-		//			break;
-		//		}
-		//	}
-		//	unsigned int cid = stoul(packetInfoStr);
-		//	e->setCid(cid);
-		//	eventList->push_back(e);
-		//	break;
-		//}
+		case SHOOT:{
+			ObjectEvents * e = new ObjectEvents(SHOOT);
+			string packetInfoStr = "";
+			int i;
+			for (i = 0;; i++)
+			{
+				if (packet.data[i] != '\n')
+					packetInfoStr += packet.data[i];
+				else
+				{
+					break;
+				}
+			}
+			unsigned int cid = stoul(packetInfoStr);
+			e->setCid(cid);
+			eventList->push_back(e);
+			break;
+		}
 		default:{
 					printf("error in packet types\n");
 					break;
@@ -478,22 +478,38 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 					btScalar yaw0 = 0, pitch0 = 0, roll0 = 0;
 
 					tran0.getBasis().getEulerZYX(yaw0, pitch0, roll0);
-					//cout << "yaw : " << yaw << endl;
-					//cout << "pitch : " << pitch << endl;
-					//cout << "roll : " << roll << endl;
-					temp += to_string((float)roll0);
-					temp += ' ';
-					temp += to_string((float)pitch0);
-					temp += ' ';
-					temp += to_string((float)yaw0);
-					temp += ' ';
-					temp += to_string(BASICCUBE);
-					temp += ' ';
+					if (k == 3)
+					{
+						temp += to_string((float)180);
+						temp += ' ';
+						temp += to_string((float)pitch0);
+						temp += ' ';
+						temp += to_string((float)180);
+						temp += ' ';
+						temp += to_string(TIRE);
+						temp += ' ';
+					}
+					else
+					{
+
+						
+						//cout << "yaw : " << yaw << endl;
+						//cout << "pitch : " << pitch << endl;
+						//cout << "roll : " << roll << endl;
+						temp += to_string((float)roll0);
+						temp += ' ';
+						temp += to_string((float)pitch0);
+						temp += ' ';
+						temp += to_string((float)yaw0);
+						temp += ' ';
+						temp += to_string(WOODENWHEEL);
+						temp += ' ';
+					}
 				}
 			}
 	}
 	temp += "\0";
-	cout << temp << endl;
+	//cout << temp << endl;
 	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;\
 
 	return temp;

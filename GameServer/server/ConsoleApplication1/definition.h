@@ -15,7 +15,7 @@ enum PacketTypes {
 	MOVE_DOWN = 7,
 	INIT_CLIENT = 8,
 	CONFIRM_CONNECTION = 9,
-	WEAPON1 = 10,
+	SHOOT = 10,
 };
 
 
@@ -57,16 +57,17 @@ enum PacketTypes {
 	enum BLOCK_TYPE
 	{
 		BASICCUBE = 0,
-		GLOWINGCUBE	= 1,
+		GLOWINGCUBE = 1,
 		WOODENCUBE = 2,
 		MACE = 3,
-		MALLET	=4,
-		NEEDLE=	5,
-		DISCOUNTWHEEL=	6,
-		TIRE =	7,
-		WOODENWHEEL	=8,
+		MALLET = 4,
+		NEEDLE = 5,
+		DISCOUNTWHEEL = 6,
+		TIRE = 7,
+		WOODENWHEEL = 8,
 		BATTLEFIELD = 100,
 		WALL = 101,
+		BULLET_1 = 102,
 		
 	};
 
