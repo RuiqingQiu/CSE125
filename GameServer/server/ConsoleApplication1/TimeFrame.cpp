@@ -40,5 +40,7 @@ int TimeFrame::checkCountdown()
 // Sleep frame for a given time period (in milliseconds)
 void TimeFrame::frameSleep(int milliseconds)
 {
+	//Need to fix this
+	if (milliseconds>0)
 	Sleep(milliseconds);
 }

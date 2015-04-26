@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Users\rqiu\Desktop\CSE125\GameServer\bullet-2.82-r2704\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -79,50 +79,76 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Constraint.h" />
+    <ClInclude Include="DamageSystem.h" />
     <ClInclude Include="definition.h" />
-    <ClInclude Include="Events.h" />
+    <ClInclude Include="GameEvents.h" />
+    <ClInclude Include="GERobotDeath.h" />
+    <ClInclude Include="ObjectEvents.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObj.h" />
     <ClInclude Include="GamePhysics.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="GOBox.h" />
+    <ClInclude Include="GOCapsule.h" />
+    <ClInclude Include="GOCone.h" />
+    <ClInclude Include="GOCylinder.h" />
+    <ClInclude Include="GOPlane.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="NetworkData.h" />
     <ClInclude Include="NetworkServices.h" />
+    <ClInclude Include="Robot.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ServerCore.h" />
     <ClInclude Include="ServerNetwork.h" />
+    <ClInclude Include="SPacketDecoder.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeFrame.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Constraint.cpp" />
+    <ClCompile Include="DamageSystem.cpp" />
     <ClCompile Include="definition.cpp" />
-    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="GameEvents.cpp" />
+    <ClCompile Include="GERobotDeath.cpp" />
+    <ClCompile Include="ObjectEvents.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="GamePhysics.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GOBox.cpp" />
+    <ClCompile Include="GOCapsule.cpp" />
+    <ClCompile Include="GOCone.cpp" />
+    <ClCompile Include="GOCylinder.cpp" />
+    <ClCompile Include="GOPlane.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="NetworkServices.cpp" />
+    <ClCompile Include="Robot.cpp" />
     <ClCompile Include="ServerCore.cpp" />
     <ClCompile Include="ServerNetwork.cpp" />
+    <ClCompile Include="SPacketDecoder.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TimeFrame.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ConsoleApplication1.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\bullet-2.82-r2704\BulletBuild\src\BulletCollision\BulletCollision.vcxproj">
-      <Project>{2ebdd13b-7e2e-46c8-944f-0b0e5060dcba}</Project>
+    <ProjectReference Include="..\..\B\src\BulletCollision\BulletCollision.vcxproj">
+      <Project>{095762ea-2ad8-47ff-afa7-4a0c423c71d0}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\bullet-2.82-r2704\BulletBuild\src\BulletDynamics\BulletDynamics.vcxproj">
-      <Project>{dbeca82c-ddc9-47df-ad44-0b74aed7f36a}</Project>
+    <ProjectReference Include="..\..\B\src\BulletDynamics\BulletDynamics.vcxproj">
+      <Project>{c3eb8696-9978-4119-8592-6cb5f8c8bb6b}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\bullet-2.82-r2704\BulletBuild\src\LinearMath\LinearMath.vcxproj">
-      <Project>{9ea3f5a1-fd03-4f45-a302-826e1c5f44b8}</Project>
+    <ProjectReference Include="..\..\B\src\LinearMath\LinearMath.vcxproj">
+      <Project>{3c13529c-cb37-4913-a5c8-fe6e8099fcaa}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
