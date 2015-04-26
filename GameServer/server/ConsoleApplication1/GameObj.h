@@ -5,6 +5,8 @@
 
 #include <map>
 #include <btBulletDynamicsCommon.h>
+#include <vector>
+#include "Constraint.h"
 
 
 
@@ -22,7 +24,7 @@ enum OBJECT_TYPE
 
 class GameObj
 {
-	
+
 private:
 	double _x;
 	double _y;
@@ -39,7 +41,12 @@ private:
 	int _blockType;
 	double _mass;
 	int _isRobot;
+	int _collisionType;
 	btRigidBody* rigidBody;
+
+	GameObj* _belongTo;
+
+	std::vector<Constraint *> constraints;
 
 public:
 	static unsigned int _totalId;
@@ -83,6 +90,17 @@ public:
 	void setRotZ(double);
 	void setIsRobot(int);
 	int getIsRobot();
+
+	void setCollisionType(int);
+	int getCollisionType();
+
+	void setBelongTo(GameObj*);
+	GameObj* getBelongTo();
+	void addConstraint(GameObj*);
+	void deleteConstraints(std::map< btCollisionObject*, GameObj*>*);
+	void deleteInvalidConstraints();
+	std::vector<Constraint *> getConstraints();
+
 	static int getOid(){ return _totalId; }
 
 	void incOid(int i){ _totalId += i; }

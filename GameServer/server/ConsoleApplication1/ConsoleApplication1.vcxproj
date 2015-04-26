@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Constraint.h" />
+    <ClInclude Include="DamageEvent.h" />
     <ClInclude Include="DamageSystem.h" />
     <ClInclude Include="definition.h" />
     <ClInclude Include="GameEvents.h" />
@@ -112,6 +113,7 @@
   <ItemGroup>
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Constraint.cpp" />
+    <ClCompile Include="DamageEvent.cpp" />
     <ClCompile Include="DamageSystem.cpp" />
     <ClCompile Include="definition.cpp" />
     <ClCompile Include="GameEvents.cpp" />

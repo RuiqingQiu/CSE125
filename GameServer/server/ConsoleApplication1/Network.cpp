@@ -18,7 +18,7 @@ Network::~Network()
 
 
 void Network::sendClientConfirmationPacket(const char* clientName, int client_ID){
-	cout << "Sending Confirmation Packet" << endl;
+	std::cout << "Sending Confirmation Packet" << endl;
 	const unsigned int packet_size = sizeof(SPacket);
 	char packet_data[packet_size];
 
@@ -99,7 +99,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 	// send action packet
 	if (gameObjs == nullptr)
 	{
-		cout << "null ptr\n" << endl;
+		std::cout << "null ptr\n" << endl;
 	}
 
 	const unsigned int packet_size = sizeof(SPacket);
@@ -314,21 +314,18 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 
 	if (gameObjs == nullptr)
 	{
-		cout << "NULL" << endl;
+		std::cout << "NULL" << endl;
 		return temp;
 	}
 
+	std::cout << gameObjs->size() << endl;
 	for (vector<GameObj*>::iterator i = gameObjs->begin();
 		i != gameObjs->end(); ++i)
 	{
 		if ((*i) == nullptr)
 		{
-			cout << "NULL" << endl;
+			std::cout << "NULL" << endl;
 			break;
-		}
-		if ((*i)->getType() == PLANE)
-		{
-			continue;
 		}
 
 		temp += to_string((*i)->getId());
@@ -390,25 +387,9 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			temp += to_string((float)yaw);
 			temp += ' ';
 		}
-		//btScalar yaw = 0, pitch = 0, roll = 0;
 
-		//trans.getBasis().getEulerZYX(yaw, pitch, roll);
-		//cout << "yaw : " << yaw << endl;
-		//cout << "pitch : " << pitch << endl;
-		//cout << "roll : " << roll << endl;
-		//temp += to_string((float)yaw);
-		//temp += ' ';
-		//temp += to_string((float)pitch);
-		//temp += ' ';
-		//temp += to_string((float)roll);
-		//temp += ' ';
-		/*temp += to_string((*i)->getRotX());
-		temp += ' ';
-		temp += to_string((*i)->getRotY());
-		temp += ' ';
-		temp += to_string((*i)->getRotZ());
-		temp += ' ';*/
 		temp += to_string((*i)->getBlockType());
+		//std::cout << to_string((*i)->getBlockType()) << endl;
 		temp += ' ';
 		/*
 		temp += to_string((*i)->getType());

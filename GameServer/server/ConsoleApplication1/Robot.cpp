@@ -131,7 +131,7 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 
 	map->insert(std::pair<btCollisionObject*, GameObj*>(m_pBody, this));
 
-
+	// 
 	m_pVehicle->setCoordinateSystem(0, 1, 2);
 
 	btVector3 wheelDirectionCS0(0, -1, 0);

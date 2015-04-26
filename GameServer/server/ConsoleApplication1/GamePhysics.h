@@ -11,7 +11,7 @@
 #include <iostream>
 #define MOVE_SPEED 1000
 #define CAP_BRAKE_SPEED 1000
-#define BRAKE_SPEED 5
+#define BRAKE_SPEED 10
 #define TURN_SPEED 0.04
 #define MAX_TURN_SPEED M_PI/10
 #define MAX_SPEED 80
@@ -37,7 +37,7 @@ public:
 	void createPhysicsEvent(int, GameObj*);
 	void createPhysicsProjectile(int, GameObj*, std::map< btCollisionObject*, GameObj*>*);
 	void stepSimulation(std::vector<GameObj*>*, std::vector<Collision*> *);
-	static std::vector<Collision*> collisionList1;
+	static std::vector<Collision*> collisionList;
 
 private:
 

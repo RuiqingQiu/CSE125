@@ -14,6 +14,7 @@
 
 #define FIELD_WIDTH 50
 #define FIELD_HEIGHT 50
+#define INSTANT_KILL 1
 
 
 class GameLogic {
@@ -22,13 +23,22 @@ private:
 	GamePhysics* gamePhysics;
 	TimeFrame* countDown;
 	DamageSystem* damageSystem;
-	int asd = 1;
+	int counter;
 
 
 	std::vector<GameObj*> gameObjs;
+	//when you delete a obj, deleteConstraints(), ~() delete rigidBody, set to nullptr
+	//
+	//check gameObjs vector every X ticks, push !null objs into new_gmaeObjs list
+	//gameObjs = new_gameObjs
+
 	std::map<int, GameObj *> clientPair;
+	//clear
+
 	std::map< btCollisionObject*, GameObj*> objCollisionPair;
-	std::vector<Constraint*> constraints;
+	//clear
+
+	//std::vector<Constraint*> constraints;
 	std::vector<ObjectEvents *> objEventList;
     std::vector<GameEvents *> gameEventList;
 
@@ -36,14 +46,14 @@ public:
 	GameLogic();
 	~GameLogic();
 	unsigned int waitToConnect();
-	void pushGameObj(GameObj*);
-	std::vector<GameObj*> getGameObjs();
 	unsigned int gameLoop();
 	void gameStart();
 	void prePhyLogic();
 	void addWalls();
 	void addGround();
 	void postPhyLogic();
+	void deleteGameObj(GameObj*);
+	void cleanDataStructures();
 
 };
 #endif

@@ -1,11 +1,12 @@
 #pragma once
-#include "GameObj.h"
+//#include "GameObj.h"
+#include <btBulletDynamicsCommon.h>
 class Constraint
 {
 public:
-	btFixedConstraint * joint6DOF;
+	btFixedConstraint * _joint6DOF;
+	
 	Constraint();
 	~Constraint();
-	void addConstraint(GameObj* a, GameObj* b);
 };
 
