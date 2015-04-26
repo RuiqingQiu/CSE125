@@ -33,7 +33,7 @@ Matrix4 Transform::GetGLMatrix4()
 	m4_rotz.makeRotateZ(rotation.z);
 
 	Matrix4 m4_rot;
-	m4_rot = m4_rotx*m4_roty*m4_rotz;
+	m4_rot = m4_rotz*m4_roty*m4_rotx;
 
 	Matrix4 m4_sca;
 	m4_sca.makeScale(scale.x, scale.y, scale.z);
@@ -64,7 +64,7 @@ Matrix4 Transform::GetMatrix4()
 	m4_rotz.makeRotateZ(rotation.z);
 
 	Matrix4 m4_rot;
-	m4_rot = m4_rotx*m4_roty*m4_rotz;
+	m4_rot = m4_rotz*m4_roty*m4_rotx;
 
 	Matrix4 m4_sca;
 	m4_sca.makeScale(scale.x, scale.y, scale.z);
@@ -96,7 +96,7 @@ Matrix4 Transform::GetRotMatrix4()
 	m4_rotz.makeRotateZ(rotation.z);
 
 	Matrix4 m4_rot;
-	m4_rot = m4_rotx*m4_roty*m4_rotz;
+	m4_rot = m4_rotz*m4_roty*m4_rotx;
 
 	ret = m4_rot;
 	//ret.transpose();

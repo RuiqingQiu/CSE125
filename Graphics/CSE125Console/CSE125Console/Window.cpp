@@ -19,7 +19,7 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#define TESTCAM 0
+#define TESTCAM 1
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
@@ -50,11 +50,12 @@ void Window::initialize(void)
 	//glColor3f(1, 1, 1);
 	/*
 	cube = new Cube(1);
-	cube->localTransform.position = Vector3(0, 0, -5);
-	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
+	cube->localTransform.position = Vector3(0, 0, 0);
+	cube->localTransform.rotation= Vector3(-180, 40, 40);
 	cube->identifier = 1;
-	view->PushGeoNode(cube);*/
-
+	view->PushGeoNode(cube);
+	view->pViewCamera->FollowingTarget = cube;
+	*/
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(Mace);
@@ -160,13 +161,11 @@ void Window::initialize(void)
 	g_pCore->i_pInput = factory->currentInput;
 
 
-	//view->pViewCamera->FollowingTarget = cube;
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
-
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.37");
 }
 
 //----------------------------------------------------------------------------
@@ -193,19 +192,19 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 	
 	if (TESTCAM){
 		if (key == ','){
-			cube->localTransform.rotation.y += 1;
+			cube->localTransform.rotation.x += 30;
 		}
 		else if (key == '.'){
-			cube->localTransform.rotation.y -= 1;
+			cube->localTransform.rotation.x -= 30;
 		}
 	}
 
 	if (TESTCAM){
 		if (key == 'l'){
-			cube->localTransform.rotation.y += 180;
+			cube->localTransform.rotation.z += 30;
 		}
 		else if (key == ';'){
-			cube->localTransform.rotation.y += 360;
+			cube->localTransform.rotation.z -= 30;
 		}
 	}
 	

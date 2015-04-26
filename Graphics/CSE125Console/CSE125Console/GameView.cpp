@@ -43,7 +43,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	{
 	    node->VOnClientUpdate(info);	
 		if (node->identifier == pPlayer->playerid ){
-			//this->pViewCamera->FollowingTarget = node;
+			this->pViewCamera->FollowingTarget = node;
 		}
 		
 	}
