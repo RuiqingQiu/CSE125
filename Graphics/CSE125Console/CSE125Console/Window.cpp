@@ -42,6 +42,7 @@ void Window::initialize(void)
 	g_pCore->skybox = new SkyBox("skyboxes/space");
 	//g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
+	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
 

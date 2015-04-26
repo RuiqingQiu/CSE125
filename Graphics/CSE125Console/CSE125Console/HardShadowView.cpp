@@ -194,8 +194,8 @@ void setupMatrices(float position_x, float position_y, float position_z, float l
 void update(void)
 {
 
-	p_light[0] = light_mvnt * cos(glutGet(GLUT_ELAPSED_TIME) / 1000.0);
-	p_light[2] = light_mvnt * sin(glutGet(GLUT_ELAPSED_TIME) / 1000.0);
+	//p_light[0] = light_mvnt * cos(glutGet(GLUT_ELAPSED_TIME) / 1000.0);
+	//p_light[2] = light_mvnt * sin(glutGet(GLUT_ELAPSED_TIME) / 1000.0);
 
 	//p_light[0] = light_mvnt * cos(3652/1000.0);
 	//p_light[2] = light_mvnt * sin(3652/1000.0);
@@ -275,8 +275,8 @@ HardShadowView::HardShadowView()
 	//SkyBox *object2 = new SkyBox();
 	//this->PushGeoNode(object2);
 	//glDisable(GL_CULL_FACE);
-
-
+	pViewCamera = new Camera();
+	currentNode = nullptr;
 }
 
 
@@ -361,8 +361,9 @@ void HardShadowView::VOnRender(void)
 	//Disable color rendering, we only want to write to the Z-Buffer
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 
-	pViewCamera->setUpCameraWithGL(p_light[0], p_light[1], p_light[2], l_light[0], l_light[1], l_light[2]);
-	//setupMatrices(p_light[0], p_light[1], p_light[2], l_light[0], l_light[1], l_light[2]);
+	//pViewCamera->setUpCameraWithGL(p_light[0], p_light[1], p_light[2], l_light[0], l_light[1], l_light[2]);
+	setupMatrices(p_light[0], p_light[1], p_light[2], l_light[0], l_light[1], l_light[2]);
+	//pViewCamera->setUpCamera();
 	// Culling switching, rendering only backface, this is done to avoid self-shadowing
 	glCullFace(GL_FRONT);
 	
@@ -371,7 +372,6 @@ void HardShadowView::VOnRender(void)
 		node->VOnDraw();
 	}
 	
-	//drawObjects();
 
 	//Save modelview/projection matrice into texture7, also add a biais
 	setTextureMatrix();
@@ -393,19 +393,17 @@ void HardShadowView::VOnRender(void)
 	glUniform1iARB(shadowMapUniform, 7);
 	glActiveTextureARB(GL_TEXTURE7);
 	glBindTexture(GL_TEXTURE_2D, depthTextureId);
-
-	pViewCamera->setUpCameraWithGL(p_camera[0], p_camera[1], p_camera[2], l_camera[0], l_camera[1], l_camera[2]);
-
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	//pViewCamera->setUpCameraWithGL(pViewCamera->position->x, pViewCamera->position->y,  pViewCamera->position->z, l_camera[0], l_camera[1], l_camera[2]);
 	//setupMatrices(p_camera[0], p_camera[1], p_camera[2], l_camera[0], l_camera[1], l_camera[2]);
-
+	pViewCamera->setUpCamera();
 	glCullFace(GL_BACK);
 
 	for each (GeoNode* node in NodeList)
 	{
 		node->VOnDraw();
 	}
-
-	//drawObjects();
 
 	// DEBUG only. this piece of code draw the depth buffer onscreen
 	/*
@@ -430,8 +428,9 @@ void HardShadowView::VOnRender(void)
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 	*/
+}
+void HardShadowView::VUpdate() {
 
-	glutSwapBuffers();
 }
 
 void HardShadowView::VOnClientUpdate(GameInfoPacket* info)
@@ -439,31 +438,166 @@ void HardShadowView::VOnClientUpdate(GameInfoPacket* info)
 	for each (GeoNode* node in NodeList)
 	{
 		node->VOnClientUpdate(info);
-
 		if (node->identifier == pPlayer->playerid){
-			//this node is our lovely player and we do want to update our camera to follow
-			/*
-			Matrix4 trans = node->localTransform.GetMatrix4();
-			Vector4 forward = Vector4(0, 0, -1, 1);
-			Vector4 direction = trans*forward;
-			float distanceToPlayer = 5;
-			pViewCamera->position = new Vector3(node->localTransform.position.x-direction.x*distanceToPlayer, node->localTransform.position.y-direction.y*distanceToPlayer, node->localTransform.position.z-direction.z*distanceToPlayer);
-			pViewCamera->rotation = new Vector3(node->localTransform.rotation);
-			*/
+			//this->pViewCamera->FollowingTarget = node;
 		}
 
 	}
 	//Loop through the list to see anything that's not being processed. if so, create
 	for (int i = 0; i < info->player_infos.size(); i++){
 		if (!info->player_infos[i]->processed){
-			double x = info->player_infos[i]->x;
-			double y = info->player_infos[i]->y;
-			double z = info->player_infos[i]->z;
-			cout << "data is not processed, need to create objects" << endl;
-			Cube* cube = new Cube(1);
-			cube->localTransform.position = Vector3(x, y, z);
-			cube->identifier = info->player_infos[i]->id;
-			NodeList.push_back(cube);
+			cout << "create object" << endl;
+			switch (info->player_infos[i]->type){
+				cout << "data is not processed, need to create objects" << endl;
+				//CUBE = 0
+
+			case BasicCube:{
+							   Model3D* object = Model3DFactory::generateObjectWithType(BasicCube);
+							   object->identifier = info->player_infos[i]->id;
+							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							   NodeList.push_back(object);
+							   break;
+			}
+				//BATTLEFIELD = 1
+			case GlowingCube:{
+								 Model3D* object = Model3DFactory::generateObjectWithType(GlowingCube);
+								 object->identifier = info->player_infos[i]->id;
+								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+								 NodeList.push_back(object);
+								 break;
+			}
+				//WALL = 2
+			case WoodenCube:{
+								Model3D* object = Model3DFactory::generateObjectWithType(WoodenCube);
+								object->identifier = info->player_infos[i]->id;
+
+								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+								NodeList.push_back(object);
+								break;
+			}
+				//CUBE3x3 = 3
+			case Mace:{
+						  Model3D* object = Model3DFactory::generateObjectWithType(Mace);
+						  object->identifier = info->player_infos[i]->id;
+
+						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						  NodeList.push_back(object);
+						  break;
+			}
+			case Mallet:{
+							Model3D* object = Model3DFactory::generateObjectWithType(Mallet);
+
+							object->identifier = info->player_infos[i]->id;
+							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							NodeList.push_back(object);
+							break;
+			}
+			case Needle:{
+							Model3D* object = Model3DFactory::generateObjectWithType(Needle);
+							object->identifier = info->player_infos[i]->id;
+							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							NodeList.push_back(object);
+							break;
+			}
+			case Discount:{
+							  Model3D* object = Model3DFactory::generateObjectWithType(Discount);
+							  object->identifier = info->player_infos[i]->id;
+							  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							  NodeList.push_back(object);
+							  break;
+			}
+			case Tire:{
+						  Model3D* object = Model3DFactory::generateObjectWithType(Tire);
+						  object->identifier = info->player_infos[i]->id;
+						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						  NodeList.push_back(object);
+						  break;
+			}
+			case WoodenWheel:{
+								 Model3D* object = Model3DFactory::generateObjectWithType(WoodenWheel);
+								 object->identifier = info->player_infos[i]->id;
+								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+								 NodeList.push_back(object);
+								 break;
+			}
+
+			case BATTLEFIELD:{
+								 cout << "create battle field" << endl;
+								 Plane* p = new Plane(100);
+								 p->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+								 NodeList.push_back(p);
+								 break;
+			}
+			case WALL:{
+						  break;
+			}
+			case BULLET_1:{
+							  break;
+			}
+
+			default:{
+						//cout << "Should not go into here in gameview.cpp" << endl;
+						break;
+			}
+			}
 		}
 	}
+}
+
+void HardShadowView::PushGeoNode(GeoNode* node)
+{
+	NodeList.push_back(node);
+}
+
+void HardShadowView::PopGeoNode(GeoNode* m_node)
+{
+	for (int i = 0; i < NodeList.size(); i++)
+	{
+		if (NodeList[i] == m_node)
+		{
+			NodeList.erase(NodeList.begin() + i);
+		}
+	}
+}
+
+//added this method to check if a node is already in the list,
+//used for checking whether or not we need to push up the skybox 
+//when we change modes
+bool HardShadowView::FindGeoNode(GeoNode* m_node) {
+	for (int i = 0; i < NodeList.size(); i++) {
+		if (NodeList[i] == m_node)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void HardShadowView::passiveMouseFunc(int x, int y) {
+
+}
+
+viewType HardShadowView::mouseClickFunc(int state, int x, int y) {
+	return viewType::CONSOLE;
+}
+
+void HardShadowView::keyPressFunc(unsigned char key, int x, int y) {
+
+}
+void HardShadowView::specialKeyFunc(int key, int x, int y) {
+
+}
+
+Vector3 HardShadowView::translateNode(Vector3 t, GeoNode * node) {
+	node->localTransform.position = node->localTransform.position + t;
+	return node->localTransform.position;
 }
