@@ -57,12 +57,6 @@ void Window::initialize(void)
 
 	
 	/*
-	object = Model3DFactory::generateObjectWithType(Mace);
-	object->localTransform.position = Vector3(3, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-
 	object = Model3DFactory::generateObjectWithType(Discount);
 	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);

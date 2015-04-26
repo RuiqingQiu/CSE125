@@ -13,4 +13,10 @@ enum ModelType{
 	Discount = 6,
 	Tire = 7,
 	WoodenWheel = 8,
+
+	//Other
+	BATTLEFIELD = 100,
+	WALL = 101,
+	BULLET_1 = 102,
+
 };

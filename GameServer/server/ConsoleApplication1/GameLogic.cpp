@@ -130,7 +130,7 @@ void GameLogic::gameStart(){
 	countDown->startClock();
 
 	addGround();
-	addWalls();
+	//addWalls();
 
 	gamePhysics->initWorld(&(this->getGameObjs()), &objCollisionPair);
 	ObjectEvents* objEvent = new ObjectEvents(SHOOT);
@@ -270,6 +270,7 @@ void GameLogic::prePhyLogic(){
 		{
 			if ((*it)->getIsRobot() != 0)
 			{
+				//Apply forces to 4 wheels
 				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 0);
 				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 1);
 				((Robot*)*it)->getVehicle()->applyEngineForce(-(((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour()*BRAKE_SPEED), 2);

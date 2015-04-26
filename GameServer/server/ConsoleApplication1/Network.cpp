@@ -326,10 +326,6 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			cout << "NULL" << endl;
 			break;
 		}
-		if ((*i)->getType() == PLANE)
-		{
-			continue;
-		}
 
 		temp += to_string((*i)->getId());
 		temp += ' ';
@@ -460,7 +456,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		}*/
 		//temp += '\n';
 
-
+		//If it's a robot, it need to provide extra 4 wheels information
 		if ((*i)->getIsRobot()){
 				int k;
 				for (k = 0; k < 4; k++){
@@ -478,33 +474,17 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 					btScalar yaw0 = 0, pitch0 = 0, roll0 = 0;
 
 					tran0.getBasis().getEulerZYX(yaw0, pitch0, roll0);
-					if (k == 3)
-					{
-						temp += to_string((float)180);
-						temp += ' ';
-						temp += to_string((float)pitch0);
-						temp += ' ';
-						temp += to_string((float)180);
-						temp += ' ';
-						temp += to_string(TIRE);
-						temp += ' ';
-					}
-					else
-					{
-
-						
-						//cout << "yaw : " << yaw << endl;
-						//cout << "pitch : " << pitch << endl;
-						//cout << "roll : " << roll << endl;
-						temp += to_string((float)roll0);
-						temp += ' ';
-						temp += to_string((float)pitch0);
-						temp += ' ';
-						temp += to_string((float)yaw0);
-						temp += ' ';
-						temp += to_string(WOODENWHEEL);
-						temp += ' ';
-					}
+					//cout << "yaw : " << yaw << endl;
+					//cout << "pitch : " << pitch << endl;
+					//cout << "roll : " << roll << endl;
+					temp += to_string((float)roll0);
+					temp += ' ';
+					temp += to_string((float)pitch0);
+					temp += ' ';
+					temp += to_string((float)yaw0);
+					temp += ' ';
+					temp += to_string(WOODENWHEEL);
+					temp += ' ';
 				}
 			}
 	}

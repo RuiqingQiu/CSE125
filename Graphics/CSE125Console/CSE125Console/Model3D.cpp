@@ -177,6 +177,7 @@ void Model3D::VOnDraw(){
 				glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i2 + 0], render_obj->shapes[i].mesh.texcoords[2 * i2 + 1]);
 			}
 			//avg normal goes here
+
 			glNormal3f(render_obj->shapes[i].mesh.normals[3 * i2 + 0],
 				render_obj->shapes[i].mesh.normals[3 * i2 + 1],
 				render_obj->shapes[i].mesh.normals[3 * i2 + 2]
