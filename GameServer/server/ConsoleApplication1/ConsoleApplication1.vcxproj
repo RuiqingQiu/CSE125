@@ -142,13 +142,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\B\src\BulletCollision\BulletCollision.vcxproj">
-      <Project>{095762ea-2ad8-47ff-afa7-4a0c423c71d0}</Project>
+      <Project>{cc0064e9-5fc3-4615-a789-f87a219c9ac4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\B\src\BulletDynamics\BulletDynamics.vcxproj">
-      <Project>{c3eb8696-9978-4119-8592-6cb5f8c8bb6b}</Project>
+      <Project>{4e320e5b-603d-46b6-a0a9-435b3f773cb4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\B\src\LinearMath\LinearMath.vcxproj">
-      <Project>{3c13529c-cb37-4913-a5c8-fe6e8099fcaa}</Project>
+      <Project>{1b718d22-ab55-4ae2-8ed4-6457351cc73f}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

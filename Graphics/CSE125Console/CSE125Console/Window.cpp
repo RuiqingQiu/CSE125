@@ -60,23 +60,23 @@ void Window::initialize(void)
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(Discount);
-	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-
+	
 	object = Model3DFactory::generateObjectWithType(Needle);
 	object->localTransform.position = Vector3(-3, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-
+	*/
 	object = Model3DFactory::generateObjectWithType(BasicCube);
-	object->localTransform.position = Vector3(-5, 0, -20);
+	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-
+	/*
 	object = Model3DFactory::generateObjectWithType(WoodenCube);
 	object->localTransform.position = Vector3(-8, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
@@ -160,7 +160,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
 }
 
 //----------------------------------------------------------------------------
