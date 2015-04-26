@@ -5,9 +5,14 @@
 
 #include "ServerNetwork.h"
 #include "NetworkData.h"
-#include "definition.h"
-#include "Events.h"
+#include "Robot.h"
+#include "GOBox.h"
+#include "GOCapsule.h"
+#include "GOCone.h"
+#include "GOCylinder.h"
+#include "GOPlane.h"
 #include <string>
+
 class Network {
 private:
 	// IDs for the clients connecting for table in ServerNetwork 
@@ -25,9 +30,9 @@ public:
 	void sendClientConfirmationPacket(const char* clientName, int client_ID);
 	int waitForConnections();
 	string convertData(vector<GameObj*> * gameObjs);
-	void receiveFromClients(std::vector<Events*>*);
+	void receiveFromClients(std::vector<ObjectEvents*>*);
 	void sendActionPackets(vector<GameObj*> * gameObjs);
-	void convertEvents(CPacket packet, std::vector<Events*>* eventList);
+	void convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* eventList);
 };
 #endif
 

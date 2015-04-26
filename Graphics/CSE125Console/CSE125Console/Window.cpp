@@ -42,6 +42,7 @@ void Window::initialize(void)
 	g_pCore->skybox = new SkyBox("skyboxes/space");
 	//g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
+	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
 
@@ -58,12 +59,6 @@ void Window::initialize(void)
 	*/
 	
 	/*
-	object = Model3DFactory::generateObjectWithType(Mace);
-	object->localTransform.position = Vector3(3, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-
 	object = Model3DFactory::generateObjectWithType(Discount);
 	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
@@ -165,7 +160,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.37");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
 }
 
 //----------------------------------------------------------------------------

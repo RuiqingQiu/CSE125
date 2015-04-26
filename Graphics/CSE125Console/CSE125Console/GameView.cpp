@@ -133,6 +133,21 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 NodeList.push_back(object);
 							break;
 			}
+			
+			case BATTLEFIELD:{
+								 cout << "create battle field" << endl;
+								 Plane* p = new Plane(100);
+								 p->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+								 NodeList.push_back(p);
+				break;
+			}
+			case WALL:{
+								break;
+			}
+			case BULLET_1:{
+							  break;
+			}
+
 				default:{
 							//cout << "Should not go into here in gameview.cpp" << endl;
 							break;

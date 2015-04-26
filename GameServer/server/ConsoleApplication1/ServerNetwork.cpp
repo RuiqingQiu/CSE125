@@ -127,7 +127,7 @@ int ServerNetwork::receiveData(int client_id, char * recvbuf)
 		if (iResult == 0)
 		{
 			printf("Connection closed\n");
-			closesocket(currentSocket);
+			//closesocket(currentSocket);
 		}
 
 		return iResult;
@@ -142,7 +142,6 @@ void ServerNetwork::sendToAll(char * packets, int totalSize)
 	SOCKET currentSocket;
 	std::map<unsigned int, SOCKET>::iterator iter;
 	int iSendResult;
-
 	for (iter = sessions.begin(); iter != sessions.end(); iter++)
 	{
 		currentSocket = iter->second;
@@ -151,7 +150,7 @@ void ServerNetwork::sendToAll(char * packets, int totalSize)
 		if (iSendResult == SOCKET_ERROR)
 		{
 			printf("send failed with error: %d\n", WSAGetLastError());
-			closesocket(currentSocket);
+			//closesocket(currentSocket);
 		}
 	}
 }
@@ -172,6 +171,6 @@ void ServerNetwork::sendToOne(char * packets, int totalSize, unsigned int client
 	if (iSendResult == SOCKET_ERROR)
 	{
 		printf("send failed with error: %d\n", WSAGetLastError());
-		closesocket(currentSocket);
+		//closesocket(currentSocket);
 	}
 }

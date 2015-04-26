@@ -53,24 +53,12 @@ void Plane::VOnDraw()
 	glColor4f(color.x, color.y, color.z, 1);
 
 	glBegin(GL_QUADS);
-	//glTranslated(0, 0, 5);
-	// Draw front face:
-	if (normal.x == 1.0 && normal.y == 0.0 && normal.z == 0.0){
-		cout << "normal is 1, 0, 0" << endl;
-		glNormal3f(1.0, 0.0, 0.0);
-		glVertex3f(0, -halfSize, -halfSize);
-		glVertex3f(0, -halfSize, halfSize);
-		glVertex3f(0, halfSize, halfSize);
-		glVertex3f(0, halfSize, -halfSize);
 
-	}
-	else{
 		glNormal3f(0.0, 1, 0.0);
 		glVertex3f(-halfSize, 0, -halfSize);
 		glVertex3f(-halfSize, 0, halfSize);
 		glVertex3f(halfSize, 0, halfSize);
 		glVertex3f(halfSize, 0, -halfSize);
-	}
 
 	glEnd();
 	glColor4f(1, 1, 1, 1);
