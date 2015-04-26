@@ -17,12 +17,13 @@ enum PacketTypes {
 	MOVE_DOWN = 7,
 	INIT_CLIENT = 8,
 	CONFIRM_CONNECTION = 9,
+	BUILD_ROBOT = 10,
 };
 
 struct CPacket {
 
 	unsigned int packet_type;
-	char data[1024];
+	char data[10000];
 
 
 	void serialize(char * data) {
@@ -38,7 +39,7 @@ struct SPacket {
 
 	unsigned int packet_type;
 
-	char data[1024];
+	char data[10000];
 
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(SPacket));

@@ -4,6 +4,7 @@
 
 GeoNode::GeoNode()
 {
+	textureType = 0;
 }
 
 

@@ -14,6 +14,9 @@ public:
 	Vector3 scale;
 
 	Matrix4 GetGLMatrix4();
+	Matrix4 GetMatrix4();
+	Matrix4 GetRotMatrix4();
+
 };
 
 #endif

@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 class PlayerInfo
 {
 public:
@@ -10,6 +11,17 @@ public:
 	double y;
 	double z;
 
+	//Rotation
+	double rx;
+	double ry;
+	double rz;
+
+	//Type of the block
+	int type;
+
+	float mat[16];
+	bool processed = false;
+	void print();
 	PlayerInfo();
 	~PlayerInfo();
 };

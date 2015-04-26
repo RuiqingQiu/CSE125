@@ -34,6 +34,21 @@
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{9b7a4e3a-22ff-486c-844c-8d6ae90bd181}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Third Party">
+      <UniqueIdentifier>{6a6e0345-1ec5-4180-9a7d-168ecb08ff3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shader">
+      <UniqueIdentifier>{96fe5bb7-8212-4286-ad15-7827028bef4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{f185199d-8262-43ae-b8b9-0c9d1d18a112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\buildMode">
+      <UniqueIdentifier>{5cf7a510-31f9-4194-a05b-17b1517a8a9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameView\GuiViews">
+      <UniqueIdentifier>{a320b1df-4e52-4874-a987-93cc06a6f01a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -108,6 +123,138 @@
     <ClInclude Include="StandardGameInput.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="tiny_obj_loader.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3D.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SOIL.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image_aug.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="stbi_DDS_aug.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="stbi_DDS_aug_c.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="image_DXT.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="image_helper.h">
+      <Filter>Third Party</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="guiGameInput.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Source Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="robot.h">
+      <Filter>Source Files\buildMode</Filter>
+    </ClInclude>
+    <ClInclude Include="block.h">
+      <Filter>Source Files\buildMode</Filter>
+    </ClInclude>
+    <ClInclude Include="battleView.h">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClInclude>
+    <ClInclude Include="helpMenu.h">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClInclude>
+    <ClInclude Include="buildView.h">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClInclude>
+    <ClInclude Include="mainmenu.h">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClInclude>
+    <ClInclude Include="gui.h">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClInclude>
+    <ClInclude Include="TestView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Teapot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="background.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="buildTimer.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="guiItem.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="listItem.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="HardShadowView.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="TestView.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="Teapot.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="scoreBox.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="scrollBox.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="viewFactory.h">
+      <Filter>Source Files\GameView</Filter>
+    </ClInclude>
+    <ClInclude Include="numbers.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="buildViewInput.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="letters.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="mainmenuinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3DFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketDecoder.h">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="battletimer.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObject.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -173,5 +320,165 @@
     <ClCompile Include="StandardGameInput.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="tiny_obj_loader.cc">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="Model3D.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SOIL.c">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image_aug.c">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="image_DXT.c">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="image_helper.c">
+      <Filter>Third Party</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="guiGameInput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="robot.cpp">
+      <Filter>Source Files\buildMode</Filter>
+    </ClCompile>
+    <ClCompile Include="block.cpp">
+      <Filter>Source Files\buildMode</Filter>
+    </ClCompile>
+    <ClCompile Include="battleView.cpp">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClCompile>
+    <ClCompile Include="helpMenu.cpp">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClCompile>
+    <ClCompile Include="buildView.cpp">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClCompile>
+    <ClCompile Include="mainmenu.cpp">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClCompile>
+    <ClCompile Include="gui.cpp">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClCompile>
+    <ClCompile Include="TestView.cpp">
+      <Filter>Source Files\GameView</Filter>
+    </ClCompile>
+    <ClCompile Include="Teapot.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="background.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="buildTimer.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="guiItem.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="listItem.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="numbers.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="scoreBox.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="scrollBox.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="viewFactory.cpp">
+      <Filter>Source Files\GameView</Filter>
+    </ClCompile>
+    <ClCompile Include="HardShadowView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mainmenuinput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketDecoder.cpp">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="buildViewInput.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="letters.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Model3DFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketDecoder.cpp">
+      <Filter>Source Files\NetPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="battletimer.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderObject.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CSE125Console.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="simple.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="simple.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="shadow.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="shadow.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="BlurVertexShader.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="FragmentShader.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="StoreDepthFragmentShader.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="StoreDepthVertexShader.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="BlurFragmentShader.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="VertexShader.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="hard_shadow.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="hard_shadow.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

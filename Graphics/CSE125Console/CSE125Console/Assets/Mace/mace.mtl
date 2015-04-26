@@ -1,0 +1,22 @@
+# Blender MTL File: 'mace.blend'
+# Material Count: 2
+
+newmtl Aluminum
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.482540 0.482540 0.482540
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd metallic.png
+
+newmtl Iron
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.517419 0.517419 0.517419
+Ks 0.370968 0.370968 0.370968
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd metallic.png

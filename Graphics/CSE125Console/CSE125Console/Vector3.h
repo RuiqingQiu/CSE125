@@ -37,6 +37,7 @@ public:
 	void setX(double mx);
 	void setY(double my);
 	void setZ(double mz);
+	bool equals(const Vector3&);
 
 };
 #endif /* defined(__CSE167HW1__Vector3__) */
