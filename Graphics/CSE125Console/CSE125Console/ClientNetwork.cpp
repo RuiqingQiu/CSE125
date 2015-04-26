@@ -123,11 +123,23 @@ ClientNetwork::~ClientNetwork(void)
 int ClientNetwork::receivePackets(char * recvbuf) 
 {
     iResult = NetworkServices::receiveMessage(ConnectSocket, recvbuf, MAX_PACKET_SIZE);
+	if (iResult < 0)
+	{
+		int errorno = WSAGetLastError();
+		if (errorno == 10035)
+		{
+			recvbuf = '\0';
+			return 0;
+		}
+		//printf("FAIL receive data: %i\n", errorno);
 
+		return -1;
+	}
 	
     if ( iResult == 0 )
     {
         printf("Connection closed\n");
+		printf(recvbuf);
         closesocket(ConnectSocket);
         WSACleanup();
    //     exit(1);

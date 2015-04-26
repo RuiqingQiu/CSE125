@@ -1,12 +1,33 @@
 #include "StdAfx.h"
 #include "ClientGame.h"
-
+#define RAD_TO_DEGREE_MULT 57.2957795
 ClientGame::ClientGame(void)
 {
 
     network = new ClientNetwork();
 
    
+}
+
+//Helper function for split strings
+unsigned int split(const std::string &txt, std::vector<std::string> &strs, char ch)
+{
+	unsigned int pos = txt.find(ch);
+	unsigned int initialPos = 0;
+	strs.clear();
+
+	// Decompose statement
+	while (pos != std::string::npos) {
+		strs.push_back(txt.substr(initialPos, pos - initialPos + 1));
+		initialPos = pos + 1;
+
+		pos = txt.find(ch, initialPos);
+	}
+
+	// Add the last one
+	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos + 1));
+
+	return strs.size();
 }
 
 bool ClientGame::connectToServer(char* ipaddress)
@@ -64,26 +85,7 @@ bool ClientGame::sendPacket(CPacket packet)
 	printf("send %d\n", packet.packet_type);
 	return NetworkServices::sendMessage(network->ConnectSocket, packet_data, packet_size);
 }
-//Helper function for split strings
-unsigned int split(const std::string &txt, std::vector<std::string> &strs, char ch)
-{
-	unsigned int pos = txt.find(ch);
-	unsigned int initialPos = 0;
-	strs.clear();
 
-	// Decompose statement
-	while (pos != std::string::npos) {
-		strs.push_back(txt.substr(initialPos, pos - initialPos + 1));
-		initialPos = pos + 1;
-
-		pos = txt.find(ch, initialPos);
-	}
-
-	// Add the last one
-	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos + 1));
-
-	return strs.size();
-}
 
 GameInfoPacket* ClientGame::update()
 {
@@ -108,30 +110,33 @@ GameInfoPacket* ClientGame::update()
 
 		case GAME_STATE:
 				{
-							 printf("client received game state packet from server\n");
-							 std::cout << packet.data << std::endl;
-							 std::string result = std::string(packet.data);
+							//printf("client received game state packet from server\n");
+							std::cout << packet.data << std::endl;
+						    //cout << "game_state" << endl;
+						    std::string result = std::string(packet.data);
+
 							 if (result == ""){
 								 return nullptr;
 							 }
 							 //Process the result
 							 else{
-								 std::vector<std::string> v;
-								 split(result, v, ' ');
-								 PlayerInfo* p = new PlayerInfo();
-								 p->id = stof(v[0]);
-								 p->x = stof(v[1]);
-								 p->y = stof(v[2]);
-								 p->z = stof(v[3]);
-								 g->player_infos.push_back(p);
+								 vector<PlayerInfo*> v = PacketDecoder::decodePacket(result);
+								 for (PlayerInfo* p : v){
+									 g->player_infos.push_back(p);
+								 }
+								 //std::cout << "pushing " << g->player_infos.size() << " on to the list" << std::endl;
 								 g->packet_types = packet.packet_type;
 							 }
-							 //sendActionPackets();
-
+							 return g;
 							 break;
 				}
+		   /*
+			*	player died, player respawn, explosion, countdown time, score board
+			*   
+			*/
 		case CONFIRM_CONNECTION:
 		{
+			cout << "confirm_packet" << endl;
 			std::string result = std::string(packet.data);
 			std::vector<std::string> v;
 			split(result, v, '\n');
@@ -142,16 +147,18 @@ GameInfoPacket* ClientGame::update()
 			std::cout << v[1] << std::endl;
 			p->id = stoi(v[1]);
 			g->player_infos.push_back(p);
+			return g;
 			break;
 
 		}
 		
 		default:{
 
-					printf("error in packet types\n");
-
+					printf("error in packet types : %i with length: %i\n", packet.packet_type, data_length);
+					//std::cout << packet.data << std::endl;
+					return nullptr;
 					break;
-		}
+			}
 		}
     }
 	return g;

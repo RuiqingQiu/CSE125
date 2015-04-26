@@ -196,8 +196,7 @@ Vector4 Matrix4::operator*(const Vector4& v){
     y += this->m[1][1]*v.y;
     y += this->m[1][2]*v.z;
     y += this->m[1][3]*v.w;
-    
-    
+     
     z += this->m[2][0]*v.x;
     z += this->m[2][1]*v.y;
     z += this->m[2][2]*v.z;
@@ -211,7 +210,25 @@ Vector4 Matrix4::operator*(const Vector4& v){
     return Vector4(x,y,z,w);
 }//multiply matrix with vector
 
+Vector3 Matrix4::transform(const Vector3& v){
+	double x = 0.0, y = 0.0, z = 0.0, w = 0.0;
+	x += this->m[0][0] * v.x;
+	x += this->m[0][1] * v.y;
+	x += this->m[0][2] * v.z;
+	x += this->m[0][3];
 
+	y += this->m[1][0] * v.x;
+	y += this->m[1][1] * v.y;
+	y += this->m[1][2] * v.z;
+	y += this->m[1][3];
+
+	z += this->m[2][0] * v.x;
+	z += this->m[2][1] * v.y;
+	z += this->m[2][2] * v.z;
+	z += this->m[2][3];
+
+	return Vector3(x, y, z);
+}//multiply matrix with vector
 
 void Matrix4::makeScale(double sx, double sy, double sz){
     identity();
@@ -235,7 +252,9 @@ void Matrix4::makeTranslate(double tx, double ty, double tz){
     this->m[2][3] = tz;
 }// make a translation matrix
 void Matrix4::print(string comment){
-    for(int row = 0; row < 4; row++){
+	cout << comment << endl;
+
+	for(int row = 0; row < 4; row++){
         cout << this->m[row][0] << ", " << this->m[row][1] << ", " << this->m[row][2] << ", " << this->m[row][3] << endl;
     }
 }// print the matrix (display all 16 matrix components numerically on the screen in a 4x4 array)

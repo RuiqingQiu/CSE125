@@ -1,21 +1,30 @@
 #include "GameObj.h"
 
-static unsigned int _totalId;
+unsigned int GameObj::_totalId;
 
 GameObj::GameObj()
 {
-	_totalId++;
 	_id = _totalId;
+
+	_totalId++;
 }
 
-
-GameObj::GameObj(double posX, double posY, double posZ)
+// x, y, z, qX, qY, qZ, qW, type, mass
+GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, double qZ, double qW, int type, double mass)
 {
-	_totalId++;
+	
 	_id = _totalId;
+	_totalId++;
 	_x = posX;
 	_y = posY;
 	_z = posZ;
+	_qX = qX;
+	_qY = qY;
+	_qZ = qZ;
+	_qW = qW;
+	_type = type;
+	_mass = mass;
+	_isRobot = 0;
 }
 
 GameObj::~GameObj(){
@@ -33,6 +42,34 @@ double GameObj::getZ(){
 	return _z;
 }
 
+double GameObj::getRotX(){
+	return _rotX;
+}
+
+double GameObj::getRotY(){
+	return _rotY;
+}
+
+double GameObj::getRotZ(){
+	return _rotZ;
+}
+
+double GameObj::getqX(){
+	return _qX;
+}
+
+double GameObj::getqY(){
+	return _qY;
+}
+
+double GameObj::getqZ(){
+	return _qZ;
+}
+
+double GameObj::getqW(){
+	return _qW;
+}
+
 unsigned int GameObj::getId(){
 	return _id;
 }
@@ -42,10 +79,88 @@ void GameObj::setX(double posX){
 	_x = posX;
 }
 
-void GameObj::setY(double posX){
-	_y = posX;
+void GameObj::setY(double posY){
+	_y = posY;
 }
 
-void GameObj::setZ(double posX){
-	_z = posX;
+void GameObj::setZ(double posZ){
+	_z = posZ;
 }
+
+void GameObj::setRotX(double rotX){
+	_rotX = rotX;
+}
+
+void GameObj::setRotY(double rotY){
+	_rotY = rotY;
+}
+
+void GameObj::setRotZ(double rotZ){
+	_rotZ = rotZ;
+}
+
+void GameObj::setqX(double qX){
+	_qX = qX;
+}
+
+void GameObj::setqY(double qY){
+	_qY = qY;
+}
+
+void GameObj::setqZ(double qZ){
+	_qZ = qZ;
+}
+
+void GameObj::setqW(double qW){
+	_qW = qW;
+}
+
+int GameObj::getType()
+{
+	return _type;
+}
+
+void GameObj::setType(int type)
+{
+	_type = type;
+}
+
+double GameObj::getMass(){
+	return _mass;
+}
+
+
+void GameObj::setMass(double mass){
+	_mass = mass;
+}
+
+btRigidBody* GameObj::getRigidBody()
+{
+	return rigidBody;
+}
+
+void GameObj::setRigidBody(btRigidBody* RB)
+{
+	rigidBody = RB;
+}
+
+int GameObj::getBlockType()
+{
+	return _blockType;
+}
+
+void GameObj::setBlockType(int bType)
+{
+	_blockType = bType;
+}
+
+void GameObj::setIsRobot(int b)
+{
+	_isRobot = b;
+}
+
+int GameObj::getIsRobot()
+{
+	return _isRobot;
+}
+

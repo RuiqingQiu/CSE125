@@ -6,6 +6,7 @@
 #include <string>
 #include "GameInfoPacket.h"
 #include <stdio.h>
+#include "PacketDecoder.h"
 class ClientGame
 {
 public:

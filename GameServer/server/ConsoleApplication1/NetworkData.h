@@ -3,28 +3,18 @@
 #include <iostream>
 #include <vector>
 #include "GameObj.h"
+#include "definition.h"
+
 
 #define MAX_PACKET_SIZE 1000000
 
 //NetworkData.h
-enum PacketTypes {
-	INIT_CONNECTION = 0,
-	GAME_STATE = 1,
-	MOVE_LEFT = 2,
-	MOVE_RIGHT = 3,
-	MOVE_FORWARD = 4,
-	MOVE_BACKWARD = 5,
-	MOVE_UP = 6,
-	MOVE_DOWN = 7,
-	INIT_CLIENT = 8,
-	CONFIRM_CONNECTION = 9,
-};
 
 struct CPacket {
 
 	unsigned int packet_type;
-	char data[1024];
-
+	//char data[1024];
+	char data[10000];
 
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(CPacket));
@@ -38,8 +28,7 @@ struct CPacket {
 struct SPacket {
 
 	unsigned int packet_type;
-
-	char data[1024];
+	char data[10000];
 
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(SPacket));

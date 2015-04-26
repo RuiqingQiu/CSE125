@@ -1,14 +1,15 @@
-// CSE125Console.cpp : Defines the entry point for the console application.
+﻿// CSE125Console.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
 #include "Window.h"
-
+//#include "GameCore.h"
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
 #endif
+#define GL_TEXTURE_CUBE_MAP_SEAMLESS 0x884F
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -24,37 +25,51 @@ int _tmain(int argc, _TCHAR* argv[])
 	glDisable(GL_CULL_FACE);                                    //Disable backface culling to render both sides of polygons
 	glShadeModel(GL_SMOOTH);                                    //Set shading to smooth
 
-	glEnable(GL_COLOR_MATERIAL);                                //Enable color materials
+	//glEnable(GL_COLOR_MATERIAL);                                //Enable color materials
+	glDisable(GL_COLOR_MATERIAL);
 	glEnable(GL_LIGHTING);                                      //Enable lighting
 
+	
 	//light
-	float position[] = { 0.0, 1.0, 0.0, 0.0 };	// lightsource position
-	GLfloat  ambientLight[] = { 1.0f, 0, 0, 1.0f };
+	float position[] = {10.0, 0.0, 5.0, 0.0 };	// lightsource position
+	GLfloat  ambientLight[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	GLfloat  diffuseLight[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	GLfloat  specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,ambientLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, position);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+
 	glEnable(GL_LIGHT0);
+	
 	//mat
-	float specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	float shininess[] = { 100.0 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specular);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shininess);
-	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_NORMALIZE);
 	//Register callback functions:
 	glutDisplayFunc(Window::displayCallback);
 	glutReshapeFunc(Window::reshapeCallback);
 	glutIdleFunc(Window::idleCallback);
-	glutKeyboardFunc(Window::processNormalKeys);
+	glutKeyboardFunc(Window::processNormalKeys);	
+	glutSpecialFunc(Window::processSpecialKeys);
+	glutMouseFunc(Window::processMouseClick);
+	glutPassiveMotionFunc(Window::processPassiveMouse);
+	glutMotionFunc(Window::processMouse);
 	//Register the callback for the keyboard
 	//Register the callback for the keyboard function keys
 	//Register the callback for the mouse
 	//Register the callback for the mouse motion
-
 	//Initialize the Window:
 	//The body of this function is a great place to load textures, shaders, etc.
 	//and do any operations/calculations/configurations that only need to happen once.
+	glewInit();
+	//remove seam
+	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
 	Window::initialize();
 
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 	//Start up the render loop!
 	glutMainLoop();
 	return 0;
