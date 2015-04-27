@@ -9,6 +9,7 @@
     #include <GL/glut.h>
 #endif
 
+#include "Sound.h"  // inlude sound in  the project
 #include "viewFactory.h"
 #include "Cube.h"
 #include "tiny_obj_loader.h"
@@ -197,6 +198,9 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 	if (TESTCAM){
 		if (key == 'l'){
 			cube->localTransform.rotation.z += 30;
+			// try the sound effect 
+			char *tmp[4];
+			play(0, tmp, "C:/Users/miw034/Desktop/Payback.mp3");
 		}
 		else if (key == ';'){
 			cube->localTransform.rotation.z -= 30;

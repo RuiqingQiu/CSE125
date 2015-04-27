@@ -41,6 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -52,13 +53,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(LocalDebuggerWorkingDirectory)\glew-1.12.0\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\miw034\Desktop\CSE125\Graphics\CSE125Console\CSE125Console\OpenAL 1.1 SDK\include;$(LocalDebuggerWorkingDirectory)\glew-1.12.0\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(LocalDebuggerWorkingDirectory)\glew-1.12.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\miw034\Desktop\CSE125\Graphics\CSE125Console\CSE125Console\OpenAL 1.1 SDK\libs\Win32\EFX-Util_MT;C:\Users\miw034\Desktop\CSE125\Graphics\CSE125Console\CSE125Console\OpenAL 1.1 SDK\libs\Win32;$(LocalDebuggerWorkingDirectory)\glew-1.12.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;OpenAL32.lib;EFX-Util.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -99,6 +100,7 @@
     <ClInclude Include="guiItem.h" />
     <ClInclude Include="HardShadowView.h" />
     <ClInclude Include="battletimer.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="letters.h" />
     <ClInclude Include="mainmenuinput.h" />
     <ClInclude Include="Light.h" />
@@ -205,6 +207,10 @@
     <ClCompile Include="mainmenuinput.cpp" />
     <ClCompile Include="letters.cpp" />
     <ClCompile Include="battletimer.cpp" />
+    <ClCompile Include="Sound.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsC</CompileAs>
+    </ClCompile>
     <ClCompile Include="StandardGameInput.cpp" />
     <ClCompile Include="stb_image_aug.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
