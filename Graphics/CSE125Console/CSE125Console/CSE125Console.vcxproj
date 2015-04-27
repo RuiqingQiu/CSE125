@@ -235,6 +235,8 @@
     <None Include="FragmentShader.frag" />
     <None Include="hard_shadow.frag" />
     <None Include="hard_shadow.vert" />
+    <None Include="new.frag" />
+    <None Include="new.vert" />
     <None Include="shadow.frag" />
     <None Include="shadow.vert" />
     <None Include="simple.frag" />

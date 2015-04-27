@@ -19,7 +19,7 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#define TESTCAM 1
+#define TESTCAM 0
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
@@ -76,7 +76,22 @@ void Window::initialize(void)
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-	/*
+	object = Model3DFactory::generateObjectWithType(BasicCube);
+	object->localTransform.position = Vector3(2, 0, -5);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(BasicCube);
+	object->localTransform.position = Vector3(4, 0, -10);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(BasicCube);
+	object->localTransform.position = Vector3(8, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	
 	object = Model3DFactory::generateObjectWithType(WoodenCube);
 	object->localTransform.position = Vector3(-8, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
@@ -100,7 +115,7 @@ void Window::initialize(void)
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-	*/
+	
 	//setup light
 	//view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
@@ -141,7 +156,7 @@ void Window::initialize(void)
 	//factory->defaultView = shadowview;
 
 	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 5);
 
 	//setup shader
 	//init shader

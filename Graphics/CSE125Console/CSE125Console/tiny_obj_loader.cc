@@ -59,6 +59,7 @@ struct obj_shape {
   std::vector<float> v;
   std::vector<float> vn;
   std::vector<float> vt;
+  std::vector<float> tangent;
 };
 
 static inline bool isSpace(const char c) { return (c == ' ') || (c == '\t'); }

@@ -1,3 +1,4 @@
+/*
 uniform sampler2D tex;
 uniform sampler2D norm;
 uniform sampler2D gloss;
@@ -51,7 +52,7 @@ void main (void)
 	vec3 baseColor = texture2D(tex, gl_TexCoord[0].st).rgb;
 	vec3 norm1 = texture2D(norm, gl_TexCoord[0].st).rgb * 2.0 - 1.0;
 
-	gl_FragColor = vec4(baseColor, 1);
+	//gl_FragColor = vec4(baseColor, 1);
 	vec3 diffuse_color;
 	vec3 specular_color;
 	
@@ -107,10 +108,10 @@ void main (void)
 	//gl_FragColor = color_without_light + finalColor;
 	//gl_FragColor = vec4(lightvec, 1);
 }
-
+*/
 
 /* Working version with normal texture and gloss */
-/*
+
 uniform sampler2D tex;
 uniform sampler2D norm;
 uniform sampler2D gloss;
@@ -153,7 +154,7 @@ void main (void)
 		finalColor = gl_LightSource[0].ambient +diffuse + vec4(specular.rgb * glossColor.r, 1.0);
 		gl_FragColor = vec4(baseColor.rgb, 1.0) + finalColor;
 }
-*/
+
 
 /* Working version of a shader with normal and texture */
 

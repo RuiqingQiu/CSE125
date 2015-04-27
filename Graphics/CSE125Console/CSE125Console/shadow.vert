@@ -1,3 +1,4 @@
+/*
 varying vec3 vN;
 varying vec3 v;
 
@@ -41,10 +42,10 @@ void main(void)
    mode = vec3(2,0,0);
    //lightvec = vec3(light_x, light_y, light_z);
 }
+*/
 
 
-
-/* Working with texture normal and gloss
+// Working with texture normal and gloss
 varying vec3 vN;
 varying vec3 v;
 
@@ -82,7 +83,7 @@ void main(void)
    mode = vec3(2,0,0);
 
 }
-*/
+
 
 
 

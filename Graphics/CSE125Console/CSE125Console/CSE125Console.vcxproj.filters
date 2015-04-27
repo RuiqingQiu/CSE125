@@ -480,5 +480,11 @@
     <None Include="hard_shadow.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
+    <None Include="new.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="new.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
