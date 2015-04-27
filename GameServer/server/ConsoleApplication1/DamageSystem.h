@@ -1,7 +1,7 @@
 #pragma once
-#include "GameObj.h"
-#include <utility>
+#include "Robot.h"
 #include "DamageEvent.h"
+#include <iostream>
 class DamageSystem
 {
 
@@ -11,7 +11,7 @@ private:
 public:
 	DamageSystem(int);
 	~DamageSystem();
-	//std::pair<DamageEvent*, DamageEvent*>* performDamage(GameObj*, GameObj*);
+	void performDamage(GameObj*, GameObj*, DamageEvent*);
 };
 
 

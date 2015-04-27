@@ -1,12 +1,12 @@
 #include "DamageEvent.h"
 
 
-DamageEvent::DamageEvent(Robot* a, Robot* v, GameObj* o, int b)
+DamageEvent::DamageEvent(GameObj* o1, GameObj* o2, int r1, int r2)
 {
-	attacker = a;
-	victim = v;
-	victimObj = o;
-	breakConstraint = b;
+	obj1 = o1;
+	obj2 = o2;
+	result1 = r1;
+	result2 = r2;
 }
 
 
@@ -14,19 +14,19 @@ DamageEvent::~DamageEvent()
 {
 }
 
-Robot* DamageEvent::getAttacker()
+GameObj* DamageEvent::getObj1()
 {
-	return attacker;
+	return obj1;
 }
-Robot* DamageEvent::getVictim()
+
+GameObj* DamageEvent::getObj2()
 {
-	return victim;
+	return obj2;
 }
-GameObj* DamageEvent::getVictimObj()
+int DamageEvent::getResult1()
 {
-	return victimObj;
-}
-int DamageEvent::getBreakConstraint()
+	return result1;
+}int DamageEvent::getResult2()
 {
-	return breakConstraint;
+	return result2;
 }

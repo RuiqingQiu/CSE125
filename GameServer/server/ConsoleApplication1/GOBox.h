@@ -18,5 +18,6 @@ public:
 	double getWidth();
 	double getHeight();
 	double getDepth();
+	btRigidBody* getRigidBody() override;
 	void createRigidBody(std::map< btCollisionObject*, GameObj*> *) override;
 };

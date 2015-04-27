@@ -49,6 +49,6 @@ public:
 	btRaycastVehicle * getVehicle();
 	void createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> *);
 	void createRigidBody(std::map< btCollisionObject*, GameObj*> *);
-	btRigidBody* getRigidBody();
+	btRigidBody* getRigidBody() override;
 };
 

@@ -9,6 +9,16 @@
 #include "Constraint.h"
 
 
+// collision type
+enum COLLISION_TYPE{
+	C_WALLS = 0,
+	C_GROUND = 1,
+	C_ROBOT = 2,
+	C_ROBOT_PARTS = 3,
+	C_PROJECTILE = 4,
+	C_MELEE = 5,
+
+};
 
 // GameObj (physical) types
 enum OBJECT_TYPE
@@ -68,7 +78,7 @@ public:
 	int getBlockType(); // Client world type
 	unsigned int getId();
 	double getMass();
-	btRigidBody* getRigidBody();
+	virtual btRigidBody* getRigidBody() = 0;
 	double getRotX();
 	double getRotY();
 	double getRotZ();
@@ -84,6 +94,7 @@ public:
 	void setBlockType(int);
 	void setMass(double);
 	void setRigidBody(btRigidBody*);
+	btRigidBody* getRB();
 	virtual void createRigidBody(std::map< btCollisionObject*, GameObj*>*) = 0;
 	void setRotX(double);
 	void setRotY(double);

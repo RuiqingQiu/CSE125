@@ -136,11 +136,6 @@ void GameObj::setMass(double mass){
 	_mass = mass;
 }
 
-btRigidBody* GameObj::getRigidBody()
-{
-	return rigidBody;
-}
-
 void GameObj::setRigidBody(btRigidBody* RB)
 {
 	rigidBody = RB;
@@ -193,6 +188,7 @@ void GameObj::addConstraint(GameObj* o)
 		//cout << "current is " << i << endl;
 		btTransform frameInA;
 		btTransform frameInB;
+
 		this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
 		o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
 	
@@ -259,6 +255,11 @@ void GameObj::deleteInvalidConstraints()
 			delete(c);
 		}
 	}
+}
+
+btRigidBody* GameObj::getRB()
+{
+	return rigidBody;
 }
 
 std::vector<Constraint *> GameObj::getConstraints()

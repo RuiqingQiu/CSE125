@@ -1,21 +1,30 @@
 #pragma once
 #include "Robot.h"
+
+enum RESULT
+{
+	NOTHING = 0,
+	BREAK_CONSTRAINT = 1,
+	DELETED = 2,
+};
+
 class DamageEvent
 {
 
 private:
-	Robot* attacker;
-	Robot* victim;
-	GameObj* victimObj;
-	int breakConstraint; //boolean, check to see if constraint should be broken
+	GameObj* obj1;
+	GameObj* obj2;
+
+	int result1;
+	int result2;
 
 public:
-	DamageEvent(Robot*, Robot*, GameObj*, int);
+	DamageEvent(GameObj*, GameObj*, int, int);
 	~DamageEvent();
 
-	Robot* getAttacker();
-	Robot* getVictim();
-	GameObj* getVictimObj();
-	int getBreakConstraint();
+	GameObj* getObj1();
+	GameObj* getObj2();
+	int getResult1();
+	int getResult2();
 };
 

@@ -38,6 +38,11 @@ double GOBox::getDepth()
 	return _depth;
 }
 
+btRigidBody* GOBox::getRigidBody()
+{
+	return getRB();
+}
+
 
 void GOBox::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 {

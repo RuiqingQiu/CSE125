@@ -13,6 +13,11 @@ GOCapsule::~GOCapsule()
 {
 }
 
+btRigidBody* GOCapsule::getRigidBody()
+{
+	return getRB();
+}
+
 void GOCapsule::setRadius(double radius)
 {
 	_radius = radius;

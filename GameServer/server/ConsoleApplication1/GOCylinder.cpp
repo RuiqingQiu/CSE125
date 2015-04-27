@@ -11,6 +11,11 @@ GOCylinder::~GOCylinder()
 {
 }
 
+btRigidBody* GOCylinder::getRigidBody()
+{
+	return getRB();
+}
+
 void GOCylinder::setRadius(double radius)
 {
 	_radius = radius;

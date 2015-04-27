@@ -7,12 +7,14 @@ Robot::Robot(int cid, char* name)
 	_r_cid = cid;
 	_name = name;
 	setIsRobot(1);
+	setCollisionType(C_ROBOT);
 	incOid(4);
 }
 
 
 Robot::~Robot()
 {
+	delete(vehicle);
 }
 
 

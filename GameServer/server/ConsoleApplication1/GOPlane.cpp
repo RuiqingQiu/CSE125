@@ -15,6 +15,11 @@ GOPlane::~GOPlane()
 {
 }
 
+btRigidBody* GOPlane::getRigidBody()
+{
+	return getRB();
+}
+
 void GOPlane::setXNorm(double xNorm)
 {
 	_xNorm = xNorm;

@@ -73,7 +73,7 @@ enum PacketTypes {
 
 
 #define BIT(x) (1<<(x))
-	enum COLLISION_TYPE {
+	enum BIT_COLLISION_TYPE {
 		COL_NOTHING = 0, //<Collide with nothing
 		COL_GROUND = BIT(1), //<Collide with ground
 		COL_WALL = BIT(2), //<Collide with walls

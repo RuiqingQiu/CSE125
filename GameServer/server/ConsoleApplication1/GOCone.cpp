@@ -11,6 +11,11 @@ GOCone::~GOCone()
 {
 }
 
+btRigidBody* GOCone::getRigidBody()
+{
+	return getRB();
+}
+
 void GOCone::setRadius(double radius)
 {
 	_radius = radius;

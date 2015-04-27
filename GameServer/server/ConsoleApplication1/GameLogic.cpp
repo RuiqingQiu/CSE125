@@ -153,18 +153,17 @@ void GameLogic::gameStart(){
 	gamePhysics->initWorld(&gameObjs, &objCollisionPair);
 
 	//int i,j,k;
-
+	//int i;
 	//for (i = 0; i < 17; i++)
 	//{
-	//	clientPair.find(i)->second->getRigidBody()->setAngularFactor(0.3);
 	//	for (j = i + 1; j < 17; j++)
 	//	{
 	//		for (k = 0; k < 7; k++)
 	//		{
-	//			Constraint* b = new Constraint();
-	//			b->addConstraint(clientPair.find(i)->second, clientPair.find(j)->second);
-	//			gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF, true);
-	//		}
+		//clientPair.find(0)->second
+		        
+		//		gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF, true);
+		//	}
 	//	}
 	//}
 
@@ -187,16 +186,16 @@ void GameLogic::gameStart(){
 
 
 unsigned int GameLogic::gameLoop (){
-	//if (counter++ > 30)
-	//{
-	//	ObjectEvents* objEvent = new ObjectEvents(SHOOT);
+	if (counter++ > 30)
+	{
+		ObjectEvents* objEvent = new ObjectEvents(SHOOT);
 
 
-	//	objEvent->setCid(0);
-	//	objEventList.push_back(objEvent);
-	//	cout << "SHOOTING" << endl;
-	//	counter = 0;
-	//}
+		objEvent->setCid(0);
+		objEventList.push_back(objEvent);
+		cout << "SHOOTING" << endl;
+		counter = 0;
+	}
 
 
 	network->receiveFromClients(&objEventList);
@@ -247,9 +246,7 @@ void GameLogic::prePhyLogic(){
 		unsigned int type = (*iter)->getEvent();
 		int cid = (*iter)->getCid();
 		std::map<int, GameObj *>::iterator it;
-		cout << "cid" << cid << endl;
 		it = clientPair.find(cid);
-		cout << "found OBJ" << cid << endl;
 
 		GameObj* gObj = it->second;
 
@@ -261,7 +258,7 @@ void GameLogic::prePhyLogic(){
 					   double bulletHeight = 0.3;
 					   double bulletdepth = 0.5;
 					   double rbWidth = ((Robot*)gObj)->getWidth();
-					   btTransform rbTrans = ((Robot*)gObj)->getRigidBody()->getWorldTransform();
+					   btTransform rbTrans = gObj->getRigidBody()->getWorldTransform();
 					   btVector3 relativeForce = btVector3(0, 0, rbWidth/2);
 					   btVector3 boxRot = rbTrans.getBasis()[2];
 					   boxRot.normalize();
@@ -276,6 +273,8 @@ void GameLogic::prePhyLogic(){
 */
 					   GameObj* bullet = new GOBox(x, y, z, rbTrans.getRotation().getX(), rbTrans.getRotation().getY(), rbTrans.getRotation().getZ(), rbTrans.getRotation().getW(),
 						 bulletMass  , bulletWidth, bulletHeight, bulletdepth);
+					   bullet->setCollisionType(C_PROJECTILE);
+					   bullet->setBelongTo(gObj);
 					   bullet->setBlockType(NEEDLE);
 					   gameObjs.push_back(bullet);
 					   gamePhysics->createPhysicsProjectile(type, bullet, &objCollisionPair);
@@ -311,7 +310,7 @@ void GameLogic::prePhyLogic(){
 	{
 		if ((*it)->getIsRobot() != 0)
 		{
-			std::cout << "forward speed: " << ((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour() << std::endl;
+			//std::cout << "forward speed: " << ((Robot*)*it)->getVehicle()->getCurrentSpeedKmHour() << std::endl;
 			if (((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering > 0)
 				((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += -TURN_SPEED / 2;
 			if (((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering > 0)
@@ -336,39 +335,52 @@ void GameLogic::postPhyLogic(){
 		btCollisionObject* obj2 = static_cast<btCollisionObject*>((*it)->getObj2());
 		GameObj* GO1 = objCollisionPair.find(obj1)->second;
 		GameObj* GO2 = objCollisionPair.find(obj2)->second;
+		std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
 
+		DamageEvent* e = nullptr;
+		damageSystem->performDamage(GO1, GO2, e);
+		if (e->getResult1() == BREAK_CONSTRAINT)
+		{
+			//gamePhysics break constraint
+			std::vector<Constraint*>::iterator iter;
+			for (iter = GO1->getConstraints().begin(); iter != GO1->getConstraints().end(); iter++)
+			{
+				gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+			}
+			GO1->deleteConstraints(&objCollisionPair);
+		}
+		else if (e->getResult1() == DELETED)
+		{
+			//gamePhysics remove rigidBody
+			gamePhysics->getDynamicsWorld()->removeRigidBody(GO1->getRigidBody());
+			deleteGameObj(GO1);
+			//set gameevent
+		}
+		if (e->getResult2() == BREAK_CONSTRAINT)
+		{
+			//gamePhysics break constraint
+			std::vector<Constraint*>::iterator iter;
+			for (iter = GO2->getConstraints().begin(); iter != GO2->getConstraints().end(); iter++)
+			{
+				gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+			}
+			GO2->deleteConstraints(&objCollisionPair);
+		}
+		else if (e->getResult2() == DELETED)
+		{
+			//gamePhysics remove rigidBody
+
+			gamePhysics->getDynamicsWorld()->removeRigidBody(GO2->getRigidBody());
+			deleteGameObj(GO2);
+			//set gameevent
+		}
 		
-		if (GO1->getBlockType() == NEEDLE && GO2->getType() == PLANE){
-			GO1->getRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
-		}
-		if (GO2->getBlockType() == NEEDLE && GO1->getType() == PLANE){
-			GO2->getRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
-		}
-
-		//if (GO1->getType() == PLANE && GO2->getIsRobot())
-		//{
-		//	//gameP
-		//	//((Robot*)GO2)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
-		//	//((Robot*)GO2)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
-
-		//}
-
-		//if (GO2->getType() == PLANE && GO1->getIsRobot())
-		//{
-		//	//gameP
-		//	//((Robot*)GO1)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
-		//	//((Robot*)GO1)->getRigidBody()->setLinearVelocity(btVector3(1, 0, 1));
-
-		//}
-
-		//damageSystem->functionCall();
-
-		/*if ((GO2->getType() == BOX && GO1->getType() == PLANE) || (GO1->getType() == BOX && GO2->getType() == PLANE))
-		{*/
-			std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
-		//}
 	}
-
+	if (!GamePhysics::collisionList.empty())
+	{
+		cleanDataStructures();
+		GamePhysics::collisionList.clear();
+	}
 }
 
 
@@ -386,6 +398,12 @@ void GameLogic::addWalls()
 	frontWall->setBlockType(WALL);
 	backWall->setBlockType(WALL);	
 
+	ceiling->setCollisionType(C_WALLS);
+	leftWall->setCollisionType(C_WALLS);
+	rightWall->setCollisionType(C_WALLS);
+	frontWall->setCollisionType(C_WALLS);
+	backWall->setCollisionType(C_WALLS);
+
 	gameObjs.push_back(ceiling);
 	gameObjs.push_back(leftWall);
 	gameObjs.push_back(rightWall);
@@ -396,6 +414,7 @@ void GameLogic::addGround()
 {
 	GameObj* ground = new GOPlane(0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
 	ground->setBlockType(BATTLEFIELD);
+	ground->setCollisionType(C_GROUND);
 	gameObjs.push_back(ground);
 }
 
