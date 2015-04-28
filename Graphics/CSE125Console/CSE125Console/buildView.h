@@ -3,6 +3,7 @@
 #include "gui.h"
 #include "buildTimer.h"
 #include "scoreBox.h"
+#include "roboBase.h"
 
 #define MAX_BLOCKS 27
 #define GRID_SIZE 5

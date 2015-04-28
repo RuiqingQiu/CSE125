@@ -87,6 +87,7 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 	char *f_str = new char[fragment_shader.length() + 1];
 	strcpy(f_str, fragment_shader.c_str());
 	*/
+
 	vertexShaderHandle = loadShader1("better.vert", GL_VERTEX_SHADER);
 	fragmentShaderHandle = loadShader1("better.frag", GL_FRAGMENT_SHADER);
 

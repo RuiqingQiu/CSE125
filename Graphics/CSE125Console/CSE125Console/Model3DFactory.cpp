@@ -30,39 +30,57 @@ Model3DFactory::~Model3DFactory()
 Model3D* Model3DFactory::generateObjectWithType(int type){
 	switch (type){
 		case Mallet:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->damageStat = 1;
+			return returnModel;
 			break;
 		}
 		case Mace:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->damageStat = 1;
+			return returnModel;
 			break;
 		}
 		case Discount:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->speedStat = 1;
+			return returnModel;
 			break;
 		}
 		case Needle:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->damageStat = 1;
+			return returnModel;
 			break;
 		}
 		case BasicCube:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->healthStat = 1;
+			return returnModel;
 			break;
 		}
 		case WoodenCube:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->healthStat = 1;
+			return returnModel;
 			break;
 		}
 		case WoodenWheel:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->speedStat = 1;
+			return returnModel;
 			break;
 		}
 		case Tire:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->speedStat = 1;
+			return returnModel;
 			break;
 		}
 		case GlowingCube:{
-			return new Model3D(render_obj_lst[type]);
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			returnModel->healthStat = 1;
+			return returnModel;
 			break;
 		}
 		case BATTLEFIELD:{
