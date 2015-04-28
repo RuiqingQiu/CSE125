@@ -73,8 +73,9 @@ void viewFactory::setView() {
 		currentView = defaultView;
 		return;
 	}
+
 	//hacky quick fix
-	buildmode->updateview = false;
+	if (viewmode != viewType::BUILD) buildmode->updateview = false;
 
 	currentView->isCurrentView = false;
 	//sky boxes needed for battle mode and console.
@@ -166,7 +167,6 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 	}
 	if (buildmode->yRotation < 0) buildmode->yRotation += 360;
 	if (buildmode->yRotation == 360) buildmode->yRotation = 0;
-	std::cout << buildmode->yRotation << std::endl;
 	buildmode->rotateY.makeRotateY(buildmode->yRotation*M_PI / 180.0);
 }
 
