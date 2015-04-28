@@ -16,6 +16,8 @@ enum ModelType{
 
 	//Other
 	BATTLEFIELD = 9,
+
+	THREEBYTHREE_BASIC=10,
 	WALL = 101,
 	BULLET_1 = 102,
 

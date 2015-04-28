@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GameView.h"
-
+#include "SkyBox.h"
 
 GameView::GameView()
 {	
@@ -42,77 +42,84 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	for each (GeoNode* node in NodeList)
 	{
 		node->VOnClientUpdate(info);
-
+		//printf("id: %i player: %i\n", node->identifier, pPlayer->playerid);
 		if (node->identifier == pPlayer->playerid ){
-			//this->pViewCamera->FollowingTarget = node;
+			this->pViewCamera->FollowingTarget = node;
 		}
 	}
 	//Loop through the list to see anything that's not being processed. if so, create
 	for (int i = 0; i < info->player_infos.size(); i++)
 	{
 		if (!info->player_infos[i]->processed){
-			cout << "create object" << endl;
+			//cout << "create object" << endl;
 			switch (info->player_infos[i]->type){
 				cout << "data is not processed, need to create objects" << endl;
 				//CUBE = 0
-				
+
 			case BasicCube:{
 							   Model3D* object = Model3DFactory::generateObjectWithType(BasicCube);
+							   object->isUpdated = true;
 							   object->identifier = info->player_infos[i]->id;
 							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							   NodeList.push_back(object);
+
 							   info->player_infos[i]->processed = true;
-					break;
-				}
+							   break;
+			}
 				//BATTLEFIELD = 1
 			case GlowingCube:{
 								 Model3D* object = Model3DFactory::generateObjectWithType(GlowingCube);
-							   object->identifier = info->player_infos[i]->id;
-							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
-							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
-							   NodeList.push_back(object);
-							   info->player_infos[i]->processed = true;
+								 object->identifier = info->player_infos[i]->id;							   object->isUpdated = true;
 
-					break;
-				}
+								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+								 NodeList.push_back(object);
+								 info->player_infos[i]->processed = true;
+
+								 break;
+			}
 				//WALL = 2
 			case WoodenCube:{
-								Model3D* object = Model3DFactory::generateObjectWithType(WoodenCube);							 
+								Model3D* object = Model3DFactory::generateObjectWithType(WoodenCube);
 								object->identifier = info->player_infos[i]->id;
+								object->isUpdated = true;
 
 								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								NodeList.push_back(object);
 								info->player_infos[i]->processed = true;
 
-					break;
-				}
+								break;
+			}
 				//CUBE3x3 = 3
 			case Mace:{
 						  Model3D* object = Model3DFactory::generateObjectWithType(Mace);
 						  object->identifier = info->player_infos[i]->id;
+						  object->isUpdated = true;
 
 						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 						  NodeList.push_back(object);
 						  info->player_infos[i]->processed = true;
 
-					break;
-				}
+						  break;
+			}
 			case Mallet:{
 							Model3D* object = Model3DFactory::generateObjectWithType(Mallet);
-							
+							object->isUpdated = true;
+
 							object->identifier = info->player_infos[i]->id;
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							NodeList.push_back(object);
 							info->player_infos[i]->processed = true;
 
-						   break;
-				}
+							break;
+			}
 			case Needle:{
-							Model3D* object = Model3DFactory::generateObjectWithType(Needle);
+							Model3D* object = Model3DFactory::generateObjectWithType(Needle);							   object->isUpdated = true;
+
 							object->identifier = info->player_infos[i]->id;
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -122,36 +129,39 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							break;
 			}
 			case Discount:{
-							  Model3D* object = Model3DFactory::generateObjectWithType(Discount);
-								object->identifier = info->player_infos[i]->id;
-								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
-								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
-								NodeList.push_back(object);
-								info->player_infos[i]->processed = true;
+							  Model3D* object = Model3DFactory::generateObjectWithType(Discount);							   object->isUpdated = true;
 
-							break;
+							  object->identifier = info->player_infos[i]->id;
+							  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							  NodeList.push_back(object);
+							  info->player_infos[i]->processed = true;
+
+							  break;
 			}
 			case Tire:{
-						  Model3D* object = Model3DFactory::generateObjectWithType(Tire);
+						  Model3D* object = Model3DFactory::generateObjectWithType(Tire);							   object->isUpdated = true;
+
 						  object->identifier = info->player_infos[i]->id;
 						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 						  NodeList.push_back(object);
 						  info->player_infos[i]->processed = true;
 
-							break;
+						  break;
 			}
 			case WoodenWheel:{
-								 Model3D* object = Model3DFactory::generateObjectWithType(WoodenWheel); 
+								 Model3D* object = Model3DFactory::generateObjectWithType(WoodenWheel);
+								 object->isUpdated = true;
 								 object->identifier = info->player_infos[i]->id;
 								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								 NodeList.push_back(object);
 								 info->player_infos[i]->processed = true;
 
-							break;
+								 break;
 			}
-			
+
 			case BATTLEFIELD:{
 								 /*
 								 Model3D* object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
@@ -160,7 +170,21 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								 object->localTransform.scale = Vector3(2, 1, 2);
 								 NodeList.push_back(object);*/
-				break;
+								 break;
+			}
+			//Fix this
+			case THREEBYTHREE_BASIC:{
+										/*
+										Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+										object->isUpdated = true;
+										object->identifier = info->player_infos[i]->id;
+										object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+										object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+										object->localTransform.scale = Vector3(1, 1, 1);
+										NodeList.push_back(object);
+										info->player_infos[i]->processed = true;
+										*/
+										break;
 			}
 			case WALL:{
 								break;
@@ -177,10 +201,21 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		}
 	}
 	//Loop through the list and delete anything 
+	//Make a tmp list to store everything we want to render at the next pass
+	NodeListBuffer.clear();
 	for (int i = 0; i < NodeList.size(); i++)
 	{
-
+		//Skybox is an exception
+		if (!NodeList[i]->isUpdated && typeid(*NodeList[i]) != typeid(SkyBox))
+		{
+			//int index = NodeList.
+		}
+		else{
+			NodeListBuffer.push_back(NodeList[i]);
+		}
+		NodeList[i]->isUpdated = false;
 	}
+	NodeList = NodeListBuffer;
 }
 
 void GameView::PushGeoNode(GeoNode* node)

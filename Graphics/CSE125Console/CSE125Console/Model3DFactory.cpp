@@ -84,8 +84,11 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BATTLEFIELD:{
-			cout << "here" << endl;
 			return new Model3D(render_obj_lst[type]);
+			break;
+		}
+		//Fix this
+		case THREEBYTHREE_BASIC:{
 			break;
 		}
 		case WALL:{

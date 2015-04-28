@@ -71,6 +71,7 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	*/
+	/*
 	for (int i = 0; i < 3; i++){
 		for (int j = 0; j < 3; j++){
 			object = Model3DFactory::generateObjectWithType(BasicCube);
@@ -100,6 +101,7 @@ void Window::initialize(void)
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
+	*/
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 	object->localTransform.position = Vector3(0, 0.5, 0);

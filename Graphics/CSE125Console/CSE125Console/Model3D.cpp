@@ -53,8 +53,11 @@ void Model3D::VOnClientUpdate(GameInfoPacket* pData){
 		localTransform.rotation.y = p->ry;
 		localTransform.rotation.z = p->rz;
 		p->processed = true;
+		this->isUpdated = true;
 	}
 	else{
+		this->isUpdated = false;
+
 	}
 }
 /*
