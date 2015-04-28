@@ -21,5 +21,9 @@ public:
 	virtual void VOnUpdate(GameInfoPacket* pData){ };
 	virtual void VOnClientUpdate(GameInfoPacket* pData){ };
 
+	int healthStat;
+	int damageStat;
+	int speedStat;
+
 };
 
