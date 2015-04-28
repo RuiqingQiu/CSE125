@@ -100,12 +100,12 @@ void Window::initialize(void)
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-
+	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 	object->localTransform.position = Vector3(0, 0.5, 0);
 	object->localTransform.scale = Vector3(2, 1, 2);
 	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
+	view->PushGeoNode(object);*/
 	/*	
 	object = Model3DFactory::generateObjectWithType(WoodenCube);
 	object->localTransform.position = Vector3(-8, 0, -20);
@@ -213,7 +213,7 @@ void Window::initialize(void)
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
 }

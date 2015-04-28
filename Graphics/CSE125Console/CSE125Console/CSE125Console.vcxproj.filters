@@ -49,6 +49,9 @@
     <Filter Include="Source Files\GameView\GuiViews">
       <UniqueIdentifier>{a320b1df-4e52-4874-a987-93cc06a6f01a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shader\Group">
+      <UniqueIdentifier>{70a9b502-6ec6-4268-92fb-a749441f3a4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -462,12 +465,6 @@
     <None Include="simple.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="shadow.vert">
-      <Filter>Source Files\Shader</Filter>
-    </None>
-    <None Include="shadow.frag">
-      <Filter>Source Files\Shader</Filter>
-    </None>
     <None Include="BlurVertexShader.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
@@ -492,11 +489,23 @@
     <None Include="hard_shadow.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="better.vert">
-      <Filter>Source Files\Shader</Filter>
-    </None>
     <None Include="better.frag">
-      <Filter>Source Files\Shader</Filter>
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="better.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="reflect.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="reflect.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="shadow.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="shadow.vert">
+      <Filter>Source Files\Shader\Group</Filter>
     </None>
   </ItemGroup>
 </Project>

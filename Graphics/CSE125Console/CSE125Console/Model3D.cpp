@@ -54,6 +54,8 @@ void Model3D::VOnClientUpdate(GameInfoPacket* pData){
 		localTransform.rotation.z = p->rz;
 		p->processed = true;
 	}
+	else{
+	}
 }
 /*
 typedef struct {

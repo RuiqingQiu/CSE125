@@ -41,14 +41,15 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 {
 	for each (GeoNode* node in NodeList)
 	{
-	    node->VOnClientUpdate(info);	
+		node->VOnClientUpdate(info);
+
 		if (node->identifier == pPlayer->playerid ){
-			this->pViewCamera->FollowingTarget = node;
+			//this->pViewCamera->FollowingTarget = node;
 		}
-		
 	}
 	//Loop through the list to see anything that's not being processed. if so, create
-	for (int i = 0; i < info->player_infos.size(); i++){
+	for (int i = 0; i < info->player_infos.size(); i++)
+	{
 		if (!info->player_infos[i]->processed){
 			cout << "create object" << endl;
 			switch (info->player_infos[i]->type){
@@ -61,6 +62,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							   NodeList.push_back(object);
+							   info->player_infos[i]->processed = true;
 					break;
 				}
 				//BATTLEFIELD = 1
@@ -70,6 +72,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							   NodeList.push_back(object);
+							   info->player_infos[i]->processed = true;
+
 					break;
 				}
 				//WALL = 2
@@ -80,6 +84,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								NodeList.push_back(object);
+								info->player_infos[i]->processed = true;
+
 					break;
 				}
 				//CUBE3x3 = 3
@@ -90,6 +96,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 						  NodeList.push_back(object);
+						  info->player_infos[i]->processed = true;
+
 					break;
 				}
 			case Mallet:{
@@ -99,6 +107,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							NodeList.push_back(object);
+							info->player_infos[i]->processed = true;
+
 						   break;
 				}
 			case Needle:{
@@ -107,6 +117,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							NodeList.push_back(object);
+							info->player_infos[i]->processed = true;
+
 							break;
 			}
 			case Discount:{
@@ -115,6 +127,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								NodeList.push_back(object);
+								info->player_infos[i]->processed = true;
+
 							break;
 			}
 			case Tire:{
@@ -123,6 +137,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 						  NodeList.push_back(object);
+						  info->player_infos[i]->processed = true;
+
 							break;
 			}
 			case WoodenWheel:{
@@ -131,16 +147,19 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								 NodeList.push_back(object);
+								 info->player_infos[i]->processed = true;
+
 							break;
 			}
 			
 			case BATTLEFIELD:{
+								 /*
 								 Model3D* object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 								 object->identifier = info->player_infos[i]->id;
 								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y+0.5, info->player_infos[i]->z);
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								 object->localTransform.scale = Vector3(2, 1, 2);
-								 NodeList.push_back(object);
+								 NodeList.push_back(object);*/
 				break;
 			}
 			case WALL:{
@@ -150,12 +169,17 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							  break;
 			}
 
-				default:{
+			default:{
 							//cout << "Should not go into here in gameview.cpp" << endl;
 							break;
 				}
 			}
 		}
+	}
+	//Loop through the list and delete anything 
+	for (int i = 0; i < NodeList.size(); i++)
+	{
+
 	}
 }
 
