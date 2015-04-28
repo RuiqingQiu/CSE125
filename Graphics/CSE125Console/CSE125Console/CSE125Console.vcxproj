@@ -58,8 +58,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\miw034\Desktop\CSE125\Graphics\CSE125Console\CSE125Console\OpenAL 1.1 SDK\libs\Win32\EFX-Util_MT;C:\Users\miw034\Desktop\CSE125\Graphics\CSE125Console\CSE125Console\OpenAL 1.1 SDK\libs\Win32;$(LocalDebuggerWorkingDirectory)\glew-1.12.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;OpenAL32.lib;EFX-Util.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\miw034\Desktop\CSE125\Graphics\CSE125Console\CSE125Console\OpenAL 1.1 SDK\libs\Win32;$(LocalDebuggerWorkingDirectory)\glew-1.12.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;alut.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

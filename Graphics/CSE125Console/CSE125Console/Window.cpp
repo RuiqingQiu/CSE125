@@ -9,7 +9,7 @@
     #include <GL/glut.h>
 #endif
 
-#include "Sound.h"  // inlude sound in  the project
+//#include "Sound.h"  // inlude sound in  the project
 #include "viewFactory.h"
 #include "Cube.h"
 #include "tiny_obj_loader.h"
@@ -161,7 +161,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
 }
 
 //----------------------------------------------------------------------------
@@ -193,17 +193,25 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 		else if (key == '.'){
 			cube->localTransform.rotation.x -= 30;
 		}
+		else if (key == '1'){
+			// try the sound effect 
+			char *tmp[4];
+			//play(0, tmp, "C:/Users/miw034/Desktop/Payback.wav");
+		}
 	}
 
 	if (TESTCAM){
 		if (key == 'l'){
 			cube->localTransform.rotation.z += 30;
-			// try the sound effect 
-			char *tmp[4];
-			play(0, tmp, "C:/Users/miw034/Desktop/Payback.mp3");
+			
 		}
 		else if (key == ';'){
 			cube->localTransform.rotation.z -= 30;
+		}
+		else if (key == '1'){
+			// try the sound effect 
+			char *tmp[4];
+			play(0, tmp, "C:/Users/miw034/Desktop/Payback.wav");
 		}
 	}
 	

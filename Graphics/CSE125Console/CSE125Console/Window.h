@@ -2,11 +2,13 @@
 //#include "GamePacketManager.h"
 
 #include "Shader.h"
-
+#include "Sound.h"  // inlude sound in  the project
 #include "GameCore.h"
 
 #ifndef CSE167_Window_h
 #define CSE167_Window_h
+
+extern "C" int play(int, char **, char* filepath);
 
 class Window	  // OpenGL output window related routines
 {
@@ -23,7 +25,6 @@ public:
 	static void processMouseClick(int button, int state, int x, int y);
 	static void processPassiveMouse(int x, int y);
 	static void processMouse(int x, int y);
-
 };
 
 #endif

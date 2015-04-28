@@ -91,7 +91,7 @@ int play(int argc, char *argv[], char* filePath)
 	char *bufferData;
 	const ALCchar *defaultDeviceName = argv[1];
 	printf("here here ");
-	printf("%s", defaultDeviceName);
+	//printf("%s", defaultDeviceName);
 	ALsizei size, freq;
 	ALenum format;
 	int ret;
@@ -112,7 +112,8 @@ int play(int argc, char *argv[], char* filePath)
 	if (!defaultDeviceName)
 		defaultDeviceName = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
 
-	device = alcOpenDevice(defaultDeviceName);
+	device = alcOpenDevice(NULL);
+	//device = alcOpenDevice(defaultDeviceName);
 	if (!device) {
 		fprintf(stderr, "unable to open default device\n");
 		return -1;
