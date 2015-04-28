@@ -8,7 +8,6 @@ Robot::Robot(int cid, char* name)
 	_name = name;
 	setIsRobot(1);
 	setCollisionType(C_ROBOT);
-	incOid(4);
 }
 
 
@@ -143,19 +142,19 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	btScalar connectionHeight = 0.2f;
 
 	{
-		btVector3 connectionPointCS0((width / 2.0f - 0.2f), connectionHeight, (depth / 2.0f - depth / 8.0f));
+		btVector3 connectionPointCS0((width / 2.0f - width/10.0f), connectionHeight, (depth / 2.0f - depth / 8.0f));
 		m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, true);
 	}
 {
-	btVector3 connectionPointCS0(-(width / 2.0f - 0.2f), connectionHeight, (depth / 2.0f - depth / 8.0f));
+	btVector3 connectionPointCS0(-(width / 2.0f - width / 10.0f), connectionHeight, (depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, true);
 }
 {
-	btVector3 connectionPointCS0((width / 2.0f - 0.2f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
+	btVector3 connectionPointCS0((width / 2.0f - width / 10.0f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, false);
 }
 {
-	btVector3 connectionPointCS0(-(width / 2.0f - 0.2f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
+	btVector3 connectionPointCS0(-(width / 2.0f - width / 10.0f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, false);
 }
 

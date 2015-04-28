@@ -66,6 +66,7 @@ enum PacketTypes {
 		TIRE = 7,
 		WOODENWHEEL = 8,
 		BATTLEFIELD = 9,
+		THREEBYTHREE_BASIC = 10,
 		WALL = 101,
 		BULLET_1 = 102,
 		

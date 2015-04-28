@@ -38,15 +38,15 @@ unsigned int GameLogic::waitToConnect()
 	robot->setqY(0);
 	robot->setqZ(0);
 	robot->setqW(1);
-	robot->setMass(50);
+	robot->setMass(100);//50);
 	robot->setType(BOX);
-	if (cid != 0)
+	if (cid != 1)
 	{
-		robot->setBlockType(BASICCUBE);
+		robot->setBlockType(1);
 	}
 	else
 	{
-		robot->setBlockType(1);
+		robot->setBlockType(BASICCUBE);
 	}
 	this->gameObjs.push_back(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
@@ -314,7 +314,6 @@ void GameLogic::prePhyLogic(){
 	}
 
 	std::vector<GameObj*>::iterator it;
-	std::cout << std::endl;
 	for (it = gameObjs.begin(); it != gameObjs.end(); ++it)
 	{
 		/*if (gameObjs.size() == 4)
@@ -366,12 +365,12 @@ void GameLogic::postPhyLogic(){
 				gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
 			}
 			GO1->deleteConstraints(&objCollisionPair);
-			cout << "GO1 ID: " << GO1->getId() << endl;
+			//cout << "GO1 ID: " << GO1->getId() << endl;
 
 		}
 		else if (e->getResult1() == DELETED)
 		{
-			cout << "correct o1 deleted" << endl;
+			//cout << "correct o1 deleted" << endl;
 			//gamePhysics remove rigidBody
 			gamePhysics->getDynamicsWorld()->removeRigidBody(GO1->getRigidBody());
 			GO1->setDeleted();
@@ -386,7 +385,7 @@ void GameLogic::postPhyLogic(){
 				gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
 			}
 			GO2->deleteConstraints(&objCollisionPair);
-			cout << "GO2 ID: " << GO2->getId() << endl;
+			//cout << "GO2 ID: " << GO2->getId() << endl;
 		}
 		else if (e->getResult2() == DELETED)
 		{
