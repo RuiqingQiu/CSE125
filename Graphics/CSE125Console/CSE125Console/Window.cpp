@@ -256,13 +256,6 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 		else if (key == ';'){
 			cube->localTransform.rotation.z -= 30;
 		}
-		// key press 1 to test sound effect
-		else if (key == '1'){
-			cout << "Eneter ! " << endl;
-			// try the sound effect 
-			char *tmp[4];
-			//play(0, tmp, "Payback.wav");
-		}
 	}
 	
 }

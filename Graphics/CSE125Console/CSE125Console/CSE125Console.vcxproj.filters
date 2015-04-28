@@ -258,9 +258,6 @@
     <ClInclude Include="RenderObject.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="roboBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -445,9 +442,6 @@
     </ClCompile>
     <ClCompile Include="RenderObject.cpp">
       <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound.c">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="roboBase.cpp">
       <Filter>Source Files</Filter>
