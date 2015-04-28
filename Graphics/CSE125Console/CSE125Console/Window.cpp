@@ -19,7 +19,7 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#define TESTCAM 1
+#define TESTCAM 0
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
@@ -80,48 +80,33 @@ void Window::initialize(void)
 			view->PushGeoNode(object);
 		}
 	}
-
-	/*
-	object = Model3DFactory::generateObjectWithType(BasicCube);
-	object->localTransform.position = Vector3(0, 0, 0);
+	object = Model3DFactory::generateObjectWithType(WoodenWheel);
+	object->localTransform.position = Vector3(-1, -2, -1);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(WoodenWheel);
+	object->localTransform.position = Vector3(-1, -2, 3);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(WoodenWheel);
+	object->localTransform.position = Vector3(3, -2, -1);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(WoodenWheel);
+	object->localTransform.position = Vector3(3, -2, 3);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 
-
-	/*
-	object = Model3DFactory::generateObjectWithType(BasicCube);
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.scale = Vector3(1, 1, 1);
+	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
+	object->localTransform.position = Vector3(0, 0.5, 0);
+	object->localTransform.scale = Vector3(2, 1, 2);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(BasicCube);
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(BasicCube);
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(GlowingCube);
-	object->localTransform.position = Vector3(2, 0, -5);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(BasicCube);
-	object->localTransform.position = Vector3(4, 0, -10);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(BasicCube);
-	object->localTransform.position = Vector3(8, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	
-	
+	/*	
 	object = Model3DFactory::generateObjectWithType(WoodenCube);
 	object->localTransform.position = Vector3(-8, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);

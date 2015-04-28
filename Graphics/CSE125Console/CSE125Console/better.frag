@@ -29,10 +29,10 @@ vec4 LightPosition = vec4(0.0, 10.0, 20.0, 1.0);
 vec4 lights[3];
 void phongModel(vec4 position, vec3 normal, out vec3 ambAndDiff, out vec3 spec) {
 	lights[0] = vec4(0.0, 10.0, 20.0, 1.0);
-	//lights[1] = vec4(5.0, 0.0, 0.0, 1.0);
-	//lights[2] = vec4(-5.0, 0.0, 0.0, 1.0);
+	lights[1] = vec4(5.0, 0.0, 0.0, 1.0);
+	lights[2] = vec4(-5.0, 0.0, -10.0, 1.0);
 	spec = vec3(0.0);
-	for(int i = 0; i < 1; i++){
+	for(int i = 0; i < 3; i++){
 		vec3 n = normalize(normal);
 		vec3 s = normalize(vec3(lights[i] - position));
 		vec3 v = normalize(-position.xyz);
