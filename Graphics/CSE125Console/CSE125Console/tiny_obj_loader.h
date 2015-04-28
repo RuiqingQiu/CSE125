@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include "Vector4.h"
 
 namespace tinyobj {
 
@@ -39,6 +40,7 @@ typedef struct {
   std::vector<float> texcoords;
   std::vector<unsigned int> indices;
   std::vector<int> material_ids; // per-mesh material ID
+  std::vector<Vector4> tangent;
 } mesh_t;
 
 typedef struct {

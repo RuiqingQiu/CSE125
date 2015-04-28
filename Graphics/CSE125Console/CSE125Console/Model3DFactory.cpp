@@ -18,7 +18,7 @@ Model3DFactory::Model3DFactory()
 	render_obj_lst.push_back(new RenderObject("Assets/MetalWheel/metalwheel.obj", "Assets/MetalWheel/tex.png", "Assets/MetalWheel/normals.png", "Assets/MetalWheel/gloss.png", "Assets/MetalWheel/metallic.png"));
 	render_obj_lst.push_back(new RenderObject("Assets/Tire/tire.obj", "Assets/Tire/tex.png", "Assets/Tire/normals.png", "Assets/Tire/gloss.png", "Assets/Tire/metallic.png"));
 	render_obj_lst.push_back(new RenderObject("Assets/WoodenWheel/woodwheel.obj", "Assets/WoodenWheel/tex.png", "Assets/WoodenWheel/normals.png", "Assets/WoodenWheel/gloss.png", "Assets/WoodenWheel/metallic.png"));
-	//render_obj_lst.push_back(new RenderObject("Assets/BattleField/battlefield.obj", "Assets/BattleField/tex.png", "Assets/BattleField/normals.png", "Assets/BattleField/gloss.png", "Assets/BattleField/metallic.png"));
+	render_obj_lst.push_back(new RenderObject("Assets/BattleField/battlefield.obj", "Assets/BattleField/tex.png", "Assets/BattleField/normals.png", "Assets/BattleField/gloss.png", "Assets/BattleField/metallic.png"));
 
 }
 
@@ -66,7 +66,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BATTLEFIELD:{
-							 cout << "here" << endl;
+			cout << "here" << endl;
 			return new Model3D(render_obj_lst[type]);
 			break;
 		}

@@ -87,8 +87,8 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 	char *f_str = new char[fragment_shader.length() + 1];
 	strcpy(f_str, fragment_shader.c_str());
 	*/
-	vertexShaderHandle = loadShader1("new.vert", GL_VERTEX_SHADER);
-	fragmentShaderHandle = loadShader1("new.frag", GL_FRAGMENT_SHADER);
+	vertexShaderHandle = loadShader1("better.vert", GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShader1("better.frag", GL_FRAGMENT_SHADER);
 
 	shader_id = glCreateProgramObjectARB();
 
@@ -170,6 +170,7 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 	glUniform1i(glGetUniformLocation(shader_id, "gloss"), 2);
 	glUniform1i(glGetUniformLocation(shader_id, "metallic"), 3);
 	glUniform1i(glGetUniformLocation(shader_id, "light_position"), 4);
+
 
 	std::string inputfile = filename;
 

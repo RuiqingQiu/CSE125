@@ -95,7 +95,7 @@ void Model3D::VOnDraw(){
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-	//counter = (counter + 1) % 360;
+	counter = (counter + 1) % 360;
 	//localTransform.rotation.y = counter;
 	//glLoadIdentity();
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
@@ -131,6 +131,13 @@ void Model3D::VOnDraw(){
 				glUniform1i(glGetUniformLocation(render_obj->shader_id, "norm"), 1);
 				glUniform1i(glGetUniformLocation(render_obj->shader_id, "gloss"), 2);
 				glUniform1i(glGetUniformLocation(render_obj->shader_id, "metallic"), 3);
+
+				/*float value[4] = { float(render_obj->shapes[i].mesh.tangent[f].x),
+					float(render_obj->shapes[i].mesh.tangent[f].y),
+					float(render_obj->shapes[i].mesh.tangent[f].z),
+					float(render_obj->shapes[i].mesh.tangent[f].w) };
+				glUniform4fv(glGetUniformLocationARB(render_obj->shader_id, "VertexTangent"), 1, value);
+				*/
 
 				GLint l_x = glGetUniformLocation(render_obj->shader_id, "light_x");
 				GLint l_y = glGetUniformLocation(render_obj->shader_id, "light_y");

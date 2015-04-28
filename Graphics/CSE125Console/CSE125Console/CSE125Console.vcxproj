@@ -230,13 +230,13 @@
     <ResourceCompile Include="CSE125Console.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="better.frag" />
+    <None Include="better.vert" />
     <None Include="BlurFragmentShader.frag" />
     <None Include="BlurVertexShader.vert" />
     <None Include="FragmentShader.frag" />
     <None Include="hard_shadow.frag" />
     <None Include="hard_shadow.vert" />
-    <None Include="new.frag" />
-    <None Include="new.vert" />
     <None Include="shadow.frag" />
     <None Include="shadow.vert" />
     <None Include="simple.frag" />

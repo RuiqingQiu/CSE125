@@ -15,7 +15,7 @@ enum ModelType{
 	WoodenWheel = 8,
 
 	//Other
-	BATTLEFIELD = 100,
+	BATTLEFIELD = 9,
 	WALL = 101,
 	BULLET_1 = 102,
 

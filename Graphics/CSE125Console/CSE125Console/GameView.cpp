@@ -135,10 +135,12 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			}
 			
 			case BATTLEFIELD:{
-								 cout << "create battle field" << endl;
-								 Plane* p = new Plane(100);
-								 p->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
-								 NodeList.push_back(p);
+								 Model3D* object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
+								 object->identifier = info->player_infos[i]->id;
+								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y+0.5, info->player_infos[i]->z);
+								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+								 object->localTransform.scale = Vector3(2, 1, 2);
+								 NodeList.push_back(object);
 				break;
 			}
 			case WALL:{

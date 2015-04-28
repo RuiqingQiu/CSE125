@@ -480,10 +480,10 @@
     <None Include="hard_shadow.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="new.vert">
+    <None Include="better.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="new.frag">
+    <None Include="better.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
   </ItemGroup>

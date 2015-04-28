@@ -35,8 +35,8 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	factory = new viewFactory(width, height);
-	//factory = new viewFactory(true);  //for no gui
+	//factory = new viewFactory(width, height);
+	factory = new viewFactory(true);  //for no gui
 	m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();
 	g_pCore->skybox = new SkyBox("skyboxes/space");
@@ -71,12 +71,38 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	*/
+	for (int i = 0; i < 3; i++){
+		for (int j = 0; j < 3; j++){
+			object = Model3DFactory::generateObjectWithType(BasicCube);
+			object->localTransform.position = Vector3(i, -2, j);
+			object->localTransform.scale = Vector3(1, 1, 1);
+			object->localTransform.rotation = Vector3(0, 0, 0);
+			view->PushGeoNode(object);
+		}
+	}
+
+	/*
 	object = Model3DFactory::generateObjectWithType(BasicCube);
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	object = Model3DFactory::generateObjectWithType(BasicCube);
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(BasicCube);
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(BasicCube);
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(GlowingCube);
 	object->localTransform.position = Vector3(2, 0, -5);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
@@ -92,19 +118,20 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	
+	
 	object = Model3DFactory::generateObjectWithType(WoodenCube);
 	object->localTransform.position = Vector3(-8, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
+	object = Model3DFactory::generateObjectWithType(Mace);
 	object->localTransform.position = Vector3(-10, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(Tire);
+	
+	object = Model3DFactory::generateObjectWithType(Mallet);
 	object->localTransform.position = Vector3(-13, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
@@ -116,6 +143,31 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	
+	object = Model3DFactory::generateObjectWithType(Needle);
+	object->localTransform.position = Vector3(-17, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Discount);
+	object->localTransform.position = Vector3(-20, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	*/
+	/*
+	object = Model3DFactory::generateObjectWithType(Tire);
+	object->localTransform.position = Vector3(-4, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(WoodenWheel);
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	*/
 	//setup light
 	//view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
@@ -173,7 +225,7 @@ void Window::initialize(void)
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
 }

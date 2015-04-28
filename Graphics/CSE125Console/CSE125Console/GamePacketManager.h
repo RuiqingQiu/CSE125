@@ -22,7 +22,7 @@ public:
 	bool SendMoveToDown(int id);
 	bool SendMoveToForward(int id);
 	bool SendMoveToBackward(int id);
-	
+	bool SendShootEvent(int id);
 	bool SendRobotBuild(int id, std::vector<GeoNode *> nodeList);
 
 	GameInfoPacket* tryGetGameInfo();
