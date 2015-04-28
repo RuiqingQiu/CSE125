@@ -211,7 +211,7 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 		else if (key == '1'){
 			// try the sound effect 
 			char *tmp[4];
-			play(0, tmp, "C:/Users/miw034/Desktop/Payback.wav");
+			play(0, tmp, "Payback.wav");
 		}
 	}
 	
