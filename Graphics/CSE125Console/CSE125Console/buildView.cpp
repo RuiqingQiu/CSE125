@@ -28,11 +28,13 @@ void buildView::createButtons() {
 	yRotation = 0;
 	rotateY.identity();
 	center = Vector3(-3, -5, -3);
+	/*
 	GeoNode * cube = new roboBase(3,1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	cube->identifier = 0;
 	cube->textureType = BasicCube;
 	PushGeoNode(cube);
+	*/
 	currentNode = nullptr;  //not allowed to move base cube
 	//hardcoded button sizes for now
 

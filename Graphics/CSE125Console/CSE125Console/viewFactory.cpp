@@ -75,9 +75,13 @@ void viewFactory::setView() {
 	}
 
 	//hacky quick fix
+
+	
+	//hacky quick fix
 	if (viewmode != viewType::BUILD) buildmode->updateview = false;
 
 	currentView->isCurrentView = false;
+	
 	//sky boxes needed for battle mode and console.
 	//not needed for menus and build mode
 	if (viewmode == viewType::BUILD) {

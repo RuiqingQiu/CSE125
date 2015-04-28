@@ -19,7 +19,7 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#define TESTCAM 0
+#define TESTCAM 1
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
@@ -71,6 +71,8 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	*/
+
+	/*
 	object = Model3DFactory::generateObjectWithType(BasicCube);
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.scale = Vector3(1, 1, 1);
@@ -115,7 +117,8 @@ void Window::initialize(void)
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-	
+	*/
+
 	//setup light
 	//view->PushGeoNode(g_pCore->light);
 	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
@@ -215,6 +218,13 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 		}
 		else if (key == ';'){
 			cube->localTransform.rotation.z -= 30;
+		}
+		// key press 1 to test sound effect
+		else if (key == '1'){
+			cout << "Eneter ! " << endl;
+			// try the sound effect 
+			char *tmp[4];
+			play(0, tmp, "Payback.wav");
 		}
 	}
 	
