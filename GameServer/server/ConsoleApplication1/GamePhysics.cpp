@@ -55,7 +55,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisio
 	{
 		if ((*it)->getIsRobot() != 0)
 		{
-			((Robot *)(*it))->createVehicle(dynamicsWorld, 6, 1, 6, objcpair);
+			((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
 
 		}
 		else
@@ -83,7 +83,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 		{
 
 			(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
-			if ((*it)->getId() == 1) std::cout << "X: " << trans.getOrigin().getX() << "  Y: " << trans.getOrigin().getY() << "  Z:  " << trans.getOrigin().getZ() << "   SPEED:" << (*it)->getRigidBody()->getLinearVelocity() << std::endl;
+			// std::cout << "X: " << trans.getOrigin().getX() << "  Y: " << trans.getOrigin().getY() << "  Z:  " << trans.getOrigin().getZ() << "   SPEED:" << (*it)->getRigidBody()->getLinearVelocity() << std::endl;
 		}
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
@@ -96,12 +96,12 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 
 void GamePhysics::createPhysicsProjectile(int eventType, GameObj* projectile, std::map< btCollisionObject*, GameObj*>* map)
 {
-	std::cout << "Projectile Event Type: " << eventType << std::endl;
+	//std::cout << "Projectile Event Type: " << eventType << std::endl;
 	switch (eventType) {
 	case SHOOT: {
 					projectile->createRigidBody(map);
 					dynamicsWorld->addRigidBody(projectile->getRigidBody());
-					btVector3 relativeForce = btVector3(0, 0, -10000);
+					btVector3 relativeForce = btVector3(0, 0, -200);
 					btMatrix3x3 boxRot = projectile->getRigidBody()->getWorldTransform().getBasis();
 					btVector3 correctedForce = boxRot * relativeForce;
 					//projectile->getRigidBody()->setLinearVelocity(btVector3(0, 0, 0)); 
@@ -126,6 +126,7 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
 		if (gameObj->getIsRobot()!= 0)
 		{
 			robotTurnLeft((Robot*)gameObj);
+			robotForward((Robot*)gameObj);
 		}
 		break;
 	}
@@ -133,6 +134,7 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
 		if (gameObj->getIsRobot()!= 0)
 		{
 			robotTurnRight((Robot*)gameObj);
+			robotForward((Robot*)gameObj);
 		}
 		break;
 	}
@@ -182,7 +184,7 @@ void GamePhysics::robotTurnLeft(Robot* rb){
 	if (v->getWheelInfo(3).m_steering < MAX_TURN_SPEED)
 		v->getWheelInfo(3).m_steering += TURN_SPEED;
 
-	robotForward(rb);
+	
 }
 void GamePhysics::robotTurnRight(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle();
@@ -191,7 +193,6 @@ void GamePhysics::robotTurnRight(Robot* rb){
 	if (v->getWheelInfo(3).m_steering > -MAX_TURN_SPEED)
 		v->getWheelInfo(3).m_steering += -TURN_SPEED;
 
-	robotForward(rb);
 }
 void GamePhysics::robotBackward(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle();

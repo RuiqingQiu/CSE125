@@ -36,6 +36,7 @@ class GameObj
 {
 
 private:
+	int deleted;
 	double _x;
 	double _y;
 	double _z;
@@ -110,11 +111,13 @@ public:
 	void addConstraint(GameObj*);
 	void deleteConstraints(std::map< btCollisionObject*, GameObj*>*);
 	void deleteInvalidConstraints();
-	std::vector<Constraint *> getConstraints();
+	std::vector<Constraint *>* getConstraints();
 
 	static int getOid(){ return _totalId; }
 
 	void incOid(int i){ _totalId += i; }
+	void setDeleted();
+	int getDeleted();
 };
 
 

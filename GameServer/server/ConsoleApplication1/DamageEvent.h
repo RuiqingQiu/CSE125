@@ -19,12 +19,14 @@ private:
 	int result2;
 
 public:
-	DamageEvent(GameObj*, GameObj*, int, int);
+	DamageEvent(GameObj*, GameObj*);
 	~DamageEvent();
 
 	GameObj* getObj1();
 	GameObj* getObj2();
 	int getResult1();
 	int getResult2();
+	void setResult1(int);
+	void setResult2(int);
 };
 

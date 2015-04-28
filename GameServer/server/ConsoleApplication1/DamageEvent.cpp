@@ -1,12 +1,10 @@
 #include "DamageEvent.h"
 
 
-DamageEvent::DamageEvent(GameObj* o1, GameObj* o2, int r1, int r2)
+DamageEvent::DamageEvent(GameObj* o1, GameObj* o2)
 {
 	obj1 = o1;
 	obj2 = o2;
-	result1 = r1;
-	result2 = r2;
 }
 
 
@@ -29,4 +27,14 @@ int DamageEvent::getResult1()
 }int DamageEvent::getResult2()
 {
 	return result2;
+}
+
+void DamageEvent::setResult1(int r)
+{
+	result1 = r;
+}
+
+void DamageEvent::setResult2(int r)
+{
+	result2 = r;
 }

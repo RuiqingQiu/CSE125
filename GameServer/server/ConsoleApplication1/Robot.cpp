@@ -90,7 +90,7 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	setWidth(width);
 	setHeight(height);
 	setDepth(depth);
-	btBoxShape* m_pBoxShape = new btBoxShape(btVector3(width, height, depth));
+	btBoxShape* m_pBoxShape = new btBoxShape(btVector3(width/2, height/2, depth/2));
 
 	btTransform chassisLS;
 	chassisLS.setIdentity();
@@ -101,8 +101,8 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	
 
 
-	btDefaultMotionState* pMotionState = new btDefaultMotionState(btTransform(btQuaternion(qX, qY, qZ, qW), btVector3(0, y, 0)));
-	btVector3 intertia;
+	btDefaultMotionState* pMotionState = new btDefaultMotionState(btTransform(btQuaternion(qX, qY, qZ, qW), btVector3(x, y, z)));
+	btVector3 intertia(0, 0, 0);
 	m_pBoxShape->calculateLocalInertia(mass, intertia);
 
 	btRigidBody::btRigidBodyConstructionInfo bodyInfo(mass, pMotionState, m_pCompoundShape, intertia);
@@ -143,19 +143,19 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	btScalar connectionHeight = 0.2f;
 
 	{
-		btVector3 connectionPointCS0(1.5f, connectionHeight, 1.5f);
+		btVector3 connectionPointCS0((width / 2.0f - 0.2f), connectionHeight, (depth / 2.0f - depth / 8.0f));
 		m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, true);
 	}
 {
-	btVector3 connectionPointCS0(-1.5f, connectionHeight, 1.5f);
+	btVector3 connectionPointCS0(-(width / 2.0f - 0.2f), connectionHeight, (depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, true);
 }
 {
-	btVector3 connectionPointCS0(1.5f, connectionHeight, -1.5f);
+	btVector3 connectionPointCS0((width / 2.0f - 0.2f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, false);
 }
 {
-	btVector3 connectionPointCS0(-1.5f, connectionHeight, -1.5f);
+	btVector3 connectionPointCS0(-(width / 2.0f - 0.2f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, false);
 }
 
@@ -181,6 +181,7 @@ void Robot::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 
 btRigidBody* Robot::getRigidBody()
 {
+	if (vehicle == nullptr) return nullptr;
 	return this->vehicle->getRigidBody();
 }
 

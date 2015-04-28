@@ -15,7 +15,7 @@ enum PacketTypes {
 	MOVE_DOWN = 7,
 	INIT_CLIENT = 8,
 	CONFIRM_CONNECTION = 9,
-	SHOOT = 10,
+	SHOOT = 11,
 };
 
 
@@ -65,7 +65,7 @@ enum PacketTypes {
 		DISCOUNTWHEEL = 6,
 		TIRE = 7,
 		WOODENWHEEL = 8,
-		BATTLEFIELD = 100,
+		BATTLEFIELD = 9,
 		WALL = 101,
 		BULLET_1 = 102,
 		

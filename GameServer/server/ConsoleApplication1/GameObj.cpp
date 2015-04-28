@@ -25,6 +25,7 @@ GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, do
 	_type = type;
 	_mass = mass;
 	_isRobot = 0;
+	deleted = 0;
 }
 
 GameObj::~GameObj(){
@@ -216,7 +217,7 @@ void GameObj::addConstraint(GameObj* o)
 		constraints.push_back(c);
 		c = new Constraint();
 		c->_joint6DOF = joint6DOF;
-		o->getConstraints().push_back(c);
+		o->getConstraints()->push_back(c);
 }
 
 void GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
@@ -262,9 +263,9 @@ btRigidBody* GameObj::getRB()
 	return rigidBody;
 }
 
-std::vector<Constraint *> GameObj::getConstraints()
+std::vector<Constraint *>* GameObj::getConstraints()
 {
-	return constraints;
+	return &constraints;
 }
 
 void GameObj::setCollisionType(int t)
@@ -274,4 +275,12 @@ void GameObj::setCollisionType(int t)
 int GameObj::getCollisionType()
 {
 	return _collisionType;
+}
+void GameObj::setDeleted()
+{
+	deleted = 1;
+}
+int GameObj::getDeleted()
+{
+	return deleted;
 }
