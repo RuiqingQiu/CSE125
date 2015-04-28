@@ -176,7 +176,6 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 	std::string inputfile = filename;
 
 	std::string err = tinyobj::LoadObj(shapes, materials, inputfile.c_str(), NULL);
-
 	if (!err.empty()) {
 		std::cerr << err << std::endl;
 		exit(1);

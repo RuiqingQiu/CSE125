@@ -29,6 +29,8 @@ public:
 	~GameView();
 	int gameViewId;
 	std::vector<GeoNode*> NodeList;
+	std::vector<GeoNode*> NodeListBuffer;
+
 	Camera* pViewCamera;
 	GamePlayer* pPlayer;
 
