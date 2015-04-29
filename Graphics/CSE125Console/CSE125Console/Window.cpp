@@ -261,17 +261,25 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 		}
 		// if the key is 1, play the sound
 		else if (key == '1'){
-			sf::SoundBuffer buffer; 
-			if (!buffer.loadFromFile("Payback.wav")){
-				cout << "buffer load file failed " << endl;
-				return;
-			}
-			else{
-				cout << "successfully load the wav file" << endl;
+			// Load a sound buffer from a wav file
+			sf::SoundBuffer buffer;
+			sf::Sound sound;
+			if(!buffer.loadFromFile("Payback.wav"))
+				cout << "ERROR!" << endl;
+			// Create a sound instance and play it
+			sound.setBuffer(buffer);
+			sound.play();
+			// Loop while the sound is playing
+			while (sound.getStatus() == sf::Sound::Playing)
+			{
+				// Leave some CPU time for other processes
+				sf::Time t1 = sf::seconds(0.1f);
+				sf::sleep(t1);
+				// Display the playing position
+				cout << "\rPlaying... " << endl;
 			}
 		}
 	}
-	
 }
 
 void Window::processSpecialKeys(int key, int x, int y) {
