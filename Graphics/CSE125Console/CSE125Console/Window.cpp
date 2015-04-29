@@ -28,6 +28,7 @@ int Window::height = 512;   //Set window height in pixels here
 
 static viewFactory * factory; // factory of gui
 static Model3DFactory* m_factory;
+ShaderSystem* Window::shader_system;
 static int counter = 0;
 static Cube* cube;
 static Model3D*object;
@@ -35,9 +36,10 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	factory = new viewFactory(width, height);
-	//factory = new viewFactory(true);  //for no gui
+	//factory = new viewFactory(width, height);
+	factory = new viewFactory(true);  //for no gui
 	m_factory = new  Model3DFactory();
+	shader_system = new ShaderSystem();
 	//g_pCore->skybox = new SkyBox();
 	g_pCore->skybox = new SkyBox("skyboxes/space");
 	//g_pCore->pPlayer->playerid = 1;
@@ -71,37 +73,21 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	*/
-	/*
-	for (int i = 0; i < 3; i++){
-		for (int j = 0; j < 3; j++){
-			object = Model3DFactory::generateObjectWithType(BasicCube);
-			object->localTransform.position = Vector3(i, -2, j);
-			object->localTransform.scale = Vector3(1, 1, 1);
-			object->localTransform.rotation = Vector3(0, 0, 0);
-			view->PushGeoNode(object);
-		}
-	}
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(-1, -2, -1);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
+	
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(-1, -2, 3);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(3, -2, -1);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(3, -2, 3);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WHEEL_WOODEN);
+	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
-	*/
+	
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 	object->localTransform.position = Vector3(0, 0.5, 0);
@@ -215,9 +201,9 @@ void Window::initialize(void)
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.23");
 }
 
 //----------------------------------------------------------------------------

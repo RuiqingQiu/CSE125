@@ -107,6 +107,7 @@
     <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="Model3DFactory.h" />
+    <ClInclude Include="Model3DGroup.h" />
     <ClInclude Include="numbers.h" />
     <ClInclude Include="PacketDecoder.h" />
     <ClInclude Include="Plane.h" />
@@ -117,6 +118,7 @@
     <ClInclude Include="scoreBox.h" />
     <ClInclude Include="scrollBox.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderSystem.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameInfoPacket.h" />
@@ -169,6 +171,7 @@
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="Model3DFactory.cpp" />
+    <ClCompile Include="Model3DGroup.cpp" />
     <ClCompile Include="numbers.cpp" />
     <ClCompile Include="PacketDecoder.cpp" />
     <ClCompile Include="Plane.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="scoreBox.cpp" />
     <ClCompile Include="scrollBox.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderSystem.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameInfoPacket.cpp" />

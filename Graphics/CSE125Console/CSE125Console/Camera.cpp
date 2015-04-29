@@ -55,7 +55,7 @@ void Camera::UpdateCamera()
 	//direction.y = 0;
 	direction.normalize();
 	float distanceToPlayer = 15;
-	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
+	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer + 10, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
 	Vector3* newrotation = new Vector3(FollowingTarget->localTransform.rotation.x, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);//FollowingTarget->localTransform.rotation.z);
 
 	this->position->negate();

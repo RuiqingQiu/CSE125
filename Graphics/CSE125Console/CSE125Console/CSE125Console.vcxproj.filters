@@ -261,6 +261,12 @@
     <ClInclude Include="roboBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Model3DGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -444,6 +450,12 @@
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="roboBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Model3DGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

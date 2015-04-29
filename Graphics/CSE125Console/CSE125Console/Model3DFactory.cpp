@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Model3DFactory.h"
+#include "Model3DGroup.h"
 static vector<RenderObject*> render_obj_lst;
 
 Model3DFactory::Model3DFactory()
@@ -89,8 +90,133 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		}
 		//Fix this
 		case THREEBYTHREE_BASIC:{
+			Model3DGroup* group = new Model3DGroup();
+			for (int i = -1; i < 2; i++){
+				for (int j = -1; j < 2; j++){
+					Model3D * returnModel = Model3DFactory::generateObjectWithType(BasicCube);
+					returnModel->localTransform.position = Vector3(i, 0, j);
+					returnModel->localTransform.scale = Vector3(1, 1, 1);
+					returnModel->localTransform.rotation = Vector3(0, 0, 0);
+					group->addObject(returnModel);
+				}
+			}
+			return group;
 			break;
 		}
+		case THREEBYTHREE_GLOWING:{
+			Model3DGroup* group = new Model3DGroup();
+			for (int i = -1; i < 2; i++){
+				for (int j = -1; j < 2; j++){
+					Model3D * returnModel = Model3DFactory::generateObjectWithType(GlowingCube);
+					returnModel->localTransform.position = Vector3(i, 0, j);
+					returnModel->localTransform.scale = Vector3(1, 1, 1);
+					returnModel->localTransform.rotation = Vector3(0, 0, 0);
+					group->addObject(returnModel);
+				}
+			}
+			return group;
+			break;
+		}
+		case THREEBYTHREE_WOODEN:{
+			Model3DGroup* group = new Model3DGroup();
+			for (int i = -1; i < 2; i++){
+				for (int j = -1; j < 2; j++){
+					Model3D * returnModel = Model3DFactory::generateObjectWithType(WoodenCube);
+					returnModel->localTransform.position = Vector3(i, 0, j);
+					returnModel->localTransform.scale = Vector3(1, 1, 1);
+					returnModel->localTransform.rotation = Vector3(0, 0, 0);
+					group->addObject(returnModel);
+				}
+			}
+			return group;
+			break;
+		}
+		case THREEBYTHREE_WHEEL_DISCOUNT:{
+			Model3DGroup* group = new Model3DGroup();
+			Model3D * returnModel = Model3DFactory::generateObjectWithType(Discount);
+			returnModel->localTransform.position = Vector3(-2, 0, -1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel); 
+			returnModel = Model3DFactory::generateObjectWithType(Discount);
+			returnModel->localTransform.position = Vector3(-2, 0, 1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			returnModel = Model3DFactory::generateObjectWithType(Discount);
+			returnModel->localTransform.position = Vector3(2, 0, -1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			returnModel = Model3DFactory::generateObjectWithType(Discount);
+			returnModel->localTransform.position = Vector3(2, 0, 1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			return group;
+			break;
+		}
+	case THREEBYTHREE_WHEEL_TIRE:{
+			Model3DGroup* group = new Model3DGroup();
+			Model3D * returnModel = Model3DFactory::generateObjectWithType(Tire);
+			returnModel->localTransform.position = Vector3(-2, 0, -1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+			returnModel = Model3DFactory::generateObjectWithType(Tire);
+			returnModel->localTransform.position = Vector3(-2, 0, 1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			returnModel = Model3DFactory::generateObjectWithType(Tire);
+			returnModel->localTransform.position = Vector3(2, 0, -1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			returnModel = Model3DFactory::generateObjectWithType(Tire);
+			returnModel->localTransform.position = Vector3(2, 0, 1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			return group;
+			break;
+	}
+	case THREEBYTHREE_WHEEL_WOODEN:{
+			Model3DGroup* group = new Model3DGroup();
+			Model3D * returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
+			returnModel->localTransform.position = Vector3(-2, 0, -1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+			returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
+			returnModel->localTransform.position = Vector3(-2, 0, 1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
+			returnModel->localTransform.position = Vector3(2, 0, -1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
+			returnModel->localTransform.position = Vector3(2, 0, 1);
+			returnModel->localTransform.scale = Vector3(1, 1, 1);
+			returnModel->localTransform.rotation = Vector3(0, 0, 0);
+			group->addObject(returnModel);
+
+			return group;
+			break;
+	}
+		
+		
 		case WALL:{
 					  break;
 		}
