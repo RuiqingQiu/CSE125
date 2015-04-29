@@ -19,7 +19,8 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#define TESTCAM 0
+#include <SFML/Audio.hpp>  // ised SFML sound 
+#define TESTCAM 1
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
@@ -215,7 +216,7 @@ void Window::initialize(void)
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
 }
@@ -257,6 +258,17 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 		}
 		else if (key == ';'){
 			cube->localTransform.rotation.z -= 30;
+		}
+		// if the key is 1, play the sound
+		else if (key == '1'){
+			sf::SoundBuffer buffer; 
+			if (!buffer.loadFromFile("Payback.wav")){
+				cout << "buffer load file failed " << endl;
+				return;
+			}
+			else{
+				cout << "successfully load the wav file" << endl;
+			}
 		}
 	}
 	
