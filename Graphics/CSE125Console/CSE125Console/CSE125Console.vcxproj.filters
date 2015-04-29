@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Shader\Group">
       <UniqueIdentifier>{70a9b502-6ec6-4268-92fb-a749441f3a4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ParticleEffect">
+      <UniqueIdentifier>{94488061-5153-4357-a150-1d0805c0f161}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -267,6 +270,12 @@
     <ClInclude Include="ShaderSystem.h">
       <Filter>Source Files\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>Source Files\ParticleEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h">
+      <Filter>Source Files\ParticleEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -457,6 +466,12 @@
     </ClCompile>
     <ClCompile Include="ShaderSystem.cpp">
       <Filter>Source Files\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Source Files\ParticleEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Source Files\ParticleEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@
 
 #include "viewFactory.h"
 #include "Cube.h"
+#include "Fire.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
 #include "SkyBox.h"
@@ -31,6 +32,8 @@ static Model3DFactory* m_factory;
 ShaderSystem* Window::shader_system;
 static int counter = 0;
 static Cube* cube;
+static Fire* fire;
+
 static Model3D*object;
 //Init server info here later
 
@@ -59,6 +62,12 @@ void Window::initialize(void)
 	view->PushGeoNode(cube);
 	view->pViewCamera->FollowingTarget = cube;
 	*/
+
+	fire = new Fire(0,0,0);
+	fire->localTransform.position = Vector3(0, 0, 0);
+	fire->localTransform.rotation = Vector3(25, 25, 25);
+	view->PushGeoNode(fire);
+	//view->pViewCamera->FollowingTarget = fire;
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(Discount);
@@ -74,7 +83,7 @@ void Window::initialize(void)
 	view->PushGeoNode(object);
 	*/
 	
-	/*
+	
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
@@ -88,7 +97,7 @@ void Window::initialize(void)
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WHEEL_WOODEN);
 	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
-	*/
+	
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
