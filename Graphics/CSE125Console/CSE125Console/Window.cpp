@@ -19,7 +19,8 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#include <SFML/Audio.hpp>  // ised SFML sound 
+#include <SFML/Audio.hpp>  // ised SFML sound
+//#include <SFML/Graphics.hpp> // be able to create Window object
 #define TESTCAM 1
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
@@ -33,6 +34,9 @@ static int counter = 0;
 static Cube* cube;
 static Model3D*object;
 //Init server info here later
+// Load a sound buffer from a wav file
+sf::SoundBuffer buffer;
+sf::Sound sound;
 
 void Window::initialize(void)
 {
@@ -47,7 +51,13 @@ void Window::initialize(void)
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
 
-	
+	if (!buffer.loadFromFile("Payback.wav"))
+		cout << "ERROR!" << endl;
+	// Create a sound instance and play it
+	sound.setBuffer(buffer);
+	sound.play();
+	sound.setLoop(true); // the music will loop itself when ends
+
 	//set color
 	//glColor3f(1, 1, 1);
 	/*
@@ -219,6 +229,8 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
+
+
 }
 
 //----------------------------------------------------------------------------
@@ -261,6 +273,7 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 		}
 		// if the key is 1, play the sound
 		else if (key == '1'){
+			/*
 			// Load a sound buffer from a wav file
 			sf::SoundBuffer buffer;
 			sf::Sound sound;
@@ -269,6 +282,7 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 			// Create a sound instance and play it
 			sound.setBuffer(buffer);
 			sound.play();
+			sound.setLoop(true); // the music will loop itself when ends
 			// Loop while the sound is playing
 			while (sound.getStatus() == sf::Sound::Playing)
 			{
@@ -278,6 +292,8 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 				// Display the playing position
 				cout << "\rPlaying... " << endl;
 			}
+		*/
+			
 		}
 	}
 }
@@ -361,4 +377,22 @@ void Window::displayCallback() {
 	glutSwapBuffers();
 	clock_t endTime = clock();
 	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	
+	/*
+	// Loop while the sound is playing
+	while (sound.getStatus() == sf::Sound::Playing)
+	{
+		// Leave some CPU time for other processes
+		sf::Time t1 = sf::seconds(0.1f);
+		sf::sleep(t1);
+		// Display the playing position
+		cout << "\rPlaying... " << endl;
+	}*/
+	
+	if (sound.getStatus() == sf::Sound::Playing){
+		cout << "Playing " << endl;
+		// do a little trick here, pause the sound and play again
+		sound.pause(); 
+		sound.play();
+	}
 }
