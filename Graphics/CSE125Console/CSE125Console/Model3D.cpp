@@ -118,7 +118,7 @@ void Model3D::VOnDraw(){
 				//material goes here
 				//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
 				//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
-				glUseProgramObjectARB(render_obj->shader_id);
+				glUseProgramObjectARB(Window::shader_system->shader_ids[0]);
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[0]);
 

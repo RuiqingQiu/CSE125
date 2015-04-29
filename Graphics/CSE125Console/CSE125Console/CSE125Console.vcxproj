@@ -118,6 +118,7 @@
     <ClInclude Include="scoreBox.h" />
     <ClInclude Include="scrollBox.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderSystem.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameInfoPacket.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="scoreBox.cpp" />
     <ClCompile Include="scrollBox.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderSystem.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameInfoPacket.cpp" />
