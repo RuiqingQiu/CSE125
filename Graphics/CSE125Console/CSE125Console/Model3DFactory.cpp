@@ -227,3 +227,16 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 	}
 }
 
+Vector3 Model3DFactory::getOffset(int type) {
+	switch (type) {
+	case Discount: 
+		break;
+	case Tire:
+		break;
+	case WoodenWheel:
+		break;
+	default:
+		break;
+	}
+	return Vector3(0, 0, 0);
+}

@@ -25,6 +25,9 @@ public:
 	int healthStat;
 	int damageStat;
 	int speedStat;
+	int width;
+	int height;
 
+	virtual bool intersect(Vector3 pos);
 };
 

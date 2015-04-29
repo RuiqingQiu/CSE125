@@ -5,7 +5,7 @@
 #include "scoreBox.h"
 #include "roboBase.h"
 
-#define MAX_BLOCKS 27
+#define MAX_BLOCKS 23
 #define GRID_SIZE 5
 #define HALF_GRID 2
 

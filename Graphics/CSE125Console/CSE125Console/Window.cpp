@@ -36,8 +36,8 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	//factory = new viewFactory(width, height);
-	factory = new viewFactory(true);  //for no gui
+	factory = new viewFactory(width, height);
+	//factory = new viewFactory(true);  //for no gui
 	shader_system = new ShaderSystem();
 	m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();

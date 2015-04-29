@@ -37,6 +37,8 @@ public:
 
 	virtual void VOnDraw();
 	virtual void VOnUpdate(GameInfoPacket* pData);
+
+	Vector3 offset;
 private:
 	bool isTextured = false;
 };
