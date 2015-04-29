@@ -265,7 +265,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ShaderSystem.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -456,7 +456,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ShaderSystem.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,28 +465,13 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="simple.frag">
-      <Filter>Source Files\Shader</Filter>
-    </None>
-    <None Include="simple.vert">
-      <Filter>Source Files\Shader</Filter>
-    </None>
     <None Include="BlurVertexShader.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="FragmentShader.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="StoreDepthFragmentShader.frag">
-      <Filter>Source Files\Shader</Filter>
-    </None>
-    <None Include="StoreDepthVertexShader.vert">
-      <Filter>Source Files\Shader</Filter>
-    </None>
     <None Include="BlurFragmentShader.frag">
-      <Filter>Source Files\Shader</Filter>
-    </None>
-    <None Include="VertexShader.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="hard_shadow.vert">
@@ -511,6 +496,12 @@
       <Filter>Source Files\Shader\Group</Filter>
     </None>
     <None Include="shadow.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="highlight.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="highlight.frag">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
   </ItemGroup>

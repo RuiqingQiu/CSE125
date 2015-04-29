@@ -38,8 +38,8 @@ void Window::initialize(void)
 {
 	//factory = new viewFactory(width, height);
 	factory = new viewFactory(true);  //for no gui
-	m_factory = new  Model3DFactory();
 	shader_system = new ShaderSystem();
+	m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();
 	g_pCore->skybox = new SkyBox("skyboxes/space");
 	//g_pCore->pPlayer->playerid = 1;
@@ -74,6 +74,7 @@ void Window::initialize(void)
 	view->PushGeoNode(object);
 	*/
 	
+	/*
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
@@ -87,6 +88,7 @@ void Window::initialize(void)
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WHEEL_WOODEN);
 	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
+	*/
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
@@ -184,7 +186,6 @@ void Window::initialize(void)
 	//factory->defaultView = shadowview;
 
 	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 5);
 
 	//setup shader
 	//init shader
@@ -198,6 +199,8 @@ void Window::initialize(void)
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
+	//g_pCore->pGameView->pViewCamera->FollowingTarget = cube;
 
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
@@ -279,7 +282,7 @@ void Window::reshapeCallback(int w, int h) {
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
 	gluPerspective(60.0, double(Window::width) / (double)Window::height, 1, 1000.0); //Set perspective projection viewing frustum
 	//glFrustum(-1, 1, -1 , 1, 1,5);
-
+	g_pCore->pGameView->pViewCamera->setCamInternals(60.0, double(Window::width) / (double)Window::height, 1, 30.0);
 	factory->reshapeFunc(w, h);
 }
 
@@ -326,5 +329,5 @@ void Window::displayCallback() {
 	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

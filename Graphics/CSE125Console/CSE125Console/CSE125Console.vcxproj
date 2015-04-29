@@ -243,15 +243,12 @@
     <None Include="FragmentShader.frag" />
     <None Include="hard_shadow.frag" />
     <None Include="hard_shadow.vert" />
+    <None Include="highlight.frag" />
+    <None Include="highlight.vert" />
     <None Include="reflect.frag" />
     <None Include="reflect.vert" />
     <None Include="shadow.frag" />
     <None Include="shadow.vert" />
-    <None Include="simple.frag" />
-    <None Include="simple.vert" />
-    <None Include="StoreDepthFragmentShader.frag" />
-    <None Include="StoreDepthVertexShader.vert" />
-    <None Include="VertexShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

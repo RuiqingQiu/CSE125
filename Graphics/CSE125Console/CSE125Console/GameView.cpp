@@ -28,10 +28,16 @@ void GameView::VOnRender()
 	pViewCamera->setUpCamera();
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
-
 	for each (GeoNode* node in NodeList)
 	{
-		node->VOnDraw();
+		if (typeid(*node) == typeid(SkyBox))
+		{
+			node->VOnDraw();
+		}
+		else if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		{
+			node->VOnDraw();
+		}
 	}
 
 	

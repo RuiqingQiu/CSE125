@@ -11,63 +11,64 @@
 
 #include "math.h"
 #include "SOIL.h"
-Plane::Plane(float size)
-{
-	localTransform = Transform();
-	this->size = size;
-	color = Vector3(0.3, 0.3, 0.3);
-}
-
-Plane::~Plane()
-{
-	//Delete any dynamically allocated memory/objects here
-}
-
-void Plane::VOnUpdate(GameInfoPacket* pData)
-{
-
-}
-void Plane::VOnClientUpdate(GameInfoPacket* pData){
-	PlayerInfo* p = pData->get_player_info(this->identifier);
-	if (p){
-		this->localTransform.position = Vector3(p->x, p->y, p->z);
-		p->processed = true;
-	}
-}
-
-void Plane::setColor(float r, float g, float b){
-	color.x = r;
-	color.y = g;
-	color.z = b;
-}
-
-void Plane::VOnDraw()
-{
-	float halfSize = size / 2.0;
-
-	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	//Apply local transformation
-	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
-	glColor4f(color.x, color.y, color.z, 1);
-
-	glBegin(GL_QUADS);
-
-		glNormal3f(0.0, 1, 0.0);
-		glVertex3f(-halfSize, 0, -halfSize);
-		glVertex3f(-halfSize, 0, halfSize);
-		glVertex3f(halfSize, 0, halfSize);
-		glVertex3f(halfSize, 0, -halfSize);
-
-	glEnd();
-	glColor4f(1, 1, 1, 1);
+#include "Plane.h"
+#include <stdio.h>
 
 
-	//Pop the save state off the matrix stack
-	//This will undo the multiply we did earlier
-	glPopMatrix();
+Plane::Plane(Vector3 &v1, Vector3 &v2, Vector3 &v3) {
 
+	set3Points(v1, v2, v3);
 }
 
 
+Plane::Plane() {}
+
+Plane::~Plane() {}
+
+
+void Plane::set3Points(Vector3 &v1, Vector3 &v2, Vector3 &v3) {
+
+
+	Vector3 aux1, aux2;
+
+	aux1 = v1 - v2;
+	aux2 = v3 - v2;
+
+	normal = aux2.cross(aux2, aux1);
+
+	normal.normalize();
+	point = Vector3(v2.x, v2.y, v2.z);
+	d = -(normal.dot(normal, point));
+}
+
+void Plane::setNormalAndPoint(Vector3 &normal, Vector3 &point) {
+
+	this->normal = Vector3(normal.x, normal.y, normal.z);
+	this->normal.normalize();
+	d = -(this->normal.dot(normal, point));
+}
+
+void Plane::setCoefficients(float a, float b, float c, float d) {
+
+	// set the normal vector
+	normal = Vector3(a, b, c);
+	//compute the lenght of the vector
+	float l = normal.length();
+	// normalize the vector
+	normal = Vector3(a / l, b / l, c / l);
+	// and divide d by th length as well
+	this->d = d / l;
+}
+
+
+
+
+float Plane::distance(Vector3 &p) {
+
+	return (d + normal.dot(normal, p));
+}
+
+void Plane::print() {
+
+	//printf("Plane("); normal.print(); printf("# %f)", d);
+}

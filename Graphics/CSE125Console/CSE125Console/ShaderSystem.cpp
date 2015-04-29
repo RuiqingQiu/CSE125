@@ -95,11 +95,13 @@ bool ShaderSystem::loadShaders(string vertex_shader_path, string fragment_shader
 	char *v_str = new char[vertex_shader_path.length() + 1];
 	strcpy(v_str, vertex_shader_path.c_str());
 	char *f_str = new char[fragment_shader_path.length() + 1];
-	strcpy(f_str, vertex_shader_path.c_str());
-	
+	strcpy(f_str, fragment_shader_path.c_str());
 
-	vertexShaderHandle = loadShaderFromFile("better.vert", GL_VERTEX_SHADER);
-	fragmentShaderHandle = loadShaderFromFile("better.frag", GL_FRAGMENT_SHADER);
+	vertexShaderHandle = loadShaderFromFile(v_str, GL_VERTEX_SHADER);
+	fragmentShaderHandle = loadShaderFromFile(f_str, GL_FRAGMENT_SHADER);
+
+	//vertexShaderHandle = loadShaderFromFile(v_str, GL_VERTEX_SHADER);
+	//fragmentShaderHandle = loadShaderFromFile(f_str, GL_FRAGMENT_SHADER);
 
 	GLhandleARB shader_id = glCreateProgramObjectARB();
 	shader_ids.push_back(shader_id);
@@ -109,3 +111,13 @@ bool ShaderSystem::loadShaders(string vertex_shader_path, string fragment_shader
 	return true;
 }
 
+void ShaderSystem::BindShader(int type){
+	switch (type){
+	case REGULAR_SHADER:
+		glUseProgramObjectARB(shader_ids[type]);
+		break;
+	}
+}
+void ShaderSystem::UnbindShader(){
+	glUseProgramObjectARB(0);
+}

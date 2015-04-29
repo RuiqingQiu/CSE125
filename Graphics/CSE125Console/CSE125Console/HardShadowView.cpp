@@ -254,11 +254,6 @@ HardShadowView::HardShadowView()
 
 	//plane
 
-	Plane* plane = new Plane(25);
-	plane->localTransform.position = Vector3(0, -1, 0);
-	plane->localTransform.rotation = Vector3(0, 0, 0);
-	this->PushGeoNode(plane);
-
 	Cube* cube = new Cube(1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	//cube->localTransform.scale= Vector3(1, 0.00001, 1);
@@ -531,10 +526,7 @@ void HardShadowView::VOnClientUpdate(GameInfoPacket* info)
 			}
 
 			case BATTLEFIELD:{
-								 cout << "create battle field" << endl;
-								 Plane* p = new Plane(100);
-								 p->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
-								 NodeList.push_back(p);
+						
 								 break;
 			}
 			case WALL:{

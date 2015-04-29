@@ -174,15 +174,15 @@ void Matrix4::makeRotate(double angle, const Vector3& axis){
 
 
 Matrix4 Matrix4::operator*(const Matrix4& m2){
-    Matrix4* product = new Matrix4();
+    Matrix4 product = Matrix4();
     for(int row = 0; row < 4; row++){
         for(int col = 0; col < 4; col++){
             for(int inner = 0; inner < 4; inner++){
-                product->m[row][col] += this->m[row][inner]*m2.m[inner][col];
+                product.m[row][col] += this->m[row][inner]*m2.m[inner][col];
             }
         }
     }
-    return *product;
+    return product;
 }//multiply matrix with matrix
 
 Vector4 Matrix4::operator*(const Vector4& v){

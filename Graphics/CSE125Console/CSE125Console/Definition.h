@@ -1,3 +1,5 @@
+#ifndef __ShaderSystemDef__
+#define __ShaderSystemDef__
 enum ModelType{
 	//blocks
 	BasicCube = 0,
@@ -28,3 +30,8 @@ enum ModelType{
 	BULLET_1 = 102,
 
 };
+
+enum ShaderType{
+	REGULAR_SHADER = 0,
+};
+#endif
