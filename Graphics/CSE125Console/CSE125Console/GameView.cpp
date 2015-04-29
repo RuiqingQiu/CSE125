@@ -174,17 +174,41 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			}
 			//Fix this
 			case THREEBYTHREE_BASIC:{
-										/*
-										Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-										object->isUpdated = true;
-										object->identifier = info->player_infos[i]->id;
-										object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
-										object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
-										object->localTransform.scale = Vector3(1, 1, 1);
-										NodeList.push_back(object);
-										info->player_infos[i]->processed = true;
-										*/
-										break;
+										
+				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+				object->isUpdated = true;
+				object->identifier = info->player_infos[i]->id;
+				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+				object->localTransform.scale = Vector3(1, 1, 1);
+				NodeList.push_back(object);
+				info->player_infos[i]->processed = true;
+				break;
+			}
+
+			case THREEBYTHREE_GLOWING:{
+				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_GLOWING);
+				object->isUpdated = true;
+				object->identifier = info->player_infos[i]->id;
+				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+				object->localTransform.scale = Vector3(1, 1, 1);
+				NodeList.push_back(object);
+				info->player_infos[i]->processed = true;
+				break;
+				break;
+			}
+			case THREEBYTHREE_WOODEN:{
+				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
+				object->isUpdated = true;
+				object->identifier = info->player_infos[i]->id;
+				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+				object->localTransform.scale = Vector3(1, 1, 1);
+				NodeList.push_back(object);
+				info->player_infos[i]->processed = true;
+				break;
+
 			}
 			case WALL:{
 								break;
