@@ -15,3 +15,6 @@ GeoNode::~GeoNode()
 {
 }
 
+bool GeoNode::intersect(Vector3 pos) {
+	return pos.equals(localTransform.position);
+}

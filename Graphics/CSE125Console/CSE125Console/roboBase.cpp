@@ -40,7 +40,8 @@ void roboBase::VOnClientUpdate(GameInfoPacket* pData) {
 }
 
 void roboBase::VOnDraw() {
-	int halfSize = 0.5;
+	float halfWidth = width / 2.0;
+	float halfHeight = height / 2.0;
 
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
@@ -69,54 +70,54 @@ void roboBase::VOnDraw() {
 	//red
 	glColor3f(1, 0, 0);
 	glNormal3f(0.0, 0.0, 1.0);
-	glVertex3f(-halfSize, halfSize, halfSize);
-	glVertex3f(halfSize, halfSize, halfSize);
-	glVertex3f(halfSize, -halfSize, halfSize);
-	glVertex3f(-halfSize, -halfSize, halfSize);
+	glVertex3f(-halfWidth, halfHeight, halfWidth);
+	glVertex3f(halfWidth, halfHeight, halfWidth);
+	glVertex3f(halfWidth, -halfHeight, halfWidth);
+	glVertex3f(-halfWidth, -halfHeight, halfWidth);
 	//green
 	glColor3f(0, 1, 0);
 	// Draw left side:
 
 	glNormal3f(-1.0, 0.0, 0.0);
-	glVertex3f(-halfSize, halfSize, halfSize);
-	glVertex3f(-halfSize, halfSize, -halfSize);
-	glVertex3f(-halfSize, -halfSize, -halfSize);
-	glVertex3f(-halfSize, -halfSize, halfSize);
+	glVertex3f(-halfWidth, halfHeight, halfWidth);
+	glVertex3f(-halfWidth, halfHeight, -halfWidth);
+	glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+	glVertex3f(-halfWidth, -halfHeight, halfWidth);
 
 	//green + blue
 	glColor3f(0.0, 1.0, 1.0);
 
 	// Draw right side:
 	glNormal3f(1.0, 0.0, 0.0);
-	glVertex3f(halfSize, halfSize, halfSize);
-	glVertex3f(halfSize, halfSize, -halfSize);
-	glVertex3f(halfSize, -halfSize, -halfSize);
-	glVertex3f(halfSize, -halfSize, halfSize);
+	glVertex3f(halfWidth, halfHeight, halfWidth);
+	glVertex3f(halfWidth, halfHeight, -halfWidth);
+	glVertex3f(halfWidth, -halfHeight, -halfWidth);
+	glVertex3f(halfWidth, -halfHeight, halfWidth);
 
 	//yellow
 	glColor3f(1.0, 1.0, 0.0);
 	// Draw back face:
 	glNormal3f(0.0, 0.0, -1.0);
-	glVertex3f(-halfSize, halfSize, -halfSize);
-	glVertex3f(halfSize, halfSize, -halfSize);
-	glVertex3f(halfSize, -halfSize, -halfSize);
-	glVertex3f(-halfSize, -halfSize, -halfSize);
+	glVertex3f(-halfWidth, halfHeight, -halfWidth);
+	glVertex3f(halfWidth, halfHeight, -halfWidth);
+	glVertex3f(halfWidth, -halfHeight, -halfWidth);
+	glVertex3f(-halfWidth, -halfHeight, -halfWidth);
 
 	glColor3f(0.0, 0.0, 1.0);
 	// Draw top side:
 	glNormal3f(0.0, 1.0, 0.0);
-	glVertex3f(-halfSize, halfSize, halfSize);
-	glVertex3f(halfSize, halfSize, halfSize);
-	glVertex3f(halfSize, halfSize, -halfSize);
-	glVertex3f(-halfSize, halfSize, -halfSize);
+	glVertex3f(-halfWidth, halfHeight, halfWidth);
+	glVertex3f(halfWidth, halfHeight, halfWidth);
+	glVertex3f(halfWidth, halfHeight, -halfWidth);
+	glVertex3f(-halfWidth, halfHeight, -halfWidth);
 
 	glColor3f(1.0, 1.0, 1.0);
 	// Draw bottom side:
 	glNormal3f(0.0, -1.0, 0.0);
-	glVertex3f(-halfSize, -halfSize, -halfSize);
-	glVertex3f(halfSize, -halfSize, -halfSize);
-	glVertex3f(halfSize, -halfSize, halfSize);
-	glVertex3f(-halfSize, -halfSize, halfSize);
+	glVertex3f(-halfWidth, -halfHeight, -halfWidth);
+	glVertex3f(halfWidth, -halfHeight, -halfWidth);
+	glVertex3f(halfWidth, -halfHeight, halfWidth);
+	glVertex3f(-halfWidth, -halfHeight, halfWidth);
 
 	glEnd();
 
@@ -134,5 +135,22 @@ void roboBase::VOnDraw() {
 }
 
 void roboBase::VOnUpdate(GameInfoPacket* pData) {
+
+}
+
+bool roboBase::intersect(Vector3 pos) {
+	if (pos.equals(localTransform.position)) return true;
+
+	float halfHeight = height / 2.0;
+	float halfWidth = width / 2.0;
+
+	Vector3 temp = localTransform.position;
+	if (   (pos.x > temp.x - halfWidth && pos.x < temp.x + halfWidth)
+		&& (pos.y > temp.y - halfHeight && pos.y < temp.y + halfHeight)
+		&& (pos.z > temp.z - halfWidth && pos.z < temp.z + halfWidth)
+		)
+		return true;
+
+	return false;
 
 }

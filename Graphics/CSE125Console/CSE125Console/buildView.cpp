@@ -24,18 +24,48 @@ buildView::~buildView() {
 }
 
 void buildView::createButtons() {
+	m_factory = new  Model3DFactory();
+
 	selectedType = BasicCube;
 	yRotation = 0;
 	rotateY.identity();
 	center = Vector3(-3, -5, -3);
-	
-	GeoNode * cube = new roboBase(3,1);
+
+	GeoNode * cube = new roboBase(3, 1);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	cube->identifier = 0;
-	cube->textureType = BasicCube;
+	cube->textureType = THREEBYTHREE_BASIC;
 	PushGeoNode(cube);
-	
 	currentNode = nullptr;  //not allowed to move base cube
+
+	GeoNode * wheel = Model3DFactory::generateObjectWithType(WoodenWheel);
+	wheel->localTransform.position = Vector3(1.6, -0.2, 1);
+	wheel->identifier = 1;
+	wheel->textureType = WoodenWheel;
+	PushGeoNode(wheel);
+
+	GeoNode * wheel2 = Model3DFactory::generateObjectWithType(WoodenWheel);
+	wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
+	wheel2->identifier = 2;
+	wheel2->textureType = WoodenWheel;
+	PushGeoNode(wheel2);
+
+	GeoNode * wheel3 = Model3DFactory::generateObjectWithType(WoodenWheel);
+	wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
+	wheel3->identifier = 3;
+	wheel3->textureType = WoodenWheel;
+	PushGeoNode(wheel3);
+
+	GeoNode * wheel4 = Model3DFactory::generateObjectWithType(WoodenWheel);
+	wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
+	wheel4->identifier = 4;
+	wheel4->textureType = WoodenWheel;
+	PushGeoNode(wheel4);
+	//for now, we just move the last added node
+	//currentNode = NodeList[NodeList.size() - 1];
+
+	
+
 	//hardcoded button sizes for now
 
 	//text displays
@@ -179,7 +209,7 @@ Vector3 buildView::addNewNodePos() {
 	Vector3 check;
 
 	if (currentNode == nullptr)
-		check = translateNode(Vector3(1, 0, 0), NodeList[0]);
+		check = translateNode(Vector3(0, 1, 0), NodeList[0]);
 	else
 		check = translateNode(Vector3(1, 0, 0), currentNode);
 
@@ -249,6 +279,17 @@ viewType buildView::checkTimeOut() {
 void buildView::addNode() {
 	int s = NodeList.size();
 	if (s < MAX_BLOCKS) {
+		if (selectedType >= 6 && selectedType <= 8) {
+			//is a wheel
+			for (int i = 1; i < 5; i++) {
+				GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
+				object->localTransform.position = NodeList[i]->localTransform.position;
+				object->identifier = NodeList[i]->identifier;
+				object->textureType = selectedType;
+				NodeList[i] = object;
+			}
+			return;
+		}
 		//screw it if it isn't valid, don't add
 		Vector3 check = addNewNodePos();
 		if (check.equals(Vector3(0,0,0))) {
@@ -265,9 +306,9 @@ void buildView::addNode() {
 }
 
 void buildView::removeNode() {
-	if (NodeList.size() > 1) {
+	if (NodeList.size() > 5) {
 		NodeList.pop_back();
-		if (NodeList.size() == 1) {
+		if (NodeList.size() <= 5) {
 			currentNode = nullptr;  //not allowed to move base block
 		}
 		else {
@@ -278,7 +319,7 @@ void buildView::removeNode() {
 
 bool buildView::validPos(Vector3 t, GeoNode * node) {
 	Vector3 check = node->localTransform.position + t;
-	if (check.x > HALF_GRID || check.x < -HALF_GRID) {
+	if (check.x > HALF_GRID - 1 || check.x < -HALF_GRID + 1) {
 		return false;
 	}
 	if (check.z > HALF_GRID || check.z < -HALF_GRID) {
@@ -333,7 +374,8 @@ Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
 		foundMatch = false;
 		for (int i = 0; i < NodeList.size(); i++) {
 			Vector3 temp = NodeList[i]->localTransform.position;
-			if (check.equals(temp)) {
+			//if (check.equals(temp)) {
+			if (NodeList[i]->intersect(check)) {
 				foundMatch = true;
 				break;
 			}
