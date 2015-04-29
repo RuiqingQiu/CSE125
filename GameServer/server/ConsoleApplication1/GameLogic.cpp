@@ -42,7 +42,7 @@ unsigned int GameLogic::waitToConnect()
 	robot->setType(BOX);
 	if (cid != 1)
 	{
-		robot->setBlockType(1);
+		robot->setBlockType(BASICCUBE);
 	}
 	else
 	{
@@ -162,10 +162,55 @@ void GameLogic::gameStart(){
 
 	gamePhysics->initWorld(&gameObjs, &objCollisionPair);
 
+	cout << "started" << endl;
 	//int i,j,k;
-	//int i;
-	//for (i = 0; i < 17; i++)
-	//{
+	int i;
+	for (i = 0; i < clientPair.size(); i++)
+	{
+		cout << "started1" << endl;
+		int j, k;
+		Robot* robot= (Robot*)clientPair.find(i)->second;
+		int left = -((int)(robot->getWidth() / 2)) - 1;
+		int right = ((int)(robot->getWidth() / 2)) + 1;
+		int front = -((int)(robot->getWidth() / 2)) - 1;
+		int back = ((int)(robot->getWidth() / 2)) + 1;
+		for (j = left; j <= right; j++)
+		{
+			cout << "started2" << endl;
+			for (k = front; k <= back; k++)
+			{
+				cout << "started3" << endl;
+				GameObj* gameObj;
+				if (j == left || j == right || k == front || k == back)
+				{
+					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+				}
+				else
+				{
+					int yOffset = ((int)robot->getHeight() / 2) + 1;
+					gameObj = new GOBox(j + robot->getX(), robot->getY() - yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+				}
+				gameObj->setBlockType(BASICCUBE);
+				gameObj->setCollisionType(C_ROBOT_PARTS);
+				gameObj->setBelongTo(robot);
+				gameObj->createRigidBody(&objCollisionPair);
+				gamePhysics->getDynamicsWorld()->addRigidBody(gameObj->getRigidBody());
+
+				int z;
+				for (z = 0; z < 1; z++)
+				{
+					robot->addConstraint(gameObj);
+				}
+				std::vector<Constraint *>::iterator iter;
+				for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
+				{
+					gamePhysics->getDynamicsWorld()->addConstraint((*iter)->_joint6DOF);
+				}
+				
+				gameObjs.push_back(gameObj);
+			}
+		}
+
 	//	for (j = i + 1; j < 17; j++)
 	//	{
 	//		for (k = 0; k < 7; k++)
@@ -175,7 +220,7 @@ void GameLogic::gameStart(){
 		//		gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF, true);
 		//	}
 	//	}
-	//}
+	}
 
 
 	/*std::vector<GameObj*>::iterator it;
@@ -344,6 +389,7 @@ void GameLogic::prePhyLogic(){
 void GameLogic::postPhyLogic(){
 	std::vector<Collision *>::iterator it;
 
+	cout << "SIZE OF COLLISION LIST " << GamePhysics::collisionList.size() << endl;
 	for (it = GamePhysics::collisionList.begin(); it != GamePhysics::collisionList.end(); it++)
 	{
 		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
@@ -356,46 +402,55 @@ void GameLogic::postPhyLogic(){
 		
 		DamageEvent* e = new DamageEvent(GO1, GO2);
 		damageSystem->performDamage(GO1, GO2, e);
-		if (e->getResult1() == BREAK_CONSTRAINT)
+		if (!GO1->getDeleted())
 		{
-			//gamePhysics break constraint
-			std::vector<Constraint*>::iterator iter;
-			for (iter = GO1->getConstraints()->begin(); iter != GO1->getConstraints()->end(); iter++)
+			if (e->getResult1() == BREAK_CONSTRAINT && GO1->getConstraints() != nullptr)
 			{
-				gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
-			}
-			GO1->deleteConstraints(&objCollisionPair);
-			//cout << "GO1 ID: " << GO1->getId() << endl;
+				//gamePhysics break constraint
+				std::vector<Constraint*>::iterator iter;
+				for (iter = GO1->getConstraints()->begin(); iter != GO1->getConstraints()->end(); iter++)
+				{
+					if ((*iter)->_joint6DOF != nullptr)
+					{
+						(*iter)->_joint6DOF->setEnabled(false);
+						gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+					}
+				}
+				GO1->deleteConstraints(&objCollisionPair);
+				cout << "GO1 Break ID: " << GO1->getId() << endl;
 
-		}
-		else if (e->getResult1() == DELETED)
-		{
-			//cout << "correct o1 deleted" << endl;
-			//gamePhysics remove rigidBody
-			gamePhysics->getDynamicsWorld()->removeRigidBody(GO1->getRigidBody());
-			GO1->setDeleted();
-			//set gameevent
-		}
-		if (e->getResult2() == BREAK_CONSTRAINT)
-		{
-			//gamePhysics break constraint
-			std::vector<Constraint*>::iterator iter;
-			for (iter = GO2->getConstraints()->begin(); iter != GO2->getConstraints()->end(); iter++)
+			}
+			else if (e->getResult1() == DELETED)
 			{
-				gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+				cout << "GO1 Deleted ID: " << GO1->getId() << endl;
+				GO1->setDeleted();
+					
+				//set gameevent
 			}
-			GO2->deleteConstraints(&objCollisionPair);
-			//cout << "GO2 ID: " << GO2->getId() << endl;
 		}
-		else if (e->getResult2() == DELETED)
+		if (!GO2->getDeleted())
 		{
-			//gamePhysics remove rigidBody
-
-			gamePhysics->getDynamicsWorld()->removeRigidBody(GO2->getRigidBody());
-			GO2->setDeleted();
-			//set gameevent
+			if (e->getResult2() == BREAK_CONSTRAINT && GO2->getConstraints() != nullptr)
+			{
+				//gamePhysics break constraint
+				std::vector<Constraint*>::iterator iter;
+				for (iter = GO2->getConstraints()->begin(); iter != GO2->getConstraints()->end(); iter++)
+				{
+					if ((*iter)->_joint6DOF != nullptr)
+					{
+						//gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+					}
+				}
+				GO2->deleteConstraints(&objCollisionPair);
+				cout << "GO2 Break ID: " << GO2->getId() << endl;
+			}
+			else if (e->getResult2() == DELETED)
+			{
+				cout << "GO2 Deleted ID: " << GO2->getId() << endl;
+				GO2->setDeleted();
+				//set gameevent
+			}
 		}
-	
 	}
 	if (!GamePhysics::collisionList.empty())
 	{
@@ -452,6 +507,15 @@ void GameLogic::cleanDataStructures()
 		}
 		else
 		{
+			std::vector<Constraint*>::iterator iter;
+			for (iter = (*it)->getConstraints()->begin(); iter != (*it)->getConstraints()->end(); iter++)
+			{
+				if ((*iter)->_joint6DOF != nullptr)
+				{
+					gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+				}
+			}
+			gamePhysics->getDynamicsWorld()->removeRigidBody((*it)->getRigidBody());
 			deleteGameObj((*it));
 		}
 	}

@@ -8,5 +8,6 @@ public:
 	
 	Constraint();
 	~Constraint();
+
 };
 

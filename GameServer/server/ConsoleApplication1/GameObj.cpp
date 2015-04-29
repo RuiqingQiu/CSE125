@@ -181,7 +181,7 @@ void GameObj::addConstraint(GameObj* o)
 	
 		localA.setIdentity(); localB.setIdentity();
 	
-	
+
 		localA.setOrigin(btVector3(0, 0, 0));
 	
 		localB.setOrigin(btVector3(0, 0, 0));
@@ -236,7 +236,7 @@ void GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
 			other = pair->find(&c->_joint6DOF->getRigidBodyA())->second;
 		}
 
-		delete(c->_joint6DOF);
+		//delete(c->_joint6DOF);
 		c->_joint6DOF = nullptr;
 		other->deleteInvalidConstraints();
 	}
@@ -246,16 +246,20 @@ void GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
 void GameObj::deleteInvalidConstraints()
 {
 	std::vector<Constraint*>::iterator it;
+	std::vector<Constraint*> new_constraints;
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
 		Constraint* c = (*it);
 		if (c->_joint6DOF == nullptr)
 		{
-			it = constraints.erase(it);
-			it--;
 			delete(c);
 		}
+		else
+		{
+			new_constraints.push_back(c);
+		}
 	}
+	constraints = new_constraints;
 }
 
 btRigidBody* GameObj::getRB()
