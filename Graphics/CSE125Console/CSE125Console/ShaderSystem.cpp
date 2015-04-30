@@ -78,6 +78,7 @@ GLhandleARB loadShaderFromFile(char* filename, unsigned int type)
 ShaderSystem::ShaderSystem()
 {
 	loadShaders("better.vert", "better.frag");
+	loadShaders("skybox.vert", "skybox.frag");
 }
 
 
@@ -113,10 +114,14 @@ bool ShaderSystem::loadShaders(string vertex_shader_path, string fragment_shader
 
 void ShaderSystem::BindShader(int type){
 	switch (type){
-	case REGULAR_SHADER:
-		glUseProgramObjectARB(shader_ids[type]);
-		break;
+		case REGULAR_SHADER:
+			glUseProgramObjectARB(shader_ids[type]);
+			break;
+		case SKYBOX_SHADER:
+			glUseProgramObjectARB(shader_ids[type]);
+			break;
 	}
+	
 }
 void ShaderSystem::UnbindShader(){
 	glUseProgramObjectARB(0);

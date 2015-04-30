@@ -33,5 +33,6 @@ enum ModelType{
 
 enum ShaderType{
 	REGULAR_SHADER = 0,
+	SKYBOX_SHADER = 1
 };
 #endif

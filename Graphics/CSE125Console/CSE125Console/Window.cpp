@@ -22,8 +22,6 @@
 #include "Model3DFactory.h"
 #define TESTCAM 0
 
-#define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
-
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
@@ -39,12 +37,13 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	factory = new viewFactory(width, height);
-	//factory = new viewFactory(true);  //for no gui
+	//factory = new viewFactory(width, height);
+	factory = new viewFactory(true);  //for no gui
 	shader_system = new ShaderSystem();
 	m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();
-	g_pCore->skybox = new SkyBox("skyboxes/space");
+	//g_pCore->skybox = new SkyBox("skyboxes/space");
+	g_pCore->skybox = new SkyBox("skyboxes/clouds");
 	//g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
 	//GameView* view = new HardShadowView();
@@ -63,10 +62,12 @@ void Window::initialize(void)
 	view->pViewCamera->FollowingTarget = cube;
 	*/
 
+	/*
 	fire = new Fire(0,0,0);
 	fire->localTransform.position = Vector3(0, 0, 0);
 	fire->localTransform.rotation = Vector3(25, 25, 25);
 	view->PushGeoNode(fire);
+	*/
 	//view->pViewCamera->FollowingTarget = fire;
 	
 	/*
@@ -83,7 +84,7 @@ void Window::initialize(void)
 	view->PushGeoNode(object);
 	*/
 	
-	
+	/*
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
@@ -97,7 +98,7 @@ void Window::initialize(void)
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WHEEL_WOODEN);
 	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
-	
+	*/
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
@@ -338,5 +339,5 @@ void Window::displayCallback() {
 	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }
