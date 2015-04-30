@@ -40,7 +40,14 @@ void GameView::VOnRender()
 		}
 	}
 
-	
+	for each (GeoNode* node in GrassList)
+	{
+
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		{
+			node->VOnDraw();
+		}
+	}
 }
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)
@@ -252,6 +259,12 @@ void GameView::PushGeoNode(GeoNode* node)
 {
 	NodeList.push_back(node);
 }
+
+void GameView::PushGrassNode(GeoNode* node)
+{
+	GrassList.push_back(node);
+}
+
 
 void GameView::PopGeoNode(GeoNode* m_node)
 {

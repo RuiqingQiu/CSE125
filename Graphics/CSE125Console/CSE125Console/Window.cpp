@@ -20,6 +20,7 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
+#include "Grass.h"
 #define TESTCAM 0
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
@@ -62,13 +63,18 @@ void Window::initialize(void)
 	view->PushGeoNode(cube);
 	view->pViewCamera->FollowingTarget = cube;
 	*/
-
+	/*
 	fire = new Fire(0,0,0);
 	fire->localTransform.position = Vector3(0, 0, 0);
 	fire->localTransform.rotation = Vector3(25, 25, 25);
 	view->PushGeoNode(fire);
 	//view->pViewCamera->FollowingTarget = fire;
-	
+	*/
+	Grass * grass = new Grass();
+	grass->localTransform.rotation = Vector3(0,0,0);
+	grass->localTransform.scale = Vector3(0.2, 0.2, 0.2);
+
+	view->PushGrassNode(grass);
 	/*
 	object = Model3DFactory::generateObjectWithType(Discount);
 	object->localTransform.position = Vector3(0, 0, 0);
@@ -85,19 +91,20 @@ void Window::initialize(void)
 	
 	
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-	object->localTransform.position = Vector3(0, -2, 0);
+	object->localTransform.position = Vector3(0, -2, -10);
 	view->PushGeoNode(object);
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-	object->localTransform.position = Vector3(0, -2, 0);
+	object->localTransform.position = Vector3(0, -2, -10);
 	view->PushGeoNode(object);
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);
 
-	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WHEEL_WOODEN);
-	object->localTransform.position = Vector3(0, -2, 0);
+	/*
+	object = Model3DFactory::generateObjectWithType(PORTAL);
+	object->localTransform.position = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
-	
+	*/
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
@@ -338,5 +345,5 @@ void Window::displayCallback() {
 	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

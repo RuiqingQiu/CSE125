@@ -21,6 +21,9 @@ Model3DFactory::Model3DFactory()
 	render_obj_lst.push_back(new RenderObject("Assets/WoodenWheel/woodwheel.obj", "Assets/WoodenWheel/tex.png", "Assets/WoodenWheel/normals.png", "Assets/WoodenWheel/gloss.png", "Assets/WoodenWheel/metallic.png"));
 	render_obj_lst.push_back(new RenderObject("Assets/BattleField/battlefield.obj", "Assets/BattleField/tex.png", "Assets/BattleField/normals.png", "Assets/BattleField/gloss.png", "Assets/BattleField/metallic.png"));
 
+	//new
+	render_obj_lst.push_back(new RenderObject("Assets/Portal/4cubea.obj", "Assets/Portal/tex.png", "Assets/Portal/normals.png", "Assets/Portal/gloss.png", "Assets/Portal/metallic.png"));
+
 }
 
 
@@ -86,6 +89,11 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		}
 		case BATTLEFIELD:{
 			return new Model3D(render_obj_lst[type]);
+			break;
+		}
+		case PORTAL:{
+			Model3D * returnModel = new Model3D(render_obj_lst[type]);
+			return returnModel;
 			break;
 		}
 		//Fix this
