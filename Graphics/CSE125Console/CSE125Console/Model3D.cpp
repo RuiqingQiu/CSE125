@@ -19,23 +19,18 @@ void Model3D::setGlossMap(string pathname){
 void Model3D::setMetallicMap(string pathname){
 	metallic_map = pathname;
 }
-void Model3D::setVertexShader(string pathname){
-	vertex_shader = pathname;
-}
-void Model3D::setFragmentShader(string pathname){
-	fragment_shader = pathname;
-}
-
-
-
 
 
 Model3D::Model3D(RenderObject* r){
 	render_obj = r;
 	isTextured = true;
 	localTransform = Transform();
+	shader_type = REGULAR_SHADER;
 }
 
+void Model3D::setShaderType(int type){
+	shader_type = type;
+}
 
 Model3D::~Model3D()
 {
@@ -100,8 +95,12 @@ void Model3D::VOnDraw(){
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
-	counter = (counter + 1) % 360;
-	//localTransform.rotation.y = counter;
+	if (auto_rotate){
+		counter = (counter + 1) % 360;
+		localTransform.rotation.y = counter;
+	}
+
+	
 	//glLoadIdentity();
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
 	
@@ -118,7 +117,14 @@ void Model3D::VOnDraw(){
 				//material goes here
 				//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
 				//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
-				Window::shader_system->BindShader(REGULAR_SHADER);
+				cout << "shader : " << shader_type << endl;
+				Window::shader_system->BindShader(shader_type);
+
+				//Passing modelMatrix
+				glUniformMatrix4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "ModelView"), 1, true,
+					localTransform.GetGLMatrix4().getFloatPointer());
+
+				//Passing four maps
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[0]);
 
@@ -132,10 +138,10 @@ void Model3D::VOnDraw(){
 				glActiveTexture(GL_TEXTURE3);
 				glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[3]);
 
-				glUniform1i(glGetUniformLocation(render_obj->shader_id, "tex"), 0);
-				glUniform1i(glGetUniformLocation(render_obj->shader_id, "norm"), 1);
-				glUniform1i(glGetUniformLocation(render_obj->shader_id, "gloss"), 2);
-				glUniform1i(glGetUniformLocation(render_obj->shader_id, "metallic"), 3);
+				glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "tex"), 0);
+				glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "norm"), 1);
+				glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 2);
+				glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 3);
 
 				/*float value[4] = { float(render_obj->shapes[i].mesh.tangent[f].x),
 					float(render_obj->shapes[i].mesh.tangent[f].y),
@@ -143,13 +149,6 @@ void Model3D::VOnDraw(){
 					float(render_obj->shapes[i].mesh.tangent[f].w) };
 				glUniform4fv(glGetUniformLocationARB(render_obj->shader_id, "VertexTangent"), 1, value);
 				*/
-
-				GLint l_x = glGetUniformLocation(render_obj->shader_id, "light_x");
-				GLint l_y = glGetUniformLocation(render_obj->shader_id, "light_y");
-				GLint l_z = glGetUniformLocation(render_obj->shader_id, "light_z");
-				glUniform1f(l_x, g_pCore->light->localTransform.position.x);
-				glUniform1f(l_y, g_pCore->light->localTransform.position.y);
-				glUniform1f(l_z, g_pCore->light->localTransform.position.z);
 				// Make sure no bytes are padded:
 				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 

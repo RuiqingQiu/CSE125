@@ -14,11 +14,14 @@ class Matrix4
 {
 
 public:
+	float f_m[4][4];
 	double m[4][4];   // matrix elements; first index is for rows, second for columns (row-major)
 	Matrix4();
 	Matrix4(double);
 	Matrix4(Vector3, Vector3, Vector3, Vector3);
 	Matrix4& operator=(const Matrix4&);
+	float* getFloatPointer();
+
 	double* getPointer();
 	void identity();
 	void transpose();

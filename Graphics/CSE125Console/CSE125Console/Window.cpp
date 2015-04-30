@@ -20,7 +20,7 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#define TESTCAM 0
+#define TESTCAM 1
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
@@ -75,26 +75,31 @@ void Window::initialize(void)
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
+	view->PushGeoNode(object);*/
 	
 	object = Model3DFactory::generateObjectWithType(Needle);
-	object->localTransform.position = Vector3(-3, 0, -20);
+	object->setShaderType(REFLECTION_SHADER);
+	object->localTransform.position = Vector3(-0, 0, -20);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
 	view->PushGeoNode(object);
-	*/
+	
+	
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-	object->localTransform.position = Vector3(0, -2, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-	object->localTransform.position = Vector3(0, -2, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-	object->localTransform.position = Vector3(0, -2, 0);
+	object->localTransform.position = Vector3(0, -2, -20);
 	view->PushGeoNode(object);
 
+	
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, -2, 0);
+	view->PushGeoNode(object);
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, -2, 0);
+	view->PushGeoNode(object);
+	
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WHEEL_WOODEN);
 	object->localTransform.position = Vector3(0, -2, 0);
 	view->PushGeoNode(object);

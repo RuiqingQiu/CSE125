@@ -84,8 +84,9 @@ void SkyBox::VOnClientUpdate(GameInfoPacket* pData){
 }
 
 void SkyBox::VOnDraw(){
+
+	/*
 	glEnable(GL_TEXTURE_CUBE_MAP);
-	glDisable(GL_CULL_FACE);
 	glActiveTexture(GL_TEXTURE0);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -93,7 +94,8 @@ void SkyBox::VOnDraw(){
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-
+	*/
+	glDisable(GL_CULL_FACE);
 	Window::shader_system->BindShader(SKYBOX_SHADER);
 	glBegin(GL_QUADS);
 
@@ -135,7 +137,7 @@ void SkyBox::VOnDraw(){
 
 	glBegin(GL_QUADS);
 
-	glNormal3f(0.0, -1.0, 0.0);
+	glNormal3f(0.0, 1.0, 0.0);
 
 	glVertex3f(-size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //front up right
 	glVertex3f(size_of_texture_cube, size_of_texture_cube, size_of_texture_cube);  //connect to front left
@@ -145,7 +147,7 @@ void SkyBox::VOnDraw(){
 	glEnd();
 
 	glPopMatrix();
-	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	//glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
 	Window::shader_system->UnbindShader();
 }
