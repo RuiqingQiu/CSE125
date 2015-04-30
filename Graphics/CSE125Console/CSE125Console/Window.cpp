@@ -84,6 +84,14 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->auto_rotate = true;
 	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Mace);
+	object->setShaderType(REFRACTION_SHADER);
+	object->localTransform.position = Vector3(3, 0, -20);
+	object->localTransform.scale = Vector3(1, 1, 1);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushGeoNode(object);
 	
 	
 	

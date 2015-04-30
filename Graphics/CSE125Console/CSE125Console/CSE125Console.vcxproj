@@ -251,6 +251,8 @@
     <None Include="highlight.vert" />
     <None Include="reflect.frag" />
     <None Include="reflect.vert" />
+    <None Include="refract.frag" />
+    <None Include="refract.vert" />
     <None Include="shadow.frag" />
     <None Include="shadow.vert" />
     <None Include="skybox.frag" />

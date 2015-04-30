@@ -117,7 +117,6 @@ void Model3D::VOnDraw(){
 				//material goes here
 				//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
 				//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
-				cout << "shader : " << shader_type << endl;
 				Window::shader_system->BindShader(shader_type);
 
 				//Passing modelMatrix

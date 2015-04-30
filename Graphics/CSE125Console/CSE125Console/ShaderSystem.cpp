@@ -80,6 +80,8 @@ ShaderSystem::ShaderSystem()
 	loadShaders("better.vert", "better.frag");
 	loadShaders("skybox.vert", "skybox.frag");
 	loadShaders("reflect.vert", "reflect.frag");
+	loadShaders("refract.vert", "refract.frag");
+
 }
 
 
@@ -122,6 +124,9 @@ void ShaderSystem::BindShader(int type){
 			glUseProgramObjectARB(shader_ids[type]);
 			break;
 		case REFLECTION_SHADER:
+			glUseProgramObjectARB(shader_ids[type]);
+			break;
+		case REFRACTION_SHADER:
 			glUseProgramObjectARB(shader_ids[type]);
 			break;
 	}

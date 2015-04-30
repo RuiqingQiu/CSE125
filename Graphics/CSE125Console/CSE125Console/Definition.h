@@ -39,5 +39,6 @@ enum ShaderType{
 	REGULAR_SHADER = 0,
 	SKYBOX_SHADER = 1,
 	REFLECTION_SHADER = 2,
+	REFRACTION_SHADER = 3,
 };
 #endif

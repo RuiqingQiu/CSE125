@@ -525,5 +525,11 @@
     <None Include="skybox.frag">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
+    <None Include="refract.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="refract.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
   </ItemGroup>
 </Project>
