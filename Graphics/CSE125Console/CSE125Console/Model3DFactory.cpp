@@ -101,6 +101,8 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					group->addObject(returnModel);
 				}
 			}
+			group->width = 3;
+			group->height = 1;
 			return group;
 			break;
 		}
@@ -115,6 +117,8 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					group->addObject(returnModel);
 				}
 			}
+			group->width = 3;
+			group->height = 1;
 			return group;
 			break;
 		}
@@ -129,6 +133,8 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					group->addObject(returnModel);
 				}
 			}
+			group->width = 3;
+			group->height = 1;
 			return group;
 			break;
 		}
