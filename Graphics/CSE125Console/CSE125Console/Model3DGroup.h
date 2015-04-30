@@ -22,5 +22,7 @@ public:
 
 	virtual void VOnDraw();
 	virtual void VOnUpdate(GameInfoPacket* pData);
+
+	virtual bool intersect(Vector3 pos);
 };
 
