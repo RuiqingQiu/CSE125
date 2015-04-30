@@ -338,5 +338,5 @@ void Window::displayCallback() {
 	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }
