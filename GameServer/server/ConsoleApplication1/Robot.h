@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObj.h"
-#include "Weapon.h"
+#include "RangedWeapon.h"
+#include "MeleeWeapon.h"
 class Robot : public GameObj
 {
 private:
@@ -9,10 +10,7 @@ private:
 	int _deaths;
 	char* _name;
 	btRaycastVehicle *vehicle;
-	Weapon *_w1;
-	Weapon *_w2;
-	Weapon *_w3;
-	
+	std::vector<Weapon *> weapons;
 	double _width;
 	double _height;
 	double _depth;
@@ -26,9 +24,6 @@ public:
 	void setTakeDowns(int);
 	void setDeaths(int);
 	void setName(char*);
-	void setWeapon1(Weapon*);
-	void setWeapon2(Weapon*);
-	void setWeapon3(Weapon*);
 
 	void setWidth(double);
 	void setHeight(double);
@@ -42,9 +37,10 @@ public:
 	int getTakeDowns();
 	int getDeaths();
 	char* getName();
-	Weapon* getWeapon1();
-	Weapon* getWeapon2();
-	Weapon* getWeapon3();
+	std::vector<Weapon*>* getWeapons();
+	void addWeapon(Weapon *);
+	void shoot(std::vector<std::pair<GameObj*, double>>*);
+	void clearWeapons();
 
 	btRaycastVehicle * getVehicle();
 	void createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> *);

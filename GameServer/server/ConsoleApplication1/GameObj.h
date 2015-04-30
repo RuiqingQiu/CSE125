@@ -53,6 +53,7 @@ private:
 	double _mass;
 	int _isRobot;
 	int _collisionType;
+	int _isWeapon;
 	btRigidBody* rigidBody;
 
 	GameObj* _belongTo;
@@ -118,6 +119,8 @@ public:
 	void incOid(int i){ _totalId += i; }
 	void setDeleted();
 	int getDeleted();
+	int getIsWeapon();
+	void setIsWeapon();
 };
 
 

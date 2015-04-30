@@ -1,24 +1,37 @@
 #pragma once
+#include "GameObj.h"
+
+enum RANGE{
+	MELEE = 0,
+	MEDIUM_RANGED = 1,
+	FAR_RANGED = 2,
+};
+
 class Weapon
 {
-private:
+protected:
 	int _type;
+
+private:
+	int _range;
 	double _damage;
 	double _attackSpeed;
-	double _mass;
-
-	double _projectileSpeed;
+	double _splash;
+	GameObj* gameObj;
 
 public:
-	Weapon(int, double, double, double);
+	Weapon();
 	~Weapon();
 
-	void setProjectileSpeed(double);
-
-	int getType();
-	double getDamage();
+	void setDamage(double);
+	void setAttackSpeed(double);
+	void setGameObj(GameObj*);
 	double getAttackSpeed();
-	double getProjectileSpeed();
-	double getMass();
+	int getRange();
+	void setRange(int);
+	double getSplash();
+	void setSplash(double);
+	double getDamage();
+	GameObj* getGameObj();
 };
 

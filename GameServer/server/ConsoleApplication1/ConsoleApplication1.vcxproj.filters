@@ -111,6 +111,12 @@
     <ClInclude Include="DamageEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -192,6 +198,12 @@
       <Filter>Source Files\network</Filter>
     </ClCompile>
     <ClCompile Include="DamageEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -86,6 +86,7 @@
     <ClInclude Include="definition.h" />
     <ClInclude Include="GameEvents.h" />
     <ClInclude Include="GERobotDeath.h" />
+    <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="ObjectEvents.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObj.h" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Network.h" />
     <ClInclude Include="NetworkData.h" />
     <ClInclude Include="NetworkServices.h" />
+    <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ServerCore.h" />
@@ -118,6 +120,7 @@
     <ClCompile Include="definition.cpp" />
     <ClCompile Include="GameEvents.cpp" />
     <ClCompile Include="GERobotDeath.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="ObjectEvents.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObj.cpp" />
@@ -131,6 +134,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="NetworkServices.cpp" />
+    <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="ServerCore.cpp" />
     <ClCompile Include="ServerNetwork.cpp" />

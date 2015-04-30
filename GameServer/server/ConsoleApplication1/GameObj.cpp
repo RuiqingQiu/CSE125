@@ -288,3 +288,13 @@ int GameObj::getDeleted()
 {
 	return deleted;
 }
+
+void GameObj::setIsWeapon()
+{
+	_isWeapon = 1;
+}
+
+int GameObj::getIsWeapon()
+{
+	return _isWeapon;
+}

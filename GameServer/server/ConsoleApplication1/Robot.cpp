@@ -1,4 +1,5 @@
 #include "Robot.h"
+#include "GOBox.h"
 
 
 Robot::Robot(int cid, char* name)
@@ -29,17 +30,12 @@ void Robot::setTakeDowns(int takedowns)
 
 void Robot::setDeaths(int deaths){ }
 void Robot::setName(char* name){ _name = name; }
-void Robot::setWeapon1(Weapon* weapon){ _w1 = weapon; }
-void Robot::setWeapon2(Weapon* weapon){ _w2 = weapon; }
-void Robot::setWeapon3(Weapon* weapon){ _w3 = weapon; }
 
 int Robot::getID(){ return _r_cid; }
 int Robot::getTakeDowns(){ return _takedowns; }
 int Robot::getDeaths(){ return _deaths; }
 char* Robot::getName(){ return _name; }
-Weapon* Robot::getWeapon1(){ return _w1; }
-Weapon* Robot::getWeapon2(){ return _w2; }
-Weapon* Robot::getWeapon3(){ return _w3; }
+
 
 btRaycastVehicle * Robot::getVehicle()
 {
@@ -129,7 +125,6 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	dynamicWorld->addRigidBody(m_pBody);
 	dynamicWorld->addAction(m_pVehicle);
 
-
 	map->insert(std::pair<btCollisionObject*, GameObj*>(m_pBody, this));
 
 	// 
@@ -184,3 +179,48 @@ btRigidBody* Robot::getRigidBody()
 	return this->vehicle->getRigidBody();
 }
 
+std::vector<Weapon*>* Robot::getWeapons()
+{
+	return &weapons;
+}
+
+
+void Robot::addWeapon(Weapon * w)
+{
+	weapons.push_back(w);
+}
+
+
+void Robot::shoot(std::vector<std::pair<GameObj*, double>>* projectiles)
+{
+	std::vector<Weapon*>::iterator it;
+	for (it = weapons.begin(); it != weapons.end(); it++)
+	{
+		
+		if((*it)->getRange() != MELEE)
+		{
+			RangedWeapon* w = (RangedWeapon*)(*it);
+			double rbDepth = ((GOBox*)w->getGameObj())->getDepth() + w->getPWidth() / 2 + 0.1f;
+			btTransform rbTrans = w->getGameObj()->getRigidBody()->getWorldTransform();
+			btVector3 relativeDisplacement = btVector3(0, 0, -rbDepth / 2);
+			btVector3 boxRot = rbTrans.getBasis()[2];
+			boxRot.normalize();
+			btVector3 correctedForce = boxRot * -rbDepth / 2;
+			double x = rbTrans.getOrigin().getX() + correctedForce.getX();
+			double y = rbTrans.getOrigin().getY() + correctedForce.getY();
+			double z = rbTrans.getOrigin().getZ() + correctedForce.getZ();
+
+			GameObj* proj = new GOBox(x, y, z, rbTrans.getRotation().getX(), rbTrans.getRotation().getY(), rbTrans.getRotation().getZ(), rbTrans.getRotation().getW(),
+				w->getPMass(), w->getPWidth(), w->getPHeight(), w->getPDepth());
+			proj->setCollisionType(C_PROJECTILE);
+			proj->setBelongTo(this);
+			proj->setBlockType(w->getPBlockType());
+			projectiles->push_back(std::make_pair(proj, w->getPInitForce()));
+		}
+	}
+}
+
+void Robot::clearWeapons()
+{
+	weapons.clear();
+}

@@ -35,7 +35,7 @@ public:
 
 	void initWorld(std::vector<GameObj*>*,  std::map< btCollisionObject*, GameObj*>*);
 	void createPhysicsEvent(int, GameObj*);
-	void createPhysicsProjectile(int, GameObj*, std::map< btCollisionObject*, GameObj*>*);
+	void createPhysicsProjectile(GameObj*, std::map< btCollisionObject*, GameObj*>*, double initForce);
 	void stepSimulation(std::vector<GameObj*>*, std::vector<Collision*> *);
 	static std::vector<Collision*> collisionList;
 

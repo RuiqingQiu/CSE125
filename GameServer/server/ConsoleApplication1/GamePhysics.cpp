@@ -94,28 +94,15 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 	//collisionCallback(dynamicsWorld, collisionList);
 }
 
-void GamePhysics::createPhysicsProjectile(int eventType, GameObj* projectile, std::map< btCollisionObject*, GameObj*>* map)
+void GamePhysics::createPhysicsProjectile(GameObj* projectile, std::map< btCollisionObject*, GameObj*>* map, double initForce)
 {
-	//std::cout << "Projectile Event Type: " << eventType << std::endl;
-	switch (eventType) {
-	case SHOOT: {
-					projectile->createRigidBody(map);
-					dynamicsWorld->addRigidBody(projectile->getRigidBody());
-					btVector3 relativeForce = btVector3(0, 0, -200);
-					btMatrix3x3 boxRot = projectile->getRigidBody()->getWorldTransform().getBasis();
-					btVector3 correctedForce = boxRot * relativeForce;
-					//projectile->getRigidBody()->setLinearVelocity(btVector3(0, 0, 0)); 
-					projectile->getRigidBody()->applyCentralImpulse(correctedForce);
 
-					//std::cout << << std::endl;
-					break;
-	}
-	default:{
-				printf("error in packet types\n");
-				break;
-	}
-	}
-
+	projectile->createRigidBody(map);
+	dynamicsWorld->addRigidBody(projectile->getRigidBody());
+	btVector3 relativeForce = btVector3(0, 0, initForce);
+	btMatrix3x3 boxRot = projectile->getRigidBody()->getWorldTransform().getBasis();
+	btVector3 correctedForce = boxRot * relativeForce;
+	projectile->getRigidBody()->applyCentralImpulse(correctedForce);
 }
 
 void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)

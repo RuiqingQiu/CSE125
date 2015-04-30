@@ -162,12 +162,11 @@ void GameLogic::gameStart(){
 
 	gamePhysics->initWorld(&gameObjs, &objCollisionPair);
 
-	cout << "started" << endl;
+	//cout << "started" << endl;
 	//int i,j,k;
 	int i;
 	for (i = 0; i < clientPair.size(); i++)
 	{
-		cout << "started1" << endl;
 		int j, k;
 		Robot* robot= (Robot*)clientPair.find(i)->second;
 		int left = -((int)(robot->getWidth() / 2)) - 1;
@@ -176,14 +175,20 @@ void GameLogic::gameStart(){
 		int back = ((int)(robot->getWidth() / 2)) + 1;
 		for (j = left; j <= right; j++)
 		{
-			cout << "started2" << endl;
 			for (k = front; k <= back; k++)
 			{
-				cout << "started3" << endl;
 				GameObj* gameObj;
 				if (j == left || j == right || k == front || k == back)
 				{
-					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+					btTransform trans;
+					robot->getRigidBody()->getMotionState()->getWorldTransform(trans);
+					
+					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ(), trans.getRotation().getW(), 1, 1, 1, 1);
+					if (k == front)
+					{
+						Weapon* w = new RangedWeapon(GUN, gameObj);
+						robot->addWeapon(w);
+					}
 				}
 				else
 				{
@@ -305,37 +310,19 @@ void GameLogic::prePhyLogic(){
 
 		switch(type) {
 		case SHOOT:{
-					   double initBulletSpd = 1;
-					   double bulletMass = 1;
-					   double bulletWidth = 0.3;
-					   double bulletHeight = 0.5;
-					   double bulletdepth = 0.5;
-					   double rbWidth = ((Robot*)gObj)->getWidth() + bulletWidth/2 + 0.1f;
-					   btTransform rbTrans = gObj->getRigidBody()->getWorldTransform();
-					   btVector3 relativeDisplacement = btVector3(0, 0, -rbWidth/2);
-					   btVector3 boxRot = rbTrans.getBasis()[2];
-					   boxRot.normalize();
-					   btVector3 correctedForce = boxRot * -rbWidth/2;
-					   double x = rbTrans.getOrigin().getX() + correctedForce.getX();
-					   double y = rbTrans.getOrigin().getY() + correctedForce.getY();
-					   double z = rbTrans.getOrigin().getZ() + correctedForce.getZ();
-					   /*btScalar qx;
-					   double qy;
-					   double qz;
-					   rbTrans.getBasis().getEulerZYX(qz, qy, qx);
-*/
-					   GameObj* bullet = new GOBox(x, y, z, rbTrans.getRotation().getX(), rbTrans.getRotation().getY(), rbTrans.getRotation().getZ(), rbTrans.getRotation().getW(),
-						 bulletMass  , bulletWidth, bulletHeight, bulletdepth);
-					   bullet->setCollisionType(C_PROJECTILE);
-					   bullet->setBelongTo(gObj);
-					   bullet->setBlockType(NEEDLE);
-					   gameObjs.push_back(bullet);
-					   gamePhysics->createPhysicsProjectile(type, bullet, &objCollisionPair);
-				break;
+			Robot *r = (Robot*)gObj;
+			std::vector<std::pair<GameObj*, double>> projectiles;
+			r->shoot(&projectiles);
+			std::vector<std::pair<GameObj*, double>>::iterator it;
+			for (it = projectiles.begin(); it != projectiles.end(); it++)
+			{
+				gamePhysics->createPhysicsProjectile((*it).first, &objCollisionPair, (*it).second);
+			}		  
+			break;
 		}
 		default:{
-					gamePhysics->createPhysicsEvent(type, gObj);
-					break;
+			gamePhysics->createPhysicsEvent(type, gObj);
+			break;
 		}
 
 		}
@@ -361,6 +348,18 @@ void GameLogic::prePhyLogic(){
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObjs.begin(); it != gameObjs.end(); ++it)
 	{
+		if ((*it)->getId() == 0)
+		{
+			btTransform trans;
+			(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+			std::cout << "id OF VEHICLE: " << (*it)->getId() << "X: " << trans.getOrigin().getX() << "  Y: " << trans.getOrigin().getY() << "  Z:  " << trans.getOrigin().getZ() << std::endl;
+		}
+		if ((*it)->getIsWeapon())
+		{
+			btTransform trans;
+			(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+			std::cout << "id: " << (*it)->getId() << "X: " << trans.getOrigin().getX() << "  Y: " << trans.getOrigin().getY() << "  Z:  " << trans.getOrigin().getZ() << std::endl;
+		}
 		/*if (gameObjs.size() == 4)
 		{
 			btTransform trans;
@@ -389,7 +388,7 @@ void GameLogic::prePhyLogic(){
 void GameLogic::postPhyLogic(){
 	std::vector<Collision *>::iterator it;
 
-	cout << "SIZE OF COLLISION LIST " << GamePhysics::collisionList.size() << endl;
+	//cout << "SIZE OF COLLISION LIST " << GamePhysics::collisionList.size() << endl;
 	for (it = GamePhysics::collisionList.begin(); it != GamePhysics::collisionList.end(); it++)
 	{
 		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
@@ -413,7 +412,21 @@ void GameLogic::postPhyLogic(){
 					if ((*iter)->_joint6DOF != nullptr)
 					{
 						(*iter)->_joint6DOF->setEnabled(false);
-						gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+						//gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+						if (GO1->getIsWeapon())
+						{
+							Robot* r = (Robot*)GO1->getBelongTo();
+							std::vector<Weapon *>* weapons = r->getWeapons();
+							r->clearWeapons();
+							std::vector<Weapon *>::iterator it1;
+							for (it1 = weapons->begin(); it1 != weapons->end(); it1++)
+							{
+								if ((*it1)->getGameObj() != GO1)
+								{
+									r->addWeapon((*it1));
+								}
+							}
+						}
 					}
 				}
 				GO1->deleteConstraints(&objCollisionPair);
@@ -424,7 +437,6 @@ void GameLogic::postPhyLogic(){
 			{
 				cout << "GO1 Deleted ID: " << GO1->getId() << endl;
 				GO1->setDeleted();
-					
 				//set gameevent
 			}
 		}
@@ -438,7 +450,22 @@ void GameLogic::postPhyLogic(){
 				{
 					if ((*iter)->_joint6DOF != nullptr)
 					{
+						(*iter)->_joint6DOF->setEnabled(false);
 						//gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+						if (GO2->getIsWeapon())
+						{
+							Robot* r = (Robot*)GO2->getBelongTo();
+							std::vector<Weapon *>* weapons = r->getWeapons();
+							r->clearWeapons();
+							std::vector<Weapon *>::iterator it1;
+							for (it1 = weapons->begin(); it1 != weapons->end(); it1++)
+							{
+								if ((*it1)->getGameObj() != GO2)
+								{
+									r->addWeapon((*it1));
+								}
+							}
+						}
 					}
 				}
 				GO2->deleteConstraints(&objCollisionPair);
@@ -512,7 +539,8 @@ void GameLogic::cleanDataStructures()
 			{
 				if ((*iter)->_joint6DOF != nullptr)
 				{
-					gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
+					(*iter)->_joint6DOF->setEnabled(false);
+					//gamePhysics->getDynamicsWorld()->removeConstraint((*iter)->_joint6DOF);
 				}
 			}
 			gamePhysics->getDynamicsWorld()->removeRigidBody((*it)->getRigidBody());
@@ -525,7 +553,7 @@ void GameLogic::cleanDataStructures()
 	std::map<int, GameObj *>::iterator it1;
 	for (it1 = clientPair.begin(); it1 != clientPair.end(); it1++)
 	{
-		if (!(*it1).second->getDeleted())
+		if ((*it1).second != nullptr)//!(*it1).second->getDeleted())
 		{
 			new_clientPair.insert((*it1));
 		}
@@ -536,7 +564,7 @@ void GameLogic::cleanDataStructures()
 	std::map< btCollisionObject*, GameObj*>::iterator it2;
 	for (it2 = objCollisionPair.begin(); it2 != objCollisionPair.end(); it2++)
 	{
-		if (!(*it2).second->getDeleted())
+		if ((*it2).second != nullptr)
 		{
 			new_objCollisionPair.insert((*it2));
 		}
