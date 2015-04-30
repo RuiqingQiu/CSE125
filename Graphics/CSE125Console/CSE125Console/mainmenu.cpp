@@ -69,7 +69,9 @@ void mainMenu::drawAllItems(){
 void mainMenu::addLetters(){
 	w = width;
 	h = height;
+	cout << "w is " << w << endl;
 	start_w = width * 0.5;
+	cout << "start_2 is " << start_w << endl;
 	start_h = h * 0.53;
 
 	string n = g_pCore->i_pInput->name; // get the name of game core
@@ -83,12 +85,8 @@ void mainMenu::addLetters(){
 		guiLetters.push_back(l);
 	}
 
-
 	// Deletes the 2nd through 3rd elements (vec[1], vec[2])
 	//guiItems.erase(guiItems.begin() + 1, guiItems.begin() + guiItems.size);
-
-
-	
 	guiItems.clear(); // clear the guiItem to avoid adding elements all more than once
 	guiItems.push_back(backimg); // backimg render first every time
 	for (std::vector<guiItem*> ::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){

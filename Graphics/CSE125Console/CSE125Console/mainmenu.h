@@ -4,7 +4,7 @@
 #include "GameCore.h"
 #include "letters.h" // display textured letter
 
-class mainMenu : public gui {
+class mainMenu : public gui{
 
 public:
 	mainMenu();
