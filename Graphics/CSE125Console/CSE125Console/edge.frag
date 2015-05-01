@@ -6,6 +6,8 @@ uniform sampler2D RenderTex;
 uniform int pass;
 
 const vec3 lum = vec3(0.2126, 0.7152, 0.0722);
+uniform float width;
+uniform float height;
 
 vec3 phongModel(vec4 position, vec3 normal){
     vec3 Kd = vec3(0.64, 0.64, 0.64);
@@ -72,8 +74,7 @@ float IsEdge(in vec2 coords){
 
 void main()
 {
-    float width = 512.0;
-    float height = 512.0;
+
     if(pass == 1){
         gl_FragColor = vec4(phongModel(Position, Normal),1.0);
     }

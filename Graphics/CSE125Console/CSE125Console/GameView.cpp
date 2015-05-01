@@ -70,6 +70,8 @@ void GameView::second_pass(){
 
 	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
 	Window::shader_system->BindShader(EDGE_SHADER);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "width"), Window::width);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "height"), Window::height);
 	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 2);
 	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "RenderTex"), 0);
 
