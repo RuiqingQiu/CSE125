@@ -29,6 +29,9 @@ public:
 	~GameView();
 	int gameViewId;
 	std::vector<GeoNode*> NodeList;
+	std::vector<GeoNode*> GrassList;
+
+
 	Camera* pViewCamera;
 	GamePlayer* pPlayer;
 
@@ -37,6 +40,8 @@ public:
 	virtual void VUpdate();
 
 	//node manipulation functions
+	void PushGrassNode(GeoNode* node);
+
 	virtual void PushGeoNode(GeoNode* node);
 	virtual void PopGeoNode(GeoNode* node);
 	virtual bool FindGeoNode(GeoNode* node);

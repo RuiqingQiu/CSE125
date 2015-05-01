@@ -19,6 +19,8 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
+#include "Grass.h"
+
 #define TESTCAM 1
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
@@ -35,8 +37,8 @@ static Model3D*object;
 
 void Window::initialize(void)
 {
-	factory = new viewFactory(width, height);
-	//factory = new viewFactory(true);  //for no gui
+	//factory = new viewFactory(width, height);
+	factory = new viewFactory(true);  //for no gui
 	m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();
 	g_pCore->skybox = new SkyBox("skyboxes/space");
@@ -45,7 +47,18 @@ void Window::initialize(void)
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
+	for (int i = 0; i < 10; i++){
+		for (int j = 0; j < 10; j++){
+			float ri = (rand() % 10 - 5) * 0.001;
+			float rj = (rand() % 10 - 5) * 0.001;
 
+			Grass * grass = new Grass();
+			grass->localTransform.position = Vector3(i*0.01 - 2 + ri, 0, j*0.01 - 2 + rj);
+			grass->localTransform.rotation = Vector3(0, 0, 0);
+			grass->localTransform.scale = Vector3(0.2, 0.2, 0.2);
+			view->PushGrassNode(grass);
+		}
+	}
 	
 	//set color
 	//glColor3f(1, 1, 1);
@@ -71,11 +84,13 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	*/
+	/*
 	object = Model3DFactory::generateObjectWithType(BasicCube);
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
+	*/
 	/*
 	object = Model3DFactory::generateObjectWithType(WoodenCube);
 	object->localTransform.position = Vector3(-8, 0, -20);
