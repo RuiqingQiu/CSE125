@@ -44,6 +44,10 @@ void GameView::first_pass(){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	pViewCamera->setUpCamera();
+	glPushMatrix();
+	glTranslated(0, 0, -15);
+	glutSolidTeapot(1);
+	glPopMatrix();
 	Window::shader_system->UnbindShader();
 }
 
@@ -63,6 +67,20 @@ void GameView::second_pass(){
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	pViewCamera->setUpCamera();
+
+	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
+	Window::shader_system->BindShader(EDGE_SHADER);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 2);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "RenderTex"), 0);
+
+	glPushMatrix();
+	glTranslated(0, 0, -15);
+	glutSolidTeapot(1);
+	glPopMatrix();
+	Window::shader_system->UnbindShader();
+	
+	
+	
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
 	for each (GeoNode* node in NodeList)
