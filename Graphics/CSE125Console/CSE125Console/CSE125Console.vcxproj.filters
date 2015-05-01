@@ -264,9 +264,6 @@
     <ClInclude Include="roboBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Model3DGroup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderSystem.h">
       <Filter>Source Files\Shader</Filter>
     </ClInclude>
@@ -277,6 +274,9 @@
       <Filter>Source Files\ParticleEffect</Filter>
     </ClInclude>
     <ClInclude Include="Grass.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3DGroup.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
@@ -464,9 +464,6 @@
     <ClCompile Include="roboBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Model3DGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ShaderSystem.cpp">
       <Filter>Source Files\Shader</Filter>
     </ClCompile>
@@ -477,6 +474,9 @@
       <Filter>Source Files\ParticleEffect</Filter>
     </ClCompile>
     <ClCompile Include="Grass.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Model3DGroup.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
@@ -525,12 +525,6 @@
     <None Include="highlight.frag">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
-    <None Include="skybox.vert">
-      <Filter>Source Files\Shader\Group</Filter>
-    </None>
-    <None Include="skybox.frag">
-      <Filter>Source Files\Shader\Group</Filter>
-    </None>
     <None Include="refract.vert">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
@@ -542,6 +536,18 @@
     </None>
     <None Include="grass.vert">
       <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="skybox.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="skybox.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="edge.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="edge.frag">
+      <Filter>Source Files\Shader\Group</Filter>
     </None>
   </ItemGroup>
 </Project>

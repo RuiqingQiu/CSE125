@@ -12,6 +12,8 @@ class Model3D: public GeoNode
 {
 public:
 	bool auto_rotate = false;
+
+	bool two_pass_draw = false;
 	//std::vector<tinyobj::shape_t> shapes;
 	//std::vector<tinyobj::material_t> materials;
 	RenderObject* render_obj;

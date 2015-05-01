@@ -143,9 +143,11 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 		exit(1);
 	}
 
+	/*
 	std::cout << "# of shapes    : " << shapes.size() << std::endl;
 	std::cout << "# of materials : " << materials.size() << std::endl;
 
+	
 	for (size_t i = 0; i < shapes.size(); i++) {
 		printf("shape[%ld].name = %s\n", i, shapes[i].name.c_str());
 		printf("Size of shape[%ld].indices: %ld\n", i, shapes[i].mesh.indices.size());
@@ -162,7 +164,7 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 				shapes[i].mesh.positions[3 * v + 2]);
 		}
 	}
-
+	*/
 	for (size_t i = 0; i < materials.size(); i++) {
 		printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
 		printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);

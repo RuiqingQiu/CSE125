@@ -246,6 +246,8 @@
     <None Include="better.vert" />
     <None Include="BlurFragmentShader.frag" />
     <None Include="BlurVertexShader.vert" />
+    <None Include="edge.frag" />
+    <None Include="edge.vert" />
     <None Include="FragmentShader.frag" />
     <None Include="grass.frag" />
     <None Include="grass.vert" />

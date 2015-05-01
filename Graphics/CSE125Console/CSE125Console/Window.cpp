@@ -62,6 +62,10 @@ void Window::initialize(void)
 			view->PushGrassNode(grass);
 		}
 	}
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
 	
 	//set color
 	//glColor3f(1, 1, 1);
@@ -79,7 +83,7 @@ void Window::initialize(void)
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
 	
 	//connect to server
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.168");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.23");

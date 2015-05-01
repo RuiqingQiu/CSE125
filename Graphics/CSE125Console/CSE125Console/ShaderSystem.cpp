@@ -82,7 +82,6 @@ ShaderSystem::ShaderSystem()
 	loadShaders("reflect.vert", "reflect.frag");
 	loadShaders("refract.vert", "refract.frag");
 	loadShaders("grass.vert", "grass.frag");
-
 }
 
 
@@ -131,6 +130,9 @@ void ShaderSystem::BindShader(int type){
 			glUseProgramObjectARB(shader_ids[type]);
 			break;
 		case GRASS_SHADER:
+			glUseProgramObjectARB(shader_ids[type]);
+			break;
+		case EDGE_SHADER:
 			glUseProgramObjectARB(shader_ids[type]);
 			break;
 	}
