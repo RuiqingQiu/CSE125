@@ -15,7 +15,6 @@ protected:
 private:
 	int _range;
 	double _damage;
-	double _attackSpeed;
 	double _splash;
 	GameObj* gameObj;
 
@@ -24,9 +23,9 @@ public:
 	~Weapon();
 
 	void setDamage(double);
-	void setAttackSpeed(double);
+	
 	void setGameObj(GameObj*);
-	double getAttackSpeed();
+
 	int getRange();
 	void setRange(int);
 	double getSplash();

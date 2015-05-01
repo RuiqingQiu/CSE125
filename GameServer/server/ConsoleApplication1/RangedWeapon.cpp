@@ -6,6 +6,7 @@ RangedWeapon::RangedWeapon(int type, GameObj* g)
 	setGameObj(g);
 	g->setIsWeapon();
 	_type = type;
+	lastShot = clock();
 
 	int range;
 	double damage;
@@ -19,10 +20,10 @@ RangedWeapon::RangedWeapon(int type, GameObj* g)
 	{
 		range = MEDIUM_RANGED;
 		damage = 1;
-		attackSpeed = 10;
+		attackSpeed = 4;
 		splash = 1;
 
-		_pInitForce = -200;
+		_pInitForce = -300;
 		_pMass = 1;
 		_pWidth = 0.3;
 		_pHeight =0.3;
@@ -34,7 +35,7 @@ RangedWeapon::RangedWeapon(int type, GameObj* g)
 	{
 		range = FAR_RANGED;
 		damage = 10;
-		attackSpeed = 2;
+		attackSpeed = 0.5;
 		splash = 4;
 
 		_pInitForce = -600;
@@ -82,4 +83,35 @@ int RangedWeapon::getPBlockType()
 
 RangedWeapon::~RangedWeapon()
 {
+}
+
+void RangedWeapon::setAttackSpeed(double a)
+{
+	_attackSpeed = a;
+}
+
+double RangedWeapon::getAttackSpeed(){
+	return _attackSpeed;
+}
+
+
+int RangedWeapon::readyToShoot()
+{
+	double diff = ((double)(clock() - lastShot)/CLOCKS_PER_SEC);
+	if (diff > 1/_attackSpeed)
+	{
+		std::cout << "Time elasped: " << diff << std::endl;
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+void RangedWeapon::setLastShot()
+{
+	double diff = ((double)(clock() - lastShot) / CLOCKS_PER_SEC);
+	
+	lastShot = clock();
 }

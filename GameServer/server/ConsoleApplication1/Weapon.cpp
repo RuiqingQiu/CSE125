@@ -10,6 +10,8 @@ Weapon::~Weapon()
 {
 }
 
+
+
 //weapon.cpp
 int Weapon::getRange(){
 	return _range;
@@ -17,10 +19,6 @@ int Weapon::getRange(){
 
 double Weapon::getDamage(){
 	return _damage;
-}
-
-double Weapon::getAttackSpeed(){
-	return _attackSpeed;
 }
 
 GameObj* Weapon::getGameObj()
@@ -32,10 +30,7 @@ void Weapon::setDamage(double d)
 {
 	_damage = d;
 }
-void Weapon::setAttackSpeed(double a)
-{
-	_attackSpeed = a;
-}
+
 void Weapon::setGameObj(GameObj* g)
 {
 	gameObj = g;

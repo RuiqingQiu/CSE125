@@ -193,7 +193,7 @@ void GameObj::addConstraint(GameObj* o)
 		this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
 		o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
 	
-		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInA, frameInB);
+		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInB, frameInA);
 
 		/*joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 0);
 		joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 1);

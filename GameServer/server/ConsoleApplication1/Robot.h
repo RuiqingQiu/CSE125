@@ -10,7 +10,7 @@ private:
 	int _deaths;
 	char* _name;
 	btRaycastVehicle *vehicle;
-	std::vector<Weapon *> weapons;
+	std::vector<Weapon *> weapons ;
 	double _width;
 	double _height;
 	double _depth;
@@ -37,7 +37,8 @@ public:
 	int getTakeDowns();
 	int getDeaths();
 	char* getName();
-	std::vector<Weapon*>* getWeapons();
+	std::vector<Weapon*> getWeapons();
+	void setWeapons(std::vector<Weapon*>);
 	void addWeapon(Weapon *);
 	void shoot(std::vector<std::pair<GameObj*, double>>*);
 	void clearWeapons();
