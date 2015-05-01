@@ -19,8 +19,7 @@
 #include "TestView.h"
 #include "Teapot.h"
 #include "Model3DFactory.h"
-#include <SFML/Audio.hpp>  // ised SFML sound
-//#include <SFML/Graphics.hpp> // be able to create Window object
+#include "sound.h" // include the sound
 #define TESTCAM 1
 
 #define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
@@ -33,10 +32,7 @@ static Model3DFactory* m_factory;
 static int counter = 0;
 static Cube* cube;
 static Model3D*object;
-//Init server info here later
-// Load a sound buffer from a wav file
-sf::SoundBuffer buffer;
-sf::Sound sound;
+static Sound *soundObject;
 
 void Window::initialize(void)
 {
@@ -50,13 +46,8 @@ void Window::initialize(void)
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
-
-	if (!buffer.loadFromFile("Payback.wav"))
-		cout << "ERROR!" << endl;
-	// Create a sound instance and play it
-	sound.setBuffer(buffer);
-	sound.play();
-	sound.setLoop(true); // the music will loop itself when ends
+	// Initialize the Sound object
+	soundObject = new Sound();
 
 	//set color
 	//glColor3f(1, 1, 1);
@@ -338,6 +329,7 @@ void Window::reshapeCallback(int w, int h) {
 
 void Window::displayCallback() {
 	clock_t startTime = clock();
+	soundObject->playSound();
 
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
@@ -389,10 +381,5 @@ void Window::displayCallback() {
 		cout << "\rPlaying... " << endl;
 	}*/
 	
-	if (sound.getStatus() == sf::Sound::Playing){
-		cout << "Playing " << endl;
-		// do a little trick here, pause the sound and play again
-		sound.pause(); 
-		sound.play();
-	}
+
 }
