@@ -82,6 +82,7 @@ ShaderSystem::ShaderSystem()
 	loadShaders("reflect.vert", "reflect.frag");
 	loadShaders("refract.vert", "refract.frag");
 	loadShaders("grass.vert", "grass.frag");
+	loadShaders("edge.vert", "edge.frag");
 }
 
 

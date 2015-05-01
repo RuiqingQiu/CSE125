@@ -124,7 +124,7 @@ void Window::initialize(void)
 		}
 	}
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	
@@ -225,6 +225,9 @@ void Window::reshapeCallback(int w, int h) {
 	//glFrustum(-1, 1, -1 , 1, 1,5);
 	g_pCore->pGameView->pViewCamera->setCamInternals(60.0, double(Window::width) / (double)Window::height, 0.1, 30.0);
 	factory->reshapeFunc(w, h);
+
+	//Reshape, set up frame buffer object again based on the new width and height
+	setupFBO();
 }
 
 //----------------------------------------------------------------------------
@@ -235,6 +238,8 @@ void Window::displayCallback() {
 
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
+
+	//Every frame, first update the objects from server infos
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
 	if (p!=nullptr) {
 		switch (p->packet_types){
@@ -253,7 +258,7 @@ void Window::displayCallback() {
 				break;
 			}
 		}
-		//update
+		//clean memory
 		for each (PlayerInfo* pi in p->player_infos)
 		{
 			delete(pi);
@@ -262,20 +267,10 @@ void Window::displayCallback() {
 	}
 	
 	
-
+	//Draw everything
 	g_pCore->pGameView->VOnRender();
-
-	//cout << "on display " << endl;
-
-	//test for camera
-	
-	//glPopMatrix();
-	//Tell OpenGL to clear any outstanding commands in its command buffer
-	//This will make sure that all of our commands are fully executed before
-	//we swap buffers and show the user the freshly drawn frame
 	glFlush();
-	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

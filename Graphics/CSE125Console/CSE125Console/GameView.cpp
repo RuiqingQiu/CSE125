@@ -2,7 +2,7 @@
 #include "GameView.h"
 #include "SkyBox.h"
 #include <algorithm>
-
+#include "Window.h"
 
 GameView::GameView()
 {	
@@ -24,13 +24,42 @@ bool pairCompare(const std::pair<float, GeoNode*>& firstElem, const std::pair<fl
 	return firstElem.first < secondElem.first;
 }
 
-
-void GameView::VOnRender()
-{
-	//Clear color and depth buffers
+void GameView::first_pass(){
+	glBindFramebuffer(GL_FRAMEBUFFER, Window::shader_system->fb);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glEnable(GL_TEXTURE_2D);
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+
+	Window::shader_system->BindShader(EDGE_SHADER);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	pViewCamera->setUpCamera();
+	Window::shader_system->UnbindShader();
+}
+
+void GameView::second_pass(){
+	
+	//Code below this is second pass
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//Clear color and depth buffers
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//Set the OpenGL matrix mode to ModelView
+
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	pViewCamera->setUpCamera();
@@ -49,7 +78,7 @@ void GameView::VOnRender()
 	}
 
 	//sorting grass from back to front before drawing
-	
+
 	float ptr[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, ptr);
 	Matrix4 modelview;
@@ -80,25 +109,28 @@ void GameView::VOnRender()
 	{
 		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
 		{
-		Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z ,1);
-		Vector4 position = modelview * (localpos);
-		float z = position.z;
+			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
+			Vector4 position = modelview * (localpos);
+			float z = position.z;
 
-		pair<float, GeoNode*> p = make_pair(z, node);
-		depthvec.push_back(p);
+			pair<float, GeoNode*> p = make_pair(z, node);
+			depthvec.push_back(p);
 		}
 	}
-	
+
 	sort(depthvec.begin(), depthvec.end(), pairCompare);
 
 
 	for each (pair<float, GeoNode*> p in depthvec)
 	{
-			p.second->VOnDraw();
+		p.second->VOnDraw();
 	}
-
-	
-
+}
+void GameView::VOnRender()
+{
+	//Code below is first pass
+	first_pass();
+	second_pass();
 }
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)

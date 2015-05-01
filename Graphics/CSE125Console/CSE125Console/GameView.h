@@ -35,6 +35,9 @@ public:
 	Camera* pViewCamera;
 	GamePlayer* pPlayer;
 
+	void first_pass();
+	void second_pass();
+
 	virtual void VOnRender(); //must have
 	virtual void VOnClientUpdate(GameInfoPacket* info); //must have
 	virtual void VUpdate();
