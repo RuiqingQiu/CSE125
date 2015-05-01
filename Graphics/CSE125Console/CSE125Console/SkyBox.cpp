@@ -43,7 +43,7 @@ GLuint loadCubemap(vector<string> faces)
 			GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
 			GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image
 			);
-		//SOIL_free_image_data(image);
+		SOIL_free_image_data(image);
 	}
 	/*DEBUG CODE */ 
 	/*
@@ -85,16 +85,6 @@ void SkyBox::VOnClientUpdate(GameInfoPacket* pData){
 
 void SkyBox::VOnDraw(){
 
-	/*
-	glEnable(GL_TEXTURE_CUBE_MAP);
-	glActiveTexture(GL_TEXTURE0);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-	*/
 	glDisable(GL_CULL_FACE);
 	Window::shader_system->BindShader(SKYBOX_SHADER);
 	glBegin(GL_QUADS);
@@ -147,7 +137,6 @@ void SkyBox::VOnDraw(){
 	glEnd();
 
 	glPopMatrix();
-	//glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
 	Window::shader_system->UnbindShader();
 }

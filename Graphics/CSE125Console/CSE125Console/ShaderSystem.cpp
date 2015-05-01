@@ -104,9 +104,6 @@ bool ShaderSystem::loadShaders(string vertex_shader_path, string fragment_shader
 	vertexShaderHandle = loadShaderFromFile(v_str, GL_VERTEX_SHADER);
 	fragmentShaderHandle = loadShaderFromFile(f_str, GL_FRAGMENT_SHADER);
 
-	//vertexShaderHandle = loadShaderFromFile(v_str, GL_VERTEX_SHADER);
-	//fragmentShaderHandle = loadShaderFromFile(f_str, GL_FRAGMENT_SHADER);
-
 	GLhandleARB shader_id = glCreateProgramObjectARB();
 	shader_ids.push_back(shader_id);
 	glAttachObjectARB(shader_id, vertexShaderHandle);

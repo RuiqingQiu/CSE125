@@ -13,12 +13,16 @@
 class ShaderSystem
 {
 public:
-	//Shader id
+	//Shader ids
 	vector<GLhandleARB> shader_ids;
-	//Four maps
-	GLuint texturaID[4];
 
-
+	//These are for two pass rendering
+	//FBO handle
+	GLuint fb;
+	//Color texture from FBO
+	GLuint color;
+	//Depth buffer from FBO
+	GLuint depth;
 	ShaderSystem();
 	bool loadShaders(string vertex_shader_path, string fragment_shader_path);
 	void BindShader(int type);

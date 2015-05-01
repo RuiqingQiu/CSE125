@@ -36,12 +36,73 @@ static Fire* fire;
 static Model3D*object;
 //Init server info here later
 
+void CHECK_FRAMEBUFFER_STATUS()
+{
+	GLenum status;
+	status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
+	switch (status) {
+	case GL_FRAMEBUFFER_COMPLETE:
+		cout << "frame buffer complete" << endl;
+		break;
+
+	case GL_FRAMEBUFFER_UNSUPPORTED:
+		/* choose different formats */
+		cout << "frame buffer not supported" << endl;
+
+		break;
+
+	default:
+		/* programming error; will fail on all hardware */
+		fputs("Framebuffer Error\n", stderr);
+		exit(-1);
+	}
+}
+
+void setupFBO(){
+	glGenFramebuffers(1, &Window::shader_system->fb);
+	glGenTextures(1, &Window::shader_system->color);
+	glGenRenderbuffers(1, &Window::shader_system->depth);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, Window::shader_system->fb);
+
+	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
+	glTexImage2D(GL_TEXTURE_2D,
+		0,
+		GL_RGBA,
+		Window::width, Window::height,
+		0,
+		GL_RGBA,
+		GL_UNSIGNED_BYTE,
+		NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, Window::shader_system->color, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, Window::shader_system->depth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, Window::width, Window::height);
+	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, 
+		GL_RENDERBUFFER, Window::shader_system->depth);
+
+	CHECK_FRAMEBUFFER_STATUS();
+
+	//Switch back to default 
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+}
+
+
 void Window::initialize(void)
 {
 	//factory = new viewFactory(width, height);
 	
 	factory = new viewFactory(true);  //for no gui
+	
+	//Shader part
 	shader_system = new ShaderSystem();
+	setupFBO();
+	
+	
 	m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();
 	//g_pCore->skybox = new SkyBox("skyboxes/space");
