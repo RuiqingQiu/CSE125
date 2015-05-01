@@ -49,6 +49,7 @@ void battleTimer::createNumbers(){
 
 	for (int i = 0; i < DIGITS; i++){
 		digits[i] = new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
+		cout << "number y is " << (yPos + off) << endl;
 	}
 	int off_comma = off + nSize;
 
@@ -106,7 +107,8 @@ void battleTimer::draw(){
 	double off = (10.0 / 100.0) * height;
 	int nSize = height - (off*2.0);
 	//add one comma and draw
-	guiItem* comma = new guiItem("text/symbols/colon.jpg", 945,970,nSize,nSize); // all things have the same size 
+	//guiItem* comma = new guiItem("text/symbols/colon.jpg", 945,970,nSize,nSize); // all things have the same size 
+	guiItem* comma = new guiItem("text/symbols/colon.jpg", (xPos + width - off) - (nSize* 3), yPos + off, nSize, nSize); // all things have the same size 
 	comma->draw();
 }
 
@@ -119,7 +121,7 @@ void battleTimer::rePosition(int x, int y, int w, int h){
 		digits[i] = new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
 	}
 	int off_comma = off + nSize;
-
+	guiItem* comma = new guiItem("text/symbols/colon.jpg", (xPos + width - off) - (nSize * 3), yPos + off, nSize, nSize); // all things have the same size 
 	for (int i = DIGITS; i < NUM_DIGITS; i++) {
 		digits[i] = new numbers((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
 	}

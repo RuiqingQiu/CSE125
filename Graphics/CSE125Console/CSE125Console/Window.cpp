@@ -11,6 +11,7 @@
 
 #include "viewFactory.h"
 #include "Cube.h"
+#include "Fire.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
 #include "SkyBox.h"
@@ -20,42 +21,44 @@
 #include "Teapot.h"
 #include "Model3DFactory.h"
 #include "Grass.h"
-
 #define TESTCAM 1
-
-#define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
 static viewFactory * factory; // factory of gui
 static Model3DFactory* m_factory;
+ShaderSystem* Window::shader_system;
 static int counter = 0;
 static Cube* cube;
+static Fire* fire;
+
 static Model3D*object;
 //Init server info here later
 
 void Window::initialize(void)
 {
 	//factory = new viewFactory(width, height);
+	
 	factory = new viewFactory(true);  //for no gui
+	shader_system = new ShaderSystem();
 	m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();
-	g_pCore->skybox = new SkyBox("skyboxes/space");
+	//g_pCore->skybox = new SkyBox("skyboxes/space");
+	g_pCore->skybox = new SkyBox("skyboxes/clouds");
 	//g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
+
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
 			float ri = (rand() % 10 - 5) * 0.001;
 			float rj = (rand() % 10 - 5) * 0.001;
-
 			Grass * grass = new Grass();
-			grass->localTransform.position = Vector3(i*0.01 - 2 + ri, 0, j*0.01 - 2 + rj);
+			grass->localTransform.position = Vector3(i*0.1 - 2 + ri, 1, j*0.1 - 2 + rj);
 			grass->localTransform.rotation = Vector3(0, 0, 0);
-			grass->localTransform.scale = Vector3(0.2, 0.2, 0.2);
 			view->PushGrassNode(grass);
 		}
 	}
@@ -63,119 +66,23 @@ void Window::initialize(void)
 	//set color
 	//glColor3f(1, 1, 1);
 	/*
-	cube = new Cube(1);
-	cube->localTransform.position = Vector3(0, 0, 0);
-	cube->localTransform.rotation= Vector3(-180, 40, 40);
-	cube->identifier = 1;
-	view->PushGeoNode(cube);
-	view->pViewCamera->FollowingTarget = cube;
-	*/
-	
-	/*
-	object = Model3DFactory::generateObjectWithType(Discount);
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(Needle);
-	object->localTransform.position = Vector3(-3, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	*/
-	/*
-	object = Model3DFactory::generateObjectWithType(BasicCube);
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	*/
-	/*
-	object = Model3DFactory::generateObjectWithType(WoodenCube);
-	object->localTransform.position = Vector3(-8, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(-10, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(Tire);
-	object->localTransform.position = Vector3(-13, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(GlowingCube);
-	object->localTransform.position = Vector3(-15, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	*/
-	//setup light
-	//view->PushGeoNode(g_pCore->light);
-	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
-
-	/*
-	Plane* p = new Plane(50);
-	p->setColor(1, 1, 0);
-	p->localTransform.position = Vector3(0, -5, 0);
-	p->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(p);*/
-	/*
-	p = new Plane(50);
-	p->setColor(1, 0, 0);
-	p->localTransform.position = Vector3(20, 0, 0);
-	p->localTransform.rotation = Vector3(0, 0, 90);
-	view->PushGeoNode(p);
-
-	p = new Plane(50);
-	p->setColor(0, 1, 0);
-	p->localTransform.position = Vector3(-20, 0, 0);
-	p->localTransform.rotation = Vector3(0, 0, -90);
-	view->PushGeoNode(p);*/
-	/*
-	Model3D *object = new Model3D("woodcube.obj");
-	object->localTransform.position = Vector3(0, 0, -10);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
 	*/
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	factory->battlemode->PushGeoNode(g_pCore->light);
-	//factory->battlemode->PushGeoNode(object);
-	//factory->battlemode->PushGeoNode(p);
-
-	//test shadow view
-	//HardShadowView* shadowview = new HardShadowView();
-	//factory->defaultView = shadowview;
-
-	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
-
-	//setup shader
-	//init shader
-	//GLuint program = LoadShader("shadow.vert", "shadow.frag");
-	//glUseProgram(program);
-
-	//setup factory
-	//g_pCore->pGameView = view;
+	
 	factory->defaultView = view;
 	factory->setView();
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 
-
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
+	
 	//connect to server
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.232");
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.168");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.23");
 }
 
 //----------------------------------------------------------------------------
@@ -249,9 +156,9 @@ void Window::reshapeCallback(int w, int h) {
     glViewport(0, 0, w, h);                                          //Set new viewport size
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(60.0, double(Window::width) / (double)Window::height, 1, 1000.0); //Set perspective projection viewing frustum
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
 	//glFrustum(-1, 1, -1 , 1, 1,5);
-
+	g_pCore->pGameView->pViewCamera->setCamInternals(60.0, double(Window::width) / (double)Window::height, 0.1, 30.0);
 	factory->reshapeFunc(w, h);
 }
 
@@ -282,8 +189,15 @@ void Window::displayCallback() {
 			}
 		}
 		//update
+		for each (PlayerInfo* pi in p->player_infos)
+		{
+			delete(pi);
+		}
+		delete(p);
 	}
 	
+	
+
 	g_pCore->pGameView->VOnRender();
 
 	//cout << "on display " << endl;

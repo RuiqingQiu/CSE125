@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Window.h"
 #include "SkyBox.h"
 #define GL_CLAMP_TO_EDGE 0x812F
 
@@ -18,137 +19,137 @@ SkyBox::~SkyBox()
 {
 }
 
+GLuint loadCubemap(vector<string> faces)
+{
+
+
+	cout << "in load cube map" << endl;
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+	glActiveTexture(GL_TEXTURE0);
+
+	int width, height;
+	unsigned char* image;
+	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+
+	for (GLuint i = 0; i < faces.size(); i++)
+	{
+		cout << faces[i] << endl;
+		char *str = new char[faces[i].length() + 1];
+		strcpy(str, faces[i].c_str());
+		image = SOIL_load_image(str, &width, &height, 0, SOIL_LOAD_RGB);
+		//cout << image << endl;
+		glTexImage2D(
+			GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
+			GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image
+			);
+		//SOIL_free_image_data(image);
+	}
+	/*DEBUG CODE */ 
+	/*
+	        GLubyte red[3] = {255, 0, 0};
+	        GLubyte green[3] = {0, 255, 0};
+	        GLubyte blue[3] = {0, 0, 255};
+	        GLubyte cyan[3] = {0, 255, 255};
+	        GLubyte magenta[3] = {255, 0, 255};
+	        GLubyte yellow[3] = {255, 255, 0};
+	        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X ,
+	                     0,3,1,1,0,GL_RGB,GL_UNSIGNED_BYTE, red);
+	        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X ,
+	                     0,3,1,1,0,GL_RGB,GL_UNSIGNED_BYTE, green);
+	        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y ,
+	                     0,3,1,1,0,GL_RGB,GL_UNSIGNED_BYTE, blue);
+	        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y ,
+	                     0,3,1,1,0,GL_RGB,GL_UNSIGNED_BYTE, cyan);
+	        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z ,
+	                     0,3,1,1,0,GL_RGB,GL_UNSIGNED_BYTE, magenta);
+	        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z ,
+	                     0,3,1,1,0,GL_RGB,GL_UNSIGNED_BYTE, yellow);
+	*/
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+
+
+	return textureID;
+}
+
+
 void SkyBox::VOnClientUpdate(GameInfoPacket* pData){
 
 }
 
 void SkyBox::VOnDraw(){
-	glUseProgramObjectARB(0);
 
+	/*
+	glEnable(GL_TEXTURE_CUBE_MAP);
 	glActiveTexture(GL_TEXTURE0);
-	glDisable(GL_LIGHTING);
-	glPushMatrix();
-	//glLoadMatrixd(glmatrix.getPointer());
-
-	glEnable(GL_TEXTURE_2D);
-	//glActiveTexture(GL_TEXTURE1);
-
-	glBindTexture(GL_TEXTURE_2D, texture[1]);
-	// Make sure no bytes are padded:
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	// Select GL_MODULATE to mix texture with polygon color for shading:
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	// Use bilinear interpolation:
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-	glEnable(GL_TEXTURE_2D);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+	*/
+	glDisable(GL_CULL_FACE);
+	Window::shader_system->BindShader(SKYBOX_SHADER);
 	glBegin(GL_QUADS);
+
+	//Back
 	glNormal3f(0, 0, -1);
-	glTexCoord2f(0, 0); glVertex3f(size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);
-	glTexCoord2f(1, 0); glVertex3f(-size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);
-	glTexCoord2f(1, 1); glVertex3f(-size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //back up right
-	glTexCoord2f(0, 1); glVertex3f(size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //back up left
+	glVertex3f(size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);
+	glVertex3f(-size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);
+	glVertex3f(-size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //back up right
+	glVertex3f(size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //back up left
 	glEnd();
 
 	//Front[0]
 
-	glBindTexture(GL_TEXTURE_2D, texture[0]);
-	// Make sure no bytes are padded:
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	// Select GL_MODULATE to mix texture with polygon color for shading:
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	// Use bilinear interpolation:
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_QUADS);
 	glNormal3f(0, 0, 1);
-	glTexCoord2f(0, 0); glVertex3f(-size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube);
-	glTexCoord2f(1, 0); glVertex3f(size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube);
-	glTexCoord2f(1, 1); glVertex3f(size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube);   //up right
-	glTexCoord2f(0, 1); glVertex3f(-size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube); //up left
+	glVertex3f(-size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube);
+	glVertex3f(size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube);
+	glVertex3f(size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube);   //up right
+	glVertex3f(-size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube); //up left
 	glEnd();
 
-	//Left[2]
-	glBindTexture(GL_TEXTURE_2D, texture[2]);
-	// Make sure no bytes are padded:
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	// Select GL_MODULATE to mix texture with polygon color for shading:
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	// Use bilinear interpolation:
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	//right
 	glBegin(GL_QUADS);
 	glNormal3f(-1, 0, 0);
-	glTexCoord2f(0, 0); glVertex3f(-size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);
-	glTexCoord2f(1, 0); glVertex3f(-size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube);
-	glTexCoord2f(1, 1); glVertex3f(-size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube); //up
-	glTexCoord2f(0, 1); glVertex3f(-size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //up
+	glVertex3f(-size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);
+	glVertex3f(-size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube);
+	glVertex3f(-size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube); //up
+	glVertex3f(-size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //up
 	glEnd();
 
-
-	//Right[3]
-	glBindTexture(GL_TEXTURE_2D, texture[3]);
-	// Make sure no bytes are padded:
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	// Select GL_MODULATE to mix texture with polygon color for shading:
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	// Use bilinear interpolation:
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	//left
 	glBegin(GL_QUADS);
 	glNormal3f(1, 0, 0);
-	glTexCoord2f(0, 0); glVertex3f(size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube);
-	glTexCoord2f(1, 0); glVertex3f(size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);
-	glTexCoord2f(1, 1); glVertex3f(size_of_texture_cube, size_of_texture_cube, size_of_texture_cube);
-	glTexCoord2f(0, 1); glVertex3f(size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube);
+	 glVertex3f(size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube);
+	 glVertex3f(size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);
+	 glVertex3f(size_of_texture_cube, size_of_texture_cube, size_of_texture_cube);
+	glVertex3f(size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube);
 	glEnd();
 
-	//Top[4]
-	glBindTexture(GL_TEXTURE_2D, texture[4]);
-	// Make sure no bytes are padded:
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	// Select GL_MODULATE to mix texture with polygon color for shading:
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	// Use bilinear interpolation:
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glBegin(GL_QUADS);
 
 	glNormal3f(0.0, 1.0, 0.0);
-	glTexCoord2f(0, 1); glVertex3f(-size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //connect to back up left
-	glTexCoord2f(0, 0); glVertex3f(-size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube); //connect to front up left
-	glTexCoord2f(1, 0); glVertex3f(size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube); //connect to front up right
-	glTexCoord2f(1, 1); glVertex3f(size_of_texture_cube, size_of_texture_cube, size_of_texture_cube);  //connect to back right
 
+	glVertex3f(-size_of_texture_cube, size_of_texture_cube, size_of_texture_cube); //front up right
+	glVertex3f(size_of_texture_cube, size_of_texture_cube, size_of_texture_cube);  //connect to front left
+	glVertex3f(size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube); //connect to front up right
+	glVertex3f(-size_of_texture_cube, size_of_texture_cube, -size_of_texture_cube); //connect to front up left
 
 	glEnd();
-	glDisable(GL_TEXTURE_2D);
 
 	glPopMatrix();
+	//glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+	Window::shader_system->UnbindShader();
 }
 void SkyBox::VOnUpdate(GameInfoPacket* pData){
 
@@ -156,7 +157,36 @@ void SkyBox::VOnUpdate(GameInfoPacket* pData){
 
 bool SkyBox::initSkyBox()
 {
-	std::string concat = skyBoxName + "_front.jpg";
+	cout << "enter init skybox" << endl;
+	vector<string> faces;
+
+	/*
+	faces.push_back("skyboxes/alpine_left.jpg");
+	faces.push_back("skyboxes/alpine_right.jpg");
+	faces.push_back("skyboxes/alpine_top.jpg");
+	faces.push_back("skyboxes/alpine_top.jpg");
+	faces.push_back("skyboxes/alpine_back.jpg");
+	faces.push_back("skyboxes/alpine_front.jpg");
+	*/
+	string concat = skyBoxName + "_left.jpg";
+	faces.push_back(concat);
+	cout << faces[0] << endl;
+	concat = skyBoxName + "_right.jpg";
+	faces.push_back(concat);
+	concat = skyBoxName + "_top.jpg";
+	faces.push_back(concat);
+	concat = skyBoxName + "_top.jpg";
+	faces.push_back(concat);
+	concat = skyBoxName + "_back.jpg";
+	faces.push_back(concat);
+	concat = skyBoxName + "_front.jpg";
+	faces.push_back(concat);
+
+	cubemapTexture = loadCubemap(faces);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+
+	/*
 	texture[0] = SOIL_load_OGL_texture
 		(
 		concat.c_str(),
@@ -230,5 +260,6 @@ bool SkyBox::initSkyBox()
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
+	*/
 	return true;
 }

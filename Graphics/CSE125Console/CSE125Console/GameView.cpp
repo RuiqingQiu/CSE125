@@ -3,6 +3,7 @@
 #include "SkyBox.h"
 #include <algorithm>
 
+
 GameView::GameView()
 {	
 	pViewCamera = new Camera();
@@ -41,7 +42,7 @@ void GameView::VOnRender()
 		{
 			node->VOnDraw();
 		}
-		else
+		else if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
 		{
 			node->VOnDraw();
 		}
@@ -73,10 +74,11 @@ void GameView::VOnRender()
 	modelview.m[3][3] = ptr[15];
 
 	modelview.transpose();
+
 	vector<pair<float, GeoNode*>> depthvec;
 	for each (GeoNode* node in GrassList)
 	{
-		if (true)
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
 		{
 		Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z ,1);
 		Vector4 position = modelview * (localpos);
@@ -92,11 +94,7 @@ void GameView::VOnRender()
 
 	for each (pair<float, GeoNode*> p in depthvec)
 	{
-
-		//if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
-		//{
 			p.second->VOnDraw();
-		//}
 	}
 
 	
@@ -250,6 +248,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 				NodeList.push_back(object);
 				info->player_infos[i]->processed = true;
 				break;
+
 			}
 
 			case THREEBYTHREE_GLOWING:{

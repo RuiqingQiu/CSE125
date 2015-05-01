@@ -68,6 +68,9 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 	else if (key == 'd'){
 		g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
 	}
+	else if (key == 'q'){
+		g_pCore->pGamePacketManager->SendShootEvent(g_pCore->pPlayer->playerid);
+	}
 	else if (key == 'z'){
 		//g_pCore->pGameView->pViewCamera.rotateLeft();
 		g_pCore->pGameView->pViewCamera->position->x -= 1;
@@ -82,10 +85,10 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		g_pCore->pGameView->pViewCamera->position->z -= 1;
 	}
 	else if (key == 'x'){
-		g_pCore->pGameView->pViewCamera->position->y += 1;
+		g_pCore->pGameView->pViewCamera->position->y += 0.1;
 	}
 	else if (key == 'X'){
-		g_pCore->pGameView->pViewCamera->position->y -= 1;
+		g_pCore->pGameView->pViewCamera->position->y -= 0.1;
 	}
 	else if (key == 'v'){
 		g_pCore->pGameView->pViewCamera->rotation->x += 10;

@@ -76,29 +76,12 @@ GLhandleARB loadShader1(char* filename, unsigned int type)
 	return handle;
 }
 
+/*
+ * Constructor in charge of loading maps
+ */
 RenderObject::RenderObject(string filename, string texture, string normal, string gloss,
 	string metal)
 {
-	GLhandleARB vertexShaderHandle;
-	GLhandleARB fragmentShaderHandle;
-	/*
-	char *v_str = new char[vertex_shader.length() + 1];
-	strcpy(v_str, vertex_shader.c_str());
-	char *f_str = new char[fragment_shader.length() + 1];
-	strcpy(f_str, fragment_shader.c_str());
-	*/
-	vertexShaderHandle = loadShader1("shadow.vert", GL_VERTEX_SHADER);
-	fragmentShaderHandle = loadShader1("shadow.frag", GL_FRAGMENT_SHADER);
-
-	shader_id = glCreateProgramObjectARB();
-
-	glAttachObjectARB(shader_id, vertexShaderHandle);
-	glAttachObjectARB(shader_id, fragmentShaderHandle);
-	glLinkProgramARB(shader_id);
-
-	//glUseProgramObjectARB(shader_id);
-
-
 	glGenTextures(3, texturaID);
 	int width, height;
 	//unsigned char* image;
@@ -152,29 +135,9 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 		cout << "error 3" << endl;
 	}
 
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texturaID[0]);
-
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, texturaID[1]);
-
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, texturaID[2]);
-
-	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, texturaID[3]);
-
-	glUniform1i(glGetUniformLocation(shader_id, "tex"), 0);
-	glUniform1i(glGetUniformLocation(shader_id, "norm"), 1);
-	glUniform1i(glGetUniformLocation(shader_id, "gloss"), 2);
-	glUniform1i(glGetUniformLocation(shader_id, "metallic"), 3);
-	glUniform1i(glGetUniformLocation(shader_id, "light_position"), 4);
-
 	std::string inputfile = filename;
 
 	std::string err = tinyobj::LoadObj(shapes, materials, inputfile.c_str(), NULL);
-
 	if (!err.empty()) {
 		std::cerr << err << std::endl;
 		exit(1);

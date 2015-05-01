@@ -94,6 +94,8 @@
     <ClInclude Include="ComponentNode.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
+    <ClInclude Include="Fire.h" />
+    <ClInclude Include="Grass.h" />
     <ClInclude Include="gui.h" />
     <ClInclude Include="guiGameInput.h" />
     <ClInclude Include="guiItem.h" />
@@ -107,15 +109,19 @@
     <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
     <ClInclude Include="Model3DFactory.h" />
+    <ClInclude Include="Model3DGroup.h" />
     <ClInclude Include="numbers.h" />
     <ClInclude Include="PacketDecoder.h" />
+    <ClInclude Include="Particles.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="roboBase.h" />
     <ClInclude Include="robot.h" />
     <ClInclude Include="scoreBox.h" />
     <ClInclude Include="scrollBox.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderSystem.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="GameCore.h" />
     <ClInclude Include="GameInfoPacket.h" />
@@ -159,6 +165,8 @@
     <ClCompile Include="ClientNetwork.cpp" />
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="Grass.cpp" />
     <ClCompile Include="gui.cpp" />
     <ClCompile Include="guiGameInput.cpp" />
     <ClCompile Include="guiItem.cpp" />
@@ -168,14 +176,18 @@
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="Model3DFactory.cpp" />
+    <ClCompile Include="Model3DGroup.cpp" />
     <ClCompile Include="numbers.cpp" />
     <ClCompile Include="PacketDecoder.cpp" />
+    <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RenderObject.cpp" />
+    <ClCompile Include="roboBase.cpp" />
     <ClCompile Include="robot.cpp" />
     <ClCompile Include="scoreBox.cpp" />
     <ClCompile Include="scrollBox.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderSystem.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="GameCore.cpp" />
     <ClCompile Include="GameInfoPacket.cpp" />
@@ -230,18 +242,25 @@
     <ResourceCompile Include="CSE125Console.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="better.frag" />
+    <None Include="better.vert" />
     <None Include="BlurFragmentShader.frag" />
     <None Include="BlurVertexShader.vert" />
     <None Include="FragmentShader.frag" />
+    <None Include="grass.frag" />
+    <None Include="grass.vert" />
     <None Include="hard_shadow.frag" />
     <None Include="hard_shadow.vert" />
+    <None Include="highlight.frag" />
+    <None Include="highlight.vert" />
+    <None Include="reflect.frag" />
+    <None Include="reflect.vert" />
+    <None Include="refract.frag" />
+    <None Include="refract.vert" />
     <None Include="shadow.frag" />
     <None Include="shadow.vert" />
-    <None Include="simple.frag" />
-    <None Include="simple.vert" />
-    <None Include="StoreDepthFragmentShader.frag" />
-    <None Include="StoreDepthVertexShader.vert" />
-    <None Include="VertexShader.vert" />
+    <None Include="skybox.frag" />
+    <None Include="skybox.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

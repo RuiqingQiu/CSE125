@@ -3,10 +3,12 @@
 #include "gui.h"
 #include "buildTimer.h"
 #include "scoreBox.h"
+#include "roboBase.h"
 
-#define MAX_BLOCKS 27
+#define MAX_BLOCKS 23
 #define GRID_SIZE 5
 #define HALF_GRID 2
+#define BASE_SIZE 5  //number of objects define base: base 3x3 plus 4 wheels
 
 class buildView : public gui {
 public:

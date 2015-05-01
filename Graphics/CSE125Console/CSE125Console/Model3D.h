@@ -11,10 +11,11 @@
 class Model3D: public GeoNode
 {
 public:
+	bool auto_rotate = false;
 	//std::vector<tinyobj::shape_t> shapes;
 	//std::vector<tinyobj::material_t> materials;
 	RenderObject* render_obj;
-
+	int shader_type;
 	//File path for the vertex and fragment shader
 	string vertex_shader;
 	string fragment_shader;
@@ -30,13 +31,15 @@ public:
 	void setNormalMap(string pathname);
 	void setGlossMap(string pathname);
 	void setMetallicMap(string pathname);
-	void setVertexShader(string pathname);
-	void setFragmentShader(string pathname);
+	void setShaderType(int type);
+
 
 	virtual void VOnClientUpdate(GameInfoPacket* pData);
 
 	virtual void VOnDraw();
 	virtual void VOnUpdate(GameInfoPacket* pData);
+
+	Vector3 offset;
 private:
 	bool isTextured = false;
 };

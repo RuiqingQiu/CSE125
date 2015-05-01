@@ -1,8 +1,9 @@
 #pragma once
+#ifndef __SKYBOX__
+#define __SKYBOX__
 #include <string>
 #include "GeoNode.h"
 #include "glew.h"
-//#include "Shader.h"
 #include <GL/glut.h>
 #include "Transform.h"
 #include <gl\GL.h>
@@ -16,8 +17,8 @@ class SkyBox :
 	public GeoNode
 {
 public:
-	float size_of_texture_cube = 100;
-
+	float size_of_texture_cube = 200;
+	GLuint cubemapTexture;
 	SkyBox();
 	//pass in format: [path]/[skytexture name] do not pass in [_front.jpg] segment
 	SkyBox(std::string filename);
@@ -34,4 +35,4 @@ private :
 
 	std::string skyBoxName;
 };
-
+#endif

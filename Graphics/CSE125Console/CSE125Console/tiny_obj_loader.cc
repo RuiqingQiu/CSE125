@@ -31,8 +31,16 @@
 #include <map>
 #include <fstream>
 #include <sstream>
-
+#include "Vector3.h"
 #include "tiny_obj_loader.h"
+
+void generateTangents(
+	const std::vector<float> & points,
+	const std::vector<float> & normals,
+	const std::vector<unsigned int> & faces,
+	const std::vector<float> & texCoords,
+	std::vector<Vector4> & tangents);
+
 
 namespace tinyobj {
 
@@ -59,6 +67,7 @@ struct obj_shape {
   std::vector<float> v;
   std::vector<float> vn;
   std::vector<float> vt;
+  std::vector<float> tangent;
 };
 
 static inline bool isSpace(const char c) { return (c == ' ') || (c == '\t'); }
@@ -843,6 +852,11 @@ std::string LoadObj(std::vector<shape_t> &shapes,
 
   bool ret = exportFaceGroupToShape(shape, vertexCache, v, vn, vt, faceGroup,
                                     material, name, true);
+  generateTangents(shape.mesh.positions, shape.mesh.normals, shape.mesh.indices, shape.mesh.texcoords, shape.mesh.tangent);
+  for (int i = 0; i < shape.mesh.tangent.size(); i++){
+	              cout << "tangent are ";
+	             shape.mesh.tangent[i].print("...");
+	        }
   if (ret) {
     shapes.push_back(shape);
   }
@@ -850,4 +864,85 @@ std::string LoadObj(std::vector<shape_t> &shapes,
 
   return err.str();
 }
+}
+
+void generateTangents(
+	const std::vector<float> & points,
+	const std::vector<float> & normals,
+	const std::vector<unsigned int> & faces,
+	const std::vector<float> & texCoords,
+	//vec4
+	std::vector<Vector4> & tangents)
+{
+	//vec3
+	std::vector<Vector3> tan1Accum;
+	//vec3
+	std::vector<Vector3> tan2Accum;
+	cout << "number of points are " << points.size() / 3 << endl;
+	//For each point, there's a tangent
+	for (int i = 0; i < points.size() / 3; i++) {
+		tan1Accum.push_back(Vector3(0, 0, 0));
+
+		tan2Accum.push_back(Vector3(0, 0, 0));
+
+		tangents.push_back(Vector4(0, 0, 0, 0));
+	}
+	cout << "number of faces are " << faces.size() / 3 << endl;
+	// Compute the tangent vector
+	for (int i = 0; i < faces.size(); i += 3)
+	{
+		int i1 = faces[i + 0];
+		int i2 = faces[i + 1];
+		int i3 = faces[i + 2];
+		Vector3 p1 = Vector3(points[3 * i1 + 0], points[3 * i1 + 1], points[3 * i1 + 2]);
+		Vector3 p2 = Vector3(points[3 * i2 + 0], points[3 * i2 + 1], points[3 * i2 + 2]);
+		Vector3 p3 = Vector3(points[3 * i3 + 0], points[3 * i3 + 1], points[3 * i3 + 2]);
+
+		Vector3 tc1 = Vector3(texCoords[2 * i1 + 0], texCoords[2 * i1 + 1], 0);
+		Vector3 tc2 = Vector3(texCoords[2 * i2 + 0], texCoords[2 * i2 + 1], 0);
+		Vector3 tc3 = Vector3(texCoords[2 * i3 + 0], texCoords[2 * i3 + 1], 0);
+
+		Vector3 q1 = p2 - p1;
+		Vector3 q2 = p3 - p1;
+		float s1 = tc2.x - tc1.x, s2 = tc3.x - tc1.x;
+		float t1 = tc2.y - tc1.y, t2 = tc3.y - tc1.y;
+		float r = 1.0f / (s1 * t2 - s2 * t1);
+		Vector3 tan1((t2*q1.x - t1*q2.x) * r,
+			(t2*q1.y - t1*q2.y) * r,
+			(t2*q1.z - t1*q2.z) * r);
+		Vector3 tan2((s1*q2.x - s2*q1.x) * r,
+			(s1*q2.y - s2*q1.y) * r,
+			(s1*q2.z - s2*q1.z) * r);
+
+		tan1Accum[faces[i]] = tan1Accum[faces[i]] + tan1;
+		tan1Accum[faces[i + 1]] = tan1Accum[faces[i + 1]] + tan1;
+		tan1Accum[faces[i + 2]] = tan1Accum[faces[i + 2]] + tan1;
+		tan2Accum[faces[i]] = tan2Accum[faces[i]] + tan2;
+		tan2Accum[faces[i + 1]] = tan2Accum[faces[i + 1]] + tan2;
+		tan2Accum[faces[i + 2]] = tan2Accum[faces[i + 2]] + tan2;
+	}
+
+	for (int i = 0; i < points.size() / 3; i++)
+	{
+		Vector3 n = Vector3(normals[3 * i + 0], normals[3 * i + 1], normals[3 * i + 2]);
+		Vector3 t1 = tan1Accum[i];
+		Vector3 t2 = tan2Accum[i];
+
+		// Gram-Schmidt orthogonalize
+		n.scale(n.dot(n, t1));
+		Vector3 tmp = t1 - n;
+
+		tmp.normalize();
+		tangents[i] = Vector4(tmp.x, tmp.y, tmp.z, 0.0f);
+		// Store handedness in w
+		double tmp_w = n.dot(n.cross(n, t1), t2);
+		if (tmp_w < 0.0f){
+			tangents[i].w = -1.0;
+		}
+		else{
+			tangents[i].w = 1.0;
+		}
+	}
+	tan1Accum.clear();
+	tan2Accum.clear();
 }
