@@ -189,16 +189,21 @@ void GameLogic::gameStart(){
 					if (k == front)
 					{
 						Weapon* w = new RangedWeapon(GUN, gameObj);
+						gameObj->setBlockType(MACE);
 						cout << "weapon id: " << gameObj->getId() << endl;
 						robot->addWeapon(w);
+					}
+					else{
+						gameObj->setBlockType(BASICCUBE);
 					}
 				}
 				else
 				{
 					int yOffset = ((int)robot->getHeight() / 2) + 1;
 					gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+					gameObj->setBlockType(BASICCUBE);
 				}
-				gameObj->setBlockType(BASICCUBE);
+				
 				gameObj->setCollisionType(C_ROBOT_PARTS);
 				gameObj->setBelongTo(robot);
 				gameObj->createRigidBody(&objCollisionPair);
