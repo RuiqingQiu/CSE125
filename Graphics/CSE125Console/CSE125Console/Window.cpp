@@ -94,9 +94,9 @@ void setupFBO(){
 
 void Window::initialize(void)
 {
-	//factory = new viewFactory(width, height);
+	factory = new viewFactory(width, height);
 	
-	factory = new viewFactory(true);  //for no gui
+	//factory = new viewFactory(true);  //for no gui
 	
 	//Shader part
 	shader_system = new ShaderSystem();
