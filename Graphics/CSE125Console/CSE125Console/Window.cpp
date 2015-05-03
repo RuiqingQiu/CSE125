@@ -330,6 +330,7 @@ void Window::reshapeCallback(int w, int h) {
 void Window::displayCallback() {
 	clock_t startTime = clock();
 	soundObject->playMusic();
+	soundObject->playSound();
 
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	

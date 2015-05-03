@@ -15,9 +15,13 @@ public:
 private:	
 	//Init server info here later
 	// Load a sound buffer from a wav file
-	sf::SoundBuffer buffer;
-	sf::Sound sound;// lightweight obeject that plays loaded audio data from a sound buffer
+	sf::SoundBuffer hammerBuffer;
+	sf::SoundBuffer explosionBuffer;
+	
+
+	sf::Sound explosionSound; 
+	sf::Sound hammerSound;// lightweight obeject that plays loaded audio data from a sound buffer
+
+	// music will play for the whole game, all other effects are sound
 	sf::Music music;// stream the data on the fly from the source file, play music that lasts several minites
-
-
 };
