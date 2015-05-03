@@ -36,27 +36,29 @@ void ServerCore::serverLoop()
 		}
 		case INIT_STATE1:
 		{	
-			//action = gameLogic->waitToConnect();
-			action = ADDCLIENT;
+			action = gameLogic->waitToConnect();
+			//action = ADDCLIENT;
 			cout << "action for init1: " << action << endl;
 			break;
 		}
 		case INIT_STATE2:
 		{	
-			//action = gameLogic->waitToConnect();
-		    action = ADDCLIENT;
+			action = gameLogic->waitToConnect();
+		    //action = ADDCLIENT;
 			cout << "action for init2: " << action << endl;
 			break;
 		}
 		case INIT_STATE3:
 		{	
-			action = ADDCLIENT;
+			action = gameLogic->waitToConnect();
+			//action = ADDCLIENT;
 			break;
 		}
 		case BUILD_STATE:
 		{	
 			gameLogic->gameStart();
 		    action = TIMEUP;
+			cout << "buildMode" << endl;
 			break;
 		}
 		case GAME_STATE0:

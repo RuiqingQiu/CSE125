@@ -166,7 +166,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							      break;
 		}
 		case MOVE_LEFT: {
-			//cout << "Move Left" << endl;
+			cout << "Move Left" << endl;
 						ObjectEvents * e = new ObjectEvents(MOVE_LEFT);
 						string packetInfoStr = "";
 						int i;
@@ -188,7 +188,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						break;
 		}
 		case MOVE_RIGHT: {
-			//cout << "Move Right" << endl;
+			cout << "Move Right" << endl;
 							 ObjectEvents * e = new ObjectEvents(MOVE_RIGHT);
 							 string packetInfoStr = "";
 							 int i;
@@ -208,7 +208,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 	
 		}
 		case MOVE_BACKWARD: {
-		//	cout << "Move Backward" << endl;
+			cout << "Move Backward" << endl;
 								ObjectEvents * e = new ObjectEvents(MOVE_BACKWARD);
 								string packetInfoStr = "";
 								int i;
@@ -228,7 +228,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 
 		}
 		case MOVE_FORWARD: {
-			//cout << "Move Forward" << endl;
+			cout << "Move Forward" << endl;
 							   ObjectEvents * e = new ObjectEvents(MOVE_FORWARD);
 							   string packetInfoStr = "";
 							   int i;

@@ -87,6 +87,10 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 		}
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
+		if (trans.getOrigin().getY() < 0)
+		{
+			(*it)->setY(2);
+		}
 		(*it)->setZ(trans.getOrigin().getZ());
 		//std::cout << "Y: " << trans.getOrigin().getY() << std::endl;//<< ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
 	}

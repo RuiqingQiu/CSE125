@@ -32,9 +32,9 @@ unsigned int GameLogic::waitToConnect()
 	if (cid == -1) return WAIT;
 	
 	GameObj* robot = new Robot(cid, "testname");
-	robot->setZ((cid % 2) * 10);
-	robot->setY(3);
-	robot->setX(cid - 2<0 ? 0 : 10);
+	robot->setZ((cid % 2) * 30);
+	robot->setY(4);
+	robot->setX(cid - 2<0 ? 0 : 30);
 	robot->setqX(0);
 	robot->setqY(0);
 	robot->setqZ(0);
@@ -44,14 +44,9 @@ unsigned int GameLogic::waitToConnect()
 	((Robot*)robot)->setCID(cid);
 	((Robot*)robot)->setMaxHealth(100);
 
-	if (cid != 1)
-	{
-		robot->setBlockType(BASICCUBE);
-	}
-	else
-	{
-		robot->setBlockType(BASICCUBE);
-	}
+
+	robot->setBlockType(THREEBYTHREE_BASIC);
+
 	this->gameObjs.push_back(robot);
 	
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
@@ -184,7 +179,7 @@ void GameLogic::gameStart(){
 			for (k = front; k <= back; k++)
 			{
 				GameObj* gameObj;
-				if (j == left || j == right || k == front || k == back)
+				if (k==front)//j == left || j == right || k == front || k == back)
 				{
 					btTransform trans;
 					robot->getRigidBody()->getMotionState()->getWorldTransform(trans);
@@ -198,33 +193,35 @@ void GameLogic::gameStart(){
 						robot->addWeapon(w);
 					}
 					else{
-						gameObj->setBlockType(BASICCUBE);
+						gameObj->setBlockType(robot->getCID());
 					}
+
+					gameObj->setCollisionType(C_ROBOT_PARTS);
+					gameObj->setBelongTo(robot);
+					gameObj->createRigidBody(&objCollisionPair);
+					gamePhysics->getDynamicsWorld()->addRigidBody(gameObj->getRigidBody());
+					int z;
+					for (z = 0; z < 2; z++)
+					{
+						robot->addConstraint(gameObj);
+					}
+					std::vector<Constraint *>::iterator iter;
+					for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
+					{
+						gamePhysics->getDynamicsWorld()->addConstraint((*iter)->_joint6DOF);
+					}
+
+					gameObjs.push_back(gameObj);
 				}
 				else
 				{
-					int yOffset = ((int)robot->getHeight() / 2) + 1;
-					gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
-					gameObj->setBlockType(BASICCUBE);
+					//int yOffset = ((int)robot->getHeight() / 2) + 1;
+					//gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+					//gameObj->setBlockType(BASICCUBE);
 				}
-				
-				gameObj->setCollisionType(C_ROBOT_PARTS);
-				gameObj->setBelongTo(robot);
-				gameObj->createRigidBody(&objCollisionPair);
-				gamePhysics->getDynamicsWorld()->addRigidBody(gameObj->getRigidBody());
 
-				int z;
-				for (z = 0; z < 1; z++)
-				{
-					robot->addConstraint(gameObj);
-				}
-				std::vector<Constraint *>::iterator iter;
-				for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
-				{
-					gamePhysics->getDynamicsWorld()->addConstraint((*iter)->_joint6DOF);
-				}
+
 				
-				gameObjs.push_back(gameObj);
 			}
 		}
 
