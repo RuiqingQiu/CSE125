@@ -20,10 +20,8 @@ private:
 	double _width;
 	double _height;
 	double _depth;
-	double _health;
-	int _state;
-	double _maxHealth;
 
+	int _state;
 
 public:
 	Robot(int, char*);
@@ -38,12 +36,7 @@ public:
 	void setHeight(double);
 	void setDepth(double);
 
-	void setHealth(double);
-	void setMaxHealth(double);
-	double getHealth();
-	double getMaxHealth();
 
-	double applyDamage(double);
 
 	double getWidth();
 	double getHeight();

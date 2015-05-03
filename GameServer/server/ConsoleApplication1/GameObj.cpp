@@ -307,3 +307,25 @@ double GameObj::getDamage()
 {
 	return _damage;
 }
+
+void GameObj::setHealth(double h)
+{
+	_health = h;
+}
+void GameObj::setMaxHealth(double h)
+{
+	_maxHealth = h;
+	_health = h;
+}
+double GameObj::getHealth()
+{
+	return _health;
+}
+double GameObj::getMaxHealth()
+{
+	return _maxHealth;
+}
+double GameObj::applyDamage(double h){
+	_health -= h;
+	return _health;
+}

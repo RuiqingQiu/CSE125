@@ -20,5 +20,5 @@ void GERobotDeath::to_string(std::string& s){
 	s += std::to_string(_event_type);
 	s += " ";
 	s += std::to_string(cid);
-	std::cout << "to string:"<< s << "end"<< std::endl;
+	//std::cout << "to string:"<< s << "end"<< std::endl;
 }

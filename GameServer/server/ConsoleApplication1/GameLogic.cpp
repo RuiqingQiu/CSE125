@@ -27,10 +27,9 @@ unsigned int GameLogic::waitToConnect()
 	int cid; 
 	cid = network->waitForConnections();
 
-	cid = 0;
 
 
-	
+	if (cid == -1) return WAIT;
 	
 	GameObj* robot = new Robot(cid, "testname");
 	robot->setZ((cid % 2) * 10);
@@ -57,7 +56,7 @@ unsigned int GameLogic::waitToConnect()
 	
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
    
-	if (cid == -1) return WAIT;
+
 	//robot = new Robot(cid+1, "testname1");
 	//robot->setZ(-20);
 	//robot->setY(2);
@@ -175,6 +174,7 @@ void GameLogic::gameStart(){
 	{
 		int j, k;
 		Robot* robot= (Robot*)clientPair.find(i)->second;
+		robot->nextState();
 		int left = -((int)(robot->getWidth() / 2)) - 1;
 		int right = ((int)(robot->getWidth() / 2)) + 1;
 		int front = -((int)(robot->getDepth() / 2)) - 1;
@@ -193,7 +193,7 @@ void GameLogic::gameStart(){
 					if (k == front)
 					{
 						Weapon* w = new RangedWeapon(GUN, gameObj);
-						gameObj->setBlockType(BASICCUBE);
+						gameObj->setBlockType(BLOCKYGUN);
 						cout << "weapon id: " << gameObj->getId() << endl;
 						robot->addWeapon(w);
 					}
@@ -262,7 +262,7 @@ unsigned int GameLogic::gameLoop (){
 		//ObjectEvents* objEvent = new ObjectEvents(SHOOT);
   //   	objEvent->setCid(0);
 		//objEventList.push_back(objEvent);
-	gameEventList.push_back(new GERobotDeath(0));
+	//gameEventList.push_back(new GERobotDeath(0));
 
 	network->receiveFromClients(&objEventList);
 	

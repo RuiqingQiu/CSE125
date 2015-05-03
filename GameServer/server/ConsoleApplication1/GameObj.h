@@ -61,6 +61,10 @@ private:
 
 	std::vector<Constraint *> constraints;
 
+protected:
+	double _health;
+	double _maxHealth;
+
 public:
 	static unsigned int _totalId;
 
@@ -125,6 +129,14 @@ public:
 	int getDeleted();
 	int getIsWeapon();
 	void setIsWeapon();
+
+	void setHealth(double);
+	void setMaxHealth(double);
+	double getHealth();
+	double getMaxHealth();
+
+	double applyDamage(double);
+
 };
 
 

@@ -114,10 +114,10 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 
 	//string des = "1 1 1 0";
 
-	//string des = convertData(gameObjs);
-	string des;
-	des += "|" + convertEventData(ge);
-	cout << "convertEvent " << des.c_str() << endl;
+	string des = convertData(gameObjs);
+	//string des;
+	//des += "|" + convertEventData(ge);
+	//cout << "convertEvent " << des.c_str() << endl;
 	//cout << "*********Sending SPacket: " << des << endl;
 	memset(packet.data, 0, sizeof(packet.data));
 	//char* str = new char[sizeof(des) + 1];
@@ -126,7 +126,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 	memcpy(packet.data, des.c_str(), des.length());
 	//cout << "size of des: " << sizeof(des) << endl;
 	//cout << "des.cstr: " << des.c_str() << endl;
-	cout << "``packet.data: " << packet.data << endl;
+	//cout << "``packet.data: " << packet.data << endl;
 	//cout << "AFTER MEM COPY" << endl;
 	packet.packet_type = GAME_STATE;
 
@@ -166,7 +166,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							      break;
 		}
 		case MOVE_LEFT: {
-			cout << "Move Left" << endl;
+			//cout << "Move Left" << endl;
 						ObjectEvents * e = new ObjectEvents(MOVE_LEFT);
 						string packetInfoStr = "";
 						int i;
@@ -188,7 +188,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						break;
 		}
 		case MOVE_RIGHT: {
-			cout << "Move Right" << endl;
+			//cout << "Move Right" << endl;
 							 ObjectEvents * e = new ObjectEvents(MOVE_RIGHT);
 							 string packetInfoStr = "";
 							 int i;
@@ -208,7 +208,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 	
 		}
 		case MOVE_BACKWARD: {
-			cout << "Move Backward" << endl;
+		//	cout << "Move Backward" << endl;
 								ObjectEvents * e = new ObjectEvents(MOVE_BACKWARD);
 								string packetInfoStr = "";
 								int i;
@@ -228,7 +228,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 
 		}
 		case MOVE_FORWARD: {
-			cout << "Move Forward" << endl;
+			//cout << "Move Forward" << endl;
 							   ObjectEvents * e = new ObjectEvents(MOVE_FORWARD);
 							   string packetInfoStr = "";
 							   int i;
@@ -495,7 +495,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 				}
 			}
 	}
-	//temp += "\0";
+	temp += "\0";
 	//cout << temp << endl;
 	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;\
 

@@ -166,7 +166,7 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
 
 void GamePhysics::robotTurnLeft(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle();
-	std::cout << "trunLeft : " << v->getWheelInfo(2).m_steering << std::endl;
+	//std::cout << "trunLeft : " << v->getWheelInfo(2).m_steering << std::endl;
 	if (v->getWheelInfo(2).m_steering < MAX_TURN_SPEED)
 		v->getWheelInfo(2).m_steering += TURN_SPEED;
 	if (v->getWheelInfo(3).m_steering < MAX_TURN_SPEED)
@@ -178,7 +178,7 @@ void GamePhysics::robotTurnLeft(Robot* rb){
 void GamePhysics::robotTurnRight(Robot* rb){
 
 	btRaycastVehicle* v = rb->getVehicle();
-	std::cout << "trunRight : " << v->getWheelInfo(2).m_steering << std::endl;
+	//std::cout << "trunRight : " << v->getWheelInfo(2).m_steering << std::endl;
 	if (v->getWheelInfo(2).m_steering > -MAX_TURN_SPEED)
 		v->getWheelInfo(2).m_steering += -TURN_SPEED;
 	if (v->getWheelInfo(3).m_steering > -MAX_TURN_SPEED)
@@ -188,11 +188,11 @@ void GamePhysics::robotTurnRight(Robot* rb){
 void GamePhysics::robotBackward(Robot* rb){
 
 	btRaycastVehicle* v = rb->getVehicle();
-	std::cout << "backward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+	//std::cout << "backward speed: " << v->getCurrentSpeedKmHour() << std::endl;
 
 	if (v->getCurrentSpeedKmHour() > MAX_SPEED)
 	{
-		std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+		//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
 		//std::cout << "forward: " <<v->getWheelInfo(0).m_engineForce << std::endl;
 		double scale = (v->getCurrentSpeedKmHour() / MAX_SPEED) - 1;
 	v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 0);
@@ -235,7 +235,7 @@ void GamePhysics::robotForward(Robot* rb){
 	//std::cout << "forward speed: " << rb->getVehicle()->getCurrentSpeedKmHour() << std::endl;
 
 	btRaycastVehicle* v = rb->getVehicle(); 
-	std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
+	//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
 
 	if (v->getCurrentSpeedKmHour() < -MAX_SPEED)
 	{

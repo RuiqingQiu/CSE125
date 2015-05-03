@@ -234,27 +234,7 @@ void Robot::setWeapons(std::vector<Weapon*> w)
 	weapons = w;
 }
 
-void Robot::setHealth(double h)
-{
-	_health = h;
-}
-void Robot::setMaxHealth(double h)
-{
-	_maxHealth = h;
-	_health = h;
-}
-double Robot::getHealth()
-{
-	return _health;
-}
-double Robot::getMaxHealth()
-{
-	return _maxHealth;
-}
-double Robot::applyDamage(double h){
-	_health -= h;
-	return _health;
-}
+
 
 void Robot::nextState()
 {
