@@ -5,9 +5,10 @@ class GERobotDeath: public GameEvents
 
 
 public:
-	GERobotDeath();
+	GERobotDeath(int);
 	~GERobotDeath();
+	int cid;
 
-	void to_string(char*) override;
+	void to_string(std::string&) override;
 };
 

@@ -9,6 +9,7 @@ Robot::Robot(int cid, char* name)
 	_name = name;
 	setIsRobot(1);
 	setCollisionType(C_ROBOT);
+	_state = PS_BUILD;
 }
 
 
@@ -18,7 +19,7 @@ Robot::~Robot()
 }
 
 
-void Robot::setID(int cid)
+void Robot::setCID(int cid)
 {
 	_r_cid = cid;
 }
@@ -31,7 +32,7 @@ void Robot::setTakeDowns(int takedowns)
 void Robot::setDeaths(int deaths){ }
 void Robot::setName(char* name){ _name = name; }
 
-int Robot::getID(){ return _r_cid; }
+int Robot::getCID(){ return _r_cid; }
 int Robot::getTakeDowns(){ return _takedowns; }
 int Robot::getDeaths(){ return _deaths; }
 char* Robot::getName(){ return _name; }
@@ -200,7 +201,7 @@ void Robot::shoot(std::vector<std::pair<GameObj*, double>>* projectiles)
 			RangedWeapon* w = (RangedWeapon*)(*it);
 			if (w->readyToShoot())
 			{
-				double rbDepth = ((GOBox*)w->getGameObj())->getDepth()/2 + w->getPDepth() / 2 + 0.3f;
+				double rbDepth = ((GOBox*)w->getGameObj())->getDepth()/2 + w->getPDepth() / 2 + 0.6f;
 				btTransform rbTrans = w->getGameObj()->getRigidBody()->getWorldTransform();
 				btVector3 relativeDisplacement = btVector3(0, 0, -rbDepth);
 				btVector3 boxRot = rbTrans.getBasis()[2];
@@ -213,6 +214,7 @@ void Robot::shoot(std::vector<std::pair<GameObj*, double>>* projectiles)
 				GameObj* proj = new GOBox(x, y, z, rbTrans.getRotation().getX(), rbTrans.getRotation().getY(), rbTrans.getRotation().getZ(), rbTrans.getRotation().getW(),
 					w->getPMass(), w->getPWidth(), w->getPHeight(), w->getPDepth());
 				proj->setCollisionType(C_PROJECTILE);
+				proj->setDamage(w->getDamage());
 				proj->setBelongTo(this);
 				proj->setBlockType(w->getPBlockType());
 				projectiles->push_back(std::make_pair(proj, w->getPInitForce()));
@@ -230,4 +232,40 @@ void Robot::clearWeapons()
 void Robot::setWeapons(std::vector<Weapon*> w)
 {
 	weapons = w;
+}
+
+void Robot::setHealth(double h)
+{
+	_health = h;
+}
+void Robot::setMaxHealth(double h)
+{
+	_maxHealth = h;
+	_health = h;
+}
+double Robot::getHealth()
+{
+	return _health;
+}
+double Robot::getMaxHealth()
+{
+	return _maxHealth;
+}
+double Robot::applyDamage(double h){
+	_health -= h;
+	return _health;
+}
+
+void Robot::nextState()
+{
+	_state = (_state + 1) % 3;
+}
+int Robot::getState()
+{
+	return _state;
+}
+
+void Robot::setState(int s)
+{
+	_state = s;
 }

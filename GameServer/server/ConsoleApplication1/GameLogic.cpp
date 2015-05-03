@@ -27,10 +27,10 @@ unsigned int GameLogic::waitToConnect()
 	int cid; 
 	cid = network->waitForConnections();
 
-//	cid = 0;
+	cid = 0;
 
 
-	if (cid == -1) return WAIT;
+	
 	
 	GameObj* robot = new Robot(cid, "testname");
 	robot->setZ((cid % 2) * 10);
@@ -42,6 +42,9 @@ unsigned int GameLogic::waitToConnect()
 	robot->setqW(1);
 	robot->setMass(100);//50);
 	robot->setType(BOX);
+	((Robot*)robot)->setCID(cid);
+	((Robot*)robot)->setMaxHealth(100);
+
 	if (cid != 1)
 	{
 		robot->setBlockType(BASICCUBE);
@@ -51,9 +54,10 @@ unsigned int GameLogic::waitToConnect()
 		robot->setBlockType(BASICCUBE);
 	}
 	this->gameObjs.push_back(robot);
+	
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
    
-
+	if (cid == -1) return WAIT;
 	//robot = new Robot(cid+1, "testname1");
 	//robot->setZ(-20);
 	//robot->setY(2);
@@ -189,7 +193,7 @@ void GameLogic::gameStart(){
 					if (k == front)
 					{
 						Weapon* w = new RangedWeapon(GUN, gameObj);
-						gameObj->setBlockType(MACE);
+						gameObj->setBlockType(BASICCUBE);
 						cout << "weapon id: " << gameObj->getId() << endl;
 						robot->addWeapon(w);
 					}
@@ -258,7 +262,7 @@ unsigned int GameLogic::gameLoop (){
 		//ObjectEvents* objEvent = new ObjectEvents(SHOOT);
   //   	objEvent->setCid(0);
 		//objEventList.push_back(objEvent);
-
+	gameEventList.push_back(new GERobotDeath(0));
 
 	network->receiveFromClients(&objEventList);
 	
@@ -289,7 +293,9 @@ unsigned int GameLogic::gameLoop (){
 
 	//after phy logic all ObjectEvents 
 	
-	network->sendActionPackets(&gameObjs);
+	network->sendActionPackets(&gameObjs, &gameEventList);
+	gameEventList.clear();
+	//network->sendEventPackets(&gameEventList);
 	return COUNTDOWN;
 	//send back 
 
@@ -309,27 +315,34 @@ void GameLogic::prePhyLogic(){
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
 		GameObj* gObj = it->second;
+		Robot *r = (Robot*)gObj;
+		if (r->getState() == PS_ALIVE){
 
-		switch(type) {
-		case SHOOT:{
-			Robot *r = (Robot*)gObj;
-			std::vector<std::pair<GameObj*, double>> projectiles;
-			r->shoot(&projectiles);
-			std::vector<std::pair<GameObj*, double>>::iterator it;
-			for (it = projectiles.begin(); it != projectiles.end(); it++)
-			{
-				gameObjs.push_back((*it).first);
-				gamePhysics->createPhysicsProjectile((*it).first, &objCollisionPair, (*it).second);
-			}		  
-			break;
+			switch (type) {
+			case SHOOT:{
+					   std::vector<std::pair<GameObj*, double>> projectiles;
+					   r->shoot(&projectiles);
+					   std::vector<std::pair<GameObj*, double>>::iterator it;
+					   for (it = projectiles.begin(); it != projectiles.end(); it++)
+					   {
+						   gameObjs.push_back((*it).first);
+						   gamePhysics->createPhysicsProjectile((*it).first, &objCollisionPair, (*it).second);
+						}
+						break;
+			}
+			default:{
+					gamePhysics->createPhysicsEvent(type, gObj);
+					break;
+			}
+			}
 		}
-		default:{
-			gamePhysics->createPhysicsEvent(type, gObj);
-			break;
-		}
+		else if(r->getState() == PS_BUILD)
+		{
 
 		}
+		else if (r->getState() == PS_DEAD){
 
+		}
 		iter++;
 	}
 	if (objEventList.size() == 0)
@@ -355,7 +368,7 @@ void GameLogic::prePhyLogic(){
 		{
 			btTransform trans;
 			(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
-			std::cout << "id OF VEHICLE: " << (*it)->getId() << "X: " << trans.getOrigin().getX() << "  Y: " << trans.getOrigin().getY() << "  Z:  " << trans.getOrigin().getZ() << std::endl;
+			//std::cout << "id OF VEHICLE: " << (*it)->getId() << "X: " << trans.getOrigin().getX() << "  Y: " << trans.getOrigin().getY() << "  Z:  " << trans.getOrigin().getZ() << std::endl;
 		}
 		if ((*it)->getIsWeapon())
 		{
@@ -449,6 +462,15 @@ void GameLogic::postPhyLogic(){
 				hasDeleted = 1;
 				//set gameevent
 			}
+			else if (e->getResult1() == DEATH)
+			{
+				cout << "GO1 Death ID: " << GO1->getId() << endl;
+				GO1->getRigidBody()->setLinearFactor(btVector3(0, 0, 0));
+				GO1->getRigidBody()->setAngularFactor(btVector3(0, 0, 0));
+				((Robot*)(GO1))->nextState();
+				GameEvents* GE = new GERobotDeath(((Robot*)GO1)->getCID());
+				gameEventList.push_back(GE);
+			}
 		}
 		if (!GO2->getDeleted())
 		{
@@ -487,6 +509,15 @@ void GameLogic::postPhyLogic(){
 				GO2->setDeleted();
 				hasDeleted = 1;
 				//set gameevent
+			}
+			else if (e->getResult2() == DEATH)
+			{
+				cout << "GO2 Death ID: " << GO1->getId() << endl;
+				GO2->getRigidBody()->setLinearFactor(btVector3(0, 0, 0));
+				GO2->getRigidBody()->setAngularFactor(btVector3(0, 0, 0));
+				((Robot*)(GO2))->nextState();
+				GameEvents* GE = new GERobotDeath(((Robot*)GO2)->getCID());
+				gameEventList.push_back(GE);
 			}
 		}
 	}

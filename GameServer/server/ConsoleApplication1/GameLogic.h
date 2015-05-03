@@ -8,7 +8,7 @@
 #include "definition.h"
 #include "TimeFrame.h"
 #include "DamageSystem.h"
-#include "GameEvents.h"
+#include "GERobotDeath.h"
 #include "GameState.h"
 #include <math.h>
 

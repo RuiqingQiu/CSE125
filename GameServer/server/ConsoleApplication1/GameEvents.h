@@ -1,17 +1,17 @@
 #pragma once
-
+#include <string>
 
 
 class GameEvents
 {
-private:
+protected:
 	unsigned int _event_type;
 
 public:
 	GameEvents(int);
 	~GameEvents();
 
-	virtual void to_string(char*) = 0  ;
+	virtual void to_string(std::string&) = 0  ;
 	int getType();
 
 };

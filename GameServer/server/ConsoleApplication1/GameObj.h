@@ -54,6 +54,7 @@ private:
 	int _isRobot;
 	int _collisionType;
 	int _isWeapon;
+	double _damage = 0;
 	btRigidBody* rigidBody;
 
 	GameObj* _belongTo;
@@ -84,6 +85,9 @@ public:
 	double getRotX();
 	double getRotY();
 	double getRotZ();
+
+	void setDamage(double);
+	double getDamage();
 
 	void setX(double);
 	void setY(double);

@@ -11,6 +11,7 @@
 #include "GOCone.h"
 #include "GOCylinder.h"
 #include "GOPlane.h"
+#include "GERobotDeath.h"
 #include <string>
 
 class Network {
@@ -31,8 +32,9 @@ public:
 	int waitForConnections();
 	string convertData(vector<GameObj*> * gameObjs);
 	void receiveFromClients(std::vector<ObjectEvents*>*);
-	void sendActionPackets(vector<GameObj*> * gameObjs);
+	void sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>*);
 	void convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* eventList);
+	string convertEventData(std::vector<GameEvents*>*);
 };
 #endif
 

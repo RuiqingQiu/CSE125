@@ -30,6 +30,7 @@ MeleeWeapon::MeleeWeapon(int type, GameObj* g)
 	setDamage(damage);
 	setSplash(splash);
 	setRange(MELEE);
+	g->setDamage(damage);
 }
 
 

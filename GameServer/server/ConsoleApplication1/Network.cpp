@@ -93,7 +93,7 @@ void Network::receiveFromClients(std::vector<ObjectEvents*>* eventList){
 
 }
 
-void Network::sendActionPackets(vector<GameObj*> * gameObjs){
+void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>* ge){
 
 	//cout << "send Action" << endl;
 	// send action packet
@@ -114,7 +114,10 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 
 	//string des = "1 1 1 0";
 
-	string des = convertData(gameObjs);
+	//string des = convertData(gameObjs);
+	string des;
+	des += "|" + convertEventData(ge);
+	cout << "convertEvent " << des.c_str() << endl;
 	//cout << "*********Sending SPacket: " << des << endl;
 	memset(packet.data, 0, sizeof(packet.data));
 	//char* str = new char[sizeof(des) + 1];
@@ -123,7 +126,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs){
 	memcpy(packet.data, des.c_str(), des.length());
 	//cout << "size of des: " << sizeof(des) << endl;
 	//cout << "des.cstr: " << des.c_str() << endl;
-	//cout << "``packet.data: " << packet.data << endl;
+	cout << "``packet.data: " << packet.data << endl;
 	//cout << "AFTER MEM COPY" << endl;
 	packet.packet_type = GAME_STATE;
 
@@ -311,7 +314,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 
 
 static string temp;
-
+static string temp1;
 string Network::convertData(vector<GameObj*> * gameObjs){
 	temp = "";
 	//cout <<"GAME OBJ SIZE IS : "<< gameObjs->size() << endl;\
@@ -492,10 +495,24 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 				}
 			}
 	}
-	temp += "\0";
+	//temp += "\0";
 	//cout << temp << endl;
 	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;\
 
 	return temp;
 }
 
+
+
+string Network::convertEventData(std::vector<GameEvents*>* ge)
+{
+	std::vector<GameEvents*>::iterator it;
+	temp1 = "";
+	for (it = ge->begin(); it != ge->end(); it++)
+	{
+		(*it)->to_string(temp1);
+		temp1 += "~";
+	}
+	temp1 += "\0";
+	return temp1;
+}

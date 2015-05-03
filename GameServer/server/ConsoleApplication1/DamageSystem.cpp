@@ -62,12 +62,20 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			//TODO: NEED TO CHANGE TO DIE
 				std::cout << "o2 PROJ" << std::endl;
 				e->setResult1(BREAK_CONSTRAINT); e->setResult2(DELETED);
+				if (((Robot*)o1)->applyDamage(o2->getDamage()) < 0)
+				{
+					e->setResult1(DEATH);
+				}
 				break;
 			}
 			case C_MELEE:
 			{
 				//TODO: NEED TO CHANGE TO DIE
 				e->setResult1(BREAK_CONSTRAINT); e->setResult2(NOTHING);
+				if (((Robot*)o1)->applyDamage(o2->getDamage()) < 0)
+				{
+					e->setResult1(DEATH);
+				}
 				break;
 			}
 			case C_GROUND:{
@@ -134,6 +142,10 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "o2 ROBOT" << std::endl;
 				e->setResult1(DELETED); e->setResult2(BREAK_CONSTRAINT);
+				if (((Robot*)o2)->applyDamage(o1->getDamage()) < 0)
+				{
+					e->setResult2(DEATH);
+				}
 				break;
 			}
 			case C_ROBOT_PARTS:
@@ -144,6 +156,7 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			case C_PROJECTILE:
 			{
 				e->setResult1(DELETED); e->setResult2(DELETED);
+
 				break;
 			}
 			case C_MELEE:
@@ -167,6 +180,10 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			case C_ROBOT:
 			{
 				e->setResult1(NOTHING); e->setResult2(BREAK_CONSTRAINT);
+				if (((Robot*)o2)->applyDamage(o1->getDamage()) < 0)
+				{
+					e->setResult2(DEATH);
+				}
 				break;
 			}
 			case C_ROBOT_PARTS:

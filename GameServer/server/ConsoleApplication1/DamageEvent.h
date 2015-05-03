@@ -6,6 +6,7 @@ enum RESULT
 	NOTHING = 0,
 	BREAK_CONSTRAINT = 1,
 	DELETED = 2,
+	DEATH = 3,
 };
 
 class DamageEvent

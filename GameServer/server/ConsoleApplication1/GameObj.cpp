@@ -298,3 +298,12 @@ int GameObj::getIsWeapon()
 {
 	return _isWeapon;
 }
+
+void GameObj::setDamage(double d )
+{
+	_damage = d;
+}
+double GameObj::getDamage()
+{
+	return _damage;
+}
