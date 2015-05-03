@@ -123,10 +123,17 @@ void Window::initialize(void)
 			view->PushGrassNode(grass);
 		}
 	}
-	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	/*
+	object = Model3DFactory::generateObjectWithType(BLOCKYGUN);
 	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
+	*/
+	
+	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
+	object->localTransform.position = Vector3(0, -2, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGrassNode(object);
 	
 	//set color
 	//glColor3f(1, 1, 1);

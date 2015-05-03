@@ -111,52 +111,58 @@ void Model3D::VOnDraw(){
 		//material goes here
 		//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
 		//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
-		Window::shader_system->BindShader(shader_type);
+		
+		if (false&&this->type == BATTLEFIELD){
+			printf("battle field\n");
+		}
+		else{
+			Window::shader_system->BindShader(shader_type);
 
-		//Passing modelMatrix
-		glUniformMatrix4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "ModelView"), 1, true,
-			localTransform.GetGLMatrix4().getFloatPointer());
+			//Passing modelMatrix
+			glUniformMatrix4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "ModelView"), 1, true,
+				localTransform.GetGLMatrix4().getFloatPointer());
 
-		//Passing four maps
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[0]);
+			//Passing four maps
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[0]);
 
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[1]);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[1]);
 
 
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[2]);
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[2]);
 
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[3]);
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[3]);
 
-		glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "tex"), 0);
-		glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "norm"), 1);
-		glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 2);
-		glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 3);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "tex"), 0);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "norm"), 1);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 2);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 3);
 
-		/*float value[4] = { float(render_obj->shapes[i].mesh.tangent[f].x),
-		float(render_obj->shapes[i].mesh.tangent[f].y),
-		float(render_obj->shapes[i].mesh.tangent[f].z),
-		float(render_obj->shapes[i].mesh.tangent[f].w) };
-		glUniform4fv(glGetUniformLocationARB(render_obj->shader_id, "VertexTangent"), 1, value);
-		*/
-		// Make sure no bytes are padded:
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+			/*float value[4] = { float(render_obj->shapes[i].mesh.tangent[f].x),
+			float(render_obj->shapes[i].mesh.tangent[f].y),
+			float(render_obj->shapes[i].mesh.tangent[f].z),
+			float(render_obj->shapes[i].mesh.tangent[f].w) };
+			glUniform4fv(glGetUniformLocationARB(render_obj->shader_id, "VertexTangent"), 1, value);
+			*/
+			// Make sure no bytes are padded:
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-		// Select GL_MODULATE to mix texture with polygon color for shading:
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+			// Select GL_MODULATE to mix texture with polygon color for shading:
+			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-		// Use bilinear interpolation:
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		//glEnable(GL_TEXTURE_2D);
+			// Use bilinear interpolation:
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			//glEnable(GL_TEXTURE_2D);
 
-		//glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
-		//glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
-		//glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
-		//glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
+			//glMaterialfv(GL_FRONT, GL_AMBIENT, materials[m1].ambient);
+			//glMaterialfv(GL_FRONT, GL_DIFFUSE, materials[m1].diffuse);
+			//glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
+			//glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
+		}
 		for (size_t i = 0; i < render_obj->shapes.size(); i++) {
 
 			for (size_t f = 0; f < render_obj->shapes[i].mesh.indices.size() / 3; f++) {

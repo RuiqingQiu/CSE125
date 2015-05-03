@@ -115,8 +115,9 @@ void GameView::second_pass(){
 	vector<pair<float, GeoNode*>> nodedepthvec;
 	for each (GeoNode* node in NodeList)
 	{
-		if (typeid(*node) == typeid(SkyBox))
+		if (typeid(*node) == typeid(SkyBox) || node->type == BATTLEFIELD)
 		{
+			cout << "enter here" << endl;
 			pair<float, GeoNode*> p = make_pair(999, node);
 			nodedepthvec.push_back(p);
 		}
@@ -321,13 +322,13 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			}
 
 			case BATTLEFIELD:{
-								 /*
+								 cout << "enter here" << endl;
 								 Model3D* object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 								 object->identifier = info->player_infos[i]->id;
-								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y+0.5, info->player_infos[i]->z);
+								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y-2, info->player_infos[i]->z);
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
-								 object->localTransform.scale = Vector3(2, 1, 2);
-								 NodeList.push_back(object);*/
+								 object->localTransform.scale = Vector3(1, 1, 1);
+								 NodeList.push_back(object);
 								 break;
 			}
 			//Fix this

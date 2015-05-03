@@ -11,11 +11,13 @@
 class Model3D: public GeoNode
 {
 public:
+	//If auto rotate for the object
 	bool auto_rotate = false;
 
+	//If require two pass draw
 	bool two_pass_draw = false;
-	//std::vector<tinyobj::shape_t> shapes;
-	//std::vector<tinyobj::material_t> materials;
+
+
 	RenderObject* render_obj;
 	int shader_type;
 	//File path for the vertex and fragment shader
