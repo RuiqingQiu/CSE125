@@ -12,11 +12,13 @@ static Model3DFactory* m_factory;
 buildView::buildView() : gui() {
 	updateview = false;
 	createButtons();
+	sound = new Sound();
 }
 
 buildView::buildView(int w, int h) : gui(w, h) {
 	updateview = false;
 	createButtons();
+	sound = new Sound();
 }
 
 
@@ -205,6 +207,9 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 	}
 	if (state == GLUT_UP && prevMouseState != GLUT_UP) {
 		if (scroll->addButton->isSelected(x, height - y) ) {
+			cout << "Enter add button " << endl;
+			// play the sound effect for selection
+			sound->playSelect();
 			addNode();
 		}
 		else if (scroll->removeButton->isSelected(x, height - y)) {

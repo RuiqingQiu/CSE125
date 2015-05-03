@@ -4,6 +4,7 @@
 #include "buildTimer.h"
 #include "scoreBox.h"
 #include "roboBase.h"
+#include "sound.h" //for gui sound effect 
 
 #define MAX_BLOCKS 27
 #define GRID_SIZE 5
@@ -47,5 +48,6 @@ private:
 	GLuint grids[2];
 
 	int selectedType;
+	Sound* sound; // for sound effect
 };
 

@@ -22,18 +22,18 @@ Sound::Sound(){
 		cout << "ERROR in loading explosion sound effect " << endl;
 	explosionSound.setBuffer(explosionBuffer);
 	explosionSound.setPosition(1,0,-5);// create a 3d spatioal sound
-	explosionSound.play();
+	//explosionSound.play();
 
 	tmp = path + "select.wav";
 	if (!selectBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading explosion sound effect " << endl;
 	selectSound.setBuffer(selectBuffer);
-	selectSound.play();
+	//selectSound.play();
 
 	// music doesn't preload the data
 	if (!music.openFromFile("Payback.wav"))
 		cout << "load music error " << endl;
-	music.play();
+	//music.play();
 }
 
 
@@ -44,25 +44,29 @@ Sound::~Sound(){
 
 // This function is used to play music
 void Sound::playMusic(){
-	if (music.getStatus() == sf::Sound::Playing){
+	if (music.getStatus() == sf::Sound::Paused){
 		cout << "Playing music " << endl;
-		music.pause();
 		music.play();
+		music.pause();
 	}
 }
 
-// This function is used to play sound
-void Sound::playSound(){
-	if (explosionSound.getStatus() == sf::Sound::Playing){
+// This function is used to play sound, don't need to be play continued
+void Sound::playExplosion(){
+	if (explosionSound.getStatus() == sf::Sound::Paused){
 		cout << "Playing " << endl;
-		explosionSound.pause();
 		explosionSound.play();
+		explosionSound.pause();
 	}
 }
 
+// This function is used to play gui menu selection
 void Sound::playSelect(){
-	if (selectSound.getStatus() == sf::Sound::Playing){
-		selectSound.pause();
+	cout << "Enter play select " << endl;
+	if (selectSound.getStatus() == sf::Sound::Paused){
+		cout << "Play Select " << endl;
 		selectSound.play();
+		selectSound.pause();
+		
 	}
 }

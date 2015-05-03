@@ -329,8 +329,8 @@ void Window::reshapeCallback(int w, int h) {
 
 void Window::displayCallback() {
 	clock_t startTime = clock();
-	soundObject->playMusic();
-	soundObject->playSound();
+	//soundObject->playMusic();
+	//soundObject->playSound();
 
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
@@ -370,17 +370,4 @@ void Window::displayCallback() {
 	glutSwapBuffers();
 	clock_t endTime = clock();
 	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
-	
-	/*
-	// Loop while the sound is playing
-	while (sound.getStatus() == sf::Sound::Playing)
-	{
-		// Leave some CPU time for other processes
-		sf::Time t1 = sf::seconds(0.1f);
-		sf::sleep(t1);
-		// Display the playing position
-		cout << "\rPlaying... " << endl;
-	}*/
-	
-
 }
