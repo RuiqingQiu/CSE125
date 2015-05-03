@@ -130,7 +130,7 @@ void Window::initialize(void)
 	
 	//set color
 	//glColor3f(1, 1, 1);
-	/*
+	/*.
 	*/
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
@@ -147,7 +147,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.168");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.23");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 }
 
 //----------------------------------------------------------------------------

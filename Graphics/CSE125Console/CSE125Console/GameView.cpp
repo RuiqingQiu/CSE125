@@ -52,11 +52,12 @@ void GameView::first_pass(){
 }
 
 void GameView::second_pass(){
-	
+
 	//Code below this is second pass
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//Clear color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	//Set the OpenGL matrix mode to ModelView
 
 	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
@@ -80,25 +81,12 @@ void GameView::second_pass(){
 	glutSolidTeapot(1);
 	glPopMatrix();
 	Window::shader_system->UnbindShader();
-	
-	
-	
+
+
+
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
-	for each (GeoNode* node in NodeList)
-	{
-		if (typeid(*node) == typeid(SkyBox))
-		{
-			node->VOnDraw();
-		}
-		else if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
-		{
-			node->VOnDraw();
-		}
-	}
-
-	//sorting grass from back to front before drawing
-
+	//sort Z before draw
 	float ptr[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, ptr);
 	Matrix4 modelview;
@@ -124,6 +112,60 @@ void GameView::second_pass(){
 
 	modelview.transpose();
 
+	vector<pair<float, GeoNode*>> nodedepthvec;
+	for each (GeoNode* node in NodeList)
+	{
+		if (typeid(*node) == typeid(SkyBox))
+		{
+			pair<float, GeoNode*> p = make_pair(999, node);
+			nodedepthvec.push_back(p);
+		}
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		{
+			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
+			Vector4 position = modelview * (localpos);
+			float z = -position.z;
+
+			pair<float, GeoNode*> p = make_pair(z, node);
+			nodedepthvec.push_back(p);
+		}
+	}
+
+	sort(nodedepthvec.begin(), nodedepthvec.end(), pairCompare);
+
+
+	for each (pair<float, GeoNode*> p in nodedepthvec)
+	{
+		p.second->VOnDraw();
+	}
+
+	//sorting grass from back to front before drawing
+	/*
+	float ptr[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, ptr);
+	Matrix4 modelview;
+	modelview.m[0][0] = ptr[0];
+	modelview.m[0][1] = ptr[1];
+	modelview.m[0][2] = ptr[2];
+	modelview.m[0][3] = ptr[3];
+
+	modelview.m[1][0] = ptr[4];
+	modelview.m[1][1] = ptr[5];
+	modelview.m[1][2] = ptr[6];
+	modelview.m[1][3] = ptr[7];
+
+	modelview.m[2][0] = ptr[8];
+	modelview.m[2][1] = ptr[9];
+	modelview.m[2][2] = ptr[10];
+	modelview.m[2][3] = ptr[11];
+
+	modelview.m[3][0] = ptr[12];
+	modelview.m[3][1] = ptr[13];
+	modelview.m[3][2] = ptr[14];
+	modelview.m[3][3] = ptr[15];
+
+	modelview.transpose();
+	*/
 	vector<pair<float, GeoNode*>> depthvec;
 	for each (GeoNode* node in GrassList)
 	{
