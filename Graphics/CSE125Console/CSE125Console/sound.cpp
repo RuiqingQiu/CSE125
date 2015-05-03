@@ -24,6 +24,12 @@ Sound::Sound(){
 	explosionSound.setPosition(1,0,-5);// create a 3d spatioal sound
 	explosionSound.play();
 
+	tmp = path + "select.wav";
+	if (!selectBuffer.loadFromFile(tmp))
+		cout << "ERROR in loading explosion sound effect " << endl;
+	selectSound.setBuffer(selectBuffer);
+	selectSound.play();
+
 	// music doesn't preload the data
 	if (!music.openFromFile("Payback.wav"))
 		cout << "load music error " << endl;
@@ -51,5 +57,12 @@ void Sound::playSound(){
 		cout << "Playing " << endl;
 		explosionSound.pause();
 		explosionSound.play();
+	}
+}
+
+void Sound::playSelect(){
+	if (selectSound.getStatus() == sf::Sound::Playing){
+		selectSound.pause();
+		selectSound.play();
 	}
 }
