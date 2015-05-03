@@ -119,12 +119,78 @@ void Window::initialize(void)
 			float rj = (rand() % 10 - 5) * 0.001;
 			Grass * grass = new Grass();
 			grass->localTransform.position = Vector3(i*0.1 - 2 + ri, 1, j*0.1 - 2 + rj);
-			grass->localTransform.rotation = Vector3(0, 0, 0);
 			view->PushGrassNode(grass);
 		}
 	}
+	
 	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, 5, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, 5, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, 10, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, 10, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(5, 10, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, 0, -10);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(0, 0, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(10, 0, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(-10, 0, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+	
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(-5, 0, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(5, 0, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(-5, 10, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	object->localTransform.position = Vector3(5, 10, -15);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	
@@ -147,7 +213,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.168");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.23");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 }
 
 //----------------------------------------------------------------------------
