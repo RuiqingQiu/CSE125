@@ -108,9 +108,9 @@ void buildView::createButtons() {
 		}
 	}
 
-	scroll->addListItem("base.jpg", "base_sel.jpg");
+	scroll->addListItem("bases.jpg", "bases_sel.jpg");
 	scroll->addsubListItem("basic.jpg", "basic_sel.jpg", THREEBYTHREE_BASIC);
-	scroll->addsubListItem("glow.jpg", "glow_sel.jpg", THREEBYTHREE_GLOWING);
+	scroll->addsubListItem("glowing.jpg", "glowing_sel.jpg", THREEBYTHREE_GLOWING);
 	scroll->addsubListItem("wooden.jpg", "wooden_sel.jpg", THREEBYTHREE_WOODEN);
 
 	scroll->addListItem("template.jpg", "template_sel.jpg");
@@ -287,6 +287,39 @@ viewType buildView::checkTimeOut() {
 	return viewType::BUILD;
 }
 
+void buildView::clearConstraints() {
+	for (int i = 0; i < NodeList.size(); i++) {
+		NodeList[i]->clearConstraints();
+	}
+}
+
+void buildView::setConstraints() {
+	clearConstraints();
+	for (int i = 0; i < NodeList.size(); i++) {
+		Vector3 compare = NodeList[i]->localTransform.position;
+		for (int j = 0; j < NodeList.size(); j++) {
+			Vector3 check = NodeList[j]->localTransform.position;
+			if (NodeList[i]->identifier != NodeList[j]->identifier) {
+				if (compare.x == check.x && compare.z == check.z && compare.y == (check.y + 1)) {
+					NodeList[i]->below_id = NodeList[j]->identifier;
+				}
+				else if (compare.x == check.x && compare.y == check.y && compare.z == (check.z + 1)) {
+					NodeList[i]->back_id = NodeList[j]->identifier;
+				}
+				else if (compare.x == check.x && compare.y == check.y && compare.z == (check.z - 1)) {
+					NodeList[i]->front_id = NodeList[j]->identifier;
+				}
+				else if (compare.z == check.z && compare.y == check.y && compare.x == (check.x + 1)) {
+					NodeList[i]->left_id = NodeList[j]->identifier;
+				}
+				else if (compare.z == check.z && compare.y == check.y && compare.x == (check.x - 1)) {
+					NodeList[i]->right_id = NodeList[j]->identifier;
+				}
+			}
+		}
+	}
+}
+
 void buildView::addNode() {
 	int s = NodeList.size();
 	if (s < MAX_BLOCKS) {
@@ -435,7 +468,7 @@ void buildView::addNode() {
 				PushGeoNode(weapon1);
 				GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Mallet);
 				weapon2->localTransform.position = Vector3(0, 1, 2);
-				weapon2->localTransform.rotation.y = 90;
+				weapon2->localTransform.rotation.y = 270;
 				weapon2->identifier = NodeList.size();
 				weapon2->textureType = Mallet;
 				PushGeoNode(weapon2);
@@ -447,7 +480,7 @@ void buildView::addNode() {
 				PushGeoNode(weapon3);
 				GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Mallet);
 				weapon4->localTransform.position = Vector3(0, 1, -2);
-				weapon4->localTransform.rotation.y = 270;
+				weapon4->localTransform.rotation.y = 90;
 				weapon4->identifier = NodeList.size();
 				weapon4->textureType = Mallet;
 				PushGeoNode(weapon4);
@@ -483,43 +516,36 @@ void buildView::addNode() {
 				//added stuff to robot
 				GeoNode * cube1 = Model3DFactory::generateObjectWithType(WoodenCube);
 				cube1->localTransform.position = Vector3(1, 1, -1);
-				cube1->localTransform.rotation.x = 90;
 				cube1->identifier = NodeList.size();
 				cube1->textureType = WoodenCube;
 				PushGeoNode(cube1);
 				GeoNode * cube2 = Model3DFactory::generateObjectWithType(WoodenCube);
 				cube2->localTransform.position = Vector3(-1, 1, -1);
-				cube2->localTransform.rotation.x = 90;
 				cube2->identifier = NodeList.size();
 				cube2->textureType = WoodenCube;
 				PushGeoNode(cube2);
 				GeoNode * cube3 = Model3DFactory::generateObjectWithType(WoodenCube);
 				cube3->localTransform.position = Vector3(0, 1, -1);
-				cube3->localTransform.rotation.x = 90;
 				cube3->identifier = NodeList.size();
 				cube3->textureType = WoodenCube;
 				PushGeoNode(cube3);
 				GeoNode * cube4 = Model3DFactory::generateObjectWithType(WoodenCube);
 				cube4->localTransform.position = Vector3(0, 2, -1);
-				cube4->localTransform.rotation.x = 90;
 				cube4->identifier = NodeList.size();
 				cube4->textureType = WoodenCube;
 				PushGeoNode(cube4);
 				GeoNode * cube5 = Model3DFactory::generateObjectWithType(WoodenCube);
 				cube5->localTransform.position = Vector3(0, 1, 0);
-				cube5->localTransform.rotation.x = 90;
 				cube5->identifier = NodeList.size();
 				cube5->textureType = WoodenCube;
 				PushGeoNode(cube5);
 				GeoNode * cube6 = Model3DFactory::generateObjectWithType(WoodenCube);
 				cube6->localTransform.position = Vector3(0, 2, 0);
-				cube6->localTransform.rotation.x = 90;
 				cube6->identifier = NodeList.size();
 				cube6->textureType = WoodenCube;
 				PushGeoNode(cube6);
 				GeoNode * cube7 = Model3DFactory::generateObjectWithType(WoodenCube);
 				cube7->localTransform.position = Vector3(0, 1, 1);
-				cube7->localTransform.rotation.x = 90;
 				cube7->identifier = NodeList.size();
 				cube7->textureType = WoodenCube;
 				PushGeoNode(cube7);
@@ -544,12 +570,13 @@ void buildView::addNode() {
 				PushGeoNode(weapon3);
 				GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Mace);
 				weapon4->localTransform.position = Vector3(0, 1, 2);
-				weapon4->localTransform.rotation.y = 180;
+				weapon4->localTransform.rotation.y = 270;
 				weapon4->identifier = NodeList.size();
 				weapon4->textureType = Mace;
 				PushGeoNode(weapon4);
 
 			}
+			setConstraints();
 			currentNode = NodeList[NodeList.size() - 1];
 			return;
 		}
@@ -588,6 +615,7 @@ void buildView::addNode() {
 		PushGeoNode(object);
 		//for now, we just move the last added node
 		currentNode = NodeList[NodeList.size() - 1];
+		setConstraints();
 	}
 }
 
@@ -662,6 +690,7 @@ Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
 			Vector3 temp = NodeList[i]->localTransform.position;
 			//if (check.equals(temp)) {
 			if (NodeList[i]->intersect(check)) {
+				node->below_id = NodeList[i]->identifier;
 				foundMatch = true;
 				break;
 			}
@@ -671,6 +700,7 @@ Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
 			t.y += 1;
 		}
 		if (!validPos(t, node)) {
+			setConstraints();
 			return node->localTransform.position;
 		}
 	}

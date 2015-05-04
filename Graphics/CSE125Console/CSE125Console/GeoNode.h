@@ -22,12 +22,20 @@ public:
 	virtual void VOnUpdate(GameInfoPacket* pData){ };
 	virtual void VOnClientUpdate(GameInfoPacket* pData){ };
 
+	virtual void clearConstraints();
+
 	bool isUpdated;
 	int healthStat;
 	int damageStat;
 	int speedStat;
 	int width;
 	int height;
+
+	int below_id;
+	int left_id;
+	int right_id;
+	int front_id;
+	int back_id;
 
 	virtual bool intersect(Vector3 pos);
 };

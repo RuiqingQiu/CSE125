@@ -28,6 +28,9 @@ public:
 	Vector3 addNewNodePos();
 	bool validPos(Vector3 t, GeoNode * node);
 
+	virtual void setConstraints();
+	void clearConstraints();
+
 	~buildView();
 
 	vector<button*> listItems;

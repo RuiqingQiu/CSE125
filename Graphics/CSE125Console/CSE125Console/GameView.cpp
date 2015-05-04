@@ -19,6 +19,12 @@ void GameView::VUpdate() {
 
 }
 
+void GameView::setConstraints() {
+	for (int i = 0; i < NodeList.size(); i++) {
+		NodeList[i]->clearConstraints();
+	}
+}
+
 
 bool pairCompare(const std::pair<float, GeoNode*>& firstElem, const std::pair<float, GeoNode*>& secondElem) {
 	return firstElem.first < secondElem.first;
@@ -117,7 +123,7 @@ void GameView::second_pass(){
 	{
 		if (typeid(*node) == typeid(SkyBox) || node->type == BATTLEFIELD)
 		{
-			cout << "enter here" << endl;
+			//cout << "enter here" << endl;
 			pair<float, GeoNode*> p = make_pair(999, node);
 			nodedepthvec.push_back(p);
 		}
@@ -322,7 +328,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			}
 
 			case BATTLEFIELD:{
-								 cout << "enter here" << endl;
+								 //cout << "enter here" << endl;
 								 Model3D* object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 								 object->identifier = info->player_infos[i]->id;
 								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y-2, info->player_infos[i]->z);

@@ -21,7 +21,7 @@
 #include "Teapot.h"
 #include "Model3DFactory.h"
 #include "Grass.h"
-#define TESTCAM 1
+#define TESTCAM 0
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
@@ -84,7 +84,7 @@ void setupFBO(){
 	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, 
 		GL_RENDERBUFFER, Window::shader_system->depth);
 
-	CHECK_FRAMEBUFFER_STATUS();
+	//CHECK_FRAMEBUFFER_STATUS();
 
 	//Switch back to default 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -279,5 +279,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

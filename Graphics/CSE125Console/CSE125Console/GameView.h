@@ -56,6 +56,8 @@ public:
 	virtual void keyPressFunc(unsigned char key, int x, int y);
 	virtual void specialKeyFunc(int key, int x, int y);
 
+	virtual void setConstraints();
+
 	bool isCurrentView;
 	GeoNode * currentNode;
 

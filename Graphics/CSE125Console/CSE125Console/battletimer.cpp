@@ -68,15 +68,15 @@ void battleTimer::update(){
 	// if minLeft is less then 0, don't update anymore
 	if (minLeft <= -1){
 		secLeft = 0;
-		cout << "Enter " << endl;
+		//cout << "Enter " << endl;
 		//return;
 	}
 	// if still time left 
 	else{
 		minLeft = MIN - min; // calcualte the min left
-		cout << "minLeft " << minLeft << endl;
+		//cout << "minLeft " << minLeft << endl;
 		secLeft = MAX_TIME - sec;
-		cout << "secLeft " << secLeft << endl;
+		//cout << "secLeft " << secLeft << endl;
 	}
 	int idx_sec = secLeft;
 	int idx = minLeft;

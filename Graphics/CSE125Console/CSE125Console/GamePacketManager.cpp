@@ -96,7 +96,16 @@ bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
 		tmp += to_string(nodeList[i]->localTransform.rotation.x) + " ";
 		tmp += to_string(nodeList[i]->localTransform.rotation.y) + " ";
 		tmp += to_string(nodeList[i]->localTransform.rotation.z) + " ";
-		tmp += to_string(nodeList[i]->textureType) + "\n\0";
+
+		tmp += to_string(nodeList[i]->textureType) + " ";
+
+		tmp += to_string(nodeList[i]->below_id) + " ";
+		tmp += to_string(nodeList[i]->left_id) + " ";
+		tmp += to_string(nodeList[i]->right_id) + " ";
+		tmp += to_string(nodeList[i]->front_id) + " ";
+		tmp += to_string(nodeList[i]->back_id) + " ";
+		
+		tmp += "\n\0";
 	}
 	strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
 	return client->sendPacket(cp);

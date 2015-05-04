@@ -33,6 +33,7 @@ void buildViewInput::VProcessKeyInput(unsigned char key, int x, int y) {
 		break;
 	}
 	g_pCore->pGameView->currentNode->localTransform.position = newPos;
+	g_pCore->pGameView->setConstraints();
 }
 
 void buildViewInput::VProcessSpecialKey(int key, int x, int y) {
