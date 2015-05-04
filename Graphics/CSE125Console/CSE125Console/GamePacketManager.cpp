@@ -104,7 +104,11 @@ bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
 		tmp += to_string(nodeList[i]->right_id) + " ";
 		tmp += to_string(nodeList[i]->front_id) + " ";
 		tmp += to_string(nodeList[i]->back_id) + " ";
-		
+
+		tmp += to_string(nodeList[i]->healthStat) + " ";
+		tmp += to_string(nodeList[i]->damageStat) + " ";
+		tmp += to_string(nodeList[i]->speedStat) + " ";
+
 		tmp += "\n\0";
 	}
 	strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
