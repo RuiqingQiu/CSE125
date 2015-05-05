@@ -111,10 +111,11 @@ void Model3D::VOnDraw(){
 		//material goes here
 		//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, whiteSpecularMaterial);
 		//glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mShininess);
-		
-		if (false&&this->type == BATTLEFIELD){
+		GLuint vt = glGetAttribLocationARB(Window::shader_system->shader_ids[shader_type], "VertexTangent");
+		if (false && this->type == BATTLEFIELD){
 			printf("battle field\n");
 		}
+		else if (this->edge_highlight){}
 		else{
 			Window::shader_system->BindShader(shader_type);
 
@@ -141,12 +142,7 @@ void Model3D::VOnDraw(){
 			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 2);
 			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 3);
 
-			/*float value[4] = { float(render_obj->shapes[i].mesh.tangent[f].x),
-			float(render_obj->shapes[i].mesh.tangent[f].y),
-			float(render_obj->shapes[i].mesh.tangent[f].z),
-			float(render_obj->shapes[i].mesh.tangent[f].w) };
-			glUniform4fv(glGetUniformLocationARB(render_obj->shader_id, "VertexTangent"), 1, value);
-			*/
+		
 			// Make sure no bytes are padded:
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -170,6 +166,7 @@ void Model3D::VOnDraw(){
 				int i2 = render_obj->shapes[i].mesh.indices[3 * f + 1];
 				int i3 = render_obj->shapes[i].mesh.indices[3 * f + 2];
 				int m1 = render_obj->shapes[i].mesh.material_ids[f];
+			
 
 
 				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -185,6 +182,12 @@ void Model3D::VOnDraw(){
 					render_obj->shapes[i].mesh.normals[3 * i1 + 1],
 					render_obj->shapes[i].mesh.normals[3 * i1 + 2]
 					);
+
+				float value[4] = { float(render_obj->shapes[i].mesh.tangent[f].x),
+					float(render_obj->shapes[i].mesh.tangent[f].y),
+					float(render_obj->shapes[i].mesh.tangent[f].z),
+					float(render_obj->shapes[i].mesh.tangent[f].w) };
+				glVertexAttrib3fvARB(vt, value);
 				glVertex3f(render_obj->shapes[i].mesh.positions[3 * i1 + 0], render_obj->shapes[i].mesh.positions[3 * i1 + 1], render_obj->shapes[i].mesh.positions[3 * i1 + 2]);
 
 				//texture
@@ -195,6 +198,11 @@ void Model3D::VOnDraw(){
 					render_obj->shapes[i].mesh.normals[3 * i2 + 1],
 					render_obj->shapes[i].mesh.normals[3 * i2 + 2]
 					);
+				float value1[4] = { float(render_obj->shapes[i].mesh.tangent[i2].x),
+					float(render_obj->shapes[i].mesh.tangent[i2].y),
+					float(render_obj->shapes[i].mesh.tangent[i2].z),
+					float(render_obj->shapes[i].mesh.tangent[i2].w) };
+				glVertexAttrib3fvARB(vt, value1);
 				glVertex3f(render_obj->shapes[i].mesh.positions[3 * i2 + 0], render_obj->shapes[i].mesh.positions[3 * i2 + 1], render_obj->shapes[i].mesh.positions[3 * i2 + 2]);
 
 				
@@ -204,6 +212,11 @@ void Model3D::VOnDraw(){
 					render_obj->shapes[i].mesh.normals[3 * i3 + 1],
 					render_obj->shapes[i].mesh.normals[3 * i3 + 2]
 					);
+				float value2[4] = { float(render_obj->shapes[i].mesh.tangent[i3].x),
+					float(render_obj->shapes[i].mesh.tangent[i3].y),
+					float(render_obj->shapes[i].mesh.tangent[i3].z),
+					float(render_obj->shapes[i].mesh.tangent[i3].w) };
+				glVertexAttrib3fvARB(vt, value2);
 				glVertex3f(render_obj->shapes[i].mesh.positions[3 * i3 + 0], render_obj->shapes[i].mesh.positions[3 * i3 + 1], render_obj->shapes[i].mesh.positions[3 * i3 + 2]);
 
 				glEnd();

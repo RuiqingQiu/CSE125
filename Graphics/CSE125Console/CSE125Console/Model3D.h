@@ -17,7 +17,6 @@ public:
 	//If require two pass draw
 	bool two_pass_draw = false;
 
-
 	RenderObject* render_obj;
 	int shader_type;
 	//File path for the vertex and fragment shader

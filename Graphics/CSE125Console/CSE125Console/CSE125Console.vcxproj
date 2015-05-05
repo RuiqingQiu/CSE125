@@ -255,6 +255,8 @@
     <None Include="hard_shadow.vert" />
     <None Include="highlight.frag" />
     <None Include="highlight.vert" />
+    <None Include="normal.frag" />
+    <None Include="normal.vert" />
     <None Include="reflect.frag" />
     <None Include="reflect.vert" />
     <None Include="refract.frag" />

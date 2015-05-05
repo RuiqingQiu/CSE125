@@ -54,6 +54,12 @@ void GameView::first_pass(){
 	glTranslated(0, 0, -15);
 	glutSolidTeapot(1);
 	glPopMatrix();
+	//List of items that need edge highlight
+	for each (GeoNode* node in NodeList){
+		if (node->edge_highlight){
+			node->VOnDraw();
+		}
+	}
 	Window::shader_system->UnbindShader();
 }
 
@@ -86,9 +92,14 @@ void GameView::second_pass(){
 	glTranslated(0, 0, -15);
 	glutSolidTeapot(1);
 	glPopMatrix();
+
+	//List of items that need edge highlight
+	for each (GeoNode* node in NodeList){
+		if (node->edge_highlight){
+			node->VOnDraw();
+		}
+	}
 	Window::shader_system->UnbindShader();
-
-
 
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
@@ -143,7 +154,12 @@ void GameView::second_pass(){
 
 	for each (pair<float, GeoNode*> p in nodedepthvec)
 	{
-		p.second->VOnDraw();
+		if (p.second->edge_highlight){
+
+		}
+		else{
+			p.second->VOnDraw();
+		}
 	}
 
 	//sorting grass from back to front before drawing
@@ -335,6 +351,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								 object->localTransform.scale = Vector3(1, 1, 1);
 								 NodeList.push_back(object);
+								 info->player_infos[i]->processed = true;
 								 break;
 			}
 			//Fix this

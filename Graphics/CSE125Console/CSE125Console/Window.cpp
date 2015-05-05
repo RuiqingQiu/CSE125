@@ -118,22 +118,33 @@ void Window::initialize(void)
 			float ri = (rand() % 10 - 5) * 0.001;
 			float rj = (rand() % 10 - 5) * 0.001;
 			Grass * grass = new Grass();
-			grass->localTransform.position = Vector3(i*0.1 - 2 + ri, 1, j*0.1 - 2 + rj);
+			grass->localTransform.position = Vector3(i*0.1 - 2 + ri, -1, j*0.1 - 2 + rj);
 			grass->localTransform.rotation = Vector3(0, 0, 0);
 			view->PushGrassNode(grass);
 		}
 	}
-	/*
+	
 	object = Model3DFactory::generateObjectWithType(BLOCKYGUN);
+	object->shader_type = EDGE_SHADER;
+	object->localTransform.position = Vector3(3, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	object->edge_highlight = true;
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(BLOCKYGUN);
+	object->shader_type = NORMAL_SHADER;
 	object->localTransform.position = Vector3(0, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
 	view->PushGeoNode(object);
-	*/
+	
 	
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGrassNode(object);
+	object->type = BATTLEFIELD;
+	view->PushGeoNode(object);
 	
 	//set color
 	//glColor3f(1, 1, 1);
@@ -153,8 +164,8 @@ void Window::initialize(void)
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
-	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.168");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
+	g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 }
 
 //----------------------------------------------------------------------------

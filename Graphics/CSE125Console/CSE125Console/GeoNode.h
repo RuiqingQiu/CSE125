@@ -8,6 +8,9 @@ class GeoNode
 public:
 	GeoNode();
 	~GeoNode();
+	//if requires two pass
+	bool edge_highlight = false;
+
 
 	//send to server object id, must be unique per player id
 	int identifier;

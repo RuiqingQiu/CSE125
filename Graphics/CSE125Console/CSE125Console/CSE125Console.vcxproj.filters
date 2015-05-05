@@ -549,5 +549,11 @@
     <None Include="edge.frag">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
+    <None Include="normal.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="normal.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -83,6 +83,7 @@ ShaderSystem::ShaderSystem()
 	loadShaders("refract.vert", "refract.frag");
 	loadShaders("grass.vert", "grass.frag");
 	loadShaders("edge.vert", "edge.frag");
+	loadShaders("normal.vert", "normal.frag");
 }
 
 
@@ -133,6 +134,8 @@ void ShaderSystem::BindShader(int type){
 		case EDGE_SHADER:
 			glUseProgramObjectARB(shader_ids[type]);
 			break;
+		case NORMAL_SHADER:
+			glUseProgramObjectARB(shader_ids[type]);
 	}
 	
 }
