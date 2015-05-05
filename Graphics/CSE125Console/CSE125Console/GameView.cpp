@@ -273,6 +273,16 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 
 								break;
 			}
+			case BGun:{
+						  Model3D* object = Model3DFactory::generateObjectWithType(BGun);							   
+						  object->isUpdated = true;
+							object->identifier = info->player_infos[i]->id;
+							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							NodeList.push_back(object);
+							info->player_infos[i]->processed = true;
+							break;
+			}
 				//CUBE3x3 = 3
 			case Mace:{
 						  Model3D* object = Model3DFactory::generateObjectWithType(Mace);
@@ -418,6 +428,9 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		if (!NodeList[i]->isUpdated && typeid(*NodeList[i]) != typeid(SkyBox))
 		{
 			//int index = NodeList.
+		}
+		else if (NodeList[i]->static_object = true){
+			NodeListBuffer.push_back(NodeList[i]);
 		}
 		else{
 			NodeListBuffer.push_back(NodeList[i]);

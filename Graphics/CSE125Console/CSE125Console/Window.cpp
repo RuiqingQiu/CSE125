@@ -124,6 +124,7 @@ void Window::initialize(void)
 		}
 	}
 	
+	/*
 	object = Model3DFactory::generateObjectWithType(BGun);
 	object->shader_type = EDGE_SHADER;
 	object->localTransform.position = Vector3(3, 0, -20);
@@ -131,13 +132,15 @@ void Window::initialize(void)
 	object->auto_rotate = true;
 	object->edge_highlight = true;
 	view->PushGeoNode(object);
-	
+	*/
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -2;
 	object->type = BATTLEFIELD;
 	view->PushGeoNode(object);
-	
+	object->static_object = true;
+
 	//set color
 	//glColor3f(1, 1, 1);
 	/*.
@@ -157,7 +160,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 }
 
 //----------------------------------------------------------------------------

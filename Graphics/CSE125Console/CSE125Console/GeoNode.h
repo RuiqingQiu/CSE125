@@ -11,7 +11,7 @@ public:
 	//if requires two pass
 	bool edge_highlight = false;
 
-
+	bool static_object = false;
 	//send to server object id, must be unique per player id
 	int identifier;
 	//send to server (0 for 1x1 nontexture cube) (1 for nontexture battlefield) (2 for nontexture wall) (3 for nontexture 3x3 cube)
