@@ -145,28 +145,28 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 
 	//cout << "packet type : " << packet.packet_type << endl;
 	switch (packet.packet_type) {
-		case INIT_CONNECTION: {
-								  ObjectEvents * e = new ObjectEvents(INIT_CONNECTION);
-								  string packetInfoStr = "";
-								  int i;
-								  for (i = 0;; i++)
+	case INIT_CONNECTION: {
+							  ObjectEvents * e = new ObjectEvents(INIT_CONNECTION);
+							  string packetInfoStr = "";
+							  int i;
+							  for (i = 0;; i++)
+							  {
+								  if (packet.data[i] != '\n')
+									  packetInfoStr += packet.data[i];
+								  else
 								  {
-									  if (packet.data[i] != '\n')
-										  packetInfoStr += packet.data[i];
-									  else
-									  {
-										  break;
-									  }
+									  break;
 								  }
-								  string name = packetInfoStr;
-								  //cout << name << endl;
-								  e->setName(packetInfoStr);
-								  //cout << e->getName() << endl;
-								  eventList->push_back(e);
-							      break;
-		}
-		case MOVE_LEFT: {
-			cout << "Move Left" << endl;
+							  }
+							  string name = packetInfoStr;
+							  //cout << name << endl;
+							  e->setName(packetInfoStr);
+							  //cout << e->getName() << endl;
+							  eventList->push_back(e);
+							  break;
+	}
+	case MOVE_LEFT: {
+						cout << "Move Left" << endl;
 						ObjectEvents * e = new ObjectEvents(MOVE_LEFT);
 						string packetInfoStr = "";
 						int i;
@@ -186,91 +186,30 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						e->setCid(cid);
 						eventList->push_back(e);
 						break;
-		}
-		case MOVE_RIGHT: {
-			cout << "Move Right" << endl;
-							 ObjectEvents * e = new ObjectEvents(MOVE_RIGHT);
-							 string packetInfoStr = "";
-							 int i;
-							 for (i = 0;; i++)
+	}
+	case MOVE_RIGHT: {
+						 cout << "Move Right" << endl;
+						 ObjectEvents * e = new ObjectEvents(MOVE_RIGHT);
+						 string packetInfoStr = "";
+						 int i;
+						 for (i = 0;; i++)
+						 {
+							 if (packet.data[i] != '\n')
+								 packetInfoStr += packet.data[i];
+							 else
 							 {
-								 if (packet.data[i] != '\n')
-									 packetInfoStr += packet.data[i];
-								 else
-								 {
-									 break;
-								 }
+								 break;
 							 }
-							 unsigned int cid = stoul(packetInfoStr);
-							 e->setCid(cid);
-							 eventList->push_back(e);
-							 break;
-	
-		}
-		case MOVE_BACKWARD: {
-			cout << "Move Backward" << endl;
-								ObjectEvents * e = new ObjectEvents(MOVE_BACKWARD);
-								string packetInfoStr = "";
-								int i;
-								for (i = 0;; i++)
-								{
-									if (packet.data[i] != '\n')
-										packetInfoStr += packet.data[i];
-									else
-									{
-										break;
-									}
-								}
-								unsigned int cid = stoul(packetInfoStr);
-								e->setCid(cid);
-								eventList->push_back(e);
-								break;
+						 }
+						 unsigned int cid = stoul(packetInfoStr);
+						 e->setCid(cid);
+						 eventList->push_back(e);
+						 break;
 
-		}
-		case MOVE_FORWARD: {
-			cout << "Move Forward" << endl;
-							   ObjectEvents * e = new ObjectEvents(MOVE_FORWARD);
-							   string packetInfoStr = "";
-							   int i;
-							   for (i = 0;; i++)
-							   {
-								   if (packet.data[i] != '\n')
-									   packetInfoStr += packet.data[i];
-								   else
-								   {
-									   break;
-								   }
-							   }
-							   unsigned int cid = stoul(packetInfoStr);
-							   e->setCid(cid);
-							   eventList->push_back(e);
-							   break;
-
-
-						   break;
-		}
-		case MOVE_UP: {
-						  ObjectEvents * e = new ObjectEvents(MOVE_UP);
-						  string packetInfoStr = "";
-						  int i;
-						  for (i = 0;; i++)
-						  {
-							  if (packet.data[i] != '\n')
-								  packetInfoStr += packet.data[i];
-							  else
-							  {
-								  break;
-							  }
-						  }
-						  unsigned int cid = stoul(packetInfoStr);
-						  e->setCid(cid);
-						  eventList->push_back(e);
-						  break;
-
-		}
-
-		case MOVE_DOWN: {
-							ObjectEvents * e = new ObjectEvents(MOVE_DOWN);
+	}
+	case MOVE_BACKWARD: {
+							cout << "Move Backward" << endl;
+							ObjectEvents * e = new ObjectEvents(MOVE_BACKWARD);
 							string packetInfoStr = "";
 							int i;
 							for (i = 0;; i++)
@@ -286,29 +225,104 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							e->setCid(cid);
 							eventList->push_back(e);
 							break;
-		}
-		case SHOOT:{
-			ObjectEvents * e = new ObjectEvents(SHOOT);
-			string packetInfoStr = "";
-			int i;
-			for (i = 0;; i++)
-			{
-				if (packet.data[i] != '\n')
-					packetInfoStr += packet.data[i];
-				else
-				{
-					break;
-				}
-			}
-			unsigned int cid = stoul(packetInfoStr);
-			e->setCid(cid);
-			eventList->push_back(e);
-			break;
-		}
-		default:{
-					printf("error in packet types\n");
-					break;
-		}
+
+	}
+	case MOVE_FORWARD: {
+						   cout << "Move Forward" << endl;
+						   ObjectEvents * e = new ObjectEvents(MOVE_FORWARD);
+						   string packetInfoStr = "";
+						   int i;
+						   for (i = 0;; i++)
+						   {
+							   if (packet.data[i] != '\n')
+								   packetInfoStr += packet.data[i];
+							   else
+							   {
+								   break;
+							   }
+						   }
+						   unsigned int cid = stoul(packetInfoStr);
+						   e->setCid(cid);
+						   eventList->push_back(e);
+						   break;
+
+
+						   break;
+	}
+	case MOVE_UP: {
+					  ObjectEvents * e = new ObjectEvents(MOVE_UP);
+					  string packetInfoStr = "";
+					  int i;
+					  for (i = 0;; i++)
+					  {
+						  if (packet.data[i] != '\n')
+							  packetInfoStr += packet.data[i];
+						  else
+						  {
+							  break;
+						  }
+					  }
+					  unsigned int cid = stoul(packetInfoStr);
+					  e->setCid(cid);
+					  eventList->push_back(e);
+					  break;
+
+	}
+
+	case MOVE_DOWN: {
+						ObjectEvents * e = new ObjectEvents(MOVE_DOWN);
+						string packetInfoStr = "";
+						int i;
+						for (i = 0;; i++)
+						{
+							if (packet.data[i] != '\n')
+								packetInfoStr += packet.data[i];
+							else
+							{
+								break;
+							}
+						}
+						unsigned int cid = stoul(packetInfoStr);
+						e->setCid(cid);
+						eventList->push_back(e);
+						break;
+	}
+	case SHOOT:{
+				   ObjectEvents * e = new ObjectEvents(SHOOT);
+				   string packetInfoStr = "";
+				   int i;
+				   for (i = 0;; i++)
+				   {
+					   if (packet.data[i] != '\n')
+						   packetInfoStr += packet.data[i];
+					   else
+					   {
+						   break;
+					   }
+				   }
+				   unsigned int cid = stoul(packetInfoStr);
+				   e->setCid(cid);
+				   eventList->push_back(e);
+				   break;
+	}
+	case BUILD_ROBOT: {
+				   string packetInfoStr = "";
+				   int i;
+				   for (i = 0;; i++)
+				   {
+					   if (packet.data[i] != '\n')
+						   packetInfoStr += packet.data[i];
+					   else
+					   {
+						   break;
+					   }
+				   }
+	}
+	default:{
+				printf("error in packet types\n");
+				break;
+	}
+
 	}
 }
 
