@@ -22,9 +22,9 @@ bool GeoNode::intersect(Vector3 pos) {
 }
 
 void GeoNode::clearConstraints() {
-	below_id = 0;
-	left_id = 0;
-	right_id = 0;
-	front_id = 0;
-	back_id = 0;
+	below_id = -1;
+	left_id = -1;
+	right_id = -1;
+	front_id = -1;
+	back_id = -1;
 }

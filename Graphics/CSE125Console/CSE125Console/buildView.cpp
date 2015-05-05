@@ -300,20 +300,36 @@ void buildView::setConstraints() {
 		for (int j = 0; j < NodeList.size(); j++) {
 			Vector3 check = NodeList[j]->localTransform.position;
 			if (NodeList[i]->identifier != NodeList[j]->identifier) {
-				if (compare.x == check.x && compare.z == check.z && compare.y == (check.y + 1)) {
+				Vector3 translate = compare;
+				translate.y -= 1;
+				if (NodeList[j]->intersect(translate)) {
 					NodeList[i]->below_id = NodeList[j]->identifier;
 				}
-				else if (compare.x == check.x && compare.y == check.y && compare.z == (check.z + 1)) {
-					NodeList[i]->back_id = NodeList[j]->identifier;
-				}
-				else if (compare.x == check.x && compare.y == check.y && compare.z == (check.z - 1)) {
-					NodeList[i]->front_id = NodeList[j]->identifier;
-				}
-				else if (compare.z == check.z && compare.y == check.y && compare.x == (check.x + 1)) {
-					NodeList[i]->left_id = NodeList[j]->identifier;
-				}
-				else if (compare.z == check.z && compare.y == check.y && compare.x == (check.x - 1)) {
-					NodeList[i]->right_id = NodeList[j]->identifier;
+				else {
+					translate = compare;
+					translate.z -= 1;
+					if (NodeList[j]->intersect(translate)) {
+						NodeList[i]->back_id = NodeList[j]->identifier;
+					}
+					else {
+						translate.z += 2;
+						if (NodeList[j]->intersect(translate)) {
+							NodeList[i]->front_id = NodeList[j]->identifier;
+						}
+						else {
+							translate = compare;
+							translate.x -= 1;
+							if (NodeList[j]->intersect(translate)) {
+								NodeList[i]->left_id = NodeList[j]->identifier;
+							}
+							else {
+								translate.x += 2;
+								if (NodeList[j]->intersect(translate)) {
+									NodeList[i]->right_id = NodeList[j]->identifier;
+								}
+							}
+						}
+					}
 				}
 			}
 		}
