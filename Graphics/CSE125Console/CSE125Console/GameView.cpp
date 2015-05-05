@@ -335,6 +335,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								 object->localTransform.scale = Vector3(1, 1, 1);
 								 NodeList.push_back(object);
+								 info->player_infos[i]->processed = true;
 								 break;
 			}
 			//Fix this

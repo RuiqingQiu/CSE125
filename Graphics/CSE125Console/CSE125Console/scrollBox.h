@@ -40,6 +40,7 @@ public:
 
 	button * addButton;
 	button * removeButton;
+	button * clearButton;
 	int currentSelection;
 
 private:

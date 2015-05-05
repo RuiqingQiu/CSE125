@@ -100,11 +100,12 @@ void buildView::createButtons() {
 		std::string selC = std::to_string(i) + "_sel.jpg";
 		scroll->addListItem(concat, selC);
 		//sublist, must be added right after the parent list
-		for (int j = 0; j < 3; j++) {
+		for (int j = 0; j < 4; j++) {
+			if (j == 3 && i != 1) break;
 			concat = std::to_string((i * 10) + j) + ".jpg";
-			 selC = std::to_string((i * 10) + j) + "_sel.jpg";
-			 scroll->addsubListItem(concat, selC, identifier);
-			 identifier++;
+			selC = std::to_string((i * 10) + j) + "_sel.jpg";
+			scroll->addsubListItem(concat, selC, identifier);
+			identifier++;
 		}
 	}
 
@@ -126,7 +127,7 @@ void buildView::createButtons() {
 
 	//grid textures
 	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
-	setTexture("uiItem/images/blackgrid.jpg", &grids[1]);
+	setTexture("uiItem/images/blackgrid_ext.jpg", &grids[1]);
 }
 
 void buildView::VUpdate() {
@@ -172,34 +173,34 @@ void buildView::VOnRender() {
 	glBegin(GL_QUADS);
 	//bottom
 	glTexCoord2f(0, 0); 
-	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z - HALF_GRID - 0.5);
 	glTexCoord2f(0, 1); 
-	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z + HALF_GRID + 0.5);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z + HALF_GRID + 0.5);
 	glTexCoord2f(1, 1); 
-	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5, center.z + HALF_GRID + 0.5);
+	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z + HALF_GRID + 0.5);
 	glTexCoord2f(1, 0); 
-	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z - HALF_GRID - 0.5);
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, grids[1]);
 	glBegin(GL_QUADS);
 	//back
 	glTexCoord2f(0, 0);
-	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z - HALF_GRID - 0.5);
 	glTexCoord2f(0, 1);
 	glVertex3f(center.x - HALF_GRID - 0.5, center.y + GRID_SIZE - 0.5, center.z - HALF_GRID - 0.5);
 	glTexCoord2f(1, 1);
 	glVertex3f(center.x + HALF_GRID + 0.5, center.y + GRID_SIZE - 0.5, center.z - HALF_GRID - 0.5);
 	glTexCoord2f(1, 0);
-	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z - HALF_GRID - 0.5);
 
 	//to the left
 	glTexCoord2f(0, 0);
 	//glNormal3f(1, 0, 0);
-	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z - HALF_GRID - 0.5);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z - HALF_GRID - 0.5);
 	glTexCoord2f(0, 1);
 	//glNormal3f(1, 0, 0);
-	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5, center.z + HALF_GRID + 0.5);
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z + HALF_GRID + 0.5);
 	glTexCoord2f(1, 1);
 	//glNormal3f(1, 0, 0);
 	glVertex3f(center.x - HALF_GRID - 0.5, center.y + GRID_SIZE - 0.5, center.z + HALF_GRID + 0.5);
@@ -250,6 +251,11 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 		}
 		else if (scroll->removeButton->isSelected(x, height - y)) {
 			removeNode();
+		}
+		else if (scroll->clearButton->isSelected(x, height - y)) {
+			while (currentNode != nullptr) {
+				removeNode();
+			}
 		}
 	}
 	selectedType = scroll->currentSelection;
@@ -339,7 +345,7 @@ void buildView::setConstraints() {
 void buildView::addNode() {
 	int s = NodeList.size();
 	if (s < MAX_BLOCKS) {
-		if (selectedType == TEMPLATE_1 || selectedType == TEMPLATE_2 || selectedType == TEMPLATE_3) {
+		if (selectedType >= TEMPLATE_BEGIN && selectedType <= TEMPLATE_END) {
 			//remove all non-base blocks use BASE_SIZE instead of 0
 			for (int i = 0; i < NodeList.size(); i++) {
 				delete NodeList[i];
@@ -597,7 +603,7 @@ void buildView::addNode() {
 			return;
 		}
 
-		if (selectedType == THREEBYTHREE_BASIC || selectedType == THREEBYTHREE_GLOWING || selectedType == THREEBYTHREE_WOODEN) {
+		if (selectedType >= BASES_BEGIN && selectedType <= BASES_END) {
 			delete NodeList[0];
 			GeoNode * cube = Model3DFactory::generateObjectWithType(selectedType);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -607,7 +613,7 @@ void buildView::addNode() {
 			return;
 		}
 
-		if (selectedType >= 6 && selectedType <= 8) {
+		if (selectedType >= WHEEL_BEGIN && selectedType <= WHEEL_END) {
 			//is a wheel
 			for (int i = 1; i < BASE_SIZE; i++) {
 				GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
@@ -637,6 +643,7 @@ void buildView::addNode() {
 
 void buildView::removeNode() {
 	if (NodeList.size() > BASE_SIZE) {
+		delete NodeList[NodeList.size() - 1];
 		NodeList.pop_back();
 		if (NodeList.size() <= BASE_SIZE) {
 			currentNode = nullptr;  //not allowed to move base block
