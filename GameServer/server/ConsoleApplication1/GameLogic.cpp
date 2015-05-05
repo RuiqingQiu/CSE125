@@ -32,7 +32,7 @@ unsigned int GameLogic::waitToConnect()
 	if (cid == -1) return WAIT;
 	
 	GameObj* robot = new Robot(cid, "testname");
-	robot->setX((cid % 2) * 30);
+	robot->setX((cid % 2)* 30);
 	robot->setY(4);
 	robot->setZ(cid - 2<0 ? 0 : 30);
 	robot->setqX(0);
@@ -224,26 +224,28 @@ void GameLogic::gameStart(){
 						gameObj->setBlockType(BASICCUBE);
 					}
 
-					gameObj->setCollisionType(C_ROBOT_PARTS);
-					gameObj->setBelongTo(robot);
-					gameObj->createRigidBody(&objCollisionPair);
-					gamePhysics->getDynamicsWorld()->addRigidBody(gameObj->getRigidBody());
-					int z;
-					for (z = 0; z < 1; z++)
-					{
-						robot->addConstraint(gameObj);
-					}
-
-					gameObjs.push_back(gameObj);
+				
 				}
-				/*else
+				else
 				{
 					cout << "height" << robot->getHeight() << endl;
 					int yOffset = ((int)robot->getHeight() / 2) + 1;
 					gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
 					gameObj->setBlockType(BASICCUBE);
-				}*/
+				}
 
+
+				gameObj->setCollisionType(C_ROBOT_PARTS);
+				gameObj->setBelongTo(robot);
+				gameObj->createRigidBody(&objCollisionPair);
+				gamePhysics->getDynamicsWorld()->addRigidBody(gameObj->getRigidBody());
+				int z;
+				for (z = 0; z < 1; z++)
+				{
+					robot->addConstraint(gameObj);
+				}
+
+				gameObjs.push_back(gameObj);
 				/*gameObj->setCollisionType(C_ROBOT_PARTS);
 				gameObj->setBelongTo(robot);
 				gameObj->createRigidBody(&objCollisionPair);
@@ -263,11 +265,7 @@ void GameLogic::gameStart(){
 				
 			}
 
-			std::vector<Constraint *>::iterator iter;
-			for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
-			{
-				gamePhysics->getDynamicsWorld()->addConstraint((*iter)->_joint6DOF);
-			}
+			
 		}
 
 	//	for (j = i + 1; j < 17; j++)
@@ -279,6 +277,11 @@ void GameLogic::gameStart(){
 		//		gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF, true);
 		//	}
 	//	}
+		std::vector<Constraint *>::iterator iter;
+		for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
+		{
+			gamePhysics->getDynamicsWorld()->addConstraint((*iter)->_joint6DOF);
+		}
 	}
 
 

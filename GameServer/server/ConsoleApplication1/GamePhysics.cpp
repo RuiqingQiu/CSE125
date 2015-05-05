@@ -187,11 +187,14 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
 void GamePhysics::robotTurnLeft(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle();
 	//std::cout << "trunLeft : " << v->getWheelInfo(2).m_steering << std::endl;
+	//if (v->getWheelInfo(2).m_steering < MAX_TURN_SPEED)
+	//	v->getWheelInfo(2).m_steering += TURN_SPEED;
+	//if (v->getWheelInfo(3).m_steering < MAX_TURN_SPEED)
+	//	v->getWheelInfo(3).m_steering += TURN_SPEED;
 	if (v->getWheelInfo(2).m_steering < MAX_TURN_SPEED)
-		v->getWheelInfo(2).m_steering += TURN_SPEED;
+		v->getWheelInfo(2).m_steering = MAX_TURN_SPEED;
 	if (v->getWheelInfo(3).m_steering < MAX_TURN_SPEED)
-		v->getWheelInfo(3).m_steering += TURN_SPEED;
-
+		v->getWheelInfo(3).m_steering = MAX_TURN_SPEED;
 
 	
 }
@@ -199,10 +202,14 @@ void GamePhysics::robotTurnRight(Robot* rb){
 
 	btRaycastVehicle* v = rb->getVehicle();
 	//std::cout << "trunRight : " << v->getWheelInfo(2).m_steering << std::endl;
-	if (v->getWheelInfo(2).m_steering > -MAX_TURN_SPEED)
+	/*if (v->getWheelInfo(2).m_steering > -MAX_TURN_SPEED)
 		v->getWheelInfo(2).m_steering += -TURN_SPEED;
 	if (v->getWheelInfo(3).m_steering > -MAX_TURN_SPEED)
-		v->getWheelInfo(3).m_steering += -TURN_SPEED;
+		v->getWheelInfo(3).m_steering += -TURN_SPEED;*/
+	if (v->getWheelInfo(2).m_steering > -MAX_TURN_SPEED)
+		v->getWheelInfo(2).m_steering = -MAX_TURN_SPEED;
+	if (v->getWheelInfo(3).m_steering > -MAX_TURN_SPEED)
+		v->getWheelInfo(3).m_steering = -MAX_TURN_SPEED;
 
 }
 void GamePhysics::robotBackward(Robot* rb){

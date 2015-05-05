@@ -172,6 +172,7 @@ GameObj* GameObj::getBelongTo()
 	return _belongTo;
 }
 
+
 void GameObj::addConstraint(GameObj* o)
 {
 	    btFixedConstraint *joint6DOF;
@@ -181,20 +182,21 @@ void GameObj::addConstraint(GameObj* o)
 	
 		localA.setIdentity(); localB.setIdentity();
 	
+		double centerX = (this->getX() + o->getX())/2;
+		double centerY = (this->getY() + o->getY()) / 2;
+		double centerZ = (this->getZ() + o->getZ()) / 2;
 
-		localA.setOrigin(btVector3(0, 0, 0));
-	
-		localB.setOrigin(btVector3(0, 0, 0));
-		//cout << "last is " << last << endl;
-		//cout << "current is " << i << endl;
+		localA.setOrigin(btVector3(this->getX() - centerX, this->getY() - centerY, this->getZ() - centerZ));
+
+		localB.setOrigin(btVector3(o->getX() - centerX, o->getY() - centerY, o->getZ() - centerZ));
 		btTransform frameInA;
 		btTransform frameInB;
 
 		this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
 		o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
 	
-		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInB, frameInA);
-
+		//joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInA, frameInB);
+		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), localB, localA);
 		/*joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 0);
 		joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 1);
 		joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 2);
