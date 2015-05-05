@@ -114,6 +114,7 @@ void Window::initialize(void)
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
+
 	// Initialize the Sound object
 	soundObject = new Sound();
 
@@ -148,8 +149,7 @@ void Window::initialize(void)
 			object->localTransform.position = Vector3(i, -2, j);
 			object->localTransform.scale = Vector3(1, 1, 1);
 			object->localTransform.rotation = Vector3(0, 0, 0);
-			view->PushGeoNode(object);
-=======
+
 	for (int i = 0; i < 10; i++){
 		for (int j = 0; j < 10; j++){
 			float ri = (rand() % 10 - 5) * 0.001;
@@ -158,7 +158,6 @@ void Window::initialize(void)
 			grass->localTransform.position = Vector3(i*0.1 - 2 + ri, 1, j*0.1 - 2 + rj);
 			grass->localTransform.rotation = Vector3(0, 0, 0);
 			view->PushGrassNode(grass);
->>>>>>> master
 		}
 	}
 	/*
@@ -198,6 +197,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.168");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
+	
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
 }
 
@@ -309,8 +309,8 @@ void Window::reshapeCallback(int w, int h) {
 
 void Window::displayCallback() {
 	clock_t startTime = clock();
-	//soundObject->playMusic();
-	//soundObject->playSound();
+	// play the background music through out the whole game
+	soundObject->playMusic();
 
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
@@ -341,7 +341,6 @@ void Window::displayCallback() {
 		}
 		delete(p);
 	}
-	
 	
 	//Draw everything
 	g_pCore->pGameView->VOnRender();
