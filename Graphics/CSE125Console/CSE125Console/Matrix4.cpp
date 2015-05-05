@@ -64,6 +64,15 @@ double* Matrix4::getPointer()
   return &m[0][0];
 }
 
+float* Matrix4::getFloatPointer(){
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++){
+			f_m[i][j] = m[i][j];
+		}
+	}
+	return &f_m[0][0];
+}
+
 // set matrix to identity matrix
 void Matrix4::identity()
 {
@@ -174,15 +183,15 @@ void Matrix4::makeRotate(double angle, const Vector3& axis){
 
 
 Matrix4 Matrix4::operator*(const Matrix4& m2){
-    Matrix4* product = new Matrix4();
+    Matrix4 product = Matrix4();
     for(int row = 0; row < 4; row++){
         for(int col = 0; col < 4; col++){
             for(int inner = 0; inner < 4; inner++){
-                product->m[row][col] += this->m[row][inner]*m2.m[inner][col];
+                product.m[row][col] += this->m[row][inner]*m2.m[inner][col];
             }
         }
     }
-    return *product;
+    return product;
 }//multiply matrix with matrix
 
 Vector4 Matrix4::operator*(const Vector4& v){

@@ -85,10 +85,10 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		g_pCore->pGameView->pViewCamera->position->z -= 1;
 	}
 	else if (key == 'x'){
-		g_pCore->pGameView->pViewCamera->position->y += 1;
+		g_pCore->pGameView->pViewCamera->position->y += 0.1;
 	}
 	else if (key == 'X'){
-		g_pCore->pGameView->pViewCamera->position->y -= 1;
+		g_pCore->pGameView->pViewCamera->position->y -= 0.1;
 	}
 	else if (key == 'v'){
 		g_pCore->pGameView->pViewCamera->rotation->x += 10;

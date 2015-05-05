@@ -4,22 +4,25 @@
 #include <vector>
 #include "ComponentNode.h"
 #include "GeoNode.h"
-class Plane : public GeoNode
+class Plane
 {
 
 public:
 
-	float size;
-	Vector3 color;
-	std::vector<ComponentNode> components;
-	Vector3 normal;
-	Plane(float);
-	void setColor(float r, float g, float b);
-	virtual ~Plane(void);
-	virtual void VOnClientUpdate(GameInfoPacket* pData);
+	Vector3 normal, point;
+	float d;
 
-	virtual void VOnDraw();
-	virtual void VOnUpdate(GameInfoPacket* pData);
+
+	Plane::Plane(Vector3 &v1, Vector3 &v2, Vector3 &v3);
+	Plane::Plane(void);
+	Plane::~Plane();
+
+	void set3Points(Vector3 &v1, Vector3 &v2, Vector3 &v3);
+	void setNormalAndPoint(Vector3 &normal, Vector3 &point);
+	void setCoefficients(float a, float b, float c, float d);
+	float distance(Vector3 &p);
+
+	void print();
 
 };
 

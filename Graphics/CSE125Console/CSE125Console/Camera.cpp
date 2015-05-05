@@ -14,6 +14,8 @@ Camera::~Camera()
 }
 
 void Camera::setUpCamera(){
+	this->drawLines();
+
 	if (IsFollowingEnabled&&FollowingTarget != nullptr)
 	{
 		UpdateCamera();
@@ -26,6 +28,14 @@ void Camera::setUpCamera(){
 	glRotatef(rotation->y, 0, 1, 0);
 	glRotatef(rotation->z, 0, 0, 1);
 	glTranslatef(position->x, position->y, position->z);
+
+
+	this->setCamDef(Vector3(0, 0, 1), Vector3(0, 0, 0), Vector3(0, 1, 0));
+
+
+	//this->setCamDef(Vector3(0,0,10), Vector3(0,0,0), Vector3(0,1,0));
+	//this->drawNormals();
+	//this->drawPlanes();
 }
 
 
@@ -54,8 +64,8 @@ void Camera::UpdateCamera()
 	Vector3 direction = Vector3(direction_temp.get_x(), direction_temp.get_y(), direction_temp.get_z());
 	//direction.y = 0;
 	direction.normalize();
-	float distanceToPlayer = 15;
-	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
+	float distanceToPlayer = 10;
+	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer + 3, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
 	Vector3* newrotation = new Vector3(FollowingTarget->localTransform.rotation.x, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);//FollowingTarget->localTransform.rotation.z);
 
 	this->position->negate();
@@ -243,7 +253,8 @@ Vector3 Camera::VectorLerp(Vector3* v1, Vector3* v2, float t, bool isangle)
 	if (retz >= 0 && retz < 360)
 	{
 		retz = retz;
-	}else{
+	}
+	else{
 		while (retz < 0)
 		{
 			retz = retz + 360;
@@ -256,4 +267,316 @@ Vector3 Camera::VectorLerp(Vector3* v1, Vector3* v2, float t, bool isangle)
 
 
 	return Vector3(retx, rety, retz);
+}
+
+#define ANG2RAD 3.14159265358979323846/180.0
+
+
+void Camera::setCamInternals(float angle, float ratio, float nearD, float farD) {
+
+	this->ratio = ratio;
+	this->angle = angle;
+	this->nearD = nearD;
+	this->farD = farD;
+
+	tang = (float)tan(angle* ANG2RAD * 0.5);
+	nh = nearD * tang;
+	nw = nh * ratio;
+	fh = farD  * tang;
+	fw = fh * ratio;
+
+
+}
+
+
+void Camera::setCamDef(Vector3 &p, Vector3 &l, Vector3 &u) {
+
+	Vector3 dir, nc, fc, X, Y, Z;
+
+	Z = p - l;
+	Z.normalize();
+
+	X = u.cross(u, Z);
+	X.normalize();
+
+	Y = Z.cross(Z, X);
+
+	Vector3 Ztemp = Vector3(Z.x, Z.y, Z.z);
+	Ztemp.scale(nearD);
+	nc = p - Ztemp;
+
+	Ztemp = Vector3(Z.x, Z.y, Z.z);
+	Ztemp.scale(farD);
+	fc = p - Ztemp;
+
+	Vector3 Ytemp = Vector3(Y.x, Y.y, Y.z);
+	Ytemp.scale(nh);
+	Vector3 Xtemp = Vector3(X.x, X.y, X.z);
+	Xtemp.scale(nw);
+
+	ntl = nc + Ytemp - Xtemp;
+	ntr = nc + Ytemp + Xtemp;
+	nbl = nc - Ytemp - Xtemp;
+	nbr = nc - Ytemp + Xtemp;
+
+	Ytemp = Vector3(Y.x, Y.y, Y.z);
+	Ytemp.scale(fh);
+	Xtemp = Vector3(X.x, X.y, X.z);
+	Xtemp.scale(fw);
+
+	ftl = fc + Ytemp - Xtemp;
+	ftr = fc + Ytemp + Xtemp;
+	fbl = fc - Ytemp - Xtemp;
+	fbr = fc - Ytemp + Xtemp;
+
+	pl[TOP].set3Points(ntr, ntl, ftl);
+	pl[BOTTOM].set3Points(nbl, nbr, fbr);
+	pl[LEFT].set3Points(ntl, nbl, fbl);
+	pl[RIGHT].set3Points(nbr, ntr, fbr);
+	pl[NEARP].set3Points(ntl, ntr, nbr);
+	pl[FARP].set3Points(ftr, ftl, fbl);
+}
+
+
+int Camera::pointInFrustum(Vector3 &p) {
+
+	int result = INSIDE;
+	for (int i = 0; i < 6; i++) {
+
+		if (pl[i].distance(p) < 0)
+			return OUTSIDE;
+	}
+	return(result);
+
+}
+
+
+int Camera::sphereInFrustum(Vector3 &p, float raio) {
+
+
+	Matrix4 ret;
+	ret.identity();
+	Matrix4 m4_pos;
+	m4_pos.identity();
+	m4_pos.makeTranslate(position->x, position->y, position->z);
+	Matrix4 m4_rotx;
+	m4_rotx.makeRotateX(rotation->x);
+	Matrix4 m4_roty;
+	m4_roty.makeRotateY(rotation->y);
+	Matrix4 m4_rotz;
+	m4_rotz.makeRotateZ(rotation->z);
+	Matrix4 m4_rot;
+	m4_rot = m4_rotx*m4_roty*m4_rotz;
+	ret = ret*m4_rot*m4_pos;
+	Vector4 pos = ret*Vector4(p.x, p.y, p.z, 1);
+	Vector3 posv3 = Vector3(pos.x, pos.y, pos.z);
+
+	//printf("%f %f %f\n", posv3.x, posv3.y, posv3.z);
+	int result = INSIDE;
+	float distance;
+
+	for (int i = 0; i < 6; i++) {
+		distance = pl[i].distance(posv3);
+		if (distance < -raio){
+			//printf("out\n");
+			return OUTSIDE;
+		}
+		else if (distance < raio){
+			result = INTERSECT;
+		}
+		else{
+		}
+	}
+	return(result);
+
+}
+
+
+int Camera::boxInFrustum(Vector3 &b) {
+	/*
+	int result = INSIDE;
+	for (int i = 0; i < 6; i++) {
+
+	if (pl[i].distance(b.getVertexP(pl[i].normal)) < 0)
+	return OUTSIDE;
+	else if (pl[i].distance(b.getVertexN(pl[i].normal)) < 0)
+	result = INTERSECT;
+	}
+	return(result);
+	*/
+	return 1;
+}
+
+
+
+
+
+void Camera::drawPoints() {
+
+
+	glBegin(GL_POINTS);
+
+	glVertex3f(ntl.x, ntl.y, ntl.z);
+	glVertex3f(ntr.x, ntr.y, ntr.z);
+	glVertex3f(nbl.x, nbl.y, nbl.z);
+	glVertex3f(nbr.x, nbr.y, nbr.z);
+
+	glVertex3f(ftl.x, ftl.y, ftl.z);
+	glVertex3f(ftr.x, ftr.y, ftr.z);
+	glVertex3f(fbl.x, fbl.y, fbl.z);
+	glVertex3f(fbr.x, fbr.y, fbr.z);
+
+	glEnd();
+}
+
+
+void Camera::drawLines() {
+
+	glBegin(GL_LINE_LOOP);
+	//near plane
+	glVertex3f(ntl.x, ntl.y, ntl.z);
+	glVertex3f(ntr.x, ntr.y, ntr.z);
+	glVertex3f(nbr.x, nbr.y, nbr.z);
+	glVertex3f(nbl.x, nbl.y, nbl.z);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	//far plane
+	glVertex3f(ftr.x, ftr.y, ftr.z);
+	glVertex3f(ftl.x, ftl.y, ftl.z);
+	glVertex3f(fbl.x, fbl.y, fbl.z);
+	glVertex3f(fbr.x, fbr.y, fbr.z);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	//bottom plane
+	glVertex3f(nbl.x, nbl.y, nbl.z);
+	glVertex3f(nbr.x, nbr.y, nbr.z);
+	glVertex3f(fbr.x, fbr.y, fbr.z);
+	glVertex3f(fbl.x, fbl.y, fbl.z);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	//top plane
+	glVertex3f(ntr.x, ntr.y, ntr.z);
+	glVertex3f(ntl.x, ntl.y, ntl.z);
+	glVertex3f(ftl.x, ftl.y, ftl.z);
+	glVertex3f(ftr.x, ftr.y, ftr.z);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	//left plane
+	glVertex3f(ntl.x, ntl.y, ntl.z);
+	glVertex3f(nbl.x, nbl.y, nbl.z);
+	glVertex3f(fbl.x, fbl.y, fbl.z);
+	glVertex3f(ftl.x, ftl.y, ftl.z);
+	glEnd();
+
+	glBegin(GL_LINE_LOOP);
+	// right plane
+	glVertex3f(nbr.x, nbr.y, nbr.z);
+	glVertex3f(ntr.x, ntr.y, ntr.z);
+	glVertex3f(ftr.x, ftr.y, ftr.z);
+	glVertex3f(fbr.x, fbr.y, fbr.z);
+
+	glEnd();
+}
+
+
+void Camera::drawPlanes() {
+
+	glBegin(GL_QUADS);
+
+	//near plane
+	glVertex3f(ntl.x, ntl.y, ntl.z);
+	glVertex3f(ntr.x, ntr.y, ntr.z);
+	glVertex3f(nbr.x, nbr.y, nbr.z);
+	glVertex3f(nbl.x, nbl.y, nbl.z);
+
+	//far plane
+	glVertex3f(ftr.x, ftr.y, ftr.z);
+	glVertex3f(ftl.x, ftl.y, ftl.z);
+	glVertex3f(fbl.x, fbl.y, fbl.z);
+	glVertex3f(fbr.x, fbr.y, fbr.z);
+
+	//bottom plane
+	glVertex3f(nbl.x, nbl.y, nbl.z);
+	glVertex3f(nbr.x, nbr.y, nbr.z);
+	glVertex3f(fbr.x, fbr.y, fbr.z);
+	glVertex3f(fbl.x, fbl.y, fbl.z);
+
+	//top plane
+	glVertex3f(ntr.x, ntr.y, ntr.z);
+	glVertex3f(ntl.x, ntl.y, ntl.z);
+	glVertex3f(ftl.x, ftl.y, ftl.z);
+	glVertex3f(ftr.x, ftr.y, ftr.z);
+
+	//left plane
+
+	glVertex3f(ntl.x, ntl.y, ntl.z);
+	glVertex3f(nbl.x, nbl.y, nbl.z);
+	glVertex3f(fbl.x, fbl.y, fbl.z);
+	glVertex3f(ftl.x, ftl.y, ftl.z);
+
+	// right plane
+	glVertex3f(nbr.x, nbr.y, nbr.z);
+	glVertex3f(ntr.x, ntr.y, ntr.z);
+	glVertex3f(ftr.x, ftr.y, ftr.z);
+	glVertex3f(fbr.x, fbr.y, fbr.z);
+
+	glEnd();
+
+}
+
+void Camera::drawNormals() {
+
+	Vector3 a, b;
+
+	glBegin(GL_LINES);
+
+	// near
+	a = (ntr + ntl + nbr + nbl);
+	a.scale(0.25);
+	b = a + pl[NEARP].normal;
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+
+	// far
+	a = (ftr + ftl + fbr + fbl);
+	a.scale(0.25);
+	b = a + pl[FARP].normal;
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+
+	// left
+	a = (ftl + fbl + nbl + ntl);
+	a.scale(0.25);
+	b = a + pl[LEFT].normal;
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+
+	// right
+	a = (ftr + nbr + fbr + ntr);
+	a.scale(0.25);
+	b = a + pl[RIGHT].normal;
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+
+	// top
+	a = (ftr + ftl + ntr + ntl);
+	a.scale(0.25);
+	b = a + pl[TOP].normal;
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+
+	// bottom
+	a = (fbr + fbl + nbr + nbl);
+	a.scale(0.25);
+	b = a + pl[BOTTOM].normal;
+	glVertex3f(a.x, a.y, a.z);
+	glVertex3f(b.x, b.y, b.z);
+
+	glEnd();
+
+
 }

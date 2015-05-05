@@ -11,6 +11,7 @@
 
 #include "viewFactory.h"
 #include "Cube.h"
+#include "Fire.h"
 #include "tiny_obj_loader.h"
 #include "Model3D.h"
 #include "SkyBox.h"
@@ -20,27 +21,94 @@
 #include "Teapot.h"
 #include "Model3DFactory.h"
 #include "sound.h" // include the sound
+#include "Grass.h"
 #define TESTCAM 1
 
-#define CREATEOBG(PATH,OBG,TEX,META,NOMAL,GROSS) new Model3D("PATH##OBJ", "PATH##TEX", "PATH##NOMAL",  "PATH##GROSS", "PATH##META")
 
 int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
 static viewFactory * factory; // factory of gui
 static Model3DFactory* m_factory;
+ShaderSystem* Window::shader_system;
 static int counter = 0;
 static Cube* cube;
+static Fire* fire;
+
 static Model3D*object;
 static Sound *soundObject;
+
+void CHECK_FRAMEBUFFER_STATUS()
+{
+	GLenum status;
+	status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
+	switch (status) {
+	case GL_FRAMEBUFFER_COMPLETE:
+		cout << "frame buffer complete" << endl;
+		break;
+
+	case GL_FRAMEBUFFER_UNSUPPORTED:
+		/* choose different formats */
+		cout << "frame buffer not supported" << endl;
+
+		break;
+
+	default:
+		/* programming error; will fail on all hardware */
+		fputs("Framebuffer Error\n", stderr);
+		exit(-1);
+	}
+}
+
+void setupFBO(){
+	glGenFramebuffers(1, &Window::shader_system->fb);
+	glGenTextures(1, &Window::shader_system->color);
+	glGenRenderbuffers(1, &Window::shader_system->depth);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, Window::shader_system->fb);
+
+	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
+	glTexImage2D(GL_TEXTURE_2D,
+		0,
+		GL_RGBA,
+		Window::width, Window::height,
+		0,
+		GL_RGBA,
+		GL_UNSIGNED_BYTE,
+		NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, Window::shader_system->color, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, Window::shader_system->depth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, Window::width, Window::height);
+	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, 
+		GL_RENDERBUFFER, Window::shader_system->depth);
+
+	//CHECK_FRAMEBUFFER_STATUS();
+
+	//Switch back to default 
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+}
+
 
 void Window::initialize(void)
 {
 	factory = new viewFactory(width, height);
+	
 	//factory = new viewFactory(true);  //for no gui
+	
+	//Shader part
+	shader_system = new ShaderSystem();
+	setupFBO();
+	
+	
 	m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();
-	g_pCore->skybox = new SkyBox("skyboxes/space");
+	//g_pCore->skybox = new SkyBox("skyboxes/space");
+	g_pCore->skybox = new SkyBox("skyboxes/clouds");
 	//g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
 	//GameView* view = new HardShadowView();
@@ -81,146 +149,55 @@ void Window::initialize(void)
 			object->localTransform.scale = Vector3(1, 1, 1);
 			object->localTransform.rotation = Vector3(0, 0, 0);
 			view->PushGeoNode(object);
+=======
+	for (int i = 0; i < 10; i++){
+		for (int j = 0; j < 10; j++){
+			float ri = (rand() % 10 - 5) * 0.001;
+			float rj = (rand() % 10 - 5) * 0.001;
+			Grass * grass = new Grass();
+			grass->localTransform.position = Vector3(i*0.1 - 2 + ri, 1, j*0.1 - 2 + rj);
+			grass->localTransform.rotation = Vector3(0, 0, 0);
+			view->PushGrassNode(grass);
+>>>>>>> master
 		}
 	}
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(-1, -2, -1);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(-1, -2, 3);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(3, -2, -1);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
-	object->localTransform.position = Vector3(3, -2, 3);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	*/
 	/*
-	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
-	object->localTransform.position = Vector3(0, 0.5, 0);
-	object->localTransform.scale = Vector3(2, 1, 2);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);*/
-	/*	
-	object = Model3DFactory::generateObjectWithType(WoodenCube);
-	object->localTransform.position = Vector3(-8, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(Mace);
-	object->localTransform.position = Vector3(-10, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(Mallet);
-	object->localTransform.position = Vector3(-13, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(GlowingCube);
-	object->localTransform.position = Vector3(-15, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(Needle);
-	object->localTransform.position = Vector3(-17, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(Discount);
-	object->localTransform.position = Vector3(-20, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-	*/
-	/*
-	object = Model3DFactory::generateObjectWithType(Tire);
-	object->localTransform.position = Vector3(-4, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(WoodenWheel);
+	object = Model3DFactory::generateObjectWithType(BLOCKYGUN);
 	object->localTransform.position = Vector3(0, 0, -20);
-	object->localTransform.scale = Vector3(1, 1, 1);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	view->PushGeoNode(object);
 	*/
-	//setup light
-	//view->PushGeoNode(g_pCore->light);
-	//g_pCore->battlemode->PushGeoNode(g_pCore->light);
-
-	/*
-	Plane* p = new Plane(50);
-	p->setColor(1, 1, 0);
-	p->localTransform.position = Vector3(0, -5, 0);
-	p->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(p);*/
-	/*
-	p = new Plane(50);
-	p->setColor(1, 0, 0);
-	p->localTransform.position = Vector3(20, 0, 0);
-	p->localTransform.rotation = Vector3(0, 0, 90);
-	view->PushGeoNode(p);
-
-	p = new Plane(50);
-	p->setColor(0, 1, 0);
-	p->localTransform.position = Vector3(-20, 0, 0);
-	p->localTransform.rotation = Vector3(0, 0, -90);
-	view->PushGeoNode(p);*/
-	/*
-	Model3D *object = new Model3D("woodcube.obj");
-	object->localTransform.position = Vector3(0, 0, -10);
-	object->localTransform.scale = Vector3(1, 1, 1);
+	
+	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
+	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
-	view->PushGeoNode(object);
+	view->PushGrassNode(object);
+	
+	//set color
+	//glColor3f(1, 1, 1);
+	/*.
 	*/
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	factory->battlemode->PushGeoNode(g_pCore->light);
-	//factory->battlemode->PushGeoNode(object);
-	//factory->battlemode->PushGeoNode(p);
-
-	//test shadow view
-	//HardShadowView* shadowview = new HardShadowView();
-	//factory->defaultView = shadowview;
-
-	//setup camera
-	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 5);
-
-	//setup shader
-	//init shader
-	//GLuint program = LoadShader("shadow.vert", "shadow.frag");
-	//glUseProgram(program);
-
-	//setup factory
-	//g_pCore->pGameView = view;
+	
 	factory->defaultView = view;
 	factory->setView();
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 
-
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
+	
 	//connect to server
+
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.91.53");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.14");
-
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.168");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 
 }
 
@@ -318,10 +295,13 @@ void Window::reshapeCallback(int w, int h) {
     glViewport(0, 0, w, h);                                          //Set new viewport size
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(60.0, double(Window::width) / (double)Window::height, 1, 1000.0); //Set perspective projection viewing frustum
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
 	//glFrustum(-1, 1, -1 , 1, 1,5);
-
+	g_pCore->pGameView->pViewCamera->setCamInternals(60.0, double(Window::width) / (double)Window::height, 0.1, 30.0);
 	factory->reshapeFunc(w, h);
+
+	//Reshape, set up frame buffer object again based on the new width and height
+	setupFBO();
 }
 
 //----------------------------------------------------------------------------
@@ -334,6 +314,8 @@ void Window::displayCallback() {
 
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
+
+	//Every frame, first update the objects from server infos
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
 	if (p!=nullptr) {
 		switch (p->packet_types){
@@ -352,21 +334,18 @@ void Window::displayCallback() {
 				break;
 			}
 		}
-		//update
+		//clean memory
+		for each (PlayerInfo* pi in p->player_infos)
+		{
+			delete(pi);
+		}
+		delete(p);
 	}
 	
-	g_pCore->pGameView->VOnRender();
-
-	//cout << "on display " << endl;
-
-	//test for camera
 	
-	//glPopMatrix();
-	//Tell OpenGL to clear any outstanding commands in its command buffer
-	//This will make sure that all of our commands are fully executed before
-	//we swap buffers and show the user the freshly drawn frame
+	//Draw everything
+	g_pCore->pGameView->VOnRender();
 	glFlush();
-	//Swap the off-screen buffer (the one we just drew to) with the on-screen buffer
 	glutSwapBuffers();
 	clock_t endTime = clock();
 	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;

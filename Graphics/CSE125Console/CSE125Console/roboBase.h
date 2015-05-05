@@ -14,8 +14,7 @@ public:
 	virtual void VOnDraw();
 	virtual void VOnUpdate(GameInfoPacket* pData);
 
-	int width;
-	int height;
+	virtual bool intersect(Vector3 pos);
 
 	~roboBase();
 };

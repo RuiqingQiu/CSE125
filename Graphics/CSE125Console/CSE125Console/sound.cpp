@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "sound.h"
+#include <windows.h>
 #include <string>
 
 using namespace std;
@@ -7,15 +8,6 @@ using namespace std;
 string path = "sound/";
 
 Sound::Sound(){
-	/*
-	// Sound effect for hammer
-	if (!hammerBuffer.loadFromFile("Payback.wav"))
-		cout << "ERROR!" << endl;
-	// Create a sound instance and play it
-	hammerSound.setBuffer(hammerBuffer);
-	hammerSound.play();
-	hammerSound.setLoop(true); // the music will loop itself when ends
-	*/
 	// This is for the explosion sound
 	string tmp = path + "explosion.wav";
 	if (!explosionBuffer.loadFromFile(tmp))
@@ -28,7 +20,7 @@ Sound::Sound(){
 	if (!selectBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading explosion sound effect " << endl;
 	selectSound.setBuffer(selectBuffer);
-	//selectSound.play();
+	selectSound.setLoop(true); 
 
 	// music doesn't preload the data
 	if (!music.openFromFile("Payback.wav"))
@@ -66,7 +58,7 @@ void Sound::playSelect(){
 	if (selectSound.getStatus() == sf::Sound::Paused){
 		cout << "Play Select " << endl;
 		selectSound.play();
-		selectSound.pause();
-		
+		//Sleep(100); // sleep for 0.1 secs and then pause
+		//selectSound.pause();
 	}
 }

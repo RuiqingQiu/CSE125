@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -51,6 +51,9 @@
     </Filter>
     <Filter Include="Source Files\Shader\Group">
       <UniqueIdentifier>{70a9b502-6ec6-4268-92fb-a749441f3a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ParticleEffect">
+      <UniqueIdentifier>{94488061-5153-4357-a150-1d0805c0f161}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +267,21 @@
     <ClInclude Include="sound.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderSystem.h">
+      <Filter>Source Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Fire.h">
+      <Filter>Source Files\ParticleEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h">
+      <Filter>Source Files\ParticleEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3DGroup.h">
+      <Filter>Source Files\Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -452,6 +470,21 @@
     <ClCompile Include="sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderSystem.cpp">
+      <Filter>Source Files\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Fire.cpp">
+      <Filter>Source Files\ParticleEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Source Files\ParticleEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Model3DGroup.cpp">
+      <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CSE125Console.rc">
@@ -459,28 +492,13 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="simple.frag">
-      <Filter>Source Files\Shader</Filter>
-    </None>
-    <None Include="simple.vert">
-      <Filter>Source Files\Shader</Filter>
-    </None>
     <None Include="BlurVertexShader.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="FragmentShader.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="StoreDepthFragmentShader.frag">
-      <Filter>Source Files\Shader</Filter>
-    </None>
-    <None Include="StoreDepthVertexShader.vert">
-      <Filter>Source Files\Shader</Filter>
-    </None>
     <None Include="BlurFragmentShader.frag">
-      <Filter>Source Files\Shader</Filter>
-    </None>
-    <None Include="VertexShader.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="hard_shadow.vert">
@@ -505,6 +523,36 @@
       <Filter>Source Files\Shader\Group</Filter>
     </None>
     <None Include="shadow.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="highlight.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="highlight.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="refract.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="refract.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="grass.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="grass.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="skybox.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="skybox.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="edge.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="edge.frag">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
   </ItemGroup>

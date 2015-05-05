@@ -49,6 +49,7 @@ void battleTimer::createNumbers(){
 
 	for (int i = 0; i < DIGITS; i++){
 		digits[i] = new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
+		cout << "number y is " << (yPos + off) << endl;
 	}
 	int off_comma = off + nSize;
 
@@ -67,15 +68,15 @@ void battleTimer::update(){
 	// if minLeft is less then 0, don't update anymore
 	if (minLeft <= -1){
 		secLeft = 0;
-		cout << "Enter " << endl;
+		//cout << "Enter " << endl;
 		//return;
 	}
 	// if still time left 
 	else{
 		minLeft = MIN - min; // calcualte the min left
-		cout << "minLeft " << minLeft << endl;
+		//cout << "minLeft " << minLeft << endl;
 		secLeft = MAX_TIME - sec;
-		cout << "secLeft " << secLeft << endl;
+		//cout << "secLeft " << secLeft << endl;
 	}
 	int idx_sec = secLeft;
 	int idx = minLeft;
@@ -107,7 +108,7 @@ void battleTimer::draw(){
 	int nSize = height - (off*2.0);
 	//add one comma and draw
 	//guiItem* comma = new guiItem("text/symbols/colon.jpg", 945,970,nSize,nSize); // all things have the same size 
-	guiItem* comma = new guiItem("text/symbols/colon.jpg", (xPos + width - off) - (nSize * 3), yPos + off, nSize, nSize); // all things have the same size 
+	guiItem* comma = new guiItem("text/symbols/colon.jpg", (xPos + width - off) - (nSize* 3), yPos + off, nSize, nSize); // all things have the same size 
 	comma->draw();
 }
 
@@ -122,7 +123,6 @@ void battleTimer::rePosition(int x, int y, int w, int h){
 
 	guiItem* comma = new guiItem("text/symbols/colon.jpg", (xPos + width - off) - (nSize * 3), yPos + off, nSize, nSize); // all things have the same size 
 	int off_comma = off + nSize;
-
 	for (int i = DIGITS; i < NUM_DIGITS; i++) {
 		digits[i] = new numbers((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
 	}

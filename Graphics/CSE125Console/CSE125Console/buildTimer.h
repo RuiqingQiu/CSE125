@@ -4,7 +4,7 @@
 #include "numbers.h"
 
 #define NUM_DIGITS 2
-#define MAX_TIME 60
+#define MAX_TIME 90
 
 class buildTimer : public guiItem {
 public:

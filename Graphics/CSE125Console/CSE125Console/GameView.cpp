@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameView.h"
 #include "SkyBox.h"
+#include <algorithm>
+#include "Window.h"
 
 GameView::GameView()
 {	
@@ -17,24 +19,187 @@ void GameView::VUpdate() {
 
 }
 
-void GameView::VOnRender()
-{
+void GameView::setConstraints() {
+	for (int i = 0; i < NodeList.size(); i++) {
+		NodeList[i]->clearConstraints();
+	}
+}
+
+
+bool pairCompare(const std::pair<float, GeoNode*>& firstElem, const std::pair<float, GeoNode*>& secondElem) {
+	return firstElem.first < secondElem.first;
+}
+
+void GameView::first_pass(){
+	glBindFramebuffer(GL_FRAMEBUFFER, Window::shader_system->fb);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glEnable(GL_TEXTURE_2D);
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+
+	Window::shader_system->BindShader(EDGE_SHADER);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	pViewCamera->setUpCamera();
+	glPushMatrix();
+	glTranslated(0, 0, -15);
+	glutSolidTeapot(1);
+	glPopMatrix();
+	Window::shader_system->UnbindShader();
+}
+
+void GameView::second_pass(){
+
+	//Code below this is second pass
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//Clear color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Set the OpenGL matrix mode to ModelView
+
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	pViewCamera->setUpCamera();
+
+	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
+	Window::shader_system->BindShader(EDGE_SHADER);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "width"), Window::width);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "height"), Window::height);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 2);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "RenderTex"), 0);
+
+	glPushMatrix();
+	glTranslated(0, 0, -15);
+	glutSolidTeapot(1);
+	glPopMatrix();
+	Window::shader_system->UnbindShader();
+
+
+
 	//glPushMatrix();
 	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
+	//sort Z before draw
+	float ptr[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, ptr);
+	Matrix4 modelview;
+	modelview.m[0][0] = ptr[0];
+	modelview.m[0][1] = ptr[1];
+	modelview.m[0][2] = ptr[2];
+	modelview.m[0][3] = ptr[3];
 
+	modelview.m[1][0] = ptr[4];
+	modelview.m[1][1] = ptr[5];
+	modelview.m[1][2] = ptr[6];
+	modelview.m[1][3] = ptr[7];
+
+	modelview.m[2][0] = ptr[8];
+	modelview.m[2][1] = ptr[9];
+	modelview.m[2][2] = ptr[10];
+	modelview.m[2][3] = ptr[11];
+
+	modelview.m[3][0] = ptr[12];
+	modelview.m[3][1] = ptr[13];
+	modelview.m[3][2] = ptr[14];
+	modelview.m[3][3] = ptr[15];
+
+	modelview.transpose();
+
+	vector<pair<float, GeoNode*>> nodedepthvec;
 	for each (GeoNode* node in NodeList)
 	{
-		node->VOnDraw();
+		if (typeid(*node) == typeid(SkyBox) || node->type == BATTLEFIELD)
+		{
+			//cout << "enter here" << endl;
+			pair<float, GeoNode*> p = make_pair(999, node);
+			nodedepthvec.push_back(p);
+		}
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		{
+			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
+			Vector4 position = modelview * (localpos);
+			float z = -position.z;
+
+			pair<float, GeoNode*> p = make_pair(z, node);
+			nodedepthvec.push_back(p);
+		}
 	}
 
-	
+	sort(nodedepthvec.begin(), nodedepthvec.end(), pairCompare);
+
+
+	for each (pair<float, GeoNode*> p in nodedepthvec)
+	{
+		p.second->VOnDraw();
+	}
+
+	//sorting grass from back to front before drawing
+	/*
+	float ptr[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, ptr);
+	Matrix4 modelview;
+	modelview.m[0][0] = ptr[0];
+	modelview.m[0][1] = ptr[1];
+	modelview.m[0][2] = ptr[2];
+	modelview.m[0][3] = ptr[3];
+
+	modelview.m[1][0] = ptr[4];
+	modelview.m[1][1] = ptr[5];
+	modelview.m[1][2] = ptr[6];
+	modelview.m[1][3] = ptr[7];
+
+	modelview.m[2][0] = ptr[8];
+	modelview.m[2][1] = ptr[9];
+	modelview.m[2][2] = ptr[10];
+	modelview.m[2][3] = ptr[11];
+
+	modelview.m[3][0] = ptr[12];
+	modelview.m[3][1] = ptr[13];
+	modelview.m[3][2] = ptr[14];
+	modelview.m[3][3] = ptr[15];
+
+	modelview.transpose();
+	*/
+	vector<pair<float, GeoNode*>> depthvec;
+	for each (GeoNode* node in GrassList)
+	{
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		{
+			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
+			Vector4 position = modelview * (localpos);
+			float z = position.z;
+
+			pair<float, GeoNode*> p = make_pair(z, node);
+			depthvec.push_back(p);
+		}
+	}
+
+	sort(depthvec.begin(), depthvec.end(), pairCompare);
+
+
+	for each (pair<float, GeoNode*> p in depthvec)
+	{
+		p.second->VOnDraw();
+	}
+}
+void GameView::VOnRender()
+{
+	//Code below is first pass
+	first_pass();
+	second_pass();
 }
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)
@@ -163,28 +328,53 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			}
 
 			case BATTLEFIELD:{
-								 /*
+								 //cout << "enter here" << endl;
 								 Model3D* object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 								 object->identifier = info->player_infos[i]->id;
-								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y+0.5, info->player_infos[i]->z);
+								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y-2, info->player_infos[i]->z);
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
-								 object->localTransform.scale = Vector3(2, 1, 2);
-								 NodeList.push_back(object);*/
+								 object->localTransform.scale = Vector3(1, 1, 1);
+								 NodeList.push_back(object);
 								 break;
 			}
 			//Fix this
 			case THREEBYTHREE_BASIC:{
-										/*
-										Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-										object->isUpdated = true;
-										object->identifier = info->player_infos[i]->id;
-										object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
-										object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
-										object->localTransform.scale = Vector3(1, 1, 1);
-										NodeList.push_back(object);
-										info->player_infos[i]->processed = true;
-										*/
-										break;
+										
+				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+				object->isUpdated = true;
+				object->identifier = info->player_infos[i]->id;
+				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+				object->localTransform.scale = Vector3(1, 1, 1);
+				NodeList.push_back(object);
+				info->player_infos[i]->processed = true;
+				break;
+
+			}
+
+			case THREEBYTHREE_GLOWING:{
+				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_GLOWING);
+				object->isUpdated = true;
+				object->identifier = info->player_infos[i]->id;
+				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+				object->localTransform.scale = Vector3(1, 1, 1);
+				NodeList.push_back(object);
+				info->player_infos[i]->processed = true;
+				break;
+				break;
+			}
+			case THREEBYTHREE_WOODEN:{
+				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
+				object->isUpdated = true;
+				object->identifier = info->player_infos[i]->id;
+				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+				object->localTransform.scale = Vector3(1, 1, 1);
+				NodeList.push_back(object);
+				info->player_infos[i]->processed = true;
+				break;
+
 			}
 			case WALL:{
 								break;
@@ -222,6 +412,12 @@ void GameView::PushGeoNode(GeoNode* node)
 {
 	NodeList.push_back(node);
 }
+
+void GameView::PushGrassNode(GeoNode* node)
+{
+	GrassList.push_back(node);
+}
+
 
 void GameView::PopGeoNode(GeoNode* m_node)
 {
