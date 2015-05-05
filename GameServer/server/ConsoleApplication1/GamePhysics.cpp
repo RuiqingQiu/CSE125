@@ -58,10 +58,26 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisio
 			((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
 
 		}
+		/*
 		else
 		{
 			(*it)->createRigidBody(objcpair);
 			dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
+		}*/
+	}
+
+	for (it = gameObj->begin(); it != gameObj->end(); ++it)
+	{
+		if ((*it)->getIsRobot() != 0)
+		{
+			//((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
+
+		}
+		
+		else
+		{
+		(*it)->createRigidBody(objcpair);
+		dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
 		}
 	}
 	dynamicsWorld->setInternalTickCallback((btInternalTickCallback)collisionCallback, &dynamicsWorld, (void*)1);
@@ -87,7 +103,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 		}
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
-		if (trans.getOrigin().getY() < 0)
+		if (trans.getOrigin().getY() < -2)
 		{
 			(*it)->setY(2);
 		}

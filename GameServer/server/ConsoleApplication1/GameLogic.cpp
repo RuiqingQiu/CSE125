@@ -32,9 +32,9 @@ unsigned int GameLogic::waitToConnect()
 	if (cid == -1) return WAIT;
 	
 	GameObj* robot = new Robot(cid, "testname");
-	robot->setZ((cid % 2) * 30);
+	robot->setX((cid % 2) * 30);
 	robot->setY(4);
-	robot->setX(cid - 2<0 ? 0 : 30);
+	robot->setZ(cid - 2<0 ? 0 : 30);
 	robot->setqX(0);
 	robot->setqY(0);
 	robot->setqZ(0);
@@ -43,14 +43,38 @@ unsigned int GameLogic::waitToConnect()
 	robot->setType(BOX);
 	((Robot*)robot)->setCID(cid);
 	((Robot*)robot)->setMaxHealth(100);
-
-
 	robot->setBlockType(THREEBYTHREE_BASIC);
 
 	this->gameObjs.push_back(robot);
-	
+
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
+	
+	
+
+	/*
+		this->gameObjs.push_back(robot);
+		robot = new Robot(101, "testname");
+		robot->setX(-5);
+		robot->setY(2);
+		robot->setZ(0);
+		robot->setqX(0);
+		robot->setqY(0);
+		robot->setqZ(0);
+		robot->setqW(1);
+		robot->setMass(100);//50);
+		robot->setType(BOX);
+		((Robot*)robot)->setCID(101);
+		((Robot*)robot)->setMaxHealth(100);
+		robot->setBlockType(THREEBYTHREE_BASIC);
+		this->gameObjs.push_back(robot);
+		tmp = false;
+	}
+	*/
    
+
+	
+
+
 
 	//robot = new Robot(cid+1, "testname1");
 	//robot->setZ(-20);
@@ -160,6 +184,9 @@ void GameLogic::gameStart(){
 	addGround();
 	//addWalls();
 
+
+	
+
 	gamePhysics->initWorld(&gameObjs, &objCollisionPair);
 
 	//cout << "started" << endl;
@@ -179,7 +206,8 @@ void GameLogic::gameStart(){
 			for (k = front; k <= back; k++)
 			{
 				GameObj* gameObj;
-				if (k==front)//j == left || j == right || k == front || k == back)
+				//if (k==front)
+				if(j == left || j == right || k == front || k == back)
 				{
 					btTransform trans;
 					robot->getRigidBody()->getMotionState()->getWorldTransform(trans);
@@ -188,12 +216,12 @@ void GameLogic::gameStart(){
 					if (k == front)
 					{
 						Weapon* w = new RangedWeapon(GUN, gameObj);
-						gameObj->setBlockType(BLOCKYGUN);
+						gameObj->setBlockType(BGun);
 						cout << "weapon id: " << gameObj->getId() << endl;
 						robot->addWeapon(w);
 					}
 					else{
-						gameObj->setBlockType(robot->getCID());
+						gameObj->setBlockType(BASICCUBE);
 					}
 
 					gameObj->setCollisionType(C_ROBOT_PARTS);
@@ -201,27 +229,44 @@ void GameLogic::gameStart(){
 					gameObj->createRigidBody(&objCollisionPair);
 					gamePhysics->getDynamicsWorld()->addRigidBody(gameObj->getRigidBody());
 					int z;
-					for (z = 0; z < 2; z++)
+					for (z = 0; z < 1; z++)
 					{
 						robot->addConstraint(gameObj);
-					}
-					std::vector<Constraint *>::iterator iter;
-					for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
-					{
-						gamePhysics->getDynamicsWorld()->addConstraint((*iter)->_joint6DOF);
 					}
 
 					gameObjs.push_back(gameObj);
 				}
-				else
+				/*else
 				{
-					//int yOffset = ((int)robot->getHeight() / 2) + 1;
-					//gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
-					//gameObj->setBlockType(BASICCUBE);
+					cout << "height" << robot->getHeight() << endl;
+					int yOffset = ((int)robot->getHeight() / 2) + 1;
+					gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+					gameObj->setBlockType(BASICCUBE);
+				}*/
+
+				/*gameObj->setCollisionType(C_ROBOT_PARTS);
+				gameObj->setBelongTo(robot);
+				gameObj->createRigidBody(&objCollisionPair);
+				gamePhysics->getDynamicsWorld()->addRigidBody(gameObj->getRigidBody());
+				int z;
+				for (z = 0; z <1 ; z++)
+				{
+					robot->addConstraint(gameObj);
+				}
+				std::vector<Constraint *>::iterator iter;
+				for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
+				{
+					gamePhysics->getDynamicsWorld()->addConstraint((*iter)->_joint6DOF);
 				}
 
-
+				gameObjs.push_back(gameObj); */
 				
+			}
+
+			std::vector<Constraint *>::iterator iter;
+			for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
+			{
+				gamePhysics->getDynamicsWorld()->addConstraint((*iter)->_joint6DOF);
 			}
 		}
 

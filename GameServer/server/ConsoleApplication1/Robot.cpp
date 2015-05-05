@@ -72,7 +72,7 @@ double Robot::getDepth()
 
 void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> * map)
 {
-
+	printf("%i %i %i\n", this->getCollisionType(), this->getIsRobot(), this->getState());
 	//GOBox* boxShape = new GOBox( x,  y,  z,  qX,  qY,  qZ,  qW,  mass,  width,  height,  depth);
 	double x = this->getX();
 	double y= this->getY();
@@ -82,10 +82,11 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	double qZ= this->getqZ();
 	double qW= this->getqW();
 	double mass = this->getMass();
+	std::cout << "mass:" << mass << std::endl;
 	setWidth(width);
 	setHeight(height);
 	setDepth(depth);
-	btBoxShape* m_pBoxShape = new btBoxShape(btVector3(width/2, height/2, depth/2));
+	btBoxShape* m_pBoxShape = new btBoxShape(btVector3(width/2.0f, height/2.0f, depth/2.0f));
 
 	btTransform chassisLS;
 	chassisLS.setIdentity();

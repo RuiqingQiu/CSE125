@@ -383,13 +383,13 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		}
 		else if ((*i)->getType() == PLANE)
 		{
-
-			temp += to_string((float)((GOPlane*)(*i))->getXNorm());
-			temp += ' ';
-			temp += to_string((float)((GOPlane*)(*i))->getYNorm());
-			temp += ' ';
-			temp += to_string((float)((GOPlane*)(*i))->getZNorm());
-			temp += ' ';
+			temp += "0 0 0 ";
+			//temp += to_string((float)((GOPlane*)(*i))->getXNorm());
+			//temp += ' ';
+			//temp += to_string((float)((GOPlane*)(*i))->getYNorm());
+			//temp += ' ';
+			//temp += to_string((float)((GOPlane*)(*i))->getZNorm());
+			//temp += ' ';
 		}
 		else
 		{
