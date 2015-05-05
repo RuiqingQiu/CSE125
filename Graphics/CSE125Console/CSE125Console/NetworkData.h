@@ -24,7 +24,7 @@ enum PacketTypes {
 struct CPacket {
 
 	unsigned int packet_type;
-	char data[50000];
+	char data[100];
 
 
 	void serialize(char * data) {

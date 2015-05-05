@@ -21,11 +21,14 @@ Sound::Sound(){
 		cout << "ERROR in loading explosion sound effect " << endl;
 	selectSound.setBuffer(selectBuffer);
 	selectSound.setLoop(true); 
+	selectSound.play();
+	selectSound.pause();
 
 	// music doesn't preload the data
 	if (!music.openFromFile("Payback.wav"))
 		cout << "load music error " << endl;
-	//music.play();
+	music.play();
+	music.pause();
 }
 
 
@@ -39,7 +42,7 @@ void Sound::playMusic(){
 	if (music.getStatus() == sf::Sound::Paused){
 		cout << "Playing music " << endl;
 		music.play();
-		music.pause();
+		//music.pause();
 	}
 }
 
@@ -58,7 +61,7 @@ void Sound::playSelect(){
 	if (selectSound.getStatus() == sf::Sound::Paused){
 		cout << "Play Select " << endl;
 		selectSound.play();
-		//Sleep(100); // sleep for 0.1 secs and then pause
-		//selectSound.pause();
+		Sleep(100); // sleep for 0.1 secs and then pause
+		selectSound.pause();
 	}
 }
