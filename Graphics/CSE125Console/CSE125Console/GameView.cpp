@@ -344,6 +344,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			}
 
 			case BATTLEFIELD:{
+								 /*
 								 //cout << "enter here" << endl;
 								 Model3D* object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 								 object->identifier = info->player_infos[i]->id;
@@ -353,6 +354,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 NodeList.push_back(object);
 								 info->player_infos[i]->processed = true;
 								 break;
+								 */
 			}
 			//Fix this
 			case THREEBYTHREE_BASIC:{

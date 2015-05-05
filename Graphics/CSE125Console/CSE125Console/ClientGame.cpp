@@ -107,7 +107,7 @@ GameInfoPacket* ClientGame::update()
         i += sizeof(SPacket);
 
         switch (packet.packet_type) {
-
+			cout << packet.data << endl;
 		case GAME_STATE:
 				{
 							//printf("client received game state packet from server\n");
