@@ -124,21 +124,13 @@ void Window::initialize(void)
 		}
 	}
 	
-	object = Model3DFactory::generateObjectWithType(BLOCKYGUN);
+	object = Model3DFactory::generateObjectWithType(BGun);
 	object->shader_type = EDGE_SHADER;
 	object->localTransform.position = Vector3(3, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->auto_rotate = true;
 	object->edge_highlight = true;
 	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(BLOCKYGUN);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(0, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushGeoNode(object);
-	
 	
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 	object->localTransform.position = Vector3(0, -2, 0);
@@ -164,7 +156,7 @@ void Window::initialize(void)
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
-	g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
+	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 }
 

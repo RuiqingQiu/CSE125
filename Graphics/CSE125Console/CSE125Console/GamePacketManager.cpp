@@ -87,7 +87,7 @@ bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
 	cp.packet_type = BUILD_ROBOT;
 	string tmp = "";
 	for (int i = 0; i < nodeList.size(); i++) {
-		//clientID objectID x y z EullerX EullerY EullerZ block_type\n (0 for 1x1 nontexture cube) (1 for nontexture battlefield) (2 for nontexture wall) (3 for nontexture 3x3 cube) \n
+		//clientID objectID x y z EullerX EullerY EullerZ block_type below_id left_id right_id front_id back_id health \n
 		tmp += to_string(id) + " ";
 		tmp += to_string(nodeList[i]->identifier) + " ";
 		tmp += to_string(nodeList[i]->localTransform.position.x) + " ";
@@ -99,15 +99,15 @@ bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
 
 		tmp += to_string(nodeList[i]->textureType) + " ";
 
-		tmp += to_string(nodeList[i]->below_id) + " ";
-		tmp += to_string(nodeList[i]->left_id) + " ";
-		tmp += to_string(nodeList[i]->right_id) + " ";
-		tmp += to_string(nodeList[i]->front_id) + " ";
-		tmp += to_string(nodeList[i]->back_id) + " ";
+		tmp += to_string(nodeList[i]->below_id);
+		tmp += " " + to_string(nodeList[i]->left_id);
+		tmp += " " + to_string(nodeList[i]->right_id);
+		tmp += " " + to_string(nodeList[i]->front_id);
+		tmp += " " + to_string(nodeList[i]->back_id);
 
-		tmp += to_string(nodeList[i]->healthStat) + " ";
-		tmp += to_string(nodeList[i]->damageStat) + " ";
-		tmp += to_string(nodeList[i]->speedStat) + " ";
+		tmp += to_string(nodeList[i]->healthStat);
+		//tmp += " " + to_string(nodeList[i]->damageStat);
+		//tmp += " " + to_string(nodeList[i]->speedStat);
 
 		tmp += "\n\0";
 	}

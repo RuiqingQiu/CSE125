@@ -79,6 +79,11 @@ void scrollBox::init() {
 	removeButton->setTexture("scrollbox/remove_sel.jpg", btnState::SELECTED);
 	removeButton->setTexture("scrollbox/remove_press.jpg", btnState::PRESSED);
 
+	yoff = yPos + width - (85 * scale);
+	clearButton = new button("scrollbox/clear.jpg", xoff, yoff);
+	clearButton->setTexture("scrollbox/clear_sel.jpg", btnState::SELECTED);
+	clearButton->setTexture("scrollbox/clear_press.jpg", btnState::PRESSED);
+
 	//keep ratio to scroll box dimensions: 1320x2420px
 	//int ratio = height / 24.2;
 	//button jpg dimensions: 1320x100px
@@ -98,6 +103,7 @@ void scrollBox::draw() {
 	//downButton->draw();
 	addButton->draw();
 	removeButton->draw();
+	clearButton->draw();
 	for (int i = displayIdx; i < displayIdx + MAXDISPLAY; i++) {
 		if (i >= list.size()) break;
 		list[i]->draw();
@@ -110,6 +116,7 @@ void scrollBox::rePosition(int x, int y, int w, int h) {
 	//downButton->rePosition(x, y, w, h);
 	addButton->rePosition(x, y, w, h);
 	removeButton->rePosition(x, y, w, h);
+	clearButton->rePosition(x, y, w, h);
 	for (int i = 0; i < list.size(); i++) {
 		list[i]->rePosition(x, y, w, h);
 	}
@@ -192,6 +199,7 @@ void scrollBox::onClick(int state, int x, int y) {
 	//downButton->onClick(state, x, y);
 	addButton->onClick(state, x, y);
 	removeButton->onClick(state, x, y);
+	clearButton->onClick(state, x, y);
 	if (addButton->isSelected(x, y) || removeButton->isSelected(x, y)) return;
 	for (int i = displayIdx; i < displayIdx+MAXDISPLAY; i++) {
 		if (i >= list.size()) return;

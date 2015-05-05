@@ -25,7 +25,6 @@ struct CPacket {
 
 	unsigned int packet_type;
 	char data[100];
-
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(CPacket));
 	}
