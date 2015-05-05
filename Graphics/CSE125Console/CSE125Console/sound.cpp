@@ -10,6 +10,10 @@ string path = "sound/";
 Sound::Sound(){
 	/* Cannot call play in the constructor !!! */
 
+
+
+
+
 	// build view selection sound
 	string tmp = path + "select.wav";
 	if (!selectBuffer.loadFromFile(tmp))
