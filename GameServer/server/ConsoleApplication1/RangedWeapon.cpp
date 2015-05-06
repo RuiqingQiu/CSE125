@@ -26,9 +26,9 @@ RangedWeapon::RangedWeapon(int type, GameObj* g)
 		_pInitForce = -300;
 		_pMass = 1;
 		_pWidth = 0.3;
-		_pHeight =0.3;
-		_pDepth =0.5;
-		_pBlockType = NEEDLE;
+		_pHeight = 0.3;
+		_pDepth = 0.5;
+		_pBlockType = BASICCUBE;
 		break;
 	}
 	default:

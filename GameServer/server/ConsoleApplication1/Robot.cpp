@@ -94,21 +94,29 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 
 	btCompoundShape * m_pCompoundShape = new btCompoundShape();
 	m_pCompoundShape->addChildShape(chassisLS, m_pBoxShape);
-	
 
 
 	btDefaultMotionState* pMotionState = new btDefaultMotionState(btTransform(btQuaternion(qX, qY, qZ, qW), btVector3(x, y, z)));
 	btVector3 intertia(0, 0, 0);
 	m_pBoxShape->calculateLocalInertia(mass, intertia);
 
-	btRigidBody::btRigidBodyConstructionInfo bodyInfo(mass, pMotionState, m_pCompoundShape, intertia);
-	bodyInfo.m_friction = 0.6f;
-	bodyInfo.m_restitution = 0.1f;
-	bodyInfo.m_linearDamping = 0.2f;
-	bodyInfo.m_angularDamping = 0.2f;
+	//btRigidBody::btRigidBodyConstructionInfo bodyInfo(mass, pMotionState, m_pCompoundShape, intertia);
+	//bodyInfo.m_friction = 0.6f;
+	//bodyInfo.m_restitution = 0.1f;
+	//bodyInfo.m_linearDamping = 0.2f;
+	//bodyInfo.m_angularDamping = 0.2f;
 
-	btRigidBody* m_pBody = new btRigidBody(bodyInfo);
-	m_pBody->setActivationState(DISABLE_DEACTIVATION);
+	btRigidBody::btRigidBodyConstructionInfo chassisInfo(mass, pMotionState, m_pBoxShape, intertia);
+	chassisInfo.m_friction = 0.6f;
+	chassisInfo.m_restitution = 0.1f;
+	chassisInfo.m_linearDamping = 0.2f;
+	chassisInfo.m_angularDamping = 0.2f;
+
+
+	btRigidBody* m_chassis = new btRigidBody(chassisInfo);
+	//btRigidBody* m_pBody = new btRigidBody(bodyInfo);
+	m_chassis->setActivationState(DISABLE_DEACTIVATION);
+	//m_pBody->setActivationState(DISABLE_DEACTIVATION);
 
 	btRaycastVehicle::btVehicleTuning tuning;
 
@@ -119,13 +127,19 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	tuning.m_suspensionStiffness = 5.0f;
 
 	btDefaultVehicleRaycaster* m_pVehicleRaycaster = new btDefaultVehicleRaycaster(dynamicWorld);
-	btRaycastVehicle* m_pVehicle = new btRaycastVehicle(tuning, m_pBody, m_pVehicleRaycaster);
+	//btRaycastVehicle* m_pVehicle = new btRaycastVehicle(tuning, m_pBody, m_pVehicleRaycaster);
+	btRaycastVehicle* m_pVehicle = new btRaycastVehicle(tuning, m_chassis, m_pVehicleRaycaster);
+
+
 
 	this->vehicle = m_pVehicle;
 	//dynamicWorld->addRigidBody(m_pBody, COL_PLAYER, playerCollisions);
-	dynamicWorld->addRigidBody(m_pBody);
+	//dynamicWorld->addRigidBody(m_pBody);
+	dynamicWorld->addRigidBody(m_chassis);
 	dynamicWorld->addAction(m_pVehicle);
-	map->insert(std::pair<btCollisionObject*, GameObj*>(m_pBody, this));
+	map->insert(std::pair<btCollisionObject*, GameObj*>(m_chassis, this));
+
+	//map->insert(std::pair<btCollisionObject*, GameObj*>(m_pBody, this));
 	//m_pBody->setLinearFactor(btVector3(0, 0, 0));
 	//m_pBody->setAngularFactor(btVector3(0, 0, 0));
 	m_pVehicle->setCoordinateSystem(0, 1, 2);
@@ -208,7 +222,7 @@ void Robot::shoot(std::vector<std::pair<GameObj*, double>>* projectiles)
 				btVector3 boxRot = rbTrans.getBasis()[2];
 				boxRot.normalize();
 				btVector3 correctedDisplacement = boxRot * -rbDepth; // /2
-				double x = rbTrans.getOrigin().getX() + correctedDisplacement.getX();
+				double x = rbTrans.getOrigin().getX() + correctedDisplacement.getX();// + 0.5 - w->getPWidth();
 				double y = rbTrans.getOrigin().getY() + correctedDisplacement.getY();
 				double z = rbTrans.getOrigin().getZ() + correctedDisplacement.getZ();
 

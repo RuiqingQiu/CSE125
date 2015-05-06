@@ -44,10 +44,26 @@ unsigned int GameLogic::waitToConnect()
 	((Robot*)robot)->setCID(cid);
 	((Robot*)robot)->setMaxHealth(100);
 	robot->setBlockType(THREEBYTHREE_BASIC);
-
 	this->gameObjs.push_back(robot);
 
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
+	//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE//REMOVE next state
+	robot = new Robot(cid+1, "testname");
+	robot->setX(((cid +1)% 2) * 30);
+	robot->setY(4);
+	robot->setZ((cid+1) - 2<0 ? 0 : 30);
+	robot->setqX(0);
+	robot->setqY(0);
+	robot->setqZ(0);
+	robot->setqW(1);
+	robot->setMass(100);//50);
+	robot->setType(BOX);
+	((Robot*)robot)->setCID(cid+1);
+	((Robot*)robot)->setMaxHealth(100);
+	robot->setBlockType(THREEBYTHREE_BASIC);
+
+	this->gameObjs.push_back(robot);
+	clientPair.insert(std::pair<int, GameObj*>(cid+1, robot));
 	
 	
 
@@ -215,10 +231,10 @@ void GameLogic::gameStart(){
 					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ(), trans.getRotation().getW(), 1, 1, 1, 1);
 					if (k == front)
 					{
-						Weapon* w = new RangedWeapon(GUN, gameObj);
-						gameObj->setBlockType(BGun);
-						cout << "weapon id: " << gameObj->getId() << endl;
-						robot->addWeapon(w);
+						//Weapon* w = new RangedWeapon(GUN, gameObj);
+						gameObj->setBlockType(BASICCUBE);
+						//cout << "weapon id: " << gameObj->getId() << endl;
+						//robot->addWeapon(w);
 					}
 					else{
 						gameObj->setBlockType(BASICCUBE);
@@ -232,6 +248,18 @@ void GameLogic::gameStart(){
 					int yOffset = ((int)robot->getHeight() / 2) + 1;
 					gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
 					gameObj->setBlockType(BASICCUBE);
+					
+					
+					GameObj* gameObj2 = new GOBox(j + robot->getX(), robot->getY() + 1 + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+					gameObj2->setBlockType(BASICCUBE);
+					gameObj2->setCollisionType(C_ROBOT_PARTS);
+					gameObj2->setBelongTo(robot);
+					gameObj2->createRigidBody(&objCollisionPair);
+					gamePhysics->getDynamicsWorld()->addRigidBody(gameObj2->getRigidBody());
+					robot->addConstraint(gameObj2);	gameObjs.push_back(gameObj2);
+					Weapon* w = new RangedWeapon(GUN, gameObj2);
+					cout << "weapon id: " << gameObj->getId() << endl;
+					robot->addWeapon(w);
 				}
 
 
@@ -268,15 +296,6 @@ void GameLogic::gameStart(){
 			
 		}
 
-	//	for (j = i + 1; j < 17; j++)
-	//	{
-	//		for (k = 0; k < 7; k++)
-	//		{
-		//clientPair.find(0)->second
-		        
-		//		gamePhysics->getDynamicsWorld()->addConstraint(b->joint6DOF, true);
-		//	}
-	//	}
 		std::vector<Constraint *>::iterator iter;
 		for (iter = robot->getConstraints()->begin(); iter != robot->getConstraints()->end(); iter++)
 		{
@@ -664,3 +683,26 @@ void GameLogic::deleteGameObj(GameObj* g)
 	g->deleteConstraints(&objCollisionPair);
 	delete(g);
 }
+
+
+/*
+
+
+
+
+void method()
+{
+   //assume clientPair is setup
+   std::vector<GameObj*>::iterator it;
+
+
+
+
+}
+
+
+
+
+
+
+*/
