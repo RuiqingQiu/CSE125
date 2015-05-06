@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 class GameEvents
 {
 protected:
@@ -13,6 +12,7 @@ public:
 
 	virtual void to_string(std::string&) = 0  ;
 	int getType();
+	
 
 };
 

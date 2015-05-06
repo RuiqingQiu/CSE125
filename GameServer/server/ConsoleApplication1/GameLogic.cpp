@@ -402,6 +402,34 @@ void GameLogic::prePhyLogic(){
 		}
 		else if(r->getState() == PS_BUILD)
 		{
+			switch (type) {
+			case BUILD_ROBOT:{
+
+						   
+						  /* std::vector<GameObj*>::iterator it;
+						   for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
+						   {
+							   gameObjs.push_back((*it));
+							   if ((*it)->getBuildID() == 0)
+							   {
+								   clientPair.find((*iter)->getCid())->second = (*it);
+							   }
+						   }
+						   Robot* robot = (Robot*)clientPair.find((*iter)->getCid())->second;
+						   for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
+						   {
+							   (*it)->setBelongTo(robot);
+							   if ((*it)->getLeftID() != -1)
+							   {
+								   (*it)->addConstraint(findObjbyBuildID());
+							   }
+						   }*/
+			}
+			default:{
+						gamePhysics->createPhysicsEvent(type, gObj);
+						break;
+			}
+			}
 
 		}
 		else if (r->getState() == PS_DEAD){

@@ -306,16 +306,160 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 				   break;
 	}
 	case BUILD_ROBOT: {
-				   string packetInfoStr = "";
-				   int i;
-				   for (i = 0;; i++)
-				   {
-					   if (packet.data[i] != '\n')
-						   packetInfoStr += packet.data[i];
+						  ObjectEvents * e = new ObjectEvents(BUILD_ROBOT);
+						  
+							  string parseData = string(packet.data);
+						  
+							  vector<string> splitByObject = vector<string>();
+						  splitByObject.push_back("");
+						  
+							  for (int i = 0; i < parseData.length(); i++) {
+							  				   //split by newline, each newline
+								  if (parseData[i] != '\n')
+								   splitByObject[splitByObject.size() - 1] += parseData[i];
 					   else
 					   {
-						   break;
+						   splitByObject.push_back("");
 					   }
+								  //pop last empty string
+								  splitByObject.pop_back();
+								  unsigned int cid;
+									  for (int i = 0; i < splitByObject.size(); i++) {
+									  string objectInfo = splitByObject[i];
+									  					   //split by space to get the information for each object
+									  size_t pos = 0;
+									  string token;
+									  					   /*
+														   					   while ((pos = objectInfo.find(" ")) != string::npos) {
+														   					   token = objectInfo.substr(0, pos);
+														   					   std::cout << token << std::endl;
+														   					   objectInfo.erase(0, pos  + 1);
+														   					   }
+														   					   */
+														   
+														   					   //CID
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  cid = stoul(token);
+									  objectInfo.erase(0, pos  + 1);
+									  					   //Object ID
+										  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  unsigned int objId = stoul(token);
+									  objectInfo.erase(0, pos  + 1);
+									  
+										  					   //position
+										  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double xPos = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double yPos = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double zPos = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  
+										  					   //rotation
+										  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double xRot = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double yRot = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double zRot = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  
+										  					   //block type
+										  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double block_type = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  
+										  					   //contraints
+										  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double below = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double left = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double right = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double front = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double back = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  
+										  					   //stats
+										  pos = objectInfo.find(" ");
+									  token = objectInfo.substr(0, pos);
+									  std::cout << token << std::endl;
+									  double health = stold(token);
+									  objectInfo.erase(0, pos  + 1);
+									  
+									  GameObj* object;
+									  btQuaternion rotations = btQuaternion();
+									  rotations.setEuler(yRot, xRot, zRot);
+
+
+									  //(double x, double y, double z, double qX, double qY, double qZ, double qW, double mass, double width, double height, double depth)
+								     if (objId == 0) {
+										object = new GOBox(xPos, yPos, zPos, rotations.getX(), rotations.getY(), rotations.getZ(), rotations.getW(), 100, 3, 1, 3);
+										object->setIsRobot(1);
+										object->setCollisionType(C_ROBOT);
+										  
+									  }
+									else
+									{
+										object = new GOBox(xPos, yPos, zPos, rotations.getX(), rotations.getY(), rotations.getZ(), rotations.getW(), 10, 1, 1, 1);
+										object->setIsRobot(0);
+										object->setCollisionType(C_ROBOT_PARTS);
+									}
+									  
+										
+									  object->setBlockType(block_type);
+									  object->setBuildID(objId);
+									  object->setBelowID(below);
+									  object->setLeftID(left);
+									  object->setRightID(right);
+									  object->setFrontID(front);
+									  object->setBackID(back);
+									  object->setHealth(health);
+									  e->roboBuild.push_back(object);
+									  
+								  }
+								  splitByObject.clear();
+								  e->setCid(cid);
+									  eventList->push_back(e);
+								  break;
 				   }
 	}
 	default:{

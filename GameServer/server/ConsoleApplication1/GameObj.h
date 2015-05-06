@@ -56,7 +56,14 @@ private:
 	int _isWeapon;
 	double _damage = 0;
 	btRigidBody* rigidBody;
-
+		//constraints
+		int below_id;
+	int left_id;
+	int right_id;
+	int front_id;
+	int back_id;
+	int buildObj_id; //this is my id
+		
 	GameObj* _belongTo;
 
 	std::vector<Constraint *> constraints;
@@ -73,6 +80,26 @@ public:
 	// x, y, z, qX, qY, qZ, qW, type, mass
 	GameObj(double, double, double, double, double, double, double, int, double);
 	~GameObj();
+
+
+	void setLeftID(int);
+	void setRightID(int);
+	void setFrontID(int);
+	void setBackID(int);
+	void setBelowID(int);
+
+
+	int getLeftID();
+	int getRightID();
+	int getFrontID();
+	int getBackID();
+	int getBelowID();
+
+
+	void setBuildID(int);
+
+
+	int getBuildID();
 
 	double getX();
 	double getY();

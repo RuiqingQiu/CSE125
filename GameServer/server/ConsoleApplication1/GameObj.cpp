@@ -331,3 +331,28 @@ double GameObj::applyDamage(double h){
 	_health -= h;
 	return _health;
 }
+
+
+void GameObj::setLeftID(int i){ left_id = i; }
+void GameObj::setRightID(int i){ right_id = i; }
+void GameObj::setFrontID(int i){ front_id = i; }
+void GameObj::setBackID(int i){ back_id = i; }
+void GameObj::setBelowID(int i){ below_id = i; }
+
+
+int GameObj::getLeftID(){ return left_id; }
+int GameObj::getRightID(){ return right_id; }
+int GameObj::getFrontID(){ return front_id; }
+int GameObj::getBackID(){ return back_id; }
+int GameObj::getBelowID(){ return below_id; }
+
+void GameObj::setBuildID(int i)
+{
+	buildObj_id = i;
+}
+
+
+int GameObj::getBuildID()
+{
+	return buildObj_id;
+}

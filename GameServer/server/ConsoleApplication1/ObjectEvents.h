@@ -2,6 +2,8 @@
 #include <string>
 #include "NetworkData.h"
 
+#include <vector>
+#include "GameObj.h"
 class ObjectEvents
 {
 	unsigned int _event_type;
@@ -17,6 +19,6 @@ public:
 	unsigned int getCid();
 	std::string getName();
 
-
+	std::vector<GameObj *> roboBuild;
 };
 
