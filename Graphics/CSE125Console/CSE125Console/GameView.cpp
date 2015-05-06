@@ -132,9 +132,11 @@ void GameView::second_pass(){
 	vector<pair<float, GeoNode*>> nodedepthvec;
 	for each (GeoNode* node in NodeList)
 	{
-		if (typeid(*node) == typeid(SkyBox) || node->type == BATTLEFIELD)
+		if (typeid(*node) == typeid(SkyBox) || node->static_object == true)
 		{
 			//cout << "enter here" << endl;
+			if (node->static_object)
+				cout << "node" << node->static_object << endl;
 			pair<float, GeoNode*> p = make_pair(999, node);
 			nodedepthvec.push_back(p);
 		}
@@ -210,6 +212,11 @@ void GameView::second_pass(){
 	{
 		p.second->VOnDraw();
 	}
+
+	//Draw environment
+	for each (GeoNode* node in EnvironmentList){
+		node->VOnDraw();
+	}
 }
 void GameView::VOnRender()
 {
@@ -244,7 +251,6 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							   NodeList.push_back(object);
-
 							   info->player_infos[i]->processed = true;
 							   break;
 			}
@@ -363,8 +369,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 object->localTransform.scale = Vector3(1, 1, 1);
 								 NodeList.push_back(object);
 								 info->player_infos[i]->processed = true;
-								 break;
 								 */
+								 break;
 			}
 			//Fix this
 			case THREEBYTHREE_BASIC:{
@@ -429,9 +435,6 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		{
 			//int index = NodeList.
 		}
-		else if (NodeList[i]->static_object = true){
-			NodeListBuffer.push_back(NodeList[i]);
-		}
 		else{
 			NodeListBuffer.push_back(NodeList[i]);
 		}
@@ -448,6 +451,10 @@ void GameView::PushGeoNode(GeoNode* node)
 void GameView::PushGrassNode(GeoNode* node)
 {
 	GrassList.push_back(node);
+}
+
+void GameView::PushEnvironmentNode(GeoNode* node){
+	EnvironmentList.push_back(node);
 }
 
 

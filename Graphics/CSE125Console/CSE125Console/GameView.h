@@ -29,6 +29,7 @@ public:
 	~GameView();
 	int gameViewId;
 	std::vector<GeoNode*> NodeList;
+	std::vector<GeoNode*> EnvironmentList;
 	std::vector<GeoNode*> GrassList;
 	std::vector<GeoNode*> NodeListBuffer;
 
@@ -45,6 +46,7 @@ public:
 	//node manipulation functions
 	void PushGrassNode(GeoNode* node);
 
+	void PushEnvironmentNode(GeoNode* node);
 	virtual void PushGeoNode(GeoNode* node);
 	virtual void PopGeoNode(GeoNode* node);
 	virtual bool FindGeoNode(GeoNode* node);

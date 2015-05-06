@@ -38,6 +38,11 @@ Model3D::~Model3D()
 
 void Model3D::VOnClientUpdate(GameInfoPacket* pData){
 	PlayerInfo* p = pData->get_player_info(this->identifier);
+	//If it's a static object, we don't want it to disappear
+	if (this->static_object == true){
+		this->isUpdated = true;
+		return;
+	}
 	if (p){
 
 		localTransform.position.x = p->x;
@@ -167,8 +172,6 @@ void Model3D::VOnDraw(){
 				int i3 = render_obj->shapes[i].mesh.indices[3 * f + 2];
 				int m1 = render_obj->shapes[i].mesh.material_ids[f];
 			
-
-
 				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				//THIS LINE OF CODE MUST BE AFTER THE TEXTURE LOADING CODE
 				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -124,6 +124,36 @@ void Window::initialize(void)
 		}
 	}
 	
+	object = Model3DFactory::generateObjectWithType(METHCUBE);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(3, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(TREE1);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(TREE2);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-3, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(SUPERTREE);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-6, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+
+
+
 	/*
 	object = Model3DFactory::generateObjectWithType(BGun);
 	object->shader_type = EDGE_SHADER;
@@ -137,6 +167,7 @@ void Window::initialize(void)
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -2;
+	object->isUpdated = true;
 	object->type = BATTLEFIELD;
 	view->PushGeoNode(object);
 	object->static_object = true;
@@ -157,7 +188,7 @@ void Window::initialize(void)
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
 	
 	//connect to server
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.30");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
