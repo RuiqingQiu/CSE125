@@ -9,11 +9,7 @@ string path = "sound/";
 
 Sound::Sound(){
 	/* Cannot call play in the constructor !!! */
-
-
-
-
-
+	
 	// build view selection sound
 	string tmp = path + "select.wav";
 	if (!selectBuffer.loadFromFile(tmp))
@@ -37,7 +33,7 @@ Sound::Sound(){
 		cout << "ERROR in loading gun sound effect " << endl;
 	gunSound.setBuffer(gunBuffer);
 	gunSound.play();
-	gunSound.pause();
+	gunSound.stop();
 
 	// build view selection sound
 	tmp = path + "select.wav";
@@ -101,10 +97,15 @@ void Sound::playSelect(){
 // This function is used to play gun shot sound
 void Sound::playGun(){
 	cout << "Enter play gun shot effect " << endl;
-	if (gunSound.getStatus() == sf::Sound::Paused){
-		cout << "Play gun " << endl;
+	// for the first time
+	if (gunSound.getStatus() == sf::Sound::Stopped){
 		gunSound.play();
-		Sleep(100); // sleep for 0.1 secs and then pause
-		gunSound.pause();
+	}
+
+	// cannot do sleep for gun sound effect
+	if (gunSound.getStatus() == sf::Sound::Playing){
+		cout << "Play gun " << endl;
+		gunSound.stop();
+		gunSound.play();
 	}
 }

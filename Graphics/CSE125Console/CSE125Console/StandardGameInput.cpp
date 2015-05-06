@@ -4,6 +4,7 @@
 
 StandardGameInput::StandardGameInput()
 {
+	sound = new Sound(); // create a new sound object
 }
 
 
@@ -70,6 +71,8 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 	}
 	else if (key == 'q'){
 		g_pCore->pGamePacketManager->SendShootEvent(g_pCore->pPlayer->playerid);
+		// play the sound of shooting
+		sound->playGun();
 	}
 	else if (key == 'z'){
 		//g_pCore->pGameView->pViewCamera.rotateLeft();
