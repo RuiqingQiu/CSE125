@@ -84,6 +84,7 @@ ShaderSystem::ShaderSystem()
 	loadShaders("grass.vert", "grass.frag");
 	loadShaders("edge.vert", "edge.frag");
 	loadShaders("normal.vert", "normal.frag");
+	loadShaders("blur.vert", "blur.frag");
 }
 
 
@@ -136,6 +137,10 @@ void ShaderSystem::BindShader(int type){
 			break;
 		case NORMAL_SHADER:
 			glUseProgramObjectARB(shader_ids[type]);
+		case BLUR_SHADER:
+			glUseProgramObjectARB(shader_ids[type]);
+		default:
+			cout << "didnt find any shader of this type" << endl;
 	}
 	
 }

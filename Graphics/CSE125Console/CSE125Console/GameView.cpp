@@ -30,7 +30,79 @@ bool pairCompare(const std::pair<float, GeoNode*>& firstElem, const std::pair<fl
 	return firstElem.first < secondElem.first;
 }
 
-void GameView::first_pass(){
+void GameView::blur_first_pass(){
+	glBindFramebuffer(GL_FRAMEBUFFER, Window::shader_system->fb);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glEnable(GL_TEXTURE_2D);
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+
+	Window::shader_system->BindShader(BLUR_SHADER);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[BLUR_SHADER], "pass"), 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	pViewCamera->setUpCamera();
+	glPushMatrix();
+	glTranslated(0, 0, -15);
+	//glutSolidTeapot(1);
+	glPopMatrix();
+	//List of items that need edge highlight
+	for each (GeoNode* node in NodeList){
+		if (node->blur){
+			node->VOnDraw();
+		}
+	}
+	Window::shader_system->UnbindShader();
+}
+void GameView::blur_second_pass(){
+	//Code below this is second pass
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//Clear color and depth buffers
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Set the OpenGL matrix mode to ModelView
+
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	pViewCamera->setUpCamera();
+
+	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
+	Window::shader_system->BindShader(BLUR_SHADER);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[BLUR_SHADER], "width"), Window::width);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[BLUR_SHADER], "height"), Window::height);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[BLUR_SHADER], "pass"), 2);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[BLUR_SHADER], "RenderTex"), 0);
+
+	glPushMatrix();
+	glTranslated(0, 0, -15);
+	//glutSolidTeapot(1);
+	glPopMatrix();
+
+	//List of items that need edge highlight
+	for each (GeoNode* node in NodeList){
+		if (node->blur){
+			cout << "enter here blur" << endl;
+			node->VOnDraw();
+		}
+	}
+	Window::shader_system->UnbindShader();
+}
+
+
+void GameView::highlight_first_pass(){
 	glBindFramebuffer(GL_FRAMEBUFFER, Window::shader_system->fb);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -52,7 +124,7 @@ void GameView::first_pass(){
 	pViewCamera->setUpCamera();
 	glPushMatrix();
 	glTranslated(0, 0, -15);
-	glutSolidTeapot(1);
+	//glutSolidTeapot(1);
 	glPopMatrix();
 	//List of items that need edge highlight
 	for each (GeoNode* node in NodeList){
@@ -63,12 +135,12 @@ void GameView::first_pass(){
 	Window::shader_system->UnbindShader();
 }
 
-void GameView::second_pass(){
+void GameView::highlight_second_pass(){
 
 	//Code below this is second pass
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	//Clear color and depth buffers
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//Set the OpenGL matrix mode to ModelView
 
@@ -87,10 +159,10 @@ void GameView::second_pass(){
 	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "height"), Window::height);
 	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 2);
 	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "RenderTex"), 0);
-
+	
 	glPushMatrix();
 	glTranslated(0, 0, -15);
-	glutSolidTeapot(1);
+	//glutSolidTeapot(1);
 	glPopMatrix();
 
 	//List of items that need edge highlight
@@ -153,7 +225,8 @@ void GameView::second_pass(){
 
 	for each (pair<float, GeoNode*> p in nodedepthvec)
 	{
-		if (p.second->edge_highlight){
+		//Don't draw if it uses 2 pass
+		if (p.second->edge_highlight || p.second->blur){
 
 		}
 		else{
@@ -215,11 +288,19 @@ void GameView::second_pass(){
 		node->VOnDraw();
 	}
 }
+
+
+
+
 void GameView::VOnRender()
 {
-	//Code below is first pass
-	first_pass();
-	second_pass();
+	blur_first_pass();
+	blur_second_pass();
+	
+	highlight_first_pass();
+	highlight_second_pass();
+
+	
 }
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)

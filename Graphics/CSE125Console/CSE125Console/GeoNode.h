@@ -10,7 +10,7 @@ public:
 	~GeoNode();
 	//if requires two pass
 	bool edge_highlight = false;
-
+	bool blur = false;
 	bool static_object = false;
 	//send to server object id, must be unique per player id
 	int identifier;
@@ -39,7 +39,7 @@ public:
 	int right_id;
 	int front_id;
 	int back_id;
-
+	void setEdgeHighlight(bool);
 	virtual bool intersect(Vector3 pos);
 };
 

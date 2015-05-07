@@ -244,8 +244,8 @@
   <ItemGroup>
     <None Include="better.frag" />
     <None Include="better.vert" />
-    <None Include="BlurFragmentShader.frag" />
-    <None Include="BlurVertexShader.vert" />
+    <None Include="blur.frag" />
+    <None Include="blur.vert" />
     <None Include="edge.frag" />
     <None Include="edge.vert" />
     <None Include="FragmentShader.frag" />

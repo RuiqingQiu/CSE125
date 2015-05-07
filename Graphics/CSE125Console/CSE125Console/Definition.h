@@ -56,6 +56,7 @@ enum ShaderType{
 	REFRACTION_SHADER = 3,
 	GRASS_SHADER = 4,
 	EDGE_SHADER = 5,
-	NORMAL_SHADER = 6
+	NORMAL_SHADER = 6,
+	BLUR_SHADER = 7,
 };
 #endif

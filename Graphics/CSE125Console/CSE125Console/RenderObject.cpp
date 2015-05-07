@@ -165,6 +165,7 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 		}
 	}
 	*/
+	/*
 	for (size_t i = 0; i < materials.size(); i++) {
 		printf("material[%ld].name = %s\n", i, materials[i].name.c_str());
 		printf("  material.Ka = (%f, %f ,%f)\n", materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2]);
@@ -200,7 +201,7 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 				SOIL_FLAG_INVERT_Y
 				);
 
-			/* check for an error during the load process */
+			//check for an error during the load process
 			if (0 == tex_2d)
 			{
 				printf("SOIL loading error: '%s'\n", SOIL_last_result());
@@ -210,7 +211,7 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 			}
 		}
 	}
-
+	*/
 
 
 

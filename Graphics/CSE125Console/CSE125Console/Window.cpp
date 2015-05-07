@@ -123,9 +123,9 @@ void Window::initialize(void)
 			view->PushGrassNode(grass);
 		}
 	}
-	
+	/*
 	for (int i = 0; i < 20; i++){
-		object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+		object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
 		if (i % 2 == 0){
 			object->shader_type = REFRACTION_SHADER;
 		}
@@ -136,7 +136,24 @@ void Window::initialize(void)
 		object->auto_rotate = true;
 		view->PushGeoNode(object);
 	}
+	*/
+	object = Model3DFactory::generateObjectWithType(BGun);
+	object->shader_type = EDGE_SHADER;
+	object->edge_highlight = true;
+	view->num_of_objs_highlight++;
+	object->localTransform.position = Vector3(0, 0, -17);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushGeoNode(object);
 	
+	object = Model3DFactory::generateObjectWithType(BGun);
+	object->shader_type = BLUR_SHADER;
+	object->blur = true;
+	view->num_of_objs_blur++;
+	object->localTransform.position = Vector3(-3, 0, -17);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushGeoNode(object);
 
 	object = Model3DFactory::generateObjectWithType(METHCUBE);
 	object->shader_type = NORMAL_SHADER;
@@ -183,6 +200,7 @@ void Window::initialize(void)
 	object->identifier = -2;
 	object->isUpdated = true;
 	object->type = BATTLEFIELD;
+	//factory->battlemode->PushGeoNode(object);
 	view->PushGeoNode(object);
 	object->static_object = true;
 
@@ -192,7 +210,6 @@ void Window::initialize(void)
 	*/
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
-	factory->battlemode->PushGeoNode(g_pCore->light);
 	
 	factory->defaultView = view;
 	factory->setView();
@@ -302,6 +319,8 @@ void Window::displayCallback() {
 	if (p!=nullptr) {
 		switch (p->packet_types){
 			case GAME_STATE:{
+				//Update states in the actual battle mode
+				//factory->battlemode->VOnClientUpdate(p);
 				g_pCore->pGameView->VOnClientUpdate(p);
 				break;
 			}

@@ -486,13 +486,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BlurVertexShader.vert">
-      <Filter>Source Files\Shader</Filter>
-    </None>
     <None Include="FragmentShader.frag">
-      <Filter>Source Files\Shader</Filter>
-    </None>
-    <None Include="BlurFragmentShader.frag">
       <Filter>Source Files\Shader</Filter>
     </None>
     <None Include="hard_shadow.vert">
@@ -553,6 +547,12 @@
       <Filter>Source Files\Shader\Group</Filter>
     </None>
     <None Include="normal.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="blur.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="blur.frag">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
   </ItemGroup>
