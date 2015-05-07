@@ -85,7 +85,7 @@ void Model3D::VOnDraw(){
 		if (false && this->type == BATTLEFIELD){
 			printf("battle field\n");
 		}
-		else if (this->edge_highlight || this->blur){}
+		else if (this->edge_highlight){}
 		else{
 			Window::shader_system->BindShader(shader_type);
 
