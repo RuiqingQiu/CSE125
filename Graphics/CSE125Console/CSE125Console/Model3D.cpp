@@ -60,42 +60,7 @@ void Model3D::VOnClientUpdate(GameInfoPacket* pData){
 
 	}
 }
-/*
-typedef struct {
-std::vector<float> positions;
-std::vector<float> normals;
-std::vector<float> texcoords;
-std::vector<unsigned int> indices;
-std::vector<int> material_ids; // per-mesh material ID
-} mesh_t;
 
-typedef struct {
-std::string name;
-mesh_t mesh;
-} shape_t;
-
-typedef struct {
-std::string name;
-
-float ambient[3];
-float diffuse[3];
-float specular[3];
-float transmittance[3];
-float emission[3];
-float shininess;
-float ior;      // index of refraction
-float dissolve; // 1 == opaque; 0 == fully transparent
-// illumination model (see http://www.fileformat.info/format/material/)
-int illum;
-
-std::string ambient_texname;
-std::string diffuse_texname;
-std::string specular_texname;
-std::string normal_texname;
-std::map<std::string, std::string> unknown_parameter;
-} material_t;
-
-*/
 void Model3D::VOnDraw(){
 	//Set the OpenGL Matrix mode to ModelView (used when drawing geometry)
 	glMatrixMode(GL_MODELVIEW);
@@ -129,23 +94,23 @@ void Model3D::VOnDraw(){
 				localTransform.GetGLMatrix4().getFloatPointer());
 
 			//Passing four maps
-			glActiveTexture(GL_TEXTURE0);
+			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[0]);
 
-			glActiveTexture(GL_TEXTURE1);
+			glActiveTexture(GL_TEXTURE2);
 			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[1]);
 
 
-			glActiveTexture(GL_TEXTURE2);
+			glActiveTexture(GL_TEXTURE3);
 			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[2]);
 
-			glActiveTexture(GL_TEXTURE3);
+			glActiveTexture(GL_TEXTURE4);
 			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[3]);
 
-			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "tex"), 0);
-			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "norm"), 1);
-			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 2);
-			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 3);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "tex"), 1);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "norm"), 2);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 3);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 4);
 
 		
 			// Make sure no bytes are padded:

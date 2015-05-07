@@ -45,6 +45,8 @@ void Model3DGroup::VOnDraw(){
 	//glMultMatrixf(mat);
 
 	for (int i = 0; i < objects.size(); i++){
+		//Set all children's shader to be the parent's
+		objects[i]->shader_type = this->shader_type;
 		objects[i]->VOnDraw();
 	}
 

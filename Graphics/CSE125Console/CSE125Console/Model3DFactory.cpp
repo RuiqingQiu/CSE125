@@ -36,6 +36,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 	switch (type){
 		case Mallet:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			returnModel->type = Mallet;
 			returnModel->damageStat = 1;
 			return returnModel;
 			break;
@@ -43,29 +44,37 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		case Mace:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->damageStat = 1;
+			returnModel->type = Mace;
 			return returnModel;
 			break;
 		}
 		case Discount:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->speedStat = 1;
+			returnModel->type = Discount;
 			return returnModel;
 			break;
 		}
 		case Needle:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->damageStat = 1;
+			returnModel->type = Needle;
+
 			return returnModel;
 			break;
 		}
 		case BasicCube:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->healthStat = 1;
+			returnModel->type = BasicCube;
+
 			return returnModel;
 			break;
 		}
 		case WoodenCube:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			returnModel->type = WoodenCube;
+
 			returnModel->healthStat = 1;
 			return returnModel;
 			break;
@@ -73,24 +82,32 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		case WoodenWheel:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->speedStat = 1;
+			returnModel->type = WoodenWheel;
+
 			return returnModel;
 			break;
 		}
 		case Tire:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->speedStat = 1;
+			returnModel->type = Tire;
+
 			return returnModel;
 			break;
 		}
 		case GlowingCube:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->healthStat = 1;
+			returnModel->type = GlowingCube;
+
 			return returnModel;
 			break;
 		}
 		case BGun:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->healthStat = 1;
+			returnModel->type = BGun;
+
 			return returnModel;
 			break;
 		}

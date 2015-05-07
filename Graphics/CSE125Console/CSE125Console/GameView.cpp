@@ -39,7 +39,7 @@ void GameView::first_pass(){
 	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
 	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
 	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
 
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
@@ -75,7 +75,7 @@ void GameView::second_pass(){
 	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
 	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
 	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -134,9 +134,6 @@ void GameView::second_pass(){
 	{
 		if (typeid(*node) == typeid(SkyBox) || node->static_object == true)
 		{
-			//cout << "enter here" << endl;
-			if (node->static_object)
-				cout << "node" << node->static_object << endl;
 			pair<float, GeoNode*> p = make_pair(999, node);
 			nodedepthvec.push_back(p);
 		}

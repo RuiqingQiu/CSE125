@@ -124,6 +124,20 @@ void Window::initialize(void)
 		}
 	}
 	
+	for (int i = 0; i < 20; i++){
+		object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+		if (i % 2 == 0){
+			object->shader_type = REFRACTION_SHADER;
+		}
+		else
+			object->shader_type = REFLECTION_SHADER;
+		object->localTransform.position = Vector3(3*i -15, 0, -10);
+		object->localTransform.rotation = Vector3(0, 0, 0);
+		object->auto_rotate = true;
+		view->PushGeoNode(object);
+	}
+	
+
 	object = Model3DFactory::generateObjectWithType(METHCUBE);
 	object->shader_type = NORMAL_SHADER;
 	object->localTransform.position = Vector3(3, 0, -20);
@@ -265,9 +279,9 @@ void Window::reshapeCallback(int w, int h) {
     glViewport(0, 0, w, h);                                          //Set new viewport size
     glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(60.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
 	//glFrustum(-1, 1, -1 , 1, 1,5);
-	g_pCore->pGameView->pViewCamera->setCamInternals(60.0, double(Window::width) / (double)Window::height, 0.1, 30.0);
+	g_pCore->pGameView->pViewCamera->setCamInternals(90.0, double(Window::width) / (double)Window::height, 0.1, 30.0);
 	factory->reshapeFunc(w, h);
 
 	//Reshape, set up frame buffer object again based on the new width and height
@@ -316,5 +330,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

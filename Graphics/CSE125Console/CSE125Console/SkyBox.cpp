@@ -21,8 +21,6 @@ SkyBox::~SkyBox()
 
 GLuint loadCubemap(vector<string> faces)
 {
-
-
 	cout << "in load cube map" << endl;
 	GLuint textureID;
 	glGenTextures(1, &textureID);
