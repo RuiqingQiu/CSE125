@@ -6,7 +6,9 @@ enum ModelType{
 	GlowingCube = 1,
 	WoodenCube = 2,
 	METHCUBE = 3,
-
+	BLACKCUBE = 300,
+	CUBEA = 301,
+	CUBEB = 302,
 	//weapons
 	BGun = 4,
 	Mace = 5,

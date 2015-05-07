@@ -183,7 +183,28 @@ void Window::initialize(void)
 	object->auto_rotate = true;
 	view->PushEnvironmentNode(object);
 
+	/*
+	object = Model3DFactory::generateObjectWithType(BLACKCUBE);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(0, 0, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
 
+	object = Model3DFactory::generateObjectWithType(CUBEA);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-3, 0, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(CUBEB);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-6, 0, -15);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+	*/
 
 	/*
 	object = Model3DFactory::generateObjectWithType(BGun);

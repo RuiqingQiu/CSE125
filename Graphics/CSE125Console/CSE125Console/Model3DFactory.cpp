@@ -9,6 +9,11 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(BasicCube, new RenderObject("Assets/BasicCube/cube2.obj", "Assets/BasicCube/tex.png", "Assets/BasicCube/normals.png", "Assets/BasicCube/gloss.png", "Assets/BasicCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(GlowingCube, new RenderObject("Assets/WhiteCube/simplecube2.obj", "Assets/WhiteCube/tex.png", "Assets/WhiteCube/normals.png", "Assets/WhiteCube/gloss.png", "Assets/WhiteCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(WoodenCube, new RenderObject("Assets/WoodenCube/woodcube.obj", "Assets/WoodenCube/tex.png", "Assets/WoodenCube/normals.png", "Assets/WoodenCube/gloss.png", "Assets/WoodenCube/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(BLACKCUBE, new RenderObject("Assets/BlackCube/blackcube.obj", "Assets/BlackCube/tex.png", "Assets/BlackCube/normals.png", "Assets/BlackCube/gloss.png", "Assets/BlackCube/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(CUBEA, new RenderObject("Assets/CubeA/cubea.obj", "Assets/CubeA/tex.png", "Assets/CubeA/normals.png", "Assets/CubeA/gloss.png", "Assets/CubeA/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(CUBEB, new RenderObject("Assets/CubeB/cubeb.obj", "Assets/CubeB/tex.png", "Assets/CubeB/normals.png", "Assets/CubeB/gloss.png", "Assets/CubeB/metallic.png")));
+
+	
 	//weapons
 	render_obj_map.insert(std::pair<int, RenderObject*>(BGun, new RenderObject("Assets/BlockyGun/gat.obj", "Assets/BlockyGun/tex.png", "Assets/BlockyGun/normals.png", "Assets/BlockyGun/gloss.png", "Assets/BlockyGun/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(Mace, new RenderObject("Assets/Mace/mace.obj", "Assets/Mace/tex.png", "Assets/Mace/normals.png", "Assets/Mace/gloss.png", "Assets/Mace/metallic.png")));
@@ -78,6 +83,27 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			returnModel->healthStat = 1;
 			return returnModel;
 			break;
+		}
+		case BLACKCUBE:{
+						   Model3D * returnModel = new Model3D(render_obj_map[type]);
+						   returnModel->type = BLACKCUBE;
+						   returnModel->healthStat = 1;
+						   return returnModel;
+			break;
+		}
+		case CUBEA:{
+					   Model3D * returnModel = new Model3D(render_obj_map[type]);
+					   returnModel->type = CUBEA;
+					   returnModel->healthStat = 1;
+					   return returnModel;
+						   break;
+		}
+		case CUBEB:{
+					   Model3D * returnModel = new Model3D(render_obj_map[type]);
+					   returnModel->type = CUBEB;
+					   returnModel->healthStat = 1;
+					   return returnModel;
+						   break;
 		}
 		case WoodenWheel:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);

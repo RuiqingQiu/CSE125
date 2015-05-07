@@ -489,6 +489,42 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 				break;
 
 			}
+
+			case BLACKCUBE:{
+							   Model3D* object = Model3DFactory::generateObjectWithType(BLACKCUBE);
+							   object->isUpdated = true;
+							   object->identifier = info->player_infos[i]->id;
+							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							   object->localTransform.scale = Vector3(1, 1, 1);
+							   NodeList.push_back(object);
+							   info->player_infos[i]->processed = true;
+							   break;
+			}
+			case CUBEA:{
+						   Model3D* object = Model3DFactory::generateObjectWithType(CUBEA);
+						   object->isUpdated = true;
+						   object->identifier = info->player_infos[i]->id;
+						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						   object->localTransform.scale = Vector3(1, 1, 1);
+						   NodeList.push_back(object);
+						   info->player_infos[i]->processed = true;
+						   break;
+			}
+			case CUBEB:{
+						   Model3D* object = Model3DFactory::generateObjectWithType(CUBEB);
+						   object->isUpdated = true;
+						   object->identifier = info->player_infos[i]->id;
+						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						   object->localTransform.scale = Vector3(1, 1, 1);
+						   NodeList.push_back(object);
+						   info->player_infos[i]->processed = true;
+						   break;
+			}
+
+
 			case WALL:{
 								break;
 			}
