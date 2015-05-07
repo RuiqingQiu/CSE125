@@ -55,6 +55,12 @@
     <Filter Include="Source Files\ParticleEffect">
       <UniqueIdentifier>{94488061-5153-4357-a150-1d0805c0f161}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Event">
+      <UniqueIdentifier>{c8f144b4-992f-4352-854e-a927d33f25e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Event\EventPacket">
+      <UniqueIdentifier>{bde6598f-3c2e-475b-ad5e-668a6b7ad690}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -279,6 +285,24 @@
     <ClInclude Include="Model3DGroup.h">
       <Filter>Source Files\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="EventInfo.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventDeath.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSystem.h">
+      <Filter>Source Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventParticle.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventTimer.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventScoreboard.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -478,6 +502,24 @@
     </ClCompile>
     <ClCompile Include="Model3DGroup.cpp">
       <Filter>Source Files\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="EventInfo.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventDeath.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSystem.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="EventParticle.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventTimer.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventScoreboard.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

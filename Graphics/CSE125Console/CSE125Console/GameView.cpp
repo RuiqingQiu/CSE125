@@ -126,6 +126,8 @@ void GameView::highlight_first_pass(){
 	glTranslated(0, 0, -15);
 	//glutSolidTeapot(1);
 	glPopMatrix();
+
+	if (currentNode != nullptr) currentNode->VOnDraw();
 	//List of items that need edge highlight
 	for each (GeoNode* node in NodeList){
 		if (node->edge_highlight){
@@ -165,6 +167,7 @@ void GameView::highlight_second_pass(){
 	//glutSolidTeapot(1);
 	glPopMatrix();
 
+	if (currentNode != nullptr) currentNode->VOnDraw();
 	//List of items that need edge highlight
 	for each (GeoNode* node in NodeList){
 		if (node->edge_highlight){
@@ -404,6 +407,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							break;
 			}
 			case Discount:{
+							  
 							  Model3D* object = Model3DFactory::generateObjectWithType(Discount);							   object->isUpdated = true;
 
 							  object->identifier = info->player_infos[i]->id;
@@ -411,10 +415,11 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							  NodeList.push_back(object);
 							  info->player_infos[i]->processed = true;
-
+							  
 							  break;
 			}
 			case Tire:{
+						  
 						  Model3D* object = Model3DFactory::generateObjectWithType(Tire);							   object->isUpdated = true;
 
 						  object->identifier = info->player_infos[i]->id;
@@ -422,10 +427,11 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 						  NodeList.push_back(object);
 						  info->player_infos[i]->processed = true;
-
+						  
 						  break;
 			}
 			case WoodenWheel:{
+								 
 								 Model3D* object = Model3DFactory::generateObjectWithType(WoodenWheel);
 								 object->isUpdated = true;
 								 object->identifier = info->player_infos[i]->id;
@@ -433,10 +439,20 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 								 NodeList.push_back(object);
 								 info->player_infos[i]->processed = true;
-
+								 
 								 break;
 			}
-
+			case CrystalCube:{
+								 Model3D* object = Model3DFactory::generateObjectWithType(CrystalCube);
+								 object->isUpdated = true;
+								 object->shader_type = NORMAL_SHADER;
+								 object->identifier = info->player_infos[i]->id;
+								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+								 NodeList.push_back(object);
+								 info->player_infos[i]->processed = true;
+								 break;
+			}
 			case BATTLEFIELD:{
 								 /*
 								 //cout << "enter here" << endl;

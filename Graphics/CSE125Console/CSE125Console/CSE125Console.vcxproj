@@ -94,6 +94,12 @@
     <ClInclude Include="ComponentNode.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
+    <ClInclude Include="EventDeath.h" />
+    <ClInclude Include="EventInfo.h" />
+    <ClInclude Include="EventParticle.h" />
+    <ClInclude Include="EventScoreboard.h" />
+    <ClInclude Include="EventSystem.h" />
+    <ClInclude Include="EventTimer.h" />
     <ClInclude Include="Fire.h" />
     <ClInclude Include="Grass.h" />
     <ClInclude Include="gui.h" />
@@ -165,6 +171,12 @@
     <ClCompile Include="ClientNetwork.cpp" />
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="EventDeath.cpp" />
+    <ClCompile Include="EventInfo.cpp" />
+    <ClCompile Include="EventParticle.cpp" />
+    <ClCompile Include="EventScoreboard.cpp" />
+    <ClCompile Include="EventSystem.cpp" />
+    <ClCompile Include="EventTimer.cpp" />
     <ClCompile Include="Fire.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="gui.cpp" />

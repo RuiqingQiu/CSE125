@@ -18,14 +18,14 @@ unsigned int split(const std::string &txt, std::vector<std::string> &strs, char 
 
 	// Decompose statement
 	while (pos != std::string::npos) {
-		strs.push_back(txt.substr(initialPos, pos - initialPos + 1));
+		strs.push_back(txt.substr(initialPos, pos - initialPos));
 		initialPos = pos + 1;
 
 		pos = txt.find(ch, initialPos);
 	}
 
 	// Add the last one
-	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos + 1));
+	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos));
 
 	return strs.size();
 }
@@ -76,13 +76,13 @@ void ClientGame::sendActionPackets()
 
 bool ClientGame::sendPacket(CPacket packet)
 {
-	printf(packet.data);
+	//printf(packet.data);
 	const unsigned int packet_size = sizeof(CPacket);
 	char packet_data[packet_size];
 
 	packet.serialize(packet_data);
 
-	printf("send %d\n", packet.packet_type);
+	//printf("send %d\n", packet.packet_type);
 	return NetworkServices::sendMessage(network->ConnectSocket, packet_data, packet_size);
 }
 
@@ -107,7 +107,7 @@ GameInfoPacket* ClientGame::update()
         i += sizeof(SPacket);
 
         switch (packet.packet_type) {
-			cout << packet.data << endl;
+			//cout << packet.data << endl;
 		case GAME_STATE:
 				{
 							//printf("client received game state packet from server\n");
@@ -120,12 +120,39 @@ GameInfoPacket* ClientGame::update()
 							 }
 							 //Process the result
 							 else{
-								 vector<PlayerInfo*> v = PacketDecoder::decodePacket(result);
-								 for (PlayerInfo* p : v){
-									 g->player_infos.push_back(p);
+								 if (result.find('|') != std::string::npos)
+								 {
+									 //it contains event as well as data info
+									 vector<string> packetVector;
+									 split(result, packetVector, '|');
+
+									 //parse datainfo
+									 vector<PlayerInfo*> infos = PacketDecoder::decodePacket(packetVector[0]);
+									 for (PlayerInfo* p : infos){
+										 g->player_infos.push_back(p);
+									 }
+									 //parse eventinfo
+									 if (packetVector.size() > 1 && packetVector[1]!="")
+									 {
+										 vector<EventInfo*> events = PacketDecoder::decodeEvent(packetVector[1]);
+										 for (EventInfo* e : events){
+											 g->event_infos.push_back(e);
+										 }
+									 }
+									 g->packet_types = packet.packet_type;
+
 								 }
-								 //std::cout << "pushing " << g->player_infos.size() << " on to the list" << std::endl;
-								 g->packet_types = packet.packet_type;
+								 else{
+									 //it contains only the game object data info
+									 //strip bar
+									 result = result.substr(0, result.size() - 1);
+
+									 vector<PlayerInfo*> v = PacketDecoder::decodePacket(result);
+									 for (PlayerInfo* p : v){
+										 g->player_infos.push_back(p);
+									 }
+									 g->packet_types = packet.packet_type;
+								 }
 							 }
 							 return g;
 							 break;

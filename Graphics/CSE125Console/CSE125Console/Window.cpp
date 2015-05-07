@@ -91,12 +91,34 @@ void setupFBO(){
 
 }
 
+//Helper function for split strings
+unsigned int split2(const std::string &txt, std::vector<std::string> &strs, char ch)
+{
+	unsigned int pos = txt.find(ch);
+	unsigned int initialPos = 0;
+	strs.clear();
+
+	// Decompose statement
+	while (pos != std::string::npos) {
+		strs.push_back(txt.substr(initialPos, pos - initialPos));
+		initialPos = pos + 1;
+
+		pos = txt.find(ch, initialPos);
+	}
+
+	// Add the last one
+	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos));
+
+	return strs.size();
+}
+
+
 
 void Window::initialize(void)
 {
-	factory = new viewFactory(width, height);
+	//factory = new viewFactory(width, height);
 	
-	//factory = new viewFactory(true);  //for no gui
+	factory = new viewFactory(true);  //for no gui
 	
 	//Shader part
 	shader_system = new ShaderSystem();
@@ -123,98 +145,7 @@ void Window::initialize(void)
 			view->PushGrassNode(grass);
 		}
 	}
-	/*
-	for (int i = 0; i < 20; i++){
-		object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
-		if (i % 2 == 0){
-			object->shader_type = REFRACTION_SHADER;
-		}
-		else
-			object->shader_type = REFLECTION_SHADER;
-		object->localTransform.position = Vector3(3*i -15, 0, -10);
-		object->localTransform.rotation = Vector3(0, 0, 0);
-		object->auto_rotate = true;
-		view->PushGeoNode(object);
-	}
-	*/
-	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = EDGE_SHADER;
-	object->edge_highlight = true;
-	view->num_of_objs_highlight++;
-	object->localTransform.position = Vector3(0, 0, -17);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushGeoNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = BLUR_SHADER;
-	object->blur = true;
-	view->num_of_objs_blur++;
-	object->localTransform.position = Vector3(-3, 0, -17);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushGeoNode(object);
 
-	object = Model3DFactory::generateObjectWithType(METHCUBE);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(3, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(TREE1);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(0, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(TREE2);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(-3, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(SUPERTREE);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(-6, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	
-	object = Model3DFactory::generateObjectWithType(BLACKCUBE);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(0, 0, -15);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(CUBEA);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(-3, 0, -15);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(CUBEB);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(-6, 0, -15);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-	
-
-	/*
-	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = EDGE_SHADER;
-	object->localTransform.position = Vector3(3, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	object->edge_highlight = true;
-	view->PushGeoNode(object);
-	*/
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
@@ -225,11 +156,7 @@ void Window::initialize(void)
 	view->PushGeoNode(object);
 	object->static_object = true;
 
-	//set color
-	//glColor3f(1, 1, 1);
-	/*.
-	*/
-
+	
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	
 	factory->defaultView = view;
@@ -243,7 +170,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
 }
 
 //----------------------------------------------------------------------------
@@ -326,12 +253,15 @@ void Window::reshapeCallback(int w, int h) {
 	setupFBO();
 }
 
+
+
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
 
 void Window::displayCallback() {
 	clock_t startTime = clock();
 
+	
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 
@@ -343,6 +273,7 @@ void Window::displayCallback() {
 				//Update states in the actual battle mode
 				//factory->battlemode->VOnClientUpdate(p);
 				g_pCore->pGameView->VOnClientUpdate(p);
+				g_pCore->pEventSystem->ProcessGamePacket(p);
 				break;
 			}
 			case CONFIRM_CONNECTION:{
@@ -370,5 +301,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

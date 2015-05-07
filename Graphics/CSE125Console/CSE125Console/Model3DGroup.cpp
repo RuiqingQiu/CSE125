@@ -32,6 +32,8 @@ void Model3DGroup::VOnClientUpdate(GameInfoPacket* pData){
 	}
 }
 
+
+
 void Model3DGroup::VOnDraw(){
 	float halfWidth = 3.0 / 2.0;
 	float halfHeight = 1.0 / 2.0;
@@ -47,6 +49,7 @@ void Model3DGroup::VOnDraw(){
 	for (int i = 0; i < objects.size(); i++){
 		//Set all children's shader to be the parent's
 		objects[i]->shader_type = this->shader_type;
+		objects[i]->identifier = this->identifier;
 		objects[i]->VOnDraw();
 	}
 

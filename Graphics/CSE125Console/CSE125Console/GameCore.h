@@ -6,6 +6,7 @@
 #include "GamePacketManager.h"
 #include "GamePlayer.h"
 #include "GameInputInterface.h"
+#include "EventSystem.h"
 #include "Light.h"
 
 #ifndef CSE125_CORE
@@ -23,6 +24,7 @@ public:
 	GamePacketManager* pGamePacketManager;
 	GamePlayer* pPlayer;
 	GameInputInterface * i_pInput;
+	EventSystem * pEventSystem;
 
 	Light* light;
 	SkyBox * skybox;

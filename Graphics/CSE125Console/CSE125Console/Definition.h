@@ -3,12 +3,10 @@
 enum ModelType{
 	//blocks
 	BasicCube = 0,
-	GlowingCube = 1,
-	WoodenCube = 2,
-	METHCUBE = 3,
-	BLACKCUBE = 300,
-	CUBEA = 301,
-	CUBEB = 302,
+	CrystalCube = 1,
+	GlowingCube = 2,
+	WoodenCube = 3,
+
 	//weapons
 	BGun = 4,
 	Mace = 5,
@@ -45,7 +43,9 @@ enum ModelType{
 	TREE1 = 200,
 	TREE2 = 201,
 	SUPERTREE=202,
-
+	BLACKCUBE = 300,
+	CUBEA = 301,
+	CUBEB = 302,
 	WALL = 101,
 	BULLET_1 = 102,
 
@@ -60,5 +60,13 @@ enum ShaderType{
 	EDGE_SHADER = 5,
 	NORMAL_SHADER = 6,
 	BLUR_SHADER = 7,
+};
+
+enum TEventType{
+	TEventDeath = 0,
+	TEventParticle = 1,
+	TEventTimer = 2,
+	TEventScoreboard = 3,
+
 };
 #endif

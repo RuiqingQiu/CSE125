@@ -13,6 +13,7 @@ GameCore::GameCore()
 	pPlayer = new GamePlayer();
 	light = new Light();
 	i_pInput = new GameInputInterface();
+	pEventSystem = new EventSystem();
 
 	light->setPosition(10, 0, 5);
 }

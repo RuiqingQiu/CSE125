@@ -27,6 +27,15 @@ gui::gui(int w, int h) {
 }
 
 gui::~gui() {
+	for (int i = 0; i < guiItems.size(); i++) {
+		delete guiItems[i];
+	}
+	guiItems.clear();
+
+	for (int i = 0; i < buttons.size(); i++) {
+		delete buttons[i];
+	}
+	buttons.clear();
 }
 
 void gui::VOnClientUpdate(GameInfoPacket* info) {

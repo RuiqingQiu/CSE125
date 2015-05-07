@@ -28,8 +28,8 @@ public:
 	void rePosition(int x, int y, int w, int h) override;
 
 	void init();
-	void addListItem(string filename, string selName);
-	void addsubListItem(string filename, string selName, int id);
+	void addListItem(string filename, string fileType, bool hasSel, bool hasPress);
+	void addsubListItem(string filename, string fileType, int id, bool hasSel, bool hasPress);
 
 	bool isSelected(int x, int y);
 	void onClick(int state, int x, int y);
@@ -51,7 +51,6 @@ private:
 	guiItem * scrollDisplay;
 	//button * upButton;
 	//button * downButton;
-
 
 	int displayIdx;
 };

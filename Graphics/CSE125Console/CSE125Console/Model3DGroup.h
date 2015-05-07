@@ -20,6 +20,7 @@ public:
 	void addObject(Model3D* object);
 	virtual void VOnClientUpdate(GameInfoPacket* pData);
 
+
 	virtual void VOnDraw();
 	virtual void VOnUpdate(GameInfoPacket* pData);
 

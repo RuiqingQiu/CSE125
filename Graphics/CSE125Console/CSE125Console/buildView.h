@@ -14,42 +14,55 @@ class buildView : public gui {
 public:
 	buildView();
 	buildView(int w, int h);
-
-	void VOnRender();
-	void VUpdate();
-	void createButtons();
-
-	viewType mouseClickFunc(int state, int x, int y);
-	virtual void keyPressFunc(unsigned char key, int x, int y);
-
-	viewType checkTimeOut();
-
-	virtual Vector3 translateNode(Vector3 t, GeoNode * node);
-	Vector3 addNewNodePos();
-	bool validPos(Vector3 t, GeoNode * node);
-
-	virtual void setConstraints();
-	void clearConstraints();
-
 	~buildView();
 
-	vector<button*> listItems;
-	Vector3 center;
+	//inherited/override
+	virtual void VOnRender();
+	virtual void VUpdate();
+
+	virtual viewType mouseClickFunc(int state, int x, int y);
+	virtual void keyPressFunc(unsigned char key, int x, int y);
+	virtual Vector3 translateNode(Vector3 t, GeoNode * node);
+	virtual void setConstraints();
+
+	//buildView only
+	void clearConstraints();
+	viewType checkTimeOut();
+	void rotateRobot(float degrees);
+
+	//leave these public for now, 
+	//may need to access to sync to server time/score, etc.
 	scrollBox * scroll;
 	buildTimer * timer;
 	scoreBox * score;
 	bool updateview;
-	float yRotation;
-	Matrix4 rotateY;
 	int prevMouseState;
 
 private:
+	//intialization helper functions
+	void init();
+	void createButtons();
+
+	//block adding/removing helper functions
 	void addNode();
 	void removeNode();
-	bool setTexture(string filename, GLuint * t);
+	Vector3 addNewNodePos();
+	bool validPos(Vector3 t, GeoNode * node);
+	void setCurrentNode(bool adding);
+	void setTemplate();  //if template, base or wheel is clicked add imediately instead of waiting for add button click or enter key press
 
+	//for creating a grid for robot size boundaries
+	bool setTexture(string filename, GLuint * t);
 	GLuint grids[2];
 
+	Vector3 center;
 	int selectedType;
+	float yRotation;
+	int blocksLeft;
+
+	//button pointers for checking special state switch
+	button * helpButton;
+	button * battleButton;
+	bool templateSet;
 };
 
