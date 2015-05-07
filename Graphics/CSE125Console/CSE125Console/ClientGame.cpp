@@ -76,13 +76,13 @@ void ClientGame::sendActionPackets()
 
 bool ClientGame::sendPacket(CPacket packet)
 {
-	printf(packet.data);
+	//printf(packet.data);
 	const unsigned int packet_size = sizeof(CPacket);
 	char packet_data[packet_size];
 
 	packet.serialize(packet_data);
 
-	printf("send %d\n", packet.packet_type);
+	//printf("send %d\n", packet.packet_type);
 	return NetworkServices::sendMessage(network->ConnectSocket, packet_data, packet_size);
 }
 

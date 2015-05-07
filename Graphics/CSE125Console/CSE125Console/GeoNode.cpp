@@ -28,3 +28,7 @@ void GeoNode::clearConstraints() {
 	front_id = -1;
 	back_id = -1;
 }
+
+void GeoNode::setShaderType(int type) {
+	//do nothing
+}

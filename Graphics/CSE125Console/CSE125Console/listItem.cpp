@@ -11,8 +11,8 @@ listItem::listItem(string filename) {
 	init();
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
-	setTexture(filename, btnState::SELECTED);
-	setTexture(filename, btnState::PRESSED);
+	setTexture("initialize", btnState::SELECTED);
+	setTexture("initialize", btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y) {
@@ -21,8 +21,8 @@ listItem::listItem(string filename, int x, int y) {
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	setTexture(filename, btnState::SELECTED);
-	setTexture(filename, btnState::PRESSED);
+	setTexture("initialize", btnState::SELECTED);
+	setTexture("initialize", btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, bool f) {
@@ -32,8 +32,8 @@ listItem::listItem(string filename, int x, int y, bool f) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(f, f);
-	setTexture(filename, btnState::SELECTED);
-	setTexture(filename, btnState::PRESSED);
+	setTexture("initialize", btnState::SELECTED);
+	setTexture("initialize", btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, bool xf, bool yf) {
@@ -42,8 +42,8 @@ listItem::listItem(string filename, int x, int y, bool xf, bool yf) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(xf, yf);
-	setTexture(filename, btnState::SELECTED);
-	setTexture(filename, btnState::PRESSED);
+	setTexture("initialize", btnState::SELECTED);
+	setTexture("initialize", btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, double s) {
@@ -52,8 +52,8 @@ listItem::listItem(string filename, int x, int y, double s) {
 	name = filename;
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
-	setTexture(filename, btnState::SELECTED);
-	setTexture(filename, btnState::PRESSED);
+	setTexture("initialize", btnState::SELECTED);
+	setTexture("initialize", btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, double s, bool f) {
@@ -63,8 +63,8 @@ listItem::listItem(string filename, int x, int y, double s, bool f) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(f, f);
-	setTexture(filename, btnState::SELECTED);
-	setTexture(filename, btnState::PRESSED);
+	setTexture("initialize", btnState::SELECTED);
+	setTexture("initialize", btnState::PRESSED);
 }
 
 listItem::listItem(string filename, int x, int y, double s, bool xf, bool yf) {
@@ -74,12 +74,16 @@ listItem::listItem(string filename, int x, int y, double s, bool xf, bool yf) {
 	setTexture(filename, btnState::NORMAL);
 	setPosition(x, y);
 	setFixed(xf, yf);
-	setTexture(filename, btnState::SELECTED);
-	setTexture(filename, btnState::PRESSED);
+	setTexture("initialize", btnState::SELECTED);
+	setTexture("initialize", btnState::PRESSED);
 }
 
 listItem::~listItem()
 {
+	for (int i = 0; i < subList.size(); i++) {
+		delete subList[i];
+	}
+	subList.clear();
 }
 
 void listItem::init() {
@@ -100,7 +104,7 @@ void listItem::init() {
 
 void listItem::draw() {
 	if (showSubList) {
-		currState = btnState::SELECTED;
+		currState = btnState::PRESSED;
 	}
 	button::draw();
 	if (showSubList) {
@@ -113,7 +117,7 @@ void listItem::draw() {
 void listItem::onClick(int state, int x, int y) {
 	if (button::isSelected(x, y)) {
 		button::onClick(state, x, y);
-		std::cout << identifier << std::endl;
+		//std::cout << identifier << std::endl;
 	}
 }
 

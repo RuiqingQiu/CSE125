@@ -158,14 +158,6 @@ void Window::initialize(void)
 		object->auto_rotate = true;
 		view->PushGeoNode(object);
 	}
-	
-
-	object = Model3DFactory::generateObjectWithType(METHCUBE);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(3, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
 
 	object = Model3DFactory::generateObjectWithType(TREE1);
 	object->shader_type = NORMAL_SHADER;

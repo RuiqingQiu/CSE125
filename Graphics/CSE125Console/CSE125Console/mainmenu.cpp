@@ -32,22 +32,27 @@ void mainMenu::createButtons() {
 	button * robo = new button("menuItem/enterRobotName.jpg", width*0.3, height*0.5, 750, 100);
 	robo->setScaling(true, true, width, height);
 	
-	button * play = new button("menuItem/play.jpg", width*0.43, height*0.3,260,50);
-	play->setTexture("menuItem/play_sel.jpg", btnState::SELECTED);
-	play->setTexture("menuItem/play_press.jpg", btnState::PRESSED);
-	play->setScaling(true, true, width, height);
+	playButton = new button("menuItem/play.jpg", width*0.43, height*0.3, 260, 50);
+	playButton->setTexture("menuItem/play_sel.jpg", btnState::SELECTED);
+	playButton->setTexture("menuItem/play_press.jpg", btnState::PRESSED);
+	playButton->setScaling(true, true, width, height);
 
-	button * help = new button("menuItem/help.jpg", width*0.43, height * 0.2,260,50);
-	help->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
-	help->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
-	help->setScaling(true, true, width, height);
+	helpButton = new button("menuItem/help.jpg", width*0.43, height * 0.2, 260, 50);
+	helpButton->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
+	helpButton->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
+	helpButton->setScaling(true, true, width, height);
+
+	exitButton = new button("menuItem/exit.jpg", width*0.43, height * 0.1, 260, 50);
+	exitButton->setTexture("menuItem/exit_sel.jpg", btnState::SELECTED);
+	exitButton->setTexture("menuItem/exit_press.jpg", btnState::PRESSED);
+	exitButton->setScaling(true, true, width, height);
 
 	buttons.push_back(robo);
-	buttons.push_back(play);
-	buttons.push_back(help);
+	buttons.push_back(playButton);
+	buttons.push_back(helpButton);
+	buttons.push_back(exitButton);
 
 	backimg = new background("background1.jpg", width, height);
-	//guiItems.push_back(backimg);
 	guiItems.push_back(backimg); // push in to the guiTexts vector
 }
 
@@ -96,7 +101,7 @@ void mainMenu::addLetters(){
 	}
 }
 
-void mainMenu::VOnRender(){
+void mainMenu::VOnRender() {
 	GameView::VOnRender();
 	set2d();
 	addLetters();
@@ -105,7 +110,7 @@ void mainMenu::VOnRender(){
 	set3d();
 }
 
-void mainMenu::VOnClientUpdate(GameInfoPacket* info){
+void mainMenu::VOnClientUpdate(GameInfoPacket* info) {
 
 }
 
@@ -120,12 +125,15 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 	if (state != GLUT_UP) return viewType::MENU;
 	
 	//play button
-	if (buttons[1]->isSelected(x, height - y)) {
+	if (playButton->isSelected(x, height - y)) {
 		return viewType::BUILD;
 	}
 	// help button
-	else if((buttons[buttons.size() - 1]->isSelected(x, height - y))){
+	else if (helpButton->isSelected(x, height - y)){
 		return viewType::HELP;
+	}
+	else if (exitButton->isSelected(x, height - y)) {
+		exit(0);
 	}
 	// stay at the menu button
 	return viewType::MENU;

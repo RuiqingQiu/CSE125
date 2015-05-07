@@ -3,9 +3,10 @@
 enum ModelType{
 	//blocks
 	BasicCube = 0,
-	GlowingCube = 1,
-	WoodenCube = 2,
-	METHCUBE = 3,
+	CrystalCube = 1,
+	GlowingCube = 2,
+	WoodenCube = 3,
+
 
 	//weapons
 	BGun = 4,
