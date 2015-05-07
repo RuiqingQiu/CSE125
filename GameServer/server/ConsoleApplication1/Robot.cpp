@@ -82,7 +82,6 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	double qZ= this->getqZ();
 	double qW= this->getqW();
 	double mass = this->getMass();
-	std::cout << "mass:" << mass << std::endl;
 	setWidth(width);
 	setHeight(height);
 	setDepth(depth);
@@ -263,4 +262,22 @@ int Robot::getState()
 void Robot::setState(int s)
 {
 	_state = s;
+}
+
+void Robot::addPart(GameObj* g)
+{
+	parts.push_back(g);
+}
+std::vector<GameObj*> Robot::getParts()
+{
+	return parts;
+}
+
+void Robot::setWheelType(int w)
+{
+	_wheelType = w;
+}
+int Robot::getWheelType()
+{
+	return _wheelType;
 }

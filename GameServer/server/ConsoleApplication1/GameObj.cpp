@@ -25,7 +25,7 @@ GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, do
 	_type = type;
 	_mass = mass;
 	_isRobot = 0;
-	deleted = 0;
+	deathTimer = NULL;
 }
 
 GameObj::~GameObj(){
@@ -75,6 +75,11 @@ double GameObj::getqW(){
 
 unsigned int GameObj::getId(){
 	return _id;
+}
+
+int GameObj::getIsWheel()
+{
+	return _isWheel;
 }
 
 
@@ -147,9 +152,96 @@ int GameObj::getBlockType()
 	return _blockType;
 }
 
+
+
 void GameObj::setBlockType(int bType)
 {
+
 	_blockType = bType;
+	switch (bType){
+	case BASICCUBE:
+	{
+			  _mass = 10;
+			  _health = 100;
+			  break;
+	}
+	case GLOWINGCUBE:
+	{
+						_mass = 5;
+						_health = 50;
+					  break;
+	}
+	case WOODENCUBE:
+	{
+					   _mass = 1;
+					   _health = 20;
+					  break;
+	}
+	case BGUN:
+	{
+				 _isWeapon = 1; _isRangedWeapon = 1;
+				 _health = 15;
+				 _mass = 20;
+					  break;
+	}
+	case MACE:
+	{
+				 _isWeapon = 1;
+				 _mass = 30;
+					  break;
+	}
+	case MALLET:
+	{
+				   _isWeapon = 1;
+				   _mass = 25;
+					  break;
+	}
+	case NEEDLE:
+	{
+				   _isWeapon = 1;
+				   _health = 10;
+				   _mass = 7;
+					  break;
+	}
+	case DISCOUNTWHEEL:
+	{
+						  _isWheel = 1;
+						  break;
+	}
+	case TIRE:
+	{
+				 _isWheel = 1;
+						  break;
+	}
+	case WOODENWHEEL:
+	{
+						_isWheel = 1;
+						  break;
+	}
+	case THREEBYTHREE_BASIC:
+	{
+							   _mass = 90;
+							   _health = 900;
+						  break;
+	}
+	case THREEBYTHREE_GLOWING:
+	{
+								 _mass = 45;
+								 _health = 450;
+							   break;
+	}
+	case THREEBYTHREE_WOODEN:
+	{
+								_mass = 9;
+								_health = 20;
+							   break;
+	}
+
+	default:{
+				std::cout << "WRONG BLOCK TYPE" << std::endl;
+				break;
+	}
+	}
 }
 
 void GameObj::setIsRobot(int b)
@@ -172,8 +264,7 @@ GameObj* GameObj::getBelongTo()
 	return _belongTo;
 }
 
-
-void GameObj::addConstraint(GameObj* o)
+Constraint* GameObj::addConstraint(GameObj* o)
 {
 	    btFixedConstraint *joint6DOF;
 		btTransform localA, localB, toground;
@@ -220,6 +311,7 @@ void GameObj::addConstraint(GameObj* o)
 		c = new Constraint();
 		c->_joint6DOF = joint6DOF;
 		o->getConstraints()->push_back(c);
+		return c;
 }
 
 void GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
@@ -284,11 +376,17 @@ int GameObj::getCollisionType()
 }
 void GameObj::setDeleted()
 {
-	deleted = 1;
+	if (deathTimer == NULL)
+	deathTimer = clock();
 }
 int GameObj::getDeleted()
 {
-	return deleted;
+	//return (deathTimer != NULL);
+	if (deathTimer == NULL)
+	{
+		return 0;
+	}
+	return (((double)(clock() - deathTimer) / CLOCKS_PER_SEC) > DEATH_DELAY);
 }
 
 void GameObj::setIsWeapon()
@@ -355,4 +453,8 @@ void GameObj::setBuildID(int i)
 int GameObj::getBuildID()
 {
 	return buildObj_id;
+}
+int GameObj::getIsRangedWeapon()
+{
+	return _isRangedWeapon;
 }

@@ -22,11 +22,11 @@ enum PacketTypes {
 
 	//Game Events
 	enum GameEventType {
-		EXPLOSION = 0,
-		RESUME = 1,
-		PAUSE = 2,
+		PLAYER_DEATH = 0,
+		PARTICLE = 1,
+		TIME = 2,
 		SCOREBOARD = 3,
-		PLAYER_DEATH = 4,
+
 	};
 
 	//TEXTURES
@@ -54,29 +54,7 @@ enum PacketTypes {
 
 	};
 
-	//block types
-	enum BLOCK_TYPE
-	{
-		BASICCUBE = 0,
-		GLOWINGCUBE = 1,
-		WOODENCUBE = 2,
-		BGun = 3,
-		MACE = 4,
-		MALLET = 5,
-		NEEDLE = 6,
-		DISCOUNTWHEEL = 7,
-		TIRE = 8,
-		WOODENWHEEL =9 ,
 
-		BATTLEFIELD = 10,
-		THREEBYTHREE_BASIC = 11,
-		THREEBYTHREE_GLOWING = 12,
-		THREEBYTHREE_WOODEN = 13,
-
-		WALL = 101,
-		BULLET_1 = 102,
-		
-	};
 
 
 #define BIT(x) (1<<(x))

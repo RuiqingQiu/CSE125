@@ -116,7 +116,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 
 	string des = convertData(gameObjs);
 	//string des;
-	//des += "|" + convertEventData(ge);
+	des += convertEventData(ge);
 	//cout << "convertEvent " << des.c_str() << endl;
 	//cout << "*********Sending SPacket: " << des << endl;
 	memset(packet.data, 0, sizeof(packet.data));
@@ -126,7 +126,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 	memcpy(packet.data, des.c_str(), des.length());
 	//cout << "size of des: " << sizeof(des) << endl;
 	//cout << "des.cstr: " << des.c_str() << endl;
-	//cout << "``packet.data: " << packet.data << endl;
+	cout << "packet.data: " << packet.data << endl;
 	//cout << "AFTER MEM COPY" << endl;
 	packet.packet_type = GAME_STATE;
 
@@ -340,88 +340,88 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 														   					   //CID
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  cid = stoul(token);
 									  objectInfo.erase(0, pos  + 1);
 									  					   //Object ID
 										  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  unsigned int objId = stoul(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //position
 										  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									 // std::cout << token << std::endl;
 									  double xPos = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double yPos = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double zPos = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //rotation
 										  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									 // std::cout << token << std::endl;
 									  double xRot = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double yRot = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double zRot = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //block type
 										  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									 // std::cout << token << std::endl;
 									  double block_type = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //contraints
 										  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double below = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									 // std::cout << token << std::endl;
 									  double left = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double right = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double front = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double back = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //stats
 										  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  std::cout << token << std::endl;
+									  //std::cout << token << std::endl;
 									  double health = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
@@ -432,10 +432,20 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 
 									  //(double x, double y, double z, double qX, double qY, double qZ, double qW, double mass, double width, double height, double depth)
 								     if (objId == 0) {
-										object = new GOBox(xPos, yPos, zPos, rotations.getX(), rotations.getY(), rotations.getZ(), rotations.getW(), 100, 3, 1, 3);
-										object->setIsRobot(1);
-										object->setCollisionType(C_ROBOT);
+
+										object = new Robot((int)cid, "Player");
 										  
+										object->setX(xPos);
+										object->setY(yPos);
+										object->setZ(zPos);
+										object->setqX(rotations.getX());
+										object->setqY(rotations.getY());
+										object->setqZ(rotations.getZ());
+										object->setqW(rotations.getW());
+										object->setType(BOX);
+										((Robot*)object)->setWidth(3);
+										((Robot*)object)->setHeight(1);
+										((Robot*)object)->setDepth(3);
 									  }
 									else
 									{
@@ -653,7 +663,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 				}
 			}
 	}
-	temp += "\0";
+	//temp += "\0";
 	//cout << temp << endl;
 	//cout << "PASS THE FORLOOP and the temp is: "<< temp << endl;\
 
@@ -665,12 +675,18 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 string Network::convertEventData(std::vector<GameEvents*>* ge)
 {
 	std::vector<GameEvents*>::iterator it;
-	temp1 = "";
+	if (ge->empty())
+	{
+		temp1 = "-1~\0";
+		return temp1;
+	}
+
+	temp1 = "|";
 	for (it = ge->begin(); it != ge->end(); it++)
 	{
 		(*it)->to_string(temp1);
 		temp1 += "~";
 	}
-	temp1 += "\0";
+	temp1 += "-1~\0";
 	return temp1;
 }

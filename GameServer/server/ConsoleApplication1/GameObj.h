@@ -7,7 +7,35 @@
 #include <btBulletDynamicsCommon.h>
 #include <vector>
 #include "Constraint.h"
+#include <iostream>
+#include <time.h>
 
+#define DEATH_DELAY 5
+
+//block types
+enum BLOCK_TYPE
+{
+	BASICCUBE = 0,
+	GLOWINGCUBE = 1,
+	WOODENCUBE = 2,
+	METHCUBE = 3,
+	BGUN = 4,
+	MACE = 5,
+	MALLET = 6,
+	NEEDLE = 7,
+	DISCOUNTWHEEL = 8,
+	TIRE = 9,
+	WOODENWHEEL = 10,
+
+	BATTLEFIELD = 12,
+	THREEBYTHREE_BASIC = 13,
+	THREEBYTHREE_GLOWING = 14,
+	THREEBYTHREE_WOODEN = 15,
+
+	WALL = 101,
+	BULLET_1 = 102,
+
+};
 
 // collision type
 enum COLLISION_TYPE{
@@ -36,7 +64,6 @@ class GameObj
 {
 
 private:
-	int deleted;
 	double _x;
 	double _y;
 	double _z;
@@ -48,22 +75,26 @@ private:
 	double _rotY;
 	double _rotZ;
 	unsigned int _id;
+	int _isWheel = 0;
 	int _type;
 	int _blockType;
 	double _mass;
-	int _isRobot;
+	int _isRobot = 0;
 	int _collisionType;
-	int _isWeapon;
+	int _isWeapon = 0;
+	int _weaponType =0;
+	int _isRangedWeapon = 0;
 	double _damage = 0;
 	btRigidBody* rigidBody;
 		//constraints
-		int below_id;
-	int left_id;
-	int right_id;
-	int front_id;
-	int back_id;
+	int below_id = -1;
+	int left_id = -1;
+	int right_id = -1;
+	int front_id = -1;
+	int back_id = -1;
 	int buildObj_id; //this is my id
-		
+	clock_t deathTimer;
+
 	GameObj* _belongTo;
 
 	std::vector<Constraint *> constraints;
@@ -82,12 +113,16 @@ public:
 	~GameObj();
 
 
+
 	void setLeftID(int);
 	void setRightID(int);
 	void setFrontID(int);
 	void setBackID(int);
 	void setBelowID(int);
 
+	int getIsWheel();
+
+	int getIsRangedWeapon();
 
 	int getLeftID();
 	int getRightID();
@@ -144,7 +179,7 @@ public:
 
 	void setBelongTo(GameObj*);
 	GameObj* getBelongTo();
-	void addConstraint(GameObj*);
+	Constraint* addConstraint(GameObj*);
 	void deleteConstraints(std::map< btCollisionObject*, GameObj*>*);
 	void deleteInvalidConstraints();
 	std::vector<Constraint *>* getConstraints();

@@ -20,6 +20,8 @@ private:
 	double _width;
 	double _height;
 	double _depth;
+	std::vector<GameObj*> parts;
+	int _wheelType;
 
 	int _state;
 
@@ -36,6 +38,8 @@ public:
 	void setHeight(double);
 	void setDepth(double);
 
+	void setWheelType(int);
+	int getWheelType();
 
 
 	double getWidth();
@@ -51,6 +55,9 @@ public:
 	void addWeapon(Weapon *);
 	void shoot(std::vector<std::pair<GameObj*, double>>*);
 	void clearWeapons();
+
+	void addPart(GameObj*);
+	std::vector<GameObj*> getParts();
 
 	btRaycastVehicle * getVehicle();
 	void createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> *);

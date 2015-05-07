@@ -16,10 +16,10 @@ RangedWeapon::RangedWeapon(int type, GameObj* g)
 
 	switch (type)
 	{
-	case GUN:
+	case BGUN:
 	{
 		range = MEDIUM_RANGED;
-		damage = 1;
+		damage = 10;
 		attackSpeed = 4;
 		splash = 1;
 
@@ -28,13 +28,13 @@ RangedWeapon::RangedWeapon(int type, GameObj* g)
 		_pWidth = 0.3;
 		_pHeight = 0.3;
 		_pDepth = 0.5;
-		_pBlockType = BASICCUBE;
+		_pBlockType = NEEDLE;
 		break;
 	}
 	default:
 	{
 		range = FAR_RANGED;
-		damage = 10;
+		damage = 20;
 		attackSpeed = 0.5;
 		splash = 4;
 

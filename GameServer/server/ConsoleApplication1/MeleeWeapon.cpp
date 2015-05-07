@@ -1,9 +1,4 @@
 #include "MeleeWeapon.h"
-enum MELEE_TYPES{
-	NEEDLE = 0,
-	MACE = 1,
-	HAMMER = 2,
-};
 
 MeleeWeapon::MeleeWeapon(int type, GameObj* g)
 {
@@ -21,7 +16,7 @@ MeleeWeapon::MeleeWeapon(int type, GameObj* g)
 		break;
 	}
 	default:{
-		damage = 5;
+		damage = 3;
 		splash = 2;
 		break;
 	}

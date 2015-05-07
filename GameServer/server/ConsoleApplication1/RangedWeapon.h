@@ -4,11 +4,7 @@
 #include "definition.h"
 #include <time.h>
 
-enum RANGED_TYPES{
-	GUN = 0,
-	LASER = 1,
-	ROCKET = 2,
-};
+
 class RangedWeapon:public Weapon
 {
 private:
