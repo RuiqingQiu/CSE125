@@ -74,11 +74,10 @@ void viewFactory::setView() {
 		return;
 	}
 
-	//hacky quick fix
-
-	
-	//hacky quick fix
-	if (viewmode != viewType::BUILD) buildmode->updateview = false;
+	//hacky quick fix for being able to switch console modes with number keys
+	//if (viewmode != viewType::BUILD) buildmode->updateview = false;
+	currentView->isCurrentView = false;
+	currentView->VUpdate();
 	
 	//sky boxes needed for battle mode and console.
 	//not needed for menus and build mode
@@ -113,21 +112,27 @@ void viewFactory::switchView(unsigned char key) {
 	switch (key) {
 	case '1':
 		viewmode = viewType::BUILD;
+		setView();
 		break;
 	case '2':
 		viewmode = viewType::BATTLE;
+		setView();
 		break;
 	case '3':
 		viewmode = viewType::HELP;
+		setView();
 		break;
 	case '4':
 		viewmode = viewType::MENU;
+		setView();
 		break;
 	case '5':
 		viewmode = viewType::CONSOLE;
+		setView();
+		break;
+	default:
 		break;
 	}
-	setView();
 }
 
 void viewFactory::reshapeFunc(int w, int h) {
@@ -159,17 +164,14 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 	if (viewmode != viewType::BUILD) return;
 	switch (key) {
 	case ',':
-		buildmode->yRotation -= 90;
+		buildmode->rotateRobot(-90);
 		break;
 	case '.':
-		buildmode->yRotation += 90;
+		buildmode->rotateRobot(90);
 		break;
 	default:
 		break;
 	}
-	if (buildmode->yRotation < 0) buildmode->yRotation += 360;
-	if (buildmode->yRotation == 360) buildmode->yRotation = 0;
-	buildmode->rotateY.makeRotateY(buildmode->yRotation*M_PI / 180.0);
 }
 
 void viewFactory::mouseFunc(int button, int state, int x, int y) {

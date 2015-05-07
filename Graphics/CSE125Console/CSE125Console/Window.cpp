@@ -124,7 +124,7 @@ void Window::initialize(void)
 		}
 	}
 	
-	object = Model3DFactory::generateObjectWithType(METHCUBE);
+	object = Model3DFactory::generateObjectWithType(CrystalCube);
 	object->shader_type = NORMAL_SHADER;
 	object->localTransform.position = Vector3(3, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);

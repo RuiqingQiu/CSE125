@@ -2,34 +2,35 @@
 #include "buildView.h"
 #include "Model3DFactory.h"
 
-/*
- * things to implement:
- * on click actions
- */
-
 static Model3DFactory* m_factory;
 
+//constructors
 buildView::buildView() : gui() {
 	updateview = false;
+	init();
 	createButtons();
 }
 
 buildView::buildView(int w, int h) : gui(w, h) {
 	updateview = false;
+	init();
 	createButtons();
 }
 
 
 buildView::~buildView() {
+	gui::~gui();
+
 }
 
-void buildView::createButtons() {
+void buildView::init() {
 	m_factory = new  Model3DFactory();
 
 	selectedType = BasicCube;
 	yRotation = 0;
-	rotateY.identity();
+	blocksLeft = MAX_BLOCKS;
 	center = Vector3(-3, -5, -3);
+	templateSet = false;
 
 	//GeoNode * cube = new roboBase(3, 1);
 	GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
@@ -37,7 +38,6 @@ void buildView::createButtons() {
 	cube->identifier = 0;
 	cube->textureType = THREEBYTHREE_BASIC;
 	PushGeoNode(cube);
-	currentNode = nullptr;  //not allowed to move base cube
 
 	GeoNode * wheel = Model3DFactory::generateObjectWithType(WoodenWheel);
 	wheel->localTransform.position = Vector3(1.6, -0.2, 1);
@@ -62,16 +62,17 @@ void buildView::createButtons() {
 	wheel4->identifier = 4;
 	wheel4->textureType = WoodenWheel;
 	PushGeoNode(wheel4);
-	//for now, we just move the last added node
-	//currentNode = NodeList[NodeList.size() - 1];
 
-	
+	setCurrentNode(false);
+}
 
+void buildView::createButtons() {
 	//hardcoded button sizes for now
 
 	//text displays
 	//time.jpg dimensions: 800x100
-	timer = new buildTimer(width*0.3, height - 50, 400, 50, false, false);
+	//"fullscreen" 1920 width ratio, 1920/2 - 200 = 760  760/1920 
+	timer = new buildTimer(width*(760.0 / 1920.0), height - 50, 400, 50, false, false);
 	timer->setScaling(true, false, width, height);
 	guiItems.push_back(timer);
 
@@ -81,10 +82,10 @@ void buildView::createButtons() {
 		guiItems.push_back(score);
 
 	//battle button
-	button * battle = new button("menuItem/battle.jpg", width - 120, 20);
-	battle->setTexture("menuItem/battle_sel.jpg", btnState::SELECTED);
-	battle->setTexture("menuItem/battle_press.jpg", btnState::PRESSED);
-	buttons.push_back(battle);
+	battleButton = new button("menuItem/battle.jpg", width - 120, 20);
+	battleButton->setTexture("menuItem/battle_sel.jpg", btnState::SELECTED);
+	battleButton->setTexture("menuItem/battle_press.jpg", btnState::PRESSED);
+	buttons.push_back(battleButton);
 	
 	int scale = 4;
 	
@@ -94,36 +95,38 @@ void buildView::createButtons() {
 	buttons.push_back(scroll);
 
 	//list options
-	int identifier = 0;
-	for (int i = 0; i < 3; i++) {
-		std::string concat = std::to_string(i) + ".jpg";
-		std::string selC = std::to_string(i) + "_sel.jpg";
-		scroll->addListItem(concat, selC);
-		//sublist, must be added right after the parent list
-		for (int j = 0; j < 4; j++) {
-			if (j == 3 && i != 1) break;
-			concat = std::to_string((i * 10) + j) + ".jpg";
-			selC = std::to_string((i * 10) + j) + "_sel.jpg";
-			scroll->addsubListItem(concat, selC, identifier);
-			identifier++;
-		}
-	}
+	scroll->addListItem("blocks", ".jpg", true, true);
+	scroll->addsubListItem("blocks/basic", ".jpg", BasicCube, true, false);
+	scroll->addsubListItem("blocks/crystal", ".jpg", CrystalCube, true, false);
+	scroll->addsubListItem("blocks/glowing", ".jpg", GlowingCube, true, false);
+	scroll->addsubListItem("blocks/wooden", ".jpg", WoodenCube, true, false);
 
-	scroll->addListItem("bases.jpg", "bases_sel.jpg");
-	scroll->addsubListItem("basic.jpg", "basic_sel.jpg", THREEBYTHREE_BASIC);
-	scroll->addsubListItem("glowing.jpg", "glowing_sel.jpg", THREEBYTHREE_GLOWING);
-	scroll->addsubListItem("wooden.jpg", "wooden_sel.jpg", THREEBYTHREE_WOODEN);
+	scroll->addListItem("weapons", ".jpg", true, true);
+	scroll->addsubListItem("weapons/bGun", ".jpg", BGun, true, false);
+	scroll->addsubListItem("weapons/mace", ".jpg", Mace, true, false);
+	scroll->addsubListItem("weapons/mallet", ".jpg", Mallet, true, false);
+	scroll->addsubListItem("weapons/needle", ".jpg", Needle, true, false);
 
-	scroll->addListItem("template.jpg", "template_sel.jpg");
-	scroll->addsubListItem("template1.jpg", "template1_sel.jpg", TEMPLATE_1);
-	scroll->addsubListItem("template2.jpg", "template2_sel.jpg", TEMPLATE_2);
-	scroll->addsubListItem("template3.jpg", "template3_sel.jpg", TEMPLATE_3);
+	scroll->addListItem("wheels", ".jpg", true, true);
+	scroll->addsubListItem("wheels/discount", ".jpg", Discount, true, false);
+	scroll->addsubListItem("wheels/tire", ".jpg", Tire, true, false);
+	scroll->addsubListItem("wheels/wooden", ".jpg", WoodenWheel, true, false);
+
+	scroll->addListItem("bases", ".jpg", true, true);
+	scroll->addsubListItem("bases/basic", ".jpg", THREEBYTHREE_BASIC, true, false);
+	scroll->addsubListItem("bases/glowing", ".jpg", THREEBYTHREE_GLOWING, true, false);
+	scroll->addsubListItem("bases/wooden", ".jpg", THREEBYTHREE_WOODEN, true, false);
+
+	scroll->addListItem("template", ".jpg", true, true);
+	scroll->addsubListItem("templates/basic", ".jpg", TEMPLATE_1, true, false);
+	scroll->addsubListItem("templates/glowing", ".jpg", TEMPLATE_2, true, false);
+	scroll->addsubListItem("templates/wooden", ".jpg", TEMPLATE_3, true, false);
 
 	//help button
-	button * help = new button("menuItem/help.jpg", 20, 20, true);
-	help->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
-	help->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
-	buttons.push_back(help);
+	helpButton = new button("menuItem/help.jpg", 20, 20, true);
+	helpButton->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
+	helpButton->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
+	buttons.push_back(helpButton);
 
 	//grid textures
 	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
@@ -132,6 +135,7 @@ void buildView::createButtons() {
 
 void buildView::VUpdate() {
 	gui::VUpdate();
+
 	if (!updateview && isCurrentView){// || true) { //use true to disable timer
 		timer->start = std::clock();
 	}
@@ -143,6 +147,8 @@ void buildView::VUpdate() {
 	if (score->deaths == 100) score->deaths = 0;
 	if (score->hits == 100) score->hits = 0;
 	if (score->rank == 100) score->rank = 0;
+
+	blocksLeft = MAX_BLOCKS - NodeList.size();
 }
 
 void buildView::VOnRender() {
@@ -164,6 +170,7 @@ void buildView::VOnRender() {
 	for each (GeoNode* node in NodeList) {
 		node->VOnDraw();
 	};
+	if (currentNode->textureType == selectedType || true) currentNode->VOnDraw();
 	glPopMatrix();
 
 	//draw grid plane quad
@@ -212,31 +219,10 @@ void buildView::VOnRender() {
 
 	set2d();
 	drawAllItems();
+
+	drawText(width*(760.0 / 1920.0), height - 150, "blocks Left: " + std::to_string(blocksLeft), 1.0, 1.0, 1.0, GLUT_BITMAP_HELVETICA_18);
+
 	set3d();
-}
-
-Vector3 buildView::addNewNodePos() {
-	//for now, just add to the right of current node
-	//logic here for finding place to start new node
-	Vector3 check;
-
-	if (currentNode == nullptr)
-		check = translateNode(Vector3(0, 1, 0), NodeList[0]);
-	else
-		check = translateNode(Vector3(1, 0, 0), currentNode);
-
-	if (currentNode != nullptr) {
-		Vector3 temp = currentNode->localTransform.position;
-		//if we got same position, try to the left
-		if (check.equals(temp)) {
-			check = translateNode(Vector3(-1, 0, 0), currentNode);
-			//if still invalid, fuck it just don't add for now
-			if (check.equals(temp)) {
-				return Vector3(0,0,0);
-			}
-		}
-	}
-	return check;
 }
 
 viewType buildView::mouseClickFunc(int state, int x, int y) {
@@ -245,6 +231,7 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height-y);
 	}
+
 	if (state == GLUT_UP && prevMouseState != GLUT_UP) {
 		if (scroll->addButton->isSelected(x, height - y) ) {
 			addNode();
@@ -253,21 +240,27 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 			removeNode();
 		}
 		else if (scroll->clearButton->isSelected(x, height - y)) {
-			while (currentNode != nullptr) {
+			while (NodeList.size() > BASE_SIZE) {
+				std::cout << "removing" << std::endl;
 				removeNode();
 			}
 		}
 	}
-	selectedType = scroll->currentSelection;
+
+	if (selectedType != scroll->currentSelection) {
+		selectedType = scroll->currentSelection;
+		setTemplate();
+	}
+	setCurrentNode(false);
 	prevMouseState = state;
 
-	if ((buttons[0]->isSelected(x, height - y) &&
+	if ((battleButton->isSelected(x, height - y) &&
 		state == GLUT_UP)) {
 		updateview = false;
 		isCurrentView = false;
 		return viewType::BATTLE;
 	}
-	else if (buttons[buttons.size() - 1]->isSelected(x, height - y)) {
+	else if (helpButton->isSelected(x, height - y)) {
 		return viewType::HELP;
 	}
 	return viewType::BUILD;
@@ -283,19 +276,6 @@ void buildView::keyPressFunc(unsigned char key, int x, int y) {
 		//add block
 		addNode();
 		break;
-	}
-}
-
-viewType buildView::checkTimeOut() {
-	if (timer->timeLeft < 0) {
-		return viewType::BATTLE;
-	}
-	return viewType::BUILD;
-}
-
-void buildView::clearConstraints() {
-	for (int i = 0; i < NodeList.size(); i++) {
-		NodeList[i]->clearConstraints();
 	}
 }
 
@@ -342,301 +322,363 @@ void buildView::setConstraints() {
 	}
 }
 
-void buildView::addNode() {
-	int s = NodeList.size();
-	if (s < MAX_BLOCKS) {
-		if (selectedType >= TEMPLATE_BEGIN && selectedType <= TEMPLATE_END) {
-			//remove all non-base blocks use BASE_SIZE instead of 0
-			for (int i = 0; i < NodeList.size(); i++) {
-				delete NodeList[i];
-			}
-			NodeList.clear();
-			//add the selected template robot build
-			if (selectedType == TEMPLATE_1) {
-				//robo base
-				GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
-				cube->localTransform.position = Vector3(0, 0, 0);
-				cube->identifier = 0;
-				cube->textureType = THREEBYTHREE_BASIC;
-				PushGeoNode(cube);
-				GeoNode * wheel = Model3DFactory::generateObjectWithType(Discount);
-				wheel->localTransform.position = Vector3(1.6, -0.2, 1);
-				wheel->identifier = 1;
-				wheel->textureType = Discount;
-				PushGeoNode(wheel);
-				GeoNode * wheel2 = Model3DFactory::generateObjectWithType(Discount);
-				wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
-				wheel2->identifier = 2;
-				wheel2->textureType = Discount;
-				PushGeoNode(wheel2);
-				GeoNode * wheel3 = Model3DFactory::generateObjectWithType(Discount);
-				wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
-				wheel3->identifier = 3;
-				wheel3->textureType = Discount;
-				PushGeoNode(wheel3);
-				GeoNode * wheel4 = Model3DFactory::generateObjectWithType(Discount);
-				wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
-				wheel4->identifier = 4;
-				wheel4->textureType = Discount;
-				PushGeoNode(wheel4);
+void buildView::clearConstraints() {
+	for (int i = 0; i < NodeList.size(); i++) {
+		NodeList[i]->clearConstraints();
+	}
+}
 
-				//added stuff to robot
-				GeoNode * cube1 = Model3DFactory::generateObjectWithType(BasicCube);
-				cube1->localTransform.position = Vector3(-1, 1, -1);
-				cube1->identifier = NodeList.size();
-				cube1->textureType = BasicCube;
-				PushGeoNode(cube1);
-				GeoNode * cube2 = Model3DFactory::generateObjectWithType(BasicCube);
-				cube2->localTransform.position = Vector3(1, 1, -1);
-				cube2->identifier = NodeList.size();
-				cube2->textureType = BasicCube;
-				PushGeoNode(cube2);
-				GeoNode * cube3 = Model3DFactory::generateObjectWithType(BasicCube);
-				cube3->localTransform.position = Vector3(-1, 1, 1);
-				cube3->identifier = NodeList.size();
-				cube3->textureType = BasicCube;
-				PushGeoNode(cube3);
-				GeoNode * cube4 = Model3DFactory::generateObjectWithType(BasicCube);
-				cube4->localTransform.position = Vector3(1, 1, 1);
-				cube4->identifier = NodeList.size();
-				cube4->textureType = BasicCube;
-				PushGeoNode(cube4);
+viewType buildView::checkTimeOut() {
+	if (timer->timeLeft < 0) {
+		return viewType::BATTLE;
+	}
+	return viewType::BUILD;
+}
 
-				GeoNode * weapon1 = Model3DFactory::generateObjectWithType(Needle);
-				weapon1->localTransform.position = Vector3(-1, 0, 2);
-				weapon1->localTransform.rotation.y = 270;
-				weapon1->identifier = NodeList.size();
-				weapon1->textureType = Needle;
-				PushGeoNode(weapon1);
-				GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Needle);
-				weapon2->localTransform.position = Vector3(-1, 1, 2);
-				weapon2->localTransform.rotation.y = 270;
-				weapon2->identifier = NodeList.size();
-				weapon2->textureType = Needle;
-				PushGeoNode(weapon2);
-				GeoNode * weapon3 = Model3DFactory::generateObjectWithType(Needle);
-				weapon3->localTransform.position = Vector3(1, 0, 2);
-				weapon3->localTransform.rotation.y = 270;
-				weapon3->identifier = NodeList.size();
-				weapon3->textureType = Needle;
-				PushGeoNode(weapon3);
-				GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Needle);
-				weapon4->localTransform.position = Vector3(1, 1, 2);
-				weapon4->localTransform.rotation.y = 270;
-				weapon4->identifier = NodeList.size();
-				weapon4->textureType = Needle;
-				PushGeoNode(weapon4);
-			}
-			else if (selectedType == TEMPLATE_2) {
-				//robo base
-				GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_GLOWING);
-				cube->localTransform.position = Vector3(0, 0, 0);
-				cube->identifier = 0;
-				cube->textureType = THREEBYTHREE_GLOWING;
-				PushGeoNode(cube);
-				GeoNode * wheel = Model3DFactory::generateObjectWithType(Tire);
-				wheel->localTransform.position = Vector3(1.6, -0.2, 1);
-				wheel->identifier = 1;
-				wheel->textureType = Tire;
-				PushGeoNode(wheel);
-				GeoNode * wheel2 = Model3DFactory::generateObjectWithType(Tire);
-				wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
-				wheel2->identifier = 2;
-				wheel2->textureType = Tire;
-				PushGeoNode(wheel2);
-				GeoNode * wheel3 = Model3DFactory::generateObjectWithType(Tire);
-				wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
-				wheel3->identifier = 3;
-				wheel3->textureType = Tire;
-				PushGeoNode(wheel3);
-				GeoNode * wheel4 = Model3DFactory::generateObjectWithType(Tire);
-				wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
-				wheel4->identifier = 4;
-				wheel4->textureType = Tire;
-				PushGeoNode(wheel4);
+void buildView::setCurrentNode(bool adding) {
+	int type = selectedType;
 
-				//added stuff to robot
-				GeoNode * cube1 = Model3DFactory::generateObjectWithType(GlowingCube);
-				cube1->localTransform.position = Vector3(0, 1, -1);
-				cube1->identifier = NodeList.size();
-				cube1->textureType = GlowingCube;
-				PushGeoNode(cube1);
-				GeoNode * cube2 = Model3DFactory::generateObjectWithType(GlowingCube);
-				cube2->localTransform.position = Vector3(0, 1, 0);
-				cube2->identifier = NodeList.size();
-				cube2->textureType = GlowingCube;
-				PushGeoNode(cube2);
-				GeoNode * cube3 = Model3DFactory::generateObjectWithType(GlowingCube);
-				cube3->localTransform.position = Vector3(-1, 1, 0);
-				cube3->identifier = NodeList.size();
-				cube3->textureType = GlowingCube;
-				PushGeoNode(cube3);
-				GeoNode * cube4 = Model3DFactory::generateObjectWithType(GlowingCube);
-				cube4->localTransform.position = Vector3(1, 1, 0);
-				cube4->identifier = NodeList.size();
-				cube4->textureType = GlowingCube;
-				PushGeoNode(cube4);
-				GeoNode * cube5 = Model3DFactory::generateObjectWithType(GlowingCube);
-				cube5->localTransform.position = Vector3(0, 1, 1);
-				cube5->identifier = NodeList.size();
-				cube5->textureType = GlowingCube;
-				PushGeoNode(cube5);
+	if (selectedType >= WHEEL_BEGIN && selectedType <= WHEEL_END) {
+		type = BasicCube;
+	}
+	if (selectedType >= BASES_BEGIN && selectedType <= BASES_END) {
+		type = BasicCube;
+	}
+	if (selectedType >= TEMPLATE_BEGIN && selectedType <= TEMPLATE_END) {
+		type = BasicCube;
+	}
 
-				GeoNode * weapon1 = Model3DFactory::generateObjectWithType(Needle);
-				weapon1->localTransform.position = Vector3(0, 0, 2);
-				weapon1->localTransform.rotation.y = 270;
-				weapon1->identifier = NodeList.size();
-				weapon1->textureType = Needle;
-				PushGeoNode(weapon1);
-				GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Mallet);
-				weapon2->localTransform.position = Vector3(0, 1, 2);
-				weapon2->localTransform.rotation.y = 270;
-				weapon2->identifier = NodeList.size();
-				weapon2->textureType = Mallet;
-				PushGeoNode(weapon2);
-				GeoNode * weapon3 = Model3DFactory::generateObjectWithType(Needle);
-				weapon3->localTransform.position = Vector3(0, 0, -2);
-				weapon3->localTransform.rotation.y = 90;
-				weapon3->identifier = NodeList.size();
-				weapon3->textureType = Needle;
-				PushGeoNode(weapon3);
-				GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Mallet);
-				weapon4->localTransform.position = Vector3(0, 1, -2);
-				weapon4->localTransform.rotation.y = 90;
-				weapon4->identifier = NodeList.size();
-				weapon4->textureType = Mallet;
-				PushGeoNode(weapon4);
-			}
-			else {
-				//robo base
-				GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
-				cube->localTransform.position = Vector3(0, 0, 0);
-				cube->identifier = 0;
-				cube->textureType = THREEBYTHREE_WOODEN;
-				PushGeoNode(cube);
-				GeoNode * wheel = Model3DFactory::generateObjectWithType(WoodenWheel);
-				wheel->localTransform.position = Vector3(1.6, -0.2, 1);
-				wheel->identifier = 1;
-				wheel->textureType = WoodenWheel;
-				PushGeoNode(wheel);
-				GeoNode * wheel2 = Model3DFactory::generateObjectWithType(WoodenWheel);
-				wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
-				wheel2->identifier = 2;
-				wheel2->textureType = WoodenWheel;
-				PushGeoNode(wheel2);
-				GeoNode * wheel3 = Model3DFactory::generateObjectWithType(WoodenWheel);
-				wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
-				wheel3->identifier = 3;
-				wheel3->textureType = WoodenWheel;
-				PushGeoNode(wheel3);
-				GeoNode * wheel4 = Model3DFactory::generateObjectWithType(WoodenWheel);
-				wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
-				wheel4->identifier = 4;
-				wheel4->textureType = WoodenWheel;
-				PushGeoNode(wheel4);
+	Model3D * object = Model3DFactory::generateObjectWithType(type);
+	object->localTransform.position = addNewNodePos();
+	object->identifier = NodeList.size();
+	object->textureType = type;
+	object->setShaderType(EDGE_SHADER);
 
-				//added stuff to robot
-				GeoNode * cube1 = Model3DFactory::generateObjectWithType(WoodenCube);
-				cube1->localTransform.position = Vector3(1, 1, -1);
-				cube1->identifier = NodeList.size();
-				cube1->textureType = WoodenCube;
-				PushGeoNode(cube1);
-				GeoNode * cube2 = Model3DFactory::generateObjectWithType(WoodenCube);
-				cube2->localTransform.position = Vector3(-1, 1, -1);
-				cube2->identifier = NodeList.size();
-				cube2->textureType = WoodenCube;
-				PushGeoNode(cube2);
-				GeoNode * cube3 = Model3DFactory::generateObjectWithType(WoodenCube);
-				cube3->localTransform.position = Vector3(0, 1, -1);
-				cube3->identifier = NodeList.size();
-				cube3->textureType = WoodenCube;
-				PushGeoNode(cube3);
-				GeoNode * cube4 = Model3DFactory::generateObjectWithType(WoodenCube);
-				cube4->localTransform.position = Vector3(0, 2, -1);
-				cube4->identifier = NodeList.size();
-				cube4->textureType = WoodenCube;
-				PushGeoNode(cube4);
-				GeoNode * cube5 = Model3DFactory::generateObjectWithType(WoodenCube);
-				cube5->localTransform.position = Vector3(0, 1, 0);
-				cube5->identifier = NodeList.size();
-				cube5->textureType = WoodenCube;
-				PushGeoNode(cube5);
-				GeoNode * cube6 = Model3DFactory::generateObjectWithType(WoodenCube);
-				cube6->localTransform.position = Vector3(0, 2, 0);
-				cube6->identifier = NodeList.size();
-				cube6->textureType = WoodenCube;
-				PushGeoNode(cube6);
-				GeoNode * cube7 = Model3DFactory::generateObjectWithType(WoodenCube);
-				cube7->localTransform.position = Vector3(0, 1, 1);
-				cube7->identifier = NodeList.size();
-				cube7->textureType = WoodenCube;
-				PushGeoNode(cube7);
+	if (!adding) delete currentNode;
+	currentNode = object;
+}
 
-				GeoNode * weapon1 = Model3DFactory::generateObjectWithType(Needle);
-				weapon1->localTransform.position = Vector3(0, 0, 2);
-				weapon1->localTransform.rotation.y = 270;
-				weapon1->identifier = NodeList.size();
-				weapon1->textureType = Needle;
-				PushGeoNode(weapon1);
-				GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Needle);
-				weapon2->localTransform.position = Vector3(1, 0, 2);
-				weapon2->localTransform.rotation.y = 270;
-				weapon2->identifier = NodeList.size();
-				weapon2->textureType = Needle;
-				PushGeoNode(weapon2);
-				GeoNode * weapon3 = Model3DFactory::generateObjectWithType(Needle);
-				weapon3->localTransform.position = Vector3(-1, 0, 2);
-				weapon3->localTransform.rotation.y = 270;
-				weapon3->identifier = NodeList.size();
-				weapon3->textureType = Needle;
-				PushGeoNode(weapon3);
-				GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Mace);
-				weapon4->localTransform.position = Vector3(0, 1, 2);
-				weapon4->localTransform.rotation.y = 270;
-				weapon4->identifier = NodeList.size();
-				weapon4->textureType = Mace;
-				PushGeoNode(weapon4);
-
-			}
-			setConstraints();
-			currentNode = NodeList[NodeList.size() - 1];
-			return;
+void buildView::setTemplate() {
+	//if template, base or wheel is clicked 
+	//add imediately instead of waiting for add button click or enter key press
+	if (selectedType >= TEMPLATE_BEGIN && selectedType <= TEMPLATE_END) {
+		//remove all non-base blocks use BASE_SIZE instead of 0
+		for (int i = 0; i < NodeList.size(); i++) {
+			delete NodeList[i];
 		}
-
-		if (selectedType >= BASES_BEGIN && selectedType <= BASES_END) {
-			delete NodeList[0];
-			GeoNode * cube = Model3DFactory::generateObjectWithType(selectedType);
+		NodeList.clear();
+		//add the selected template robot build
+		if (selectedType == TEMPLATE_1) {
+			//robo base
+			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 			cube->localTransform.position = Vector3(0, 0, 0);
 			cube->identifier = 0;
-			cube->textureType = selectedType;
-			NodeList[0] = cube;
-			return;
-		}
+			cube->textureType = THREEBYTHREE_BASIC;
+			PushGeoNode(cube);
+			GeoNode * wheel = Model3DFactory::generateObjectWithType(Discount);
+			wheel->localTransform.position = Vector3(1.6, -0.2, 1);
+			wheel->identifier = 1;
+			wheel->textureType = Discount;
+			PushGeoNode(wheel);
+			GeoNode * wheel2 = Model3DFactory::generateObjectWithType(Discount);
+			wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
+			wheel2->identifier = 2;
+			wheel2->textureType = Discount;
+			PushGeoNode(wheel2);
+			GeoNode * wheel3 = Model3DFactory::generateObjectWithType(Discount);
+			wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
+			wheel3->identifier = 3;
+			wheel3->textureType = Discount;
+			PushGeoNode(wheel3);
+			GeoNode * wheel4 = Model3DFactory::generateObjectWithType(Discount);
+			wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
+			wheel4->identifier = 4;
+			wheel4->textureType = Discount;
+			PushGeoNode(wheel4);
 
-		if (selectedType >= WHEEL_BEGIN && selectedType <= WHEEL_END) {
-			//is a wheel
-			for (int i = 1; i < BASE_SIZE; i++) {
-				GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
-				object->localTransform.position = NodeList[i]->localTransform.position;
-				object->identifier = NodeList[i]->identifier;
-				object->textureType = selectedType;
-				delete NodeList[i];
-				NodeList[i] = object;
-			}
-			return;
+			//added stuff to robot
+			GeoNode * cube1 = Model3DFactory::generateObjectWithType(BasicCube);
+			cube1->localTransform.position = Vector3(-1, 1, -1);
+			cube1->identifier = NodeList.size();
+			cube1->textureType = BasicCube;
+			PushGeoNode(cube1);
+			GeoNode * cube2 = Model3DFactory::generateObjectWithType(BasicCube);
+			cube2->localTransform.position = Vector3(1, 1, -1);
+			cube2->identifier = NodeList.size();
+			cube2->textureType = BasicCube;
+			PushGeoNode(cube2);
+			GeoNode * cube3 = Model3DFactory::generateObjectWithType(BasicCube);
+			cube3->localTransform.position = Vector3(-1, 1, 1);
+			cube3->identifier = NodeList.size();
+			cube3->textureType = BasicCube;
+			PushGeoNode(cube3);
+			GeoNode * cube4 = Model3DFactory::generateObjectWithType(BasicCube);
+			cube4->localTransform.position = Vector3(1, 1, 1);
+			cube4->identifier = NodeList.size();
+			cube4->textureType = BasicCube;
+			PushGeoNode(cube4);
+
+			GeoNode * weapon1 = Model3DFactory::generateObjectWithType(Needle);
+			weapon1->localTransform.position = Vector3(-1, 0, 2);
+			weapon1->localTransform.rotation.y = 270;
+			weapon1->identifier = NodeList.size();
+			weapon1->textureType = Needle;
+			PushGeoNode(weapon1);
+			GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Needle);
+			weapon2->localTransform.position = Vector3(-1, 1, 2);
+			weapon2->localTransform.rotation.y = 270;
+			weapon2->identifier = NodeList.size();
+			weapon2->textureType = Needle;
+			PushGeoNode(weapon2);
+			GeoNode * weapon3 = Model3DFactory::generateObjectWithType(Needle);
+			weapon3->localTransform.position = Vector3(1, 0, 2);
+			weapon3->localTransform.rotation.y = 270;
+			weapon3->identifier = NodeList.size();
+			weapon3->textureType = Needle;
+			PushGeoNode(weapon3);
+			GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Needle);
+			weapon4->localTransform.position = Vector3(1, 1, 2);
+			weapon4->localTransform.rotation.y = 270;
+			weapon4->identifier = NodeList.size();
+			weapon4->textureType = Needle;
+			PushGeoNode(weapon4);
 		}
+		else if (selectedType == TEMPLATE_2) {
+			//robo base
+			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_GLOWING);
+			cube->localTransform.position = Vector3(0, 0, 0);
+			cube->identifier = 0;
+			cube->textureType = THREEBYTHREE_GLOWING;
+			PushGeoNode(cube);
+			GeoNode * wheel = Model3DFactory::generateObjectWithType(Tire);
+			wheel->localTransform.position = Vector3(1.6, -0.2, 1);
+			wheel->identifier = 1;
+			wheel->textureType = Tire;
+			PushGeoNode(wheel);
+			GeoNode * wheel2 = Model3DFactory::generateObjectWithType(Tire);
+			wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
+			wheel2->identifier = 2;
+			wheel2->textureType = Tire;
+			PushGeoNode(wheel2);
+			GeoNode * wheel3 = Model3DFactory::generateObjectWithType(Tire);
+			wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
+			wheel3->identifier = 3;
+			wheel3->textureType = Tire;
+			PushGeoNode(wheel3);
+			GeoNode * wheel4 = Model3DFactory::generateObjectWithType(Tire);
+			wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
+			wheel4->identifier = 4;
+			wheel4->textureType = Tire;
+			PushGeoNode(wheel4);
+
+			//added stuff to robot
+			GeoNode * cube1 = Model3DFactory::generateObjectWithType(GlowingCube);
+			cube1->localTransform.position = Vector3(0, 1, -1);
+			cube1->identifier = NodeList.size();
+			cube1->textureType = GlowingCube;
+			PushGeoNode(cube1);
+			GeoNode * cube2 = Model3DFactory::generateObjectWithType(GlowingCube);
+			cube2->localTransform.position = Vector3(0, 1, 0);
+			cube2->identifier = NodeList.size();
+			cube2->textureType = GlowingCube;
+			PushGeoNode(cube2);
+			GeoNode * cube3 = Model3DFactory::generateObjectWithType(GlowingCube);
+			cube3->localTransform.position = Vector3(-1, 1, 0);
+			cube3->identifier = NodeList.size();
+			cube3->textureType = GlowingCube;
+			PushGeoNode(cube3);
+			GeoNode * cube4 = Model3DFactory::generateObjectWithType(GlowingCube);
+			cube4->localTransform.position = Vector3(1, 1, 0);
+			cube4->identifier = NodeList.size();
+			cube4->textureType = GlowingCube;
+			PushGeoNode(cube4);
+			GeoNode * cube5 = Model3DFactory::generateObjectWithType(GlowingCube);
+			cube5->localTransform.position = Vector3(0, 1, 1);
+			cube5->identifier = NodeList.size();
+			cube5->textureType = GlowingCube;
+			PushGeoNode(cube5);
+
+			GeoNode * weapon1 = Model3DFactory::generateObjectWithType(Needle);
+			weapon1->localTransform.position = Vector3(0, 0, 2);
+			weapon1->localTransform.rotation.y = 270;
+			weapon1->identifier = NodeList.size();
+			weapon1->textureType = Needle;
+			PushGeoNode(weapon1);
+			GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Mallet);
+			weapon2->localTransform.position = Vector3(0, 1, 2);
+			weapon2->localTransform.rotation.y = 270;
+			weapon2->identifier = NodeList.size();
+			weapon2->textureType = Mallet;
+			PushGeoNode(weapon2);
+			GeoNode * weapon3 = Model3DFactory::generateObjectWithType(Needle);
+			weapon3->localTransform.position = Vector3(0, 0, -2);
+			weapon3->localTransform.rotation.y = 90;
+			weapon3->identifier = NodeList.size();
+			weapon3->textureType = Needle;
+			PushGeoNode(weapon3);
+			GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Mallet);
+			weapon4->localTransform.position = Vector3(0, 1, -2);
+			weapon4->localTransform.rotation.y = 90;
+			weapon4->identifier = NodeList.size();
+			weapon4->textureType = Mallet;
+			PushGeoNode(weapon4);
+		}
+		else {
+			//robo base
+			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
+			cube->localTransform.position = Vector3(0, 0, 0);
+			cube->identifier = 0;
+			cube->textureType = THREEBYTHREE_WOODEN;
+			PushGeoNode(cube);
+			GeoNode * wheel = Model3DFactory::generateObjectWithType(WoodenWheel);
+			wheel->localTransform.position = Vector3(1.6, -0.2, 1);
+			wheel->identifier = 1;
+			wheel->textureType = WoodenWheel;
+			PushGeoNode(wheel);
+			GeoNode * wheel2 = Model3DFactory::generateObjectWithType(WoodenWheel);
+			wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
+			wheel2->identifier = 2;
+			wheel2->textureType = WoodenWheel;
+			PushGeoNode(wheel2);
+			GeoNode * wheel3 = Model3DFactory::generateObjectWithType(WoodenWheel);
+			wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
+			wheel3->identifier = 3;
+			wheel3->textureType = WoodenWheel;
+			PushGeoNode(wheel3);
+			GeoNode * wheel4 = Model3DFactory::generateObjectWithType(WoodenWheel);
+			wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
+			wheel4->identifier = 4;
+			wheel4->textureType = WoodenWheel;
+			PushGeoNode(wheel4);
+
+			//added stuff to robot
+			GeoNode * cube1 = Model3DFactory::generateObjectWithType(WoodenCube);
+			cube1->localTransform.position = Vector3(1, 1, -1);
+			cube1->identifier = NodeList.size();
+			cube1->textureType = WoodenCube;
+			PushGeoNode(cube1);
+			GeoNode * cube2 = Model3DFactory::generateObjectWithType(WoodenCube);
+			cube2->localTransform.position = Vector3(-1, 1, -1);
+			cube2->identifier = NodeList.size();
+			cube2->textureType = WoodenCube;
+			PushGeoNode(cube2);
+			GeoNode * cube3 = Model3DFactory::generateObjectWithType(WoodenCube);
+			cube3->localTransform.position = Vector3(0, 1, -1);
+			cube3->identifier = NodeList.size();
+			cube3->textureType = WoodenCube;
+			PushGeoNode(cube3);
+			GeoNode * cube4 = Model3DFactory::generateObjectWithType(WoodenCube);
+			cube4->localTransform.position = Vector3(0, 2, -1);
+			cube4->identifier = NodeList.size();
+			cube4->textureType = WoodenCube;
+			PushGeoNode(cube4);
+			GeoNode * cube5 = Model3DFactory::generateObjectWithType(WoodenCube);
+			cube5->localTransform.position = Vector3(0, 1, 0);
+			cube5->identifier = NodeList.size();
+			cube5->textureType = WoodenCube;
+			PushGeoNode(cube5);
+			GeoNode * cube6 = Model3DFactory::generateObjectWithType(WoodenCube);
+			cube6->localTransform.position = Vector3(0, 2, 0);
+			cube6->identifier = NodeList.size();
+			cube6->textureType = WoodenCube;
+			PushGeoNode(cube6);
+			GeoNode * cube7 = Model3DFactory::generateObjectWithType(WoodenCube);
+			cube7->localTransform.position = Vector3(0, 1, 1);
+			cube7->identifier = NodeList.size();
+			cube7->textureType = WoodenCube;
+			PushGeoNode(cube7);
+
+			GeoNode * weapon1 = Model3DFactory::generateObjectWithType(Needle);
+			weapon1->localTransform.position = Vector3(0, 0, 2);
+			weapon1->localTransform.rotation.y = 270;
+			weapon1->identifier = NodeList.size();
+			weapon1->textureType = Needle;
+			PushGeoNode(weapon1);
+			GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Needle);
+			weapon2->localTransform.position = Vector3(1, 0, 2);
+			weapon2->localTransform.rotation.y = 270;
+			weapon2->identifier = NodeList.size();
+			weapon2->textureType = Needle;
+			PushGeoNode(weapon2);
+			GeoNode * weapon3 = Model3DFactory::generateObjectWithType(Needle);
+			weapon3->localTransform.position = Vector3(-1, 0, 2);
+			weapon3->localTransform.rotation.y = 270;
+			weapon3->identifier = NodeList.size();
+			weapon3->textureType = Needle;
+			PushGeoNode(weapon3);
+			GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Mace);
+			weapon4->localTransform.position = Vector3(0, 1, 2);
+			weapon4->localTransform.rotation.y = 270;
+			weapon4->identifier = NodeList.size();
+			weapon4->textureType = Mace;
+			PushGeoNode(weapon4);
+
+		}
+		setConstraints();
+		return;
+	}
+
+	if (selectedType >= BASES_BEGIN && selectedType <= BASES_END) {
+		delete NodeList[0];
+		GeoNode * cube = Model3DFactory::generateObjectWithType(selectedType);
+		cube->localTransform.position = Vector3(0, 0, 0);
+		cube->identifier = 0;
+		cube->textureType = selectedType;
+		NodeList[0] = cube;
+		return;
+	}
+
+	if (selectedType >= WHEEL_BEGIN && selectedType <= WHEEL_END) {
+		//is a wheel
+		for (int i = 1; i < BASE_SIZE; i++) {
+			GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
+			object->localTransform.position = NodeList[i]->localTransform.position;
+			object->identifier = NodeList[i]->identifier;
+			object->textureType = selectedType;
+			delete NodeList[i];
+			NodeList[i] = object;
+		}
+		return;
+	}
+}
+
+
+Vector3 buildView::addNewNodePos() {
+	//for now, just add to the right of current node
+	//logic here for finding place to start new node
+	Vector3 check;
+
+	if (currentNode == nullptr)
+		check = translateNode(Vector3(0, 1, 0), NodeList[0]);
+	else
+		check = translateNode(Vector3(1, 0, 0), currentNode);
+
+	if (currentNode != nullptr) {
+		Vector3 temp = currentNode->localTransform.position;
+		//if we got same position, try to the left
+		if (check.equals(temp)) {
+			check = translateNode(Vector3(-1, 0, 0), currentNode);
+			//if still invalid, fuck it just don't add a new node
+			if (check.equals(temp)) {
+				return Vector3(0, 0, 0);
+			}
+		}
+	}
+	return check;
+}
+
+void buildView::addNode() {
+	if (currentNode->textureType != selectedType) return;
+	if (NodeList.size() < MAX_BLOCKS) {
 		//screw it if it isn't valid, don't add
 		Vector3 check = addNewNodePos();
-		if (check.equals(Vector3(0,0,0))) {
+		if (check.equals(Vector3(0, 0, 0))) {
 			return;
 		}
-		GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
-		object->localTransform.position = addNewNodePos();
-		object->identifier = s;
-		object->textureType = selectedType;
-		PushGeoNode(object);
-		//for now, we just move the last added node
-		currentNode = NodeList[NodeList.size() - 1];
+		currentNode->setShaderType(REGULAR_SHADER);
+		PushGeoNode(currentNode);
+		//currentNode = NodeList[NodeList.size() - 1];
+		setCurrentNode(true);
 		setConstraints();
 	}
 }
@@ -645,13 +687,8 @@ void buildView::removeNode() {
 	if (NodeList.size() > BASE_SIZE) {
 		delete NodeList[NodeList.size() - 1];
 		NodeList.pop_back();
-		if (NodeList.size() <= BASE_SIZE) {
-			currentNode = nullptr;  //not allowed to move base block
-		}
-		else {
-			currentNode = NodeList[NodeList.size() - 1];
-		}
 	}
+	setCurrentNode(false);
 }
 
 bool buildView::validPos(Vector3 t, GeoNode * node) {
@@ -669,10 +706,6 @@ bool buildView::validPos(Vector3 t, GeoNode * node) {
 }
 
 Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
-	//this works for now with our small 3x3x3, until mouse raycast is implemented
-	//std::cout << "old: " << t.x << " " << t.y << " " << t.z << std::endl;
-	//t = rotateY.transform(t);
-	//std::cout << t.x << " " << t.y << " " << t.z << std::endl;
 	if (yRotation == 180) {
 		t.x = -t.x;
 		t.z = -t.z;
@@ -711,7 +744,6 @@ Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
 		foundMatch = false;
 		for (int i = 0; i < NodeList.size(); i++) {
 			Vector3 temp = NodeList[i]->localTransform.position;
-			//if (check.equals(temp)) {
 			if (NodeList[i]->intersect(check)) {
 				node->below_id = NodeList[i]->identifier;
 				foundMatch = true;
@@ -746,10 +778,13 @@ bool buildView::setTexture(string filename, GLuint * t) {
 		printf("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
-
-	//return true if successfully set texture
-	//std::cout << filename << std::endl;
-	//std::cout << "width: " << width << std::endl;
-	//std::cout << "height: " << height << std::endl;
 	return true;
+}
+
+void buildView::rotateRobot(float degrees) {
+	yRotation += degrees;
+
+	//keep it in the range 0 - 360
+	if (yRotation < 0) yRotation += 360;
+	if (yRotation >= 360) yRotation -= 360;
 }

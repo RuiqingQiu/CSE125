@@ -26,6 +26,7 @@ public:
 	virtual void VOnClientUpdate(GameInfoPacket* pData){ };
 
 	virtual void clearConstraints();
+	virtual void setShaderType(int type);
 
 	bool isUpdated;
 	int healthStat;

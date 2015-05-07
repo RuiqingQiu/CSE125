@@ -41,7 +41,6 @@ void buildViewInput::VProcessSpecialKey(int key, int x, int y) {
 	switch (key) {
 		//move the new block to be added to the robot
 	case GLUT_KEY_LEFT:
-		
 		g_pCore->pGameView->currentNode->localTransform.rotation.y += 90;
 		break;
 	case GLUT_KEY_RIGHT:

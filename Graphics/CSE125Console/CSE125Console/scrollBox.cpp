@@ -60,6 +60,10 @@ scrollBox::scrollBox(int x, int y, double s, bool xf, bool yf) {
 
 scrollBox::~scrollBox()
 {
+	for (int i = 0; i < list.size(); i++) {
+		delete list[i];
+	}
+	list.clear();
 }
 
 
@@ -130,21 +134,27 @@ int scrollBox::getTotalSize() {
 	return s;
 }
 
-void scrollBox::addListItem(string filename, string selName) {
+void scrollBox::addListItem(string filename, string fileType, bool hasSel, bool hasPress) {
 	int s = list.size();
 	s = MAXDISPLAY - 1 - s;
 	//header area is 100 pixels, footer area is 100 pixels
 	double hf = 200.0 * scale;
 	double h = ((height - hf) / MAXDISPLAY);
 
-	listItem * newL = new listItem(filename, xPos, yPos + int(s*h + (hf / 2.0)), scale);
-	if (selName.compare("") != 0) {
-		newL->setTexture(selName, btnState::SELECTED);
+	listItem * newL = new listItem(filename+fileType, xPos, yPos + int(s*h + (hf / 2.0)), scale);
+	if (hasSel) {
+		newL->setTexture(filename+"_sel"+fileType, btnState::SELECTED);
+	}
+	if (hasPress) {
+		newL->setTexture(filename + "_press" + fileType, btnState::PRESSED);
+	}
+	else {
+		newL->setTexture("initialize", btnState::PRESSED);
 	}
 	list.push_back(newL);
 }
 
-void scrollBox::addsubListItem(string filename, string selName, int id) {
+void scrollBox::addsubListItem(string filename, string fileType, int id, bool hasSel, bool hasPress) {
 	int s = list[list.size()-1]->subList.size();
 	s = MAXDISPLAY - 1 - s;
 	//header area is 100 pixels, footer area is 100 pixels
@@ -153,9 +163,15 @@ void scrollBox::addsubListItem(string filename, string selName, int id) {
 	//halfway point width wise is 500 on original image
 	double half = 500.0 * scale;
 
-	listItem * newSl = new listItem("subItem/" + filename, int(xPos + half), yPos + int(s*h + (hf / 2.0)), scale);
-	if (selName.compare("") != 0) {
-		newSl->setTexture("subItem/" + selName, btnState::SELECTED);
+	listItem * newSl = new listItem(filename+fileType, int(xPos + half), yPos + int(s*h + (hf / 2.0)), scale);
+	if (hasSel) {
+		newSl->setTexture(filename + "_sel" + fileType, btnState::SELECTED);
+	}
+	if (hasPress) {
+		newSl->setTexture(filename + "_press" + fileType, btnState::PRESSED);
+	}
+	else {
+		newSl->setTexture("initialize", btnState::PRESSED);
 	}
 	newSl->identifier = id;
 	list[list.size() - 1]->subList.push_back(newSl);

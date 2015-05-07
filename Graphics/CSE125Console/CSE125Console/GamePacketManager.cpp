@@ -111,7 +111,7 @@ bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
 
 		tmp += "\n\0";
 	}
-	strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
+	//strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
 	return client->sendPacket(cp);
 }
 

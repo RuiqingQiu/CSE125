@@ -12,23 +12,25 @@ public:
 	~mainMenu();
 
 	void VOnRender(); //must have
-
 	void VOnClientUpdate(GameInfoPacket* info); //must have
-
-	void createButtons();
-
-	void addLetters(); // helper function
 	void drawAllItems(); // overwrite the gui drawAllItems function
 
 	viewType mouseClickFunc(int state, int x, int y);
 
-	vector<button*> clickableItems;
 	std::vector<guiItem*> guiLetters; // keep track of the letter in the string, later combined with guiItems vector
-	
 
+private:
+	//helper initialization functions
+	void createButtons();
+	void addLetters();
+
+	// local variables to remembr the width and height
+	int w; 
+	int h;
+
+	//pointers to special guiItems
 	background * backimg;
-
-	int w; // local variables to remembr the width and height
-	int h; 
-
+	button * helpButton;
+	button * playButton;
+	button * exitButton;
 };

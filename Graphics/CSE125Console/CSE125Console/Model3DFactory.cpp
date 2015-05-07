@@ -7,6 +7,7 @@ Model3DFactory::Model3DFactory()
 {
 	//blocks
 	render_obj_map.insert(std::pair<int, RenderObject*>(BasicCube, new RenderObject("Assets/BasicCube/cube2.obj", "Assets/BasicCube/tex.png", "Assets/BasicCube/normals.png", "Assets/BasicCube/gloss.png", "Assets/BasicCube/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(CrystalCube, new RenderObject("Assets/CrystalMethCube/cubeofmeth.obj", "Assets/CrystalMethCube/tex.png", "Assets/CrystalMethCube/normals.png", "Assets/CrystalMethCube/gloss.png", "Assets/CrystalMethCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(GlowingCube, new RenderObject("Assets/WhiteCube/simplecube2.obj", "Assets/WhiteCube/tex.png", "Assets/WhiteCube/normals.png", "Assets/WhiteCube/gloss.png", "Assets/WhiteCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(WoodenCube, new RenderObject("Assets/WoodenCube/woodcube.obj", "Assets/WoodenCube/tex.png", "Assets/WoodenCube/normals.png", "Assets/WoodenCube/gloss.png", "Assets/WoodenCube/metallic.png")));
 	//weapons
@@ -18,9 +19,8 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(Discount, new RenderObject("Assets/MetalWheel/metalwheel.obj", "Assets/MetalWheel/tex.png", "Assets/MetalWheel/normals.png", "Assets/MetalWheel/gloss.png", "Assets/MetalWheel/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(Tire, new RenderObject("Assets/Tire/tire.obj", "Assets/Tire/tex.png", "Assets/Tire/normals.png", "Assets/Tire/gloss.png", "Assets/Tire/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(WoodenWheel, new RenderObject("Assets/WoodenWheel/woodwheel.obj", "Assets/WoodenWheel/tex.png", "Assets/WoodenWheel/normals.png", "Assets/WoodenWheel/gloss.png", "Assets/WoodenWheel/metallic.png")));
-	
+	//other
 	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELD, new RenderObject("Assets/BattleField/checkerboard.obj", "Assets/BattleField/tex.png", "Assets/BattleField/normals.png", "Assets/BattleField/gloss.png", "Assets/BattleField/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(METHCUBE, new RenderObject("Assets/CrystalMethCube/cubeofmeth.obj", "Assets/CrystalMethCube/tex.png", "Assets/CrystalMethCube/normals.png", "Assets/CrystalMethCube/gloss.png", "Assets/CrystalMethCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(TREE1, new RenderObject("Assets/reallylowres/treelowtes.obj", "Assets/reallylowres/tex.png", "Assets/reallylowres/normals.png", "Assets/reallylowres/gloss.png", "Assets/reallylowres/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(TREE2, new RenderObject("Assets/lowishres/treelowish.obj", "Assets/lowishres/tex.png", "Assets/lowishres/normals.png", "Assets/lowishres/gloss.png", "Assets/lowishres/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(SUPERTREE, new RenderObject("Assets/Supertree/supertree.obj", "Assets/Supertree/tex.png", "Assets/Supertree/normals.png", "Assets/Supertree/gloss.png", "Assets/Supertree/metallic.png")));
@@ -100,9 +100,9 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			return returnModel;
 			break;
 		}
-		case METHCUBE:{
+		case CrystalCube:{
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->type = METHCUBE;
+			returnModel->type = CrystalCube;
 			return returnModel;
 			break;
 		}
