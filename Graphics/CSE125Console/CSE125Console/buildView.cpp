@@ -167,10 +167,14 @@ void buildView::VOnRender() {
 	glTranslatef(center.x, center.y, center.z);
 	glRotatef(yRotation, 0.0, 1.0, 0.0);
 
+	
 	for each (GeoNode* node in NodeList) {
 		node->VOnDraw();
 	};
 	if (currentNode->textureType == selectedType || true) currentNode->VOnDraw();
+	
+	//GameView::first_pass();
+	//GameView::second_pass();
 	glPopMatrix();
 
 	//draw grid plane quad
