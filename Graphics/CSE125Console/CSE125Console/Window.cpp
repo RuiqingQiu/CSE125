@@ -91,12 +91,34 @@ void setupFBO(){
 
 }
 
+//Helper function for split strings
+unsigned int split2(const std::string &txt, std::vector<std::string> &strs, char ch)
+{
+	unsigned int pos = txt.find(ch);
+	unsigned int initialPos = 0;
+	strs.clear();
+
+	// Decompose statement
+	while (pos != std::string::npos) {
+		strs.push_back(txt.substr(initialPos, pos - initialPos));
+		initialPos = pos + 1;
+
+		pos = txt.find(ch, initialPos);
+	}
+
+	// Add the last one
+	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos));
+
+	return strs.size();
+}
+
+
 
 void Window::initialize(void)
 {
-	factory = new viewFactory(width, height);
+	//factory = new viewFactory(width, height);
 	
-	//factory = new viewFactory(true);  //for no gui
+	factory = new viewFactory(true);  //for no gui
 	
 	//Shader part
 	shader_system = new ShaderSystem();
@@ -123,7 +145,7 @@ void Window::initialize(void)
 			view->PushGrassNode(grass);
 		}
 	}
-	
+	/*
 	for (int i = 0; i < 20; i++){
 		object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 		if (i % 2 == 0){
@@ -165,7 +187,7 @@ void Window::initialize(void)
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->auto_rotate = true;
 	view->PushEnvironmentNode(object);
-
+	*/
 
 
 	/*
@@ -205,7 +227,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.32");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
 }
 
 //----------------------------------------------------------------------------
@@ -288,12 +310,15 @@ void Window::reshapeCallback(int w, int h) {
 	setupFBO();
 }
 
+
+
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
 
 void Window::displayCallback() {
 	clock_t startTime = clock();
 
+	
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 
@@ -303,6 +328,7 @@ void Window::displayCallback() {
 		switch (p->packet_types){
 			case GAME_STATE:{
 				g_pCore->pGameView->VOnClientUpdate(p);
+				g_pCore->pEventSystem->ProcessGamePacket(p);
 				break;
 			}
 			case CONFIRM_CONNECTION:{
@@ -330,5 +356,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

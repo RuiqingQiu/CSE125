@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "PacketDecoder.h"
+#include "Definition.h"
+#include "EventDeath.h"
 #define RAD_TO_DEGREE_MULT 57.2957795
-
 
 PacketDecoder::PacketDecoder()
 {
@@ -21,16 +22,59 @@ unsigned int split1(const std::string &txt, std::vector<std::string> &strs, char
 
 	// Decompose statement
 	while (pos != std::string::npos) {
-		strs.push_back(txt.substr(initialPos, pos - initialPos + 1));
+		strs.push_back(txt.substr(initialPos, pos - initialPos));
 		initialPos = pos + 1;
 
 		pos = txt.find(ch, initialPos);
 	}
 
 	// Add the last one
-	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos + 1));
+	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos));
 
 	return strs.size();
+}
+
+
+vector<EventInfo*> PacketDecoder::decodeEvent(string data)
+{
+	vector<EventInfo*> ret;
+	std::vector<std::string> events;
+	split1(data, events, '~');
+
+	for (int i = 0; i < events.size()-1; i += 1){
+		std::vector<std::string> EventData;
+		split1(events[i], EventData, ' ');
+		int EventId = stoi(EventData[0]);
+
+		switch (EventId) {
+			case TEventDeath:
+			{
+				EventDeath* EDeath = new EventDeath();
+				EDeath->cid = stoi(EventData[1]);
+				EDeath->processed = false;
+				ret.push_back(EDeath);
+				break;
+			}
+			case TEventParticle:
+			{
+				break;
+			}
+			case TEventTimer:
+			{
+				break;
+			}
+			case TEventScoreboard:
+			{
+				break;
+			}
+			default:
+			{
+				//cout << "this is a good fix " << endl;
+				break;
+			}
+		}
+	}
+	return ret;
 }
 
 vector<PlayerInfo*> PacketDecoder::decodePacket(string data)
@@ -42,8 +86,12 @@ vector<PlayerInfo*> PacketDecoder::decodePacket(string data)
 	for (int i = 0; i < v.size(); i++){
 	cout << v[i] << endl;
 	}*/
+	if ((v.size()-1) % 8 != 0)
+	{
+		return ret;
+	}
 	//1 + 3 + 16
-	for (int i = 0; i < v.size() - 1; i += 8){
+	for (int i = 0; i < v.size()-1; i += 8){
 		PlayerInfo* p = new PlayerInfo();
 		p->id = stoi(v[i]);
 		p->x = stof(v[i + 1]);

@@ -58,4 +58,12 @@ enum ShaderType{
 	EDGE_SHADER = 5,
 	NORMAL_SHADER = 6
 };
+
+enum TEventType{
+	TEventDeath = 0,
+	TEventParticle = 1,
+	TEventTimer = 2,
+	TEventScoreboard = 3,
+
+};
 #endif
