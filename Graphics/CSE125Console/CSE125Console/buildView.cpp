@@ -10,6 +10,7 @@ buildView::buildView() : gui() {
 	init();
 	createButtons();
 	sound = new Sound();
+	
 }
 
 buildView::buildView(int w, int h) : gui(w, h) {
@@ -27,7 +28,7 @@ buildView::~buildView() {
 
 void buildView::init() {
 	m_factory = new  Model3DFactory();
-
+	pViewCamera->rotation->x = 0;
 	selectedType = BasicCube;
 	yRotation = 0;
 	blocksLeft = MAX_BLOCKS;
