@@ -145,7 +145,53 @@ void Window::initialize(void)
 			view->PushGrassNode(grass);
 		}
 	}
+	//////////////////////////
+	object = Model3DFactory::generateObjectWithType(BGun);
+	object->shader_type = EDGE_SHADER;
+	object->edge_highlight = true;
+	view->num_of_objs_highlight++;
+	object->localTransform.position = Vector3(0, 0, -17);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushGeoNode(object);
 
+	object = Model3DFactory::generateObjectWithType(BGun);
+	object->shader_type = BLUR_SHADER;
+	object->blur = true;
+	view->num_of_objs_blur++;
+	object->localTransform.position = Vector3(-3, 0, -17);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(CrystalCube);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(3, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(TREE1);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(TREE2);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-5, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(TREE3);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(5, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->auto_rotate = true;
+	view->PushEnvironmentNode(object);
+	///////////////////////////
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
@@ -170,7 +216,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
 }
 
 //----------------------------------------------------------------------------
@@ -301,5 +347,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

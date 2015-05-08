@@ -26,9 +26,9 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(WoodenWheel, new RenderObject("Assets/WoodenWheel/woodwheel.obj", "Assets/WoodenWheel/tex.png", "Assets/WoodenWheel/normals.png", "Assets/WoodenWheel/gloss.png", "Assets/WoodenWheel/metallic.png")));
 	//other
 	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELD, new RenderObject("Assets/BattleField/checkerboard.obj", "Assets/BattleField/tex.png", "Assets/BattleField/normals.png", "Assets/BattleField/gloss.png", "Assets/BattleField/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(TREE1, new RenderObject("Assets/reallylowres/treelowtes.obj", "Assets/reallylowres/tex.png", "Assets/reallylowres/normals.png", "Assets/reallylowres/gloss.png", "Assets/reallylowres/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(TREE2, new RenderObject("Assets/lowishres/treelowish.obj", "Assets/lowishres/tex.png", "Assets/lowishres/normals.png", "Assets/lowishres/gloss.png", "Assets/lowishres/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(SUPERTREE, new RenderObject("Assets/Supertree/supertree.obj", "Assets/Supertree/tex.png", "Assets/Supertree/normals.png", "Assets/Supertree/gloss.png", "Assets/Supertree/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(TREE1, new RenderObject("Assets/Tree1/tree.obj", "Assets/Tree1/tex.png", "Assets/Tree1/normals.png", "Assets/Tree1/gloss.png", "Assets/Tree1/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(TREE2, new RenderObject("Assets/Tree2/tree.obj", "Assets/Tree2/tex.png", "Assets/Tree2/normals.png", "Assets/Tree2/gloss.png", "Assets/Tree2/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(TREE3, new RenderObject("Assets/Tree3/tree.obj", "Assets/Tree3/tex.png", "Assets/Tree3/normals.png", "Assets/Tree3/gloss.png", "Assets/Tree3/metallic.png")));
 
 }
 
@@ -297,9 +297,9 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		return returnModel;
 		break;
 	}
-	case SUPERTREE:{
+	case TREE3:{
 		Model3D * returnModel = new Model3D(render_obj_map[type]);
-		returnModel->type = SUPERTREE;
+		returnModel->type = TREE3;
 		return returnModel;
 		break;
 	}

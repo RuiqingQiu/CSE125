@@ -42,7 +42,7 @@ enum ModelType{
 	//Environment
 	TREE1 = 200,
 	TREE2 = 201,
-	SUPERTREE=202,
+	TREE3 = 202,
 	BLACKCUBE = 300,
 	CUBEA = 301,
 	CUBEB = 302,
