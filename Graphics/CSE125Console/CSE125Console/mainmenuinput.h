@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "guiGameInput.h"
 
+#define MAX_NUMBER 15
+
 using namespace std;
 
 // extends the guiGameInput class
