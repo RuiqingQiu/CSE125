@@ -9,12 +9,14 @@ buildView::buildView() : gui() {
 	updateview = false;
 	init();
 	createButtons();
+	sound = new Sound();
 }
 
 buildView::buildView(int w, int h) : gui(w, h) {
 	updateview = false;
 	init();
 	createButtons();
+	sound = new Sound();
 }
 
 
@@ -238,9 +240,15 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 
 	if (state == GLUT_UP && prevMouseState != GLUT_UP) {
 		if (scroll->addButton->isSelected(x, height - y) ) {
+			// play the sound effect for selection
+			cout << "buildview play sound" << endl;
+			sound->playSelect();
 			addNode();
 		}
 		else if (scroll->removeButton->isSelected(x, height - y)) {
+			// play the sound effect for removing the object
+			cout << "buildview remove play sound" << endl;
+			sound->playSelect();
 			removeNode();
 		}
 		else if (scroll->clearButton->isSelected(x, height - y)) {

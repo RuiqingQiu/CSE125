@@ -35,7 +35,10 @@ static Cube* cube;
 static Fire* fire;
 static GraphicsTest* gt;
 static Model3D*object;
+static Sound *soundObject;
 //Init server info here later
+
+
 
 void CHECK_FRAMEBUFFER_STATUS()
 {
@@ -118,6 +121,10 @@ unsigned int split2(const std::string &txt, std::vector<std::string> &strs, char
 void Window::initialize(void)
 {
 	factory = new viewFactory(width, height);
+
+	// Initialize the Sound object
+	soundObject = new Sound();
+
 	
 	//factory = new viewFactory(true);  //for no gui
 	
@@ -314,6 +321,10 @@ void Window::reshapeCallback(int w, int h) {
 
 void Window::displayCallback() {
 	clock_t startTime = clock();
+
+	// play the background music through out the whole game
+	soundObject->playMusic();
+
 
 	
 	//object->localTransform.rotation.y = counter;

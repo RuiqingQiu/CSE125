@@ -4,6 +4,7 @@
 #include "buildTimer.h"
 #include "scoreBox.h"
 #include "roboBase.h"
+#include "sound.h" //for gui sound effect 
 
 #define MAX_BLOCKS 23
 #define GRID_SIZE 5
@@ -64,5 +65,7 @@ private:
 	button * helpButton;
 	button * battleButton;
 	bool templateSet;
+
+	Sound* sound; // for sound effect
 };
 

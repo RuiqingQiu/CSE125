@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "GameCore.h"
 #include "ShaderSystem.h"
+#include "sound.h" // include the sound
 
 #ifndef CSE167_Window_h
 #define CSE167_Window_h
