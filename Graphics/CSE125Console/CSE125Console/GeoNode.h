@@ -3,6 +3,7 @@
 #include "Matrix4.h"
 #include "GameInfoPacket.h"
 #include "Transform.h"
+#include "Definition.h"
 class GeoNode
 {
 public:
@@ -16,7 +17,7 @@ public:
 	int identifier;
 	//send to server (0 for 1x1 nontexture cube) (1 for nontexture battlefield) (2 for nontexture wall) (3 for nontexture 3x3 cube)
 	int textureType;
-	int type = 0;
+	int type;
 
 	Transform localTransform;
 	float mat[16];
