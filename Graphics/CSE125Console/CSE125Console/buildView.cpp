@@ -29,10 +29,11 @@ buildView::~buildView() {
 void buildView::init() {
 	m_factory = new  Model3DFactory();
 	pViewCamera->rotation->x = 0;
+	pViewCamera->position->z = -7;
 	selectedType = BasicCube;
 	yRotation = 0;
 	blocksLeft = MAX_BLOCKS;
-	center = Vector3(-3, -5, -3);
+	center = Vector3(0, -2, 0);
 	templateSet = false;
 
 	//GeoNode * cube = new roboBase(3, 1);
