@@ -46,6 +46,9 @@ public:
 	//Second pass uses first pass' texture
 	void highlight_second_pass();
 
+	void highlight_first_pass_build();
+	void highlight_second_pass_build();
+
 	void blur_first_pass();
 	void blur_second_pass();
 	

@@ -228,7 +228,7 @@ void Window::initialize(void)
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
 	
 	//connect to server
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
