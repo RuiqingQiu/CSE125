@@ -112,7 +112,7 @@ void mainMenu::VOnRender() {
 	drawAllItems();
 
 	// draw how many players are ready, drawText defined in gui.cpp
-	drawText(width*(760.0 / 1920.0), height - 150, "blocks Left: " + std::to_string(playerReady), 1.0, 1.0, 1.0, GLUT_BITMAP_HELVETICA_18);
+	drawText(width*(760.0 / 1920.0), height - 150, std::to_string(playerReady) + " / " + std::to_string(MAX_PLAYER) + " players are ready", 1.0, 1.0, 1.0, GLUT_BITMAP_HELVETICA_18);
 	//drawText(width * 0.5, height * 0.55, g_pCore->i_pInput->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
 	set3d();
 }
