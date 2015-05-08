@@ -64,6 +64,9 @@
     <Filter Include="Source Files\GraphicsTest">
       <UniqueIdentifier>{3f6bc74a-c2f8-452a-9991-7a67030290f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Sound">
+      <UniqueIdentifier>{176f2cd1-fbf5-4541-a873-694473cd595b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -309,6 +312,9 @@
     <ClInclude Include="GraphicsTest.h">
       <Filter>Source Files\GraphicsTest</Filter>
     </ClInclude>
+    <ClInclude Include="sound.h">
+      <Filter>Source Files\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -529,6 +535,9 @@
     </ClCompile>
     <ClCompile Include="GraphicsTest.cpp">
       <Filter>Source Files\GraphicsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>Source Files\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

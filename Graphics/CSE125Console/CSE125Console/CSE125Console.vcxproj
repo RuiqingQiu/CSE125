@@ -50,16 +50,19 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(LocalDebuggerWorkingDirectory)\glew-1.12.0\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(LocalDebuggerWorkingDirectory)\SFML-2.2\include;$(LocalDebuggerWorkingDirectory)\glew-1.12.0\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(LocalDebuggerWorkingDirectory)\glew-1.12.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(LocalDebuggerWorkingDirectory)\SFML-2.2\lib;$(LocalDebuggerWorkingDirectory)\glew-1.12.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glew32s.lib;sndfile.lib;openal32.lib;winmm.lib;sfml-audio-s-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y $(LocalDebuggerWorkingDirectory)\SFML-2.2\bin $(SolutionDir)\Debug</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -145,6 +148,7 @@
     <ClInclude Include="NetworkServices.h" />
     <ClInclude Include="PlayerInfo.h" />
     <ClInclude Include="SOIL.h" />
+    <ClInclude Include="sound.h" />
     <ClInclude Include="StandardGameInput.h" />
     <ClInclude Include="stbi_DDS_aug.h" />
     <ClInclude Include="stbi_DDS_aug_c.h" />
@@ -231,6 +235,7 @@
     <ClCompile Include="mainmenuinput.cpp" />
     <ClCompile Include="letters.cpp" />
     <ClCompile Include="battletimer.cpp" />
+    <ClCompile Include="sound.cpp" />
     <ClCompile Include="StandardGameInput.cpp" />
     <ClCompile Include="stb_image_aug.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
