@@ -10,6 +10,8 @@ int start_h; // height should be the same
 mainMenu::mainMenu() : gui() {
 	w = width;
 	h = height;
+	playerReady = 0;
+	ready = false;
 	start_w = w * 0.5;
 	start_h = h * 0.53; 
 	createButtons();
@@ -18,6 +20,8 @@ mainMenu::mainMenu() : gui() {
 mainMenu::mainMenu(int w, int h) : gui(w, h) {
 	w = width;
 	h = height;
+	ready = false;
+	playerReady = 0;
 	start_w = w * 0.5;
 	start_h = h * 0.53;
 	createButtons();
@@ -106,6 +110,9 @@ void mainMenu::VOnRender() {
 	set2d();
 	addLetters();
 	drawAllItems();
+
+	// draw how many players are ready, drawText defined in gui.cpp
+	drawText(width*(760.0 / 1920.0), height - 150, "blocks Left: " + std::to_string(playerReady), 1.0, 1.0, 1.0, GLUT_BITMAP_HELVETICA_18);
 	//drawText(width * 0.5, height * 0.55, g_pCore->i_pInput->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
 	set3d();
 }
@@ -126,7 +133,14 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 	
 	//play button
 	if (playButton->isSelected(x, height - y)) {
-		return viewType::BUILD;
+		if (!ready){
+			ready = true;
+			// if hit play button, means is ready
+			playerReady = playerReady + 1;
+		}
+		// if all the players are ready, go to the build view
+		if (playerReady == MAX_PLAYER)
+			return viewType::BUILD;
 	}
 	// help button
 	else if (helpButton->isSelected(x, height - y)){

@@ -4,6 +4,8 @@
 #include "GameCore.h"
 #include "letters.h" // display textured letter
 
+#define MAX_PLAYER 4
+
 class mainMenu : public gui {
 
 public:
@@ -33,4 +35,7 @@ private:
 	button * helpButton;
 	button * playButton;
 	button * exitButton;
+
+	int playerReady;
+	bool ready;
 };
