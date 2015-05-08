@@ -116,9 +116,9 @@ unsigned int split2(const std::string &txt, std::vector<std::string> &strs, char
 
 void Window::initialize(void)
 {
-	//factory = new viewFactory(width, height);
+	factory = new viewFactory(width, height);
 	
-	factory = new viewFactory(true);  //for no gui
+	//factory = new viewFactory(true);  //for no gui
 	
 	//Shader part
 	shader_system = new ShaderSystem();
