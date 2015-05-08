@@ -101,6 +101,7 @@
     <ClInclude Include="EventSystem.h" />
     <ClInclude Include="EventTimer.h" />
     <ClInclude Include="Fire.h" />
+    <ClInclude Include="GraphicsTest.h" />
     <ClInclude Include="Grass.h" />
     <ClInclude Include="gui.h" />
     <ClInclude Include="guiGameInput.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="EventTimer.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="GraphicsTest.cpp" />
     <ClCompile Include="Grass.cpp" />
     <ClCompile Include="gui.cpp" />
     <ClCompile Include="guiGameInput.cpp" />

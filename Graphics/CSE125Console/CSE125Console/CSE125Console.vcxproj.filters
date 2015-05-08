@@ -61,6 +61,9 @@
     <Filter Include="Source Files\Event\EventPacket">
       <UniqueIdentifier>{bde6598f-3c2e-475b-ad5e-668a6b7ad690}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GraphicsTest">
+      <UniqueIdentifier>{3f6bc74a-c2f8-452a-9991-7a67030290f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -303,6 +306,9 @@
     <ClInclude Include="EventScoreboard.h">
       <Filter>Source Files\Event\EventPacket</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicsTest.h">
+      <Filter>Source Files\GraphicsTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -520,6 +526,9 @@
     </ClCompile>
     <ClCompile Include="EventScoreboard.cpp">
       <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsTest.cpp">
+      <Filter>Source Files\GraphicsTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

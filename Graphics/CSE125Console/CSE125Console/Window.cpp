@@ -21,6 +21,7 @@
 #include "Teapot.h"
 #include "Model3DFactory.h"
 #include "Grass.h"
+#include "GraphicsTest.h"
 #define TESTCAM 0
 
 int Window::width  = 512;   //Set window width in pixels here
@@ -32,7 +33,7 @@ ShaderSystem* Window::shader_system;
 static int counter = 0;
 static Cube* cube;
 static Fire* fire;
-
+static GraphicsTest* gt;
 static Model3D*object;
 //Init server info here later
 
@@ -121,6 +122,8 @@ void Window::initialize(void)
 	//factory = new viewFactory(true);  //for no gui
 	
 	//Shader part
+	gt = new GraphicsTest();
+	
 	shader_system = new ShaderSystem();
 	setupFBO();
 	
@@ -131,6 +134,9 @@ void Window::initialize(void)
 	g_pCore->skybox = new SkyBox("skyboxes/clouds");
 	//g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
+
+	//Comment this for non-local testing
+	gt->displayTest1(view);
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
@@ -170,7 +176,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
 }
 
 //----------------------------------------------------------------------------
@@ -301,5 +307,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }
