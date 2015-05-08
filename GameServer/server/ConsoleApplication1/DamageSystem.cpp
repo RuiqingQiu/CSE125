@@ -21,6 +21,7 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 		{
 			case C_PROJECTILE:
 			{
+				std::cout << "COLLISION: WALL WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				break;
 			}
@@ -34,18 +35,17 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 	}
 	case C_GROUND:
 	{
-		std::cout << "o1 GROUND"<< std::endl;
+	    
 		switch (o2->getCollisionType())
 		{
 			case C_PROJECTILE:
 			{
-				std::cout << "o2 PROJ" << std::endl;
+				std::cout << "COLLISION: GROUND WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				break;
 			}
 			default:
 			{
-				std::cout << "o2 DEFAULT" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
 				break;
 			}
@@ -54,15 +54,13 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 	}
 	case C_ROBOT:
 	{
-		std::cout << "o1 ROBOT" << std::endl;
 		switch (o2->getCollisionType())
 		{
 			case C_PROJECTILE:
 			{
-			//TODO: NEED TO CHANGE TO DIE
-				std::cout << "o2 PROJ" << std::endl;
+				std::cout << "COLLISION: ROBOT WITH PROJECTILE" << std::endl;
 				e->setResult1(BREAK_CONSTRAINT); e->setResult2(DELETED);
-				if (((Robot*)o1)->applyDamage(o2->getDamage()) < 0)
+				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					e->setResult1(DEATH);
 				}
@@ -70,29 +68,26 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			}
 			case C_MELEE:
 			{
-				//TODO: NEED TO CHANGE TO DIE
+				std::cout << "COLLISION: ROBOT WITH MELEE" << std::endl;
 				e->setResult1(BREAK_CONSTRAINT); e->setResult2(NOTHING);
-				if (((Robot*)o1)->applyDamage(o2->getDamage()) < 0)
+				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					e->setResult1(DEATH);
 				}
 				break;
 			}
 			case C_GROUND:{
-
-				std::cout << "o2 Ground" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
 				break; 
 			}
 			case C_ROBOT:{
 
-				std::cout << "o2 ROBOT" << std::endl;
+				std::cout << "COLLISION: ROBOT WITH ROBOT" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
 				break;
 			}
 			default:
 			{
-				std::cout << "o2 DONT CARE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
 				break;
 			}
@@ -105,12 +100,22 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 		{
 			case C_PROJECTILE:
 			{
-				e->setResult1(BREAK_CONSTRAINT); e->setResult2(DELETED);
+				std::cout << "COLLISION: ROBOT PART WITH PROJECTILE" << std::endl;
+				e->setResult1(NOTHING); e->setResult2(DELETED);
+				if (o1->applyDamage(o2->getDamage()) < 0)
+				{
+					e->setResult1(BREAK_CONSTRAINT);
+				}
 				break;
 			}
 			case C_MELEE:
 			{
-				e->setResult1(BREAK_CONSTRAINT); e->setResult2(NOTHING);
+				std::cout << "COLLISION: ROBOT PART WITH MELEE" << std::endl;
+				e->setResult1(NOTHING); e->setResult2(NOTHING);
+				if (o1->applyDamage(o2->getDamage()) < 0)
+				{
+					e->setResult1(BREAK_CONSTRAINT);
+				}
 				break;
 			}
 			default:
@@ -123,26 +128,25 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 	}
 	case C_PROJECTILE:
 	{
-		std::cout << "o1 PROJ" << std::endl;
 		switch (o2->getCollisionType())
 		{
 			case C_WALLS:
 			{
-				std::cout << "O2 WALL" << std::endl;
+				std::cout << "COLLISION: PROJECTILE WITH WALL" << std::endl;
 				e->setResult1(DELETED); e->setResult2(NOTHING);
 				break;
 			}
 			case C_GROUND:
 			{
-				std::cout << "O2 GROUND" << std::endl;
+				std::cout << "COLLISION: PROJECTILE WITH GROUND" << std::endl;
 				e->setResult1(DELETED); e->setResult2(NOTHING);
 				break;
 			}
 			case C_ROBOT:
 			{
-				std::cout << "o2 ROBOT" << std::endl;
+				std::cout << "COLLISION: PROJECTILE WITH ROBOT" << std::endl;
 				e->setResult1(DELETED); e->setResult2(BREAK_CONSTRAINT);
-				if (((Robot*)o2)->applyDamage(o1->getDamage()) < 0)
+				if (o2->applyDamage(o1->getDamage()) < 0)
 				{
 					e->setResult2(DEATH);
 				}
@@ -150,18 +154,29 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			}
 			case C_ROBOT_PARTS:
 			{
-				e->setResult1(DELETED); e->setResult2(BREAK_CONSTRAINT);
+				std::cout << "COLLISION: PROJECTILE WITH ROBOT PART" << std::endl;
+				e->setResult1(DELETED); e->setResult2(NOTHING);
+				if (o2->applyDamage(o1->getDamage()) < 0)
+				{
+					e->setResult2(BREAK_CONSTRAINT);
+				}
 				break;
 			}
 			case C_PROJECTILE:
 			{
+				std::cout << "COLLISION: PROJECTILE WITH PROJECTILE" << std::endl;
 				e->setResult1(DELETED); e->setResult2(DELETED);
 
 				break;
 			}
 			case C_MELEE:
 			{
-				e->setResult1(DELETED); e->setResult2(BREAK_CONSTRAINT);
+				std::cout << "COLLISION: PROJECTILE WITH MELEE" << std::endl;
+				e->setResult1(DELETED); e->setResult2(NOTHING);
+				if (o2->applyDamage(o1->getDamage()) < 0)
+				{
+					e->setResult2(BREAK_CONSTRAINT);
+				}
 				break;
 			}
 			default:

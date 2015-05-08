@@ -54,6 +54,8 @@ public:
 	void postPhyLogic();
 	void deleteGameObj(GameObj*);
 	void cleanDataStructures();
-
+	int breakConstraints(GameObj*);
+	void createDeathEvent(GameObj*);
+	void postDamageLogic(GameObj*, DamageEvent* e);
 };
 #endif

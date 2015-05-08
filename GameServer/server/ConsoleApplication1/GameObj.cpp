@@ -314,9 +314,10 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		return c;
 }
 
-void GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
+int GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
 {
 	std::vector<Constraint*>::iterator it;
+	int ret = 0;
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
 		Constraint* c = (*it);
@@ -332,12 +333,22 @@ void GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
 
 		//delete(c->_joint6DOF);
 		c->_joint6DOF = nullptr;
-		other->deleteInvalidConstraints();
+		if (other->deleteInvalidConstraints())
+		{
+			ret = 1;
+		}
 	}
+
 	constraints.clear();
+	if (!getIsRobot())
+	{
+		setDeleted();
+		return 1;
+	}
+	return ret;
 }
 
-void GameObj::deleteInvalidConstraints()
+int GameObj::deleteInvalidConstraints()
 {
 	std::vector<Constraint*>::iterator it;
 	std::vector<Constraint*> new_constraints;
@@ -354,6 +365,12 @@ void GameObj::deleteInvalidConstraints()
 		}
 	}
 	constraints = new_constraints;
+	if (constraints.empty() && !getIsRobot())
+	{
+		setDeleted();
+		return 1;
+	}
+	return 0;
 }
 
 btRigidBody* GameObj::getRB()

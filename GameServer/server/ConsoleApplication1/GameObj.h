@@ -180,8 +180,8 @@ public:
 	void setBelongTo(GameObj*);
 	GameObj* getBelongTo();
 	Constraint* addConstraint(GameObj*);
-	void deleteConstraints(std::map< btCollisionObject*, GameObj*>*);
-	void deleteInvalidConstraints();
+	int deleteConstraints(std::map< btCollisionObject*, GameObj*>*);
+	int deleteInvalidConstraints();
 	std::vector<Constraint *>* getConstraints();
 
 	static int getOid(){ return _totalId; }
