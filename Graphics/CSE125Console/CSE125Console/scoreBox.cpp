@@ -61,7 +61,7 @@ void scoreBox::createNumbers() {
 
 void scoreBox::update() {
 	//update score here
-	int idx = deaths;
+	int idx = rank;
 	for (int i = 0; i < MAX_DIGITS; i++) {
 		if (!(idx >= 0)) break;
 		int digit = idx % 10;
@@ -85,22 +85,24 @@ void scoreBox::update() {
 	
 }
 
+void scoreBox::updateScore(int d, int h, int r) {
+	deaths += d;
+	hits += h;
+	rank += r;
+}
+
 void scoreBox::draw() {
 	guiItem::draw();
 	for (int i = 0; i < MAX_DIGITS; i++) {
 		rankDigits[i]->draw();
 		hitDigits[i]->draw();
-		deathDigits[i]->draw();
+		//deathDigits[i]->draw();
 	}
 }
 
 void scoreBox::rePosition(int x, int y, int w, int h) {
 	guiItem::rePosition(x, y, w, h);
-	/*
-	for (int i = 0; i < NUM_DIGITS; i++) {
-	digits[i].rePosition(x, y, w, h);
-	}
-	*/
+
 	double off = scoreBox::border  * height;
 	double offset = scoreBox::spacing * height;
 	int nSize = scoreBox::sizing * height;

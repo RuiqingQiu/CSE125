@@ -12,6 +12,8 @@
 #include "buildViewInput.h"
 #include "mainmenuinput.h"
 
+#include "scoreBox.h"
+
 class viewFactory
 {
 public:
@@ -51,6 +53,9 @@ public:
 	void idleFunc();
 	void mouseFunc(int button, int state, int x, int y);
 	void keyboardFunc(unsigned char key, int x, int y);
+
+	//one scorebox for whole game
+	scoreBox * score;
 
 private:
 	int prevMouseState;

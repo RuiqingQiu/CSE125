@@ -18,6 +18,10 @@ viewFactory::viewFactory()
 	meunInput = new mainMenuInput();
 	currentInput = standard_Input;
 
+	score = new scoreBox(0, 0, 150, 100, true, false);
+	battlemode->addItem(score);
+	buildmode->addItem(score);
+
 	debug = false;
 }
 
@@ -35,6 +39,10 @@ viewFactory::viewFactory(int w, int h) {
 	build_Input = new buildViewInput();
 	currentInput = standard_Input;
 	meunInput = new mainMenuInput();
+
+	score = new scoreBox(20, h - 100, 150, 100, true, false);
+	battlemode->addItem(score);
+	buildmode->addItem(score);
 
 	debug = false;
 }
@@ -161,6 +169,16 @@ void viewFactory::idleFunc() {
 void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 	//can't check from pGameView, so must do in factory
 	//function specific to buildmode
+	if (key == '6') {
+		score->updateScore(1, 0, 0);
+	}
+	else if (key == '7') {
+		score->updateScore(0, 1, 0);
+	}
+	else if(key == '8') {
+		score->updateScore(0, 0, 1);
+	}
+
 	if (viewmode != viewType::BUILD) return;
 	switch (key) {
 	case ',':

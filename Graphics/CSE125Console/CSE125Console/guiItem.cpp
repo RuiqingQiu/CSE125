@@ -175,11 +175,11 @@ void guiItem::setPosition(int x, int y) {
 }
 
 void guiItem::rePosition(int x, int y, int w, int h) {
+	if (sWidth == w && sHeight == h) return;
 	//scaling mode for x
 	if (scaleX) {
 		double curr = double(xPos) / sWidth;
 		xPos = curr * w;
-		sWidth = w;
 	}
 	//translate mode for x
 	else if (!xfixed) {
@@ -189,12 +189,13 @@ void guiItem::rePosition(int x, int y, int w, int h) {
 	if (scaleY) {
 		double curr = double(yPos) / sHeight;
 		yPos = curr * h;
-		sHeight = h;
 	}
 	//translate mode for y
 	else if (!yfixed) {
 		yPos += y;
 	}
+	sWidth = w;
+	sHeight = h;
 }
 
 void guiItem::setFixed(bool x, bool y) {

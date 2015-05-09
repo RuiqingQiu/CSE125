@@ -21,7 +21,6 @@ buildView::buildView(int w, int h) : gui(w, h) {
 
 buildView::~buildView() {
 	gui::~gui();
-
 }
 
 void buildView::init() {
@@ -79,8 +78,7 @@ void buildView::createButtons() {
 
 	//text box
 	//textbox.jpg dimensions: 600x400
-	score = new scoreBox(20, height - 100, 150, 100, true, false);
-	guiItems.push_back(score);
+	//guiItems.push_back(score);
 
 	//blocks left display
 	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 200, 25, true, false);
@@ -145,10 +143,6 @@ void buildView::VUpdate() {
 		timer->start = std::clock();
 	}
 	updateview = isCurrentView;
-
-	if (score->deaths == 100) score->deaths = 0;
-	if (score->hits == 100) score->hits = 0;
-	if (score->rank == 100) score->rank = 0;
 
 	blocksLeft = MAX_BLOCKS - NodeList.size();
 	blocksDisplay->displayValue = blocksLeft;

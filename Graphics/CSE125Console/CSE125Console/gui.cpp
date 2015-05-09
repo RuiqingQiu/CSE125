@@ -1,15 +1,6 @@
 #include "stdafx.h"
 #include "gui.h"
 
-/*
-* things to implement:
-* handling mouseclick events...
-*		is this from g_pCore->i_pInput???
-*		somehow need to connect buttons to core then....
-*			i.e. g_pCore->pGamePacketManager->sendClick...??
-*			need to ask graphics how this is done
-*/
-
 gui::gui() {
 	NodeList = std::vector<GeoNode*>();
 	isCurrentView = false;
@@ -36,6 +27,10 @@ gui::~gui() {
 		delete buttons[i];
 	}
 	buttons.clear();
+}
+
+void gui::addItem(guiItem * item) {
+	guiItems.push_back(item);
 }
 
 void gui::VOnClientUpdate(GameInfoPacket* info) {

@@ -9,6 +9,7 @@
 #include "button.h"
 #include "background.h"
 #include "scrollBox.h"
+#include "scoreBox.h"
 
 class gui : public GameView {
 public:
@@ -31,6 +32,8 @@ public:
 	//mouse click functions
 	virtual viewType mouseClickFunc(int state, int x, int y);
 	virtual void passiveMouseFunc(int x, int y);
+
+	void addItem(guiItem * item);
 
 protected:
 	int width;

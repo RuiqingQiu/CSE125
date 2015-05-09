@@ -19,9 +19,7 @@ public:
 	void draw();
 	void rePosition(int x, int y, int w, int h);
 
-	int deaths;
-	int hits;
-	int rank;
+	void updateScore(int d, int h, int r);
 
 	static string textPath;
 
@@ -31,7 +29,9 @@ public:
 	static double sizing;
 
 private:
-
+	int deaths;
+	int hits;
+	int rank;
 
 	void createNumbers();
 
