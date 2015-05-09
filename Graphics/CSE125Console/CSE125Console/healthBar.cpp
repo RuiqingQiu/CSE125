@@ -36,13 +36,17 @@ healthBar::~healthBar()
 
 void healthBar::init() {
 	setTexture("images/healthBar_empty.jpg", btnState::SELECTED);
-	healthPercent = 1;
+	maxHealth = 1000;
+	currentHealth = maxHealth;
 }
 
 void healthBar::update() {
-	healthPercent -= 0.001;
 
-	if (healthPercent < 0) healthPercent = 1;
+	currentHealth -= 1;
+
+	if (currentHealth < 0) currentHealth = maxHealth;
+
+	healthPercent = currentHealth / maxHealth;
 }
 
 void healthBar::draw() {

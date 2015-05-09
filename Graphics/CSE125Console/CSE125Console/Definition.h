@@ -1,5 +1,6 @@
 #ifndef __ShaderSystemDef__
 #define __ShaderSystemDef__
+
 enum ModelType{
 	//blocks
 	BasicCube = 0,

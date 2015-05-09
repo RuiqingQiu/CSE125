@@ -2,8 +2,6 @@
 #include "buildView.h"
 #include "Model3DFactory.h"
 
-static Model3DFactory* m_factory;
-
 //constructors
 buildView::buildView() : gui() {
 	updateview = false;
@@ -27,7 +25,6 @@ buildView::~buildView() {
 }
 
 void buildView::init() {
-	m_factory = new  Model3DFactory();
 	pViewCamera->rotation->x = 0;
 	pViewCamera->position->z = -7;
 	selectedType = BasicCube;

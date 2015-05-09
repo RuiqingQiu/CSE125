@@ -10,6 +10,7 @@
 #include "GamePlayer.h"
 #include "Plane.h"
 #include "Model3DFactory.h"
+#include "scoreBox.h"
 
 #ifndef CSE125_GAMEVIEW
 #define CSE125_GAMEVIEW
@@ -21,6 +22,8 @@ enum class viewType {
 	MENU,
 	CONSOLE
 };
+
+static scoreBox * score;
 
 class GameView
 {
@@ -79,7 +82,6 @@ public:
 
 	bool isCurrentView;
 	GeoNode * currentNode;
-
 };
 
 #endif

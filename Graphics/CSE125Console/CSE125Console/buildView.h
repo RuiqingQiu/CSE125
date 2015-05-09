@@ -36,7 +36,6 @@ public:
 	//may need to access to sync to server time/score, etc.
 	scrollBox * scroll;
 	buildTimer * timer;
-	scoreBox * score;
 	bool updateview;
 	int prevMouseState;
 

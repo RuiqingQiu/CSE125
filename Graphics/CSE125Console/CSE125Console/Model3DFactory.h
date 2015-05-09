@@ -19,5 +19,8 @@ public:
 	static Model3D* generateObjectWithType(int type);
 	static Vector3 getOffset(int type);
 };
+
+static Model3DFactory* m_factory;
+
 #endif
 

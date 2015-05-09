@@ -28,7 +28,7 @@ int Window::width  = 512;   //Set window width in pixels here
 int Window::height = 512;   //Set window height in pixels here
 
 static viewFactory * factory; // factory of gui
-static Model3DFactory* m_factory;
+//static Model3DFactory* m_factory;
 ShaderSystem* Window::shader_system;
 static int counter = 0;
 static Cube* cube;
@@ -120,6 +120,7 @@ unsigned int split2(const std::string &txt, std::vector<std::string> &strs, char
 
 void Window::initialize(void)
 {
+	m_factory = new  Model3DFactory(); //must call before making view factory
 	factory = new viewFactory(width, height);
 
 	// Initialize the Sound object
@@ -135,7 +136,7 @@ void Window::initialize(void)
 	setupFBO();
 	
 	
-	m_factory = new  Model3DFactory();
+	//m_factory = new  Model3DFactory();
 	//g_pCore->skybox = new SkyBox();
 	//g_pCore->skybox = new SkyBox("skyboxes/space");
 	g_pCore->skybox = new SkyBox("skyboxes/clouds");
@@ -234,7 +235,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
 }
 
 //----------------------------------------------------------------------------
