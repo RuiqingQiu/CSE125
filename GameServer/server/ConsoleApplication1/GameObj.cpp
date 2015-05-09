@@ -276,16 +276,29 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		double centerX = (this->getX() + o->getX())/2;
 		double centerY = (this->getY() + o->getY()) / 2;
 		double centerZ = (this->getZ() + o->getZ()) / 2;
+		
+		
+		//********************CONSTRAINTS ROTATION NEED TO BE FIXED!!!!!!!!!!!!!!**********************************//
+		//btTransform frameInA;
+		//btTransform frameInB;
+
+		//this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
+		//o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
+
+		//btScalar yawA, pA, rA, yawB, pB, rB;
+		//frameInA.getBasis().getEulerZYX(yawA, pA, rA);
+		//frameInB.getBasis().getEulerZYX(yawB, pB, rB);
+		//localA.getBasis().setEulerZYX(yawA, pA, rA);
+		//localB.getBasis().setEulerZYX(yawB, pB, rB);
+
+
+
 
 		localA.setOrigin(btVector3(this->getX() - centerX, this->getY() - centerY, this->getZ() - centerZ));
 
 		localB.setOrigin(btVector3(o->getX() - centerX, o->getY() - centerY, o->getZ() - centerZ));
-		btTransform frameInA;
-		btTransform frameInB;
 
-		this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
-		o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
-	
+
 		//joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInA, frameInB);
 		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), localB, localA);
 		/*joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 0);
@@ -395,6 +408,12 @@ void GameObj::setDeleted()
 {
 	if (deathTimer == NULL)
 	deathTimer = clock();
+}
+
+void GameObj::setImmediateDeleted()
+{
+	if (deathTimer == NULL)
+		deathTimer = clock() - DEATH_DELAY * CLOCKS_PER_SEC;
 }
 int GameObj::getDeleted()
 {

@@ -97,7 +97,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 		}
 		else
 		{
-
+			//std::cout << "stepSimu , not robot" << (*it)->getOid() << "is wheel " << (*it)->getIsWheel() << std::endl;
 			(*it)->getRigidBody()->getMotionState()->getWorldTransform(trans);
 			// std::cout << "X: " << trans.getOrigin().getX() << "  Y: " << trans.getOrigin().getY() << "  Z:  " << trans.getOrigin().getZ() << "   SPEED:" << (*it)->getRigidBody()->getLinearVelocity() << std::endl;
 		}

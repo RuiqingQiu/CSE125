@@ -93,6 +93,7 @@ private:
 	int front_id = -1;
 	int back_id = -1;
 	int buildObj_id; //this is my id
+
 	clock_t deathTimer;
 
 	GameObj* _belongTo;
@@ -121,6 +122,7 @@ public:
 	void setBelowID(int);
 
 	int getIsWheel();
+	void setImmediateDeleted();
 
 	int getIsRangedWeapon();
 

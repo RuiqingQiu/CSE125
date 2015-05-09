@@ -126,7 +126,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 	memcpy(packet.data, des.c_str(), des.length());
 	//cout << "size of des: " << sizeof(des) << endl;
 	//cout << "des.cstr: " << des.c_str() << endl;
-	cout << "packet.data: " << packet.data << endl;
+	//cout << "packet.data: " << packet.data << endl;
 	//cout << "AFTER MEM COPY" << endl;
 	packet.packet_type = GAME_STATE;
 
@@ -309,26 +309,30 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						  ObjectEvents * e = new ObjectEvents(BUILD_ROBOT);
 						  
 							  string parseData = string(packet.data);
-						  
+							  cout << parseData << endl;
 							  vector<string> splitByObject = vector<string>();
 						  splitByObject.push_back("");
 						  
-							  for (int i = 0; i < parseData.length(); i++) {
-							  				   //split by newline, each newline
-								  if (parseData[i] != '\n')
-								   splitByObject[splitByObject.size() - 1] += parseData[i];
-					   else
-					   {
-						   splitByObject.push_back("");
-					   }
+						  for (int i = 0; i < parseData.length(); i++) {
+							  //split by newline, each newline
+							  //cout << parseData.length() << endl;
+							  if (parseData[i] != '\n')
+								  splitByObject[splitByObject.size() - 1] += parseData[i];
+							  else
+							  {
+								  splitByObject.push_back("");
+							  }
+						  }
 								  //pop last empty string
-								  splitByObject.pop_back();
-								  unsigned int cid;
-									  for (int i = 0; i < splitByObject.size(); i++) {
-									  string objectInfo = splitByObject[i];
-									  					   //split by space to get the information for each object
-									  size_t pos = 0;
-									  string token;
+							 splitByObject.pop_back();
+							 unsigned int cid;
+							 //cout << "splitSize" << splitByObject.size() << endl;
+							 for (int i = 0; i < splitByObject.size(); i++) {
+								 
+								  string objectInfo = splitByObject[i];
+								  					   //split by space to get the information for each object
+								  size_t pos = 0;
+								  string token;
 									  					   /*
 														   					   while ((pos = objectInfo.find(" ")) != string::npos) {
 														   					   token = objectInfo.substr(0, pos);
@@ -338,46 +342,48 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 														   					   */
 														   
 														   					   //CID
-									  pos = objectInfo.find(" ");
-									  token = objectInfo.substr(0, pos);
-									  //std::cout << token << std::endl;
-									  cid = stoul(token);
-									  objectInfo.erase(0, pos  + 1);
+								  pos = objectInfo.find(" ");
+								  token = objectInfo.substr(0, pos);
+								  //std::cout << token << std::endl;
+								  cid = stoul(token);
+								  e->setCid(cid);
+								  cout << cid << endl;
+								  objectInfo.erase(0, pos  + 1);
 									  					   //Object ID
-										  pos = objectInfo.find(" ");
-									  token = objectInfo.substr(0, pos);
+								  pos = objectInfo.find(" ");
+								  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  unsigned int objId = stoul(token);
-									  objectInfo.erase(0, pos  + 1);
+								  unsigned int objId = stoul(token);
+								  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //position
-										  pos = objectInfo.find(" ");
-									  token = objectInfo.substr(0, pos);
+								  pos = objectInfo.find(" ");
+								  token = objectInfo.substr(0, pos);
 									 // std::cout << token << std::endl;
-									  double xPos = stold(token);
-									  objectInfo.erase(0, pos  + 1);
-									  pos = objectInfo.find(" ");
-									  token = objectInfo.substr(0, pos);
+								  double xPos = stold(token);
+								  objectInfo.erase(0, pos  + 1);
+								  pos = objectInfo.find(" ");
+								  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  double yPos = stold(token);
-									  objectInfo.erase(0, pos  + 1);
-									  pos = objectInfo.find(" ");
-									  token = objectInfo.substr(0, pos);
-									  //std::cout << token << std::endl;
-									  double zPos = stold(token);
-									  objectInfo.erase(0, pos  + 1);
-									  
+								  double yPos = stold(token);
+								  objectInfo.erase(0, pos  + 1);
+								  pos = objectInfo.find(" ");
+								  token = objectInfo.substr(0, pos);
+								  //std::cout << token << std::endl;
+								  double zPos = stold(token);
+								  objectInfo.erase(0, pos  + 1);
+								  
 										  					   //rotation
-										  pos = objectInfo.find(" ");
-									  token = objectInfo.substr(0, pos);
+								  pos = objectInfo.find(" ");
+								  token = objectInfo.substr(0, pos);
 									 // std::cout << token << std::endl;
-									  double xRot = stold(token);
-									  objectInfo.erase(0, pos  + 1);
-									  pos = objectInfo.find(" ");
-									  token = objectInfo.substr(0, pos);
+								  double xRot = stold(token);
+								  objectInfo.erase(0, pos  + 1);
+								  pos = objectInfo.find(" ");
+								  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  double yRot = stold(token);
-									  objectInfo.erase(0, pos  + 1);
+								  double yRot = stold(token);
+								  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
@@ -419,37 +425,55 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //stats
-										  pos = objectInfo.find(" ");
+									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
 									  double health = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
+									  btMatrix3x3 matrix;
+									  //matrix.setEulerZYX(xRot, yRot, zRot);
+									  matrix.setEulerYPR(zRot, yRot, xRot);
 									  GameObj* object;
-									  btQuaternion rotations = btQuaternion();
-									  rotations.setEuler(yRot, xRot, zRot);
+									  btQuaternion rotations = btQuaternion();//zRot, yRot, xRot);
+									  cout << "default rotations: x: " << rotations.x() << " y:" << rotations.y() << "  z: " << rotations.z() << endl;
+									  cout << "rotations: getx: " << rotations.getX() << " gety:" << rotations.getY() << "  getz: " << rotations.getZ() << endl;
+									  //rotations.setEulerZYX(zRot, yRot, xRot);
+									  matrix.getRotation(rotations);
+									 
+									  cout << "yaw : " << yRot << endl;
 
+									  
 
+									  //btScalar yaw;
+									  
+									  cout << "rotations: x: " << rotations.x() << " y:" << rotations.y() << "  z: "<< rotations.z() << "w " << rotations.w() << endl;
+									  cout << "rotations: getx: " << rotations.getX() << " gety:" << rotations.getY() << "  getz: " << rotations.getZ() << endl;
+									  cout << " objID: " << objId << endl;
 									  //(double x, double y, double z, double qX, double qY, double qZ, double qW, double mass, double width, double height, double depth)
 								     if (objId == 0) {
+										 cout << " objID == 0 " << endl;
 
 										object = new Robot((int)cid, "Player");
-										  
+										
+										object->setIsRobot(1);
 										object->setX(xPos);
 										object->setY(yPos);
 										object->setZ(zPos);
-										object->setqX(rotations.getX());
-										object->setqY(rotations.getY());
-										object->setqZ(rotations.getZ());
-										object->setqW(rotations.getW());
+										object->setqX(rotations.x());
+										object->setqY(rotations.y());
+										object->setqZ(rotations.z());
+										object->setqW(rotations.w());
 										object->setType(BOX);
 										((Robot*)object)->setWidth(3);
 										((Robot*)object)->setHeight(1);
 										((Robot*)object)->setDepth(3);
+										object->setCollisionType(C_ROBOT);
 									  }
 									else
 									{
-										object = new GOBox(xPos, yPos, zPos, rotations.getX(), rotations.getY(), rotations.getZ(), rotations.getW(), 10, 1, 1, 1);
+										cout << "not robot y: " << rotations.y() << " w " << rotations.w() << endl;
+										object = new GOBox(xPos, yPos, zPos, rotations.x(), rotations.y(), rotations.z(), 1, 10, 1, 1, 1);
 										object->setIsRobot(0);
 										object->setCollisionType(C_ROBOT_PARTS);
 									}
@@ -467,10 +491,8 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 									  
 								  }
 								  splitByObject.clear();
-								  e->setCid(cid);
-									  eventList->push_back(e);
+								  eventList->push_back(e);
 								  break;
-				   }
 	}
 	default:{
 				printf("error in packet types\n");
@@ -551,9 +573,9 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			btScalar yaw = 0, pitch = 0, roll = 0;
 
 			trans.getBasis().getEulerZYX(yaw, pitch, roll);
-			//cout << "yaw : " << yaw << endl;
-			//cout << "pitch : " << pitch << endl;
-			//cout << "roll : " << roll << endl;
+			cout << "other yaw z rotation : " << yaw << endl;
+			cout << "other pitch y  : " << pitch << endl;
+			cout << "other roll x : " << roll << endl;
 			temp += to_string((float)roll);
 			temp += ' ';
 			temp += to_string((float)pitch);
@@ -633,20 +655,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 					btScalar yaw0 = 0, pitch0 = 0, roll0 = 0;
 
 					tran0.getBasis().getEulerZYX(yaw0, pitch0, roll0);
-					if (k == 3)
-					{
-						temp += to_string((float)180);
-						temp += ' ';
-						temp += to_string((float)pitch0);
-						temp += ' ';
-						temp += to_string((float)180);
-						temp += ' ';
-						temp += to_string(TIRE);
-						temp += ' ';
-					}
-					else
-					{
-
+			
 						
 						//cout << "yaw : " << yaw << endl;
 						//cout << "pitch : " << pitch << endl;
@@ -657,9 +666,8 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 						temp += ' ';
 						temp += to_string((float)yaw0);
 						temp += ' ';
-						temp += to_string(WOODENWHEEL);
+						temp += to_string(((Robot*)*i)->getWheelType() );
 						temp += ' ';
-					}
 				}
 			}
 	}
