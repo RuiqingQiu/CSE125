@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include <ctime>
-#include "numbers.h"
+#include "numDisplay.h"
 
 #define NUM_DIGITS 2
 #define MAX_TIME 90

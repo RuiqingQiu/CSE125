@@ -315,6 +315,9 @@
     <ClInclude Include="sound.h">
       <Filter>Source Files\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="numDisplay.h">
+      <Filter>Source Files\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -538,6 +541,9 @@
     </ClCompile>
     <ClCompile Include="sound.cpp">
       <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="numDisplay.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -121,6 +121,7 @@
     <ClInclude Include="Model3DFactory.h" />
     <ClInclude Include="Model3DGroup.h" />
     <ClInclude Include="numbers.h" />
+    <ClInclude Include="numDisplay.h" />
     <ClInclude Include="PacketDecoder.h" />
     <ClInclude Include="Particles.h" />
     <ClInclude Include="Plane.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Model3DFactory.cpp" />
     <ClCompile Include="Model3DGroup.cpp" />
     <ClCompile Include="numbers.cpp" />
+    <ClCompile Include="numDisplay.cpp" />
     <ClCompile Include="PacketDecoder.cpp" />
     <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Plane.cpp" />
