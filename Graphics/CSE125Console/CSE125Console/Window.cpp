@@ -206,17 +206,20 @@ void Window::initialize(void)
 	object->auto_rotate = true;
 	view->PushEnvironmentNode(object);
 	*/
-	///////////////////////////
-	object = Model3DFactory::generateObjectWithType(BATTLEFIELD);
+	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
+	object->shader_type = NORMAL_SHADER;
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -2;
-	object->isUpdated = true;
+	object->auto_rotate = false;
+	view->PushEnvironmentNode(object);
+	///////////////////////////
+	object = Model3DFactory::generateObjectWithType(BATTLEFIELDINNER);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(0, -2, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->type = BATTLEFIELD;
 	//factory->battlemode->PushGeoNode(object);
-	view->PushGeoNode(object);
-	object->static_object = true;
-
+	view->PushEnvironmentNode(object);
 	
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	
@@ -231,7 +234,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.35");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 }
 
 //----------------------------------------------------------------------------

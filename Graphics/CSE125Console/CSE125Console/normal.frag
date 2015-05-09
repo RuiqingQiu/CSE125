@@ -25,7 +25,7 @@ vec3 phongModel(vec3 normal, vec3 diffR){
     vec3 Ks = vec3(0.5, 0.5, 0.5);
     vec3 Ls = vec3( 1.0, 1.0, 1.0);
     float Shininess = 100.0;
-    vec4 LightPosition = vec4(0.0, 10.0, 20.0, 1.0);
+    vec4 LightPosition = vec4(5.0, 10.0, 20.0, 1.0);
     vec3 Intensity = vec3(0.9,0.9,0.9);
     
     
