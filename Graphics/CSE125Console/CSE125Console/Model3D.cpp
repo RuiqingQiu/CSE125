@@ -71,7 +71,7 @@ void Model3D::VOnDraw(){
 	}
 
 	if (two_pass_draw){
-
+		cout << "enter model3d two pass draw " << endl;
 	}
 	else{
 		//glLoadIdentity();

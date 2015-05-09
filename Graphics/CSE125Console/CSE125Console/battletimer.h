@@ -1,6 +1,5 @@
 #include "stdafx.h"
-#include "guiItem.h"
-#include "numbers.h"
+#include "numDisplay.h"
 #include <ctime>
 
 // for display seconds, use buildTimer

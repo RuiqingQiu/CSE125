@@ -102,6 +102,67 @@ void GameView::blur_second_pass(){
 }
 
 
+
+void GameView::highlight_first_pass_build(){
+	
+	glBindFramebuffer(GL_FRAMEBUFFER, Window::shader_system->fb);
+	
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glEnable(GL_TEXTURE_2D);
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+
+	Window::shader_system->BindShader(EDGE_SHADER);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 1);
+
+	glMatrixMode(GL_MODELVIEW);
+
+	if (currentNode != nullptr) currentNode->VOnDraw();
+	//List of items that need edge highlight
+	if (currentNode)
+		currentNode->VOnDraw();
+	Window::shader_system->UnbindShader();
+}
+
+
+void GameView::highlight_second_pass_build(){
+
+	//Code below this is second pass
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//Clear color and depth buffers
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Set the OpenGL matrix mode to ModelView
+
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
+	glMatrixMode(GL_MODELVIEW);
+
+	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
+
+	Window::shader_system->BindShader(EDGE_SHADER);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "width"), Window::width);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "height"), Window::height);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 2);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "RenderTex"), 0);
+
+	if (currentNode != nullptr) currentNode->VOnDraw();
+	//List of items that need edge highlight
+	if (currentNode)
+		currentNode->VOnDraw();
+	Window::shader_system->UnbindShader();
+
+}
+
+
 void GameView::highlight_first_pass(){
 	glBindFramebuffer(GL_FRAMEBUFFER, Window::shader_system->fb);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -134,8 +195,11 @@ void GameView::highlight_first_pass(){
 			node->VOnDraw();
 		}
 	}
+	if (currentNode)
+		currentNode->VOnDraw();
 	Window::shader_system->UnbindShader();
 }
+
 
 void GameView::highlight_second_pass(){
 
@@ -174,6 +238,8 @@ void GameView::highlight_second_pass(){
 			node->VOnDraw();
 		}
 	}
+	if (currentNode)
+		currentNode->VOnDraw();
 	Window::shader_system->UnbindShader();
 
 	//glPushMatrix();

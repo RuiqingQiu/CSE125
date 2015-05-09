@@ -155,8 +155,12 @@ void buildView::VUpdate() {
 	blocksLeft = MAX_BLOCKS - NodeList.size();
 }
 
-void buildView::VOnRender() {
 
+
+void buildView::VOnRender() {
+	GameView::highlight_first_pass();
+	GameView::highlight_second_pass();
+	
 	//Clear color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -175,12 +179,13 @@ void buildView::VOnRender() {
 	for each (GeoNode* node in NodeList) {
 		node->VOnDraw();
 	};
-	if (currentNode->textureType == selectedType || true) currentNode->VOnDraw();
+	//if (currentNode->textureType == selectedType || true) 
+	//	currentNode->VOnDraw();
 	
-	//GameView::first_pass();
-	//GameView::second_pass();
+	GameView::highlight_first_pass_build();
+	GameView::highlight_second_pass_build();
 	glPopMatrix();
-
+	
 	//draw grid plane quad
 	glColor3f(1, 1, 1);
 	glEnable(GL_TEXTURE_2D);
@@ -231,6 +236,7 @@ void buildView::VOnRender() {
 	drawText(width*(760.0 / 1920.0), height - 150, "blocks Left: " + std::to_string(blocksLeft), 1.0, 1.0, 1.0, GLUT_BITMAP_HELVETICA_18);
 
 	set3d();
+	
 }
 
 viewType buildView::mouseClickFunc(int state, int x, int y) {
