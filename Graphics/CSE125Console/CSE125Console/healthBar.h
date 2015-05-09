@@ -12,5 +12,12 @@ public:
 	healthBar(int x, int y, int w, int h, bool f);
 	healthBar(int x, int y, int w, int h, bool xf, bool yf);
 	~healthBar();
+
+	float healthPercent;
+	virtual void draw();
+	virtual void update();
+
+private:
+	void init();
 };
 

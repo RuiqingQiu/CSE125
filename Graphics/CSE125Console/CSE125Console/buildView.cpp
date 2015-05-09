@@ -147,9 +147,6 @@ void buildView::VUpdate() {
 	if (!updateview && isCurrentView){// || true) { //use true to disable timer
 		timer->start = std::clock();
 	}
-	for (int i = 0; i < guiItems.size(); i++) {
-		guiItems[i]->update();
-	}
 	updateview = isCurrentView;
 
 	if (score->deaths == 100) score->deaths = 0;

@@ -128,7 +128,6 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="roboBase.h" />
     <ClInclude Include="robot.h" />
     <ClInclude Include="scoreBox.h" />
     <ClInclude Include="scrollBox.h" />
@@ -204,7 +203,6 @@
     <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="RenderObject.cpp" />
-    <ClCompile Include="roboBase.cpp" />
     <ClCompile Include="robot.cpp" />
     <ClCompile Include="scoreBox.cpp" />
     <ClCompile Include="scrollBox.cpp" />

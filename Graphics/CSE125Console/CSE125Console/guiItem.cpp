@@ -149,15 +149,8 @@ void guiItem::draw() {
 	glEnable(GL_TEXTURE_2D);
 	//glActiveTexture(GL_TEXTURE1);
 
-	if (currState == btnState::PRESSED) {
-		glBindTexture(GL_TEXTURE_2D, texture[2]);
-	}
-	else if (currState == btnState::SELECTED) {
-		glBindTexture(GL_TEXTURE_2D, texture[1]);
-	}
-	else {
-		glBindTexture(GL_TEXTURE_2D, texture[0]);
-	}
+	glBindTexture(GL_TEXTURE_2D, texture[currState]);
+
 	// Make sure no bytes are padded:
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 

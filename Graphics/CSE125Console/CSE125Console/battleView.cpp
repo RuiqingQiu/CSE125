@@ -30,9 +30,6 @@ void battleView::VUpdate() {
 	if (!updateview && isCurrentView){
 		//timer->start = std::clock();
 	}
-	for (int i = 0; i < guiItems.size(); i++) {
-		guiItems[i]->update();
-	}
 	updateview = isCurrentView;
 }
 

@@ -85,6 +85,10 @@ void gui::set3d() {
 }
 
 void gui::VUpdate() {
+	for (int i = 0; i < guiItems.size(); i++) {
+		guiItems[i]->update();
+	}
+
 	for (int i = 0; i < buttons.size(); i++) {
 		buttons[i]->update();
 	}

@@ -6,10 +6,10 @@
 
 using namespace std;
 
-enum class btnState {
-	NORMAL,
-	SELECTED,
-	PRESSED
+enum btnState {
+	NORMAL = 0,
+	SELECTED = 1,
+	PRESSED = 2,
 };
 
 class guiItem
