@@ -1,15 +1,8 @@
 #include "stdafx.h"
-#include "numDisplay.h"
 #include <ctime>
+#include "buildTimer.h"
 
-// for display seconds, use buildTimer
-#define MIN 9 // game lasts 10 minutes
-#define MAX_TIME 60
-#define NUM_DIGITS 4
-#define DIGITS 2
-
-// battle view timer extends buildTimer
-class battleTimer : public guiItem{
+class battleTimer : public numDisplay {
 
 public:
 	battleTimer();
@@ -31,7 +24,8 @@ public:
 	int secLeft;
 
 	static string textPath;
-	numbers * digits[NUM_DIGITS];
+
+	guiItem * colon;
 };
 
 

@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "gui.h"
 #include "battletimer.h"
+#include "healthBar.h"
 
 class battleView : public gui {
 public:
@@ -18,4 +19,6 @@ public:
 	vector<button*> listItems;
 	battleTimer * timer;
 	bool updateview;
+
+	healthBar * healthDisplay;
 };

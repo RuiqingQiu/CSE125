@@ -83,7 +83,11 @@ void buildView::createButtons() {
 	//text box
 	//textbox.jpg dimensions: 600x400
 	score = new scoreBox(20, height - 100, 150, 100, true, false);
-		guiItems.push_back(score);
+	guiItems.push_back(score);
+
+	//blocks left display
+	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 200, 25, true, false);
+	guiItems.push_back(blocksDisplay);
 
 	//battle button
 	battleButton = new button("menuItem/battle.jpg", width - 120, 20);
@@ -153,6 +157,7 @@ void buildView::VUpdate() {
 	if (score->rank == 100) score->rank = 0;
 
 	blocksLeft = MAX_BLOCKS - NodeList.size();
+	blocksDisplay->displayValue = blocksLeft;
 }
 
 
@@ -232,9 +237,6 @@ void buildView::VOnRender() {
 
 	set2d();
 	drawAllItems();
-
-	drawText(width*(760.0 / 1920.0), height - 150, "blocks Left: " + std::to_string(blocksLeft), 1.0, 1.0, 1.0, GLUT_BITMAP_HELVETICA_18);
-
 	set3d();
 	
 }

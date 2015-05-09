@@ -20,6 +20,9 @@ void battleView:: createButtons(){
 	timer->setScaling(true, false, width, height);
 	guiItems.push_back(timer);
 
+	healthDisplay = new healthBar(20, height - 100, 250, 25, true, false);
+	guiItems.push_back(healthDisplay);
+
 }
 
 void battleView::VUpdate() {

@@ -111,6 +111,7 @@
     <ClInclude Include="guiItem.h" />
     <ClInclude Include="HardShadowView.h" />
     <ClInclude Include="battletimer.h" />
+    <ClInclude Include="healthBar.h" />
     <ClInclude Include="letters.h" />
     <ClInclude Include="mainmenuinput.h" />
     <ClInclude Include="Light.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="guiGameInput.cpp" />
     <ClCompile Include="guiItem.cpp" />
     <ClCompile Include="HardShadowView.cpp" />
+    <ClCompile Include="healthBar.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="helpMenu.cpp" />
     <ClCompile Include="listItem.cpp" />

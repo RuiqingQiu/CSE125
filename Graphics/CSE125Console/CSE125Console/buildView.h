@@ -65,6 +65,7 @@ private:
 	button * helpButton;
 	button * battleButton;
 	bool templateSet;
+	numDisplay * blocksDisplay;
 
 	Sound* sound; // for sound effect
 };

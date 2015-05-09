@@ -3,6 +3,13 @@
 #include <vector>
 #include "numbers.h"
 
+enum displayConstants {
+	DEFAULT_NUM_DIGITS = 2,
+	BUILD_MAX_TIME = 90,
+	MIN = 5,
+	BATTLE_MAX_TIME = 60,
+	BATTLE_NUM_DIGITS = 4,
+};
 
 class numDisplay : public guiItem
 {
@@ -17,8 +24,20 @@ public:
 	numDisplay(string filename, int x, int y, int w, int h, bool xf, bool yf);
 	~numDisplay();
 
+	virtual void update();
+	virtual void draw();
+	virtual void rePosition(int x, int y, int w, int h);
+
+	float displayValue;
+
 protected:
-	void createNumbers();
+	virtual void createNumbers();
+
 	vector<numbers *> digits;
+	int num_digits;
+
+	//for setting size and position
+	double off;
+	int nSize;
 };
 

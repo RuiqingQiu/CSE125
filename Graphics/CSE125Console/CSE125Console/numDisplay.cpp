@@ -42,5 +42,38 @@ numDisplay::~numDisplay() {
 }
 
 void numDisplay::createNumbers() {
+	displayValue = 0;
+	num_digits = DEFAULT_NUM_DIGITS;
+	off = (10.0 / 100.0) * height;
+	nSize = height - (off*2.0);
+	for (int i = 0; i < num_digits; i++) {
+		digits.push_back(new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed));
+	}
+}
 
+void numDisplay::update() {
+	int idx = displayValue;
+	for (int i = 0; i < num_digits; i++) {
+		if (!(idx >= 0)) break;
+		int digit = idx % 10;
+		digits[i]->numIdx = digit;
+		idx /= 10;
+	}
+}
+
+void numDisplay::draw() {
+	guiItem::draw();
+	for (int i = 0; i < digits.size(); i++) {
+		digits[i]->draw();
+	}
+}
+
+void numDisplay::rePosition(int x, int y, int w, int h) {
+	guiItem::rePosition(x, y, w, h);
+	off = (10.0 / 100.0) * height;
+	nSize = height - (off*2.0);
+	//want to manually make sure it stays relative to time left box
+	for (int i = 0; i < num_digits; i++) {
+		digits[i]->setPosition((xPos + width - off) - (nSize*(i + 1)), yPos + off);
+	}
 }
