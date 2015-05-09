@@ -22,7 +22,7 @@ enum ModelType{
 
 	//Other
 	BATTLEFIELD = 12,
-	
+
 	BASES_BEGIN = 13,
 	THREEBYTHREE_BASIC = 13,
 	THREEBYTHREE_GLOWING = 14,
@@ -49,6 +49,9 @@ enum ModelType{
 	WALL = 101,
 	BULLET_1 = 102,
 
+	//super battlefield
+	BATTLEFIELDINNER = 500,
+	BATTLEFIELDOUTER = 501,
 };
 
 enum ShaderType{

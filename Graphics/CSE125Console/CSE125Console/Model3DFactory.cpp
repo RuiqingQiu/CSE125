@@ -30,6 +30,10 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(TREE2, new RenderObject("Assets/Tree2/tree.obj", "Assets/Tree2/tex.png", "Assets/Tree2/normals.png", "Assets/Tree2/gloss.png", "Assets/Tree2/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(TREE3, new RenderObject("Assets/Tree3/tree.obj", "Assets/Tree3/tex.png", "Assets/Tree3/normals.png", "Assets/Tree3/gloss.png", "Assets/Tree3/metallic.png")));
 
+	//super battlefield
+	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDINNER, new RenderObject("Assets/BattleFieldInner/inner.obj", "Assets/BattleFieldInner/tex.png", "Assets/BattleFieldInner/normals.png", "Assets/BattleFieldInner/gloss.png", "Assets/BattleFieldInner/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDOUTER, new RenderObject("Assets/BattleFieldOuter/plane.obj", "Assets/BattleFieldOuter/tex.png", "Assets/BattleFieldOuter/normals.png", "Assets/BattleFieldOuter/gloss.png", "Assets/BattleFieldOuter/metallic.png")));
+
 }
 
 
@@ -303,13 +307,24 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		return returnModel;
 		break;
 	}
-		case WALL:{
-					  break;
-		}
-		case BULLET_1:{
-						  break;
-		}
-
+	case WALL:{
+		  break;
+	}
+	case BULLET_1:{
+		  break;
+	}
+	case BATTLEFIELDINNER:{
+							  Model3D * returnModel = new Model3D(render_obj_map[type]);
+							  returnModel->type = BATTLEFIELDINNER;
+							  return returnModel;
+		break;
+	}
+	case BATTLEFIELDOUTER:{
+							  Model3D * returnModel = new Model3D(render_obj_map[type]);
+							  returnModel->type = BATTLEFIELDOUTER;
+							  return returnModel;
+		break;
+	}
 	}
 }
 
