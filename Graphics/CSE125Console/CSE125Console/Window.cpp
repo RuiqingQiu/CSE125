@@ -234,11 +234,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-<<<<<<< HEAD
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
-=======
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
->>>>>>> eedff44b7e1979860e00ef241f311ea00bb5b578
 }
 
 //----------------------------------------------------------------------------
