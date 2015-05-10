@@ -489,8 +489,8 @@ void GameLogic::postPhyLogic(){
 		
 		DamageEvent* e = new DamageEvent(GO1, GO2);
 		damageSystem->performDamage(GO1, GO2, e);
-		postDamageLogic(GO1, GO2, e->getResult1());
-		postDamageLogic(GO2, GO1, e->getResult2());
+		postDamageLogic(GO1, GO2, e->getResult1(), e->getDamage1());
+		postDamageLogic(GO2, GO1, e->getResult2(), e->getDamage2());
 	}
 
 	cleanDataStructures();

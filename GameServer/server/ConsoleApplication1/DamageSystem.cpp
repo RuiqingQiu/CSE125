@@ -60,6 +60,7 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: ROBOT WITH PROJECTILE" << std::endl;
 				e->setResult1(BREAK_CONSTRAINT); e->setResult2(DELETED);
+				e->setDamage1();
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					e->setResult1(DEATH);
@@ -70,6 +71,8 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: ROBOT WITH MELEE" << std::endl;
 				e->setResult1(BREAK_CONSTRAINT); e->setResult2(NOTHING);
+				e->setDamage1();
+
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					e->setResult1(DEATH);
@@ -102,10 +105,12 @@ void DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: ROBOT PART WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
+				e->setDamage1();
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					e->setResult1(BREAK_CONSTRAINT);
 				}
+				Robot* r = o1->getBelongTo();
 				break;
 			}
 			case C_MELEE:

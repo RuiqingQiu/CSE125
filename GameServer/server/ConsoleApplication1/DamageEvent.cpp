@@ -38,3 +38,18 @@ void DamageEvent::setResult2(int r)
 {
 	result2 = r;
 }
+
+void DamageEvent::setDamage2(){
+	damageDealt2 = 1;
+}
+int DamageEvent::getDamage2(){
+	return damageDealt2;
+}
+
+
+void DamageEvent::setDamage1(){
+	damageDealt1 = 1;
+}
+int DamageEvent::getDamage1(){
+	return damageDealt1;
+}

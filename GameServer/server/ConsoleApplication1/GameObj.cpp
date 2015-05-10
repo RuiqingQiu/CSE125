@@ -282,6 +282,7 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		btTransform frameInA;
 		btTransform frameInB;
 
+
 		this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
 		o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
 
@@ -292,24 +293,30 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		localB.getBasis().setEulerZYX(yawB, pB, rB);
 		localA.setRotation(frameInA.getRotation());
 		*/
-
 		//localA.setOrigin(frameInA.getOrigin());
 		//localB.setOrigin(frameInB.getOrigin());
+		//a
+		btMatrix3x3 matrix;
+		matrix.setEulerZYX(-az, -ay, -ax);
+		localA.setOrigin(matrix*localpointinA);
 
-
-
+		//b
+		btMatrix3x3 matrix;
+		matrix.setEulerZYX(-bz, -by, -bx);
+		localA.setOrigin(matrix*localpointinA);
+		//
 		localA.setOrigin(btVector3(this->getX() - centerX, this->getY() - centerY, this->getZ() - centerZ));
 
 		localB.setOrigin(btVector3(o->getX() - centerX, o->getY() - centerY, o->getZ() - centerZ));
 		
-		localA.setRotation(frameInA.getRotation());
-		localB.setRotation(frameInB.getRotation());
+		//localA.setRotation(frameInA.getRotation());
+		//localB.setRotation(frameInB.getRotation());
 
 
 
 
 		//joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInA, frameInB);
-		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInB , frameInA);
+		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), localA , localB);
 
 
 		/*joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 0);

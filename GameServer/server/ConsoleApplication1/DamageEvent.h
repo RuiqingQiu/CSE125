@@ -19,6 +19,9 @@ private:
 	int result1;
 	int result2;
 
+	int damageDealt1 = 0;
+	int damageDealt2 = 0;
+
 public:
 	DamageEvent(GameObj*, GameObj*);
 	~DamageEvent();
@@ -29,5 +32,10 @@ public:
 	int getResult2();
 	void setResult1(int);
 	void setResult2(int);
+	void setDamage1();
+	int getDamage1();
+	void setDamage2();
+	int getDamage2();
+
 };
 
