@@ -192,9 +192,9 @@ void GamePhysics::robotTurnLeft(Robot* rb){
 	//if (v->getWheelInfo(3).m_steering < MAX_TURN_SPEED)
 	//	v->getWheelInfo(3).m_steering += TURN_SPEED;
 	if (v->getWheelInfo(2).m_steering < MAX_TURN_SPEED)
-		v->getWheelInfo(2).m_steering = MAX_TURN_SPEED;
+		v->getWheelInfo(2).m_steering += TURN_SPEED;
 	if (v->getWheelInfo(3).m_steering < MAX_TURN_SPEED)
-		v->getWheelInfo(3).m_steering = MAX_TURN_SPEED;
+		v->getWheelInfo(3).m_steering += TURN_SPEED;
 
 	
 }
@@ -207,9 +207,9 @@ void GamePhysics::robotTurnRight(Robot* rb){
 	if (v->getWheelInfo(3).m_steering > -MAX_TURN_SPEED)
 		v->getWheelInfo(3).m_steering += -TURN_SPEED;*/
 	if (v->getWheelInfo(2).m_steering > -MAX_TURN_SPEED)
-		v->getWheelInfo(2).m_steering = -MAX_TURN_SPEED;
+		v->getWheelInfo(2).m_steering += -TURN_SPEED;
 	if (v->getWheelInfo(3).m_steering > -MAX_TURN_SPEED)
-		v->getWheelInfo(3).m_steering = -MAX_TURN_SPEED;
+		v->getWheelInfo(3).m_steering += -TURN_SPEED;
 
 }
 void GamePhysics::robotBackward(Robot* rb){

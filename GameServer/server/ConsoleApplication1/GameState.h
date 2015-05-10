@@ -17,8 +17,11 @@ enum STATE {
 	INIT_STATE1 = 1,
 	INIT_STATE2 = 2,
 	INIT_STATE3 = 3,
+	INIT_BUILD = 6,
 	BUILD_STATE = 4,
+	INIT_GAME = 7,
 	GAME_STATE0 = 5,
+	CLEAR_STATE = 9,
 	END_STATE = 8,
 
 };
@@ -35,9 +38,13 @@ class GameState
 	std::map<unsigned int, unsigned int> init1map;
 	std::map<unsigned int, unsigned int> init2map;
 	std::map<unsigned int, unsigned int> init3map;
+	std::map<unsigned int, unsigned int> initbuildmap;
 	std::map<unsigned int, unsigned int> buildmap;
+	std::map<unsigned int, unsigned int> initgamemap;
 	std::map<unsigned int, unsigned int> gamemap;
+	std::map<unsigned int, unsigned int> clearmap;
 	std::map<unsigned int, unsigned int> endmap;
+
 
 	
 

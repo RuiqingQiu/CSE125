@@ -35,6 +35,8 @@ public:
 	void sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>*);
 	void convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* eventList);
 	string convertEventData(std::vector<GameEvents*>*);
+	void sendInitBuild(int,int);
+	void sendBuildRequest(int);
 };
 #endif
 

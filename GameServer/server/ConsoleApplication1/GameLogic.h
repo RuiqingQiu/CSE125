@@ -11,6 +11,7 @@
 #include "GERobotDeath.h"
 #include "GameState.h"
 #include <math.h>
+#include "GETime.h"
 
 #define FIELD_WIDTH 50
 #define FIELD_HEIGHT 50
@@ -41,13 +42,16 @@ private:
 	//std::vector<Constraint*> constraints;
 	std::vector<ObjectEvents *> objEventList;
     std::vector<GameEvents *> gameEventList;
+	std::vector<ObjectEvents *> buildList;
+
+	int lastTime;
 
 public:
 	GameLogic();
 	~GameLogic();
 	unsigned int waitToConnect();
 	unsigned int gameLoop();
-	void gameStart();
+	int gameStart();
 	void prePhyLogic();
 	void addWalls();
 	void addGround();
@@ -55,7 +59,13 @@ public:
 	void deleteGameObj(GameObj*);
 	void cleanDataStructures();
 	int breakConstraints(GameObj*);
-	void createDeathEvent(GameObj*);
-	void postDamageLogic(GameObj*, DamageEvent* e);
+	void createDeathEvent(GameObj*, GameObj*);
+	void postDamageLogic(GameObj*, GameObj* k, int e);
+	int buildMode();
+	int startBuild();
+	int endGame();
+
+
+	int clearGame();
 };
 #endif

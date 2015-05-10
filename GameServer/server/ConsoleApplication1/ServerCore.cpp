@@ -55,17 +55,36 @@ void ServerCore::serverLoop()
 			if (numPlayer < 4) action = ADDCLIENT;
 			break;
 		}
+		case INIT_BUILD:
+		{
+			action = gameLogic->startBuild();
+			break;
+		}
 		case BUILD_STATE:
 		{	
-			gameLogic->gameStart();
-		    action = TIMEUP;
+		    action=	gameLogic->buildMode();
+			//gameLogic->gameStart();
+		    //action = TIMEUP;
 			cout << "buildMode" << endl;
 			break;
+		}
+		case INIT_GAME: 
+		{
+			 action = gameLogic->gameStart();
+			 break;
 		}
 		case GAME_STATE0:
 		{	
 			action = gameLogic->gameLoop();
 			break;
+		}
+		case CLEAR_STATE:{
+		    action = gameLogic->clearGame();
+			break;
+		}
+		case END_STATE:{
+ 		    action = gameLogic->endGame();
+ 		    break;
 		}
 		default:
 		{	action = WAIT;

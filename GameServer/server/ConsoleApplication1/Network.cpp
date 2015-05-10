@@ -47,6 +47,38 @@ void Network::sendClientConfirmationPacket(const char* clientName, int client_ID
 }
 
 
+void Network::sendInitBuild(int type, int time){
+	const unsigned int packet_size = sizeof(SPacket);
+	char packet_data[packet_size];
+
+	SPacket packet;
+	packet.packet_type = type;
+	string packetInfoStr = "";
+
+	packetInfoStr += to_string(time);
+	packetInfoStr += '\0';
+	memset(packet.data, 0, sizeof(packet.data));
+	memcpy(packet.data, packetInfoStr.c_str(), packetInfoStr.length());
+
+	packet.serialize(packet_data);
+	network->sendToAll(packet_data, packet_size);
+}
+
+
+void Network::sendBuildRequest(int cid){
+	const unsigned int packet_size = sizeof(SPacket);
+	char packet_data[packet_size];
+
+	SPacket packet;
+	packet.packet_type = BUILD_REQUEST;
+	string packetInfoStr = "\0";
+	memset(packet.data, 0, sizeof(packet.data));
+	memcpy(packet.data, packetInfoStr.c_str(), packetInfoStr.length());
+
+	packet.serialize(packet_data);
+	network->sendToOne(packet_data, packet_size, cid);
+
+}
 
 
 int Network::waitForConnections(){

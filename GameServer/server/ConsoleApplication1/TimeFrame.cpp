@@ -44,3 +44,7 @@ void TimeFrame::frameSleep(int milliseconds)
 	if (milliseconds>0)
 	Sleep(milliseconds);
 }
+
+int TimeFrame::getCurrentTime(){
+	return countdownPeriod - (clock() - clockTime);
+}

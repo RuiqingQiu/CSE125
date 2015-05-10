@@ -279,28 +279,39 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		
 		
 		//********************CONSTRAINTS ROTATION NEED TO BE FIXED!!!!!!!!!!!!!!**********************************//
-		//btTransform frameInA;
-		//btTransform frameInB;
+		btTransform frameInA;
+		btTransform frameInB;
 
-		//this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
-		//o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
+		this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
+		o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
 
-		//btScalar yawA, pA, rA, yawB, pB, rB;
-		//frameInA.getBasis().getEulerZYX(yawA, pA, rA);
-		//frameInB.getBasis().getEulerZYX(yawB, pB, rB);
-		//localA.getBasis().setEulerZYX(yawA, pA, rA);
-		//localB.getBasis().setEulerZYX(yawB, pB, rB);
+		/*btScalar yawA, pA, rA, yawB, pB, rB;
+		frameInA.getBasis().getEulerZYX(yawA, pA, rA);
+		frameInB.getBasis().getEulerZYX(yawB, pB, rB);
+		localA.getBasis().setEulerZYX(yawA, pA, rA);
+		localB.getBasis().setEulerZYX(yawB, pB, rB);
+		localA.setRotation(frameInA.getRotation());
+		*/
 
+		//localA.setOrigin(frameInA.getOrigin());
+		//localB.setOrigin(frameInB.getOrigin());
 
 
 
 		localA.setOrigin(btVector3(this->getX() - centerX, this->getY() - centerY, this->getZ() - centerZ));
 
 		localB.setOrigin(btVector3(o->getX() - centerX, o->getY() - centerY, o->getZ() - centerZ));
+		
+		localA.setRotation(frameInA.getRotation());
+		localB.setRotation(frameInB.getRotation());
+
+
 
 
 		//joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInA, frameInB);
-		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), localB, localA);
+		joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInB , frameInA);
+
+
 		/*joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 0);
 		joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 1);
 		joint6DOF->setParam(BT_CONSTRAINT_STOP_CFM, 1, 2);
