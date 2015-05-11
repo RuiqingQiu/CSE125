@@ -13,6 +13,8 @@
 #include <math.h>
 #include "GEHealthUpdate.h"
 #include "GETime.h"
+#include "Scoreboard.h"
+#include "GEScoreboardUpdate.h"
 
 #define FIELD_WIDTH 50
 #define FIELD_HEIGHT 50
@@ -25,6 +27,7 @@ private:
 	GamePhysics* gamePhysics;
 	TimeFrame* countDown;
 	DamageSystem* damageSystem;
+	Scoreboard* scoreboard;
 	int counter;
 
 
@@ -62,9 +65,11 @@ public:
 	int breakConstraints(GameObj*);
 	void createDeathEvent(Robot*);
 	void createHealthUpdateEvent(Robot*);
+	void createScoreboardUpdateEvent();
 	void postDamageLogic(GameObj*, int e);
 	void postHealthLogic(Robot* arr[]);
-	void createHeathUpdateEvent(Robot*);
+	void postDeathLogic(Robot*);
+
 	int buildMode();
 	int startBuild();
 	int endGame();

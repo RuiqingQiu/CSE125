@@ -10,6 +10,7 @@ GameLogic::GameLogic()
 	gamePhysics = new GamePhysics();
 	countDown = new TimeFrame();
 	damageSystem = new DamageSystem(INSTANT_KILL);
+	scoreboard = new Scoreboard();
 	counter = 0;
 }
 
@@ -19,6 +20,7 @@ GameLogic::~GameLogic()
 	delete gamePhysics;
 	delete countDown;
 	delete damageSystem;
+	delete scoreboard;
 
 }
 
@@ -503,8 +505,20 @@ void GameLogic::postPhyLogic(){
 	}
 
 	postHealthLogic(dmgDealtArr);
+	
+	if (scoreboard->getHasChanged())
+	{
+		createScoreboardUpdateEvent();
+	}
+
 	cleanDataStructures();
 	GamePhysics::collisionList.clear();
+}
+
+void GameLogic::createScoreboardUpdateEvent()
+{
+	GEScoreboardUpdate* GE = new GEScoreboardUpdate(scoreboard->getTakedowns(), scoreboard->getDeaths(), scoreboard->getGold());
+	gameEventList.push_back(GE);
 }
 
 void GameLogic::postHealthLogic(Robot* arr[4])
@@ -517,10 +531,17 @@ void GameLogic::postHealthLogic(Robot* arr[4])
 			createHealthUpdateEvent(arr[i]);
 			if (arr[i]->getHealth() == 0)
 			{
-				createDeathEvent(arr[i]);
+				postDeathLogic(arr[i]);
 			}
 		}
 	}
+}
+
+void GameLogic::postDeathLogic(Robot* r)
+{
+	scoreboard->incDeaths(r->getCID());
+	scoreboard->incTakedowns(r->getDiedTo()->getCID());
+	createDeathEvent(r);
 }
 
 void GameLogic::createHealthUpdateEvent(Robot* r)
@@ -546,7 +567,7 @@ void GameLogic::postDamageLogic(GameObj* g, int result)
 		else if (result == DEATH)
 		{
 			//cout << "GO Death ID: " << g->getId() << endl;
-			createDeathEvent((Robot*)g);
+			postDeathLogic((Robot*)g);
 		}
 	}
 }
