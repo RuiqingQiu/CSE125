@@ -20,6 +20,8 @@ void GEScoreboardUpdate::to_string(std::string &s)
 	int i;
 	for (i = 0; i < 4; i++)
 	{
+		s += std::to_string(i);
+		s += " ";
 		s += std::to_string(takedowns[i]);
 		s += " ";
 		s += std::to_string(deaths[i]);
@@ -27,7 +29,7 @@ void GEScoreboardUpdate::to_string(std::string &s)
 		s += std::to_string(gold[i]);
 		if (i!=3)
 		{ 
-			s += " ";
+			s += "\n";
 		}	
 	}
 
