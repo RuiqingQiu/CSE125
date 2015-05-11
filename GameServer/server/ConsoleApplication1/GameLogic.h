@@ -11,6 +11,7 @@
 #include "GERobotDeath.h"
 #include "GameState.h"
 #include <math.h>
+#include "GEHealthUpdate.h"
 #include "GETime.h"
 
 #define FIELD_WIDTH 50
@@ -59,8 +60,11 @@ public:
 	void deleteGameObj(GameObj*);
 	void cleanDataStructures();
 	int breakConstraints(GameObj*);
-	void createDeathEvent(GameObj*, GameObj*);
-	void postDamageLogic(GameObj*, GameObj* k, int e);
+	void createDeathEvent(Robot*);
+	void createHealthUpdateEvent(Robot*);
+	void postDamageLogic(GameObj*, int e);
+	void postHealthLogic(Robot* arr[]);
+	void createHeathUpdateEvent(Robot*);
 	int buildMode();
 	int startBuild();
 	int endGame();

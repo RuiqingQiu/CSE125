@@ -10,6 +10,7 @@ Robot::Robot(int cid, char* name)
 	setIsRobot(1);
 	setCollisionType(C_ROBOT);
 	_state = PS_BUILD;
+	setBelongTo(this);
 }
 
 
@@ -280,4 +281,14 @@ void Robot::setWheelType(int w)
 int Robot::getWheelType()
 {
 	return _wheelType;
+}
+
+void Robot::setDiedTo(Robot* r)
+{
+	if (diedTo == nullptr)
+	diedTo = r;
+}
+Robot* Robot::getDiedTo()
+{
+	return diedTo;
 }

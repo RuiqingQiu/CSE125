@@ -473,7 +473,7 @@ void GameObj::setMaxHealth(double h)
 }
 double GameObj::getHealth()
 {
-	return _health;
+	return (_health < 0) ? 0 : _health;
 }
 double GameObj::getMaxHealth()
 {

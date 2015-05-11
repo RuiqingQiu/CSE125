@@ -476,7 +476,7 @@ void GameLogic::prePhyLogic(){
 
 void GameLogic::postPhyLogic(){
 	std::vector<Collision *>::iterator it;
-
+	Robot* dmgDealtArr[4] = { nullptr };
 	for (it = GamePhysics::collisionList.begin(); it != GamePhysics::collisionList.end(); it++)
 	{
 		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
@@ -489,15 +489,47 @@ void GameLogic::postPhyLogic(){
 		
 		DamageEvent* e = new DamageEvent(GO1, GO2);
 		damageSystem->performDamage(GO1, GO2, e);
-		postDamageLogic(GO1, GO2, e->getResult1(), e->getDamage1());
-		postDamageLogic(GO2, GO1, e->getResult2(), e->getDamage2());
+		postDamageLogic(GO1, e->getResult1());
+		postDamageLogic(GO2, e->getResult2());
+
+		if (e->getDamage1())
+		{
+			dmgDealtArr[((Robot*)GO1->getBelongTo())->getCID()] = (Robot*)GO1->getBelongTo();
+		}
+		if (e->getDamage2())
+		{
+			dmgDealtArr[((Robot*)GO2->getBelongTo())->getCID()] = (Robot*)GO2->getBelongTo();
+		}
 	}
 
+	postHealthLogic(dmgDealtArr);
 	cleanDataStructures();
 	GamePhysics::collisionList.clear();
 }
 
-void GameLogic::postDamageLogic(GameObj* g, GameObj* k, int result)
+void GameLogic::postHealthLogic(Robot* arr[4])
+{
+	int i;
+	for (i = 0; i < 4; i++)
+	{
+		if (arr[i] != nullptr)
+		{
+			createHealthUpdateEvent(arr[i]);
+			if (arr[i]->getHealth() == 0)
+			{
+				createDeathEvent(arr[i]);
+			}
+		}
+	}
+}
+
+void GameLogic::createHealthUpdateEvent(Robot* r)
+{
+	GEHealthUpdate* GE = new GEHealthUpdate(r->getCID(), r->getHealth(), r->getMaxHealth());
+	gameEventList.push_back(GE);
+}
+
+void GameLogic::postDamageLogic(GameObj* g, int result)
 {
 	if (!g->getDeleted())
 	{
@@ -514,7 +546,7 @@ void GameLogic::postDamageLogic(GameObj* g, GameObj* k, int result)
 		else if (result == DEATH)
 		{
 			//cout << "GO Death ID: " << g->getId() << endl;
-			createDeathEvent(g,k);
+			createDeathEvent((Robot*)g);
 		}
 	}
 }
@@ -593,17 +625,16 @@ int GameLogic::breakConstraints(GameObj* g)
 	return g->deleteConstraints(&objCollisionPair);
 }
 
-void GameLogic::createDeathEvent(GameObj* g, GameObj* k)
+void GameLogic::createDeathEvent(Robot* r)
 {
-	((Robot*)(g))->setState(PS_DEAD);
-	Robot* robot = (Robot*)(k->getBelongTo());
-	if (robot != nullptr){
-		GameEvents* GE = new GERobotDeath(((Robot*)g)->getCID(), robot->getCID());
+	r->setState(PS_DEAD);
+	if (r->getDiedTo() != nullptr){
+		GameEvents* GE = new GERobotDeath(r->getCID(), r->getDiedTo()->getCID());
 		gameEventList.push_back(GE);
 	}
 	else{
 
-		GameEvents* GE = new GERobotDeath(((Robot*)g)->getCID(),-1);
+		GameEvents* GE = new GERobotDeath(r->getCID(),-1);
 		gameEventList.push_back(GE);
 	}
 	

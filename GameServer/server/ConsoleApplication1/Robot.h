@@ -22,7 +22,7 @@ private:
 	double _depth;
 	std::vector<GameObj*> parts;
 	int _wheelType;
-
+	Robot* diedTo = nullptr;
 	int _state;
 
 public:
@@ -33,6 +33,9 @@ public:
 	void setTakeDowns(int);
 	void setDeaths(int);
 	void setName(char*);
+
+	void setDiedTo(Robot*);
+	Robot* getDiedTo();
 
 	void setWidth(double);
 	void setHeight(double);
