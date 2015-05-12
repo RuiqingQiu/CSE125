@@ -72,7 +72,7 @@ void buildView::createButtons() {
 	//text displays
 	//time.jpg dimensions: 800x100
 	//"fullscreen" 1920 width ratio, 1920/2 - 200 = 760  760/1920 
-	timer = new buildTimer(width*(760.0 / 1920.0), height - 50, 400, 50, false, false);
+	timer = new buildTimer(width*(760.0 / 1920.0), height - 60, 400, 50, false, false);
 	timer->setScaling(true, false, width, height);
 	guiItems.push_back(timer);
 
@@ -81,7 +81,7 @@ void buildView::createButtons() {
 	//guiItems.push_back(score);
 
 	//blocks left display
-	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 200, 25, true, false);
+	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 900*0.25, 25, true, false);
 	guiItems.push_back(blocksDisplay);
 
 	//battle button
