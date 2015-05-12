@@ -44,12 +44,12 @@ void battleTimer::createNumbers() {
 	minLeft = MIN;
 	start = std::clock();
 
-	int off_comma = off + nSize;
+	int off_comma = (off*3.0) + nSize;
 	for (int i = num_digits; i < BATTLE_NUM_DIGITS; i++) {
 		digits.push_back(new numbers((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed));
 	}
 
-	colon = new guiItem("text/symbols/colon.jpg", (xPos + width - off) - (nSize * 3), yPos + off, nSize, nSize); // all things have the same size 
+	colon = new guiItem("text/symbols/colon.jpg", (xPos + width - (off*3.0)) - (nSize * 3), yPos + off, nSize, nSize); // all things have the same size 
 }
 
 void battleTimer::update(){
@@ -95,10 +95,10 @@ void battleTimer::draw(){
 void battleTimer::rePosition(int x, int y, int w, int h){
 	numDisplay::rePosition(x, y, w, h);
 
-	int off_comma = off + nSize;
+	int off_comma = (off*3.0) + nSize;
 	for (int i = num_digits; i < BATTLE_NUM_DIGITS; i++) {
 		digits[i]->setPosition((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off);
 	}
-	colon->setPosition((xPos + width - off) - (nSize * 3), yPos + off);
+	colon->setPosition((xPos + width - (off*3.0)) - (nSize * 3), yPos + off);
 }
 
