@@ -18,7 +18,7 @@ viewFactory::viewFactory()
 	meunInput = new mainMenuInput();
 	currentInput = standard_Input;
 
-	score = new scoreBox(0, 0, 150, 100, true, false);
+	score = new scoreBox(0, 0, 200, 100, true, false);
 	battlemode->addItem(score);
 	buildmode->addItem(score);
 
@@ -40,7 +40,7 @@ viewFactory::viewFactory(int w, int h) {
 	currentInput = standard_Input;
 	meunInput = new mainMenuInput();
 
-	score = new scoreBox(20, h - 100, 150, 100, true, false);
+	score = new scoreBox(20, h - 110, 200, 100, true, false);
 	battlemode->addItem(score);
 	buildmode->addItem(score);
 

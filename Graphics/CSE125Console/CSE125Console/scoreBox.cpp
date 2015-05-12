@@ -96,7 +96,7 @@ void scoreBox::draw() {
 	for (int i = 0; i < MAX_DIGITS; i++) {
 		rankDigits[i]->draw();
 		hitDigits[i]->draw();
-		//deathDigits[i]->draw();
+		deathDigits[i]->draw();
 	}
 }
 

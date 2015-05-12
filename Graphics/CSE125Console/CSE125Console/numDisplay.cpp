@@ -44,10 +44,10 @@ numDisplay::~numDisplay() {
 void numDisplay::createNumbers() {
 	displayValue = 0;
 	num_digits = DEFAULT_NUM_DIGITS;
-	off = (10.0 / 100.0) * height;
+	off = (20.0 / 100.0) * height;
 	nSize = height - (off*2.0);
 	for (int i = 0; i < num_digits; i++) {
-		digits.push_back(new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed));
+		digits.push_back(new numbers((xPos + width - (off*3.0)) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed));
 	}
 }
 
@@ -70,10 +70,10 @@ void numDisplay::draw() {
 
 void numDisplay::rePosition(int x, int y, int w, int h) {
 	guiItem::rePosition(x, y, w, h);
-	off = (10.0 / 100.0) * height;
+	off = (20.0 / 100.0) * height;
 	nSize = height - (off*2.0);
 	//want to manually make sure it stays relative to time left box
 	for (int i = 0; i < num_digits; i++) {
-		digits[i]->setPosition((xPos + width - off) - (nSize*(i + 1)), yPos + off);
+		digits[i]->setPosition((xPos + width - (off*3.0)) - (nSize*(i + 1)), yPos + off);
 	}
 }

@@ -92,7 +92,6 @@ GameInfoPacket* ClientGame::update()
     GameInfoPacket* g = new GameInfoPacket();
     SPacket packet;
     int data_length = network->receivePackets(network_data);
-
     if (data_length <= 0) 
     {
         //no data recieved
@@ -107,7 +106,6 @@ GameInfoPacket* ClientGame::update()
         i += sizeof(SPacket);
 
         switch (packet.packet_type) {
-			//cout << packet.data << endl;
 		//Server tells client start build mode , client start build mode
 		case INIT_BUILD:{
 			break;
@@ -194,7 +192,7 @@ GameInfoPacket* ClientGame::update()
 		default:{
 
 					printf("error in packet types : %i with length: %i\n", packet.packet_type, data_length);
-					//std::cout << packet.data << std::endl;
+					std::cout << packet.data << std::endl;
 					return nullptr;
 					break;
 			}
