@@ -7,6 +7,7 @@ Model3DFactory::Model3DFactory()
 {
 	//blocks
 	render_obj_map.insert(std::pair<int, RenderObject*>(BasicCube, new RenderObject("Assets/BasicCube/cube2.obj", "Assets/BasicCube/tex.png", "Assets/BasicCube/normals.png", "Assets/BasicCube/gloss.png", "Assets/BasicCube/metallic.png")));
+	/*
 	render_obj_map.insert(std::pair<int, RenderObject*>(CrystalCube, new RenderObject("Assets/CrystalMethCube/cubeofmeth.obj", "Assets/CrystalMethCube/tex.png", "Assets/CrystalMethCube/normals.png", "Assets/CrystalMethCube/gloss.png", "Assets/CrystalMethCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(GlowingCube, new RenderObject("Assets/WhiteCube/simplecube2.obj", "Assets/WhiteCube/tex.png", "Assets/WhiteCube/normals.png", "Assets/WhiteCube/gloss.png", "Assets/WhiteCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(WoodenCube, new RenderObject("Assets/WoodenCube/woodcube.obj", "Assets/WoodenCube/tex.png", "Assets/WoodenCube/normals.png", "Assets/WoodenCube/gloss.png", "Assets/WoodenCube/metallic.png")));
@@ -34,7 +35,7 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDINNER, new RenderObject("Assets/BattleFieldInner/inner.obj", "Assets/BattleFieldInner/tex.png", "Assets/BattleFieldInner/normals.png", "Assets/BattleFieldInner/gloss.png", "Assets/BattleFieldInner/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDOUTER, new RenderObject("Assets/BattleFieldOuter/plane.obj", "Assets/BattleFieldOuter/tex.png", "Assets/BattleFieldOuter/normals.png", "Assets/BattleFieldOuter/gloss.png", "Assets/BattleFieldOuter/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(BULLET, new RenderObject("Assets/Bullet/bullet.obj", "Assets/Bullet/tex.png", "Assets/Bullet/normals.png", "Assets/Bullet/gloss.png", "Assets/Bullet/metallic.png")));
-
+	*/
 }
 
 
@@ -44,29 +45,30 @@ Model3DFactory::~Model3DFactory()
 
 Model3D* Model3DFactory::generateObjectWithType(int type){
 	switch (type){
+
 		case Mallet:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->type = Mallet;
 			returnModel->damageStat = 1;
 			return returnModel;
 			break;
 		}
 		case Mace:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->damageStat = 1;
 			returnModel->type = Mace;
 			return returnModel;
 			break;
 		}
 		case Discount:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->speedStat = 1;
 			returnModel->type = Discount;
 			return returnModel;
 			break;
 		}
 		case Needle:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->damageStat = 1;
 			returnModel->type = Needle;
 
@@ -74,7 +76,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BasicCube:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->healthStat = 1;
 			returnModel->type = BasicCube;
 
@@ -82,7 +84,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case WoodenCube:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->type = WoodenCube;
 
 			returnModel->healthStat = 1;
@@ -90,28 +92,28 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BLACKCUBE:{
-						   Model3D * returnModel = new Model3D(render_obj_map[type]);
+						   Model3D * returnModel = new Model3D(render_obj_map[0]);
 						   returnModel->type = BLACKCUBE;
 						   returnModel->healthStat = 1;
 						   return returnModel;
 			break;
 		}
 		case CUBEA:{
-					   Model3D * returnModel = new Model3D(render_obj_map[type]);
+					   Model3D * returnModel = new Model3D(render_obj_map[0]);
 					   returnModel->type = CUBEA;
 					   returnModel->healthStat = 1;
 					   return returnModel;
 						   break;
 		}
 		case CUBEB:{
-					   Model3D * returnModel = new Model3D(render_obj_map[type]);
+					   Model3D * returnModel = new Model3D(render_obj_map[0]);
 					   returnModel->type = CUBEB;
 					   returnModel->healthStat = 1;
 					   return returnModel;
 						   break;
 		}
 		case WoodenWheel:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->speedStat = 1;
 			returnModel->type = WoodenWheel;
 
@@ -119,7 +121,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case Tire:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->speedStat = 1;
 			returnModel->type = Tire;
 
@@ -127,7 +129,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case GlowingCube:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->healthStat = 1;
 			returnModel->type = GlowingCube;
 
@@ -135,7 +137,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BGun:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->healthStat = 1;
 			returnModel->type = BGun;
 
@@ -143,13 +145,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BATTLEFIELD:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->type = BATTLEFIELD;
 			return returnModel;
 			break;
 		}
 		case CrystalCube:{
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
+			Model3D * returnModel = new Model3D(render_obj_map[0]);
 			returnModel->type = CrystalCube;
 			return returnModel;
 			break;
@@ -291,19 +293,19 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		
 	//Environment objects
 	case TREE1:{
-		Model3D * returnModel = new Model3D(render_obj_map[type]);
+		Model3D * returnModel = new Model3D(render_obj_map[0]);
 		returnModel->type = TREE1;
 		return returnModel;
 		break;
 	}
 	case TREE2:{
-		Model3D * returnModel = new Model3D(render_obj_map[type]);
+		Model3D * returnModel = new Model3D(render_obj_map[0]);
 		returnModel->type = TREE2;
 		return returnModel;
 		break;
 	}
 	case TREE3:{
-		Model3D * returnModel = new Model3D(render_obj_map[type]);
+		Model3D * returnModel = new Model3D(render_obj_map[0]);
 		returnModel->type = TREE3;
 		return returnModel;
 		break;
@@ -312,7 +314,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		  break;
 	}
 	case BULLET:{
-					Model3D * returnModel = new Model3D(render_obj_map[type]);
+					Model3D * returnModel = new Model3D(render_obj_map[0]);
 					returnModel->type = BULLET;
 					return returnModel;
 					break;
@@ -321,13 +323,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		  break;
 	}
 	case BATTLEFIELDINNER:{
-							  Model3D * returnModel = new Model3D(render_obj_map[type]);
+							  Model3D * returnModel = new Model3D(render_obj_map[0]);
 							  returnModel->type = BATTLEFIELDINNER;
 							  return returnModel;
 		break;
 	}
 	case BATTLEFIELDOUTER:{
-							  Model3D * returnModel = new Model3D(render_obj_map[type]);
+							  Model3D * returnModel = new Model3D(render_obj_map[0]);
 							  returnModel->type = BATTLEFIELDOUTER;
 							  return returnModel;
 		break;
