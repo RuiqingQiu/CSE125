@@ -74,6 +74,7 @@ enum TEventType{
 	TEventUpdateHealth = 4,
 	TEventCollisionHappen = 5,
 	TEventWaiting = 6,
-	TEventEmergency = 7
+	TEventEmergency = 7,
+	TEventDefault = -1
 };
 #endif

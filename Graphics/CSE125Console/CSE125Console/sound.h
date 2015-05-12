@@ -12,7 +12,7 @@ public:
 	Sound();
 	~Sound();
 
-	void playExplosion(); // play the sound 
+	void playExplosion(float,float,float); // play the sound 
 	void playMusic();
 	void playSelect(); // play menu selection sound
 	void playGun(); // play gun shot sound

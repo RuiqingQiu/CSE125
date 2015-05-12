@@ -346,16 +346,17 @@ void GameView::highlight_second_pass(){
 
 	sort(depthvec.begin(), depthvec.end(), pairCompare);
 
-
+	//Draw environment
+	for each (GeoNode* node in EnvironmentList){
+		node->VOnDraw();
+	}
+	//grass
 	for each (pair<float, GeoNode*> p in depthvec)
 	{
 		p.second->VOnDraw();
 	}
 
-	//Draw environment
-	for each (GeoNode* node in EnvironmentList){
-		node->VOnDraw();
-	}
+
 }
 
 

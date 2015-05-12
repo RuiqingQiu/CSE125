@@ -75,9 +75,11 @@ void Sound::playMusic(){
 
 
 // This function is used to play sound, don't need to be play continued
-void Sound::playExplosion(){
+// need user location to play 3d sound
+void Sound::playExplosion(float x, float y,float z){
 	if (explosionSound.getStatus() == sf::Sound::Paused){
 		cout << "Playing " << endl;
+		explosionSound.setPosition(x, y, z);
 		explosionSound.play();
 		explosionSound.pause();
 	}
@@ -109,3 +111,4 @@ void Sound::playGun(){
 		gunSound.play();
 	}
 }
+

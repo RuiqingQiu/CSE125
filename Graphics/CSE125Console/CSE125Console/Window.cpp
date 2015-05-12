@@ -9,7 +9,6 @@
     #include <GL/glut.h>
 #endif
 
-#include "viewFactory.h"
 #include "Cube.h"
 #include "Fire.h"
 #include "tiny_obj_loader.h"
@@ -24,10 +23,10 @@
 #include "GraphicsTest.h"
 #define TESTCAM 0
 
-int Window::width  = 512;   //Set window width in pixels here
-int Window::height = 512;   //Set window height in pixels here
+int Window::width  = 1980;   //Set window width in pixels here
+int Window::height = 1000;   //Set window height in pixels here
 
-static viewFactory * factory; // factory of gui
+viewFactory * Window::factory; // factory of gui
 //static Model3DFactory* m_factory;
 ShaderSystem* Window::shader_system;
 static int counter = 0;
@@ -35,7 +34,7 @@ static Cube* cube;
 static Fire* fire;
 static GraphicsTest* gt;
 static Model3D*object;
-static Sound *soundObject;
+static Sound *soundObject; // sound
 //Init server info here later
 
 

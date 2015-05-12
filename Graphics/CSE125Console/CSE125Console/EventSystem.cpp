@@ -10,6 +10,7 @@
 #include "EventWaiting.h"
 #include "EventEmergency.h"
 
+#include "Window.h"
 EventSystem::EventSystem()
 {
 }
@@ -25,31 +26,56 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 	for (int i = 0; i < eventinfos.size(); i++)
 	{
 		EventInfo* event = eventinfos[i];
-		if (typeid(event) == typeid(EventDeath*))
-		{
-			printf("Death Event has been received \n");
+		std::cout << "mydoubleptr points to " << typeid(*event).name() << '\n';
+		switch (event->event_type){
+		case TEventDeath:{
+							 printf("Death Event has been received \n");
+							 //Switch back to game view
+							 Window::factory->switchView('1');
+							 break;
 		}
-		else if (typeid(event) == typeid(EventParticle*))
-		{
-			printf("particle event received \n");
+		case TEventParticle:{
+								printf("particle event received \n");
+								//Window::factory->battlemode->PushGeoNode();
+								break;
 		}
-		else if (typeid(event) == typeid(EventTimer*)){
-			printf("time event received \n");
+		case TEventTimer:{
+							 printf("time event received \n");
+							 break;
+
+
 		}
-		else if (typeid(event) == typeid(EventScoreboard*)){
-			printf("scoreboard event received\n");
+		case TEventScoreboard:{
+								  printf("scoreboard event received\n");
+								  break;
+
 		}
-		else if (typeid(event) == typeid(EventHealth*)){
-			printf("health event received\n");
+		case TEventUpdateHealth:{
+									printf("health event received\n");
+									break;
+
 		}
-		else if (typeid(event) == typeid(EventCollision*)){
-			printf("collision event received\n");
+		case TEventCollisionHappen:{
+									   printf("collision event received\n");
+									   break;
+
 		}
-		else if (typeid(event) == typeid(EventWaiting*)){
-			printf("waiting event received\n");
+		case TEventWaiting:{
+							   printf("waiting event received\n");
+							   break;
+
 		}
-		else if (typeid(event) == typeid(EventEmergency*)){
-			printf("emergency event received\n");
+		case TEventEmergency:{
+								 printf("emergency event received\n");
+								 break;
+
+		}
+		case TEventDefault:{
+							   printf("Event default, should not entered\n");
+							   break;
+
+		}
+
 		}
 	}
 }

@@ -59,10 +59,12 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 		switch (EventId) {
 			case TEventDeath:
 			{
+				printf("event death encode\n");
 				EventDeath* EDeath = new EventDeath();
 				EDeath->death_id = stoi(EventData[1]);
 				EDeath->killer_id = stoi(EventData[2]);
 				EDeath->processed = false;
+				EDeath->event_type = TEventDeath;
 				ret.push_back(EDeath);
 				break;
 			}
@@ -74,6 +76,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 				EParticle->y = stof(EventData[3]);
 				EParticle->z = stof(EventData[4]);
 				EParticle->processed = false;
+				EParticle->event_type = TEventParticle;
 				ret.push_back(EParticle);
 				break;
 			}
@@ -83,6 +86,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 				ETimer->time = stoi(EventData[1]);
 				ETimer->processed = false;
 				ret.push_back(ETimer);
+				ETimer->event_type = TEventTimer;
 				break;
 			}
 			case TEventScoreboard:
@@ -110,6 +114,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 				EScoreBoard->player4_gold = stoi(EventData[16]);
 
 				EScoreBoard->processed = false;
+				EScoreBoard->event_type = TEventScoreboard;
 				ret.push_back(EScoreBoard);
 				break;
 			}
@@ -121,6 +126,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 				EHealth->maxhealth = stoi(EventData[3]);
 
 				EHealth->processed = false;
+				EHealth->event_type = TEventUpdateHealth;
 				ret.push_back(EHealth);
 				break;
 			}
@@ -133,6 +139,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 				EEvent->z = stof(EventData[4]);
 
 				EEvent->processed = false;
+				EEvent->event_type = TEventCollisionHappen;
 				ret.push_back(EEvent);
 				break;
 			}
@@ -141,6 +148,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 				EventWaiting* EWaiting = new EventWaiting();
 				EWaiting->number_of_players = stoi(EventData[1]);
 				EWaiting->processed = false;
+				EWaiting->event_type = TEventWaiting;
 				ret.push_back(EWaiting);
 				break;
 			}
@@ -148,6 +156,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 			{
 				EventEmergency* EEmergency = new EventEmergency();
 				EEmergency->processed = false;
+				EEmergency->event_type = TEventEmergency;
 				ret.push_back(EEmergency);
 				break;
 			}

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameInputInterface.h"
 #include "GameCore.h"
+#include "sound.h"
 
 #pragma once
 class StandardGameInput : public GameInputInterface
@@ -14,5 +15,7 @@ public:
 	virtual void VProcessMouseClick(int button, int state, int x, int y);
 	virtual void VProcessPassiveMouse(int x, int y);
 	virtual void VProcessMouse(int x, int y);
+
+	Sound *sound;
 };
 

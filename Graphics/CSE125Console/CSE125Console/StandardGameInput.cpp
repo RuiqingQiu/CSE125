@@ -4,6 +4,7 @@
 
 StandardGameInput::StandardGameInput()
 {
+	sound = new Sound();
 }
 
 
@@ -70,6 +71,11 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 	}
 	else if (key == 'q'){
 		g_pCore->pGamePacketManager->SendShootEvent(g_pCore->pPlayer->playerid);
+		// play explosion sound here
+		float x = 0;
+		float y = 0;
+		float z = 0;
+		sound->playExplosion(x, y, z);
 	}
 	else if (key == 'z'){
 		//g_pCore->pGameView->pViewCamera.rotateLeft();

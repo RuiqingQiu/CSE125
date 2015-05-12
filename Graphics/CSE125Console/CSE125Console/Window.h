@@ -5,6 +5,7 @@
 #include "GameCore.h"
 #include "ShaderSystem.h"
 #include "sound.h" // include the sound
+#include "viewFactory.h"
 
 #ifndef CSE167_Window_h
 #define CSE167_Window_h
@@ -26,6 +27,7 @@ public:
 	static void processPassiveMouse(int x, int y);
 	static void processMouse(int x, int y);
 	static ShaderSystem* shader_system;
+	static viewFactory* factory;
 
 
 };
