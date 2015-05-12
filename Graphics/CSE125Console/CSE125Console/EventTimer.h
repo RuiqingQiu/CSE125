@@ -4,6 +4,7 @@ class EventTimer :
 	public EventInfo
 {
 public:
+	int time;
 	EventTimer();
 	~EventTimer();
 };

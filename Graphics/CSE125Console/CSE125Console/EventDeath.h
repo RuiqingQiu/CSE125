@@ -6,7 +6,8 @@ class EventDeath : public EventInfo
 public:
 	EventDeath();
 	~EventDeath();
-	int cid;
+	int death_id;
+	int killer_id;
 };
 
 #endif

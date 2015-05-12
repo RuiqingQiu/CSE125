@@ -2,6 +2,16 @@
 #include "PacketDecoder.h"
 #include "Definition.h"
 #include "EventDeath.h"
+#include "EventDeath.h"
+#include "EventParticle.h"
+#include "EventTimer.h"
+#include "EventScoreboard.h"
+#include "EventHealth.h"
+#include "EventCollision.h"
+#include "EventWaiting.h"
+#include "EventEmergency.h"
+
+
 #define RAD_TO_DEGREE_MULT 57.2957795
 
 PacketDecoder::PacketDecoder()
@@ -50,23 +60,98 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 			case TEventDeath:
 			{
 				EventDeath* EDeath = new EventDeath();
-				EDeath->cid = stoi(EventData[1]);
+				EDeath->death_id = stoi(EventData[1]);
+				EDeath->killer_id = stoi(EventData[2]);
 				EDeath->processed = false;
 				ret.push_back(EDeath);
 				break;
 			}
 			case TEventParticle:
 			{
+				EventParticle* EParticle = new EventParticle();
+				EParticle->particle_id = stoi(EventData[1]);
+				EParticle->x = stof(EventData[2]);
+				EParticle->y = stof(EventData[3]);
+				EParticle->z = stof(EventData[4]);
+				EParticle->processed = false;
+				ret.push_back(EParticle);
 				break;
 			}
 			case TEventTimer:
 			{
+				EventTimer* ETimer = new EventTimer();
+				ETimer->time = stoi(EventData[1]);
+				ETimer->processed = false;
+				ret.push_back(ETimer);
 				break;
 			}
 			case TEventScoreboard:
 			{
+				EventScoreboard* EScoreBoard = new EventScoreboard();
+				EScoreBoard->player1id = stoi(EventData[1]);
+				EScoreBoard->player1_takedown = stoi(EventData[2]);
+				EScoreBoard->player1_death = stoi(EventData[3]);
+				EScoreBoard->player1_gold = stoi(EventData[4]);
+
+
+				EScoreBoard->player2id = stoi(EventData[5]);
+				EScoreBoard->player2_takedown = stoi(EventData[6]);
+				EScoreBoard->player2_death = stoi(EventData[7]);
+				EScoreBoard->player2_gold = stoi(EventData[8]);
+
+				EScoreBoard->player3id = stoi(EventData[9]);
+				EScoreBoard->player3_takedown = stoi(EventData[10]);
+				EScoreBoard->player3_death = stoi(EventData[11]);
+				EScoreBoard->player3_gold = stoi(EventData[12]);
+
+				EScoreBoard->player4id = stoi(EventData[13]);
+				EScoreBoard->player4_takedown = stoi(EventData[14]);
+				EScoreBoard->player4_death = stoi(EventData[15]);
+				EScoreBoard->player4_gold = stoi(EventData[16]);
+
+				EScoreBoard->processed = false;
+				ret.push_back(EScoreBoard);
 				break;
 			}
+			case TEventUpdateHealth:
+			{
+				EventHealth* EHealth = new EventHealth();
+				EHealth->player1id = stoi(EventData[1]);
+				EHealth->health = stoi(EventData[2]);
+				EHealth->maxhealth = stoi(EventData[3]);
+
+				EHealth->processed = false;
+				ret.push_back(EHealth);
+				break;
+			}
+			case TEventCollisionHappen:
+			{
+				EventCollision* EEvent = new EventCollision();
+				EEvent->collision_type = stoi(EventData[1]);
+				EEvent->x = stof(EventData[2]);
+				EEvent->y = stof(EventData[3]);
+				EEvent->z = stof(EventData[4]);
+
+				EEvent->processed = false;
+				ret.push_back(EEvent);
+				break;
+			}
+			case TEventWaiting:
+			{
+				EventWaiting* EWaiting = new EventWaiting();
+				EWaiting->number_of_players = stoi(EventData[1]);
+				EWaiting->processed = false;
+				ret.push_back(EWaiting);
+				break;
+			}
+			case TEventEmergency:
+			{
+				EventEmergency* EEmergency = new EventEmergency();
+				EEmergency->processed = false;
+				ret.push_back(EEmergency);
+				break;
+			}
+
 			default:
 			{
 				//cout << "this is a good fix " << endl;

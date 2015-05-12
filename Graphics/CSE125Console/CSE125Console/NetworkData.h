@@ -18,7 +18,10 @@ enum PacketTypes {
 	INIT_CLIENT = 8,
 	CONFIRM_CONNECTION = 9,
 	BUILD_ROBOT = 10,
-	SHOOT = 11
+	SHOOT = 11,
+	INIT_BUILD = 12,
+	TIMER = 13,
+	BUILD_REQUEST = 14,
 };
 
 struct CPacket {

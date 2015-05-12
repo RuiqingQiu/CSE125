@@ -108,6 +108,18 @@ GameInfoPacket* ClientGame::update()
 
         switch (packet.packet_type) {
 			//cout << packet.data << endl;
+		//Server tells client start build mode , client start build mode
+		case INIT_BUILD:{
+			break;
+		}
+		//client show the time only build mode
+		case TIMER:{
+			break;
+		}
+		//client send build package if they havent done that, time's up
+		case BUILD_REQUEST:{
+			break;
+		}
 		case GAME_STATE:
 				{
 							//printf("client received game state packet from server\n");

@@ -318,6 +318,18 @@
     <ClInclude Include="healthBar.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="EventHealth.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCollision.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEmergency.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventWaiting.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -544,6 +556,18 @@
     </ClCompile>
     <ClCompile Include="healthBar.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHealth.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventCollision.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventEmergency.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventWaiting.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

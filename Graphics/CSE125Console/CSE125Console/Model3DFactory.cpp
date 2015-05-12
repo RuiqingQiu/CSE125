@@ -33,6 +33,7 @@ Model3DFactory::Model3DFactory()
 	//super battlefield
 	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDINNER, new RenderObject("Assets/BattleFieldInner/inner.obj", "Assets/BattleFieldInner/tex.png", "Assets/BattleFieldInner/normals.png", "Assets/BattleFieldInner/gloss.png", "Assets/BattleFieldInner/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDOUTER, new RenderObject("Assets/BattleFieldOuter/plane.obj", "Assets/BattleFieldOuter/tex.png", "Assets/BattleFieldOuter/normals.png", "Assets/BattleFieldOuter/gloss.png", "Assets/BattleFieldOuter/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(BULLET, new RenderObject("Assets/Bullet/bullet.obj", "Assets/Bullet/tex.png", "Assets/Bullet/normals.png", "Assets/Bullet/gloss.png", "Assets/Bullet/metallic.png")));
 
 }
 
@@ -309,6 +310,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 	}
 	case WALL:{
 		  break;
+	}
+	case BULLET:{
+					Model3D * returnModel = new Model3D(render_obj_map[type]);
+					returnModel->type = BULLET;
+					return returnModel;
+					break;
 	}
 	case BULLET_1:{
 		  break;

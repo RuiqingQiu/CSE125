@@ -17,10 +17,10 @@ void GraphicsTest::displayTest1(GameView* view){
 	object = Model3DFactory::generateObjectWithType(BGun);
 	object->shader_type = EDGE_SHADER;
 	object->edge_highlight = true;
-	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.position = Vector3(0, 0, -25);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
-	object->auto_rotate = true;
+	//object->auto_rotate = true;
 	object->isUpdated = true;
 	object->type = BGun;
 	view->PushGeoNode(object);
@@ -30,7 +30,7 @@ void GraphicsTest::displayTest1(GameView* view){
 	object->localTransform.position = Vector3(-5, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
-	object->auto_rotate = true;
+	//object->auto_rotate = true;
 	object->isUpdated = true;
 	object->type = BasicCube;
 	view->PushGeoNode(object);
@@ -40,7 +40,7 @@ void GraphicsTest::displayTest1(GameView* view){
 	object->localTransform.position = Vector3(-3, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
-	object->auto_rotate = true;
+	//object->auto_rotate = true;
 	object->isUpdated = true;
 	object->type = CrystalCube;
 	view->PushGeoNode(object);
@@ -50,7 +50,7 @@ void GraphicsTest::displayTest1(GameView* view){
 	object->localTransform.position = Vector3(3, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
-	object->auto_rotate = true;
+	//object->auto_rotate = true;
 	object->isUpdated = true;
 	object->type = GlowingCube;
 	view->PushGeoNode(object);
@@ -61,7 +61,7 @@ void GraphicsTest::displayTest1(GameView* view){
 	object->localTransform.position = Vector3(5, 0, -20);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
-	object->auto_rotate = true;
+	//object->auto_rotate = true;
 	object->isUpdated = true;
 	object->type = Mace;
 	view->PushGeoNode(object);
@@ -73,7 +73,7 @@ void GraphicsTest::displayTest1(GameView* view){
 		object->localTransform.position = Vector3(i*2, 0, -20);
 		object->localTransform.rotation = Vector3(0, 0, 0);
 		object->identifier = -1;
-		object->auto_rotate = true;
+		//object->auto_rotate = true;
 		object->isUpdated = true;
 		object->type = i;
 		view->PushGeoNode(object);
@@ -86,7 +86,7 @@ void GraphicsTest::displayTest1(GameView* view){
 		object->localTransform.position = Vector3((i-190)*2, 0, -20);
 		object->localTransform.rotation = Vector3(0, 0, 0);
 		object->identifier = -1;
-		object->auto_rotate = true;
+		//object->auto_rotate = true;
 		object->isUpdated = true;
 		object->type = i;
 		view->PushGeoNode(object);
@@ -99,12 +99,22 @@ void GraphicsTest::displayTest1(GameView* view){
 		object->localTransform.position = Vector3((i-280) * 5, 0, -20);
 		object->localTransform.rotation = Vector3(0, 0, 0);
 		object->identifier = -1;
-		object->auto_rotate = true;
+		//object->auto_rotate = true;
 		object->isUpdated = true;
 		object->type = i;
 		view->PushGeoNode(object);
 	}
 	
+	object = Model3DFactory::generateObjectWithType(BULLET);
+	object->shader_type = REGULAR_SHADER;
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = BULLET;
+	view->PushGeoNode(object);
+
 }
 
 

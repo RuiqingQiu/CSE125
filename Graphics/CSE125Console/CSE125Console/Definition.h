@@ -49,7 +49,7 @@ enum ModelType{
 	CUBEB = 302,
 	WALL = 101,
 	BULLET_1 = 102,
-
+	BULLET=103,
 	//super battlefield
 	BATTLEFIELDINNER = 500,
 	BATTLEFIELDOUTER = 501,
@@ -71,6 +71,9 @@ enum TEventType{
 	TEventParticle = 1,
 	TEventTimer = 2,
 	TEventScoreboard = 3,
-
+	TEventUpdateHealth = 4,
+	TEventCollisionHappen = 5,
+	TEventWaiting = 6,
+	TEventEmergency = 7
 };
 #endif
