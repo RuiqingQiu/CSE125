@@ -208,10 +208,13 @@ void Robot::shoot(std::vector<GameObj*>* projectiles)
 			{
 				g->setBelongTo(this);
 
-				std::cout << "add bullet" << (*it)->getIsWeapon()<< std::endl;
+				std::cout << "add bullet: " << (*it)->getIsWeapon()<< std::endl;
+				std::cout << "Weapon ID: " << (*it)->getId() << std::endl;
+
 				projectiles->push_back(g);
 			}
 	}
+
 }
 
 

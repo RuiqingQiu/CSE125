@@ -163,7 +163,7 @@ int GameLogic::gameStart(){
 		{
 			int j, k;
 		Robot* robot = (Robot*)clientPair.find(i)->second;
-		robot->setState(PS_BUILD);
+		robot->setState(PS_ALIVE);
 		int left = -((int)(robot->getWidth() / 2)) - 1;
 		int right = ((int)(robot->getWidth() / 2)) + 1;
 		int front = -((int)(robot->getDepth() / 2)) - 1;
@@ -182,11 +182,12 @@ int GameLogic::gameStart(){
 					if (k == back)
 					{
 						gameObj->setBlockType(BGUN);
+						gameObj->setWeapon(gameObj->getIsRangedWeapon(), gameObj->getBlockType());
 						//cout << "weapon id: " << gameObj->getId() << endl;
 					}
 					else
 					{
-						gameObj->setBlockType(WOODENCUBE);
+						gameObj->setBlockType(BASICCUBE);
 					}
 				}
 				else
@@ -204,7 +205,9 @@ int GameLogic::gameStart(){
 				for (z = 0; z < 1; z++)
 				{
 					robot->addConstraint(gameObj);
+					
 				}
+				robot->addPart(gameObj);
 
 				gameObjs.push_back(gameObj);
 			}
@@ -283,11 +286,12 @@ void GameLogic::prePhyLogic(){
 					   std::vector<GameObj*> projectiles;
 					   r->shoot(&projectiles);
 					   std::vector<GameObj*>::iterator it;
+					   cout << "size of projectiles" << projectiles.size() << endl;
 					   for (it = projectiles.begin(); it != projectiles.end(); it++)
 					   {
-						   cout << gameObjs.size() << endl;
+						   cout << "before push back:" << gameObjs.size() << endl;
 						   gameObjs.push_back((*it));
-						   cout << gameObjs.size() << endl;
+						   cout << "after push back:" << gameObjs.size() << endl;
 						   gamePhysics->createPhysicsProjectile((Projectile*)(*it));// &objCollisionPair, (*it).second);
 						}
 						break;

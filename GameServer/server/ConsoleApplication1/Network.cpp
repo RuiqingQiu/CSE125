@@ -341,7 +341,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						  ObjectEvents * e = new ObjectEvents(BUILD_ROBOT);
 						  
 							  string parseData = string(packet.data);
-							  cout << parseData << endl;
+							  //cout << parseData << endl;
 							  vector<string> splitByObject = vector<string>();
 						  splitByObject.push_back("");
 						  
@@ -379,7 +379,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 								  //std::cout << token << std::endl;
 								  cid = stoul(token);
 								  e->setCid(cid);
-								  cout << cid << endl;
+								  //cout << cid << endl;
 								  objectInfo.erase(0, pos  + 1);
 									  					   //Object ID
 								  pos = objectInfo.find(" ");
@@ -468,23 +468,23 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 									  matrix.setEulerYPR(zRot, yRot, xRot);
 									  GameObj* object;
 									  btQuaternion rotations = btQuaternion();//zRot, yRot, xRot);
-									  cout << "default rotations: x: " << rotations.x() << " y:" << rotations.y() << "  z: " << rotations.z() << endl;
-									  cout << "rotations: getx: " << rotations.getX() << " gety:" << rotations.getY() << "  getz: " << rotations.getZ() << endl;
+									  //cout << "default rotations: x: " << rotations.x() << " y:" << rotations.y() << "  z: " << rotations.z() << endl;
+									  //cout << "rotations: getx: " << rotations.getX() << " gety:" << rotations.getY() << "  getz: " << rotations.getZ() << endl;
 									  //rotations.setEulerZYX(zRot, yRot, xRot);
 									  matrix.getRotation(rotations);
 									 
-									  cout << "yaw : " << yRot << endl;
+									  //cout << "yaw : " << yRot << endl;
 
 									  
 
 									  //btScalar yaw;
 									  
-									  cout << "rotations: x: " << rotations.x() << " y:" << rotations.y() << "  z: "<< rotations.z() << "w " << rotations.w() << endl;
-									  cout << "rotations: getx: " << rotations.getX() << " gety:" << rotations.getY() << "  getz: " << rotations.getZ() << endl;
-									  cout << " objID: " << objId << endl;
+									 // cout << "rotations: x: " << rotations.x() << " y:" << rotations.y() << "  z: "<< rotations.z() << "w " << rotations.w() << endl;
+									  //cout << "rotations: getx: " << rotations.getX() << " gety:" << rotations.getY() << "  getz: " << rotations.getZ() << endl;
+									  //cout << " objID: " << objId << endl;
 									  //(double x, double y, double z, double qX, double qY, double qZ, double qW, double mass, double width, double height, double depth)
 								     if (objId == 0) {
-										 cout << " objID == 0 " << endl;
+										 //cout << " objID == 0 " << endl;
 
 										object = new Robot((int)cid, "Player");
 										
@@ -504,7 +504,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 									  }
 									else
 									{
-										cout << "not robot y: " << rotations.y() << " w " << rotations.w() << endl;
+										//cout << "not robot y: " << rotations.y() << " w " << rotations.w() << endl;
 										object = new GOBox(xPos, yPos, zPos, rotations.x(), rotations.y(), rotations.z(), 1, 10, 1, 1, 1);
 										object->setIsRobot(0);
 										object->setCollisionType(C_ROBOT_PARTS);
@@ -543,7 +543,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 
 	if (gameObjs == nullptr)
 	{
-		std::cout << "NULL" << endl;
+		//std::cout << "NULL" << endl;
 		return temp;
 	}
 
@@ -552,7 +552,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 	{
 		if ((*i) == nullptr)
 		{
-			std::cout << "NULL" << endl;
+			//std::cout << "NULL" << endl;
 			break;
 		}
 
@@ -605,9 +605,9 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			btScalar yaw = 0, pitch = 0, roll = 0;
 
 			trans.getBasis().getEulerZYX(yaw, pitch, roll);
-			cout << "other yaw z rotation : " << yaw << endl;
+			/*cout << "other yaw z rotation : " << yaw << endl;
 			cout << "other pitch y  : " << pitch << endl;
-			cout << "other roll x : " << roll << endl;
+			cout << "other roll x : " << roll << endl;*/
 			temp += to_string((float)roll);
 			temp += ' ';
 			temp += to_string((float)pitch);

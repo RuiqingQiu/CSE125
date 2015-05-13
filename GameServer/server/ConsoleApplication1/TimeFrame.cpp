@@ -42,7 +42,7 @@ void TimeFrame::frameSleep(int milliseconds)
 {
 	//Need to fix this
 	if (milliseconds>0)
-	Sleep(milliseconds);
+ 	Sleep(milliseconds);
 }
 
 int TimeFrame::getCurrentTime(){
