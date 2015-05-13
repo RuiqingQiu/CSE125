@@ -271,6 +271,8 @@
     <ResourceCompile Include="CSE125Console.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="battlefield.frag" />
+    <None Include="battlefield.vert" />
     <None Include="better.frag" />
     <None Include="better.vert" />
     <None Include="blur.frag" />

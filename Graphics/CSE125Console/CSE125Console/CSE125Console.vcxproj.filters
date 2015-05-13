@@ -645,5 +645,11 @@
     <None Include="blur.frag">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
+    <None Include="battlefield.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="battlefield.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
   </ItemGroup>
 </Project>

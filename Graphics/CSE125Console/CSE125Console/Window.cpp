@@ -207,14 +207,14 @@ void Window::initialize(void)
 	view->PushEnvironmentNode(object);
 	*/
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->auto_rotate = false;
 	view->PushEnvironmentNode(object);
 	///////////////////////////
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELDINNER);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->type = BATTLEFIELD;
