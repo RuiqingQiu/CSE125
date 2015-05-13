@@ -21,6 +21,7 @@ public:
 	double getZNorm();
 	double getPlaneConst();
 	btRigidBody* getRigidBody() override;
-	void createRigidBody(std::map< btCollisionObject*, GameObj*> *) override;
+	void createRigidBody() override;// std::map< btCollisionObject*, GameObj*> *) override;
+	GameObj* shoot() override;
 };
 

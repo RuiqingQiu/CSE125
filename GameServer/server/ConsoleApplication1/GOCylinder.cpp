@@ -34,7 +34,7 @@ double GOCylinder::getHeight()
 	return _height;
 }
 
-void GOCylinder::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
+void GOCylinder::createRigidBody()//std::map< btCollisionObject*, GameObj*> * map)
 {
 	btCollisionShape* fallShape = new btCylinderShape(btVector3(this->getRadius(), this->getHeight()/2, this->getRadius()));
 	btDefaultMotionState* fallMotionState =
@@ -49,6 +49,11 @@ void GOCylinder::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 	fallRigidBodyCI.m_linearDamping = 0.2f;
 	fallRigidBodyCI.m_angularDamping = 0.1f;
 	btRigidBody* rb = new btRigidBody(fallRigidBodyCI);
-	map->insert(std::pair<btCollisionObject*, GameObj*>(rb, this));
+	//map->insert(std::pair<btCollisionObject*, GameObj*>(rb, this));
+	rb->setUserPointer(this);
 	this->setRigidBody(rb);
 }
+
+
+
+GameObj* GOCylinder::shoot(){ return nullptr; }

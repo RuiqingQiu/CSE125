@@ -47,7 +47,7 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 	return dynamicsWorld;
 }
 
-void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisionObject*, GameObj*>* objcpair)
+void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)//, std::map< btCollisionObject*, GameObj*>* objcpair)
 {
 	dynamicsWorld->setGravity(btVector3(0,GRAVITY,0));
 	std::vector<GameObj*>::iterator it;
@@ -55,7 +55,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisio
 	{
 		if ((*it)->getIsRobot() != 0)
 		{
-			((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
+			((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3);//, objcpair);
 
 		}
 		/*
@@ -76,7 +76,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj, std::map< btCollisio
 		
 		else
 		{
-		(*it)->createRigidBody(objcpair);
+			(*it)->createRigidBody();// objcpair);
 		dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
 		}
 	}
@@ -114,12 +114,12 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 	//collisionCallback(dynamicsWorld, collisionList);
 }
 
-void GamePhysics::createPhysicsProjectile(GameObj* projectile, std::map< btCollisionObject*, GameObj*>* map, double initForce)
+void GamePhysics::createPhysicsProjectile(Projectile* projectile)//std::map< btCollisionObject*, GameObj*>* map, double initForce)
 {
 
-	projectile->createRigidBody(map);
+	projectile->createRigidBody();// map);
 	dynamicsWorld->addRigidBody(projectile->getRigidBody());
-	btVector3 relativeForce = btVector3(0, 0, initForce);
+	btVector3 relativeForce = btVector3(0, 0, projectile->initForce);
 	btMatrix3x3 boxRot = projectile->getRigidBody()->getWorldTransform().getBasis();
 	btVector3 correctedForce = boxRot * relativeForce;
 	projectile->getRigidBody()->applyCentralImpulse(correctedForce);

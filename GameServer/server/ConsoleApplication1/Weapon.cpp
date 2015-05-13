@@ -21,19 +21,10 @@ double Weapon::getDamage(){
 	return _damage;
 }
 
-GameObj* Weapon::getGameObj()
-{
-	return gameObj;
-}
 
 void Weapon::setDamage(double d)
 {
 	_damage = d;
-}
-
-void Weapon::setGameObj(GameObj* g)
-{
-	gameObj = g;
 }
 
 void Weapon::setRange(int r)
@@ -50,3 +41,4 @@ double Weapon::getSplash()
 {
 	return _splash;
 }
+

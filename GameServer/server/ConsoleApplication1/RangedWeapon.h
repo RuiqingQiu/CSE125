@@ -1,6 +1,5 @@
 #pragma once
 #include "Weapon.h"
-#include "GOBox.h"
 #include "definition.h"
 #include <time.h>
 
@@ -19,7 +18,7 @@ private:
 	double time;
 
 public:
-	RangedWeapon(int, GameObj*);
+	RangedWeapon(int);
 	~RangedWeapon();
 
 	void setAttackSpeed(double);

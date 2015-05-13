@@ -71,7 +71,7 @@ double Robot::getDepth()
 	return _depth;
 }
 
-void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> * map)
+void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth)//, std::map< btCollisionObject*, GameObj*> * map)
 {
 	printf("%i %i %i\n", this->getCollisionType(), this->getIsRobot(), this->getState());
 	//GOBox* boxShape = new GOBox( x,  y,  z,  qX,  qY,  qZ,  qW,  mass,  width,  height,  depth);
@@ -135,9 +135,10 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	this->vehicle = m_pVehicle;
 	//dynamicWorld->addRigidBody(m_pBody, COL_PLAYER, playerCollisions);
 	//dynamicWorld->addRigidBody(m_pBody);
+	m_chassis->setUserPointer(this);
 	dynamicWorld->addRigidBody(m_chassis);
 	dynamicWorld->addAction(m_pVehicle);
-	map->insert(std::pair<btCollisionObject*, GameObj*>(m_chassis, this));
+	//map->insert(std::pair<btCollisionObject*, GameObj*>(m_chassis, this));
 
 	//map->insert(std::pair<btCollisionObject*, GameObj*>(m_pBody, this));
 	//m_pBody->setLinearFactor(btVector3(0, 0, 0));
@@ -182,7 +183,7 @@ for ( i = 0; i < m_pVehicle->getNumWheels(); ++i)
 
 }
 
-void Robot::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
+void Robot::createRigidBody()//std::map< btCollisionObject*, GameObj*> * map)
 {
 	return;
 }
@@ -193,61 +194,27 @@ btRigidBody* Robot::getRigidBody()
 	return this->vehicle->getRigidBody();
 }
 
-std::vector<Weapon*> Robot::getWeapons()
+
+
+
+
+void Robot::shoot(std::vector<GameObj*>* projectiles)
 {
-	return weapons;
-}
-
-
-void Robot::addWeapon(Weapon * w)
-{
-	weapons.push_back(w);
-}
-
-
-
-void Robot::shoot(std::vector<std::pair<GameObj*, double>>* projectiles)
-{
-	std::vector<Weapon*>::iterator it;
-	for (it = weapons.begin(); it != weapons.end(); it++)
+	std::vector<GameObj*>::iterator it;
+	for (it = parts.begin(); it != parts.end(); it++)
 	{
-		if((*it)->getRange() != MELEE)
-		{
-			RangedWeapon* w = (RangedWeapon*)(*it);
-			if (w->readyToShoot())
+			GameObj* g = (*it)->shoot();
+			if (g != nullptr)
 			{
-				double rbDepth = ((GOBox*)w->getGameObj())->getDepth()/2 + w->getPDepth() / 2 + 0.6f;
-				btTransform rbTrans = w->getGameObj()->getRigidBody()->getWorldTransform();
-				btVector3 relativeDisplacement = btVector3(0, 0, -rbDepth);
-				btVector3 boxRot = rbTrans.getBasis()[2];
-				boxRot.normalize();
-				btVector3 correctedDisplacement = boxRot * -rbDepth; // /2
-				double x = rbTrans.getOrigin().getX() + correctedDisplacement.getX();// + 0.5 - w->getPWidth();
-				double y = rbTrans.getOrigin().getY() + correctedDisplacement.getY();
-				double z = rbTrans.getOrigin().getZ() + correctedDisplacement.getZ();
+				g->setBelongTo(this);
 
-				GameObj* proj = new GOBox(x, y, z, rbTrans.getRotation().getX(), rbTrans.getRotation().getY(), rbTrans.getRotation().getZ(), rbTrans.getRotation().getW(),
-					w->getPMass(), w->getPWidth(), w->getPHeight(), w->getPDepth());
-				proj->setCollisionType(C_PROJECTILE);
-				proj->setDamage(w->getDamage());
-				proj->setBelongTo(this);
-				proj->setBlockType(w->getPBlockType());
-				projectiles->push_back(std::make_pair(proj, w->getPInitForce()));
-				w->setLastShot();
+				std::cout << "add bullet" << (*it)->getIsWeapon()<< std::endl;
+				projectiles->push_back(g);
 			}
-		}
 	}
 }
 
-void Robot::clearWeapons()
-{
-	weapons.clear();
-}
 
-void Robot::setWeapons(std::vector<Weapon*> w)
-{
-	weapons = w;
-}
 
 
 
@@ -292,3 +259,12 @@ Robot* Robot::getDiedTo()
 {
 	return diedTo;
 }
+
+
+
+void Robot::setParts(std::vector<GameObj*> p){
+	parts = p;
+
+}
+
+GameObj* Robot::shoot(){ return nullptr; }

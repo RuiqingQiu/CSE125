@@ -1,8 +1,6 @@
 #pragma once
 #include "GameObj.h"
-#include "Projectile.h"
-#include "definition.h"
-class GOBox : public GameObj
+class Projectile: public GameObj
 {
 private:
 	double _width;
@@ -11,8 +9,8 @@ private:
 
 public:
 
-	GOBox(double, double, double, double, double, double, double, double, double, double, double);
-	~GOBox();
+	Projectile(double, double, double, double, double, double, double, double, double, double, double);
+	~Projectile();
 	void setWidth(double);
 	void setHeight(double);
 	void setDepth(double);
@@ -22,4 +20,7 @@ public:
 	btRigidBody* getRigidBody() override;
 	void createRigidBody() override; // std::map< btCollisionObject*, GameObj*> *) override;
 	GameObj* shoot() override;
+	float initForce;
+
 };
+

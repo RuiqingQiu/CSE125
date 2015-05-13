@@ -3,6 +3,8 @@
 #ifndef _GAME_LOGIC_H_
 #define _GAME_LOGIC_H_
 
+#include "Robot.h"
+#include "ObjectEvents.h"
 #include "Network.h"
 #include "GamePhysics.h"
 #include "definition.h"
@@ -40,7 +42,7 @@ private:
 	std::map<int, GameObj *> clientPair;
 	//clear
 
-	std::map< btCollisionObject*, GameObj*> objCollisionPair;
+	//std::map< btCollisionObject*, GameObj*> objCollisionPair;
 	//clear
 
 	//std::vector<Constraint*> constraints;

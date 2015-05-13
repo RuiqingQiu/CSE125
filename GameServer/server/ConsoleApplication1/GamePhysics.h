@@ -1,6 +1,7 @@
 #pragma once
 #include <btBulletDynamicsCommon.h>
 #include "GameObj.h"
+#include "Projectile.h"
 #include "Robot.h"
 #include "GOPlane.h"
 #include "Constraint.h"
@@ -33,9 +34,9 @@ public:
 	btSequentialImpulseConstraintSolver* getSolver();
 	btDiscreteDynamicsWorld* getDynamicsWorld();
 
-	void initWorld(std::vector<GameObj*>*,  std::map< btCollisionObject*, GameObj*>*);
+	void initWorld(std::vector<GameObj*>*);// , std::map< btCollisionObject*, GameObj*>*);
 	void createPhysicsEvent(int, GameObj*);
-	void createPhysicsProjectile(GameObj*, std::map< btCollisionObject*, GameObj*>*, double initForce);
+	void createPhysicsProjectile(Projectile*);//GameObj*, std::map< btCollisionObject*, GameObj*>*, double initForce);
 	void stepSimulation(std::vector<GameObj*>*, std::vector<Collision*> *);
 	static std::vector<Collision*> collisionList;
 

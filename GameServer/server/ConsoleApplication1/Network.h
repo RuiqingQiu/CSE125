@@ -12,6 +12,7 @@
 #include "GOCylinder.h"
 #include "GOPlane.h"
 #include "GERobotDeath.h"
+#include "ObjectEvents.h"
 #include <string>
 
 class Network {

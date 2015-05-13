@@ -1,7 +1,60 @@
 #pragma once
-#include "GameObj.h"
-#include "ObjectEvents.h"
+#ifndef DEFINITION_H
+#define DEFINITION_H
+
+
 # define M_PI  3.14159265358979323846
+
+
+//block types
+enum BLOCK_TYPE
+{
+	BASICCUBE = 0,
+	GLOWINGCUBE = 1,
+	WOODENCUBE = 2,
+	METHCUBE = 3,
+	BGUN = 4,
+	MACE = 5,
+	MALLET = 6,
+	NEEDLE = 7,
+	DISCOUNTWHEEL = 8,
+	TIRE = 9,
+	WOODENWHEEL = 10,
+
+	BATTLEFIELD = 12,
+	THREEBYTHREE_BASIC = 13,
+	THREEBYTHREE_GLOWING = 14,
+	THREEBYTHREE_WOODEN = 15,
+
+	WALL = 101,
+	BULLET_1 = 102,
+
+};
+
+// collision type
+enum COLLISION_TYPE{
+	C_WALLS = 0,
+	C_GROUND = 1,
+	C_ROBOT = 2,
+	C_ROBOT_PARTS = 3,
+	C_PROJECTILE = 4,
+	C_MELEE = 5,
+
+};
+
+// GameObj (physical) types
+enum OBJECT_TYPE
+{
+	PLANE = 0,
+	TRIANGLE = 1,
+	CAPSULE = 2,
+	CONE = 3,
+	CYLINDER = 4,
+	BOX = 5,
+	CLOUD = 6,
+};
+
+
 
 // Packet Types
 enum PacketTypes {
@@ -21,6 +74,13 @@ enum PacketTypes {
 	TIMER = 13,
 	BUILD_REQUEST = 14,
 };
+
+enum RANGE{
+	MELEE = 0,
+	MEDIUM_RANGED = 1,
+	FAR_RANGED = 2,
+};
+
 
 
 	//Game Events
@@ -77,3 +137,7 @@ enum PacketTypes {
 
 #define oneStep 0.1
 #define TIMEFRAME 300
+
+
+
+#endif 

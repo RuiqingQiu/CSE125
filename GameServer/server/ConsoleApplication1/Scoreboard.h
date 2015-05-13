@@ -3,9 +3,9 @@
 class Scoreboard
 {
 private:
-	int takedowns[4] = { 0 };
-	int deaths[4] = { 0 };
-	int gold[4] = { 100 };
+	int takedowns[4];
+	int deaths[4];
+	int gold[4];
 	int hasChanged = 0;
 public:
 	Scoreboard();

@@ -1,6 +1,9 @@
 #pragma once
+
+
 #ifndef GAME_OBJ_H
 #define GAME_OBJ_H
+
 
 
 #include <map>
@@ -9,56 +12,13 @@
 #include "Constraint.h"
 #include <iostream>
 #include <time.h>
+#include "MeleeWeapon.h"
+#include "RangedWeapon.h"
+#include "Weapon.h"
 
 #define DEATH_DELAY 5
 
-//block types
-enum BLOCK_TYPE
-{
-	BASICCUBE = 0,
-	GLOWINGCUBE = 1,
-	WOODENCUBE = 2,
-	METHCUBE = 3,
-	BGUN = 4,
-	MACE = 5,
-	MALLET = 6,
-	NEEDLE = 7,
-	DISCOUNTWHEEL = 8,
-	TIRE = 9,
-	WOODENWHEEL = 10,
 
-	BATTLEFIELD = 12,
-	THREEBYTHREE_BASIC = 13,
-	THREEBYTHREE_GLOWING = 14,
-	THREEBYTHREE_WOODEN = 15,
-
-	WALL = 101,
-	BULLET_1 = 102,
-
-};
-
-// collision type
-enum COLLISION_TYPE{
-	C_WALLS = 0,
-	C_GROUND = 1,
-	C_ROBOT = 2,
-	C_ROBOT_PARTS = 3,
-	C_PROJECTILE = 4,
-	C_MELEE = 5,
-
-};
-
-// GameObj (physical) types
-enum OBJECT_TYPE
-{
-	PLANE = 0,
-	TRIANGLE = 1,
-	CAPSULE = 2,
-	CONE = 3,
-	CYLINDER = 4,
-	BOX = 5,
-	CLOUD = 6,
-};
 
 class GameObj
 {
@@ -80,11 +40,9 @@ private:
 	int _blockType;
 	double _mass;
 	int _isRobot = 0;
+	int	_isRanged = 0;
 	int _collisionType;
-	int _isWeapon = 0;
-	int _weaponType =0;
-	int _isRangedWeapon = 0;
-	double _damage = 0;
+
 	btRigidBody* rigidBody;
 		//constraints
 	int below_id = -1;
@@ -93,6 +51,11 @@ private:
 	int front_id = -1;
 	int back_id = -1;
 	int buildObj_id; //this is my id
+
+
+
+
+
 
 	clock_t deathTimer;
 
@@ -103,6 +66,10 @@ private:
 protected:
 	double _health;
 	double _maxHealth;
+	int _isWeapon = 0;
+	double _damage = 0;
+	double _initForce;
+	Weapon* weapon;
 
 public:
 	static unsigned int _totalId;
@@ -113,13 +80,16 @@ public:
 	GameObj(double, double, double, double, double, double, double, int, double);
 	~GameObj();
 
-
+	void setInitForce(double);
+	double getInitForce();
 
 	void setLeftID(int);
 	void setRightID(int);
 	void setFrontID(int);
 	void setBackID(int);
 	void setBelowID(int);
+
+	virtual GameObj* shoot() = 0;
 
 	int getIsWheel();
 	void setImmediateDeleted();
@@ -153,6 +123,7 @@ public:
 	double getRotX();
 	double getRotY();
 	double getRotZ();
+	Weapon* getWeapon();
 
 	void setDamage(double);
 	double getDamage();
@@ -169,7 +140,7 @@ public:
 	void setMass(double);
 	void setRigidBody(btRigidBody*);
 	btRigidBody* getRB();
-	virtual void createRigidBody(std::map< btCollisionObject*, GameObj*>*) = 0;
+	virtual void createRigidBody() = 0;// std::map< btCollisionObject*, GameObj*>*) = 0;
 	void setRotX(double);
 	void setRotY(double);
 	void setRotZ(double);
@@ -182,7 +153,7 @@ public:
 	void setBelongTo(GameObj*);
 	GameObj* getBelongTo();
 	Constraint* addConstraint(GameObj*);
-	int deleteConstraints(std::map< btCollisionObject*, GameObj*>*);
+	int deleteConstraints();// std::map< btCollisionObject*, GameObj*>*);
 	int deleteInvalidConstraints();
 	std::vector<Constraint *>* getConstraints();
 
@@ -200,6 +171,8 @@ public:
 	double getMaxHealth();
 
 	double applyDamage(double);
+
+	void setWeapon(int meleeorranged, int weapontype);
 
 };
 

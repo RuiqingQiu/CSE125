@@ -1,12 +1,11 @@
 #include "MeleeWeapon.h"
 
-MeleeWeapon::MeleeWeapon(int type, GameObj* g)
+MeleeWeapon::MeleeWeapon(int type)
 {
-	setGameObj(g);
+
 	double damage;
 	double splash;
 	_type = type;
-	g->setIsWeapon();
 
 	switch (type)
 	{
@@ -25,13 +24,17 @@ MeleeWeapon::MeleeWeapon(int type, GameObj* g)
 	setDamage(damage);
 	setSplash(splash);
 	setRange(MELEE);
-	g->setDamage(damage);
 }
 
 
 MeleeWeapon::~MeleeWeapon()
 {
 }
+
+//GameObj* MeleeWeapon::shoot(btTransform * trans)
+//{
+//	return nullptr;
+//}
 
 
 

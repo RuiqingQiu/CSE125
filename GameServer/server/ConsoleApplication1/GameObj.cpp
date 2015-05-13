@@ -31,7 +31,7 @@ GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, do
 GameObj::~GameObj(){
 	delete rigidBody;
 
-};
+}
 
 double GameObj::getX(){
 	return _x;
@@ -76,6 +76,7 @@ double GameObj::getqW(){
 unsigned int GameObj::getId(){
 	return _id;
 }
+
 
 int GameObj::getIsWheel()
 {
@@ -179,7 +180,8 @@ void GameObj::setBlockType(int bType)
 	}
 	case BGUN:
 	{
-				 _isWeapon = 1; _isRangedWeapon = 1;
+				 _isWeapon = 1;
+				 _isRanged = 1;
 				 _health = 15;
 				 _mass = 20;
 					  break;
@@ -264,6 +266,11 @@ GameObj* GameObj::getBelongTo()
 	return _belongTo;
 }
 
+int GameObj::getIsRangedWeapon()
+{
+	return _isRanged;
+}
+
 Constraint* GameObj::addConstraint(GameObj* o)
 {
 	    btFixedConstraint *joint6DOF;
@@ -286,6 +293,14 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		this->getRigidBody()->getMotionState()->getWorldTransform(frameInA);
 		o->getRigidBody()->getMotionState()->getWorldTransform(frameInB);
 
+		btVector3 vA = frameInA.getOrigin();
+		btTransform globalTrans;
+		globalTrans.setIdentity();
+		globalTrans.setOrigin(vA);
+
+
+		localA = frameInA.inverse() * globalTrans;
+		localB = frameInB.inverse() * globalTrans;
 		/*btScalar yawA, pA, rA, yawB, pB, rB;
 		frameInA.getBasis().getEulerZYX(yawA, pA, rA);
 		frameInB.getBasis().getEulerZYX(yawB, pB, rB);
@@ -296,23 +311,21 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		//localA.setOrigin(frameInA.getOrigin());
 		//localB.setOrigin(frameInB.getOrigin());
 		//a
-		btMatrix3x3 matrix;
-		matrix.setEulerZYX(-az, -ay, -ax);
-		localA.setOrigin(matrix*localpointinA);
+		//btMatrix3x3 matrix;
+		//matrix.setEulerZYX(-az, -ay, -ax);
+		//localA.setOrigin(matrix*localpointinA);
 
 		//b
-		btMatrix3x3 matrix;
-		matrix.setEulerZYX(-bz, -by, -bx);
-		localA.setOrigin(matrix*localpointinA);
+		//btMatrix3x3 matrix;
+		//matrix.setEulerZYX(-bz, -by, -bx);
+		//localA.setOrigin(matrix*localpointinA);
 		//
-		localA.setOrigin(btVector3(this->getX() - centerX, this->getY() - centerY, this->getZ() - centerZ));
+		//localA.setOrigin(btVector3(this->getX() - centerX, this->getY() - centerY, this->getZ() - centerZ));
 
-		localB.setOrigin(btVector3(o->getX() - centerX, o->getY() - centerY, o->getZ() - centerZ));
+		//localB.setOrigin(btVector3(o->getX() - centerX, o->getY() - centerY, o->getZ() - centerZ));
 		
 		//localA.setRotation(frameInA.getRotation());
 		//localB.setRotation(frameInB.getRotation());
-
-
 
 
 		//joint6DOF = new btFixedConstraint(*(this->getRigidBody()), *(o->getRigidBody()), frameInA, frameInB);
@@ -345,7 +358,7 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		return c;
 }
 
-int GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
+int GameObj::deleteConstraints()//std::map< btCollisionObject*, GameObj*>* pair)
 {
 	std::vector<Constraint*>::iterator it;
 	int ret = 0;
@@ -355,11 +368,13 @@ int GameObj::deleteConstraints(std::map< btCollisionObject*, GameObj*>* pair)
 		GameObj* other;
 		if (&c->_joint6DOF->getRigidBodyA() == this->getRigidBody())
 		{
-			other = pair->find(&c->_joint6DOF->getRigidBodyB())->second;
+			other = (GameObj*)(&(c->_joint6DOF->getRigidBodyB()))->getUserPointer();
+				//pair->find(&c->_joint6DOF->getRigidBodyB())->second;
 		}
 		else
 		{
-			other = pair->find(&c->_joint6DOF->getRigidBodyA())->second;
+			other = (GameObj*) (&(c->_joint6DOF->getRigidBodyA()))->getUserPointer();
+				//pair->find(&c->_joint6DOF->getRigidBodyA())->second;
 		}
 
 		//delete(c->_joint6DOF);
@@ -508,7 +523,31 @@ int GameObj::getBuildID()
 {
 	return buildObj_id;
 }
-int GameObj::getIsRangedWeapon()
+
+
+Weapon* GameObj::getWeapon(){
+	return weapon;
+}
+
+
+void GameObj::setWeapon(int mor, int weapontype)
 {
-	return _isRangedWeapon;
+	if (mor != MELEE)
+	{
+		weapon = new MeleeWeapon(weapontype);
+	}
+	else
+	{
+		weapon = new RangedWeapon(weapontype);
+	}
+	setIsWeapon();
+}
+
+void GameObj::setInitForce(double d)
+{
+	_initForce = d;
+}
+double GameObj::getInitForce()
+{
+	return _initForce;
 }

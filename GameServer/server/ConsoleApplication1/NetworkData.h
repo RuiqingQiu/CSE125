@@ -2,7 +2,6 @@
 #include <string.h>
 #include <iostream>
 #include <vector>
-#include "GameObj.h"
 #include "definition.h"
 
 

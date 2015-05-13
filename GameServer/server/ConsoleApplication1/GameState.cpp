@@ -15,7 +15,7 @@ GameState::GameState()
 	init2map[ADDCLIENT] = INIT_STATE3;
 
 	init3map[WAIT] = INIT_STATE3;
-	init3map[ADDCLIENT] = INIT_BUILD;
+	init3map[ADDCLIENT] = INIT_BUILD_STATE;
 
 	initbuildmap[0] = BUILD_STATE;
 
@@ -44,7 +44,7 @@ GameState::GameState()
 	STATEMAP[GAME_STATE0] = gamemap;
 	STATEMAP[CLEAR_STATE] = clearmap;
 	STATEMAP[END_STATE] = endmap;
-	STATEMAP[INIT_BUILD] = initbuildmap;
+	STATEMAP[INIT_BUILD_STATE] = initbuildmap;
 
 
 

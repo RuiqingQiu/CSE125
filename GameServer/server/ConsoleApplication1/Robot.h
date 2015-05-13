@@ -1,7 +1,5 @@
 #pragma once
 #include "GameObj.h"
-#include "RangedWeapon.h"
-#include "MeleeWeapon.h"
 
 enum PLAYER_STATE {
 	PS_BUILD = 0,
@@ -16,7 +14,6 @@ private:
 	int _deaths;
 	char* _name;
 	btRaycastVehicle *vehicle;
-	std::vector<Weapon *> weapons ;
 	double _width;
 	double _height;
 	double _depth;
@@ -53,20 +50,19 @@ public:
 	int getTakeDowns();
 	int getDeaths();
 	char* getName();
-	std::vector<Weapon*> getWeapons();
-	void setWeapons(std::vector<Weapon*>);
-	void addWeapon(Weapon *);
-	void shoot(std::vector<std::pair<GameObj*, double>>*);
+	GameObj* shoot() override;
+	void shoot(std::vector<GameObj*>*);
 	void clearWeapons();
 
 	void addPart(GameObj*);
 	std::vector<GameObj*> getParts();
 
 	btRaycastVehicle * getVehicle();
-	void createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth, std::map< btCollisionObject*, GameObj*> *);
-	void createRigidBody(std::map< btCollisionObject*, GameObj*> *);
+	void createVehicle(btDynamicsWorld* dynamicWorld, double width, double height, double depth);// , std::map< btCollisionObject*, GameObj*> *);
+	void createRigidBody();// std::map< btCollisionObject*, GameObj*> *);
 	btRigidBody* getRigidBody() override;
 	void nextState();
+	void setParts(std::vector<GameObj*> );
 	int getState();
 	void setState(int);
 };

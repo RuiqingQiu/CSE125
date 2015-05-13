@@ -41,6 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -87,6 +88,9 @@
     <ClInclude Include="GameEvents.h" />
     <ClInclude Include="GERobotDeath.h" />
     <ClInclude Include="MeleeWeapon.h" />
+    <ClInclude Include="Network.h" />
+    <ClInclude Include="NetworkData.h" />
+    <ClInclude Include="NetworkServices.h" />
     <ClInclude Include="ObjectEvents.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObj.h" />
@@ -98,9 +102,7 @@
     <ClInclude Include="GOCylinder.h" />
     <ClInclude Include="GOPlane.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="Network.h" />
-    <ClInclude Include="NetworkData.h" />
-    <ClInclude Include="NetworkServices.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="resource.h" />
@@ -121,6 +123,8 @@
     <ClCompile Include="GameEvents.cpp" />
     <ClCompile Include="GERobotDeath.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
+    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="ObjectEvents.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObj.cpp" />
@@ -132,8 +136,7 @@
     <ClCompile Include="GOCylinder.cpp" />
     <ClCompile Include="GOPlane.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Network.cpp" />
-    <ClCompile Include="NetworkServices.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="ServerCore.cpp" />

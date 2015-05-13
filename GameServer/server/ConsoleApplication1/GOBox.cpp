@@ -12,7 +12,44 @@ GOBox::~GOBox()
 {
 
 }
+GameObj* GOBox::shoot()
+{
+	if (getIsWeapon())
+	{
+		Weapon* w = getWeapon();
 
+		if (getIsRangedWeapon()){
+			
+
+
+			double rbDepth = getDepth() / 2 + 0.6f;
+			btTransform* rbTrans = &getRigidBody()->getWorldTransform();
+			btVector3 relativeDisplacement = btVector3(0, 0, -rbDepth);
+			btVector3 boxRot = rbTrans->getBasis()[2];
+			boxRot.normalize();
+			btVector3 correctedDisplacement = boxRot * -rbDepth; // /2
+			double x = rbTrans->getOrigin().getX() + correctedDisplacement.getX();// + 0.5 - w->getPWidth();
+			double y = rbTrans->getOrigin().getY() + correctedDisplacement.getY();
+			double z = rbTrans->getOrigin().getZ() + correctedDisplacement.getZ();
+
+			if (((RangedWeapon *)w)->readyToShoot())
+			{
+
+				GameObj* proj = new Projectile(rbTrans->getOrigin().getX(), rbTrans->getOrigin().getY(), rbTrans->getOrigin().getZ(), rbTrans->getRotation().getX(), rbTrans->getRotation().getY(), rbTrans->getRotation().getZ(), rbTrans->getRotation().getW(),
+					((RangedWeapon *)w)->getPMass(), ((RangedWeapon *)w)->getPWidth(), ((RangedWeapon *)w)->getPHeight(), ((RangedWeapon *)w)->getPDepth());
+				proj->setCollisionType(C_PROJECTILE);
+				proj->setDamage(getDamage());
+				proj->setBlockType(((RangedWeapon *)w)->getPBlockType());
+
+				((RangedWeapon *)w)->setLastShot();
+				((Projectile*)proj)->initForce = ((RangedWeapon *)w)->getPInitForce();
+				return proj;
+			}
+
+		}
+
+	}
+}
 void GOBox::setWidth(double width)
 {
 	_width = width;
@@ -44,7 +81,7 @@ btRigidBody* GOBox::getRigidBody()
 }
 
 
-void GOBox::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
+void GOBox::createRigidBody()//std::map< btCollisionObject*, GameObj*> * map)
 {
 	btCollisionShape* fallShape = new btBoxShape(btVector3(this->getWidth()/2, this->getHeight()/2, this->getDepth()/2));
 	btDefaultMotionState* fallMotionState =
@@ -58,6 +95,7 @@ void GOBox::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 	fallRigidBodyCI.m_linearDamping = 0.2f;
 	fallRigidBodyCI.m_angularDamping = 0.1f;
 	btRigidBody* rb = new btRigidBody(fallRigidBodyCI);
-	map->insert(std::pair<btCollisionObject*, GameObj*> (rb, this));
+	//map->insert(std::pair<btCollisionObject*, GameObj*> (rb, this));
+	rb->setUserPointer(this);
 	this->setRigidBody(rb);
 }

@@ -37,7 +37,7 @@ double GOCapsule::getHeight()
 }
 
 
-void GOCapsule::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
+void GOCapsule::createRigidBody()// std::map< btCollisionObject*, GameObj*> * map)
 {
 	btCollisionShape* fallShape = new btCapsuleShape(this->getRadius(), this->getHeight());
 	btDefaultMotionState* fallMotionState =
@@ -51,6 +51,10 @@ void GOCapsule::createRigidBody(std::map< btCollisionObject*, GameObj*> * map)
 	fallRigidBodyCI.m_linearDamping = 0.2f;
 	fallRigidBodyCI.m_angularDamping = 0.1f;
 	btRigidBody* rb = new btRigidBody(fallRigidBodyCI);
-	map->insert(std::pair<btCollisionObject*, GameObj*>(rb, this));
+	//map->insert(std::pair<btCollisionObject*, GameObj*>(rb, this));
+	rb->setUserPointer(this);
 	this->setRigidBody(rb);
 }
+
+
+GameObj* GOCapsule::shoot(){ return nullptr; }

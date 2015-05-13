@@ -1,10 +1,9 @@
 #include "RangedWeapon.h"
+#include <iostream>
 
 
-RangedWeapon::RangedWeapon(int type, GameObj* g)
+RangedWeapon::RangedWeapon(int type)
 {
-	setGameObj(g);
-	g->setIsWeapon();
 	_type = type;
 	lastShot = clock();
 
@@ -115,3 +114,4 @@ void RangedWeapon::setLastShot()
 	
 	lastShot = clock();
 }
+
