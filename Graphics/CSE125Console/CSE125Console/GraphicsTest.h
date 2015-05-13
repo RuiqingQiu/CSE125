@@ -10,6 +10,7 @@ public:
 	GraphicsTest();
 	~GraphicsTest();
 	void displayTest1(GameView* view);
+	void displayTest2(GameView* view);
 };
 #endif
 

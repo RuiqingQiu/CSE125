@@ -8,12 +8,13 @@
 #include "tiny_obj_loader.h"
 #include <GL/glut.h>
 #include "RenderObject.h"
+#include "Materials.h"
 class Model3D: public GeoNode
 {
 public:
 	//If auto rotate for the object
 	bool auto_rotate = false;
-
+	Materials material;
 	//If require two pass draw
 	bool two_pass_draw = false;
 

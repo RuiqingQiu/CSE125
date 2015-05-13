@@ -123,6 +123,7 @@
     <ClInclude Include="helpMenu.h" />
     <ClInclude Include="listItem.h" />
     <ClInclude Include="mainmenu.h" />
+    <ClInclude Include="Materials.h" />
     <ClInclude Include="Model3DFactory.h" />
     <ClInclude Include="Model3DGroup.h" />
     <ClInclude Include="numbers.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="helpMenu.cpp" />
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
+    <ClCompile Include="Materials.cpp" />
     <ClCompile Include="Model3DFactory.cpp" />
     <ClCompile Include="Model3DGroup.cpp" />
     <ClCompile Include="numbers.cpp" />
@@ -286,6 +288,8 @@
     <None Include="hard_shadow.vert" />
     <None Include="highlight.frag" />
     <None Include="highlight.vert" />
+    <None Include="material.frag" />
+    <None Include="material.vert" />
     <None Include="normal.frag" />
     <None Include="normal.vert" />
     <None Include="reflect.frag" />

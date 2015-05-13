@@ -143,7 +143,8 @@ void Window::initialize(void)
 	GameView* view = new GameView();
 
 	//Comment this for non-local testing
-	gt->displayTest1(view);
+	gt->displayTest2(view);
+	//gt->displayTest1(view);
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);

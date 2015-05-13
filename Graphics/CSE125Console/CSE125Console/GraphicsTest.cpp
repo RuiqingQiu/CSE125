@@ -11,6 +11,33 @@ GraphicsTest::~GraphicsTest()
 {
 }
 
+void GraphicsTest::displayTest2(GameView* view){
+	Model3D* object;
+	object = Model3DFactory::generateObjectWithType(BasicCube);
+	object->shader_type = REFLECTION_SHADER;
+	object->localTransform.position = Vector3(0, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = BGun;
+	view->PushGeoNode(object);
+
+	for (int i = 9; i < 24; i++){
+		object = Model3DFactory::generateObjectWithType(BasicCube);
+		object->shader_type = MATERIAL_SHADER;
+		object->localTransform.position = Vector3(i*5 - 100, 0, -10);
+		object->localTransform.rotation = Vector3(0, 0, 0);
+		object->identifier = -1;
+		//object->auto_rotate = true;
+		object->isUpdated = true;
+		object->type = BGun;
+		view->PushGeoNode(object);
+		object->material.setMaterial_Property(i);
+	}
+}
+
+
 //
 void GraphicsTest::displayTest1(GameView* view){
 	Model3D* object;

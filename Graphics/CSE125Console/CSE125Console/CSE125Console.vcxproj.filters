@@ -67,6 +67,9 @@
     <Filter Include="Source Files\Sound">
       <UniqueIdentifier>{176f2cd1-fbf5-4541-a873-694473cd595b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Light">
+      <UniqueIdentifier>{a9dcfac1-a3f5-45b6-99a4-1cf6d9b5c91f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -330,6 +333,9 @@
     <ClInclude Include="EventWaiting.h">
       <Filter>Source Files\Event\EventPacket</Filter>
     </ClInclude>
+    <ClInclude Include="Materials.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -569,6 +575,9 @@
     <ClCompile Include="EventWaiting.cpp">
       <Filter>Source Files\Event\EventPacket</Filter>
     </ClCompile>
+    <ClCompile Include="Materials.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CSE125Console.rc">
@@ -649,6 +658,12 @@
       <Filter>Source Files\Shader\Group</Filter>
     </None>
     <None Include="battlefield.frag">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="material.vert">
+      <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="material.frag">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
   </ItemGroup>

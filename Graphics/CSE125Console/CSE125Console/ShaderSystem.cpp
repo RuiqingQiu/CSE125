@@ -86,6 +86,7 @@ ShaderSystem::ShaderSystem()
 	loadShaders("normal.vert", "normal.frag");
 	loadShaders("blur.vert", "blur.frag");
 	loadShaders("battlefield.vert", "battlefield.frag");
+	loadShaders("material.vert", "material.frag");
 }
 
 
@@ -144,6 +145,10 @@ void ShaderSystem::BindShader(int type){
 			break;
 		case BATTLEFIELD_SHADER:
 			glUseProgramObjectARB(shader_ids[type]);
+			break;
+		case MATERIAL_SHADER:
+			glUseProgramObjectARB(shader_ids[type]);
+			break;
 		default:
 			cout << "didnt find any shader of this type" << endl;
 			break;
