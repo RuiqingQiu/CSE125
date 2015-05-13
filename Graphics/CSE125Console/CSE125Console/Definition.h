@@ -64,6 +64,7 @@ enum ShaderType{
 	EDGE_SHADER = 5,
 	NORMAL_SHADER = 6,
 	BLUR_SHADER = 7,
+	BATTLEFIELD_SHADER = 8
 };
 
 enum TEventType{
