@@ -144,6 +144,7 @@ void ShaderSystem::BindShader(int type){
 			break;
 		case BATTLEFIELD_SHADER:
 			glUseProgramObjectARB(shader_ids[type]);
+			break;
 		default:
 			cout << "didnt find any shader of this type" << endl;
 			break;

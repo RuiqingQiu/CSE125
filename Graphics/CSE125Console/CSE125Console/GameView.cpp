@@ -94,7 +94,6 @@ void GameView::blur_second_pass(){
 	//List of items that need edge highlight
 	for each (GeoNode* node in NodeList){
 		if (node->blur){
-			cout << "enter here blur" << endl;
 			node->VOnDraw();
 		}
 	}

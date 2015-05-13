@@ -15,7 +15,7 @@ public:
 	void playExplosion(float,float,float); // play the sound 
 	void playMusic();
 	void playSelect(); // play menu selection sound
-	void playGun(); // play gun shot sound
+	void playGun(float,float,float); // play gun shot sound
 
 private:
 	//Init server info here later

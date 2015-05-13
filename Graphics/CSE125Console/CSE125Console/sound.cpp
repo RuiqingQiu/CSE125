@@ -25,7 +25,8 @@ Sound::Sound(){
 	if (!explosionBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading explosion sound effect " << endl;
 	explosionSound.setBuffer(explosionBuffer);
-	explosionSound.setPosition(1, 0, -5);// create a 3d spatioal sound
+	gunSound.play();
+	gunSound.stop();
 
 	// game view gun shot sound
 	tmp = path + "gun.wav";
@@ -50,7 +51,6 @@ Sound::Sound(){
 	if (!music.openFromFile("Payback.wav"))
 		cout << "load music error " << endl;
 	music.setVolume(70); // lower the sound of the background music
-
 }
 
 
@@ -77,13 +77,21 @@ void Sound::playMusic(){
 // This function is used to play sound, don't need to be play continued
 // need user location to play 3d sound
 void Sound::playExplosion(float x, float y,float z){
-	if (explosionSound.getStatus() == sf::Sound::Paused){
-		cout << "Playing " << endl;
+	// for the first time
+	if (explosionSound.getStatus() == sf::Sound::Stopped){
+		cout << "Playing explosion sound " << endl;
 		explosionSound.setPosition(x, y, z);
 		explosionSound.play();
-		explosionSound.pause();
 	}
-}
+	// cannot do sleep for gun sound effect
+	if (explosionSound.getStatus() == sf::Sound::Playing){
+		cout << "Play explosion sound " << endl;
+		explosionSound.stop();
+		explosionSound.setPosition(x, y, z);
+		explosionSound.play();
+	}
+ }
+
 
 // This function is used to play gui menu selection
 void Sound::playSelect(){
@@ -97,7 +105,7 @@ void Sound::playSelect(){
 }
 
 // This function is used to play gun shot sound
-void Sound::playGun(){
+void Sound::playGun(float x, float y, float z){
 	cout << "Enter play gun shot effect " << endl;
 	// for the first time
 	if (gunSound.getStatus() == sf::Sound::Stopped){
@@ -107,6 +115,7 @@ void Sound::playGun(){
 	// cannot do sleep for gun sound effect
 	if (gunSound.getStatus() == sf::Sound::Playing){
 		cout << "Play gun " << endl;
+		gunSound.setPosition(x, y, z);
 		gunSound.stop();
 		gunSound.play();
 	}
