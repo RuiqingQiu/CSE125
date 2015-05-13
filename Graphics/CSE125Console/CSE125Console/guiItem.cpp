@@ -222,3 +222,11 @@ void guiItem::translate(int x, int y) {
 	xPos += x;
 	yPos += y;
 }
+
+int guiItem::getYPos(){
+	return yPos;
+}
+
+int guiItem::getHeight(){
+	return height;
+}

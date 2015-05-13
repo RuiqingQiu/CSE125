@@ -6,6 +6,7 @@
 GameCore* g_pCore = new GameCore();
 float GameCore::width = 512;   //Set window width in pixels here
 float GameCore::height = 512;   //Set window height in pixels here
+
 GameCore::GameCore()
 {
 	pGameView = new GameView();

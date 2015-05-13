@@ -46,6 +46,10 @@ public:
 	virtual void draw();
 	void translate(int x, int y);
 	virtual void rePosition(int x, int y, int w, int h);
+	
+	// getter function
+	int getYPos();
+	int getHeight();
 
 protected:
 	string path;

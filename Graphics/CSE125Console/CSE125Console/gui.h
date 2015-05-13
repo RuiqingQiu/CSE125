@@ -35,6 +35,8 @@ public:
 
 	void addItem(guiItem * item);
 
+	
+
 protected:
 	int width;
 	int height;

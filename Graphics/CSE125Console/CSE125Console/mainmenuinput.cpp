@@ -113,6 +113,9 @@ void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 	default:
 		break;
 	}
+	// set the gamecore player info at the mainmenuinput file
+	g_pCore->pPlayer->name = name;
+	//cout << "robot name is " << g_pCore->pPlayer->name << endl;
 }
 
 

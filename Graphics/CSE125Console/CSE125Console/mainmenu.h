@@ -38,4 +38,5 @@ private:
 
 	int playerReady;
 	bool ready;
+	int letterOffset; // tune the position of the letters
 };
