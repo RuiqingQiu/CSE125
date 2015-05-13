@@ -32,6 +32,8 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 							 printf("Death Event has been received \n");
 							 //Switch back to game view
 							 Window::factory->switchView('1');
+							 //Explosion particle effect
+							 //Explosion sound
 							 break;
 		}
 		case TEventParticle:{
@@ -41,22 +43,26 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		}
 		case TEventTimer:{
 							 printf("time event received \n");
+							 //Change variable in build mode and battle mode
 							 break;
 
 
 		}
 		case TEventScoreboard:{
 								  printf("scoreboard event received\n");
+								  //Change score variables in battle mode and build mode
 								  break;
 
 		}
 		case TEventUpdateHealth:{
 									printf("health event received\n");
+									//Update health bar
 									break;
 
 		}
 		case TEventCollisionHappen:{
 									   printf("collision event received\n");
+									   //Collision sound
 									   break;
 
 		}

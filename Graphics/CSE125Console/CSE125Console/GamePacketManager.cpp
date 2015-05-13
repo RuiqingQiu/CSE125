@@ -2,6 +2,7 @@
 #include "GamePacketManager.h"
 #include <vector>
 
+
 GamePacketManager::GamePacketManager()
 {
 	client = new ClientGame();

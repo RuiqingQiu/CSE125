@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "ClientGame.h"
+#include "GameCore.h"
+
 #define RAD_TO_DEGREE_MULT 57.2957795
 ClientGame::ClientGame(void)
 {
@@ -46,8 +48,8 @@ bool ClientGame::connectToServer(char* ipaddress)
 	CPacket packet;
 
 	packet.packet_type = INIT_CONNECTION;
-	string tmp = "Thomas\n\0";
-	strncpy_s(packet.data, tmp.c_str(), sizeof(packet.data));
+	string player_name = g_pCore->pPlayer->name;
+	strncpy_s(packet.data, player_name.c_str(), sizeof(packet.data));
 	packet.serialize(packet_data);
 
 	NetworkServices::sendMessage(network->ConnectSocket, packet_data, packet_size);
