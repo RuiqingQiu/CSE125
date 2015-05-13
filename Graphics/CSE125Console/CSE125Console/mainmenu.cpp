@@ -14,6 +14,7 @@ mainMenu::mainMenu() : gui() {
 	ready = false;
 	start_w = w * 0.5;
 	start_h = h * 0.53; 
+	letterOffset = 0.0;
 	createButtons();
 }
 
@@ -24,6 +25,7 @@ mainMenu::mainMenu(int w, int h) : gui(w, h) {
 	playerReady = 0;
 	start_w = w * 0.5;
 	start_h = h * 0.53;
+	letterOffset = 0.0;
 	createButtons();
 }
 
@@ -51,7 +53,7 @@ void mainMenu::createButtons() {
 	exitButton->setTexture("menuItem/exit_press.jpg", btnState::PRESSED);
 	exitButton->setScaling(true, true, width, height);
 
-	buttons.push_back(robo);
+	buttons.push_back(robo);// button[0] is robot name
 	buttons.push_back(playButton);
 	buttons.push_back(helpButton);
 	buttons.push_back(exitButton);
@@ -79,25 +81,23 @@ void mainMenu::addLetters(){
 	w = width;
 	h = height;
 	start_w = width * 0.5;
-	start_h = h * 0.53;
+	start_h = h * 0.54;
+	letterOffset = (buttons[0]->getYPos()+ buttons[0]->getHeight()) - ((buttons[0]->getHeight() - 22) / 2) - 24.5; // offset fits now
 
+	// set the gamecore player name at the mainmenuinput file
 	string n = g_pCore->i_pInput->name; // get the name of game core
 	guiLetters.clear(); // clear the guiLetters every time and start over
 	int counter = 0;
 	// loop through the string
 	for (string::iterator it = n.begin(); it != n.end(); ++it) {
-		letters *l = new letters(start_w + counter * span, start_h,22,22); // pass in x,y position and its size
+		letters *l = new letters(start_w + counter * span, letterOffset,22,21.5); // pass in x,y position and its size
 		counter++;
 		l->letterToShow = int(*it) - 97; // from char to array index
 		guiLetters.push_back(l);
 	}
 
-
 	// Deletes the 2nd through 3rd elements (vec[1], vec[2])
 	//guiItems.erase(guiItems.begin() + 1, guiItems.begin() + guiItems.size);
-
-
-	
 	guiItems.clear(); // clear the guiItem to avoid adding elements all more than once
 	guiItems.push_back(backimg); // backimg render first every time
 	for (std::vector<guiItem*> ::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){

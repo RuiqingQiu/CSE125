@@ -24,7 +24,7 @@ void GraphicsTest::displayTest2(GameView* view){
 	view->PushGeoNode(object);
 
 	for (int i = 9; i < 24; i++){
-		object = Model3DFactory::generateObjectWithType(BasicCube);
+		object = Model3DFactory::generateObjectWithType(BGun);
 		object->shader_type = MATERIAL_SHADER;
 		object->localTransform.position = Vector3(i*5 - 100, 0, -10);
 		object->localTransform.rotation = Vector3(0, 0, 0);

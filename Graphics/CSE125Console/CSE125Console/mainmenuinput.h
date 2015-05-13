@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "guiGameInput.h"
+#include "GameCore.h"
 
 #define MAX_NUMBER 15
 
