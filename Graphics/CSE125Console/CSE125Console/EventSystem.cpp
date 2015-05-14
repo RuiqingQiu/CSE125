@@ -55,8 +55,15 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 		}
 		case TEventUpdateHealth:{
-									printf("health event received\n");
 									//Update health bar
+									EventHealth * h = (EventHealth *) event;
+									printf("health event received\n");
+
+									//this is for the GUI display update
+									Window::factory->battlemode->healthDisplay->currentHealth = h->health;
+									Window::factory->battlemode->healthDisplay->maxHealth = h->maxhealth;
+									///////
+
 									break;
 
 		}
