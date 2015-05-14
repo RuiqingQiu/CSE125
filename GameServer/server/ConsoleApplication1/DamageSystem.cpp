@@ -119,8 +119,8 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				}
 				e->setDamage1();
 				Robot* r = (Robot*)o1->getBelongTo();
-				//if (r->applyDamage(o2->getDamage()) < 0)
-				if (r->applyDamage(1000) < 0)
+				if (r->applyDamage(o2->getDamage()) < 0)
+				//if (r->applyDamage(1000) < 0)
 				{
 					r->setDiedTo((Robot*)o2->getBelongTo());
 				}
