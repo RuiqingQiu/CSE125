@@ -43,8 +43,16 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								break;
 		}
 		case TEventTimer:{
+							 EventTimer * t = (EventTimer *)event;
 							 printf("time event received \n");
 							 //Change variable in build mode and battle mode
+
+							 //CHANGE BATTLE MODE ONLY
+							 int sec = t->time % 60;
+							 Window::factory->battlemode->timer->secLeft = sec;
+							 Window::factory->battlemode->timer->minLeft = (t->time - sec) / 60;
+							 /////// end GUI
+
 							 break;
 
 

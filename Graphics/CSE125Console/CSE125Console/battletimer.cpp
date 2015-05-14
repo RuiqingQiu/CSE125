@@ -40,9 +40,9 @@ battleTimer::~battleTimer() {
 }
 
 void battleTimer::createNumbers() {
-	secLeft = BATTLE_MAX_TIME;
+	secLeft = 0;
 	minLeft = MIN;
-	start = std::clock();
+	//start = std::clock();
 
 	int off_comma = (off*3.0) + nSize;
 	for (int i = num_digits; i < BATTLE_NUM_DIGITS; i++) {
@@ -54,10 +54,10 @@ void battleTimer::createNumbers() {
 
 void battleTimer::update(){
 	// convert the time used to second
-	int timeUsed = (std::clock() - start) / CLOCKS_PER_SEC;
+	//int timeUsed = (std::clock() - start) / CLOCKS_PER_SEC;
 	// mod gives the reminder
-	int sec = timeUsed % BATTLE_MAX_TIME; // sec used
-	int min = (timeUsed - sec) / BATTLE_MAX_TIME;// mins used
+	//int sec = timeUsed % BATTLE_MAX_TIME; // sec used
+	//int min = (timeUsed - sec) / BATTLE_MAX_TIME;// mins used
 
 	// if minLeft is less then 0, don't update anymore
 	if (minLeft <= -1){
@@ -66,8 +66,8 @@ void battleTimer::update(){
 	}
 	// if still time left 
 	else{
-		minLeft = MIN - min; // calcualte the min left
-		secLeft = BATTLE_MAX_TIME - sec;
+		//minLeft = MIN - min; // calcualte the min left
+		//secLeft = BATTLE_MAX_TIME - sec;
 	}
 	
 	// update sec first
