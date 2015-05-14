@@ -92,26 +92,29 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 			case TEventScoreboard:
 			{
 				EventScoreboard* EScoreBoard = new EventScoreboard();
-				EScoreBoard->player1id = stoi(EventData[1]);
-				EScoreBoard->player1_takedown = stoi(EventData[2]);
-				EScoreBoard->player1_death = stoi(EventData[3]);
-				EScoreBoard->player1_gold = stoi(EventData[4]);
+				for (int i = 0; i < 5; i++) {
+				}
+
+				EScoreBoard->playerid[0] = stoi(EventData[1]);
+				EScoreBoard->takedowns[0] = stoi(EventData[2]);
+				EScoreBoard->deaths[0] = stoi(EventData[3]);
+				EScoreBoard->gold[0] = stoi(EventData[4]);
 
 
-				EScoreBoard->player2id = stoi(EventData[5]);
-				EScoreBoard->player2_takedown = stoi(EventData[6]);
-				EScoreBoard->player2_death = stoi(EventData[7]);
-				EScoreBoard->player2_gold = stoi(EventData[8]);
+				EScoreBoard->playerid[1] = stoi(EventData[5]);
+				EScoreBoard->takedowns[1] = stoi(EventData[6]);
+				EScoreBoard->deaths[1] = stoi(EventData[7]);
+				EScoreBoard->gold[1] = stoi(EventData[8]);
 
-				EScoreBoard->player3id = stoi(EventData[9]);
-				EScoreBoard->player3_takedown = stoi(EventData[10]);
-				EScoreBoard->player3_death = stoi(EventData[11]);
-				EScoreBoard->player3_gold = stoi(EventData[12]);
+				EScoreBoard->playerid[2] = stoi(EventData[9]);
+				EScoreBoard->takedowns[2] = stoi(EventData[10]);
+				EScoreBoard->deaths[2] = stoi(EventData[11]);
+				EScoreBoard->gold[2] = stoi(EventData[12]);
 
-				EScoreBoard->player4id = stoi(EventData[13]);
-				EScoreBoard->player4_takedown = stoi(EventData[14]);
-				EScoreBoard->player4_death = stoi(EventData[15]);
-				EScoreBoard->player4_gold = stoi(EventData[16]);
+				EScoreBoard->playerid[3] = stoi(EventData[13]);
+				EScoreBoard->takedowns[3] = stoi(EventData[14]);
+				EScoreBoard->deaths[3] = stoi(EventData[15]);
+				EScoreBoard->gold[3] = stoi(EventData[16]);
 
 				EScoreBoard->processed = false;
 				EScoreBoard->event_type = TEventScoreboard;

@@ -9,6 +9,7 @@
 #include "EventCollision.h"
 #include "EventWaiting.h"
 #include "EventEmergency.h"
+#include "GameCore.h"
 
 #include "Window.h"
 EventSystem::EventSystem()
@@ -49,8 +50,26 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 		}
 		case TEventScoreboard:{
+								  EventScoreboard * s = (EventScoreboard *) event;
 								  printf("scoreboard event received\n");
+
 								  //Change score variables in battle mode and build mode
+								  int myID = g_pCore->pPlayer->playerid;
+								  int myScore = s->takedowns[myID] - s->deaths[myID];
+								  
+								  //calculate rank
+								  int rank = 1;
+								  for (int i = 0; i < 4; i++) {
+									  if (i != myID) {
+										  if (myScore < (s->takedowns[i] - s->deaths[i])) {
+											  rank++;
+										  }
+									  }
+								  }
+
+								  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank);
+								  /////// end GUI
+
 								  break;
 
 		}
@@ -62,7 +81,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									//this is for the GUI display update
 									Window::factory->battlemode->healthDisplay->currentHealth = h->health;
 									Window::factory->battlemode->healthDisplay->maxHealth = h->maxhealth;
-									///////
+									/////// end GUI
 
 									break;
 

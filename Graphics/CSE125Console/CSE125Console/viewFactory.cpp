@@ -170,13 +170,13 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 	//can't check from pGameView, so must do in factory
 	//function specific to buildmode
 	if (key == '6') {
-		score->updateScore(1, 0, 0);
+		//score->updateScore(1, 0, 0);
 	}
 	else if (key == '7') {
-		score->updateScore(0, 1, 0);
+		//score->updateScore(0, 1, 0);
 	}
 	else if(key == '8') {
-		score->updateScore(0, 0, 1);
+		//score->updateScore(0, 0, 1);
 	}
 
 	if (viewmode != viewType::BUILD) return;
