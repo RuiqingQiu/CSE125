@@ -12,14 +12,12 @@ varying vec3 ViewDir;
 varying float height_pass;
 uniform mat4 ModelView;
 
-
 void main()
 {
     TexCoords= vec2(gl_TextureMatrix[0] * gl_MultiTexCoord0);
     Normal = normalize( gl_NormalMatrix * gl_Normal);
     Position = gl_ModelViewMatrix * gl_Vertex;
   
-    
     Tangent = normalize(gl_NormalMatrix * vec3(VertexTangent));
     vec3 binormal = normalize(cross(Normal, Tangent)) * VertexTangent.w;
     mat3 toObjectLocal = mat3(

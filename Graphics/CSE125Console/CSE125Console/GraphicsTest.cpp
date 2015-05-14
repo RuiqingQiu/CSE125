@@ -11,6 +11,42 @@ GraphicsTest::~GraphicsTest()
 {
 }
 
+
+void GraphicsTest::displayTest3(GameView* view){
+	Model3D* object;
+	object = Model3DFactory::generateObjectWithType(DESERT);
+	object->shader_type = BATTLEFIELD_SHADER;
+	object->localTransform.position = Vector3(0, -2, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = DESERT;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(ALTMACE);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(5, 2, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = ALTMACE;
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(ALTNEEDLE);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-5, 2, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = ALTNEEDLE;
+	view->PushGeoNode(object);
+}
+
+
+//This is for testing materials
 void GraphicsTest::displayTest2(GameView* view){
 	Model3D* object;
 	object = Model3DFactory::generateObjectWithType(BasicCube);
@@ -22,7 +58,10 @@ void GraphicsTest::displayTest2(GameView* view){
 	object->isUpdated = true;
 	object->type = BGun;
 	view->PushGeoNode(object);
+	
 
+
+	
 	for (int i = 9; i < 24; i++){
 		object = Model3DFactory::generateObjectWithType(BGun);
 		object->shader_type = MATERIAL_SHADER;
@@ -35,6 +74,7 @@ void GraphicsTest::displayTest2(GameView* view){
 		view->PushGeoNode(object);
 		object->material.setMaterial_Property(i);
 	}
+	
 }
 
 

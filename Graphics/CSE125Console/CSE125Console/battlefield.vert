@@ -6,7 +6,7 @@ varying vec3 Normal;
 varying vec2 TexCoords;
 varying vec3 Tangent;
 
-varying vec3 LightDir;
+varying vec3[3] LightDir;
 varying vec3 ViewDir;
 
 varying float height_pass;
@@ -26,10 +26,15 @@ void main()
     Tangent.x, binormal.x, Normal.x,
     Tangent.y, binormal.y, Normal.y,
     Tangent.z, binormal.z, Normal.z);
-    vec4 LightPosition = vec4(0.0, 10.0, 20.0, 1.0);
-    LightDir = normalize(toObjectLocal * (LightPosition.xyz - Position.xyz));
+    vec4 [3] LightPosition;
+	LightPosition[0] =  vec4(0.0, 10.0, 20.0, 1.0);
+	LightPosition[1] =  vec4(10,10,10,1.0);
+	LightPosition[2] =  vec4(-10,10,-10,1.0);
+    LightDir[0] = normalize(toObjectLocal * (LightPosition[0].xyz - Position.xyz));
+	LightDir[1] = normalize(toObjectLocal * (LightPosition[1].xyz - Position.xyz));
+	LightDir[2] = normalize(toObjectLocal * (LightPosition[2].xyz - Position.xyz));
+
     ViewDir = toObjectLocal * normalize(-Position.xyz);
-    //Tangent = vec3(ModelView * VertexTangent);
     
     
     height_pass = height;

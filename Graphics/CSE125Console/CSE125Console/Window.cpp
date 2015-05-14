@@ -29,6 +29,8 @@ int Window::height = 1000;   //Set window height in pixels here
 viewFactory * Window::factory; // factory of gui
 //static Model3DFactory* m_factory;
 ShaderSystem* Window::shader_system;
+LightSystem* Window::light_sytem;
+
 static int counter = 0;
 static Cube* cube;
 static Fire* fire;
@@ -131,6 +133,7 @@ void Window::initialize(void)
 	//Shader part
 	gt = new GraphicsTest();
 	
+	light_sytem = new LightSystem();
 	shader_system = new ShaderSystem();
 	setupFBO();
 	
@@ -144,6 +147,7 @@ void Window::initialize(void)
 
 	//Comment this for non-local testing
 	gt->displayTest2(view);
+	//gt->displayTest3(view);
 	//gt->displayTest1(view);
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
@@ -159,6 +163,15 @@ void Window::initialize(void)
 			view->PushGrassNode(grass);
 		}
 	}
+
+	//Here's for init lights
+	for (int i = -50; i < 50; i+=50){
+		for (int j = -50; j < 50; j+=50){
+			light_sytem->addLight(new Light());
+		}
+	}
+	cout << "number of lights are " << light_sytem->lights.size() << endl;
+
 	//////////////////////////
 	/*
 	object = Model3DFactory::generateObjectWithType(BGun);
@@ -207,6 +220,18 @@ void Window::initialize(void)
 	object->auto_rotate = true;
 	view->PushEnvironmentNode(object);
 	*/
+
+	object = Model3DFactory::generateObjectWithType(DESERT);
+	object->shader_type = BATTLEFIELD_SHADER;
+	object->localTransform.position = Vector3(0, -2, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = DESERT;
+	view->PushEnvironmentNode(object);
+
+	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
 	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, -2, 0);
@@ -221,7 +246,9 @@ void Window::initialize(void)
 	object->type = BATTLEFIELD;
 	//factory->battlemode->PushGeoNode(object);
 	view->PushEnvironmentNode(object);
-	
+	*/
+
+
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	
 	factory->defaultView = view;
@@ -229,7 +256,7 @@ void Window::initialize(void)
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 
-	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, 10);
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
 	
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");

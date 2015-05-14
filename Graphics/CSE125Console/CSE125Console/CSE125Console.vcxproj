@@ -117,6 +117,7 @@
     <ClInclude Include="battletimer.h" />
     <ClInclude Include="healthBar.h" />
     <ClInclude Include="letters.h" />
+    <ClInclude Include="LightSystem.h" />
     <ClInclude Include="mainmenuinput.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="battleView.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="healthBar.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="helpMenu.cpp" />
+    <ClCompile Include="LightSystem.cpp" />
     <ClCompile Include="listItem.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="Materials.cpp" />

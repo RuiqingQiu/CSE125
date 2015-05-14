@@ -216,8 +216,8 @@ void GameView::highlight_second_pass(){
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	Window::light_sytem->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
 	pViewCamera->setUpCamera();
-
 	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
 	Window::shader_system->BindShader(EDGE_SHADER);
 	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "width"), Window::width);
