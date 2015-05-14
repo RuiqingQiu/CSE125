@@ -42,9 +42,11 @@ void healthBar::init() {
 
 void healthBar::update() {
 
-	currentHealth -= 1;
+	//currentHealth -= 1;
 
 	if (currentHealth < 0) currentHealth = maxHealth;
+
+	if (currentHealth > maxHealth) currentHealth = maxHealth;
 
 	healthPercent = currentHealth / maxHealth;
 }
