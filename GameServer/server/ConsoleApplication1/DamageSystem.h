@@ -2,6 +2,7 @@
 #include "Robot.h"
 #include "DamageEvent.h"
 #include <iostream>
+#include "GECollisonHappen.h"
 class DamageSystem
 {
 
@@ -11,7 +12,7 @@ private:
 public:
 	DamageSystem(int);
 	~DamageSystem();
-	void performDamage(GameObj*, GameObj*, DamageEvent*);
+	int performDamage(GameObj*, GameObj*, DamageEvent*);
 };
 
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEvents.h"
+#include <iostream>
 class GETime : public GameEvents
 {
 

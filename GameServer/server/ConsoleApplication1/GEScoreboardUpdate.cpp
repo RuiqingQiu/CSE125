@@ -9,9 +9,12 @@ GEScoreboardUpdate::GEScoreboardUpdate(int t[4], int d[4], int g[4]) :GameEvents
 }
 
 
+
 GEScoreboardUpdate::~GEScoreboardUpdate()
 {
 }
+
+
 
 void GEScoreboardUpdate::to_string(std::string &s)
 {
@@ -27,10 +30,11 @@ void GEScoreboardUpdate::to_string(std::string &s)
 		s += std::to_string(deaths[i]);
 		s += " ";
 		s += std::to_string(gold[i]);
-		if (i!=3)
+		if (i==3)
 		{ 
 			s += "\n";
-		}	
+		}
+		else s += " ";
+		
 	}
-
 }

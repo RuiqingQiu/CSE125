@@ -9,8 +9,9 @@ GameLogic::GameLogic()
 	network = new Network();
 	gamePhysics = new GamePhysics();
 	countDown = new TimeFrame();
+	physicsTimer = new TimeFrame();
 	damageSystem = new DamageSystem(INSTANT_KILL);
-	//scoreboard = new Scoreboard();
+	scoreboard = new Scoreboard();
 	counter = 0;
 }
 
@@ -20,7 +21,7 @@ GameLogic::~GameLogic()
 	delete gamePhysics;
 	delete countDown;
 	delete damageSystem;
-	//delete scoreboard;
+	delete scoreboard;
 
 }
 
@@ -41,8 +42,8 @@ unsigned int GameLogic::waitToConnect()
 	robot->setMass(100);
 	robot->setType(BOX);
 	((Robot*)robot)->setCID(cid);
-	((Robot*)robot)->setMaxHealth(100);
 	robot->setBlockType(THREEBYTHREE_BASIC);
+	((Robot*)robot)->setMaxHealth(100);
 
 	this->gameObjs.push_back(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
@@ -168,6 +169,7 @@ int GameLogic::gameStart(){
 		int right = ((int)(robot->getWidth() / 2)) + 1;
 		int front = -((int)(robot->getDepth() / 2)) - 1;
 		int back = ((int)(robot->getDepth() / 2)) + 1;
+		int count = 0;
 		for (j = left; j <= right; j++)
 		{
 			for (k = front; k <= back; k++)
@@ -179,10 +181,10 @@ int GameLogic::gameStart(){
 					robot->getRigidBody()->getMotionState()->getWorldTransform(trans);
 					
 					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ(), trans.getRotation().getW(), 1, 1, 1, 1);
-					if (k == back)
+					if (k == front && j!=left && j != right)
 					{
-						gameObj->setBlockType(BGUN);
-						gameObj->setWeapon(gameObj->getIsRangedWeapon(), gameObj->getBlockType());
+						gameObj->setBlockType(BASICCUBE);
+						gameObj->setWeapon(1, gameObj->getBlockType());
 						//cout << "weapon id: " << gameObj->getId() << endl;
 					}
 					else
@@ -192,9 +194,15 @@ int GameLogic::gameStart(){
 				}
 				else
 				{
+					count++;
 					int yOffset = ((int)robot->getHeight() / 2) + 1;
 					gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0.1, 0.2, 0.3, 1, 0.5, 0.5, 0.5, 1);
 					gameObj->setBlockType(NEEDLE);
+					if (count == 1) {
+						
+						gameObj->setBlockType(BGUN);
+						gameObj->setWeapon(1, gameObj->getBlockType());
+					}
 				}
 
 				gameObj->setCollisionType(C_ROBOT_PARTS);
@@ -221,8 +229,9 @@ int GameLogic::gameStart(){
 	}
 
 	countDown->startCountdown(300);
+	physicsTimer->startClock();
 	countDown->startClock();
-	lastTime = countDown->getCurrentTime();
+	lastTime = countDown->getCurrentTime()/1000;
 	return 0;
 }
 
@@ -242,8 +251,8 @@ unsigned int GameLogic::gameLoop (){
 	prePhyLogic();
 	
 	//pass the time into physics
-	unsigned int time = countDown->getElapsedTime();
-	countDown->startClock();
+	unsigned int time = physicsTimer->getElapsedTime();
+	physicsTimer->startClock();
 
 	//do physics
 	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/66.0),4);
@@ -251,11 +260,11 @@ unsigned int GameLogic::gameLoop (){
 	postPhyLogic();
 	
 	
-	if (lastTime != countDown->getCurrentTime())
+	if (lastTime != countDown->getCurrentTime()/1000)
 	{
-		lastTime = countDown->getCurrentTime();
-		//GETime* et = new GETime(lastTime);
-		//gameEventList.push_back(et);
+		lastTime = countDown->getCurrentTime()/1000;
+		GETime* et = new GETime(lastTime);
+		gameEventList.push_back(et);
 	}
 	network->sendActionPackets(&gameObjs, &gameEventList);
 	gameEventList.clear();
@@ -286,12 +295,12 @@ void GameLogic::prePhyLogic(){
 					   std::vector<GameObj*> projectiles;
 					   r->shoot(&projectiles);
 					   std::vector<GameObj*>::iterator it;
-					   cout << "size of projectiles" << projectiles.size() << endl;
+					  // cout << "size of projectiles" << projectiles.size() << endl;
 					   for (it = projectiles.begin(); it != projectiles.end(); it++)
 					   {
-						   cout << "before push back:" << gameObjs.size() << endl;
+						  // cout << "before push back:" << gameObjs.size() << endl;
 						   gameObjs.push_back((*it));
-						   cout << "after push back:" << gameObjs.size() << endl;
+						  // cout << "after push back:" << gameObjs.size() << endl;
 						   gamePhysics->createPhysicsProjectile((Projectile*)(*it));// &objCollisionPair, (*it).second);
 						}
 						break;
@@ -452,7 +461,7 @@ void GameLogic::prePhyLogic(){
 		}*/
 		if ((*it)->getIsRobot() != 0)
 		{
-			cout << "release wheel " << endl;
+		//	cout << "release wheel " << endl;
 			btWheelInfo leftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(2);
 			btWheelInfo rightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(3);
 			double steering_delta = TURN_SPEED / 2;
@@ -482,13 +491,25 @@ void GameLogic::postPhyLogic(){
 		GameObj* GO1 = (GameObj*)obj1->getUserPointer();//objCollisionPair.find(obj1)->second;
 		GameObj* GO2 = (GameObj*)obj2->getUserPointer();//objCollisionPair.find(obj2)->second;
 
+		//cout << "Collision pairs: GO1: " << GO1->getId() << endl;
+		//cout << "GO2: " << GO2->getId() << endl;
 		//if ((GO1->getBelongTo() != nullptr && GO1->getBelongTo() == GO2) || (GO2->getBelongTo() != nullptr && GO2->getBelongTo() == GO1)) continue;
 		//std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
 		
 		DamageEvent* e = new DamageEvent(GO1, GO2);
-		damageSystem->performDamage(GO1, GO2, e);
+		int clientCollision = damageSystem->performDamage(GO1, GO2, e);
+		if (clientCollision != CH_INVALIDCOLLISION)
+		{
+			cout << "clientCollision" << clientCollision << endl;
+			GECollisonHappen* gech = new GECollisonHappen(clientCollision, (*it)->getX(), (*it)->getY(), (*it)->getZ());
+			gameEventList.push_back(gech);
+		}
+		
+
 		postDamageLogic(GO1, e->getResult1());
 		postDamageLogic(GO2, e->getResult2());
+
+
 
 		if (e->getDamage1())
 		{
@@ -500,51 +521,52 @@ void GameLogic::postPhyLogic(){
 		}
 	}
 
-	//postHealthLogic(dmgDealtArr);
+	postHealthLogic(dmgDealtArr);
+
 	
-	/*if (scoreboard->getHasChanged())
+	if (scoreboard->getHasChanged())
 	{
 		createScoreboardUpdateEvent();
 	}
-*/
+
 	cleanDataStructures();
 	GamePhysics::collisionList.clear();
 }
-//
-//void GameLogic::createScoreboardUpdateEvent()
-//{
-//	GEScoreboardUpdate* GE = new GEScoreboardUpdate(scoreboard->getTakedowns(), scoreboard->getDeaths(), scoreboard->getGold());
-//	gameEventList.push_back(GE);
-//}
-//
-//void GameLogic::postHealthLogic(Robot* arr[4])
-//{
-//	int i;
-//	for (i = 0; i < 4; i++)
-//	{
-//		if (arr[i] != nullptr)
-//		{
-//			createHealthUpdateEvent(arr[i]);
-//			if (arr[i]->getHealth() == 0)
-//			{
-//				postDeathLogic(arr[i]);
-//			}
-//		}
-//	}
-//}
-//
-//void GameLogic::postDeathLogic(Robot* r)
-//{
-//	scoreboard->incDeaths(r->getCID());
-//	scoreboard->incTakedowns(r->getDiedTo()->getCID());
-//	createDeathEvent(r);
-//}
-//
-//void GameLogic::createHealthUpdateEvent(Robot* r)
-//{
-//	GEHealthUpdate* GE = new GEHealthUpdate(r->getCID(), r->getHealth(), r->getMaxHealth());
-//	gameEventList.push_back(GE);
-//}
+
+void GameLogic::createScoreboardUpdateEvent()
+{
+	GEScoreboardUpdate* GE = new GEScoreboardUpdate(scoreboard->getTakedowns(), scoreboard->getDeaths(), scoreboard->getGold());
+	gameEventList.push_back(GE);
+}
+
+void GameLogic::postHealthLogic(Robot* arr[4])
+{
+	int i;
+	for (i = 0; i < 4; i++)
+	{
+		if (arr[i] != nullptr)
+		{
+			createHealthUpdateEvent(arr[i]);
+			if (arr[i]->getHealth() == 0)
+			{
+				postDeathLogic(arr[i]);
+			}
+		}
+	}
+}
+
+void GameLogic::postDeathLogic(Robot* r)
+{
+	scoreboard->incDeaths(r->getCID());
+	scoreboard->incTakedowns(r->getDiedTo()->getCID());
+	createDeathEvent(r);
+}
+
+void GameLogic::createHealthUpdateEvent(Robot* r)
+{
+	GEHealthUpdate* GE = new GEHealthUpdate(r->getCID(), r->getHealth(), r->getMaxHealth());
+	gameEventList.push_back(GE);
+}
 
 void GameLogic::postDamageLogic(GameObj* g, int result)
 {
@@ -562,8 +584,8 @@ void GameLogic::postDamageLogic(GameObj* g, int result)
 		}
 		else if (result == DEATH)
 		{
-			//cout << "GO Death ID: " << g->getId() << endl;
-			//postDeathLogic((Robot*)g);
+			cout << "GO Death ID: " << g->getId() << endl;
+			postDeathLogic((Robot*)g);
 		}
 	}
 }
@@ -727,7 +749,7 @@ int GameLogic::buildMode(){
 	objEventList.clear();
 	
 
-	if (lastTime != countDown->getCurrentTime())
+	if (lastTime > countDown->getCurrentTime())
 	{
 		lastTime = countDown->getCurrentTime();
 		network->sendInitBuild(TIMER, lastTime);

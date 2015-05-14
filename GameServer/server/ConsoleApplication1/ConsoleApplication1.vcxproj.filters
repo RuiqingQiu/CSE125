@@ -133,6 +133,21 @@
     <ClInclude Include="GameObj.h">
       <Filter>Source Files\GameObJ</Filter>
     </ClInclude>
+    <ClInclude Include="GEHealthUpdate.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GEScoreboardUpdate.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GETime.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="Scoreboard.h">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GECollisonHappen.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -224,6 +239,21 @@
     </ClCompile>
     <ClCompile Include="ServerNetwork.cpp">
       <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="GEHealthUpdate.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GEScoreboardUpdate.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GETime.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Scoreboard.cpp">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="GECollisonHappen.cpp">
+      <Filter>Source Files\GameEvent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

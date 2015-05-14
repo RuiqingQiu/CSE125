@@ -86,7 +86,11 @@
     <ClInclude Include="DamageSystem.h" />
     <ClInclude Include="definition.h" />
     <ClInclude Include="GameEvents.h" />
+    <ClInclude Include="GECollisonHappen.h" />
+    <ClInclude Include="GEHealthUpdate.h" />
     <ClInclude Include="GERobotDeath.h" />
+    <ClInclude Include="GEScoreboardUpdate.h" />
+    <ClInclude Include="GETime.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="NetworkData.h" />
@@ -106,6 +110,7 @@
     <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="ServerCore.h" />
     <ClInclude Include="ServerNetwork.h" />
     <ClInclude Include="SPacketDecoder.h" />
@@ -121,7 +126,11 @@
     <ClCompile Include="DamageSystem.cpp" />
     <ClCompile Include="definition.cpp" />
     <ClCompile Include="GameEvents.cpp" />
+    <ClCompile Include="GECollisonHappen.cpp" />
+    <ClCompile Include="GEHealthUpdate.cpp" />
     <ClCompile Include="GERobotDeath.cpp" />
+    <ClCompile Include="GEScoreboardUpdate.cpp" />
+    <ClCompile Include="GETime.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="NetworkServices.cpp" />
@@ -139,6 +148,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="ServerCore.cpp" />
     <ClCompile Include="ServerNetwork.cpp" />
     <ClCompile Include="SPacketDecoder.cpp" />

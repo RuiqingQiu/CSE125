@@ -3,6 +3,13 @@
 
 Scoreboard::Scoreboard()
 {
+	int i;
+	for (i = 0; i < 4; i++){
+		takedowns[i] = 0;
+		deaths[i] = 0;
+		gold[i] = 0;
+	}
+
 }
 
 

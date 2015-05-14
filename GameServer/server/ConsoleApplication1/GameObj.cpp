@@ -532,7 +532,7 @@ Weapon* GameObj::getWeapon(){
 
 void GameObj::setWeapon(int mor, int weapontype)
 {
-	if (mor != MELEE)
+	if (mor == MELEE)
 	{
 		weapon = new MeleeWeapon(weapontype);
 	}

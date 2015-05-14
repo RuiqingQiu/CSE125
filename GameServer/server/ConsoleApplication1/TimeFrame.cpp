@@ -46,5 +46,9 @@ void TimeFrame::frameSleep(int milliseconds)
 }
 
 int TimeFrame::getCurrentTime(){
+	//std::cout << "Countdown time" << countdownPeriod << std::endl;
+	//std::cout << "Current time" << clock() << std::endl;
+	//std::cout << "Clock time" << clockTime << std::endl;
+
 	return countdownPeriod - (clock() - clockTime);
 }

@@ -324,7 +324,7 @@ void GamePhysics::collisionCallback(btDynamicsWorld* world, btScalar timestep)//
 			btManifoldPoint& pt = contactManifold->getContactPoint(j);
 			if (pt.getDistance()<0.f)
 			{
-				Collision* col = new Collision(obA, obB);
+				Collision* col = new Collision(obA, obB, &pt);
 				GamePhysics::collisionList.push_back(col);
 				
 

@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <ctime>
+#include <iostream>
 
 class TimeFrame {
 private:

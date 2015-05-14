@@ -16,6 +16,7 @@
 #include "GEHealthUpdate.h"
 #include "GETime.h"
 #include "Scoreboard.h"
+#include "GECollisonHappen.h"
 #include "GEScoreboardUpdate.h"
 
 #define FIELD_WIDTH 50
@@ -28,6 +29,7 @@ private:
 	Network* network;
 	GamePhysics* gamePhysics;
 	TimeFrame* countDown;
+	TimeFrame*	physicsTimer;
 	DamageSystem* damageSystem;
 	Scoreboard* scoreboard;
 	int counter;
@@ -68,6 +70,7 @@ public:
 	void createDeathEvent(Robot*);
 	void createHealthUpdateEvent(Robot*);
 	void createScoreboardUpdateEvent();
+	void createGEClientCollision( GameObj*, GameObj*);
 	void postDamageLogic(GameObj*, int e);
 	void postHealthLogic(Robot* arr[]);
 	void postDeathLogic(Robot*);
