@@ -8,6 +8,7 @@
 class LightSystem
 {
 public:
+	int num_of_lights = 6;
 	Vector3 camera_offset;
 	vector<Light*> lights;
 	void addLight(Light*);

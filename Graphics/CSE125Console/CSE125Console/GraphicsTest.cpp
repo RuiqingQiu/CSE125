@@ -122,6 +122,7 @@ void GraphicsTest::displayTest1(GameView* view){
 	object->type = GlowingCube;
 	view->PushGeoNode(object);
 
+	
 	object = Model3DFactory::generateObjectWithType(Mace);
 	object->shader_type = BLUR_SHADER;
 	object->blur = true;
@@ -132,8 +133,19 @@ void GraphicsTest::displayTest1(GameView* view){
 	object->isUpdated = true;
 	object->type = Mace;
 	view->PushGeoNode(object);
+	
+	object = Model3DFactory::generateObjectWithType(Mallet);
+	object->shader_type = REFRACTION_SHADER;
+	object->blur = true;
+	object->localTransform.position = Vector3(7, 0, -20);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = Mallet;
 
-	for (int i = 6; i < 11; i++){
+	view->PushGeoNode(object);
+	for (int i = 8; i < 11; i++){
 		object = Model3DFactory::generateObjectWithType(i);
 		object->shader_type = REFRACTION_SHADER;
 		object->blur = true;
