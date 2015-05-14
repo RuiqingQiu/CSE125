@@ -8,14 +8,13 @@ varying vec2 TexCoords;
 
 varying vec3 Tangent;
 
-varying vec3 LightDir;
+varying vec3[3] LightDir;
 varying vec3 ViewDir;
 varying float height_pass;
 
 //Fog Attributes
 float maxDist = 150.0;
 float minDist = 10.0;
-vec4 color = vec4(0.5, 0.5, 0.5, 1.0);
 
 vec3 Kd = vec3(0.64, 0.64, 0.64);
 vec3 Ld = vec3(1.0, 1.0, 1.0);
@@ -30,9 +29,9 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 	vec3 spec = vec3(0.0);
 	vec3 ambAndDiff = vec3(0.0);
 	for(int i = 0; i < 3; i++){
-		vec3 r = reflect(-LightDir, normal);
+		vec3 r = reflect(-LightDir[i], normal);
 		vec3 ambient = Intensity * Ka;
-		float sDotN = max(dot(LightDir, normal), 0.0);
+		float sDotN = max(dot(LightDir[i], normal), 0.0);
     
 		vec3 diffuse = Intensity * diffR * sDotN;
     
@@ -41,32 +40,13 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 		}
 		ambAndDiff += ambient + diffuse;
 	}
-    
     return spec + ambAndDiff;
 }
 
-vec3 CalcBumpedNormal(){
-    vec3 normal_tmp = normalize(Normal);
-    vec3 tangent_tmp = normalize(Tangent);
-    tangent_tmp = normalize(tangent_tmp-dot(tangent_tmp, normal_tmp) * normal_tmp);
-    vec3 Bitangent = cross(tangent_tmp, normal_tmp);
-    vec3 BumpMapNormal = texture2D(norm, TexCoords).xyz;
-    BumpMapNormal = 2.0 * BumpMapNormal - vec3(1.0,1.0,1.0);
-    vec3 NewNormal;
-    mat3 TBN = mat3(tangent_tmp, Bitangent, normal_tmp);
-    NewNormal = TBN * BumpMapNormal;
-    NewNormal = normalize(NewNormal);
-    return NewNormal;
-}
-
 void main() {
- 
     vec4 normal = 2.0 * texture2D(norm, TexCoords) - 1.0;
     vec4 texColor = texture2D(tex, TexCoords);
-    float dist = length(Position.xyz);
-    float fogFactor = (maxDist - dist)/(maxDist-minDist);
-    fogFactor = clamp(fogFactor, 0.0, 1.0);
     vec3 ambAndDiff, spec;
     vec4 shadeColor = vec4(phongModel(normal.xyz, texColor.rgb), 1.0);
-    gl_FragColor = mix(color, shadeColor, fogFactor);
+	gl_FragColor = shadeColor;
 }

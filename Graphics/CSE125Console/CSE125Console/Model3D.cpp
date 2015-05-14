@@ -94,7 +94,13 @@ void Model3D::VOnDraw(){
 			//Passing modelMatrix
 			glUniformMatrix4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "ModelView"), 1, true,
 				localTransform.GetGLMatrix4().getFloatPointer());
+
+		
+
 			if (this->shader_type == MATERIAL_SHADER){
+				float camera_offset[4] = { Window::light_sytem->camera_offset.x, Window::light_sytem->camera_offset.y, Window::light_sytem->camera_offset.z, 0.0 };
+				glUniform4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_offset"), 1, camera_offset);
+
 				float Ka[3] = { float(this->material.material_ambient.x), float(this->material.material_ambient.y), float(this->material.material_ambient.z) };
 				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Ka"), 1, Ka);
 				float Kd[3] = { float(this->material.material_diffuse.x), float(this->material.material_diffuse.y), float(this->material.material_diffuse.z) };
@@ -142,12 +148,11 @@ void Model3D::VOnDraw(){
 			//glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
 			//glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
 		}
-		/*
+		
 		if (tmp){
 			glutSolidTeapot(1);
 		}
 		else{
-		*/
 			for (size_t i = 0; i < render_obj->shapes.size(); i++) {
 
 				for (size_t f = 0; f < render_obj->shapes[i].mesh.indices.size() / 3; f++) {
@@ -211,7 +216,7 @@ void Model3D::VOnDraw(){
 				}
 
 			}
-		//}
+		}
 	}
 	Window::shader_system->UnbindShader();
 

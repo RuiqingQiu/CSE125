@@ -6,6 +6,7 @@ static map<int, RenderObject*> render_obj_map;
 Model3DFactory::Model3DFactory()
 {
 	//blocks
+	
 	render_obj_map.insert(std::pair<int, RenderObject*>(BasicCube, new RenderObject("Assets/BasicCube/cube2.obj", "Assets/BasicCube/tex.png", "Assets/BasicCube/normals.png", "Assets/BasicCube/gloss.png", "Assets/BasicCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(CrystalCube, new RenderObject("Assets/CrystalMethCube/cubeofmeth.obj", "Assets/CrystalMethCube/tex.png", "Assets/CrystalMethCube/normals.png", "Assets/CrystalMethCube/gloss.png", "Assets/CrystalMethCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(GlowingCube, new RenderObject("Assets/WhiteCube/simplecube2.obj", "Assets/WhiteCube/tex.png", "Assets/WhiteCube/normals.png", "Assets/WhiteCube/gloss.png", "Assets/WhiteCube/metallic.png")));
@@ -19,7 +20,8 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(BGun, new RenderObject("Assets/BlockyGun/gat.obj", "Assets/BlockyGun/tex.png", "Assets/BlockyGun/normals.png", "Assets/BlockyGun/gloss.png", "Assets/BlockyGun/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(Mace, new RenderObject("Assets/Mace/mace.obj", "Assets/Mace/tex.png", "Assets/Mace/normals.png", "Assets/Mace/gloss.png", "Assets/Mace/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(Mallet, new RenderObject("Assets/Hammer/Hammer.obj", "Assets/Hammer/tex.png", "Assets/Hammer/normals.png", "Assets/Hammer/gloss.png", "Assets/Hammer/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(Needle, new RenderObject("Assets/Needle/needle.obj", "Assets/Needle/tex.png", "Assets/Needle/normals.png", "Assets/Needle/gloss.png", "Assets/Needle/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(Needle, new RenderObject("Assets/Needle/needle.obj", "Assets/Needle/tex.png", "Assets/Needle/normals.png", "Assets/Needle/gloss.png", "Assets/Needle/metallic.png")));
+	
 	//wheels
 	render_obj_map.insert(std::pair<int, RenderObject*>(Discount, new RenderObject("Assets/MetalWheel/metalwheel.obj", "Assets/MetalWheel/tex.png", "Assets/MetalWheel/normals.png", "Assets/MetalWheel/gloss.png", "Assets/MetalWheel/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(Tire, new RenderObject("Assets/Tire/tire.obj", "Assets/Tire/tex.png", "Assets/Tire/normals.png", "Assets/Tire/gloss.png", "Assets/Tire/metallic.png")));
@@ -29,11 +31,16 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(TREE1, new RenderObject("Assets/Tree1/tree.obj", "Assets/Tree1/tex.png", "Assets/Tree1/normals.png", "Assets/Tree1/gloss.png", "Assets/Tree1/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(TREE2, new RenderObject("Assets/Tree2/tree.obj", "Assets/Tree2/tex.png", "Assets/Tree2/normals.png", "Assets/Tree2/gloss.png", "Assets/Tree2/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(TREE3, new RenderObject("Assets/Tree3/tree.obj", "Assets/Tree3/tex.png", "Assets/Tree3/normals.png", "Assets/Tree3/gloss.png", "Assets/Tree3/metallic.png")));
-
+	
 	//super battlefield
 	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDINNER, new RenderObject("Assets/BattleFieldInner/inner.obj", "Assets/BattleFieldInner/tex.png", "Assets/BattleFieldInner/normals.png", "Assets/BattleFieldInner/gloss.png", "Assets/BattleFieldInner/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDOUTER, new RenderObject("Assets/BattleFieldOuter/plane.obj", "Assets/BattleFieldOuter/tex.png", "Assets/BattleFieldOuter/normals.png", "Assets/BattleFieldOuter/gloss.png", "Assets/BattleFieldOuter/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(BULLET, new RenderObject("Assets/Bullet/bullet.obj", "Assets/Bullet/tex.png", "Assets/Bullet/normals.png", "Assets/Bullet/gloss.png", "Assets/Bullet/metallic.png")));
+	
+	
+	render_obj_map.insert(std::pair<int, RenderObject*>(ALTNEEDLE, new RenderObject("Assets/AltNeedle/altneedle.obj", "Assets/AltNeedle/tex.png", "Assets/AltNeedle/normals.png", "Assets/AltNeedle/gloss.png", "Assets/AltNeedle/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(ALTMACE, new RenderObject("Assets/AltMace/final.obj", "Assets/AltMace/tex.png", "Assets/AltMace/normals.png", "Assets/AltMace/gloss.png", "Assets/AltMace/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
 
 }
 
@@ -331,6 +338,25 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 							  returnModel->type = BATTLEFIELDOUTER;
 							  return returnModel;
 		break;
+	}
+	case DESERT:{
+
+					Model3D * returnModel = new Model3D(render_obj_map[type]);
+					returnModel->type = DESERT;
+					return returnModel;
+					break;
+	}
+	case ALTMACE:{
+					 Model3D * returnModel = new Model3D(render_obj_map[type]);
+					 returnModel->type = ALTMACE;
+					 return returnModel;
+					 break;
+	}
+	case ALTNEEDLE:{
+					   Model3D * returnModel = new Model3D(render_obj_map[type]);
+					   returnModel->type = ALTNEEDLE;
+					   return returnModel;
+					   break;
 	}
 	}
 }

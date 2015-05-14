@@ -213,9 +213,6 @@
     <ClInclude Include="Teapot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="background.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
@@ -334,6 +331,12 @@
       <Filter>Source Files\Event\EventPacket</Filter>
     </ClInclude>
     <ClInclude Include="Materials.h">
+      <Filter>Source Files\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Source Files\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="LightSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -461,9 +464,6 @@
     <ClCompile Include="Teapot.cpp">
       <Filter>Source Files\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Source Files\Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="background.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
@@ -576,6 +576,12 @@
       <Filter>Source Files\Event\EventPacket</Filter>
     </ClCompile>
     <ClCompile Include="Materials.cpp">
+      <Filter>Source Files\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="LightSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

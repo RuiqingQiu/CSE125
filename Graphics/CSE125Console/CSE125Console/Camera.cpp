@@ -14,7 +14,7 @@ Camera::~Camera()
 }
 
 void Camera::setUpCamera(){
-	this->drawLines();
+	//this->drawLines();
 
 	if (IsFollowingEnabled&&FollowingTarget != nullptr)
 	{

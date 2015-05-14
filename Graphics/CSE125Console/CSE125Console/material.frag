@@ -22,16 +22,18 @@ uniform vec3 Ka;
 uniform vec3 Ks;
 uniform float Shininess;
 
-vec4 lights[5];
+#define MAX_LIGHTS 6 
+
+vec4 lights[MAX_LIGHTS];
+uniform vec4 camera_offset;
 vec3 phongModel(vec3 normal, vec3 diffR){
 	
-	lights[0] = vec4(0.0, 10.0, 20.0, 1.0);
-	lights[1] = vec4(5.0, 0.0, 0.0, 1.0);
-	lights[2] = vec4(-5.0, 0.0, -10.0, 1.0);
-	lights[3] = vec4(-5.0, 5.0, -10.0, 1.0);
-	lights[4] = vec4(-5.0, -5.0, -10.0, 1.0);
-
-
+	lights[0] = camera_offset + vec4(0.0, 10.0, 0.0, 1.0);
+	lights[1] = camera_offset +vec4(5.0, 0.0, 0.0, 1.0);
+	lights[2] = camera_offset +vec4(-5.0, 0.0, -10.0, 1.0);
+	lights[3] = camera_offset +vec4(-5.0, 5.0, -10.0, 1.0);
+	lights[4] = camera_offset +vec4(5.0, 0.0, -10.0, 1.0);
+	lights[5] = camera_offset +vec4(0.0, 50.0, 0.0, 1.0);
 
 	vec3 Ld = vec3(1.0, 1.0, 1.0);
     vec3 La = vec3(0.4, 0.4, 0.4);
@@ -40,15 +42,16 @@ vec3 phongModel(vec3 normal, vec3 diffR){
     vec3 Intensity = vec3(0.9,0.9,0.9);
 	vec3 ambAndDiff = La * Ka;
 	vec3 spec = vec3(0.0);
-	for(int i = 0; i < 5; i++){
+	for(int i = 0; i < MAX_LIGHTS; i++){
+		float attenuation = 1.0 / (1.0 + 0.0 * length(lights[i] - Position) + 0.01 * pow(length(lights[i] - Position), 2));
 		vec3 n = normalize(Normal);
 		vec3 s = normalize(vec3(lights[i] - Position));
 		vec3 v = normalize(-Position.xyz);
 		vec3 r = reflect(-s, n);
 		float sDotN = max( dot(s,Normal), 0.0 );
-		vec3 diffuse = Ld * Kd * sDotN;
+		vec3 diffuse = attenuation * (Ld * Kd * sDotN);
 		if( sDotN > 0.0 )
-		    spec += Ls * Ks * pow( max( dot(r,v), 0.0 ), Shininess );
+		    spec += attenuation * (Ls * Ks * pow( max( dot(r,v), 0.0 ), Shininess ));
 		ambAndDiff += diffuse;
 	}
 	return ambAndDiff + spec;

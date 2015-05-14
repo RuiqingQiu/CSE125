@@ -6,7 +6,7 @@
 #include "ShaderSystem.h"
 #include "sound.h" // include the sound
 #include "viewFactory.h"
-
+#include "LightSystem.h"
 #ifndef CSE167_Window_h
 #define CSE167_Window_h
 
@@ -28,6 +28,7 @@ public:
 	static void processMouse(int x, int y);
 	static ShaderSystem* shader_system;
 	static viewFactory* factory;
+	static LightSystem* light_sytem;
 
 
 };

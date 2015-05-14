@@ -9,9 +9,12 @@
 static int counter = 0;
 Light::Light()
 {
-	localTransform.position = Vector3(0, 0, -20);
+	localTransform.position = Vector3(0, 0, 0);
 }
 
+Light::Light(float x, float y, float z){
+	localTransform.position = Vector3(x,y,z);
+}
 
 Light::~Light()
 {

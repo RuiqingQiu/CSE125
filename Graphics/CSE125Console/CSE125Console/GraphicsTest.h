@@ -11,6 +11,7 @@ public:
 	~GraphicsTest();
 	void displayTest1(GameView* view);
 	void displayTest2(GameView* view);
+	void displayTest3(GameView* view);
 };
 #endif
 

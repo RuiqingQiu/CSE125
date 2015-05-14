@@ -13,6 +13,8 @@ enum ModelType{
 	Mace = 5,
 	Mallet = 6,
 	Needle = 7,
+	ALTNEEDLE = 700,
+	ALTMACE = 701,
 
 	//wheels
 	WHEEL_BEGIN = 8,
@@ -53,6 +55,7 @@ enum ModelType{
 	//super battlefield
 	BATTLEFIELDINNER = 500,
 	BATTLEFIELDOUTER = 501,
+	DESERT=502,
 };
 
 enum ShaderType{
