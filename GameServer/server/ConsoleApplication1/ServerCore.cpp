@@ -20,7 +20,7 @@ ServerCore::~ServerCore()
 
 void ServerCore::serverLoop()
 {
-	int numPlayer =1;
+	int numPlayer =2;
 	
 	while (true)
 	{

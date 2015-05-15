@@ -71,7 +71,7 @@ public:
 	void createHealthUpdateEvent(Robot*);
 	void createScoreboardUpdateEvent();
 	void createGEClientCollision( GameObj*, GameObj*);
-	void postDamageLogic(GameObj*, int e);
+	void postDamageLogic(GameObj*, int e, btManifoldPoint*);
 	void postHealthLogic(Robot* arr[]);
 	void postDeathLogic(Robot*);
 

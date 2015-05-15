@@ -18,7 +18,7 @@ RangedWeapon::RangedWeapon(int type)
 	case BGUN:
 	{
 		range = MEDIUM_RANGED;
-		damage = 10;
+		damage = 100;
 		attackSpeed = 4;
 		splash = 1;
 
@@ -27,7 +27,7 @@ RangedWeapon::RangedWeapon(int type)
 		_pWidth = 0.3;
 		_pHeight = 0.3;
 		_pDepth = 0.5;
-		_pBlockType = NEEDLE;
+		_pBlockType = 103;
 		break;
 	}
 	default:
@@ -99,7 +99,7 @@ int RangedWeapon::readyToShoot()
 	double diff = ((double)(clock() - lastShot)/CLOCKS_PER_SEC);
 	if (diff > 1/_attackSpeed)
 	{
-		std::cout << "Time elasped: " << diff << std::endl;
+		//std::cout << "Time elasped: " << diff << std::endl;
 		return 1;
 	}
 	else

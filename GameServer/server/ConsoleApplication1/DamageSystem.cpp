@@ -62,7 +62,7 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				e->setDamage1();
 
-				std::cout << "O2 damage" << o2->getDamage() << std::endl;
+				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 
@@ -111,7 +111,7 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: ROBOT PART WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
-				std::cout << "O2 damage" << o2->getDamage() << std::endl;
+				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					std::cout << "ROB PART WITH PROJ BREAK CONST" << std::endl;
@@ -119,10 +119,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				}
 				e->setDamage1();
 				Robot* r = (Robot*)o1->getBelongTo();
+				
 				if (r->applyDamage(o2->getDamage()) < 0)
 				//if (r->applyDamage(1000) < 0)
 				{
 					r->setDiedTo((Robot*)o2->getBelongTo());
+					//std::cout << "o2 belongto pointer in ds: " << (Robot*)o2->getBelongTo() << std::endl;
+					//std::cout << "o2 belongto cid in ds: " << ((Robot*)o2->getBelongTo())->getCID() << std::endl;
 				}
 				return CH_BULLETPLAYER;
 			}
@@ -258,7 +261,7 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				
 				std::cout << "COLLISION: ROBOT PART WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
-				std::cout << "O2 damage" << o2->getDamage() << std::endl;
+				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					std::cout << "ROB PART WITH PROJ BREAK CONST" << std::endl;

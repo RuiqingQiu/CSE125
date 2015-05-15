@@ -20,37 +20,42 @@ GameObj* GOBox::shoot()
 
 		if (getIsRangedWeapon()){
 			
-
-
-			double rbDepth = getDepth() / 2 + 0.6f;
-			btTransform* rbTrans = &getRigidBody()->getWorldTransform();
-			btVector3 relativeDisplacement = btVector3(0, 0, -rbDepth);
-			btVector3 boxRot = rbTrans->getBasis()[2];
-			boxRot.normalize();
-			btVector3 correctedDisplacement = boxRot * -rbDepth; // /2
-			double x = rbTrans->getOrigin().getX() + correctedDisplacement.getX();// + 0.5 - w->getPWidth();
-			double y = rbTrans->getOrigin().getY() + correctedDisplacement.getY();
-			double z = rbTrans->getOrigin().getZ() + correctedDisplacement.getZ();
-
 			if (((RangedWeapon *)w)->readyToShoot())
 			{
 
-				GameObj* proj = new Projectile(rbTrans->getOrigin().getX(), rbTrans->getOrigin().getY(), rbTrans->getOrigin().getZ(), rbTrans->getRotation().getX(), rbTrans->getRotation().getY(), rbTrans->getRotation().getZ(), rbTrans->getRotation().getW(),
+				double rbDepth = getDepth() / 2 + ((RangedWeapon *)w)->getPDepth()/2 + 0.6f;
+				btTransform* rbTrans = &getRigidBody()->getWorldTransform();
+				btVector3 relativeDisplacement = btVector3(0, 0, -rbDepth);
+				btVector3 boxRot = rbTrans->getBasis()[2];
+				boxRot.normalize();
+				btVector3 correctedDisplacement = boxRot * -rbDepth; // /2
+				double x = rbTrans->getOrigin().getX() + correctedDisplacement.getX();// + 0.5 - w->getPWidth();
+				double y = rbTrans->getOrigin().getY() + correctedDisplacement.getY();
+				double z = rbTrans->getOrigin().getZ() + correctedDisplacement.getZ();
+
+				GameObj* proj = new Projectile(x, y, z, rbTrans->getRotation().getX(), rbTrans->getRotation().getY(), rbTrans->getRotation().getZ(), rbTrans->getRotation().getW(),
 					((RangedWeapon *)w)->getPMass(), ((RangedWeapon *)w)->getPWidth(), ((RangedWeapon *)w)->getPHeight(), ((RangedWeapon *)w)->getPDepth());
 				proj->setCollisionType(C_PROJECTILE);
 				proj->setDamage(w->getDamage());
 				proj->setBlockType(((RangedWeapon *)w)->getPBlockType());
-
-				std::cout << "weapon damage " << w->getDamage() << std::endl;
-				std::cout << "proj damage " << proj->getDamage() << std::endl;
 				((RangedWeapon *)w)->setLastShot();
 				((Projectile*)proj)->initForce = ((RangedWeapon *)w)->getPInitForce();
+
+				//std::cout << "weapon x y z: " << rbTrans->getOrigin().getX() << " , " << rbTrans->getOrigin().getY() << "  , " << rbTrans->getOrigin().getZ() << std::endl;
+				//std::cout << "weapon depth: " << getDepth() << std::endl;
+				//std::cout << "weapon orientation x y z w:" << rbTrans->getRotation().getX() << " , " << rbTrans->getRotation().getY() << "  , " << rbTrans->getRotation().getZ() << " , " << rbTrans->getRotation().getW() << std::endl;
+				//std::cout << "--------------------------------------------" << std::endl;
+				//std::cout << "bullet x y z: " << x << " , " << y << "  , " << z << std::endl;
+				//std::cout << "bullet depth: " << ((Projectile*)proj)->getDepth() << std::endl;
+				//std::cout << "bullet orientation x y z w: " << proj->getqX() << " , " << proj->getqY() << "  , " << proj->getqZ() << " , " << proj->getqW() << std::endl;
+
 				return proj;
 			}
 
 		}
 
 	}
+	return nullptr;
 }
 void GOBox::setWidth(double width)
 {

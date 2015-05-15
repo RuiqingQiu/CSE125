@@ -137,6 +137,7 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	//dynamicWorld->addRigidBody(m_pBody);
 	m_chassis->setUserPointer(this);
 	dynamicWorld->addRigidBody(m_chassis);
+	//m_chassis->setAngularFactor(btVector3(0, 0, 0));
 	dynamicWorld->addAction(m_pVehicle);
 	//map->insert(std::pair<btCollisionObject*, GameObj*>(m_chassis, this));
 
@@ -270,4 +271,5 @@ void Robot::setParts(std::vector<GameObj*> p){
 
 }
 
-GameObj* Robot::shoot(){ return nullptr; }
+GameObj* Robot::shoot(){ 
+	return nullptr; }

@@ -53,10 +53,6 @@ private:
 	int buildObj_id; //this is my id
 
 
-
-
-
-
 	clock_t deathTimer;
 
 	GameObj* _belongTo;

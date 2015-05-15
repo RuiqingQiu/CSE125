@@ -43,7 +43,7 @@ unsigned int GameLogic::waitToConnect()
 	robot->setType(BOX);
 	((Robot*)robot)->setCID(cid);
 	robot->setBlockType(THREEBYTHREE_BASIC);
-	((Robot*)robot)->setMaxHealth(100);
+	((Robot*)robot)->setMaxHealth(10000);//100);
 
 	this->gameObjs.push_back(robot);
 	clientPair.insert(std::pair<int, GameObj*>(cid, robot));
@@ -169,7 +169,6 @@ int GameLogic::gameStart(){
 		int right = ((int)(robot->getWidth() / 2)) + 1;
 		int front = -((int)(robot->getDepth() / 2)) - 1;
 		int back = ((int)(robot->getDepth() / 2)) + 1;
-		int count = 0;
 		for (j = left; j <= right; j++)
 		{
 			for (k = front; k <= back; k++)
@@ -179,35 +178,31 @@ int GameLogic::gameStart(){
 				{
 					btTransform trans;
 					robot->getRigidBody()->getMotionState()->getWorldTransform(trans);
-					
-					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), trans.getRotation().getX(), trans.getRotation().getY(), trans.getRotation().getZ(), trans.getRotation().getW(), 1, 1, 1, 1);
-					if (k == front && j!=left && j != right)
+					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+					gameObj->setBlockType(BASICCUBE);
+					if (j == robot->getX() && k == front)
 					{
-						gameObj->setBlockType(BASICCUBE);
+						gameObj->setBlockType(BGUN);
 						gameObj->setWeapon(1, gameObj->getBlockType());
-						//cout << "weapon id: " << gameObj->getId() << endl;
+					
 					}
-					else
-					{
-						gameObj->setBlockType(BASICCUBE);
-					}
+					
+					
+					//cout << "weapon id: " << gameObj->getId() << endl;
 				}
 				else
 				{
-					count++;
 					int yOffset = ((int)robot->getHeight() / 2) + 1;
-					gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0.1, 0.2, 0.3, 1, 0.5, 0.5, 0.5, 1);
-					gameObj->setBlockType(NEEDLE);
-					if (count == 1) {
-						
-						gameObj->setBlockType(BGUN);
-						gameObj->setWeapon(1, gameObj->getBlockType());
-					}
+					gameObj = new GOBox(j + robot->getX(), robot->getY() + yOffset, k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+					gameObj->setBlockType(BASICCUBE);
+	
 				}
 
 				gameObj->setCollisionType(C_ROBOT_PARTS);
 				gameObj->setBelongTo(robot);
 				gameObj->createRigidBody();
+
+
 				gamePhysics->getDynamicsWorld()->addRigidBody(gameObj->getRigidBody());
 				int z;
 				for (z = 0; z < 1; z++)
@@ -235,9 +230,11 @@ int GameLogic::gameStart(){
 	return 0;
 }
 
+int packet_counter = 0;
 
 unsigned int GameLogic::gameLoop (){
 
+	packet_counter++;
     //ObjectEvents* objEvent = new ObjectEvents(SHOOT);
     //objEvent->setCid(0);
 	//objEventList.push_back(objEvent);
@@ -260,9 +257,14 @@ unsigned int GameLogic::gameLoop (){
 	postPhyLogic();
 	
 	
-	if (lastTime != countDown->getCurrentTime()/1000)
+	if (lastTime != (int) (countDown->getCurrentTime()/1000))
 	{
-		lastTime = countDown->getCurrentTime()/1000;
+
+		lastTime = (int) (countDown->getCurrentTime()/1000);
+
+		cout << "packet counter: " << packet_counter << " at time " << lastTime << endl;
+		packet_counter = 0;
+
 		GETime* et = new GETime(lastTime);
 		gameEventList.push_back(et);
 	}
@@ -303,6 +305,7 @@ void GameLogic::prePhyLogic(){
 						  // cout << "after push back:" << gameObjs.size() << endl;
 						   gamePhysics->createPhysicsProjectile((Projectile*)(*it));// &objCollisionPair, (*it).second);
 						}
+					    projectiles.clear();
 						break;
 			}
 			default:{
@@ -500,14 +503,14 @@ void GameLogic::postPhyLogic(){
 		int clientCollision = damageSystem->performDamage(GO1, GO2, e);
 		if (clientCollision != CH_INVALIDCOLLISION)
 		{
-			cout << "clientCollision" << clientCollision << endl;
+			//cout << "clientCollision" << clientCollision << endl;
 			GECollisonHappen* gech = new GECollisonHappen(clientCollision, (*it)->getX(), (*it)->getY(), (*it)->getZ());
 			gameEventList.push_back(gech);
 		}
 		
 
-		postDamageLogic(GO1, e->getResult1());
-		postDamageLogic(GO2, e->getResult2());
+		postDamageLogic(GO1, e->getResult1(), (*it)->getPt());
+		postDamageLogic(GO2, e->getResult2(), (*it)->getPt());
 
 
 
@@ -568,7 +571,7 @@ void GameLogic::createHealthUpdateEvent(Robot* r)
 	gameEventList.push_back(GE);
 }
 
-void GameLogic::postDamageLogic(GameObj* g, int result)
+void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 {
 	if (!g->getDeleted())
 	{
@@ -576,6 +579,11 @@ void GameLogic::postDamageLogic(GameObj* g, int result)
 		{
 			//cout << "GO Break ID: " << g->getId() << endl;
 			breakConstraints(g);
+			cout << "Impulse: " << pt->getAppliedImpulse() << endl;
+			btVector3 randomForce(rand(), rand(), rand());
+			randomForce.normalize();
+			
+			g->getRigidBody()->applyCentralImpulse(randomForce*pt->getAppliedImpulse());
 		}
 		else if (result == DELETED)
 		{
@@ -584,7 +592,7 @@ void GameLogic::postDamageLogic(GameObj* g, int result)
 		}
 		else if (result == DEATH)
 		{
-			cout << "GO Death ID: " << g->getId() << endl;
+			//cout << "GO Death ID: " << g->getId() << endl;
 			postDeathLogic((Robot*)g);
 		}
 	}

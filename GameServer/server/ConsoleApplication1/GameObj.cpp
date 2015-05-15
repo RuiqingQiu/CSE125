@@ -182,7 +182,7 @@ void GameObj::setBlockType(int bType)
 	{
 				 _isWeapon = 1;
 				 _isRanged = 1;
-				 _health = 15;
+				 _health = 10000;//15;
 				 _mass = 20;
 					  break;
 	}

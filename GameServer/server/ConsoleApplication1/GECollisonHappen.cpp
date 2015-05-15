@@ -31,6 +31,6 @@ void GECollisonHappen::to_string(std::string& s){
 
 	s += std::to_string(this->_z);
 
-	std::cout << "CH EVENT" << s << std::endl;
+	//std::cout << "CH EVENT" << s << std::endl;
 
 }

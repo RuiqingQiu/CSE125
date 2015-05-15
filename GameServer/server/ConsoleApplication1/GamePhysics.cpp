@@ -119,6 +119,13 @@ void GamePhysics::createPhysicsProjectile(Projectile* projectile)//std::map< btC
 
 	projectile->createRigidBody();// map);
 	dynamicsWorld->addRigidBody(projectile->getRigidBody());
+
+	btTransform rbTrans = projectile->getRigidBody()->getWorldTransform();
+    //std::cout << "-----------------------------------------" << std::endl;
+	//std::cout << "rigidbody x y z: " << rbTrans.getOrigin().getX() << " , " << rbTrans.getOrigin().getY() << "  , " << rbTrans.getOrigin().getZ() << std::endl;
+	//std::cout << "rigidbody orientation x y z w:" << rbTrans.getRotation().getX() << " , " << rbTrans.getRotation().getY() << "  , " << rbTrans.getRotation().getZ() << " , " << rbTrans.getRotation().getW() << std::endl;
+
+
 	btVector3 relativeForce = btVector3(0, 0, projectile->initForce);
 	btMatrix3x3 boxRot = projectile->getRigidBody()->getWorldTransform().getBasis();
 	btVector3 correctedForce = boxRot * relativeForce;

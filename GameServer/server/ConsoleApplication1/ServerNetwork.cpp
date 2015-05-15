@@ -146,7 +146,10 @@ void ServerNetwork::sendToAll(char * packets, int totalSize)
 	{
 		currentSocket = iter->second;
 		iSendResult = NetworkServices::sendMessage(currentSocket, packets, totalSize);
-
+	/*	cout << "packets[4]: " << &packets[4] << endl;
+		cout << "packets[8]: " << &packets[8] << endl;
+	*/	
+		//cout << "------------------------------------------------------------------------------------------" << endl;
 		if (iSendResult == SOCKET_ERROR)
 		{
 			printf("send failed with error: %d\n", WSAGetLastError());
