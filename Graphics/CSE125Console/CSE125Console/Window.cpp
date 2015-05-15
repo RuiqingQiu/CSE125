@@ -146,7 +146,7 @@ void Window::initialize(void)
 	GameView* view = new GameView();
 
 	//Comment this for non-local testing
-	gt->displayTest2(view);
+	//gt->displayTest2(view);
 	//gt->displayTest3(view);
 	//gt->displayTest1(view);
 	//GameView* view = new HardShadowView();
@@ -262,7 +262,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.27");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
 }
 
 //----------------------------------------------------------------------------
@@ -397,5 +397,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

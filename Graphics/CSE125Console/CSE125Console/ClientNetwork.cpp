@@ -122,7 +122,7 @@ ClientNetwork::~ClientNetwork(void)
 
 int ClientNetwork::receivePackets(char * recvbuf) 
 {
-    iResult = NetworkServices::receiveMessage(ConnectSocket, recvbuf, MAX_PACKET_SIZE);
+    iResult = NetworkServices::receiveMessage(ConnectSocket, recvbuf, 50004);
 	if (iResult < 0)
 	{
 		int errorno = WSAGetLastError();
@@ -144,7 +144,7 @@ int ClientNetwork::receivePackets(char * recvbuf)
         WSACleanup();
    //     exit(1);
     }
-	
+	//std::cout << iResult << "	 " <<&recvbuf[4] << std::endl;
 
     return iResult;
 }

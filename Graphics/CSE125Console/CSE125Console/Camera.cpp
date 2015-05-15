@@ -71,8 +71,8 @@ void Camera::UpdateCamera()
 	this->position->negate();
 	this->rotation->negate();
 
-	*this->position = VectorLerp(position, newposition, 0.05, false);
-	*this->rotation = VectorLerp(rotation, newrotation, 0.1, true);
+	*this->position = VectorLerp(position, newposition, 1, false);
+	*this->rotation = VectorLerp(rotation, newrotation, 1, true);
 
 	this->position->negate();
 	this->rotation->negate();

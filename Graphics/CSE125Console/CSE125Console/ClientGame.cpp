@@ -93,7 +93,8 @@ GameInfoPacket* ClientGame::update()
 {
     GameInfoPacket* g = new GameInfoPacket();
     SPacket packet;
-    int data_length = network->receivePackets(network_data);
+	memset(&network_data[0], 0, MAX_PACKET_SIZE);
+	int data_length = network->receivePackets(network_data);
     if (data_length <= 0) 
     {
         //no data recieved
@@ -101,7 +102,6 @@ GameInfoPacket* ClientGame::update()
     }
 	//return network_data;
     int i = 0;
-   
 	while (i < (unsigned int)data_length) 
     {
         packet.deserialize(&(network_data[i]));
