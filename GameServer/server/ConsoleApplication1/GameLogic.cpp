@@ -178,10 +178,24 @@ int GameLogic::gameStart(){
 				{
 					btTransform trans;
 					robot->getRigidBody()->getMotionState()->getWorldTransform(trans);
-					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+					//gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), 0, 0, 0, 1, 1, 1, 1, 1);
+
+					double z, x, y;
+					z= 0;
+					x = 0;
+					y = 90;
+
+					btQuaternion* q = convertEulerToQuaternion(x, y, z);
+
+					cout << "q x y z w: " << q->getX() << " , " << q->getY() << " , " << q->getZ() << " , " << q->getW() << endl;
+
+					gameObj = new GOBox(j + robot->getX(), robot->getY(), k + robot->getZ(), q->getX(), q->getY(), q->getZ(), q->getW(), 10, 1, 1, 1);
+					delete q;
 					gameObj->setBlockType(BASICCUBE);
+
 					if (j == robot->getX() && k == front)
 					{
+
 						gameObj->setBlockType(BGUN);
 						gameObj->setWeapon(1, gameObj->getBlockType());
 					
@@ -228,6 +242,23 @@ int GameLogic::gameStart(){
 	countDown->startClock();
 	lastTime = countDown->getCurrentTime()/1000;
 	return 0;
+}
+
+btQuaternion* GameLogic::convertEulerToQuaternion(double x, double y, double z)
+{
+	double c1 = cos(M_PI*y / 360) ;
+	double 	c2 = cos(M_PI*z / 360);
+	double c3 = cos(M_PI*x / 360);
+	double 	s1 = sin(M_PI*y / 360);
+	double 	s2 = sin(M_PI*z / 360);
+	double 	s3 = sin(M_PI*x / 360);
+
+	double qW = c1*c2*c3 - s1*s2*s3;
+	double qX = s1*s2*c3 + c1*c2*s3;
+	double qY = s1*c2*c3 + c1*s2*s3;
+	double qZ = c1*s2*c3 - s1*c2*s3;
+
+	return new btQuaternion(qX, qY, qZ, qW);
 }
 
 int packet_counter = 0;

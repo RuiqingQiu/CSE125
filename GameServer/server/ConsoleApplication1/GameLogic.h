@@ -18,6 +18,7 @@
 #include "Scoreboard.h"
 #include "GECollisonHappen.h"
 #include "GEScoreboardUpdate.h"
+#include <math.h>
 
 #define FIELD_WIDTH 50
 #define FIELD_HEIGHT 50
@@ -78,6 +79,8 @@ public:
 	int buildMode();
 	int startBuild();
 	int endGame();
+
+	btQuaternion* convertEulerToQuaternion(double, double, double);
 
 
 	int clearGame();
