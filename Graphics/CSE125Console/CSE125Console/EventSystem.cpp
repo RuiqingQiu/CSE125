@@ -32,7 +32,8 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventDeath:{
 							 printf("Death Event has been received \n");
 							 //Switch back to game view
-							 Window::factory->switchView('1');
+							 if (((EventDeath*)event)->death_id == (g_pCore->pPlayer->playerid))
+								Window::factory->switchView('1');
 							 //Explosion particle effect
 							 //Explosion sound
 							 break;

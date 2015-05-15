@@ -613,6 +613,17 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case BULLET_1:{
 							  break;
 			}
+			case BULLET:{
+							Model3D* object = Model3DFactory::generateObjectWithType(BULLET);
+							object->isUpdated = true;
+							object->identifier = info->player_infos[i]->id;
+							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							object->localTransform.scale = Vector3(1, 1, 1);
+							NodeList.push_back(object);
+							info->player_infos[i]->processed = true;
+							break;
+			}
 
 			default:{
 							//cout << "Should not go into here in gameview.cpp" << endl;
