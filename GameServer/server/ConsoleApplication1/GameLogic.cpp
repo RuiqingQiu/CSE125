@@ -774,13 +774,17 @@ int GameLogic::buildMode(){
 	objEventList.clear();
 	
 
-	if (lastTime > countDown->getCurrentTime())
+	if (lastTime >(countDown->getCurrentTime())/1000)
 	{
-		lastTime = countDown->getCurrentTime();
+		lastTime = (countDown->getCurrentTime()) / 1000;
 		network->sendInitBuild(TIMER, lastTime);
 	}
 
-	if (countDown->checkCountdown()){
+
+	if (buildnum > 1){
+		return TIMEUP;
+	}
+	else if (countDown->checkCountdown()){
 		int i;
 		for (i = 0; i < 1;i++)
 		{
@@ -790,13 +794,8 @@ int GameLogic::buildMode(){
 			}
 		}
 		return COUNTDOWN;
-	}else if(buildnum < 1){
-		return COUNTDOWN;
 	}
-	else{
-		cout << "finished build mode" << endl;
-		return TIMEUP;
-	}
+	return COUNTDOWN;
 }
 
 
