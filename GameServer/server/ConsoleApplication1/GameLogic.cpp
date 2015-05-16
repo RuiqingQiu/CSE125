@@ -108,6 +108,10 @@ int GameLogic::gameStart(){
 					(*it)->createRigidBody();// &objCollisionPair);
 					d->addRigidBody((*it)->getRigidBody());
 					gameObjs.push_back((*it));
+					if ((*it)->getIsWeapon())
+					{
+						(*it)->setWeapon((*it)->getIsRangedWeapon(), (*it)->getBlockType());
+					}
 				}
 
 			}
@@ -592,6 +596,7 @@ void GameLogic::postDeathLogic(Robot* r)
 void GameLogic::createHealthUpdateEvent(Robot* r)
 {
 	GEHealthUpdate* GE = new GEHealthUpdate(r->getCID(), r->getHealth(), r->getMaxHealth());
+	cout << "update health" << r->getHealth() << endl;
 	gameEventList.push_back(GE);
 }
 
@@ -747,7 +752,8 @@ void GameLogic::deleteGameObj(GameObj* g)
 }
 
 int buildplayer[4] = {0};
-int buildnum;
+int buildnum = 0;
+
 int GameLogic::buildMode(){
 	network->receiveFromClients(&objEventList);
 	
@@ -762,13 +768,16 @@ int GameLogic::buildMode(){
 					if (buildplayer[cid] == 0){
 						 buildplayer[cid] = 1;
 						 buildnum++;
+						 cout << "buildnum" << buildnum << endl;
 						 buildList.push_back(*iter);
 					 }
-			}
+					break;
+		    }
 			default:{
 						break;
 			}
 		}
+		iter++;
 	}
 
 	objEventList.clear();
@@ -781,7 +790,8 @@ int GameLogic::buildMode(){
 	}
 
 
-	if (buildnum > 1){
+	if (buildnum > 0){
+		cout << "build finish" << endl;
 		return TIMEUP;
 	}
 	else if (countDown->checkCountdown()){

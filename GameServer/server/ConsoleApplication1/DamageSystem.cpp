@@ -60,6 +60,12 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: ROBOT WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
+				
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					e->setResult2(NOTHING);
+					return CH_INVALIDCOLLISION;
+				}
+
 				e->setDamage1();
 
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
@@ -77,6 +83,12 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: ROBOT WITH MELEE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
+
+				// check if it belongs to the robot 
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					return CH_INVALIDCOLLISION;
+				}
+
 				e->setDamage1();
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
@@ -111,6 +123,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: ROBOT PART WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
+
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					e->setResult2(NOTHING);
+					return CH_INVALIDCOLLISION;
+				}
+
+
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
@@ -133,6 +152,11 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: ROBOT PART WITH MELEE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
+
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					return CH_INVALIDCOLLISION;
+				}
+
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					e->setResult1(BREAK_CONSTRAINT);
@@ -172,12 +196,20 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			case C_ROBOT:
 			{
 				std::cout << "COLLISION: PROJECTILE WITH ROBOT" << std::endl;
-				e->setResult1(DELETED); e->setResult2(BREAK_CONSTRAINT);
+				e->setResult1(DELETED); e->setResult2(NOTHING);
+				
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					e->setResult1(NOTHING);
+					return CH_INVALIDCOLLISION;
+				}
+
 				if (o2->applyDamage(o1->getDamage()) < 0)
 				{
 					((Robot*)o2)->setDiedTo((Robot*)o1->getBelongTo());
 					e->setResult2(DEATH);
 				}
+
+
 				e->setDamage2();
 				return CH_PLAYERWALL;
 			}
@@ -185,6 +217,12 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: PROJECTILE WITH ROBOT PART" << std::endl;
 				e->setResult1(DELETED); e->setResult2(NOTHING);
+
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					e->setResult1(NOTHING);
+					return CH_INVALIDCOLLISION;
+				}
+
 				if (o2->applyDamage(o1->getDamage()) < 0)
 				{
 					e->setResult2(BREAK_CONSTRAINT);
@@ -207,6 +245,12 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: PROJECTILE WITH MELEE" << std::endl;
 				e->setResult1(DELETED); e->setResult2(NOTHING);
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					e->setResult1(NOTHING);
+					return CH_INVALIDCOLLISION;
+				}
+
+				
 				if (o2->applyDamage(o1->getDamage()) < 0)
 				{
 					e->setResult2(BREAK_CONSTRAINT);
@@ -235,7 +279,12 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			case C_ROBOT:
 			{
 				std::cout << "COLLISION: MELEE WITH ROBOT" << std::endl;
-				e->setResult1(NOTHING); e->setResult2(BREAK_CONSTRAINT);
+				e->setResult1(NOTHING); e->setResult2(NOTHING);
+
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					return CH_INVALIDCOLLISION;
+				}
+
 				if (((Robot*)o2)->applyDamage(o1->getDamage()) < 0)
 				{
 					((Robot*)o2)->setDiedTo((Robot*)o1->getBelongTo());
@@ -248,6 +297,10 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: MELEE WITH ROBOT PART" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(BREAK_CONSTRAINT);
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					e->setResult2(NOTHING);
+					return CH_INVALIDCOLLISION;
+				}
 				e->setDamage2();
 				Robot* r = (Robot*)o2->getBelongTo();
 				if (r->applyDamage(o1->getDamage()) < 0)
@@ -262,6 +315,11 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				std::cout << "COLLISION: ROBOT PART WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					e->setResult2(NOTHING);
+					return CH_INVALIDCOLLISION;
+				}
+				
 				if (o1->applyDamage(o2->getDamage()) < 0)
 				{
 					std::cout << "ROB PART WITH PROJ BREAK CONST" << std::endl;
@@ -281,6 +339,12 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				std::cout << "COLLISION: MELEE WITH MELEE" << std::endl;
 				e->setResult1(BREAK_CONSTRAINT); e->setResult2(BREAK_CONSTRAINT);
+				if (o1->getBelongTo() == o2->getBelongTo()) {
+					e->setResult1(NOTHING);
+					e->setResult2(NOTHING);
+					return CH_INVALIDCOLLISION;
+				}
+
 				e->setDamage1();
 				Robot* r1 = (Robot*)o1->getBelongTo();
 				if (r1->applyDamage(o2->getDamage()) < 0)

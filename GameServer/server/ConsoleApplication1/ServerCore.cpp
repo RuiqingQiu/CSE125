@@ -69,6 +69,7 @@ void ServerCore::serverLoop()
 		}
 		case INIT_GAME: 
 		{
+			 cout << "init game game start " << endl;
 			 action = gameLogic->gameStart();
 			 break;
 		}
