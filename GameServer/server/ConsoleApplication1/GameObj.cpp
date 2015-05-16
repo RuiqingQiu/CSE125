@@ -78,6 +78,7 @@ unsigned int GameObj::getId(){
 }
 
 
+
 int GameObj::getIsWheel()
 {
 	return _isWheel;
@@ -164,18 +165,21 @@ void GameObj::setBlockType(int bType)
 	{
 			  _mass = 10;
 			  _health = 100;
+			  _collisionType = C_ROBOT_PARTS;
 			  break;
 	}
 	case GLOWINGCUBE:
 	{
 						_mass = 5;
 						_health = 50;
+						_collisionType = C_ROBOT_PARTS;
 					  break;
 	}
 	case WOODENCUBE:
 	{
 					   _mass = 1;
 					   _health = 20;
+					   _collisionType = C_ROBOT_PARTS;
 					  break;
 	}
 	case BGUN:
@@ -184,18 +188,21 @@ void GameObj::setBlockType(int bType)
 				 _isRanged = 1;
 				 _health = 10000;//15;
 				 _mass = 20;
+				 _collisionType = C_ROBOT_PARTS;
 					  break;
 	}
 	case MACE:
 	{
 				 _isWeapon = 1;
 				 _mass = 30;
+				 _collisionType = C_MELEE;
 					  break;
 	}
 	case MALLET:
 	{
 				   _isWeapon = 1;
 				   _mass = 25;
+				   _collisionType = C_MELEE;
 					  break;
 	}
 	case NEEDLE:
@@ -203,6 +210,7 @@ void GameObj::setBlockType(int bType)
 				   _isWeapon = 1;
 				   _health = 10;
 				   _mass = 7;
+				   _collisionType = C_MELEE;
 					  break;
 	}
 	case DISCOUNTWHEEL:
@@ -224,23 +232,46 @@ void GameObj::setBlockType(int bType)
 	{
 							   _mass = 90;
 							   _health = 900;
+							   _collisionType = C_ROBOT;
 						  break;
 	}
 	case THREEBYTHREE_GLOWING:
 	{
 								 _mass = 45;
 								 _health = 450;
+								 _collisionType = C_ROBOT;
 							   break;
 	}
 	case THREEBYTHREE_WOODEN:
 	{
 								_mass = 9;
 								_health = 20;
+								_collisionType = C_ROBOT;
 							   break;
+	}
+	case WALL:
+	{
+		_collisionType = C_WALLS;
+		break;
+	}
+	case BATTLEFIELD:
+	{
+		_collisionType = C_GROUND;
+		break;
+	}
+	case BULLET_1:
+	{
+		_collisionType = C_PROJECTILE;
+		break;
+	}
+	case 103:
+	{
+		_collisionType = C_PROJECTILE;
+		break;
 	}
 
 	default:{
-				std::cout << "WRONG BLOCK TYPE" << std::endl;
+		std::cout << "WRONG BLOCK TYPE " << bType << std::endl;
 				break;
 	}
 	}

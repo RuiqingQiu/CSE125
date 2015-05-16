@@ -80,9 +80,10 @@ public:
 	int startBuild();
 	int endGame();
 
+
+
+	btVector3* convertQuaternionToEuler(btQuaternion* q);
 	btQuaternion* convertEulerToQuaternion(double, double, double);
-
-
 	int clearGame();
 };
 #endif

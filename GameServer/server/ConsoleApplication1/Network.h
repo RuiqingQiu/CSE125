@@ -13,6 +13,7 @@
 #include "GOPlane.h"
 #include "GERobotDeath.h"
 #include "ObjectEvents.h"
+#include "definition.h"
 #include <string>
 
 class Network {
@@ -38,6 +39,8 @@ public:
 	string convertEventData(std::vector<GameEvents*>*);
 	void sendInitBuild(int,int);
 	void sendBuildRequest(int);
+	btVector3* convertQuaternionToEuler(btQuaternion* q);
+	btQuaternion* convertEulerToQuaternion(double, double, double);
 };
 #endif
 

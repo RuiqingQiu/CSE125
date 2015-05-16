@@ -77,7 +77,7 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)//, std::map< btColli
 		else
 		{
 			(*it)->createRigidBody();// objcpair);
-		dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
+		    dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
 		}
 	}
 	dynamicsWorld->setInternalTickCallback((btInternalTickCallback)collisionCallback, &dynamicsWorld, (void*)1);

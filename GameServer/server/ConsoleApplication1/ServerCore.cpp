@@ -62,10 +62,9 @@ void ServerCore::serverLoop()
 		}
 		case BUILD_STATE:
 		{	
-		    //action=	gameLogic->buildMode();
+		    action=	gameLogic->buildMode();
 			//gameLogic->gameStart();
-		    action = TIMEUP;
-			cout << "buildMode" << endl;
+		    //action = TIMEUP;
 			break;
 		}
 		case INIT_GAME: 

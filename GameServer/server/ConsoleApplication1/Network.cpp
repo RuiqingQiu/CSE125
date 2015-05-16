@@ -158,7 +158,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 	memcpy(packet.data, des.c_str(), des.length());
 	//cout << "size of des: " << sizeof(des) << endl;
 	//cout << "des.cstr: " << des.c_str() << endl;
-	//cout << "packet.data[8] : " << packet.data[8] << endl;
+	//cout << "packet.data[4] : " << packet.data[4] << endl;
 	//cout << "AFTER MEM COPY" << endl;
 	packet.packet_type = GAME_STATE;
 
@@ -338,6 +338,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 				   break;
 	}
 	case BUILD_ROBOT: {
+		cout << "in build packet" << endl;
 						  ObjectEvents * e = new ObjectEvents(BUILD_ROBOT);
 						  
 							  string parseData = string(packet.data);
@@ -463,28 +464,11 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 									  double health = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
-									  btMatrix3x3 matrix;
-									  //matrix.setEulerZYX(xRot, yRot, zRot);
-									  matrix.setEulerYPR(zRot, yRot, xRot);
+									  btQuaternion* q = convertEulerToQuaternion(xRot, yRot, zRot); 
+
 									  GameObj* object;
-									  btQuaternion rotations = btQuaternion();//zRot, yRot, xRot);
-									  //cout << "default rotations: x: " << rotations.x() << " y:" << rotations.y() << "  z: " << rotations.z() << endl;
-									  //cout << "rotations: getx: " << rotations.getX() << " gety:" << rotations.getY() << "  getz: " << rotations.getZ() << endl;
-									  //rotations.setEulerZYX(zRot, yRot, xRot);
-									  matrix.getRotation(rotations);
 									 
-									  //cout << "yaw : " << yRot << endl;
-
-									  
-
-									  //btScalar yaw;
-									  
-									 // cout << "rotations: x: " << rotations.x() << " y:" << rotations.y() << "  z: "<< rotations.z() << "w " << rotations.w() << endl;
-									  //cout << "rotations: getx: " << rotations.getX() << " gety:" << rotations.getY() << "  getz: " << rotations.getZ() << endl;
-									  //cout << " objID: " << objId << endl;
-									  //(double x, double y, double z, double qX, double qY, double qZ, double qW, double mass, double width, double height, double depth)
 								     if (objId == 0) {
-										 //cout << " objID == 0 " << endl;
 
 										object = new Robot((int)cid, "Player");
 										
@@ -492,10 +476,10 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 										object->setX(xPos);
 										object->setY(yPos);
 										object->setZ(zPos);
-										object->setqX(rotations.x());
-										object->setqY(rotations.y());
-										object->setqZ(rotations.z());
-										object->setqW(rotations.w());
+										object->setqX(q->getX());
+										object->setqY(q->getY());
+										object->setqZ(q->getZ());
+										object->setqW(q->getW());
 										object->setType(BOX);
 										((Robot*)object)->setWidth(3);
 										((Robot*)object)->setHeight(1);
@@ -505,12 +489,12 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 									else
 									{
 										//cout << "not robot y: " << rotations.y() << " w " << rotations.w() << endl;
-										object = new GOBox(xPos, yPos, zPos, rotations.x(), rotations.y(), rotations.z(), 1, 10, 1, 1, 1);
+										object = new GOBox(xPos, yPos, zPos, q->getX(), q->getY(), q->getZ(), q->getW(), 10, 1, 1, 1);
 										object->setIsRobot(0);
 										object->setCollisionType(C_ROBOT_PARTS);
 									}
 									  
-										
+								      delete q;
 									  object->setBlockType(block_type);
 									  object->setBuildID(objId);
 									  object->setBelowID(below);
@@ -533,6 +517,24 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 
 	}
 }
+
+btQuaternion* Network::convertEulerToQuaternion(double x, double y, double z)
+{
+	double c1 = cos(M_PI*y / 360);
+	double 	c2 = cos(M_PI*z / 360);
+	double c3 = cos(M_PI*x / 360);
+	double 	s1 = sin(M_PI*y / 360);
+	double 	s2 = sin(M_PI*z / 360);
+	double 	s3 = sin(M_PI*x / 360);
+
+	double qW = c1*c2*c3 - s1*s2*s3;
+	double qX = s1*s2*c3 + c1*c2*s3;
+	double qY = s1*c2*c3 + c1*s2*s3;
+	double qZ = c1*s2*c3 - s1*c2*s3;
+
+	return new btQuaternion(qX, qY, qZ, qW);
+}
+
 
 
 static string temp;

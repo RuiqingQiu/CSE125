@@ -35,19 +35,11 @@ GameObj* GOBox::shoot()
 
 				GameObj* proj = new Projectile(x, y, z, rbTrans->getRotation().getX(), rbTrans->getRotation().getY(), rbTrans->getRotation().getZ(), rbTrans->getRotation().getW(),
 					((RangedWeapon *)w)->getPMass(), ((RangedWeapon *)w)->getPWidth(), ((RangedWeapon *)w)->getPHeight(), ((RangedWeapon *)w)->getPDepth());
-				proj->setCollisionType(C_PROJECTILE);
 				proj->setDamage(w->getDamage());
 				proj->setBlockType(((RangedWeapon *)w)->getPBlockType());
 				((RangedWeapon *)w)->setLastShot();
 				((Projectile*)proj)->initForce = ((RangedWeapon *)w)->getPInitForce();
 
-				//std::cout << "weapon x y z: " << rbTrans->getOrigin().getX() << " , " << rbTrans->getOrigin().getY() << "  , " << rbTrans->getOrigin().getZ() << std::endl;
-				//std::cout << "weapon depth: " << getDepth() << std::endl;
-				//std::cout << "weapon orientation x y z w:" << rbTrans->getRotation().getX() << " , " << rbTrans->getRotation().getY() << "  , " << rbTrans->getRotation().getZ() << " , " << rbTrans->getRotation().getW() << std::endl;
-				//std::cout << "--------------------------------------------" << std::endl;
-				//std::cout << "bullet x y z: " << x << " , " << y << "  , " << z << std::endl;
-				//std::cout << "bullet depth: " << ((Projectile*)proj)->getDepth() << std::endl;
-				//std::cout << "bullet orientation x y z w: " << proj->getqX() << " , " << proj->getqY() << "  , " << proj->getqZ() << " , " << proj->getqW() << std::endl;
 
 				return proj;
 			}
