@@ -15,6 +15,8 @@ enum ModelType{
 	Needle = 7,
 	ALTNEEDLE = 700,
 	ALTMACE = 701,
+	Turrent = 702,
+	Railgun = 703,
 
 	//wheels
 	WHEEL_BEGIN = 8,
@@ -22,7 +24,9 @@ enum ModelType{
 	Tire = 9,
 	WoodenWheel = 10,
 	WHEEL_END = 11,
-
+	AltTire = 801,
+	StoneTire = 802,
+	TronWheel = 803,
 	//Other
 	BATTLEFIELD = 12,
 

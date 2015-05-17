@@ -43,6 +43,20 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(ALTNEEDLE, new RenderObject("Assets/AltNeedle/altneedle.obj", "Assets/AltNeedle/tex.png", "Assets/AltNeedle/normals.png", "Assets/AltNeedle/gloss.png", "Assets/AltNeedle/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(ALTMACE, new RenderObject("Assets/AltMace/final.obj", "Assets/AltMace/tex.png", "Assets/AltMace/normals.png", "Assets/AltMace/gloss.png", "Assets/AltMace/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
+	
+	
+	render_obj_map.insert(std::pair<int, RenderObject*>(AltTire, new RenderObject("Assets/AltTire/alt-tire.obj", "Assets/AltTire/tex.png", "Assets/AltTire/normals.png", "Assets/AltTire/gloss.png", "Assets/AltTire/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(StoneTire, new RenderObject("Assets/StoneTire/crackedstone.obj", "Assets/StoneTire/tex.png", "Assets/StoneTire/normals.png", "Assets/StoneTire/gloss.png", "Assets/StoneTire/metallic.png")));
+
+	render_obj_map.insert(std::pair<int, RenderObject*>(TronWheel, new RenderObject("Assets/TronWheel/tron.obj", "Assets/TronWheel/tex.png", "Assets/TronWheel/normals.png", "Assets/TronWheel/gloss.png", "Assets/TronWheel/metallic.png")));
+
+	//render_obj_map.insert(std::pair<int, RenderObject*>(Turrent, new RenderObject("Assets/CrappyTurret/turretjoined.obj", "Assets/CrappyTurret/tex.png", "Assets/CrappyTurret/normals.png", "Assets/CrappyTurret/gloss.png", "Assets/CrappyTurret/metallic.png")));
+
+	render_obj_map.insert(std::pair<int, RenderObject*>(Railgun, new RenderObject("Assets/Railgun/railgun.obj", "Assets/Railgun/tex.png", "Assets/Railgun/normals.png", "Assets/Railgun/gloss.png", "Assets/Railgun/metallic.png")));
+
+	
+	
+	
 	cout << "Model3DFactory loading done" << endl;
 
 }
@@ -54,101 +68,88 @@ Model3DFactory::~Model3DFactory()
 
 Model3D* Model3DFactory::generateObjectWithType(int type){
 	switch (type){
-		case Mallet:{
-			if (render_obj_map[type] == nullptr){
-				cout << "model is not there, using BasicCube" << endl;
-				Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-				returnModel->type = BasicCube;
-				return returnModel;
-			}
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->type = Mallet;
-			returnModel->damageStat = 1;
-			return returnModel;
-			break;
-		}
-		case Mace:{
+	case Mallet:{
+					if (render_obj_map[type] == nullptr){
+						cout << "model is not there, using BasicCube" << endl;
+						Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						returnModel->type = BasicCube;
+						return returnModel;
+					}
+					Model3D * returnModel = new Model3D(render_obj_map[type]);
+					returnModel->type = Mallet;
+					returnModel->damageStat = 1;
+					return returnModel;
+					break;
+	}
+	case Mace:{
+				  if (render_obj_map[type] == nullptr){
+					  cout << "model is not there" << endl;
+					  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					  returnModel->type = BasicCube;
+					  return returnModel;
+				  }
+				  Model3D * returnModel = new Model3D(render_obj_map[type]);
+				  returnModel->damageStat = 1;
+				  returnModel->type = Mace;
+				  return returnModel;
+				  break;
+	}
+	case Discount:{
 					  if (render_obj_map[type] == nullptr){
 						  cout << "model is not there" << endl;
 						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						  returnModel->type = BasicCube;
 						  return returnModel;
 					  }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->damageStat = 1;
-			returnModel->type = Mace;
-			return returnModel;
-			break;
-		}
-		case Discount:{
-						  if (render_obj_map[type] == nullptr){
-							  cout << "model is not there" << endl;
-							  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-							  returnModel->type = BasicCube;
-							  return returnModel;
-						  }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->speedStat = 1;
-			returnModel->type = Discount;
-			return returnModel;
-			break;
-		}
-		case Needle:{
+					  Model3D * returnModel = new Model3D(render_obj_map[type]);
+					  returnModel->speedStat = 1;
+					  returnModel->type = Discount;
+					  return returnModel;
+					  break;
+	}
+	case Needle:{
+					if (render_obj_map[type] == nullptr){
+						cout << "model is not there" << endl;
+						Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						returnModel->type = BasicCube;
+						return returnModel;
+					}
+					Model3D * returnModel = new Model3D(render_obj_map[type]);
+					returnModel->damageStat = 1;
+					returnModel->type = Needle;
+
+					return returnModel;
+					break;
+	}
+	case BasicCube:{
+					   if (render_obj_map[type] == nullptr){
+						   cout << "model is not there" << endl;
+						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						   returnModel->type = BasicCube;
+						   return returnModel;
+					   }
+					   Model3D * returnModel = new Model3D(render_obj_map[type]);
+					   returnModel->healthStat = 1;
+					   returnModel->type = BasicCube;
+
+					   return returnModel;
+					   break;
+	}
+	case WoodenCube:{
 						if (render_obj_map[type] == nullptr){
 							cout << "model is not there" << endl;
 							Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 							returnModel->type = BasicCube;
 							return returnModel;
 						}
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->damageStat = 1;
-			returnModel->type = Needle;
+						Model3D * returnModel = new Model3D(render_obj_map[type]);
+						returnModel->type = WoodenCube;
 
-			return returnModel;
-			break;
-		}
-		case BasicCube:{
-						   if (render_obj_map[type] == nullptr){
-							   cout << "model is not there" << endl;
-							   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-							   returnModel->type = BasicCube;
-							   return returnModel;
-						   }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->healthStat = 1;
-			returnModel->type = BasicCube;
-
-			return returnModel;
-			break;
-		}
-		case WoodenCube:{
-							if (render_obj_map[type] == nullptr){
-								cout << "model is not there" << endl;
-								Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-								returnModel->type = BasicCube;
-								return returnModel;
-							}
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->type = WoodenCube;
-
-			returnModel->healthStat = 1;
-			return returnModel;
-			break;
-		}
-		case BLACKCUBE:{
-						   if (render_obj_map[type] == nullptr){
-							   cout << "model is not there" << endl;
-							   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-							   returnModel->type = BasicCube;
-							   return returnModel;
-						   }
-						   Model3D * returnModel = new Model3D(render_obj_map[type]);
-						   returnModel->type = BLACKCUBE;
-						   returnModel->healthStat = 1;
-						   return returnModel;
-			break;
-		}
-		case CUBEA:{
+						returnModel->healthStat = 1;
+						return returnModel;
+						break;
+	}
+	case BLACKCUBE:{
 					   if (render_obj_map[type] == nullptr){
 						   cout << "model is not there" << endl;
 						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
@@ -156,240 +157,253 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						   return returnModel;
 					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
-					   returnModel->type = CUBEA;
+					   returnModel->type = BLACKCUBE;
 					   returnModel->healthStat = 1;
 					   return returnModel;
-						   break;
-		}
-		case CUBEB:{
-					   if (render_obj_map[type] == nullptr){
-						   cout << "model is not there" << endl;
-						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-						   returnModel->type = BasicCube;
-						   return returnModel;
-					   }
-					   Model3D * returnModel = new Model3D(render_obj_map[type]);
-					   returnModel->type = CUBEB;
-					   returnModel->healthStat = 1;
+					   break;
+	}
+	case CUBEA:{
+				   if (render_obj_map[type] == nullptr){
+					   cout << "model is not there" << endl;
+					   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					   returnModel->type = BasicCube;
 					   return returnModel;
-						   break;
-		}
-		case WoodenWheel:{
-							 if (render_obj_map[type] == nullptr){
-								 cout << "model is not there" << endl;
-								 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-								 returnModel->type = BasicCube;
-								 return returnModel;
-							 }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->speedStat = 1;
-			returnModel->type = WoodenWheel;
+				   }
+				   Model3D * returnModel = new Model3D(render_obj_map[type]);
+				   returnModel->type = CUBEA;
+				   returnModel->healthStat = 1;
+				   return returnModel;
+				   break;
+	}
+	case CUBEB:{
+				   if (render_obj_map[type] == nullptr){
+					   cout << "model is not there" << endl;
+					   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					   returnModel->type = BasicCube;
+					   return returnModel;
+				   }
+				   Model3D * returnModel = new Model3D(render_obj_map[type]);
+				   returnModel->type = CUBEB;
+				   returnModel->healthStat = 1;
+				   return returnModel;
+				   break;
+	}
+	case WoodenWheel:{
+						 if (render_obj_map[type] == nullptr){
+							 cout << "model is not there" << endl;
+							 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							 returnModel->type = BasicCube;
+							 return returnModel;
+						 }
+						 Model3D * returnModel = new Model3D(render_obj_map[type]);
+						 returnModel->speedStat = 1;
+						 returnModel->type = WoodenWheel;
 
-			return returnModel;
-			break;
-		}
-		case Tire:{
-					  if (render_obj_map[type] == nullptr){
-						  cout << "model is not there" << endl;
-						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-						  returnModel->type = BasicCube;
-						  return returnModel;
-					  }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->speedStat = 1;
-			returnModel->type = Tire;
+						 return returnModel;
+						 break;
+	}
+	case Tire:{
+				  if (render_obj_map[type] == nullptr){
+					  cout << "model is not there" << endl;
+					  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					  returnModel->type = BasicCube;
+					  return returnModel;
+				  }
+				  Model3D * returnModel = new Model3D(render_obj_map[type]);
+				  returnModel->speedStat = 1;
+				  returnModel->type = Tire;
 
-			return returnModel;
-			break;
-		}
-		case GlowingCube:{
-							 if (render_obj_map[type] == nullptr){
-								 cout << "model is not there" << endl;
-								 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-								 returnModel->type = BasicCube;
-								 return returnModel;
-							 }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->healthStat = 1;
-			returnModel->type = GlowingCube;
+				  return returnModel;
+				  break;
+	}
+	case GlowingCube:{
+						 if (render_obj_map[type] == nullptr){
+							 cout << "model is not there" << endl;
+							 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							 returnModel->type = BasicCube;
+							 return returnModel;
+						 }
+						 Model3D * returnModel = new Model3D(render_obj_map[type]);
+						 returnModel->healthStat = 1;
+						 returnModel->type = GlowingCube;
 
-			return returnModel;
-			break;
-		}
-		case BGun:{
-					  if (render_obj_map[type] == nullptr){
-						  cout << "model is not there" << endl;
-						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-						  returnModel->type = BasicCube;
-						  return returnModel;
-					  }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->healthStat = 1;
-			returnModel->type = BGun;
+						 return returnModel;
+						 break;
+	}
+	case BGun:{
+				  if (render_obj_map[type] == nullptr){
+					  cout << "model is not there" << endl;
+					  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					  returnModel->type = BasicCube;
+					  return returnModel;
+				  }
+				  Model3D * returnModel = new Model3D(render_obj_map[type]);
+				  returnModel->healthStat = 1;
+				  returnModel->type = BGun;
 
-			return returnModel;
-			break;
-		}
-		case BATTLEFIELD:{
-							 if (render_obj_map[type] == nullptr){
-								 cout << "model is not there" << endl;
-								 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-								 returnModel->type = BasicCube;
-								 return returnModel;
-							 }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->type = BATTLEFIELD;
-			return returnModel;
-			break;
-		}
-		case CrystalCube:{
-							 if (render_obj_map[type] == nullptr){
-								 cout << "model is not there" << endl;
-								 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
-								 returnModel->type = BasicCube;
-								 return returnModel;
-							 }
-			Model3D * returnModel = new Model3D(render_obj_map[type]);
-			returnModel->type = CrystalCube;
-			return returnModel;
-			break;
-		}
-		
+				  return returnModel;
+				  break;
+	}
+	case BATTLEFIELD:{
+						 if (render_obj_map[type] == nullptr){
+							 cout << "model is not there" << endl;
+							 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							 returnModel->type = BasicCube;
+							 return returnModel;
+						 }
+						 Model3D * returnModel = new Model3D(render_obj_map[type]);
+						 returnModel->type = BATTLEFIELD;
+						 return returnModel;
+						 break;
+	}
+	case CrystalCube:{
+						 if (render_obj_map[type] == nullptr){
+							 cout << "model is not there" << endl;
+							 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							 returnModel->type = BasicCube;
+							 return returnModel;
+						 }
+						 Model3D * returnModel = new Model3D(render_obj_map[type]);
+						 returnModel->type = CrystalCube;
+						 return returnModel;
+						 break;
+	}
+
 		//Fix this
-		case THREEBYTHREE_BASIC:{
-			Model3DGroup* group = new Model3DGroup();
-			for (int i = -1; i < 2; i++){
-				for (int j = -1; j < 2; j++){
-					Model3D * returnModel = Model3DFactory::generateObjectWithType(BasicCube);
-					returnModel->localTransform.position = Vector3(i, 0, j);
-					returnModel->localTransform.scale = Vector3(1, 1, 1);
-					returnModel->localTransform.rotation = Vector3(0, 0, 0);
-					group->addObject(returnModel);
-				}
-			}
-			group->width = 3;
-			group->height = 1;
-			return group;
-			break;
-		}
-		case THREEBYTHREE_GLOWING:{
-			Model3DGroup* group = new Model3DGroup();
-			for (int i = -1; i < 2; i++){
-				for (int j = -1; j < 2; j++){
-					Model3D * returnModel = Model3DFactory::generateObjectWithType(GlowingCube);
-					returnModel->localTransform.position = Vector3(i, 0, j);
-					returnModel->localTransform.scale = Vector3(1, 1, 1);
-					returnModel->localTransform.rotation = Vector3(0, 0, 0);
-					group->addObject(returnModel);
-				}
-			}
-			group->width = 3;
-			group->height = 1;
-			return group;
-			break;
-		}
-		case THREEBYTHREE_WOODEN:{
-			Model3DGroup* group = new Model3DGroup();
-			for (int i = -1; i < 2; i++){
-				for (int j = -1; j < 2; j++){
-					Model3D * returnModel = Model3DFactory::generateObjectWithType(WoodenCube);
-					returnModel->localTransform.position = Vector3(i, 0, j);
-					returnModel->localTransform.scale = Vector3(1, 1, 1);
-					returnModel->localTransform.rotation = Vector3(0, 0, 0);
-					group->addObject(returnModel);
-				}
-			}
-			group->width = 3;
-			group->height = 1;
-			return group;
-			break;
-		}
-		case THREEBYTHREE_WHEEL_DISCOUNT:{
-			Model3DGroup* group = new Model3DGroup();
-			Model3D * returnModel = Model3DFactory::generateObjectWithType(Discount);
-			returnModel->localTransform.position = Vector3(-2, 0, -1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel); 
-			returnModel = Model3DFactory::generateObjectWithType(Discount);
-			returnModel->localTransform.position = Vector3(-2, 0, 1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+	case THREEBYTHREE_BASIC:{
+								Model3DGroup* group = new Model3DGroup();
+								for (int i = -1; i < 2; i++){
+									for (int j = -1; j < 2; j++){
+										Model3D * returnModel = Model3DFactory::generateObjectWithType(BasicCube);
+										returnModel->localTransform.position = Vector3(i, 0, j);
+										returnModel->localTransform.scale = Vector3(1, 1, 1);
+										returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										group->addObject(returnModel);
+									}
+								}
+								group->width = 3;
+								group->height = 1;
+								return group;
+								break;
+	}
+	case THREEBYTHREE_GLOWING:{
+								  Model3DGroup* group = new Model3DGroup();
+								  for (int i = -1; i < 2; i++){
+									  for (int j = -1; j < 2; j++){
+										  Model3D * returnModel = Model3DFactory::generateObjectWithType(GlowingCube);
+										  returnModel->localTransform.position = Vector3(i, 0, j);
+										  returnModel->localTransform.scale = Vector3(1, 1, 1);
+										  returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										  group->addObject(returnModel);
+									  }
+								  }
+								  group->width = 3;
+								  group->height = 1;
+								  return group;
+								  break;
+	}
+	case THREEBYTHREE_WOODEN:{
+								 Model3DGroup* group = new Model3DGroup();
+								 for (int i = -1; i < 2; i++){
+									 for (int j = -1; j < 2; j++){
+										 Model3D * returnModel = Model3DFactory::generateObjectWithType(WoodenCube);
+										 returnModel->localTransform.position = Vector3(i, 0, j);
+										 returnModel->localTransform.scale = Vector3(1, 1, 1);
+										 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										 group->addObject(returnModel);
+									 }
+								 }
+								 group->width = 3;
+								 group->height = 1;
+								 return group;
+								 break;
+	}
+	case THREEBYTHREE_WHEEL_DISCOUNT:{
+										 Model3DGroup* group = new Model3DGroup();
+										 Model3D * returnModel = Model3DFactory::generateObjectWithType(Discount);
+										 returnModel->localTransform.position = Vector3(-2, 0, -1);
+										 returnModel->localTransform.scale = Vector3(1, 1, 1);
+										 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										 group->addObject(returnModel);
+										 returnModel = Model3DFactory::generateObjectWithType(Discount);
+										 returnModel->localTransform.position = Vector3(-2, 0, 1);
+										 returnModel->localTransform.scale = Vector3(1, 1, 1);
+										 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										 group->addObject(returnModel);
 
-			returnModel = Model3DFactory::generateObjectWithType(Discount);
-			returnModel->localTransform.position = Vector3(2, 0, -1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+										 returnModel = Model3DFactory::generateObjectWithType(Discount);
+										 returnModel->localTransform.position = Vector3(2, 0, -1);
+										 returnModel->localTransform.scale = Vector3(1, 1, 1);
+										 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										 group->addObject(returnModel);
 
-			returnModel = Model3DFactory::generateObjectWithType(Discount);
-			returnModel->localTransform.position = Vector3(2, 0, 1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+										 returnModel = Model3DFactory::generateObjectWithType(Discount);
+										 returnModel->localTransform.position = Vector3(2, 0, 1);
+										 returnModel->localTransform.scale = Vector3(1, 1, 1);
+										 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										 group->addObject(returnModel);
 
-			return group;
-			break;
-		}
+										 return group;
+										 break;
+	}
 	case THREEBYTHREE_WHEEL_TIRE:{
-			Model3DGroup* group = new Model3DGroup();
-			Model3D * returnModel = Model3DFactory::generateObjectWithType(Tire);
-			returnModel->localTransform.position = Vector3(-2, 0, -1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
-			returnModel = Model3DFactory::generateObjectWithType(Tire);
-			returnModel->localTransform.position = Vector3(-2, 0, 1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+									 Model3DGroup* group = new Model3DGroup();
+									 Model3D * returnModel = Model3DFactory::generateObjectWithType(Tire);
+									 returnModel->localTransform.position = Vector3(-2, 0, -1);
+									 returnModel->localTransform.scale = Vector3(1, 1, 1);
+									 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+									 group->addObject(returnModel);
+									 returnModel = Model3DFactory::generateObjectWithType(Tire);
+									 returnModel->localTransform.position = Vector3(-2, 0, 1);
+									 returnModel->localTransform.scale = Vector3(1, 1, 1);
+									 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+									 group->addObject(returnModel);
 
-			returnModel = Model3DFactory::generateObjectWithType(Tire);
-			returnModel->localTransform.position = Vector3(2, 0, -1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+									 returnModel = Model3DFactory::generateObjectWithType(Tire);
+									 returnModel->localTransform.position = Vector3(2, 0, -1);
+									 returnModel->localTransform.scale = Vector3(1, 1, 1);
+									 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+									 group->addObject(returnModel);
 
-			returnModel = Model3DFactory::generateObjectWithType(Tire);
-			returnModel->localTransform.position = Vector3(2, 0, 1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+									 returnModel = Model3DFactory::generateObjectWithType(Tire);
+									 returnModel->localTransform.position = Vector3(2, 0, 1);
+									 returnModel->localTransform.scale = Vector3(1, 1, 1);
+									 returnModel->localTransform.rotation = Vector3(0, 0, 0);
+									 group->addObject(returnModel);
 
-			return group;
-			break;
+									 return group;
+									 break;
 	}
 	case THREEBYTHREE_WHEEL_WOODEN:{
-			Model3DGroup* group = new Model3DGroup();
-			Model3D * returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
-			returnModel->localTransform.position = Vector3(-2, 0, -1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
-			returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
-			returnModel->localTransform.position = Vector3(-2, 0, 1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+									   Model3DGroup* group = new Model3DGroup();
+									   Model3D * returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
+									   returnModel->localTransform.position = Vector3(-2, 0, -1);
+									   returnModel->localTransform.scale = Vector3(1, 1, 1);
+									   returnModel->localTransform.rotation = Vector3(0, 0, 0);
+									   group->addObject(returnModel);
+									   returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
+									   returnModel->localTransform.position = Vector3(-2, 0, 1);
+									   returnModel->localTransform.scale = Vector3(1, 1, 1);
+									   returnModel->localTransform.rotation = Vector3(0, 0, 0);
+									   group->addObject(returnModel);
 
-			returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
-			returnModel->localTransform.position = Vector3(2, 0, -1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+									   returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
+									   returnModel->localTransform.position = Vector3(2, 0, -1);
+									   returnModel->localTransform.scale = Vector3(1, 1, 1);
+									   returnModel->localTransform.rotation = Vector3(0, 0, 0);
+									   group->addObject(returnModel);
 
-			returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
-			returnModel->localTransform.position = Vector3(2, 0, 1);
-			returnModel->localTransform.scale = Vector3(1, 1, 1);
-			returnModel->localTransform.rotation = Vector3(0, 0, 0);
-			group->addObject(returnModel);
+									   returnModel = Model3DFactory::generateObjectWithType(WoodenWheel);
+									   returnModel->localTransform.position = Vector3(2, 0, 1);
+									   returnModel->localTransform.scale = Vector3(1, 1, 1);
+									   returnModel->localTransform.rotation = Vector3(0, 0, 0);
+									   group->addObject(returnModel);
 
-			return group;
-			break;
+									   return group;
+									   break;
 	}
-		
-	//Environment objects
+
+		//Environment objects
 	case TREE1:{
 				   if (render_obj_map[type] == nullptr){
 					   cout << "model is not there" << endl;
@@ -397,10 +411,10 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					   returnModel->type = BasicCube;
 					   return returnModel;
 				   }
-		Model3D * returnModel = new Model3D(render_obj_map[type]);
-		returnModel->type = TREE1;
-		return returnModel;
-		break;
+				   Model3D * returnModel = new Model3D(render_obj_map[type]);
+				   returnModel->type = TREE1;
+				   return returnModel;
+				   break;
 	}
 	case TREE2:{
 				   if (render_obj_map[type] == nullptr){
@@ -409,10 +423,10 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					   returnModel->type = BasicCube;
 					   return returnModel;
 				   }
-		Model3D * returnModel = new Model3D(render_obj_map[type]);
-		returnModel->type = TREE2;
-		return returnModel;
-		break;
+				   Model3D * returnModel = new Model3D(render_obj_map[type]);
+				   returnModel->type = TREE2;
+				   return returnModel;
+				   break;
 	}
 	case TREE3:{
 				   if (render_obj_map[type] == nullptr){
@@ -421,13 +435,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					   returnModel->type = BasicCube;
 					   return returnModel;
 				   }
-		Model3D * returnModel = new Model3D(render_obj_map[type]);
-		returnModel->type = TREE3;
-		return returnModel;
-		break;
+				   Model3D * returnModel = new Model3D(render_obj_map[type]);
+				   returnModel->type = TREE3;
+				   return returnModel;
+				   break;
 	}
 	case WALL:{
-		  break;
+				  break;
 	}
 	case BULLET:{
 					if (render_obj_map[type] == nullptr){
@@ -442,7 +456,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					break;
 	}
 	case BULLET_1:{
-		  break;
+					  break;
 	}
 	case BATTLEFIELDINNER:{
 							  if (render_obj_map[type] == nullptr){
@@ -454,7 +468,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 							  Model3D * returnModel = new Model3D(render_obj_map[type]);
 							  returnModel->type = BATTLEFIELDINNER;
 							  return returnModel;
-		break;
+							  break;
 	}
 	case BATTLEFIELDOUTER:{
 							  if (render_obj_map[type] == nullptr){
@@ -466,7 +480,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 							  Model3D * returnModel = new Model3D(render_obj_map[type]);
 							  returnModel->type = BATTLEFIELDOUTER;
 							  return returnModel;
-		break;
+							  break;
 	}
 	case DESERT:{
 					if (render_obj_map[type] == nullptr){
@@ -503,6 +517,68 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					   returnModel->type = ALTNEEDLE;
 					   return returnModel;
 					   break;
+	}
+
+	case AltTire:{
+					 if (render_obj_map[type] == nullptr){
+						 cout << "model is not there" << endl;
+						 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						 returnModel->type = BasicCube;
+						 return returnModel;
+					 }
+					 Model3D * returnModel = new Model3D(render_obj_map[type]);
+					 returnModel->type = AltTire;
+					 return returnModel;
+					 break;
+	}
+	case StoneTire:{
+					   if (render_obj_map[type] == nullptr){
+						   cout << "model is not there" << endl;
+						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						   returnModel->type = BasicCube;
+						   return returnModel;
+					   }
+					   Model3D * returnModel = new Model3D(render_obj_map[type]);
+					   returnModel->type = StoneTire;
+					   return returnModel;
+					   break;
+	}
+	case TronWheel:{
+					   if (render_obj_map[type] == nullptr){
+						   cout << "model is not there" << endl;
+						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						   returnModel->type = BasicCube;
+						   return returnModel;
+					   }
+					   Model3D * returnModel = new Model3D(render_obj_map[type]);
+					   returnModel->type = TronWheel;
+					   return returnModel;
+					   break;
+	}
+	case Turrent:{
+					 if (render_obj_map[type] == nullptr){
+						 cout << "model is not there" << endl;
+						 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						 returnModel->type = BasicCube;
+						 return returnModel;
+					 }
+					 Model3D * returnModel = new Model3D(render_obj_map[type]);
+					 returnModel->type = Turrent;
+					 return returnModel;
+					 break;
+	}
+	case Railgun:{
+					 if (render_obj_map[type] == nullptr){
+						 cout << "model is not there" << endl;
+						 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						 returnModel->type = BasicCube;
+						 return returnModel;
+					 }
+					 Model3D * returnModel = new Model3D(render_obj_map[type]);
+					 returnModel->type = Railgun;
+					 return returnModel;
+					 break;
+
 	}
 	}
 }

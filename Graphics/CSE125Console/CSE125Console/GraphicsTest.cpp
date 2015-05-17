@@ -134,6 +134,55 @@ void GraphicsTest::displayTest4(GameView* view){
 	cout << "here" << endl;
 	view->PushGeoNode(object);
 
+	object = Model3DFactory::generateObjectWithType(AltTire);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-5, 0, -10);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = AltTire;
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(StoneTire);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-3, 0, -10);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = StoneTire;
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(TronWheel);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-1, 0, -10);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = TronWheel;
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Turrent);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(1, 0, -10);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = Turrent;
+	view->PushGeoNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Railgun);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(3, 0, -10);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = Railgun;
+	view->PushGeoNode(object);
 }
 
 //This is for testing materials
