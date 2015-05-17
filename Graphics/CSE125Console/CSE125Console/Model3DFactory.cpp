@@ -6,7 +6,7 @@ static map<int, RenderObject*> render_obj_map;
 Model3DFactory::Model3DFactory()
 {
 	//blocks
-	
+	cout << "Model3DFactory loading" << endl;
 	render_obj_map.insert(std::pair<int, RenderObject*>(BasicCube, new RenderObject("Assets/BasicCube/cube2.obj", "Assets/BasicCube/tex.png", "Assets/BasicCube/normals.png", "Assets/BasicCube/gloss.png", "Assets/BasicCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(CrystalCube, new RenderObject("Assets/CrystalMethCube/cubeofmeth.obj", "Assets/CrystalMethCube/tex.png", "Assets/CrystalMethCube/normals.png", "Assets/CrystalMethCube/gloss.png", "Assets/CrystalMethCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(GlowingCube, new RenderObject("Assets/WhiteCube/simplecube2.obj", "Assets/WhiteCube/tex.png", "Assets/WhiteCube/normals.png", "Assets/WhiteCube/gloss.png", "Assets/WhiteCube/metallic.png")));
@@ -41,6 +41,7 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(ALTNEEDLE, new RenderObject("Assets/AltNeedle/altneedle.obj", "Assets/AltNeedle/tex.png", "Assets/AltNeedle/normals.png", "Assets/AltNeedle/gloss.png", "Assets/AltNeedle/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(ALTMACE, new RenderObject("Assets/AltMace/final.obj", "Assets/AltMace/tex.png", "Assets/AltMace/normals.png", "Assets/AltMace/gloss.png", "Assets/AltMace/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
+	cout << "Model3DFactory loading done" << endl;
 
 }
 
@@ -52,6 +53,12 @@ Model3DFactory::~Model3DFactory()
 Model3D* Model3DFactory::generateObjectWithType(int type){
 	switch (type){
 		case Mallet:{
+			if (render_obj_map[type] == nullptr){
+				cout << "model is not there, using BasicCube" << endl;
+				Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+				returnModel->type = BasicCube;
+				return returnModel;
+			}
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->type = Mallet;
 			returnModel->damageStat = 1;
@@ -59,6 +66,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case Mace:{
+					  if (render_obj_map[type] == nullptr){
+						  cout << "model is not there" << endl;
+						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						  returnModel->type = BasicCube;
+						  return returnModel;
+					  }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->damageStat = 1;
 			returnModel->type = Mace;
@@ -66,6 +79,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case Discount:{
+						  if (render_obj_map[type] == nullptr){
+							  cout << "model is not there" << endl;
+							  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							  returnModel->type = BasicCube;
+							  return returnModel;
+						  }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->speedStat = 1;
 			returnModel->type = Discount;
@@ -73,6 +92,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case Needle:{
+						if (render_obj_map[type] == nullptr){
+							cout << "model is not there" << endl;
+							Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							returnModel->type = BasicCube;
+							return returnModel;
+						}
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->damageStat = 1;
 			returnModel->type = Needle;
@@ -81,6 +106,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BasicCube:{
+						   if (render_obj_map[type] == nullptr){
+							   cout << "model is not there" << endl;
+							   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							   returnModel->type = BasicCube;
+							   return returnModel;
+						   }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->healthStat = 1;
 			returnModel->type = BasicCube;
@@ -89,6 +120,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case WoodenCube:{
+							if (render_obj_map[type] == nullptr){
+								cout << "model is not there" << endl;
+								Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+								returnModel->type = BasicCube;
+								return returnModel;
+							}
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->type = WoodenCube;
 
@@ -97,6 +134,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BLACKCUBE:{
+						   if (render_obj_map[type] == nullptr){
+							   cout << "model is not there" << endl;
+							   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							   returnModel->type = BasicCube;
+							   return returnModel;
+						   }
 						   Model3D * returnModel = new Model3D(render_obj_map[type]);
 						   returnModel->type = BLACKCUBE;
 						   returnModel->healthStat = 1;
@@ -104,6 +147,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case CUBEA:{
+					   if (render_obj_map[type] == nullptr){
+						   cout << "model is not there" << endl;
+						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						   returnModel->type = BasicCube;
+						   return returnModel;
+					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
 					   returnModel->type = CUBEA;
 					   returnModel->healthStat = 1;
@@ -111,6 +160,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						   break;
 		}
 		case CUBEB:{
+					   if (render_obj_map[type] == nullptr){
+						   cout << "model is not there" << endl;
+						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						   returnModel->type = BasicCube;
+						   return returnModel;
+					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
 					   returnModel->type = CUBEB;
 					   returnModel->healthStat = 1;
@@ -118,6 +173,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						   break;
 		}
 		case WoodenWheel:{
+							 if (render_obj_map[type] == nullptr){
+								 cout << "model is not there" << endl;
+								 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+								 returnModel->type = BasicCube;
+								 return returnModel;
+							 }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->speedStat = 1;
 			returnModel->type = WoodenWheel;
@@ -126,6 +187,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case Tire:{
+					  if (render_obj_map[type] == nullptr){
+						  cout << "model is not there" << endl;
+						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						  returnModel->type = BasicCube;
+						  return returnModel;
+					  }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->speedStat = 1;
 			returnModel->type = Tire;
@@ -134,6 +201,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case GlowingCube:{
+							 if (render_obj_map[type] == nullptr){
+								 cout << "model is not there" << endl;
+								 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+								 returnModel->type = BasicCube;
+								 return returnModel;
+							 }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->healthStat = 1;
 			returnModel->type = GlowingCube;
@@ -142,6 +215,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BGun:{
+					  if (render_obj_map[type] == nullptr){
+						  cout << "model is not there" << endl;
+						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						  returnModel->type = BasicCube;
+						  return returnModel;
+					  }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->healthStat = 1;
 			returnModel->type = BGun;
@@ -150,12 +229,24 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 			break;
 		}
 		case BATTLEFIELD:{
+							 if (render_obj_map[type] == nullptr){
+								 cout << "model is not there" << endl;
+								 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+								 returnModel->type = BasicCube;
+								 return returnModel;
+							 }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->type = BATTLEFIELD;
 			return returnModel;
 			break;
 		}
 		case CrystalCube:{
+							 if (render_obj_map[type] == nullptr){
+								 cout << "model is not there" << endl;
+								 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+								 returnModel->type = BasicCube;
+								 return returnModel;
+							 }
 			Model3D * returnModel = new Model3D(render_obj_map[type]);
 			returnModel->type = CrystalCube;
 			return returnModel;
@@ -298,18 +389,36 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		
 	//Environment objects
 	case TREE1:{
+				   if (render_obj_map[type] == nullptr){
+					   cout << "model is not there" << endl;
+					   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					   returnModel->type = BasicCube;
+					   return returnModel;
+				   }
 		Model3D * returnModel = new Model3D(render_obj_map[type]);
 		returnModel->type = TREE1;
 		return returnModel;
 		break;
 	}
 	case TREE2:{
+				   if (render_obj_map[type] == nullptr){
+					   cout << "model is not there" << endl;
+					   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					   returnModel->type = BasicCube;
+					   return returnModel;
+				   }
 		Model3D * returnModel = new Model3D(render_obj_map[type]);
 		returnModel->type = TREE2;
 		return returnModel;
 		break;
 	}
 	case TREE3:{
+				   if (render_obj_map[type] == nullptr){
+					   cout << "model is not there" << endl;
+					   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					   returnModel->type = BasicCube;
+					   return returnModel;
+				   }
 		Model3D * returnModel = new Model3D(render_obj_map[type]);
 		returnModel->type = TREE3;
 		return returnModel;
@@ -319,6 +428,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		  break;
 	}
 	case BULLET:{
+					if (render_obj_map[type] == nullptr){
+						cout << "model is not there" << endl;
+						Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						returnModel->type = BasicCube;
+						return returnModel;
+					}
 					Model3D * returnModel = new Model3D(render_obj_map[type]);
 					returnModel->type = BULLET;
 					return returnModel;
@@ -328,31 +443,60 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 		  break;
 	}
 	case BATTLEFIELDINNER:{
+							  if (render_obj_map[type] == nullptr){
+								  cout << "model is not there" << endl;
+								  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+								  returnModel->type = BasicCube;
+								  return returnModel;
+							  }
 							  Model3D * returnModel = new Model3D(render_obj_map[type]);
 							  returnModel->type = BATTLEFIELDINNER;
 							  return returnModel;
 		break;
 	}
 	case BATTLEFIELDOUTER:{
+							  if (render_obj_map[type] == nullptr){
+								  cout << "model is not there" << endl;
+								  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+								  returnModel->type = BasicCube;
+								  return returnModel;
+							  }
 							  Model3D * returnModel = new Model3D(render_obj_map[type]);
 							  returnModel->type = BATTLEFIELDOUTER;
 							  return returnModel;
 		break;
 	}
 	case DESERT:{
-
+					if (render_obj_map[type] == nullptr){
+						cout << "model is not there" << endl;
+						Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						returnModel->type = BasicCube;
+						return returnModel;
+					}
 					Model3D * returnModel = new Model3D(render_obj_map[type]);
 					returnModel->type = DESERT;
 					return returnModel;
 					break;
 	}
 	case ALTMACE:{
+					 if (render_obj_map[type] == nullptr){
+						 cout << "model is not there" << endl;
+						 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						 returnModel->type = BasicCube;
+						 return returnModel;
+					 }
 					 Model3D * returnModel = new Model3D(render_obj_map[type]);
 					 returnModel->type = ALTMACE;
 					 return returnModel;
 					 break;
 	}
 	case ALTNEEDLE:{
+					   if (render_obj_map[type] == nullptr){
+						   cout << "model is not there" << endl;
+						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						   returnModel->type = BasicCube;
+						   return returnModel;
+					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
 					   returnModel->type = ALTNEEDLE;
 					   return returnModel;

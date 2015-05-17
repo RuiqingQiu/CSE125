@@ -26,6 +26,7 @@ viewFactory::viewFactory()
 }
 
 viewFactory::viewFactory(int w, int h) {
+	cout << "view factory loading" << endl;
 	viewmode = viewType::CONSOLE;
 	defaultView = new GameView();
 	helpview = new helpMenu(w, h);
@@ -45,6 +46,8 @@ viewFactory::viewFactory(int w, int h) {
 	buildmode->addItem(score);
 
 	debug = false;
+	cout << "view factory loading done" << endl;
+
 }
 
 viewFactory::viewFactory(bool d) {

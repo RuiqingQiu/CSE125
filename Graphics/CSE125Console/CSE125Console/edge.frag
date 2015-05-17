@@ -74,16 +74,13 @@ float IsEdge(in vec2 coords){
 
 void main()
 {
-
     if(pass == 1){
         gl_FragColor = vec4(phongModel(Position, Normal),1.0);
     }
     else{
-        
         vec4 color = vec4(0.0,0.0,0.0,1.0);
         vec2 pix = vec2(gl_FragCoord.x/width, gl_FragCoord.y /height);
         color.g = IsEdge(pix);
-        //gl_FragColor = color;
         if(color.g == 0.0){
             gl_FragColor = texture2D(RenderTex, pix);
         }

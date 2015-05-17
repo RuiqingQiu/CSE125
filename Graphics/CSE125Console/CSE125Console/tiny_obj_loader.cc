@@ -880,7 +880,7 @@ void generateTangents(
 	std::vector<Vector3> tan1Accum;
 	//vec3
 	std::vector<Vector3> tan2Accum;
-	cout << "number of points are " << points.size() / 3 << endl;
+	//cout << "number of points are " << points.size() / 3 << endl;
 	//For each point, there's a tangent
 	for (int i = 0; i < points.size() / 3; i++) {
 		tan1Accum.push_back(Vector3(0, 0, 0));
@@ -889,7 +889,7 @@ void generateTangents(
 
 		tangents.push_back(Vector4(0, 0, 0, 0));
 	}
-	cout << "number of faces are " << faces.size() / 3 << endl;
+	//cout << "number of faces are " << faces.size() / 3 << endl;
 	// Compute the tangent vector
 	for (int i = 0; i < faces.size(); i += 3)
 	{

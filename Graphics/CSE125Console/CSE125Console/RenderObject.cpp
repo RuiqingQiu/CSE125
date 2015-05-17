@@ -82,6 +82,7 @@ GLhandleARB loadShader1(char* filename, unsigned int type)
 RenderObject::RenderObject(string filename, string texture, string normal, string gloss,
 	string metal)
 {
+	cout << "loading " << filename << endl;
 	glGenTextures(3, texturaID);
 	int width, height;
 	//unsigned char* image;
@@ -94,9 +95,6 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 	if (texturaID[0] == 0)
 	{
 		cout << "error" << endl;
-	}
-	else{
-		cout << texturaID[0] << endl;
 	}
 	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	//SOIL_free_image_data(image);

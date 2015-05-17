@@ -10,12 +10,23 @@
 #include <iostream>
 #include "SOIL.h"
 
+
+class FrameBufferObject{
+public:
+	//FBO handle
+	GLuint fb;
+	//Color texture from FBO
+	GLuint color;
+	//Depth buffer from FBO
+	GLuint depth;
+};
+
 class ShaderSystem
 {
 public:
 	//Shader ids
 	vector<GLhandleARB> shader_ids;
-
+	vector<FrameBufferObject*> frame_buffer_list;
 	//These are for two pass rendering
 	//FBO handle
 	GLuint fb;
