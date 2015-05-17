@@ -97,7 +97,8 @@ public:
 	int getFrontID();
 	int getBackID();
 	int getBelowID();
-
+	void setId(unsigned int i);
+	
 
 	void setBuildID(int);
 

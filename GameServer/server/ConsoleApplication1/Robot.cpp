@@ -135,6 +135,7 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	//dynamicWorld->addRigidBody(m_pBody, COL_PLAYER, playerCollisions);
 	//dynamicWorld->addRigidBody(m_pBody);
 	m_chassis->setUserPointer(this);
+	m_chassis->setAngularFactor(btVector3(0, 1, 0));
 	dynamicWorld->addRigidBody(m_chassis);
 	//m_chassis->setAngularFactor(btVector3(0, 0, 0));
 	dynamicWorld->addAction(m_pVehicle);
@@ -152,19 +153,19 @@ void Robot::createVehicle(btDynamicsWorld* dynamicWorld, double width, double he
 	btScalar connectionHeight = 0.2f;
 
 	{
-		btVector3 connectionPointCS0((width / 2.0f - width/10.0f), connectionHeight, (depth / 2.0f - depth / 8.0f));
+		btVector3 connectionPointCS0((width / 2.0f - width/30.0f), connectionHeight, (depth / 2.0f - depth / 8.0f));
 		m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, true);
 	}
 {
-	btVector3 connectionPointCS0(-(width / 2.0f - width / 10.0f), connectionHeight, (depth / 2.0f - depth / 8.0f));
+	btVector3 connectionPointCS0(-(width / 2.0f - width / 30.0f), connectionHeight, (depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, true);
 }
 {
-	btVector3 connectionPointCS0((width / 2.0f - width / 10.0f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
+	btVector3 connectionPointCS0((width / 2.0f - width / 30.0f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, false);
 }
 {
-	btVector3 connectionPointCS0(-(width / 2.0f - width / 10.0f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
+	btVector3 connectionPointCS0(-(width / 2.0f - width / 30.0f), connectionHeight, -(depth / 2.0f - depth / 8.0f));
 	m_pVehicle->addWheel(connectionPointCS0, wheelDirectionCS0, wheelAxleCS, suspensionRestLength, wheelRadius, tuning, false);
 }
 
@@ -223,17 +224,18 @@ void Robot::shoot(std::vector<GameObj*>* projectiles)
 
 void Robot::nextState()
 {
-	_state = (_state + 1) % 3;
+	_state = (_state + 1) % 2;
+	//_state = (_state + 1) % 3;
 }
 int Robot::getState()
 {
 	return _state;
 }
 
-void Robot::setState(int s)
-{
-	_state = s;
-}
+//void Robot::setState(int s)
+//{
+//	_state = s;
+//}
 
 void Robot::addPart(GameObj* g)
 {

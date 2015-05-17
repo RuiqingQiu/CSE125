@@ -13,7 +13,7 @@ GameObj::GameObj()
 GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, double qZ, double qW, int type, double mass)
 {
 
-	_id = _totalId;
+	_id = _totalId+5;
 	_totalId++;
 	_x = posX;
 	_y = posY;
@@ -77,6 +77,10 @@ unsigned int GameObj::getId(){
 	return _id;
 }
 
+void GameObj::setId(unsigned int i)
+{
+	_id = i;
+}
 
 
 int GameObj::getIsWheel()
@@ -164,21 +168,21 @@ void GameObj::setBlockType(int bType)
 	case BASICCUBE:
 	{
 			  _mass = 10;
-			  _health = 100;
+			  _health = 200;
 			  _collisionType = C_ROBOT_PARTS;
 			  break;
 	}
 	case GLOWINGCUBE:
 	{
-						_mass = 5;
-						_health = 50;
+						_mass = 9;
+						_health = 190;
 						_collisionType = C_ROBOT_PARTS;
 					  break;
 	}
 	case WOODENCUBE:
 	{
-					   _mass = 1;
-					   _health = 20;
+					   _mass = 7;
+					   _health = 170;
 					   _collisionType = C_ROBOT_PARTS;
 					  break;
 	}
@@ -186,7 +190,7 @@ void GameObj::setBlockType(int bType)
 	{
 				 _isWeapon = 1;
 				 _isRanged = 1;
-				 _health = 10000;//15;
+				 _health = 200;
 				 _mass = 20;
 				 _collisionType = C_ROBOT_PARTS;
 					  break;
@@ -195,6 +199,7 @@ void GameObj::setBlockType(int bType)
 	{
 				 _isWeapon = 1;
 				 _mass = 30;
+				 _health = 300;
 				 _collisionType = C_MELEE;
 					  break;
 	}
@@ -202,14 +207,15 @@ void GameObj::setBlockType(int bType)
 	{
 				   _isWeapon = 1;
 				   _mass = 25;
+				   _health = 350;
 				   _collisionType = C_MELEE;
 					  break;
 	}
 	case NEEDLE:
 	{
 				   _isWeapon = 1;
-				   _health = 10;
-				   _mass = 7;
+				   _health = 250;
+				   _mass = 6;
 				   _collisionType = C_MELEE;
 					  break;
 	}
@@ -231,21 +237,21 @@ void GameObj::setBlockType(int bType)
 	case THREEBYTHREE_BASIC:
 	{
 							   _mass = 90;
-							   _health = 900;
+							   _health = 1800;
 							   _collisionType = C_ROBOT;
 						  break;
 	}
 	case THREEBYTHREE_GLOWING:
 	{
-								 _mass = 45;
-								 _health = 450;
+								 _mass = 81;
+								 _health = 1710;
 								 _collisionType = C_ROBOT;
 							   break;
 	}
 	case THREEBYTHREE_WOODEN:
 	{
-								_mass = 9;
-								_health = 20;
+								_mass = 63;
+								_health = 1530;
 								_collisionType = C_ROBOT;
 							   break;
 	}
@@ -566,10 +572,12 @@ void GameObj::setWeapon(int mor, int weapontype)
 	if (mor == MELEE)
 	{
 		weapon = new MeleeWeapon(weapontype);
+		this->setDamage(weapon->getDamage());
 	}
 	else
 	{
 		weapon = new RangedWeapon(weapontype);
+		
 	}
 	setIsWeapon();
 }

@@ -10,12 +10,12 @@ MeleeWeapon::MeleeWeapon(int type)
 	switch (type)
 	{
 	case NEEDLE:{
-		damage = 1;
+		damage = .5;
 		splash = 1;
 		break;
 	}
 	default:{
-		damage = 3;
+		damage = 1000;
 		splash = 2;
 		break;
 	}

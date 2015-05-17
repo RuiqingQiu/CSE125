@@ -118,6 +118,7 @@ void GamePhysics::createPhysicsProjectile(Projectile* projectile)//std::map< btC
 {
 
 	projectile->createRigidBody();// map);
+	projectile->getRigidBody()->setLinearFactor(btVector3(1, 0.1, 1));
 	dynamicsWorld->addRigidBody(projectile->getRigidBody());
 
 	btTransform rbTrans = projectile->getRigidBody()->getWorldTransform();

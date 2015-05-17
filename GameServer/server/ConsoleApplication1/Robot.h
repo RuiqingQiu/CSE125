@@ -64,6 +64,6 @@ public:
 	void nextState();
 	void setParts(std::vector<GameObj*> );
 	int getState();
-	void setState(int);
+	//void setState(int);
 };
 

@@ -18,7 +18,7 @@ RangedWeapon::RangedWeapon(int type)
 	case BGUN:
 	{
 		range = MEDIUM_RANGED;
-		damage = 100;
+		damage = 15;
 		attackSpeed = 4;
 		splash = 1;
 
@@ -33,7 +33,7 @@ RangedWeapon::RangedWeapon(int type)
 	default:
 	{
 		range = FAR_RANGED;
-		damage = 20;
+		damage = 30;
 		attackSpeed = 0.5;
 		splash = 4;
 

@@ -25,12 +25,11 @@ GameObj* GOBox::shoot()
 
 				double rbDepth = getDepth() / 2 + ((RangedWeapon *)w)->getPDepth()/2 + 0.6f;
 				btTransform* rbTrans = &getRigidBody()->getWorldTransform();
-				btVector3 relativeDisplacement = btVector3(0, 0, -rbDepth);
 				btVector3 boxRot = rbTrans->getBasis()[2];
 				boxRot.normalize();
 				btVector3 correctedDisplacement = boxRot * -rbDepth; // /2
-				double x = rbTrans->getOrigin().getX() + correctedDisplacement.getX();// + 0.5 - w->getPWidth();
-				double y = rbTrans->getOrigin().getY() + correctedDisplacement.getY();
+				double x = rbTrans->getOrigin().getX();// + 0.5 - w->getPWidth();
+				double y = rbTrans->getOrigin().getY();
 				double z = rbTrans->getOrigin().getZ() + correctedDisplacement.getZ();
 
 				GameObj* proj = new Projectile(x, y, z, rbTrans->getRotation().getX(), rbTrans->getRotation().getY(), rbTrans->getRotation().getZ(), rbTrans->getRotation().getW(),

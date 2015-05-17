@@ -12,6 +12,7 @@ GameLogic::GameLogic()
 	physicsTimer = new TimeFrame();
 	damageSystem = new DamageSystem(INSTANT_KILL);
 	scoreboard = new Scoreboard();
+	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
 	counter = 0;
 }
 
@@ -84,6 +85,7 @@ int GameLogic::gameStart(){
 	vector<ObjectEvents*>::iterator iter;
 	for (iter = buildList.begin(); iter != buildList.end(); iter++)
 	{
+
 		double maxHealth = 0;
 		//Add robot parts to gameObjs and find the Robot, create rigidbodies
 		std::vector<GameObj*>::iterator it;
@@ -94,10 +96,17 @@ int GameLogic::gameStart(){
 		for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
 		{
 
+			int cid = (*iter)->getCid();
+			double xoffset = (cid % 2) * 30;
+			double zoffset = cid - 2<0 ? 0 : 30;
+
 			if ((*it)->getBuildID() == 0)
 			{
 				robot = (Robot*)(*it);
-				clientPair.insert(std::pair<int, Robot*>((*iter)->getCid(), robot));
+				robot->setCID(cid);
+				clientPair.insert(std::pair<int, Robot*>(cid, robot));
+				robot->setX(xoffset);
+				robot->setZ(zoffset);
 				robot->createVehicle(d, robot->getWidth(), robot->getHeight(), robot->getDepth());//, &objCollisionPair);
 				gameObjs.push_back((*it));
 			}
@@ -105,6 +114,10 @@ int GameLogic::gameStart(){
 			{
 				if (!(*it)->getIsWheel())
 				{
+					double initX = (*it)->getX();
+					double initZ = (*it)->getZ();
+					(*it)->setX(initX + xoffset);
+					(*it)->setZ(initZ + zoffset);
 					(*it)->createRigidBody();// &objCollisionPair);
 					d->addRigidBody((*it)->getRigidBody());
 					gameObjs.push_back((*it));
@@ -131,7 +144,6 @@ int GameLogic::gameStart(){
 			}
 			else
 			{
-
 				(*it)->setBelongTo(robot);
 				robot->addPart((*it));
 				maxHealth += (*it)->getHealth();
@@ -146,8 +158,37 @@ int GameLogic::gameStart(){
 		for (it = parts.begin(); it != parts.end(); it++)
 		{
 
-			d->addConstraint(robot->addConstraint(*it)->_joint6DOF);
+			//d->addConstraint(robot->addConstraint(*it)->_joint6DOF);
+			int l = (*it)->getLeftID();
+			int r = (*it)->getRightID();
+			int f = (*it)->getFrontID();
+			int ba = (*it)->getBackID();
+			int be = (*it)->getBelowID();
+			for (it2 = parts.begin(); it2 != parts.end(); it2++)
+			{
+				if ((*it2)->getBuildID() == l)
+				{
+					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+				}
+				if ((*it2)->getBuildID() == r)
+				{
+					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+				}
+				if ((*it2)->getBuildID() == f)
+				{
+					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+				}
+				if ((*it2)->getBuildID() == ba)
+				{
+					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+				}
+				if ((*it2)->getBuildID() == be)
+				{
+					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+				}
+			}
 		}
+		
 		robot->nextState();
 	}
 
@@ -313,6 +354,7 @@ void GameLogic::prePhyLogic(){
 	while (iter != objEventList.end()) 
 	{
 		unsigned int type = (*iter)->getEvent();
+		cout << "PACKET TYPE: " << type << endl;
 		int cid = (*iter)->getCid();
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
@@ -343,108 +385,116 @@ void GameLogic::prePhyLogic(){
 			}
 		}
 		else if(r->getState() == PS_BUILD)
-		{
+		{					
+			cout << "IN PS_BUILD1" << endl;
 			switch (type) {
 			case BUILD_ROBOT:{
+	
+								 cout << "IN PS_BUILD2" << endl;
 						   
-						   cout << "enter build mode " << endl;
-						   double maxHealth = 0;
-						   //Add robot parts to gameObjs and find the Robot, create rigidbodies
-						   std::vector<GameObj*>::iterator it;
-						   std::vector<GameObj*>::iterator it2;
-						   
-						   btDynamicsWorld* d = gamePhysics->getDynamicsWorld();
-						   Robot* robot = nullptr;
-						   for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
-						   {
-								
-							   if ((*it)->getBuildID() == 0)
-							   {
-								   robot = (Robot*)(*it);
-								   clientPair.find((*iter)->getCid())->second->setImmediateDeleted();
-								   clientPair.find((*iter)->getCid())->second = (*it);
-								   robot->createVehicle(d, robot->getWidth(), robot->getHeight(), robot->getDepth());// , &objCollisionPair);
-								   gameObjs.push_back((*it));
-							   }
-							   else
-							   {
-								   if (!(*it)->getIsWheel())
-								   {
-									   (*it)->createRigidBody();//&objCollisionPair);
-									   d->addRigidBody((*it)->getRigidBody());
-									   gameObjs.push_back((*it));
-								   }
-								
-							   }
-						   }
+								 double maxHealth = 0;
+								 //Add robot parts to gameObjs and find the Robot, create rigidbodies
+								 std::vector<GameObj*>::iterator it;
+								 std::vector<GameObj*>::iterator it2;
 
-						   if (robot == nullptr)
-						   {
-							   cout << "NO ROBOT WAS SENT FROM BUILD MODE" << endl;
-						   }
+								 btDynamicsWorld* d = gamePhysics->getDynamicsWorld();
+								 Robot* robot = nullptr;
+								 for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
+								 {
 
-						   //Group robot and its parts together
-						   for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
-						   {
-							   if ((*it)->getIsWheel())
-							   {
-								   robot->setWheelType((*it)->getBlockType());
-							   }
-							   else
-							   {
+									 int cid = (*iter)->getCid();
+									 double xoffset = (cid % 2) * 30;
+									 double zoffset = cid - 2 < 0 ? 0 : 30;
 
-								   (*it)->setBelongTo(robot);
-								   robot->addPart((*it));
-								   maxHealth += (*it)->getHealth();
+									 if ((*it)->getBuildID() == 0)
+									 {
+										 robot = (Robot*)(*it);
+										 clientPair.insert(std::pair<int, Robot*>(cid, robot));
+										 robot->setCID(cid);
+										 robot->setX(xoffset);
+										 robot->setZ(zoffset);
+										 robot->createVehicle(d, robot->getWidth(), robot->getHeight(), robot->getDepth());//, &objCollisionPair);
+										 gameObjs.push_back((*it));
+									 }
+									 else
+									 {
+										 if (!(*it)->getIsWheel())
+										 {
+											 double initX = (*it)->getX();
+											 double initZ = (*it)->getZ();
+											 (*it)->setX(initX + xoffset);
+											 (*it)->setZ(initZ + zoffset);
+											 (*it)->createRigidBody();// &objCollisionPair);
+											 d->addRigidBody((*it)->getRigidBody());
+											 gameObjs.push_back((*it));
+											 if ((*it)->getIsWeapon())
+											 {
+												 (*it)->setWeapon((*it)->getIsRangedWeapon(), (*it)->getBlockType());
+											 }
+										 }
 
-								   
-								   if ((*it)->getIsWeapon())
-								   {
-									   (*it)->setWeapon((*it)->getIsRangedWeapon(), (*it)->getBlockType());
-								   }
-							   }
-						   }
+									 }
+								 }
+
+								 if (robot == nullptr)
+								 {
+									 cout << "NO ROBOT WAS SENT FROM BUILD MODE" << endl;
+								 }
+
+								 //Group robot and its parts together
+								 for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
+								 {
+									 if ((*it)->getIsWheel())
+									 {
+										 robot->setWheelType((*it)->getBlockType());
+									 }
+									 else
+									 {
+										 (*it)->setBelongTo(robot);
+										 robot->addPart((*it));
+										 maxHealth += (*it)->getHealth();
+									 }
+								 }
 
 
-						   robot->setMaxHealth(maxHealth);
+								 robot->setMaxHealth(maxHealth);
 
-						   //Add constraints for the robot
-						   std::vector<GameObj*> parts = robot->getParts();
-						   for (it = parts.begin(); it != parts.end(); it++)
-						   {
-							  
-							   d->addConstraint(robot->addConstraint(*it)->_joint6DOF);
-							   
-							   int l = (*it)->getLeftID();
-							   int r = (*it)->getRightID();
-							   int f = (*it)->getFrontID();
-							   int ba = (*it)->getBackID();
-							   int be = (*it)->getBelowID();
-							   for (it2 = parts.begin(); it2 != parts.end(); it2++)
-							   {
-								   if ((*it2)->getBuildID() == l)
-								   {
-									   d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-								   }
-								   if ((*it2)->getBuildID() == r)
-								   {
-									   d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-								   }
-								   if ((*it2)->getBuildID() == f)
-								   {
-									   d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-								   }
-								   if ((*it2)->getBuildID() == ba)
-								   {
-									   d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-								   }
-								   if ((*it2)->getBuildID() == be)
-								   {
-									   d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-								   }
-							   }
-						   }
-						   robot->nextState();
+								 //Add constraints for the robot
+								 std::vector<GameObj*> parts = robot->getParts();
+								 for (it = parts.begin(); it != parts.end(); it++)
+								 {
+
+									 int l = (*it)->getLeftID();
+									 int r = (*it)->getRightID();
+									 int f = (*it)->getFrontID();
+									 int ba = (*it)->getBackID();
+									 int be = (*it)->getBelowID();
+									 for (it2 = parts.begin(); it2 != parts.end(); it2++)
+									 {
+									 if ((*it2)->getBuildID() == l)
+									 {
+									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+									 }
+									 if ((*it2)->getBuildID() == r)
+									 {
+									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+									 }
+									 if ((*it2)->getBuildID() == f)
+									 {
+									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+									 }
+									 if ((*it2)->getBuildID() == ba)
+									 {
+									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+									 }
+									 if ((*it2)->getBuildID() == be)
+									 {
+									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+									 }
+									 }
+								 }
+
+								 robot->nextState();
 			}
 			default:{
 						gamePhysics->createPhysicsEvent(type, gObj);
@@ -454,7 +504,7 @@ void GameLogic::prePhyLogic(){
 
 		}
 		else if (r->getState() == PS_DEAD){
-
+			cout << "IN PS_DEAD" << endl;
 		}
 		iter++;
 	}
@@ -524,7 +574,7 @@ void GameLogic::postPhyLogic(){
 
 		//cout << "Collision pairs: GO1: " << GO1->getId() << endl;
 		//cout << "GO2: " << GO2->getId() << endl;
-		//if ((GO1->getBelongTo() != nullptr && GO1->getBelongTo() == GO2) || (GO2->getBelongTo() != nullptr && GO2->getBelongTo() == GO1)) continue;
+		if ((GO1->getBelongTo()== GO2->getBelongTo())) continue;
 		//std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
 		
 		DamageEvent* e = new DamageEvent(GO1, GO2);
@@ -590,6 +640,7 @@ void GameLogic::postDeathLogic(Robot* r)
 {
 	scoreboard->incDeaths(r->getCID());
 	scoreboard->incTakedowns(r->getDiedTo()->getCID());
+	r->setImmediateDeleted();
 	createDeathEvent(r);
 }
 
@@ -602,6 +653,7 @@ void GameLogic::createHealthUpdateEvent(Robot* r)
 
 void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 {
+	
 	if (!g->getDeleted())
 	{
 		if (result == BREAK_CONSTRAINT && g->getConstraints() != nullptr)
@@ -609,10 +661,11 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 			//cout << "GO Break ID: " << g->getId() << endl;
 			breakConstraints(g);
 			cout << "Impulse: " << pt->getAppliedImpulse() << endl;
-			btVector3 randomForce(rand(), rand(), rand());
+			btVector3 randomForce((*dist)(generator), (*dist)(generator), (*dist)(generator));
+			cout << "randomForce x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
 			randomForce.normalize();
-			
-			g->getRigidBody()->applyCentralImpulse(randomForce*pt->getAppliedImpulse());
+			cout << "randomForce normalized x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
+			g->getRigidBody()->applyCentralImpulse(randomForce*pt->getAppliedImpulse()*pt->getAppliedImpulse());
 		}
 		else if (result == DELETED)
 		{
@@ -705,7 +758,7 @@ int GameLogic::breakConstraints(GameObj* g)
 
 void GameLogic::createDeathEvent(Robot* r)
 {
-	r->setState(PS_DEAD);
+	r->nextState();
 	if (r->getDiedTo() != nullptr){
 		GameEvents* GE = new GERobotDeath(r->getCID(), r->getDiedTo()->getCID());
 		gameEventList.push_back(GE);
@@ -790,7 +843,7 @@ int GameLogic::buildMode(){
 	}
 
 
-	if (buildnum > 0){
+	if (buildnum >= numPlayers){
 		cout << "build finish" << endl;
 		return TIMEUP;
 	}

@@ -18,7 +18,7 @@
 #include "Scoreboard.h"
 #include "GECollisonHappen.h"
 #include "GEScoreboardUpdate.h"
-#include <math.h>
+#include <random>
 
 #define FIELD_WIDTH 50
 #define FIELD_HEIGHT 50
@@ -52,10 +52,12 @@ private:
 	std::vector<ObjectEvents *> objEventList;
     std::vector<GameEvents *> gameEventList;
 	std::vector<ObjectEvents *> buildList;
-
+	std::uniform_real_distribution<double>* dist;
+	std::default_random_engine generator;
 	int lastTime;
 
 public:
+	int numPlayers;
 	GameLogic();
 	~GameLogic();
 	unsigned int waitToConnect();

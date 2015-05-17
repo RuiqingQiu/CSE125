@@ -471,8 +471,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 								     if (objId == 0) {
 
 										object = new Robot((int)cid, "Player");
-										
-										object->setIsRobot(1);
+										object->setId(cid);
 										object->setX(xPos);
 										object->setY(yPos);
 										object->setZ(zPos);
@@ -484,14 +483,12 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 										((Robot*)object)->setWidth(3);
 										((Robot*)object)->setHeight(1);
 										((Robot*)object)->setDepth(3);
-										object->setCollisionType(C_ROBOT);
 									  }
 									else
 									{
 										//cout << "not robot y: " << rotations.y() << " w " << rotations.w() << endl;
 										object = new GOBox(xPos, yPos, zPos, q->getX(), q->getY(), q->getZ(), q->getW(), 10, 1, 1, 1);
-										object->setIsRobot(0);
-										object->setCollisionType(C_ROBOT_PARTS);
+					
 									}
 									  
 								      delete q;
@@ -502,7 +499,6 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 									  object->setRightID(right);
 									  object->setFrontID(front);
 									  object->setBackID(back);
-									  object->setHealth(health);
 									  e->roboBuild.push_back(object);
 									  
 								  }
