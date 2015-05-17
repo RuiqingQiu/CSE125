@@ -4,18 +4,15 @@
 
 //constructors
 buildView::buildView() : gui() {
-	updateview = false;
 	init();
+	createText();
 	createButtons();
-	sound = new Sound();
-	
 }
 
 buildView::buildView(int w, int h) : gui(w, h) {
-	updateview = false;
 	init();
+	createText();
 	createButtons();
-	sound = new Sound();
 }
 
 
@@ -24,6 +21,8 @@ buildView::~buildView() {
 }
 
 void buildView::init() {
+	updateview = false;
+	sound = new Sound();
 	pViewCamera->rotation->x = 0;
 	pViewCamera->position->z = -7;
 	selectedType = BasicCube;
@@ -66,9 +65,7 @@ void buildView::init() {
 	setCurrentNode(false);
 }
 
-void buildView::createButtons() {
-	//hardcoded button sizes for now
-
+void buildView::createText() {
 	//text displays
 	//time.jpg dimensions: 800x100
 	//"fullscreen" 1920 width ratio, 1920/2 - 200 = 760  760/1920 
@@ -81,8 +78,12 @@ void buildView::createButtons() {
 	//guiItems.push_back(score);
 
 	//blocks left display
-	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 900*0.25, 25, true, false);
+	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 900 * 0.25, 25, true, false);
 	guiItems.push_back(blocksDisplay);
+}
+
+void buildView::createButtons() {
+	//hardcoded button sizes for now
 
 	//battle button
 	battleButton = new button("menuItem/battle.jpg", width - 120, 20);
@@ -112,7 +113,10 @@ void buildView::createButtons() {
 
 	scroll->addListItem("wheels", ".jpg", true, true);
 	scroll->addsubListItem("wheels/discount", ".jpg", Discount, true, false);
+	scroll->addsubListItem("wheels/stone", ".jpg", StoneTire, true, false);
 	scroll->addsubListItem("wheels/tire", ".jpg", Tire, true, false);
+	scroll->addsubListItem("wheels/tire2", ".jpg", AltTire, true, false);
+	scroll->addsubListItem("wheels/tron", ".jpg", TronWheel, true, false);
 	scroll->addsubListItem("wheels/wooden", ".jpg", WoodenWheel, true, false);
 
 	scroll->addListItem("bases", ".jpg", true, true);

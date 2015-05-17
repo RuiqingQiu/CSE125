@@ -42,6 +42,7 @@ public:
 private:
 	//intialization helper functions
 	void init();
+	void createText();
 	void createButtons();
 
 	//block adding/removing helper functions
