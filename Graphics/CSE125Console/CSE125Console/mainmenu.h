@@ -35,6 +35,7 @@ private:
 	button * helpButton;
 	button * playButton;
 	button * exitButton;
+	button*  ipAdrressButton; // enter IP button
 
 	int playerReady;
 	bool ready;

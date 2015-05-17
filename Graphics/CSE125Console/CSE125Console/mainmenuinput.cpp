@@ -11,6 +11,7 @@ mainMenuInput::~mainMenuInput(){
 
 // handle robot name input
 void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
+	IPAdress = "123.45.678"; // test displaying the IP Address
 	// if the robot name is longer than max characters, doesn't allow user to add more letters
 	if (name.length() >= MAX_NUMBER){
 		// but allow the user to delete character
@@ -115,6 +116,7 @@ void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 	}
 	// set the gamecore player info at the mainmenuinput file
 	g_pCore->pPlayer->name = name;
+	g_pCore->pPlayer->IPAddress = IPAdress; // set the ip address in the game player object
 	//cout << "robot name is " << g_pCore->pPlayer->name << endl;
 }
 

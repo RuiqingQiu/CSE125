@@ -37,6 +37,10 @@ void mainMenu::createButtons() {
 
 	button * robo = new button("menuItem/enterRobotName.jpg", width*0.3, height*0.5, 750, 100);
 	robo->setScaling(true, true, width, height);
+
+	//set up enter IP button
+	ipAdrressButton = new button("menuItem/enterIP.jpg", width*0.3, height*0.4, 750, 100);
+	ipAdrressButton->setScaling(true, true, width, height);
 	
 	playButton = new button("menuItem/play.jpg", width*0.43, height*0.3, 260, 50);
 	playButton->setTexture("menuItem/play_sel.jpg", btnState::SELECTED);
@@ -57,6 +61,7 @@ void mainMenu::createButtons() {
 	buttons.push_back(playButton);
 	buttons.push_back(helpButton);
 	buttons.push_back(exitButton);
+	buttons.push_back(ipAdrressButton); // button[4] is enterIP Address
 
 	backimg = new background("background1.jpg", width, height);
 	guiItems.push_back(backimg); // push in to the guiTexts vector
@@ -95,6 +100,10 @@ void mainMenu::addLetters(){
 		l->letterToShow = int(*it) - 97; // from char to array index
 		guiLetters.push_back(l);
 	}
+
+
+
+
 
 	// Deletes the 2nd through 3rd elements (vec[1], vec[2])
 	//guiItems.erase(guiItems.begin() + 1, guiItems.begin() + guiItems.size);
