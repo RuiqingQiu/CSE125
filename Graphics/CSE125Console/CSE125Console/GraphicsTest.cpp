@@ -195,10 +195,10 @@ void GraphicsTest::displayTest1(GameView* view){
 	object->type = BULLET;
 	view->PushGeoNode(object);
 
-	for (int i = 0; i < 100; i++){
+	for (int i = 0; i < 1000; i++){
 		object = Model3DFactory::generateObjectWithType(BGun);
 		object->shader_type = NORMAL_SHADER;
-		object->localTransform.position = Vector3(i, 0, -10);
+		object->localTransform.position = Vector3(0, 0, -10);
 		object->localTransform.rotation = Vector3(0, 0, 0);
 		object->identifier = -1;
 		//object->auto_rotate = true;

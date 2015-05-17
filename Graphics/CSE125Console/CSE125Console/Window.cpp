@@ -148,7 +148,7 @@ void Window::initialize(void)
 	//Comment this for non-local testing
 	//gt->displayTest2(view);
 	//gt->displayTest3(view);
-	//gt->displayTest1(view);
+	//.gt->displayTest1(view);
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
@@ -262,7 +262,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.17");
 }
 
 //----------------------------------------------------------------------------
@@ -391,100 +391,8 @@ void Window::displayCallback() {
 	
 
 
-
-
-
-
-
 	//Draw everything
 	g_pCore->pGameView->VOnRender();
-
-	//Set the OpenGL matrix mode to ModelView
-
-	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
-	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
-	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
-	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	GLfloat vertices1[] = { 1, 1, 1, -1, 1, 1, -1, -1, 1,      // v0-v1-v2 (front)
-		-1, -1, 1, 1, -1, 1, 1, 1, 1,      // v2-v3-v0
-
-		1, 1, 1, 1, -1, 1, 1, -1, -1,      // v0-v3-v4 (right)
-		1, -1, -1, 1, 1, -1, 1, 1, 1,      // v4-v5-v0
-
-		1, 1, 1, 1, 1, -1, -1, 1, -1,      // v0-v5-v6 (top)
-		-1, 1, -1, -1, 1, 1, 1, 1, 1,      // v6-v1-v0
-
-		-1, 1, 1, -1, 1, -1, -1, -1, -1,      // v1-v6-v7 (left)
-		-1, -1, -1, -1, -1, 1, -1, 1, 1,      // v7-v2-v1
-
-		-1, -1, -1, 1, -1, -1, 1, -1, 1,      // v7-v4-v3 (bottom)
-		1, -1, 1, -1, -1, 1, -1, -1, -1,      // v3-v2-v7
-
-		1, -1, -1, -1, -1, -1, -1, 1, -1,      // v4-v7-v6 (back)
-		-1, 1, -1, 1, 1, -1, 1, -1, -1 };    // v6-v5-v4
-
-	// normal array
-	GLfloat normals1[] = { 0, 0, 1, 0, 0, 1, 0, 0, 1,      // v0-v1-v2 (front)
-		0, 0, 1, 0, 0, 1, 0, 0, 1,      // v2-v3-v0
-
-		1, 0, 0, 1, 0, 0, 1, 0, 0,      // v0-v3-v4 (right)
-		1, 0, 0, 1, 0, 0, 1, 0, 0,      // v4-v5-v0
-
-		0, 1, 0, 0, 1, 0, 0, 1, 0,      // v0-v5-v6 (top)
-		0, 1, 0, 0, 1, 0, 0, 1, 0,      // v6-v1-v0
-
-		-1, 0, 0, -1, 0, 0, -1, 0, 0,      // v1-v6-v7 (left)
-		-1, 0, 0, -1, 0, 0, -1, 0, 0,      // v7-v2-v1
-
-		0, -1, 0, 0, -1, 0, 0, -1, 0,      // v7-v4-v3 (bottom)
-		0, -1, 0, 0, -1, 0, 0, -1, 0,      // v3-v2-v7
-
-		0, 0, -1, 0, 0, -1, 0, 0, -1,      // v4-v7-v6 (back)
-		0, 0, -1, 0, 0, -1, 0, 0, -1 };    // v6-v5-v4
-
-	// color array
-	GLfloat colors1[] = { 1, 1, 1, 1, 1, 0, 1, 0, 0,      // v0-v1-v2 (front)
-		1, 0, 0, 1, 0, 1, 1, 1, 1,      // v2-v3-v0
-
-		1, 1, 1, 1, 0, 1, 0, 0, 1,      // v0-v3-v4 (right)
-		0, 0, 1, 0, 1, 1, 1, 1, 1,      // v4-v5-v0
-
-		1, 1, 1, 0, 1, 1, 0, 1, 0,      // v0-v5-v6 (top)
-		0, 1, 0, 1, 1, 0, 1, 1, 1,      // v6-v1-v0
-
-		1, 1, 0, 0, 1, 0, 0, 0, 0,      // v1-v6-v7 (left)
-		0, 0, 0, 1, 0, 0, 1, 1, 0,      // v7-v2-v1
-
-		0, 0, 0, 0, 0, 1, 1, 0, 1,      // v7-v4-v3 (bottom)
-		1, 0, 1, 1, 0, 0, 0, 0, 0,      // v3-v2-v7
-
-		0, 0, 1, 0, 0, 0, 0, 1, 0,      // v4-v7-v6 (back)
-		0, 1, 0, 0, 1, 1, 0, 0, 1 };    // v6-v5-v4
-
-	//glClearColor(1, 1, 1, 1);
-	// enble and specify pointers to vertex arrays
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glNormalPointer(GL_FLOAT, 0, normals1);
-	glColorPointer(3, GL_FLOAT, 0, colors1);
-	glVertexPointer(3, GL_FLOAT, 0, vertices1);
-
-	glPushMatrix();
-
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-
-	glPopMatrix();
-
-	glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_NORMAL_ARRAY);
-
-
 
 	glFlush();
 	glutSwapBuffers();
