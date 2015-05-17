@@ -57,6 +57,8 @@ void mainMenu::createButtons() {
 	exitButton->setTexture("menuItem/exit_press.jpg", btnState::PRESSED);
 	exitButton->setScaling(true, true, width, height);
 
+	dot = new guiItem("text/symbols/dot.jpg"); // set position later
+
 	buttons.push_back(robo);// button[0] is robot name
 	buttons.push_back(playButton);
 	buttons.push_back(helpButton);
@@ -87,7 +89,7 @@ void mainMenu::addLetters(){
 	h = height;
 	start_w = width * 0.5;
 	start_h = h * 0.54;
-	letterOffset = (buttons[0]->getYPos()+ buttons[0]->getHeight()) - ((buttons[0]->getHeight() - 22) / 2) - 24.5; // offset fits now
+	letterOffset = (buttons[0]->getYPos() + buttons[0]->getHeight()) - ((buttons[0]->getHeight() - 22) / 2) - 24.5; // offset fits now
 
 	// set the gamecore player name at the mainmenuinput file
 	string n = g_pCore->i_pInput->name; // get the name of game core
@@ -95,21 +97,57 @@ void mainMenu::addLetters(){
 	int counter = 0;
 	// loop through the string
 	for (string::iterator it = n.begin(); it != n.end(); ++it) {
-		letters *l = new letters(start_w + counter * span, letterOffset,22,21.5); // pass in x,y position and its size
+		letters *l = new letters(start_w + counter * span, letterOffset, 22, 21.5); // pass in x,y position and its size
 		counter++;
 		l->letterToShow = int(*it) - 97; // from char to array index
 		guiLetters.push_back(l);
 	}
 
-
-
-
+	string address = g_pCore->i_pInput->IPAdress;
+	guiNumbers.clear();
+	letterOffset = (buttons[4]->getYPos() + buttons[4]->getHeight()) - ((buttons[4]->getHeight() - 22) / 2) - 24.5; // offset for ip displaying
+	// loop through the ipAdress string
+	counter = 0;
+	for (string::iterator it = address.begin(); it != address.end(); ++it) {
+		// dot is 46, if it is dot 
+		if (int(*it) - 46 == 0){
+			// default path of guiItem is uiItem
+			// cannot assume the IP address format is always the same
+			//dotPosition.push(counter); // the position of the dot in the actual ip address
+			dot->setPosition(start_w + counter * span, letterOffset); // set the position of each dot
+			guiNumbers.push_back(dot);
+			counter++;
+			continue;
+		}
+		numbers *num = new numbers(start_w + counter * span, letterOffset, 22, 21.5); // pass in x,y position and its size
+		num->numIdx = int(*it) - 48; // from char to array index
+		guiNumbers.push_back(num);
+		counter++;
+	}
 
 	// Deletes the 2nd through 3rd elements (vec[1], vec[2])
 	//guiItems.erase(guiItems.begin() + 1, guiItems.begin() + guiItems.size);
 	guiItems.clear(); // clear the guiItem to avoid adding elements all more than once
 	guiItems.push_back(backimg); // backimg render first every time
 	for (std::vector<guiItem*> ::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){
+		guiItems.push_back(*it);
+	}
+
+	// push back the ip address
+	counter = 0;
+	int currentDotPosition;
+	// if the stack is not empty
+	if (!dotPosition.empty()){
+		currentDotPosition = dotPosition.top(); // get the first poisition
+		dotPosition.pop;
+	}
+
+	for (std::vector<guiItem*> ::iterator it = guiNumbers.begin(); it != guiNumbers.end(); ++it){
+		if (currentDotPosition == counter){
+			dot->setPosition(start_w + counter * span, );
+			guiItems.push_back(dot);
+			
+		}
 		guiItems.push_back(*it);
 	}
 }
