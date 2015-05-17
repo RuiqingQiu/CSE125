@@ -82,7 +82,7 @@ GLhandleARB loadShader1(char* filename, unsigned int type)
 RenderObject::RenderObject(string filename, string texture, string normal, string gloss,
 	string metal)
 {
-	cout << "loading " << filename << endl;
+	cout << "loading " << filename;
 	glGenTextures(3, texturaID);
 	int width, height;
 	//unsigned char* image;
@@ -140,7 +140,7 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 		std::cerr << err << std::endl;
 		exit(1);
 	}
-
+	cout <<" number of faces are " << shapes[0].mesh.indices.size()/3 << endl;
 	/*
 	std::cout << "# of shapes    : " << shapes.size() << std::endl;
 	std::cout << "# of materials : " << materials.size() << std::endl;
@@ -210,8 +210,63 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 		}
 	}
 	*/
+	this->vertex.clear();
+	this->normal.clear();
+	this->texture.clear(); 
+	this->tangent.clear();
+	for (size_t i = 0; i < shapes.size(); i++) {
+		for (size_t f = 0; f < shapes[i].mesh.indices.size() / 3; f++){
+			int i1 = shapes[i].mesh.indices[3 * f + 0];
+			int i2 = shapes[i].mesh.indices[3 * f + 1];
+			int i3 = shapes[i].mesh.indices[3 * f + 2];
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i1 + 0]);
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i1 + 1]);
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i1 + 2]);
+
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i2 + 0]);
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i2 + 1]);
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i2 + 2]);
+
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i3 + 0]);
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i3 + 1]);
+			this->vertex.push_back(shapes[i].mesh.positions[3 * i3 + 2]);
+
+			this->normal.push_back(shapes[i].mesh.normals[3 * i1 + 0]);
+			this->normal.push_back(shapes[i].mesh.normals[3 * i1 + 1]);
+			this->normal.push_back(shapes[i].mesh.normals[3 * i1 + 2]);
+
+			this->normal.push_back(shapes[i].mesh.normals[3 * i2 + 0]);
+			this->normal.push_back(shapes[i].mesh.normals[3 * i2 + 1]);
+			this->normal.push_back(shapes[i].mesh.normals[3 * i2 + 2]);
 
 
+			this->normal.push_back(shapes[i].mesh.normals[3 * i3 + 0]);
+			this->normal.push_back(shapes[i].mesh.normals[3 * i3 + 1]);
+			this->normal.push_back(shapes[i].mesh.normals[3 * i3 + 2]);
+
+			this->texture.push_back(shapes[i].mesh.texcoords[2 * i1 + 0]);
+			this->texture.push_back(shapes[i].mesh.texcoords[2 * i1 + 1]);
+
+			this->texture.push_back(shapes[i].mesh.texcoords[2 * i2 + 0]);
+			this->texture.push_back(shapes[i].mesh.texcoords[2 * i2 + 1]);
+
+			this->texture.push_back(shapes[i].mesh.texcoords[2 * i3 + 0]);
+			this->texture.push_back(shapes[i].mesh.texcoords[2 * i3 + 1]);
+
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i1].x));
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i1].y));
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i1].z));
+
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i2].x));
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i2].y));
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i2].z));
+
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i3].x));
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i3].y));
+			this->tangent.push_back(float(shapes[i].mesh.tangent[i3].z));
+		}
+
+	}
 
 }
 

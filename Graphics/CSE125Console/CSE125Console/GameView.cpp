@@ -228,6 +228,7 @@ void GameView::highlight_second_pass(){
 	glPushMatrix();
 	glTranslated(0, 0, -15);
 	//glutSolidTeapot(1);
+	// activate and specify pointer to vertex array
 	glPopMatrix();
 
 	if (currentNode != nullptr) currentNode->VOnDraw();
@@ -367,9 +368,7 @@ void GameView::VOnRender()
 	blur_second_pass();
 	
 	highlight_first_pass();
-	highlight_second_pass();
-
-	
+	highlight_second_pass();	
 }
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)

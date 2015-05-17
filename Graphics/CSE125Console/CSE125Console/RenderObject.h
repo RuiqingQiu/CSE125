@@ -19,6 +19,11 @@ public:
 
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> materials;
+	vector<float> vertex;
+	vector<float> normal;
+	vector<float> texture;
+	vector<float> tangent;
+
 	RenderObject(string filename, string texture, string normal, string gloss,
 		string metal);
 	~RenderObject();

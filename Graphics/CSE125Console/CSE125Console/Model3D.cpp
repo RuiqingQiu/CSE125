@@ -69,7 +69,7 @@ void Model3D::VOnDraw(){
 		counter = (counter + 1) % 360;
 		localTransform.rotation.y = counter;
 	}
-
+	
 	if (two_pass_draw){
 		cout << "enter model3d two pass draw " << endl;
 	}
@@ -100,7 +100,6 @@ void Model3D::VOnDraw(){
 			if (this->shader_type == MATERIAL_SHADER){
 				float camera_offset[4] = { Window::light_sytem->camera_offset.x, Window::light_sytem->camera_offset.y, Window::light_sytem->camera_offset.z, 0.0 };
 				glUniform4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_offset"), 1, camera_offset);
-
 				float Ka[3] = { float(this->material.material_ambient.x), float(this->material.material_ambient.y), float(this->material.material_ambient.z) };
 				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Ka"), 1, Ka);
 				float Kd[3] = { float(this->material.material_diffuse.x), float(this->material.material_diffuse.y), float(this->material.material_diffuse.z) };
@@ -148,79 +147,102 @@ void Model3D::VOnDraw(){
 			//glMaterialfv(GL_FRONT, GL_SPECULAR, materials[m1].specular);
 			//glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
 		}
-		
 		if (tmp){
 			glutSolidTeapot(1);
 		}
 		else{
-			for (size_t i = 0; i < render_obj->shapes.size(); i++) {
+			/*
+			vector<float> vertex;
+			vector<float> normal;
+			vector<float> texture;
+			vector<float> tangent;*/
 
-				for (size_t f = 0; f < render_obj->shapes[i].mesh.indices.size() / 3; f++) {
-					int i1 = render_obj->shapes[i].mesh.indices[3 * f + 0];
-					int i2 = render_obj->shapes[i].mesh.indices[3 * f + 1];
-					int i3 = render_obj->shapes[i].mesh.indices[3 * f + 2];
-					int m1 = render_obj->shapes[i].mesh.material_ids[f];
+			/*
+			glBegin(GL_TRIANGLES);
+			for (size_t f = 0; f < render_obj->shapes[i].mesh.indices.size() / 3; f++) {
+			int i1 = render_obj->shapes[i].mesh.indices[3 * f + 0];
+			int i2 = render_obj->shapes[i].mesh.indices[3 * f + 1];
+			int i3 = render_obj->shapes[i].mesh.indices[3 * f + 2];
+			int m1 = render_obj->shapes[i].mesh.material_ids[f];
 
-					//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					//THIS LINE OF CODE MUST BE AFTER THE TEXTURE LOADING CODE
-					//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					glBegin(GL_TRIANGLES);
-					//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					//DONT MODIFY IF YOU DONT KNOW WHAT IT IS
-					//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i1 + 0], render_obj->shapes[i].mesh.texcoords[2 * i1 + 1]);
-					//avg normal goes here
-					glNormal3f(render_obj->shapes[i].mesh.normals[3 * i1 + 0],
-						render_obj->shapes[i].mesh.normals[3 * i1 + 1],
-						render_obj->shapes[i].mesh.normals[3 * i1 + 2]
-						);
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//THIS LINE OF CODE MUST BE AFTER THE TEXTURE LOADING CODE
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			//DONT MODIFY IF YOU DONT KNOW WHAT IT IS
+			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i1 + 0], render_obj->shapes[i].mesh.texcoords[2 * i1 + 1]);
+			//avg normal goes here
+			glNormal3f(render_obj->shapes[i].mesh.normals[3 * i1 + 0],
+			render_obj->shapes[i].mesh.normals[3 * i1 + 1],
+			render_obj->shapes[i].mesh.normals[3 * i1 + 2]
+			);
 
-					float value[4] = { float(render_obj->shapes[i].mesh.tangent[f].x),
-						float(render_obj->shapes[i].mesh.tangent[f].y),
-						float(render_obj->shapes[i].mesh.tangent[f].z),
-						float(render_obj->shapes[i].mesh.tangent[f].w) };
-					glVertexAttrib3fvARB(vt, value);
-					glVertex3f(render_obj->shapes[i].mesh.positions[3 * i1 + 0], render_obj->shapes[i].mesh.positions[3 * i1 + 1], render_obj->shapes[i].mesh.positions[3 * i1 + 2]);
+			float value[4] = { float(render_obj->shapes[i].mesh.tangent[f].x),
+			float(render_obj->shapes[i].mesh.tangent[f].y),
+			float(render_obj->shapes[i].mesh.tangent[f].z),
+			float(render_obj->shapes[i].mesh.tangent[f].w) };
+			glVertexAttrib3fvARB(vt, value);
+			glVertex3f(render_obj->shapes[i].mesh.positions[3 * i1 + 0], render_obj->shapes[i].mesh.positions[3 * i1 + 1], render_obj->shapes[i].mesh.positions[3 * i1 + 2]);
 
-					//texture
-					glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i2 + 0], render_obj->shapes[i].mesh.texcoords[2 * i2 + 1]);
-					//avg normal goes here
+			//texture
+			glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i2 + 0], render_obj->shapes[i].mesh.texcoords[2 * i2 + 1]);
+			//avg normal goes here
 
-					glNormal3f(render_obj->shapes[i].mesh.normals[3 * i2 + 0],
-						render_obj->shapes[i].mesh.normals[3 * i2 + 1],
-						render_obj->shapes[i].mesh.normals[3 * i2 + 2]
-						);
-					float value1[4] = { float(render_obj->shapes[i].mesh.tangent[i2].x),
-						float(render_obj->shapes[i].mesh.tangent[i2].y),
-						float(render_obj->shapes[i].mesh.tangent[i2].z),
-						float(render_obj->shapes[i].mesh.tangent[i2].w) };
-					glVertexAttrib3fvARB(vt, value1);
-					glVertex3f(render_obj->shapes[i].mesh.positions[3 * i2 + 0], render_obj->shapes[i].mesh.positions[3 * i2 + 1], render_obj->shapes[i].mesh.positions[3 * i2 + 2]);
+			glNormal3f(render_obj->shapes[i].mesh.normals[3 * i2 + 0],
+			render_obj->shapes[i].mesh.normals[3 * i2 + 1],
+			render_obj->shapes[i].mesh.normals[3 * i2 + 2]
+			);
+			float value1[4] = { float(render_obj->shapes[i].mesh.tangent[i2].x),
+			float(render_obj->shapes[i].mesh.tangent[i2].y),
+			float(render_obj->shapes[i].mesh.tangent[i2].z),
+			float(render_obj->shapes[i].mesh.tangent[i2].w) };
+			glVertexAttrib3fvARB(vt, value1);
+			glVertex3f(render_obj->shapes[i].mesh.positions[3 * i2 + 0], render_obj->shapes[i].mesh.positions[3 * i2 + 1], render_obj->shapes[i].mesh.positions[3 * i2 + 2]);
 
 
-					glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i3 + 0], render_obj->shapes[i].mesh.texcoords[2 * i3 + 1]);
-					//avg normal goes here
-					glNormal3f(render_obj->shapes[i].mesh.normals[3 * i3 + 0],
-						render_obj->shapes[i].mesh.normals[3 * i3 + 1],
-						render_obj->shapes[i].mesh.normals[3 * i3 + 2]
-						);
-					float value2[4] = { float(render_obj->shapes[i].mesh.tangent[i3].x),
-						float(render_obj->shapes[i].mesh.tangent[i3].y),
-						float(render_obj->shapes[i].mesh.tangent[i3].z),
-						float(render_obj->shapes[i].mesh.tangent[i3].w) };
-					glVertexAttrib3fvARB(vt, value2);
-					glVertex3f(render_obj->shapes[i].mesh.positions[3 * i3 + 0], render_obj->shapes[i].mesh.positions[3 * i3 + 1], render_obj->shapes[i].mesh.positions[3 * i3 + 2]);
+			glTexCoord2f(render_obj->shapes[i].mesh.texcoords[2 * i3 + 0], render_obj->shapes[i].mesh.texcoords[2 * i3 + 1]);
+			//avg normal goes here
+			glNormal3f(render_obj->shapes[i].mesh.normals[3 * i3 + 0],
+			render_obj->shapes[i].mesh.normals[3 * i3 + 1],
+			render_obj->shapes[i].mesh.normals[3 * i3 + 2]
+			);
+			float value2[4] = { float(render_obj->shapes[i].mesh.tangent[i3].x),
+			float(render_obj->shapes[i].mesh.tangent[i3].y),
+			float(render_obj->shapes[i].mesh.tangent[i3].z),
+			float(render_obj->shapes[i].mesh.tangent[i3].w) };
+			glVertexAttrib3fvARB(vt, value2);
+			glVertex3f(render_obj->shapes[i].mesh.positions[3 * i3 + 0], render_obj->shapes[i].mesh.positions[3 * i3 + 1], render_obj->shapes[i].mesh.positions[3 * i3 + 2]);
 
-					glEnd();
-
-				}
 
 			}
+			glEnd();
+			*/
+
+			float *p = &render_obj->vertex[0];
+			float *n = &render_obj->normal[0];
+			float *t = &render_obj->texture[0];
+			float *tan = &render_obj->tangent[0];
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+			glVertexPointer(3, GL_FLOAT, 0, p);
+			glTexCoordPointer(2, GL_FLOAT, 0, t);
+			glNormalPointer(GL_FLOAT, 0, n);
+
+			glVertexAttribPointer(vt, 3, GL_FLOAT, GL_FALSE, 0, tan);
+			glDrawArrays(GL_TRIANGLES, 0, render_obj->vertex.size() / 3);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+			glDisableClientState(GL_NORMAL_ARRAY);
+			glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
 		}
 	}
 	Window::shader_system->UnbindShader();
 
+
+
 	glActiveTexture(GL_TEXTURE0);
+
 	glPopMatrix();
 
 	
