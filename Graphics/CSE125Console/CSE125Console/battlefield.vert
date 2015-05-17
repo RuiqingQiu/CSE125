@@ -8,8 +8,8 @@ varying vec3 Tangent;
 
 varying vec3[3] LightDir;
 varying vec3 ViewDir;
+varying vec3 ReflectDir;
 
-varying float height_pass;
 uniform mat4 ModelView;
 
 
@@ -34,10 +34,14 @@ void main()
 	LightDir[1] = normalize(toObjectLocal * (LightPosition[1].xyz - Position.xyz));
 	LightDir[2] = normalize(toObjectLocal * (LightPosition[2].xyz - Position.xyz));
 
+
+	vec3 WorldCameraPosition = vec3(0, 0, 0);
+    vec3 worldPos = vec3(ModelView * vec4(gl_Vertex.xyz,1.0));
+    vec3 worldNorm = vec3(ModelView * vec4(gl_Normal.xyz,0.0));
+    vec3 worldView = normalize( WorldCameraPosition - worldPos );
+
     ViewDir = toObjectLocal * normalize(-Position.xyz);
-    
-    
-    height_pass = height;
+    ReflectDir = reflect(-worldView, worldNorm );
     
     gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
 }

@@ -378,7 +378,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		node->VOnClientUpdate(info);
 		//printf("id: %i player: %i\n", node->identifier, pPlayer->playerid);
 		if (node->identifier == pPlayer->playerid ){
-			this->pViewCamera->FollowingTarget = node;
+			 this->pViewCamera->FollowingTarget = node;
 		}
 	}
 	//Loop through the list to see anything that's not being processed. if so, create

@@ -28,12 +28,21 @@ vec4 lights[MAX_LIGHTS];
 uniform vec4 camera_offset;
 vec3 phongModel(vec3 normal, vec3 diffR){
 	
+	/*
 	lights[0] = camera_offset + vec4(0.0, 10.0, 0.0, 1.0);
 	lights[1] = camera_offset +vec4(5.0, 0.0, 0.0, 1.0);
 	lights[2] = camera_offset +vec4(-5.0, 0.0, -10.0, 1.0);
 	lights[3] = camera_offset +vec4(-5.0, 5.0, -10.0, 1.0);
 	lights[4] = camera_offset +vec4(5.0, 0.0, -10.0, 1.0);
 	lights[5] = camera_offset +vec4(0.0, 50.0, 0.0, 1.0);
+	*/
+	lights[0] = vec4(0.0, 10.0, 0.0, 1.0);
+	lights[1] = vec4(5.0, 0.0, 0.0, 1.0);
+	lights[2] = vec4(-5.0, 0.0, 0.0, 1.0);
+	lights[3] = vec4(0.0, 0.0, 0.0, 1.0);
+	lights[4] = vec4(5.0, 5.0, 0.0, 1.0);
+	lights[5] = vec4(0.0, 50.0, 0.0, 1.0);
+
 
 	vec3 Ld = vec3(1.0, 1.0, 1.0);
     vec3 La = vec3(0.4, 0.4, 0.4);

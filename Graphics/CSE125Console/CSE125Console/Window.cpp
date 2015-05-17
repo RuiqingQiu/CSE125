@@ -146,9 +146,10 @@ void Window::initialize(void)
 	GameView* view = new GameView();
 
 	//Comment this for non-local testing
+	gt->displayTest4(view);
 	//gt->displayTest2(view);
 	//gt->displayTest3(view);
-	//.gt->displayTest1(view);
+	//gt->displayTest1(view);
 	//GameView* view = new HardShadowView();
 	view->PushGeoNode(g_pCore->skybox);
 	//Teapot* t = new Teapot(2);
@@ -220,7 +221,7 @@ void Window::initialize(void)
 	object->auto_rotate = true;
 	view->PushEnvironmentNode(object);
 	*/
-
+	
 	object = Model3DFactory::generateObjectWithType(DESERT);
 	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, -2, 0);
@@ -230,7 +231,7 @@ void Window::initialize(void)
 	object->isUpdated = true;
 	object->type = DESERT;
 	view->PushEnvironmentNode(object);
-
+	
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
 	object->shader_type = BATTLEFIELD_SHADER;
@@ -262,7 +263,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.17");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.17");
 }
 
 //----------------------------------------------------------------------------

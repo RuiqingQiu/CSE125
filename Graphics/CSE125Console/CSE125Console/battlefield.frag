@@ -1,3 +1,5 @@
+uniform samplerCube skybox;
+
 uniform sampler2D tex;
 uniform sampler2D norm;
 uniform sampler2D gloss;
@@ -10,7 +12,7 @@ varying vec3 Tangent;
 
 varying vec3[3] LightDir;
 varying vec3 ViewDir;
-varying float height_pass;
+varying vec3 ReflectDir;
 
 //Fog Attributes
 float maxDist = 150.0;
@@ -43,10 +45,19 @@ vec3 phongModel(vec3 normal, vec3 diffR){
     return spec + ambAndDiff;
 }
 
+float ReflectFactor;
+
 void main() {
+	ReflectFactor = 1 - texture2D(gloss, TexCoords).x;
     vec4 normal = 2.0 * texture2D(norm, TexCoords) - 1.0;
     vec4 texColor = texture2D(tex, TexCoords);
     vec3 ambAndDiff, spec;
     vec4 shadeColor = vec4(phongModel(normal.xyz, texColor.rgb), 1.0);
 	gl_FragColor = shadeColor;
+	
+
+	vec3 reflected = reflect(vec3(0,2,0), normal);
+
+	vec4 cubeMapColor = textureCube(skybox, reflected);
+	//gl_FragColor = mix(shadeColor, cubeMapColor, ReflectFactor);
 }
