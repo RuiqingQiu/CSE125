@@ -3,7 +3,6 @@
 #include "gui.h"
 #include "GameCore.h"
 #include "letters.h" // display textured letter
-#include <stack>  
 
 #define MAX_PLAYER 4
 
@@ -34,13 +33,13 @@ private:
 	button * playButton;
 	button * exitButton;
 	button*  ipAdrressButton; // enter IP button
-	//guiItem *dot; // for displaying IP address, need several times
 
 	int playerReady;
 	bool ready;
 	int letterOffset; // tune the position of the letters
+	int displayName;
+	int displayIp;
 
 	std::vector<guiItem*> guiLetters; // keep track of the letter in the string, later combined with guiItems vector
 	std::vector<guiItem*> guiNumbers; // keep track of the number in the Ip Adress
-	std::stack<int> dotPosition; // record the position of the dot using a stack
 };

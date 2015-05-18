@@ -12,6 +12,8 @@ mainMenu::mainMenu() : gui() {
 	h = height;
 	playerReady = 0;
 	ready = false;
+	displayName = 0; // default doesn't display name or ip address
+	displayIp = 0;
 	start_w = w * 0.5;
 	start_h = h * 0.53; 
 	letterOffset = 0.0;
@@ -127,22 +129,20 @@ void mainMenu::addLetters(){
 	//guiItems.erase(guiItems.begin() + 1, guiItems.begin() + guiItems.size);
 	guiItems.clear(); // clear the guiItem to avoid adding elements all more than once
 	guiItems.push_back(backimg); // backimg render first every time
-	for (std::vector<guiItem*> ::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){
-		guiItems.push_back(*it);
+
+	// if enter Robot name selected
+	if (displayName){
+		for (std::vector<guiItem*> ::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){
+			guiItems.push_back(*it);
+		}
 	}
 
-	// push back the ip address
-	counter = 0;
-	int currentDotPosition;
-	// if the stack is not empty
-	if (!dotPosition.empty()){
-		currentDotPosition = dotPosition.top(); // get the first poisition
-		dotPosition.pop();
-	}
-
-	// after push back the robot names, push back the ip address
-	for (std::vector<guiItem*> ::iterator it = guiNumbers.begin(); it != guiNumbers.end(); ++it){
-		guiItems.push_back(*it);
+	// if display Ip selected
+	if (displayIp){
+		// after push back the robot names, push back the ip address
+		for (std::vector<guiItem*> ::iterator it = guiNumbers.begin(); it != guiNumbers.end(); ++it){
+			guiItems.push_back(*it);
+		}
 	}
 }
 
@@ -189,6 +189,14 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 	}
 	else if (exitButton->isSelected(x, height - y)) {
 		exit(0);
+	}
+	// if enter IP address is selected
+	else if (ipAdrressButton->isSelected(x, height - y)){
+		displayIp = true;
+	}
+	// if enter robot name is selected
+	else if (buttons[0]->isSelected(x, height - y)){
+		displayName = true;
 	}
 	// stay at the menu button
 	return viewType::MENU;
