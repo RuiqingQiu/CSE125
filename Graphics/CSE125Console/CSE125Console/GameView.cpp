@@ -483,6 +483,15 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							  
 							  break;
 			}
+			case Railgun:{
+							 Model3D* object = Model3DFactory::generateObjectWithType(Railgun);							   object->isUpdated = true;
+							 object->identifier = info->player_infos[i]->id;
+							 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							 NodeList.push_back(object);
+							 info->player_infos[i]->processed = true;
+							 break;
+			}
 			case Tire:{
 						  
 						  Model3D* object = Model3DFactory::generateObjectWithType(Tire);							   object->isUpdated = true;
