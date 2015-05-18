@@ -104,7 +104,7 @@ enum COLLISION_TYPE{
 	C_ROBOT_PARTS = 3,
 	C_PROJECTILE = 4,
 	C_MELEE = 5,
-
+	
 };
 
 // GameObj (physical) types
@@ -138,6 +138,7 @@ enum PacketTypes {
 	INIT_BUILD = 12,
 	TIMER = 13,
 	BUILD_REQUEST = 14,
+	INIT_BATTLE = 15,
 };
 
 enum RANGE{

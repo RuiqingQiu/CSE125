@@ -402,7 +402,7 @@ int GameObj::deleteConstraints()//std::map< btCollisionObject*, GameObj*>* pair)
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
 		Constraint* c = (*it);
-		GameObj* other;
+		GameObj* other = nullptr;
 		if (&c->_joint6DOF->getRigidBodyA() == this->getRigidBody())
 		{
 			other = (GameObj*)(&(c->_joint6DOF->getRigidBodyB()))->getUserPointer();
@@ -488,6 +488,11 @@ void GameObj::setImmediateDeleted()
 int GameObj::getDeleted()
 {
 	//return (deathTimer != NULL);
+	//bugs overthere 
+	//ConsoleApplication1.exe!GameObj::getDeleted() Line 491	C++
+	//ConsoleApplication1.exe!GameLogic::cleanDataStructures() Line 693	C++
+	//ConsoleApplication1.exe!GameLogic::postPhyLogic() Line 618	C++
+	//ConsoleApplication1.exe!GameLogic::gameLoop() Line 330	C++
 	if (deathTimer == NULL)
 	{
 		return 0;

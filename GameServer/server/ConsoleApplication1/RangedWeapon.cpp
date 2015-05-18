@@ -27,7 +27,7 @@ RangedWeapon::RangedWeapon(int type)
 		_pWidth = 0.3;
 		_pHeight = 0.3;
 		_pDepth = 0.5;
-		_pBlockType = 103;
+		_pBlockType =  BULLET;
 		break;
 	}
 	default:
@@ -42,7 +42,7 @@ RangedWeapon::RangedWeapon(int type)
 		_pWidth = 0.3;
 		_pHeight = 0.3;
 		_pDepth = 1;
-		_pBlockType = Mace;
+		_pBlockType = BULLET;
 		break;
 	}
 	}

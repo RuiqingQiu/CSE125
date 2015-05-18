@@ -269,6 +269,7 @@ int GameLogic::gameStart(){
 	countDown->startClock();
 	lastTime = countDown->getCurrentTime()/1000;
 	cout << "end of game start" << endl;
+	network->sendInitBuild(INIT_BATTLE, 0);
 	return 0;
 }
 
@@ -358,6 +359,8 @@ void GameLogic::prePhyLogic(){
 		int cid = (*iter)->getCid();
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
+//nullptr check still does not work
+
 		GameObj* gObj = it->second;
 		if (gObj == nullptr) continue;
 		Robot *r = (Robot*)gObj;
@@ -689,6 +692,11 @@ void GameLogic::cleanDataStructures()
 	{
 		if (!(*it1).second->getDeleted())
 		{
+			new_clientPair.insert((*it1));
+		}
+		else{
+			
+			(*it1).second = nullptr;
 			new_clientPair.insert((*it1));
 		}
 	}
