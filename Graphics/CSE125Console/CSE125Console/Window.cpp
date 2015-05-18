@@ -30,7 +30,7 @@ viewFactory * Window::factory; // factory of gui
 //static Model3DFactory* m_factory;
 ShaderSystem* Window::shader_system;
 LightSystem* Window::light_sytem;
-
+bool Window::build_to_battle = false;
 static int counter = 0;
 static Cube* cube;
 static Fire* fire;
@@ -38,8 +38,6 @@ static GraphicsTest* gt;
 static Model3D*object;
 static Sound *soundObject; // sound
 //Init server info here later
-
-
 
 void CHECK_FRAMEBUFFER_STATUS()
 {
@@ -229,7 +227,7 @@ void Window::initialize(void)
 	//object->auto_rotate = true;
 	object->isUpdated = true;
 	object->type = DESERT;
-	view->PushEnvironmentNode(object);
+	factory->battlemode->PushEnvironmentNode(object);
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
@@ -250,19 +248,22 @@ void Window::initialize(void)
 
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
-	
-	factory->defaultView = view;
+	factory->viewmode = viewType::MENU;
 	factory->setView();
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 
+	//Game start with the menu mode
+
+
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
+
 	
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.17");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.17");
 }
 
 //----------------------------------------------------------------------------
@@ -365,14 +366,18 @@ void Window::displayCallback() {
 		switch (p->packet_types){
 			case GAME_STATE:{
 				//Update states in the actual battle mode
-				//factory->battlemode->VOnClientUpdate(p);
-				g_pCore->pGameView->VOnClientUpdate(p);
+				factory->battlemode->VOnClientUpdate(p);
+				//g_pCore->pGameView->VOnClientUpdate(p);
 				g_pCore->pEventSystem->ProcessGamePacket(p);
 				break;
 			}
 			case CONFIRM_CONNECTION:{
 				g_pCore->pPlayer->playerid = p->player_infos[0]->id;
+				//This is for testing
 				g_pCore->pGameView->pPlayer = g_pCore->pPlayer;
+				//This is real for battle mode player info
+				factory->battlemode->pPlayer = g_pCore->pPlayer;
+
 				cout << "player id " << p->player_infos[0]->id << endl;
 
 				break;
@@ -392,8 +397,8 @@ void Window::displayCallback() {
 
 
 	//Draw everything
-	g_pCore->pGameView->VOnRender();
-
+	//g_pCore->pGameView->VOnRender();
+	factory->currentView->VOnRender();
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();

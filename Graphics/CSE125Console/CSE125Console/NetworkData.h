@@ -22,6 +22,7 @@ enum PacketTypes {
 	INIT_BUILD = 12,
 	TIMER = 13,
 	BUILD_REQUEST = 14,
+	INIT_BATTLE = 15,
 };
 
 struct CPacket {

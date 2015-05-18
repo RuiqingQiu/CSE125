@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ClientGame.h"
 #include "GameCore.h"
-
+#include "Window.h"
 #define RAD_TO_DEGREE_MULT 57.2957795
 ClientGame::ClientGame(void)
 {
@@ -110,6 +110,13 @@ GameInfoPacket* ClientGame::update()
         switch (packet.packet_type) {
 		//Server tells client start build mode , client start build mode
 		case INIT_BUILD:{
+			cout << "in init build" << endl;
+			Window::factory->switchView('1');
+			break;
+		}
+		case INIT_BATTLE:{
+			cout << "in init battle" << endl;
+			Window::factory->switchView('2');
 			break;
 		}
 		//client show the time only build mode
@@ -118,10 +125,11 @@ GameInfoPacket* ClientGame::update()
 		}
 		//client send build package if they havent done that, time's up
 		case BUILD_REQUEST:{
+			Window::build_to_battle = true;
 			break;
 		}
 		case GAME_STATE:
-				{
+		{
 							//printf("client received game state packet from server\n");
 							//std::cout << packet.data << std::endl;
 						    //cout << "game_state" << endl;
