@@ -580,6 +580,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					 break;
 
 	}
+	default: {
+				 cout << "type " << type << " is not recognized" << endl;
+				 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+				 returnModel->type = BasicCube;
+				 return returnModel;
+	}
 	}
 }
 

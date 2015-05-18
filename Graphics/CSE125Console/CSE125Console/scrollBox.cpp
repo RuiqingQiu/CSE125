@@ -69,7 +69,7 @@ scrollBox::~scrollBox()
 
 void scrollBox::init() {
 	displayIdx = 0;
-	setSize(1000 * scale, 1000 * scale);
+	setSize(default_w * scale, default_h * scale);
 
 	//create "add and "remove" buttons
 	int xoff = xPos + (100 * scale);
@@ -161,7 +161,7 @@ void scrollBox::addsubListItem(string filename, string fileType, int id, bool ha
 	double hf = 200.0 * scale;
 	double h = ((height - hf) / MAXDISPLAY);
 	//halfway point width wise is 500 on original image
-	double half = 500.0 * scale;
+	double half = (default_h/2.0) * scale;
 
 	listItem * newSl = new listItem(filename+fileType, int(xPos + half), yPos + int(s*h + (hf / 2.0)), scale);
 	if (hasSel) {

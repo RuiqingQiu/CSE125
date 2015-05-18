@@ -126,7 +126,6 @@ void Window::initialize(void)
 
 	// Initialize the Sound object
 	soundObject = new Sound();
-
 	
 	//factory = new viewFactory(true);  //for no gui
 	
