@@ -3,10 +3,12 @@
 
 battleView::battleView(): gui(){
 	createButtons();
+	GameView::GameView();
 }
 
 battleView::battleView(int w, int h) : gui(w, h) {
 	createButtons();
+	GameView::GameView();
 }
 
 battleView::~battleView()

@@ -35,6 +35,7 @@ void gui::addItem(guiItem * item) {
 
 void gui::VOnClientUpdate(GameInfoPacket* info) {
 	//empty for now
+	GameView::VOnClientUpdate(info);
 }
 
 void gui::setDimensions(int w, int h) {

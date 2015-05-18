@@ -229,7 +229,7 @@ void Window::initialize(void)
 	//object->auto_rotate = true;
 	object->isUpdated = true;
 	object->type = DESERT;
-	view->PushEnvironmentNode(object);
+	factory->battlemode->PushEnvironmentNode(object);
 	
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
@@ -256,13 +256,17 @@ void Window::initialize(void)
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
 
+	//Game start with the menu mode
+	factory->defaultView = factory->menumode;
+
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
+
 	
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.17");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.17");
 }
 
 //----------------------------------------------------------------------------
@@ -365,14 +369,18 @@ void Window::displayCallback() {
 		switch (p->packet_types){
 			case GAME_STATE:{
 				//Update states in the actual battle mode
-				//factory->battlemode->VOnClientUpdate(p);
-				g_pCore->pGameView->VOnClientUpdate(p);
+				factory->battlemode->VOnClientUpdate(p);
+				//g_pCore->pGameView->VOnClientUpdate(p);
 				g_pCore->pEventSystem->ProcessGamePacket(p);
 				break;
 			}
 			case CONFIRM_CONNECTION:{
 				g_pCore->pPlayer->playerid = p->player_infos[0]->id;
+				//This is for testing
 				g_pCore->pGameView->pPlayer = g_pCore->pPlayer;
+				//This is real for battle mode player info
+				factory->battlemode->pPlayer = g_pCore->pPlayer;
+
 				cout << "player id " << p->player_infos[0]->id << endl;
 
 				break;
