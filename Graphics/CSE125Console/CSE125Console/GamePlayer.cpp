@@ -4,6 +4,7 @@
 
 GamePlayer::GamePlayer()
 {
+	IPAddress = "";
 }
 
 

@@ -4,7 +4,9 @@
 
 GameInputInterface::GameInputInterface()
 {
+	// initialize the string
 	name = "";
+	IPAdress = "";
 }
 
 
