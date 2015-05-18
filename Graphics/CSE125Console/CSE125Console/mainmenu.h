@@ -34,7 +34,7 @@ private:
 	button * playButton;
 	button * exitButton;
 	button*  ipAdrressButton; // enter IP button
-	guiItem *dot; // for displaying IP address, need several times
+	//guiItem *dot; // for displaying IP address, need several times
 
 	int playerReady;
 	bool ready;

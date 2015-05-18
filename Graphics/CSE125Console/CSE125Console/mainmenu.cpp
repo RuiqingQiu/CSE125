@@ -57,8 +57,6 @@ void mainMenu::createButtons() {
 	exitButton->setTexture("menuItem/exit_press.jpg", btnState::PRESSED);
 	exitButton->setScaling(true, true, width, height);
 
-	dot = new guiItem("text/symbols/dot.jpg"); // set position later
-
 	buttons.push_back(robo);// button[0] is robot name
 	buttons.push_back(playButton);
 	buttons.push_back(helpButton);
@@ -114,7 +112,7 @@ void mainMenu::addLetters(){
 			// default path of guiItem is uiItem
 			// cannot assume the IP address format is always the same
 			//dotPosition.push(counter); // the position of the dot in the actual ip address
-			dot->setPosition(start_w + counter * span, letterOffset); // set the position of each dot
+			guiItem* dot = new guiItem("text/symbols/dot.jpg", start_w + counter * span, letterOffset, 22,21.5);
 			guiNumbers.push_back(dot);
 			counter++;
 			continue;
@@ -139,15 +137,11 @@ void mainMenu::addLetters(){
 	// if the stack is not empty
 	if (!dotPosition.empty()){
 		currentDotPosition = dotPosition.top(); // get the first poisition
-		dotPosition.pop;
+		dotPosition.pop();
 	}
 
+	// after push back the robot names, push back the ip address
 	for (std::vector<guiItem*> ::iterator it = guiNumbers.begin(); it != guiNumbers.end(); ++it){
-		if (currentDotPosition == counter){
-			dot->setPosition(start_w + counter * span, );
-			guiItems.push_back(dot);
-			
-		}
 		guiItems.push_back(*it);
 	}
 }
