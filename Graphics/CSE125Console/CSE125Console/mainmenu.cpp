@@ -12,6 +12,8 @@ mainMenu::mainMenu() : gui() {
 	h = height;
 	playerReady = 0;
 	ready = false;
+	displayName = 0; // default doesn't display name or ip address
+	displayIp = 0;
 	start_w = w * 0.5;
 	start_h = h * 0.53; 
 	letterOffset = 0.0;
@@ -87,30 +89,69 @@ void mainMenu::addLetters(){
 	h = height;
 	start_w = width * 0.5;
 	start_h = h * 0.54;
-	letterOffset = (buttons[0]->getYPos()+ buttons[0]->getHeight()) - ((buttons[0]->getHeight() - 22) / 2) - 24.5; // offset fits now
-
-	// set the gamecore player name at the mainmenuinput file
-	string n = g_pCore->i_pInput->name; // get the name of game core
-	guiLetters.clear(); // clear the guiLetters every time and start over
+	letterOffset = (buttons[0]->getYPos() + buttons[0]->getHeight()) - ((buttons[0]->getHeight() - 22) / 2) - 24.5; // offset fits now
 	int counter = 0;
-	// loop through the string
-	for (string::iterator it = n.begin(); it != n.end(); ++it) {
-		letters *l = new letters(start_w + counter * span, letterOffset,22,21.5); // pass in x,y position and its size
-		counter++;
-		l->letterToShow = int(*it) - 97; // from char to array index
-		guiLetters.push_back(l);
+	// clear the guiNumbers and guiLetters
+	guiNumbers.clear();
+	guiLetters.clear();
+
+	if (displayName == 1){
+		// set the gamecore player name at the mainmenuinput file
+		string n = g_pCore->i_pInput->name; // get the name of game core
+		//guiLetters.clear(); // clear the guiLetters every time and start over
+		counter = 0;
+		// loop through the string
+		for (string::iterator it = n.begin(); it != n.end(); ++it) {
+			letters *l = new letters(start_w + counter * span, letterOffset, 22, 21.5); // pass in x,y position and its size
+			counter++;
+			l->letterToShow = int(*it) - 97; // from char to array index
+			guiLetters.push_back(l);
+		}
 	}
 
-
-
-
+	if (displayIp == 1){
+		string address = g_pCore->i_pInput->IPAdress;
+		//guiNumbers.clear();
+		letterOffset = (buttons[4]->getYPos() + buttons[4]->getHeight()) - ((buttons[4]->getHeight() - 22) / 2) - 24.5; // offset for ip displaying
+		// loop through the ipAdress string
+		counter = 0;
+		for (string::iterator it = address.begin(); it != address.end(); ++it) {
+			// dot is 46, if it is dot 
+			if (int(*it) - 46 == 0){
+				// default path of guiItem is uiItem
+				// cannot assume the IP address format is always the same
+				//dotPosition.push(counter); // the position of the dot in the actual ip address
+				guiItem* dot = new guiItem("text/symbols/dot.jpg", start_w + counter * span, letterOffset, 22, 21.5);
+				guiNumbers.push_back(dot);
+				counter++;
+				continue;
+			}
+			numbers *num = new numbers(start_w + counter * span, letterOffset, 22, 21.5); // pass in x,y position and its size
+			num->numIdx = int(*it) - 48; // from char to array index
+			guiNumbers.push_back(num);
+			counter++;
+		}
+	}
 
 	// Deletes the 2nd through 3rd elements (vec[1], vec[2])
 	//guiItems.erase(guiItems.begin() + 1, guiItems.begin() + guiItems.size);
 	guiItems.clear(); // clear the guiItem to avoid adding elements all more than once
 	guiItems.push_back(backimg); // backimg render first every time
-	for (std::vector<guiItem*> ::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){
-		guiItems.push_back(*it);
+
+
+	// if display Ip selected
+	if (displayIp){
+		// after push back the robot names, push back the ip address
+		for (std::vector<guiItem*> ::iterator it = guiNumbers.begin(); it != guiNumbers.end(); ++it){
+			guiItems.push_back(*it);
+		}
+	}
+
+	// if enter Robot name selected
+	if (displayName){
+		for (std::vector<guiItem*> ::iterator it = guiLetters.begin(); it != guiLetters.end(); ++it){
+			guiItems.push_back(*it);
+		}
 	}
 }
 
@@ -140,6 +181,17 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 
 	if (state != GLUT_UP) return viewType::MENU;
 	
+
+	// if enter IP address is selected
+	if (ipAdrressButton->isSelected(x, height - y)){
+		displayIp = true;
+	}
+
+	// if enter robot name is selected
+	if (buttons[0]->isSelected(x, height - y)){
+		displayName = true;
+	}
+
 	//play button
 	if (playButton->isSelected(x, height - y)) {
 		if (!ready){
@@ -157,7 +209,7 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 	}
 	else if (exitButton->isSelected(x, height - y)) {
 		exit(0);
-	}
+	}	
 	// stay at the menu button
 	return viewType::MENU;
 }
