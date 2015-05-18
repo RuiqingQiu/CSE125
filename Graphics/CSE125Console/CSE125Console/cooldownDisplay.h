@@ -3,7 +3,7 @@
 
 //global static variables to load numbers only once
 static bool cooldown_set = false;
-static GLuint cdMasks[3];
+static GLuint cdMasks[4];
 
 class cooldownDisplay : public numDisplay
 {

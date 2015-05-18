@@ -44,7 +44,7 @@ bool cooldownDisplay::setMasks() {
 	timeLeft = 0;
 	maxTime = 5;
 
-	off = (38.0 / 500) * height;
+	off = (40.0 / 500) * height;
 	nSize = (width / 2.0) - off;
 	for (int i = 0; i < num_digits; i++) {
 		digits[i]->setSize(nSize, nSize);
@@ -52,7 +52,7 @@ bool cooldownDisplay::setMasks() {
 	}
 
 	if (cooldown_set) return false;
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 4; i++) {
 		setTexture(i);
 	}
 	nums_set = true;
@@ -63,9 +63,9 @@ bool cooldownDisplay::setTexture(int i) {
 	//this was setting the individual object's texture, for some reason
 	//the multpile instances didn't let display ones
 
-	if (i > 9 || i < 0) return false;
+	if (i > 4 || i < 0) return false;
 	GLuint * t = &cdMasks[i];
-	string concat = path + "images/cooldown" + std::to_string(i) + ".png";
+	string concat = path + "images/cooldown/" + std::to_string(i) + ".png";
 	*t = SOIL_load_OGL_texture
 		(
 		concat.c_str()
@@ -85,7 +85,7 @@ bool cooldownDisplay::setTexture(int i) {
 }
 
 void cooldownDisplay::update() {
-	timeLeft -= 0.1;
+	timeLeft -= 0.05;
 	if (timeLeft < 0) timeLeft = maxTime;
 	displayValue = timeLeft;
 	numDisplay::update();
@@ -94,10 +94,10 @@ void cooldownDisplay::update() {
 void cooldownDisplay::draw() {
 	numDisplay::draw();
 
-	/*
 	//bind the texture and draw it
 	float wh = width / 2.0;
 	float hh = height / 2.0;
+	float currTime = timeLeft / maxTime;
 
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
@@ -107,34 +107,52 @@ void cooldownDisplay::draw() {
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
-	//glActiveTexture(GL_TEXTURE1);
-
-	glBindTexture(GL_TEXTURE_2D, texture[currState]);
-
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	// Make sure no bytes are padded:
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-	// Draw a textured quad
-	glColor3f(1, 1, 1);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0); glVertex3f(-wh, -hh, 0);
-	glTexCoord2f(0, 1); glVertex3f(-wh, hh, 0);
-	glTexCoord2f(1, 1); glVertex3f(wh, hh, 0);
-	glTexCoord2f(1, 0); glVertex3f(wh, -hh, 0);
-	glEnd();
+	glBindTexture(GL_TEXTURE_2D, cdMasks[3]);
+	
+	//top right, then bottom right, then bottom left, then top left
+	for (int i = 0; i < 4; i++) {
+		glBindTexture(GL_TEXTURE_2D, cdMasks[3]);
+		if (currTime > 0.75) {
+			if (currTime < (0.75 + 0.1875)) {
+				if (currTime < (0.75 + 0.125)) {
+					if (currTime < (0.75 + 0.0625)) {
+						glBindTexture(GL_TEXTURE_2D, cdMasks[2]);
+					}
+					else {
+						glBindTexture(GL_TEXTURE_2D, cdMasks[1]);
+					}
+				}
+				else {
+					glBindTexture(GL_TEXTURE_2D, cdMasks[0]);
+				}
+			}
+			//top right
+			glColor3f(1, 1, 1);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.5, 0.5); glVertex3f(0, 0, 0);
+			glTexCoord2f(0.5, 1); glVertex3f(0, hh, 0);
+			glTexCoord2f(1, 1); glVertex3f(wh, hh, 0);
+			glTexCoord2f(1, 0.5); glVertex3f(wh, 0, 0);
+			glEnd();
+		}
+		currTime += 0.25;
+		glRotatef(-90, 0, 0, 1);
+	}
 
 	glPopMatrix();
 	//glEnable(GL_LIGHTING);
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
-	*/
+
 }
 
 void cooldownDisplay::rePosition(int x, int y, int w, int h) {
 	guiItem::rePosition(x, y, w, h);
-	off = (38.0 / 500) * height;
+	off = (40.0 / 500) * height;
 	nSize = (width / 2.0) - off;
 	//want to manually make sure it stays relative to time left box
 	for (int i = 0; i < num_digits; i++) {
