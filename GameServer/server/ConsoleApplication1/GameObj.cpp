@@ -165,28 +165,28 @@ void GameObj::setBlockType(int bType)
 
 	_blockType = bType;
 	switch (bType){
-	case BASICCUBE:
+	case BasicCube:
 	{
 			  _mass = 10;
 			  _health = 200;
 			  _collisionType = C_ROBOT_PARTS;
 			  break;
 	}
-	case GLOWINGCUBE:
+	case GlowingCube:
 	{
 						_mass = 9;
 						_health = 190;
 						_collisionType = C_ROBOT_PARTS;
 					  break;
 	}
-	case WOODENCUBE:
+	case WoodenCube:
 	{
 					   _mass = 7;
 					   _health = 170;
 					   _collisionType = C_ROBOT_PARTS;
 					  break;
 	}
-	case BGUN:
+	case Railgun:
 	{
 				 _isWeapon = 1;
 				 _isRanged = 1;
@@ -195,7 +195,7 @@ void GameObj::setBlockType(int bType)
 				 _collisionType = C_ROBOT_PARTS;
 					  break;
 	}
-	case MACE:
+	case Mace:
 	{
 				 _isWeapon = 1;
 				 _mass = 30;
@@ -203,7 +203,7 @@ void GameObj::setBlockType(int bType)
 				 _collisionType = C_MELEE;
 					  break;
 	}
-	case MALLET:
+	case Mallet:
 	{
 				   _isWeapon = 1;
 				   _mass = 25;
@@ -211,7 +211,7 @@ void GameObj::setBlockType(int bType)
 				   _collisionType = C_MELEE;
 					  break;
 	}
-	case NEEDLE:
+	case Needle:
 	{
 				   _isWeapon = 1;
 				   _health = 250;
@@ -219,17 +219,17 @@ void GameObj::setBlockType(int bType)
 				   _collisionType = C_MELEE;
 					  break;
 	}
-	case DISCOUNTWHEEL:
+	case Discount:
 	{
 						  _isWheel = 1;
 						  break;
 	}
-	case TIRE:
+	case Tire:
 	{
 				 _isWheel = 1;
 						  break;
 	}
-	case WOODENWHEEL:
+	case WoodenWheel:
 	{
 						_isWheel = 1;
 						  break;
@@ -270,7 +270,7 @@ void GameObj::setBlockType(int bType)
 		_collisionType = C_PROJECTILE;
 		break;
 	}
-	case 103:
+	case BULLET:
 	{
 		_collisionType = C_PROJECTILE;
 		break;

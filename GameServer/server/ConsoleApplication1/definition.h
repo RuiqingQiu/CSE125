@@ -9,27 +9,92 @@
 //block types
 enum BLOCK_TYPE
 {
-	BASICCUBE = 0,
-	GLOWINGCUBE = 1,
-	WOODENCUBE = 2,
-	METHCUBE = 3,
-	BGUN = 4,
-	MACE = 5,
-	MALLET = 6,
-	NEEDLE = 7,
-	DISCOUNTWHEEL = 8,
-	TIRE = 9,
-	WOODENWHEEL = 10,
+	//BASICCUBE = 100,
+	//GLOWINGCUBE = 101,
+	//WOODENCUBE = 102,
+	//METHCUBE = 3,
+	//BGUN = 4,
+	//MACE = 5,
+	//MALLET = 6,
+	//NEEDLE = 7,
+	//DISCOUNTWHEEL = 8,
+	//TIRE = 9,
+	//WOODENWHEEL = 10,
 
-	BATTLEFIELD = 12,
-	THREEBYTHREE_BASIC = 13,
-	THREEBYTHREE_GLOWING = 14,
-	THREEBYTHREE_WOODEN = 15,
+	//BATTLEFIELD = 12,
+	//THREEBYTHREE_BASIC = 13,
+	//THREEBYTHREE_GLOWING = 14,
+	//THREEBYTHREE_WOODEN = 15,
 
-	WALL = 101,
-	BULLET_1 = 102,
+	//WALL = 101,
+	//BULLET_1 = 102,
 
-};
+
+	//enum ModelType{
+		//blocks
+		BasicCube = 100,
+		CrystalCube = 101,
+		GlowingCube = 102,
+		WoodenCube = 103,
+		BLACKCUBE = 104,
+
+		//weapons
+		BGun = 200,
+		Mace = 201,
+		Mallet = 202,
+		Needle = 203,
+		ALTNEEDLE = 204,
+		ALTMACE = 205,
+		Turrent = 206,
+		Railgun = 207,
+
+		//wheels
+		WHEEL_BEGIN = 300,
+		Discount = 301,
+		Tire = 302,
+		WoodenWheel = 303,
+		AltTire = 304,
+		StoneTire = 305,
+		TronWheel = 306,
+		WHEEL_END = 350,
+
+		//bases
+		BASES_BEGIN = 400,
+		THREEBYTHREE_BASIC = 401,
+		THREEBYTHREE_GLOWING = 402,
+		THREEBYTHREE_WOODEN = 403,
+		THREEBYTHREE_WHEEL_DISCOUNT = 404,
+		THREEBYTHREE_WHEEL_TIRE = 405,
+		THREEBYTHREE_WHEEL_WOODEN = 406,
+		BASES_END = 410,
+
+		//templates
+		TEMPLATE_BEGIN = 500,
+		TEMPLATE_1 = 501,
+		TEMPLATE_2 = 502,
+		TEMPLATE_3 = 503,
+		TEMPLATE_END = 510,
+
+		//Environment
+		TREE1 = 600,
+		TREE2 = 601,
+		TREE3 = 602,
+
+		//Other
+		BATTLEFIELD = 700,
+		WALL = 701,
+		BULLET_1 = 702,
+		BULLET = 703,
+
+		CUBEA = 751,
+		CUBEB = 752,
+
+		//super battlefield
+		BATTLEFIELDINNER = 800,
+		BATTLEFIELDOUTER = 801,
+		DESERT = 802,
+	};
+
 
 // collision type
 enum COLLISION_TYPE{

@@ -15,7 +15,7 @@ RangedWeapon::RangedWeapon(int type)
 
 	switch (type)
 	{
-	case BGUN:
+	case Railgun:
 	{
 		range = MEDIUM_RANGED;
 		damage = 15;
@@ -42,7 +42,7 @@ RangedWeapon::RangedWeapon(int type)
 		_pWidth = 0.3;
 		_pHeight = 0.3;
 		_pDepth = 1;
-		_pBlockType = MACE;
+		_pBlockType = Mace;
 		break;
 	}
 	}

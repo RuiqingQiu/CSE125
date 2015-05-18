@@ -9,7 +9,7 @@ MeleeWeapon::MeleeWeapon(int type)
 
 	switch (type)
 	{
-	case NEEDLE:{
+	case Needle:{
 		damage = .5;
 		splash = 1;
 		break;
