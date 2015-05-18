@@ -403,25 +403,22 @@ int GameObj::deleteConstraints()//std::map< btCollisionObject*, GameObj*>* pair)
 	{
 		Constraint* c = (*it);
 		GameObj* other;
-		if (c->getRigidBodyA() == this->getRigidBody())
+		if (&c->_joint6DOF->getRigidBodyA() == this->getRigidBody())
 		{
-			other = (GameObj*)c->getRigidBodyB()->getUserPointer();
+			other = (GameObj*)(&(c->_joint6DOF->getRigidBodyB()))->getUserPointer();
 				//pair->find(&c->_joint6DOF->getRigidBodyB())->second;
 		}
 		else
 		{
-			other = (GameObj*)c->getRigidBodyA()->getUserPointer();
+			other = (GameObj*) (&(c->_joint6DOF->getRigidBodyA()))->getUserPointer();
 				//pair->find(&c->_joint6DOF->getRigidBodyA())->second;
 		}
 
 		//delete(c->_joint6DOF);
 		c->_joint6DOF = nullptr;
-		if (other != nullptr)
+		if (other->deleteInvalidConstraints())
 		{
-			if (other->deleteInvalidConstraints())
-			{
-				ret = 1;
-			}
+			ret = 1;
 		}
 	}
 

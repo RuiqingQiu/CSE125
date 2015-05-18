@@ -55,7 +55,7 @@ void ServerCore::serverLoop()
 			if (gameLogic->numPlayers< 4) action = ADDCLIENT;
 			break;
 		}
-		case INIT_BUILD:
+		case INIT_BUILD_STATE:
 		{
 			action = gameLogic->startBuild();
 			break;

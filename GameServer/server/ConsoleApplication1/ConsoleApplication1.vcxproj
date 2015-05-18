@@ -91,6 +91,7 @@
     <ClInclude Include="GERobotDeath.h" />
     <ClInclude Include="GEScoreboardUpdate.h" />
     <ClInclude Include="GETime.h" />
+    <ClInclude Include="Hill.h" />
     <ClInclude Include="MeleeWeapon.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="NetworkData.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="GERobotDeath.cpp" />
     <ClCompile Include="GEScoreboardUpdate.cpp" />
     <ClCompile Include="GETime.cpp" />
+    <ClCompile Include="Hill.cpp" />
     <ClCompile Include="MeleeWeapon.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="NetworkServices.cpp" />

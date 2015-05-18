@@ -127,6 +127,9 @@ void Network::receiveFromClients(std::vector<ObjectEvents*>* eventList){
 
 void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>* ge){
 
+
+	cout << "size of GO " << gameObjs->size() << endl;
+
 	//cout << "send Action" << endl;
 	// send action packet
 	if (gameObjs == nullptr)

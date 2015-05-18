@@ -4,14 +4,10 @@
 class Constraint
 {
 public:
-
 	btFixedConstraint * _joint6DOF;
 	
 	Constraint();
 	~Constraint();
-
-	btRigidBody* getRigidBodyA();
-	btRigidBody* getRigidBodyB();
 
 };
 

@@ -359,6 +359,7 @@ void GameLogic::prePhyLogic(){
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
 		GameObj* gObj = it->second;
+		if (gObj == nullptr) continue;
 		Robot *r = (Robot*)gObj;
 		if (r->getState() == PS_ALIVE){
 
