@@ -114,20 +114,22 @@ GameInfoPacket* ClientGame::update()
 			Window::factory->switchView('1');
 			break;
 		}
+		case INIT_BATTLE:{
+			cout << "in init battle" << endl;
+			Window::factory->switchView('2');
+			break;
+		}
 		//client show the time only build mode
 		case TIMER:{
 			break;
 		}
 		//client send build package if they havent done that, time's up
 		case BUILD_REQUEST:{
+			Window::build_to_battle = true;
 			break;
 		}
 		case GAME_STATE:
 		{
-						   if (Window::factory->viewmode == viewType::BUILD){
-							   cout << "in build mode, switch" << endl;
-							   Window::factory->switchView('5');
-						   }
 							//printf("client received game state packet from server\n");
 							//std::cout << packet.data << std::endl;
 						    //cout << "game_state" << endl;
