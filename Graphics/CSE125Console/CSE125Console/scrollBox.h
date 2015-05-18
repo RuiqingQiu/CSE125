@@ -5,14 +5,14 @@
 #include "button.h"
 #include "listItem.h"
 
-#define MAXDISPLAY 8
+#define MAXDISPLAY 10
 
 class scrollBox : public button
 {
 private:
 	//scrollbox.jpg size is 1000x1000 px
 	int default_w = 1000;
-	int default_h = 1000;
+	int default_h = 1200;
 
 public:
 	scrollBox();

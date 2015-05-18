@@ -26,7 +26,7 @@ void buildView::init() {
 	pViewCamera->rotation->x = 0;
 	pViewCamera->position->z = -7;
 	selectedType = BasicCube;
-	yRotation = 0;
+	yRotation = 180;
 	blocksLeft = MAX_BLOCKS;
 	center = Vector3(0, -2, 0);
 	templateSet = false;
@@ -80,6 +80,10 @@ void buildView::createText() {
 	//blocks left display
 	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 900 * 0.25, 25, true, false);
 	guiItems.push_back(blocksDisplay);
+
+	//grid textures
+	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
+	setTexture("uiItem/images/blackgrid_ext.jpg", &grids[1]);
 }
 
 void buildView::createButtons() {
@@ -99,8 +103,10 @@ void buildView::createButtons() {
 	buttons.push_back(scroll);
 
 	//list options
+	//blocks
 	scroll->addListItem("blocks", ".jpg", true, true);
 	scroll->addsubListItem("blocks/basic", ".jpg", BasicCube, true, false);
+	scroll->addsubListItem("blocks/black", ".jpg", BLACKCUBE, true, false);
 	scroll->addsubListItem("blocks/crystal", ".jpg", CrystalCube, true, false);
 	scroll->addsubListItem("blocks/glowing", ".jpg", GlowingCube, true, false);
 	scroll->addsubListItem("blocks/wooden", ".jpg", WoodenCube, true, false);
@@ -108,9 +114,14 @@ void buildView::createButtons() {
 	scroll->addListItem("weapons", ".jpg", true, true);
 	scroll->addsubListItem("weapons/bGun", ".jpg", BGun, true, false);
 	scroll->addsubListItem("weapons/mace", ".jpg", Mace, true, false);
+	scroll->addsubListItem("weapons/mace2", ".jpg", ALTMACE, true, false);
 	scroll->addsubListItem("weapons/mallet", ".jpg", Mallet, true, false);
 	scroll->addsubListItem("weapons/needle", ".jpg", Needle, true, false);
+	scroll->addsubListItem("weapons/needle2", ".jpg", ALTNEEDLE, true, false);
+	scroll->addsubListItem("weapons/railgun", ".jpg", Railgun, true, false);
+	scroll->addsubListItem("weapons/turret", ".jpg", Turrent, true, false);
 
+	//wheels
 	scroll->addListItem("wheels", ".jpg", true, true);
 	scroll->addsubListItem("wheels/discount", ".jpg", Discount, true, false);
 	scroll->addsubListItem("wheels/stone", ".jpg", StoneTire, true, false);
@@ -119,11 +130,13 @@ void buildView::createButtons() {
 	scroll->addsubListItem("wheels/tron", ".jpg", TronWheel, true, false);
 	scroll->addsubListItem("wheels/wooden", ".jpg", WoodenWheel, true, false);
 
+	//bases
 	scroll->addListItem("bases", ".jpg", true, true);
 	scroll->addsubListItem("bases/basic", ".jpg", THREEBYTHREE_BASIC, true, false);
 	scroll->addsubListItem("bases/glowing", ".jpg", THREEBYTHREE_GLOWING, true, false);
 	scroll->addsubListItem("bases/wooden", ".jpg", THREEBYTHREE_WOODEN, true, false);
 
+	//templates
 	scroll->addListItem("template", ".jpg", true, true);
 	scroll->addsubListItem("templates/basic", ".jpg", TEMPLATE_1, true, false);
 	scroll->addsubListItem("templates/glowing", ".jpg", TEMPLATE_2, true, false);
@@ -134,10 +147,6 @@ void buildView::createButtons() {
 	helpButton->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
 	helpButton->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
 	buttons.push_back(helpButton);
-
-	//grid textures
-	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
-	setTexture("uiItem/images/blackgrid_ext.jpg", &grids[1]);
 }
 
 void buildView::VUpdate() {
@@ -181,23 +190,29 @@ void buildView::VOnRender() {
 	
 	GameView::highlight_first_pass_build();
 	GameView::highlight_second_pass_build();
-	glPopMatrix();
 	
+	glPopMatrix();
+
+	glPushMatrix();
+	glRotatef(yRotation, 0.0, 1.0, 0.0);
+
 	//draw grid plane quad
 	glColor3f(1, 1, 1);
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, grids[0]);
 	glBegin(GL_QUADS);
 	//bottom
-	glTexCoord2f(0, 0); 
-	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z - HALF_GRID - 0.5);
-	glTexCoord2f(0, 1); 
-	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z + HALF_GRID + 0.5);
-	glTexCoord2f(1, 1); 
-	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z + HALF_GRID + 0.5);
 	glTexCoord2f(1, 0); 
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z - HALF_GRID - 0.5);
+	glTexCoord2f(1, 1); 
+	glVertex3f(center.x - HALF_GRID - 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z + HALF_GRID + 0.5);
+	glTexCoord2f(0, 1); 
+	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z + HALF_GRID + 0.5);
+	glTexCoord2f(0, 0); 
 	glVertex3f(center.x + HALF_GRID + 0.5, center.y - 0.5 - (GRID_SIZE * 0.04), center.z - HALF_GRID - 0.5);
 	glEnd();
+
+	glPopMatrix();
 
 	glBindTexture(GL_TEXTURE_2D, grids[1]);
 	glBegin(GL_QUADS);
@@ -255,7 +270,7 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 		}
 		else if (scroll->clearButton->isSelected(x, height - y)) {
 			while (NodeList.size() > BASE_SIZE) {
-				std::cout << "removing" << std::endl;
+				//std::cout << "removing" << std::endl;
 				removeNode();
 			}
 		}
@@ -433,26 +448,23 @@ void buildView::setTemplate() {
 			PushGeoNode(cube4);
 
 			GeoNode * weapon1 = Model3DFactory::generateObjectWithType(Needle);
-			weapon1->localTransform.position = Vector3(-1, 0, 2);
-			weapon1->localTransform.rotation.y = 270;
+			weapon1->localTransform.position = Vector3(-1, 0, -2);
 			weapon1->identifier = NodeList.size();
 			weapon1->textureType = Needle;
 			PushGeoNode(weapon1);
 			GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Needle);
-			weapon2->localTransform.position = Vector3(-1, 1, 2);
+			weapon2->localTransform.position = Vector3(-1, 1, -2);
 			weapon2->localTransform.rotation.y = 270;
 			weapon2->identifier = NodeList.size();
 			weapon2->textureType = Needle;
 			PushGeoNode(weapon2);
 			GeoNode * weapon3 = Model3DFactory::generateObjectWithType(Needle);
-			weapon3->localTransform.position = Vector3(1, 0, 2);
-			weapon3->localTransform.rotation.y = 270;
+			weapon3->localTransform.position = Vector3(1, 0, -2);
 			weapon3->identifier = NodeList.size();
 			weapon3->textureType = Needle;
 			PushGeoNode(weapon3);
 			GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Needle);
-			weapon4->localTransform.position = Vector3(1, 1, 2);
-			weapon4->localTransform.rotation.y = 270;
+			weapon4->localTransform.position = Vector3(1, 1, -2);
 			weapon4->identifier = NodeList.size();
 			weapon4->textureType = Needle;
 			PushGeoNode(weapon4);
@@ -520,7 +532,6 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon1);
 			GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Mallet);
 			weapon2->localTransform.position = Vector3(0, 1, 2);
-			weapon2->localTransform.rotation.y = 270;
 			weapon2->identifier = NodeList.size();
 			weapon2->textureType = Mallet;
 			PushGeoNode(weapon2);
@@ -532,7 +543,7 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon3);
 			GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Mallet);
 			weapon4->localTransform.position = Vector3(0, 1, -2);
-			weapon4->localTransform.rotation.y = 90;
+			weapon2->localTransform.rotation.y = 180;
 			weapon4->identifier = NodeList.size();
 			weapon4->textureType = Mallet;
 			PushGeoNode(weapon4);
@@ -582,7 +593,7 @@ void buildView::setTemplate() {
 			cube3->textureType = WoodenCube;
 			PushGeoNode(cube3);
 			GeoNode * cube4 = Model3DFactory::generateObjectWithType(WoodenCube);
-			cube4->localTransform.position = Vector3(0, 2, -1);
+			cube4->localTransform.position = Vector3(0, 2, 1);
 			cube4->identifier = NodeList.size();
 			cube4->textureType = WoodenCube;
 			PushGeoNode(cube4);
@@ -603,26 +614,22 @@ void buildView::setTemplate() {
 			PushGeoNode(cube7);
 
 			GeoNode * weapon1 = Model3DFactory::generateObjectWithType(Needle);
-			weapon1->localTransform.position = Vector3(0, 0, 2);
-			weapon1->localTransform.rotation.y = 270;
+			weapon1->localTransform.position = Vector3(0, 0, -2);
 			weapon1->identifier = NodeList.size();
 			weapon1->textureType = Needle;
 			PushGeoNode(weapon1);
 			GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Needle);
-			weapon2->localTransform.position = Vector3(1, 0, 2);
-			weapon2->localTransform.rotation.y = 270;
+			weapon2->localTransform.position = Vector3(1, 0, -2);
 			weapon2->identifier = NodeList.size();
 			weapon2->textureType = Needle;
 			PushGeoNode(weapon2);
 			GeoNode * weapon3 = Model3DFactory::generateObjectWithType(Needle);
-			weapon3->localTransform.position = Vector3(-1, 0, 2);
-			weapon3->localTransform.rotation.y = 270;
+			weapon3->localTransform.position = Vector3(-1, 0, -2);
 			weapon3->identifier = NodeList.size();
 			weapon3->textureType = Needle;
 			PushGeoNode(weapon3);
 			GeoNode * weapon4 = Model3DFactory::generateObjectWithType(Mace);
-			weapon4->localTransform.position = Vector3(0, 1, 2);
-			weapon4->localTransform.rotation.y = 270;
+			weapon4->localTransform.position = Vector3(0, 1, -2);
 			weapon4->identifier = NodeList.size();
 			weapon4->textureType = Mace;
 			PushGeoNode(weapon4);
