@@ -79,5 +79,7 @@ protected:
 
 	//for selecting which texture
 	btnState currState;
+
+	float rotation;
 };
 

@@ -83,7 +83,7 @@ void scrollBox::init() {
 	removeButton->setTexture("scrollbox/remove_sel.jpg", btnState::SELECTED);
 	removeButton->setTexture("scrollbox/remove_press.jpg", btnState::PRESSED);
 
-	yoff = yPos + width - (85 * scale);
+	yoff = yPos + height - (85 * scale);
 	clearButton = new button("scrollbox/clear.jpg", xoff, yoff);
 	clearButton->setTexture("scrollbox/clear_sel.jpg", btnState::SELECTED);
 	clearButton->setTexture("scrollbox/clear_press.jpg", btnState::PRESSED);
@@ -160,8 +160,7 @@ void scrollBox::addsubListItem(string filename, string fileType, int id, bool ha
 	//header area is 100 pixels, footer area is 100 pixels
 	double hf = 200.0 * scale;
 	double h = ((height - hf) / MAXDISPLAY);
-	//halfway point width wise is 500 on original image
-	double half = (default_h/2.0) * scale;
+	double half = (default_w/2.0) * scale;
 
 	listItem * newSl = new listItem(filename+fileType, int(xPos + half), yPos + int(s*h + (hf / 2.0)), scale);
 	if (hasSel) {

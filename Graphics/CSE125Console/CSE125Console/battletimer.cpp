@@ -2,7 +2,7 @@
 #include "battletimer.h"
 
 
-string battleTimer::textPath = "text/time_long.jpg";
+string battleTimer::textPath = "text/time_long.png";
 battleTimer::battleTimer() : numDisplay() {
 	createNumbers();
 }

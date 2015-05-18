@@ -22,6 +22,12 @@ void battleView:: createButtons(){
 
 	healthDisplay = new healthBar(20, height - 150, 250, 25, true, false);
 	guiItems.push_back(healthDisplay);
+
+	cooldown = new cooldownDisplay(100, 100, 250, 250, true, false);
+	guiItems.push_back(cooldown);
+
+	loading = new loadDisplay(500, 100, 250, 250, true, false);
+	guiItems.push_back(loading);
 }
 
 void battleView::VUpdate() {

@@ -3,6 +3,8 @@
 #include "gui.h"
 #include "battletimer.h"
 #include "healthBar.h"
+#include "cooldownDisplay.h"
+#include "loadDisplay.h"
 
 class battleView : public gui {
 public:
@@ -21,4 +23,7 @@ public:
 	bool updateview;
 
 	healthBar * healthDisplay;
+
+	cooldownDisplay * cooldown;
+	loadDisplay * loading;
 };

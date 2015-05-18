@@ -95,6 +95,7 @@
     <ClInclude Include="ClientGame.h" />
     <ClInclude Include="ClientNetwork.h" />
     <ClInclude Include="ComponentNode.h" />
+    <ClInclude Include="cooldownDisplay.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
     <ClInclude Include="EventCollision.h" />
@@ -118,6 +119,7 @@
     <ClInclude Include="healthBar.h" />
     <ClInclude Include="letters.h" />
     <ClInclude Include="LightSystem.h" />
+    <ClInclude Include="loadDisplay.h" />
     <ClInclude Include="mainmenuinput.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="battleView.h" />
@@ -181,6 +183,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ClientGame.cpp" />
     <ClCompile Include="ClientNetwork.cpp" />
+    <ClCompile Include="cooldownDisplay.cpp" />
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="EventCollision.cpp" />
@@ -205,6 +208,7 @@
     <ClCompile Include="helpMenu.cpp" />
     <ClCompile Include="LightSystem.cpp" />
     <ClCompile Include="listItem.cpp" />
+    <ClCompile Include="loadDisplay.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="Materials.cpp" />
     <ClCompile Include="Model3DFactory.cpp" />

@@ -68,6 +68,7 @@ guiItem::guiItem(string filename, int x, int y, int w, int h, bool xf, bool yf) 
 }
 
 void guiItem::init() {
+	rotation = 0;
 	setPosition(0, 0);
 	setSize(100, 100);
 	setFixed(false, true);
@@ -141,15 +142,22 @@ void guiItem::update() {
 
 void guiItem::draw() {
 	//bind the texture and draw it
+	float wh = width / 2.0;
+	float hh = height / 2.0;
 
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
-	//glLoadMatrixd(glmatrix.getPointer());
+
+	glTranslatef(xPos + wh, yPos + hh, 0.0);
+	glRotatef(rotation, 0.0, 0.0, 1.0);
 
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
 	//glActiveTexture(GL_TEXTURE1);
 
 	glBindTexture(GL_TEXTURE_2D, texture[currState]);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Make sure no bytes are padded:
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -157,16 +165,16 @@ void guiItem::draw() {
 	// Draw a textured quad
 	glColor3f(1, 1, 1);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0); glVertex3f(xPos, yPos, 0);
-	glTexCoord2f(0, 1); glVertex3f(xPos, yPos + height, 0);
-	glTexCoord2f(1, 1); glVertex3f(xPos + width, yPos + height, 0);
-	glTexCoord2f(1, 0); glVertex3f(xPos + width, yPos, 0);
+	glTexCoord2f(0, 0); glVertex3f(-wh, -hh, 0);
+	glTexCoord2f(0, 1); glVertex3f(-wh, hh, 0);
+	glTexCoord2f(1, 1); glVertex3f(wh, hh, 0);
+	glTexCoord2f(1, 0); glVertex3f(wh, -hh, 0);
 	glEnd();
 
 	glPopMatrix();
 	//glEnable(GL_LIGHTING);
+	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
-
 }
 
 void guiItem::setPosition(int x, int y) {
