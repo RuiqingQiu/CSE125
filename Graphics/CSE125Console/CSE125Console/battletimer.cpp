@@ -76,7 +76,7 @@ void battleTimer::update(){
 
 	// then update minutes
 	int idx = minLeft;
-	std::cout << minLeft << std::endl;
+	//std::cout << minLeft << std::endl;
 	for (int i = num_digits; i < BATTLE_NUM_DIGITS; i++) {
 		if (!(idx >= 0)) break;
 		int digit = idx % 10;

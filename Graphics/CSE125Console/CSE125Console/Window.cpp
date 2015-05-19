@@ -263,7 +263,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.17");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 }
 
 //----------------------------------------------------------------------------
@@ -378,7 +378,7 @@ void Window::displayCallback() {
 				//This is real for battle mode player info
 				factory->battlemode->pPlayer = g_pCore->pPlayer;
 
-				cout << "player id " << p->player_infos[0]->id << endl;
+				//cout << "player id " << p->player_infos[0]->id << endl;
 
 				break;
 			}
@@ -402,5 +402,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }
