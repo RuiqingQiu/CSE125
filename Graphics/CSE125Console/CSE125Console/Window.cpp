@@ -38,7 +38,7 @@ static GraphicsTest* gt;
 static Model3D*object;
 static Sound *soundObject; // sound
 //Init server info here later
-
+Model3D* tmp_object;
 void CHECK_FRAMEBUFFER_STATUS()
 {
 	GLenum status;
@@ -170,6 +170,10 @@ void Window::initialize(void)
 	}
 	cout << "number of lights are " << light_sytem->lights.size() << endl;
 
+	Fire* f = new Fire(0,0,0);
+	f->static_object = true;
+	factory->battlemode->PushGeoNode(f);
+
 	//////////////////////////
 	/*
 	object = Model3DFactory::generateObjectWithType(BGun);
@@ -228,7 +232,7 @@ void Window::initialize(void)
 	object->isUpdated = true;
 	object->type = DESERT;
 	factory->battlemode->PushEnvironmentNode(object);
-	
+
 	/*
 	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
 	object->shader_type = BATTLEFIELD_SHADER;
@@ -248,6 +252,7 @@ void Window::initialize(void)
 	gt->displayTest5(factory->battlemode);
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
+	//factory->viewmode = viewType::MENU;
 	factory->viewmode = viewType::BATTLE;
 	factory->setView();
 	g_pCore->pGameView = factory->currentView;
@@ -255,7 +260,7 @@ void Window::initialize(void)
 
 	//Game start with the menu mode
 
-
+	gt->displayTest5(factory->battlemode);
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
 
 	
@@ -350,10 +355,14 @@ void Window::reshapeCallback(int w, int h) {
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
-
+int count1 = 0;
 void Window::displayCallback() {
 	clock_t startTime = clock();
-
+	count1++;
+	if (count1 == 10){
+		cout << "trigger explosion" << endl;
+		//tmp_object->triggerExplosion();
+	}
 	// play the background music through out the whole game
 	soundObject->playMusic();
 

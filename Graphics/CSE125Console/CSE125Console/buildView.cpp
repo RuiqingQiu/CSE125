@@ -112,7 +112,7 @@ void buildView::createButtons() {
 	scroll->addsubListItem("blocks/wooden", ".jpg", WoodenCube, true, false);
 
 	scroll->addListItem("weapons", ".jpg", true, true);
-	//scroll->addsubListItem("weapons/bGun", ".jpg", BGun, true, false);
+	scroll->addsubListItem("weapons/bGun", ".jpg", BGun, true, false);
 	scroll->addsubListItem("weapons/mace", ".jpg", Mace, true, false);
 	scroll->addsubListItem("weapons/mace2", ".jpg", ALTMACE, true, false);
 	scroll->addsubListItem("weapons/mallet", ".jpg", Mallet, true, false);
@@ -459,7 +459,6 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon1);
 			GeoNode * weapon2 = Model3DFactory::generateObjectWithType(Needle);
 			weapon2->localTransform.position = Vector3(-1, 1, -2);
-			weapon2->localTransform.rotation.y = 270;
 			weapon2->identifier = NodeList.size();
 			weapon2->textureType = Needle;
 			PushGeoNode(weapon2);

@@ -4,7 +4,6 @@
 #include "battletimer.h"
 #include "healthBar.h"
 #include "cooldownDisplay.h"
-#include "loadDisplay.h"
 
 class battleView : public gui {
 public:
@@ -25,5 +24,4 @@ public:
 	healthBar * healthDisplay;
 
 	cooldownDisplay * cooldown;
-	loadDisplay * loading;
 };

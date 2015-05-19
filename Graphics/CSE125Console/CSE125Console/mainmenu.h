@@ -3,6 +3,7 @@
 #include "gui.h"
 #include "GameCore.h"
 #include "letters.h" // display textured letter
+#include "loadDisplay.h"
 
 #define MAX_PLAYER 4
 
@@ -16,8 +17,12 @@ public:
 	void VOnRender(); //must have
 	void VOnClientUpdate(GameInfoPacket* info); //must have
 	void drawAllItems(); // overwrite the gui drawAllItems function
+	virtual void VUpdate();
 
 	viewType mouseClickFunc(int state, int x, int y);
+
+	bool isLoading;
+
 private:
 	//helper initialization functions
 	void createButtons();
@@ -33,6 +38,7 @@ private:
 	button * playButton;
 	button * exitButton;
 	button*  ipAdrressButton; // enter IP button
+	loadDisplay * loading;
 
 	int playerReady;
 	bool ready;
@@ -42,4 +48,6 @@ private:
 
 	std::vector<guiItem*> guiLetters; // keep track of the letter in the string, later combined with guiItems vector
 	std::vector<guiItem*> guiNumbers; // keep track of the number in the Ip Adress
+
+	bool playPressed;
 };
