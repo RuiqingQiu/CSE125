@@ -253,7 +253,7 @@ void Model3D::VOnDraw(){
 	glActiveTexture(GL_TEXTURE0);
 
 
-	this->explosion->VOnDraw();
+	//this->explosion->VOnDraw();
 
 	glPopMatrix();
 

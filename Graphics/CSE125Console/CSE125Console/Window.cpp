@@ -361,7 +361,7 @@ void Window::displayCallback() {
 	count1++;
 	if (count1 == 10){
 		cout << "trigger explosion" << endl;
-		tmp_object->triggerExplosion();
+		//tmp_object->triggerExplosion();
 	}
 	// play the background music through out the whole game
 	soundObject->playMusic();
@@ -411,5 +411,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

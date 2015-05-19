@@ -39,6 +39,17 @@ void GraphicsTest::displayTest5(GameView* view){
 	object->isUpdated = true;
 	object->type = Needle;
 	view->PushEnvironmentNode(object);
+
+	for (int i = 0; i < 100; i++){
+		object = Model3DFactory::generateObjectWithType(WoodenCube);
+		object->shader_type = NORMAL_SHADER;
+		object->localTransform.position = Vector3(0, 0, 0);
+		object->localTransform.rotation = Vector3(0, 0, 0);
+		object->identifier = -1;
+		object->isUpdated = true;
+		object->type = WoodenCube;
+		view->PushEnvironmentNode(object);
+	}
 }
 
 
