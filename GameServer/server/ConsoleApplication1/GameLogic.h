@@ -20,8 +20,8 @@
 #include "GEScoreboardUpdate.h"
 #include <random>
 
-#define FIELD_WIDTH 50
-#define FIELD_HEIGHT 50
+#define FIELD_WIDTH 100
+#define FIELD_HEIGHT 100
 #define INSTANT_KILL 1
 
 

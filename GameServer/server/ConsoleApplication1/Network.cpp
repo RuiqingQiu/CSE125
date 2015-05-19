@@ -129,6 +129,7 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 
 
 	cout << "size of GO " << gameObjs->size() << endl;
+	cout << "size of GE " << ge->size() << endl;
 
 	//cout << "send Action" << endl;
 	// send action packet
@@ -556,7 +557,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//std::cout << "NULL" << endl;
 			break;
 		}
-
+		cout << "GO ID: " <<(*i)->getId() << endl;
 		temp += to_string((*i)->getId());
 		temp += ' ';
 		temp += to_string((*i)->getX());

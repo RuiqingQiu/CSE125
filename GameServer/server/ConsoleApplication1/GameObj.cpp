@@ -12,7 +12,6 @@ GameObj::GameObj()
 // x, y, z, qX, qY, qZ, qW, type, mass
 GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, double qZ, double qW, int type, double mass)
 {
-
 	_id = _totalId+5;
 	_totalId++;
 	_x = posX;
@@ -26,6 +25,7 @@ GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, do
 	_mass = mass;
 	_isRobot = 0;
 	deathTimer = NULL;
+	setBelongTo(nullptr);
 }
 
 GameObj::~GameObj(){
@@ -416,9 +416,11 @@ int GameObj::deleteConstraints()//std::map< btCollisionObject*, GameObj*>* pair)
 
 		//delete(c->_joint6DOF);
 		c->_joint6DOF = nullptr;
-		if (other->deleteInvalidConstraints())
-		{
-			ret = 1;
+		if (other != nullptr){
+			if (other->deleteInvalidConstraints())
+			{
+				ret = 1;
+			}
 		}
 	}
 

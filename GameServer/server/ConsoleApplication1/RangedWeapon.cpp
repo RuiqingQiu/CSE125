@@ -22,7 +22,7 @@ RangedWeapon::RangedWeapon(int type)
 		attackSpeed = 4;
 		splash = 1;
 
-		_pInitForce = -300;
+		_pInitForce = -150;
 		_pMass = 1;
 		_pWidth = 0.3;
 		_pHeight = 0.3;
@@ -37,7 +37,7 @@ RangedWeapon::RangedWeapon(int type)
 		attackSpeed = 0.5;
 		splash = 4;
 
-		_pInitForce = -600;
+		_pInitForce = -100;
 		_pMass = 10;
 		_pWidth = 0.3;
 		_pHeight = 0.3;

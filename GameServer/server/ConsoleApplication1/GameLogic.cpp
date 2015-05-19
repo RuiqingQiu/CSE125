@@ -78,7 +78,7 @@ int GameLogic::gameStart(){
 
 
 	addGround();
-	//addWalls();
+	addWalls();
 
 	gamePhysics->initWorld(&gameObjs);//, &objCollisionPair);
 	cout << "end of init world" << endl;
@@ -120,6 +120,7 @@ int GameLogic::gameStart(){
 					(*it)->setZ(initZ + zoffset);
 					(*it)->createRigidBody();// &objCollisionPair);
 					d->addRigidBody((*it)->getRigidBody());
+					cout << "new build robot ids:  " << (*it)->getId() << endl;
 					gameObjs.push_back((*it));
 					if ((*it)->getIsWeapon())
 					{
@@ -412,13 +413,19 @@ void GameLogic::prePhyLogic(){
 
 									 if ((*it)->getBuildID() == 0)
 									 {
+										 robot = (Robot *) clientPair.find(cid)->second;
+										 robot->setImmediateDeleted();
 										 robot = (Robot*)(*it);
-										 clientPair.insert(std::pair<int, Robot*>(cid, robot));
+										 //clientPair.insert(std::pair<int, Robot*>(cid, robot));
 										 robot->setCID(cid);
 										 robot->setX(xoffset);
 										 robot->setZ(zoffset);
 										 robot->createVehicle(d, robot->getWidth(), robot->getHeight(), robot->getDepth());//, &objCollisionPair);
 										 gameObjs.push_back((*it));
+										 cout << "before assign" << clientPair.find(cid)->second << endl;
+										 clientPair.find(cid)->second = robot;
+										 cout << "after assign" << clientPair.find(cid)->second << endl;
+
 									 }
 									 else
 									 {
@@ -497,7 +504,7 @@ void GameLogic::prePhyLogic(){
 									 }
 									 }
 								 }
-
+								 createHealthUpdateEvent(robot);
 								 robot->nextState();
 			}
 			default:{
@@ -509,6 +516,7 @@ void GameLogic::prePhyLogic(){
 		}
 		else if (r->getState() == PS_DEAD){
 			cout << "IN PS_DEAD" << endl;
+			r->nextState();
 		}
 		iter++;
 	}
@@ -579,17 +587,43 @@ void GameLogic::postPhyLogic(){
 		//cout << "Collision pairs: GO1: " << GO1->getId() << endl;
 		//cout << "GO2: " << GO2->getId() << endl;
 		if ((GO1->getBelongTo()== GO2->getBelongTo())) continue;
+		if (GO1->getBelongTo() != nullptr && GO2->getBelongTo() != nullptr){
+			if (((Robot*)GO1->getBelongTo())->getState() != PS_ALIVE) {
+				cout <<"GO1 " << GO1->getCollisionType() << " belongs to null " << endl;
+				continue;
+			}
+			if (((Robot*)GO2->getBelongTo())->getState() != PS_ALIVE) {
+				cout << "GO2 " << GO2->getCollisionType() << " belongs to null " << endl;
+				continue;
+			}
+		}
+
 		//std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
 		
 		DamageEvent* e = new DamageEvent(GO1, GO2);
 		int clientCollision = damageSystem->performDamage(GO1, GO2, e);
 		if (clientCollision != CH_INVALIDCOLLISION)
 		{
+			if (GO1->getIsWeapon() && !GO1->getIsRangedWeapon())
+			{
+				double knockback = -((MeleeWeapon*)GO1->getWeapon())->getKnockback();
+				btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
+				btVector3 boxRot = rbTrans.getBasis()[2];
+				boxRot.normalize();
+				GO2->getBelongTo()->getRigidBody()->applyCentralImpulse(boxRot*knockback);
+			}
+			if (GO2->getIsWeapon() && !GO2->getIsRangedWeapon())
+			{
+				double knockback = -((MeleeWeapon*)GO2->getWeapon())->getKnockback();
+				btTransform rbTrans = GO2->getRigidBody()->getWorldTransform();
+				btVector3 boxRot = rbTrans.getBasis()[2];
+				boxRot.normalize();
+				GO1->getBelongTo()->getRigidBody()->applyCentralImpulse(boxRot*knockback);
+			}
 			//cout << "clientCollision" << clientCollision << endl;
 			GECollisonHappen* gech = new GECollisonHappen(clientCollision, (*it)->getX(), (*it)->getY(), (*it)->getZ());
 			gameEventList.push_back(gech);
 		}
-		
 
 		postDamageLogic(GO1, e->getResult1(), (*it)->getPt());
 		postDamageLogic(GO2, e->getResult2(), (*it)->getPt());
@@ -642,10 +676,21 @@ void GameLogic::postHealthLogic(Robot* arr[4])
 
 void GameLogic::postDeathLogic(Robot* r)
 {
-	scoreboard->incDeaths(r->getCID());
-	scoreboard->incTakedowns(r->getDiedTo()->getCID());
-	r->setImmediateDeleted();
-	createDeathEvent(r);
+	if (r->getState() == PS_ALIVE)
+	{
+		scoreboard->incDeaths(r->getCID());
+		scoreboard->incTakedowns(r->getDiedTo()->getCID());
+		createDeathEvent(r);
+		vector<GameObj*> parts = r->getParts();
+		vector<GameObj*>::iterator it;
+		r->setId(1000000  + counter);
+		if (parts.empty()) return;
+		for (it = parts.begin(); it != parts.end(); it++)
+		{
+			breakConstraints(*it);
+		}
+		parts.clear();
+	}
 }
 
 void GameLogic::createHealthUpdateEvent(Robot* r)
@@ -678,6 +723,7 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 		}
 		else if (result == DEATH)
 		{
+			
 			//cout << "GO Death ID: " << g->getId() << endl;
 			postDeathLogic((Robot*)g);
 		}
@@ -690,14 +736,16 @@ void GameLogic::cleanDataStructures()
 	std::map<int, GameObj *>::iterator it1;
 	for (it1 = clientPair.begin(); it1 != clientPair.end(); it1++)
 	{
-		if (!(*it1).second->getDeleted())
+		if ((*it1).second == nullptr){
+			continue; 
+		}
+		else if (!(*it1).second->getDeleted())
 		{
 			new_clientPair.insert((*it1));
 		}
 		else{
 			
 			(*it1).second = nullptr;
-			new_clientPair.insert((*it1));
 		}
 	}
 	clientPair = new_clientPair;
@@ -723,6 +771,7 @@ void GameLogic::cleanDataStructures()
 		}
 		else
 		{
+
 			breakConstraints(*it);
 			gamePhysics->getDynamicsWorld()->removeRigidBody((*it)->getRigidBody());
 			deleteGameObj(*it);
@@ -746,37 +795,44 @@ int GameLogic::breakConstraints(GameObj* g)
 		std::vector<GameObj *> parts = r->getParts();
 		std::vector<GameObj *>new_parts;
 		std::vector<GameObj *>::iterator it1;
-		for (it1 = parts.begin(); it1 != parts.end(); it1++)
+		// dont use parts.empty
+		if (!(parts.size() == 0))
 		{
-			if ((*it1) != g)
+
+			for (it1 = parts.begin(); it1 != parts.end(); it1++)
 			{
-				new_parts.push_back((*it1));
-			}
-			else
-			{
-				if ((*it1) != nullptr)
-				 {
-					(*it1)->setDeleted();
+				if ((*it1) != g)
+				{
+					new_parts.push_back((*it1));
+				}
+				else
+				{
+					if ((*it1) != nullptr)
+					{
+						(*it1)->setDeleted();
+					}
 				}
 			}
+			r->setParts(new_parts);
 		}
-		r->setParts(new_parts);
 	
 	return g->deleteConstraints();//&objCollisionPair);
 }
 
 void GameLogic::createDeathEvent(Robot* r)
 {
-	r->nextState();
-	if (r->getDiedTo() != nullptr){
-		GameEvents* GE = new GERobotDeath(r->getCID(), r->getDiedTo()->getCID());
-		gameEventList.push_back(GE);
-	}
-	else{
 
-		GameEvents* GE = new GERobotDeath(r->getCID(),-1);
-		gameEventList.push_back(GE);
-	}
+		r->nextState();
+		if (r->getDiedTo() != nullptr){
+			GameEvents* GE = new GERobotDeath(r->getCID(), r->getDiedTo()->getCID());
+			gameEventList.push_back(GE);
+		}
+		else{
+
+			GameEvents* GE = new GERobotDeath(r->getCID(), -1);
+			gameEventList.push_back(GE);
+		}
+	
 	
 }
 
@@ -794,11 +850,11 @@ void GameLogic::addWalls()
 	frontWall->setBlockType(WALL);
 	backWall->setBlockType(WALL);
 
-	gameObjs.push_back(ceiling);
-	gameObjs.push_back(leftWall);
-	gameObjs.push_back(rightWall);
-	gameObjs.push_back(frontWall);
-	gameObjs.push_back(backWall);
+	//gameObjs.push_back(ceiling);
+	//gameObjs.push_back(leftWall);
+	//gameObjs.push_back(rightWall);
+	//gameObjs.push_back(frontWall);
+	//gameObjs.push_back(backWall);
 }
 void GameLogic::addGround()
 {

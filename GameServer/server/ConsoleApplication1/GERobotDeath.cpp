@@ -24,4 +24,5 @@ void GERobotDeath::to_string(std::string& s){
 	s += " ";
 	s += std::to_string(kcid);
 	//std::cout << "to string:"<< s << "end"<< std::endl;
+	std::cout << "cid" << cid << "kid" << kcid << std::endl;
 }
