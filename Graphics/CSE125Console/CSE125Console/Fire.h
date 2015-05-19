@@ -13,18 +13,25 @@ public:
 
 	float size;
 	particles p;
-	
-	float x_origin=0;
-	float y_origin=0;
-	float z_origin=0;
 
+	float x_origin = 0;
+	float y_origin = 0;
+	float z_origin = 0;
+
+	int mode;
+	int color;
 	void Fire::initParticles();
 	//Initialize particular particle
 	void Fire::initParticle(int loop);
 
+	// Fire column
+	void Fire::DoFire();
+	// Some sparks
+	void Fire::DoSparks();
+
 	std::vector<ComponentNode> components;
 
-	Fire(float x_pos, float y_pos, float z_pos);
+	Fire(float x_pos, float y_pos, float z_pos, int mode, int color);
 	void LoadGLTextures();
 	virtual ~Fire(void);
 	virtual void VOnClientUpdate(GameInfoPacket* pData);

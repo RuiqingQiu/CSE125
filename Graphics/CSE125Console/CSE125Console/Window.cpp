@@ -171,7 +171,7 @@ void Window::initialize(void)
 	}
 	cout << "number of lights are " << light_sytem->lights.size() << endl;
 
-	Fire* f = new Fire(0,0,0);
+	Fire* f = new Fire(0,0,0,0,0);
 	f->static_object = true;
 	factory->battlemode->PushGeoNode(f);
 
