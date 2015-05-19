@@ -43,7 +43,7 @@ void GraphicsTest::displayTest5(GameView* view){
 	for (int i = 0; i < 100; i++){
 		object = Model3DFactory::generateObjectWithType(WoodenCube);
 		object->shader_type = NORMAL_SHADER;
-		object->localTransform.position = Vector3(0, 0, 0);
+		object->localTransform.position = Vector3(i, 0, 0);
 		object->localTransform.rotation = Vector3(0, 0, 0);
 		object->identifier = -1;
 		object->isUpdated = true;
