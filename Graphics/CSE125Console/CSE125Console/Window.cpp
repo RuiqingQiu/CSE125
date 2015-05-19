@@ -36,7 +36,8 @@ static Cube* cube;
 static Fire* fire;
 static GraphicsTest* gt;
 static Model3D*object;
-static Sound *soundObject; // sound
+Sound * Window::soundObject; // static variable
+
 //Init server info here later
 Model3D* tmp_object;
 void CHECK_FRAMEBUFFER_STATUS()
@@ -363,8 +364,8 @@ void Window::displayCallback() {
 		cout << "trigger explosion" << endl;
 		//tmp_object->triggerExplosion();
 	}
-	// play the background music through out the whole game
-	soundObject->playMusic();
+	// play the background music through out the whole game, may change with the view
+	soundObject->playMusic(); 
 
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	

@@ -33,13 +33,18 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 							 //Switch back to game view
 							 if (((EventDeath*)event)->death_id == (g_pCore->pPlayer->playerid)){
 								 printf("Death Event has been received \n");
+								 // switch to build view
 								 Window::factory->switchView('1');
+								 // switch to build view sound in Window
+								 
 							 }
 							 else{
-								 //Render explosion effect
+								 //Explosion particle effect
+								 //Explosion sound
+
+
 							 }
-							 //Explosion particle effect
-							 //Explosion sound
+							
 							 break;
 		}
 		case TEventParticle:{
