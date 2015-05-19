@@ -7,6 +7,9 @@ typedef struct
 {
 	//Is particle active?
 	bool alive;
+	bool up;
+	bool right;
+	bool in;
 
 	//Particle's time to live
 	float life;
@@ -28,6 +31,8 @@ typedef struct
 	float xi;
 	float yi;
 	float zi;
+
+
 }
 particles;
 #endif

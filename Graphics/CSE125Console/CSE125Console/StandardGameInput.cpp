@@ -54,20 +54,46 @@ void StandardGameInput::VProcessMouse(int x, int y)
 
 void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 {
+	if (keyStates['a'] == true){
+		g_pCore->pGamePacketManager->SendMoveToLeft(g_pCore->pPlayer->playerid);
+	}
+	if (keyStates['w'] == true){
+		g_pCore->pGamePacketManager->SendMoveToForward(g_pCore->pPlayer->playerid);
+	}
+	if (keyStates['s'] == true){
+		g_pCore->pGamePacketManager->SendMoveToBackward(g_pCore->pPlayer->playerid);
+
+	}
+	if (keyStates['d'] == true){
+		g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
+	}
 	if (key == 27){
 		exit(0);
 	}
-	else if (key == 'a'){
-		cout << g_pCore->pGamePacketManager->SendMoveToLeft(g_pCore->pPlayer->playerid) << endl;
+	if (key == 'a'){
+		if (keyStates['a'] != true){
+			keyStates['a'] = true;
+			g_pCore->pGamePacketManager->SendMoveToLeft(g_pCore->pPlayer->playerid);
+		}
 	}
-	else if (key == 'w'){
-		g_pCore->pGamePacketManager->SendMoveToForward(g_pCore->pPlayer->playerid);
+	if (key == 'w'){
+		if (keyStates['w'] != true){
+			keyStates['w'] = true;
+			g_pCore->pGamePacketManager->SendMoveToForward(g_pCore->pPlayer->playerid);
+		}
 	}
-	else if (key == 's'){
-		g_pCore->pGamePacketManager->SendMoveToBackward(g_pCore->pPlayer->playerid);
+	if (key == 's'){
+		if (keyStates['s'] != true){
+			keyStates['s'] = true;
+			g_pCore->pGamePacketManager->SendMoveToBackward(g_pCore->pPlayer->playerid);
+		}
 	}
-	else if (key == 'd'){
-		g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
+	if (key == 'd'){
+		if (keyStates['d'] != true){
+			keyStates['d'] = true;
+
+			g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
+		}
 	}
 	else if (key == 'q'){
 		g_pCore->pGamePacketManager->SendShootEvent(g_pCore->pPlayer->playerid);
@@ -122,4 +148,20 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 	}
 	else if (key == 'l'){
 	}
+}
+
+void StandardGameInput::VProcessKeyInputUp(unsigned char key, int x, int y){
+	if (key == 'a'){
+		keyStates['a'] = false;
+	}
+	if (key == 'w'){
+		keyStates['w'] = false;
+	}
+	if (key == 's'){
+		keyStates['s'] = false;
+	}
+	if (key == 'd'){
+		keyStates['d'] = false;
+	}
+
 }

@@ -314,6 +314,12 @@ void Window::processNormalKeys(unsigned char key, int x, int y)
 	
 }
 
+void Window::processNormalKeysUp(unsigned char key, int x, int y)
+{
+	g_pCore->i_pInput->VProcessKeyInputUp(key, x, y);
+	
+}
+
 void Window::processSpecialKeys(int key, int x, int y) {
 	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
 }
@@ -412,5 +418,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

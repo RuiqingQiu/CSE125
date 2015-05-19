@@ -27,3 +27,6 @@ void guiGameInput::VProcessMouseClick(int button, int state, int x, int y) {
 void guiGameInput::VProcessPassiveMouse(int x, int y) {
 	g_pCore->pGameView->passiveMouseFunc(x, y);
 }
+void guiGameInput::VProcessKeyInputUp(unsigned char key, int x, int y){
+
+}
