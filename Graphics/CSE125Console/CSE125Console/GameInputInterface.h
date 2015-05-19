@@ -8,6 +8,7 @@ using namespace std;
 class GameInputInterface
 {
 public:
+	bool keyStates[256];
 	GameInputInterface();
 	~GameInputInterface();
 	string name; // store the robot name

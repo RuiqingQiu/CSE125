@@ -393,7 +393,6 @@ void Window::displayCallback() {
 				g_pCore->pGameView->pPlayer = g_pCore->pPlayer;
 				//This is real for battle mode player info
 				factory->battlemode->pPlayer = g_pCore->pPlayer;
-
 				//cout << "player id " << p->player_infos[0]->id << endl;
 
 				break;
@@ -410,6 +409,20 @@ void Window::displayCallback() {
 		delete(p);
 	}
 	
+	//Send keyboard event, will put it to somewhere else 5/19/15
+	if (g_pCore->i_pInput->keyStates['a'] == true){
+		g_pCore->pGamePacketManager->SendMoveToLeft(g_pCore->pPlayer->playerid);
+	}
+	if (g_pCore->i_pInput->keyStates['w'] == true){
+		g_pCore->pGamePacketManager->SendMoveToForward(g_pCore->pPlayer->playerid);
+	}
+	if (g_pCore->i_pInput->keyStates['s'] == true){
+		g_pCore->pGamePacketManager->SendMoveToBackward(g_pCore->pPlayer->playerid);
+	}
+
+	if (g_pCore->i_pInput->keyStates['d'] == true){
+		g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
+	}
 
 
 	//Draw everything

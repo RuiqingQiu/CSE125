@@ -5,6 +5,9 @@
 StandardGameInput::StandardGameInput()
 {
 	sound = new Sound();
+	for (int i = 0; i < 256; i++){
+		keyStates[i] = false;
+	}
 }
 
 
@@ -54,19 +57,7 @@ void StandardGameInput::VProcessMouse(int x, int y)
 
 void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 {
-	if (keyStates['a'] == true){
-		g_pCore->pGamePacketManager->SendMoveToLeft(g_pCore->pPlayer->playerid);
-	}
-	if (keyStates['w'] == true){
-		g_pCore->pGamePacketManager->SendMoveToForward(g_pCore->pPlayer->playerid);
-	}
-	if (keyStates['s'] == true){
-		g_pCore->pGamePacketManager->SendMoveToBackward(g_pCore->pPlayer->playerid);
 
-	}
-	if (keyStates['d'] == true){
-		g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
-	}
 	if (key == 27){
 		exit(0);
 	}
@@ -151,6 +142,7 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 }
 
 void StandardGameInput::VProcessKeyInputUp(unsigned char key, int x, int y){
+	cout << "key up " << key << endl;
 	if (key == 'a'){
 		keyStates['a'] = false;
 	}
@@ -163,5 +155,6 @@ void StandardGameInput::VProcessKeyInputUp(unsigned char key, int x, int y){
 	if (key == 'd'){
 		keyStates['d'] = false;
 	}
+	cout << "keyboard" << keyStates['a']  << " " <<  keyStates['w']  << " " << keyStates['s']  << " "<< keyStates['d'] << endl;
 
 }

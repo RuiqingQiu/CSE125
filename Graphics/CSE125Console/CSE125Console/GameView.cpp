@@ -374,7 +374,7 @@ void GameView::VOnRender()
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)
 {
-	cout << "node list size is " << NodeList.size() << endl;
+	//cout << "node list size is " << NodeList.size() << endl;
 	for each (GeoNode* node in NodeList)
 	{
 		node->VOnClientUpdate(info);

@@ -44,3 +44,6 @@ void GameInputInterface::VProcessMouse(int x, int y) {
 	//implement here just to avoid compiler error
 	printf("This need to be implemented please FIX\n");
 }
+void GameInputInterface::VProcessKeyInputUp(unsigned char key, int x, int y){
+
+}

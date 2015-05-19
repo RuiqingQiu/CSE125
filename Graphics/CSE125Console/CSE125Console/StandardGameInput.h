@@ -8,7 +8,6 @@ class StandardGameInput : public GameInputInterface
 {
 public:
 
-	bool* keyStates = new bool[256];
 
 
 	StandardGameInput();
