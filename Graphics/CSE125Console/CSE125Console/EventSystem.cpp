@@ -92,8 +92,10 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									printf("health event received\n");
 
 									//this is for the GUI display update
-									Window::factory->battlemode->healthDisplay->currentHealth = h->health;
-									Window::factory->battlemode->healthDisplay->maxHealth = h->maxhealth;
+									if (h->player1id == g_pCore->pPlayer->playerid) {
+										Window::factory->battlemode->healthDisplay->currentHealth = h->health;
+										Window::factory->battlemode->healthDisplay->maxHealth = h->maxhealth;
+									}
 									/////// end GUI
 
 									break;

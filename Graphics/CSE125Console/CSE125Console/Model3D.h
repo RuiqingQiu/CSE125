@@ -9,11 +9,11 @@
 #include <GL/glut.h>
 #include "RenderObject.h"
 #include "Materials.h"
-#include "Explosion.h"
+//#include "Explosion.h"
 class Model3D: public GeoNode
 {
 public:
-	Explosion* explosion;
+	//Explosion* explosion;
 	//If auto rotate for the object
 	bool auto_rotate = false;
 	Materials material;

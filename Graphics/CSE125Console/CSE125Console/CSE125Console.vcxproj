@@ -108,7 +108,6 @@
     <ClInclude Include="EventSystem.h" />
     <ClInclude Include="EventTimer.h" />
     <ClInclude Include="EventWaiting.h" />
-    <ClInclude Include="Explosion.h" />
     <ClInclude Include="Fire.h" />
     <ClInclude Include="GraphicsTest.h" />
     <ClInclude Include="Grass.h" />
@@ -197,7 +196,6 @@
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="EventTimer.cpp" />
     <ClCompile Include="EventWaiting.cpp" />
-    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Fire.cpp" />
     <ClCompile Include="GraphicsTest.cpp" />
     <ClCompile Include="Grass.cpp" />

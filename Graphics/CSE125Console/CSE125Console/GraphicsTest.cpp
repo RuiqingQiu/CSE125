@@ -40,8 +40,9 @@ void GraphicsTest::displayTest5(GameView* view){
 	object->type = Needle;
 	view->PushEnvironmentNode(object);
 
-	for (int i = 0; i < 100; i++){
+	for (int i = 0; i < 1000; i++){
 		object = Model3DFactory::generateObjectWithType(WoodenCube);
+		object->auto_rotate = true;
 		object->shader_type = NORMAL_SHADER;
 		object->localTransform.position = Vector3(i, 0, 0);
 		object->localTransform.rotation = Vector3(0, 0, 0);

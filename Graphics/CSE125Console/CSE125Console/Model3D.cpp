@@ -31,7 +31,7 @@ Model3D::Model3D(RenderObject* r){
 	isTextured = true;
 	localTransform = Transform();
 	shader_type = REGULAR_SHADER;
-	explosion = new Explosion();
+	//explosion = new Explosion();
 }
 
 void Model3D::setShaderType(int type){

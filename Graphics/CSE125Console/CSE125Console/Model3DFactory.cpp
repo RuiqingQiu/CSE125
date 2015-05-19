@@ -319,6 +319,38 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 								 return group;
 								 break;
 	}
+	case THREEBYTHREE_CRYSTAL:{
+								  Model3DGroup* group = new Model3DGroup();
+								  for (int i = -1; i < 2; i++){
+									  for (int j = -1; j < 2; j++){
+										  Model3D * returnModel = Model3DFactory::generateObjectWithType(CrystalCube);
+										  returnModel->localTransform.position = Vector3(i, 0, j);
+										  returnModel->localTransform.scale = Vector3(1, 1, 1);
+										  returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										  group->addObject(returnModel);
+									  }
+								  }
+								  group->width = 3;
+								  group->height = 1;
+								  return group;
+								  break;
+	}
+	case THREEBYTHREE_BLACK:{
+								  Model3DGroup* group = new Model3DGroup();
+								  for (int i = -1; i < 2; i++){
+									  for (int j = -1; j < 2; j++){
+										  Model3D * returnModel = Model3DFactory::generateObjectWithType(BLACKCUBE);
+										  returnModel->localTransform.position = Vector3(i, 0, j);
+										  returnModel->localTransform.scale = Vector3(1, 1, 1);
+										  returnModel->localTransform.rotation = Vector3(0, 0, 0);
+										  group->addObject(returnModel);
+									  }
+								  }
+								  group->width = 3;
+								  group->height = 1;
+								  return group;
+								  break;
+	}
 	case THREEBYTHREE_WHEEL_DISCOUNT:{
 										 Model3DGroup* group = new Model3DGroup();
 										 Model3D * returnModel = Model3DFactory::generateObjectWithType(Discount);
