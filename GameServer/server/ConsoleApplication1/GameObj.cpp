@@ -399,6 +399,8 @@ int GameObj::deleteConstraints()//std::map< btCollisionObject*, GameObj*>* pair)
 {
 	std::vector<Constraint*>::iterator it;
 	int ret = 0;
+	// return value? 
+	if (constraints.size() == 0) return 1;
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
 		Constraint* c = (*it);
@@ -437,6 +439,17 @@ int GameObj::deleteInvalidConstraints()
 {
 	std::vector<Constraint*>::iterator it;
 	std::vector<Constraint*> new_constraints;
+	// make sure constraints is 0 
+	if (constraints.size()==0)
+	{
+		if (!getIsRobot())
+		{
+			setDeleted();
+			return 1;
+		}
+		return 0;
+	}
+	
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
 		Constraint* c = (*it);
@@ -450,11 +463,7 @@ int GameObj::deleteInvalidConstraints()
 		}
 	}
 	constraints = new_constraints;
-	if (constraints.empty() && !getIsRobot())
-	{
-		setDeleted();
-		return 1;
-	}
+	
 	return 0;
 }
 

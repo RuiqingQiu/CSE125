@@ -360,8 +360,8 @@ void GameLogic::prePhyLogic(){
 		int cid = (*iter)->getCid();
 		std::map<int, GameObj *>::iterator it;
 		it = clientPair.find(cid);
-//nullptr check still does not work
 
+		//ullptr check still does not work
 		GameObj* gObj = it->second;
 		if (gObj == nullptr) continue;
 		Robot *r = (Robot*)gObj;
@@ -557,7 +557,9 @@ void GameLogic::prePhyLogic(){
 		//	cout << "release wheel " << endl;
 			btWheelInfo leftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(2);
 			btWheelInfo rightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(3);
-			double steering_delta = TURN_SPEED / 2;
+			btWheelInfo bleftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(0);
+			btWheelInfo brightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(1);
+			double steering_delta = TURN_SPEED / 4;
 
 			if (leftWheel.m_steering > 0)
 				((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += -steering_delta;
@@ -567,6 +569,20 @@ void GameLogic::prePhyLogic(){
 				((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += steering_delta;
 			if (rightWheel.m_steering < 0)
 				((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering += steering_delta;
+
+			if (bleftWheel.m_steering > 0)
+				((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering += -steering_delta;
+			if (brightWheel.m_steering > 0)
+				((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += -steering_delta;
+			if (bleftWheel.m_steering < 0)
+				((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering += steering_delta;
+			if (brightWheel.m_steering < 0)
+				((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += steering_delta;
+
+			if (leftWheel.m_steering < TURN_SPEED/4 && leftWheel.m_steering > -TURN_SPEED/4) ((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering = 0;
+			if (bleftWheel.m_steering < TURN_SPEED/4 && bleftWheel.m_steering > -TURN_SPEED/4) ((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering = 0;
+			if (rightWheel.m_steering < TURN_SPEED/4 && rightWheel.m_steering > -TURN_SPEED/4) ((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering = 0;
+			if (brightWheel.m_steering < TURN_SPEED/4 && brightWheel.m_steering > -TURN_SPEED/4) ((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering = 0;
 		}
 	}
 
@@ -719,7 +735,9 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 		else if (result == DELETED)
 		{
 			//cout << "GO Deleted ID: " << g->getId() << endl;
-			g->setImmediateDeleted();
+			if (!g->getIsRobot()){
+				g->setImmediateDeleted();
+		    }
 		}
 		else if (result == DEATH)
 		{
@@ -732,23 +750,16 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 
 void GameLogic::cleanDataStructures()
 {
-	std::map<int, GameObj *> new_clientPair;
-	std::map<int, GameObj *>::iterator it1;
-	for (it1 = clientPair.begin(); it1 != clientPair.end(); it1++)
-	{
-		if ((*it1).second == nullptr){
-			continue; 
-		}
-		else if (!(*it1).second->getDeleted())
-		{
-			new_clientPair.insert((*it1));
-		}
-		else{
-			
-			(*it1).second = nullptr;
-		}
-	}
-	clientPair = new_clientPair;
+//	std::map<int, GameObj *> new_clientPair;
+//	std::map<int, GameObj *>::iterator it1;
+//	for (it1 = clientPair.begin(); it1 != clientPair.end(); it1++)
+//	{
+//		//if (!(*it1).second->getDeleted())
+//		//{
+//		//	new_clientPair.insert((*it1));
+//		//}
+//	}
+//	clientPair = new_clientPair;
 
 	//std::map< btCollisionObject*, GameObj*> new_objCollisionPair;
 	//std::map< btCollisionObject*, GameObj*>::iterator it2;

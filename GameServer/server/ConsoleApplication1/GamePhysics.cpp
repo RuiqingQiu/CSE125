@@ -141,7 +141,7 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
 		if (gameObj->getIsRobot()!= 0)
 		{
 			robotTurnLeft((Robot*)gameObj);
-			robotForward((Robot*)gameObj);
+			//robotForward((Robot*)gameObj);
 		}
 		break;
 	}
@@ -149,7 +149,7 @@ void GamePhysics::createPhysicsEvent(int eventType, GameObj* gameObj)
 		if (gameObj->getIsRobot()!= 0)
 		{
 			robotTurnRight((Robot*)gameObj);
-			robotForward((Robot*)gameObj);
+			//robotForward((Robot*)gameObj);
 		}
 		break;
 	}
@@ -204,6 +204,14 @@ void GamePhysics::robotTurnLeft(Robot* rb){
 	if (v->getWheelInfo(3).m_steering < MAX_TURN_SPEED)
 		v->getWheelInfo(3).m_steering += TURN_SPEED;
 
+	if (v->getWheelInfo(0).m_steering > -MAX_TURN_SPEED)
+		v->getWheelInfo(0).m_steering -= TURN_SPEED;
+	if (v->getWheelInfo(1).m_steering > -MAX_TURN_SPEED)
+		v->getWheelInfo(1).m_steering -= TURN_SPEED;
+
+
+
+
 	
 }
 void GamePhysics::robotTurnRight(Robot* rb){
@@ -218,6 +226,11 @@ void GamePhysics::robotTurnRight(Robot* rb){
 		v->getWheelInfo(2).m_steering += -TURN_SPEED;
 	if (v->getWheelInfo(3).m_steering > -MAX_TURN_SPEED)
 		v->getWheelInfo(3).m_steering += -TURN_SPEED;
+
+	if (v->getWheelInfo(0).m_steering < MAX_TURN_SPEED)
+		v->getWheelInfo(0).m_steering += TURN_SPEED;
+	if (v->getWheelInfo(1).m_steering < MAX_TURN_SPEED)
+		v->getWheelInfo(1).m_steering += TURN_SPEED;
 
 }
 void GamePhysics::robotBackward(Robot* rb){
