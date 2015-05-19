@@ -30,10 +30,14 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		std::cout << "mydoubleptr points to " << typeid(*event).name() << '\n';
 		switch (event->event_type){
 		case TEventDeath:{
-							 printf("Death Event has been received \n");
 							 //Switch back to game view
-							 if (((EventDeath*)event)->death_id == (g_pCore->pPlayer->playerid))
-								Window::factory->switchView('1');
+							 if (((EventDeath*)event)->death_id == (g_pCore->pPlayer->playerid)){
+								 printf("Death Event has been received \n");
+								 Window::factory->switchView('1');
+							 }
+							 else{
+								 //Render explosion effect
+							 }
 							 //Explosion particle effect
 							 //Explosion sound
 							 break;

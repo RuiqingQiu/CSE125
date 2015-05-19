@@ -9,9 +9,11 @@
 #include <GL/glut.h>
 #include "RenderObject.h"
 #include "Materials.h"
+//#include "Explosion.h"
 class Model3D: public GeoNode
 {
 public:
+	//Explosion* explosion;
 	//If auto rotate for the object
 	bool auto_rotate = false;
 	Materials material;
@@ -36,6 +38,8 @@ public:
 	void setGlossMap(string pathname);
 	void setMetallicMap(string pathname);
 	void setShaderType(int type);
+
+	void triggerExplosion();
 
 
 	virtual void VOnClientUpdate(GameInfoPacket* pData);

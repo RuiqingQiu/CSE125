@@ -103,6 +103,7 @@ void Fire::VOnDraw()
 
 			//glColor4f(r, g, b, particle[loop].life / 5 * 30.0f/timeCount );
 			glColor4f(r, g, b, particle[loop].life / 5 );
+			//glColor4f(1, 0, 0, particle[loop].life / 5 );
 
 			//float split = rand() % 2 - rand() % 2;
 		    float split = 0;
@@ -137,7 +138,7 @@ void Fire::VOnDraw()
 		else
 			initParticle(loop);	
 	}
-	glBindTexture(GL_TEXTURE_2D, GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, GL_TEXTURE1);
 	glEnable(GL_DEPTH_TEST);                       // Disables Depth Testing
 	glDisable(GL_BLEND);
 	//timeCount++;

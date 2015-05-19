@@ -20,12 +20,18 @@ void Model3D::setMetallicMap(string pathname){
 	metallic_map = pathname;
 }
 
+void Model3D::triggerExplosion(){
+//	this->explosion->newExplosion();
+}
+
+
 
 Model3D::Model3D(RenderObject* r){
 	render_obj = r;
 	isTextured = true;
 	localTransform = Transform();
 	shader_type = REGULAR_SHADER;
+	//explosion = new Explosion();
 }
 
 void Model3D::setShaderType(int type){
@@ -44,7 +50,11 @@ void Model3D::VOnClientUpdate(GameInfoPacket* pData){
 		return;
 	}
 	if (p){
-
+		if (p->type != this->type){
+			cout << "model type is not right" << endl;
+			//this->type = p->type; 
+			//this->render_obj = Model3DFactory::generateObjectWithType(this->type)->render_obj;
+		}
 		localTransform.position.x = p->x;
 		localTransform.position.y = p->y;
 		localTransform.position.z = p->z;
@@ -218,7 +228,7 @@ void Model3D::VOnDraw(){
 			}
 			glEnd();
 			*/
-
+			
 			float *p = &render_obj->vertex[0];
 			float *n = &render_obj->normal[0];
 			float *t = &render_obj->texture[0];
@@ -235,13 +245,15 @@ void Model3D::VOnDraw(){
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
 			glDisableClientState(GL_NORMAL_ARRAY);
 			glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+			
 		}
 	}
 	Window::shader_system->UnbindShader();
 
-
-
 	glActiveTexture(GL_TEXTURE0);
+
+
+	//this->explosion->VOnDraw();
 
 	glPopMatrix();
 

@@ -8,6 +8,9 @@ public:
 	~EventDeath();
 	int death_id;
 	int killer_id;
+	float x;
+	float y;
+	float z;
 };
 
 #endif
