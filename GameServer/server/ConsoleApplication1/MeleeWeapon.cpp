@@ -17,7 +17,7 @@ MeleeWeapon::MeleeWeapon(int type)
 		break;
 	}
 	default:{
-		knockback = 50;
+		knockback = 10;
 		damage = 1000;
 		splash = 2;
 		break;
