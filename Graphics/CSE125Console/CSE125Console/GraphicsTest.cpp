@@ -11,6 +11,36 @@ GraphicsTest::~GraphicsTest()
 {
 }
 
+void GraphicsTest::displayTest5(GameView* view){
+	Model3D* object;
+	object = Model3DFactory::generateObjectWithType(Turrent);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	object->isUpdated = true;
+	object->type = Turrent;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(BGun);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(5, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	object->isUpdated = true;
+	object->type = BGun;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Needle);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(-5, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	object->isUpdated = true;
+	object->type = Needle;
+	view->PushEnvironmentNode(object);
+}
+
 
 void GraphicsTest::displayTest3(GameView* view){
 	Model3D* object;

@@ -13,6 +13,7 @@ public:
 	void displayTest2(GameView* view);
 	void displayTest3(GameView* view);
 	void displayTest4(GameView* view);
+	void displayTest5(GameView* view);
 };
 #endif
 
