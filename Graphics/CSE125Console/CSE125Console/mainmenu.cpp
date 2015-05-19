@@ -36,6 +36,8 @@ mainMenu::~mainMenu(){
 }
 
 void mainMenu::createButtons() {
+	isLoading = true;
+	playPressed = false;
 
 	button * robo = new button("menuItem/enterRobotName.jpg", width*0.3, height*0.5, 750, 100);
 	robo->setScaling(true, true, width, height);
@@ -65,6 +67,8 @@ void mainMenu::createButtons() {
 	buttons.push_back(exitButton);
 	buttons.push_back(ipAdrressButton); // button[4] is enterIP Address
 
+	loading = new loadDisplay(width*0.43, height*0.3, 250, 250);
+
 	backimg = new background("background1.jpg", width, height);
 	guiItems.push_back(backimg); // push in to the guiTexts vector
 }
@@ -74,13 +78,23 @@ void mainMenu::drawAllItems(){
 	// but need to draw background first
 	guiItems[0]->draw();
 
-	// exchange the order, draw button first and then draw guiItems 
-	for (int i = 0; i < buttons.size(); i++) {
-		buttons[i]->draw();
+	if (playPressed) {
+		loading->draw();
 	}
-	for (int i = 1; i < guiItems.size(); i++) {
-		guiItems[i]->draw();
+	else {
+		// exchange the order, draw button first and then draw guiItems 
+		for (int i = 0; i < buttons.size(); i++) {
+			buttons[i]->draw();
+		}
+		for (int i = 1; i < guiItems.size(); i++) {
+			guiItems[i]->draw();
+		}
 	}
+}
+
+void mainMenu::VUpdate() {
+	gui::VUpdate();
+	loading->update();
 }
 
 // add letters to the guiItem array
@@ -173,6 +187,8 @@ void mainMenu::VOnClientUpdate(GameInfoPacket* info) {
 
 
 viewType mainMenu::mouseClickFunc(int state, int x, int y){
+	if (playPressed && isLoading) return viewType::MENU;
+	if (playPressed && !isLoading) return viewType::BUILD;
 	for (int i = 0; i < buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
@@ -194,6 +210,7 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 
 	//play button
 	if (playButton->isSelected(x, height - y)) {
+		playPressed = true;
 		if (!ready){
 			ready = true;
 			// if hit play button, means is ready

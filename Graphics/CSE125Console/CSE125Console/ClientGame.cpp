@@ -111,6 +111,7 @@ GameInfoPacket* ClientGame::update()
 		//Server tells client start build mode , client start build mode
 		case INIT_BUILD:{
 			cout << "in init build" << endl;
+			Window::factory->menumode->isLoading = false;
 			Window::factory->switchView('1');
 			break;
 		}
