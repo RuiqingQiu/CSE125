@@ -144,7 +144,7 @@ void Window::initialize(void)
 	GameView* view = new GameView();
 
 	//Comment this for non-local testing
-	gt->displayTest4(view);
+	//gt->displayTest4(view);
 	//gt->displayTest2(view);
 	//gt->displayTest3(view);
 	//gt->displayTest1(view);
@@ -246,11 +246,11 @@ void Window::initialize(void)
 	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, -2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->type = BATTLEFIELD;
+	object->type = BATTLEFIELD
 	//factory->battlemode->PushGeoNode(object);
 	view->PushEnvironmentNode(object);
 	*/
-
+	//gt->displayTest5(factory->battlemode);
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
@@ -261,7 +261,7 @@ void Window::initialize(void)
 
 	//Game start with the menu mode
 
-	gt->displayTest5(factory->battlemode);
+	//gt->displayTest5(factory->battlemode);
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
 
 	
@@ -412,5 +412,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

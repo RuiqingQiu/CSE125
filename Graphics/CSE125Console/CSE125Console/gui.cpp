@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "gui.h"
-
+#include <time.h>       /* clock_t, clock, CLOCKS_PER_SEC */
 gui::gui() {
 	NodeList = std::vector<GeoNode*>();
 	isCurrentView = false;
@@ -34,8 +34,11 @@ void gui::addItem(guiItem * item) {
 }
 
 void gui::VOnClientUpdate(GameInfoPacket* info) {
-	//empty for now
+	//empty for now	
+	//clock_t startTime = clock();
 	GameView::VOnClientUpdate(info);
+	//clock_t endTime = clock();
+	//cout << "update time cost: " << float(endTime - startTime)/ CLOCKS_PER_SEC << endl;
 }
 
 void gui::setDimensions(int w, int h) {

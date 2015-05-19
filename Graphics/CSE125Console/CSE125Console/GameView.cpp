@@ -55,6 +55,7 @@ void GameView::blur_first_pass(){
 	//glutSolidTeapot(1);
 	glPopMatrix();
 	//List of items that need edge highlight
+
 	for each (GeoNode* node in NodeList){
 		if (node->blur){
 			node->VOnDraw();
@@ -373,6 +374,7 @@ void GameView::VOnRender()
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)
 {
+	cout << "node list size is " << NodeList.size() << endl;
 	for each (GeoNode* node in NodeList)
 	{
 		node->VOnClientUpdate(info);
@@ -565,7 +567,6 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 				NodeList.push_back(object);
 				info->player_infos[i]->processed = true;
 				break;
-				break;
 			}
 			case THREEBYTHREE_WOODEN:{
 				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
@@ -642,6 +643,10 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	}
 	//Loop through the list and delete anything 
 	//Make a tmp list to store everything we want to render at the next pass
+	/*
+	for (int i = 0; i < NodeListBuffer.size(); i++){
+		delete NodeListBuffer[i];
+	}*/
 	NodeListBuffer.clear();
 	for (int i = 0; i < NodeList.size(); i++)
 	{
