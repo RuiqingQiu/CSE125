@@ -13,7 +13,7 @@
 #include "SOIL.h"
 #include <ctime>
 
-int const MAX = 1000;
+int const MAX = 25;
 
 //int timeCount = 1;
 //int timeToBurn = 500;
@@ -97,7 +97,7 @@ void Fire::DoFire()
 	glEnable(GL_BLEND);                         // Enable Blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);                   // Type Of Blending To Perform
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
-
+	glBegin(GL_TRIANGLE_STRIP);
 	for (int loop = 0; loop < MAX; loop++)                   // Loop Through All The Particles
 	{
 		p = particle[loop];
@@ -118,19 +118,17 @@ void Fire::DoFire()
 			//float split = rand() % 2 - rand() % 2;
 			float split = 0;
 
-			glBegin(GL_TRIANGLE_STRIP);
 			glTexCoord2d(1, 1); glVertex3f(x + 0.4f + split, y + 0.4f, z); // Top Right
 			glTexCoord2d(0, 1); glVertex3f(x - 0.4f + split, y + 0.4f, z); // Top Left
 			glTexCoord2d(1, 0); glVertex3f(x + 0.4f + split, y - 0.4f, z); // Bottom Right
 			glTexCoord2d(0, 0); glVertex3f(x - 0.4f + split, y - 0.4f, z); // Bottom Left
-			glEnd();
+			//glEnd();
 
-			glBegin(GL_TRIANGLE_STRIP);
+			//glBegin(GL_TRIANGLE_STRIP);
 			glTexCoord2d(1, 1); glVertex3f(x + 0.4f + split, y, z + 0.4f); // Top Right
 			glTexCoord2d(0, 1); glVertex3f(x - 0.4f + split, y, z + 0.4f); // Top Left
 			glTexCoord2d(1, 0); glVertex3f(x + 0.4f + split, y, z - 0.4f); // Bottom Right
 			glTexCoord2d(0, 0); glVertex3f(x - 0.4f + split, y, z - 0.4f); // Bottom Left
-			glEnd();
 
 			particle[loop].x += 0.0075f  * float(rand() % 5 + 1) * p.life / 5.0f;
 			particle[loop].x -= 0.0075f  * float(rand() % 5 + 1) * p.life / 5.0f;
@@ -148,6 +146,7 @@ void Fire::DoFire()
 		else
 			initParticle(loop);
 	}
+	glEnd();
 	glBindTexture(GL_TEXTURE_2D, GL_TEXTURE0);
 	glEnable(GL_DEPTH_TEST);                       // Disables Depth Testing
 	glDisable(GL_BLEND);
@@ -268,7 +267,6 @@ void Fire::initParticle(int loop)
 	particle[loop].z = z_origin;
 
 	particle[loop].fade = float(rand() % 100) / 1000.0f + 0.05f;   // Random Fade Speed
-
 	if (color == 0)
 	{
 		//red+orange

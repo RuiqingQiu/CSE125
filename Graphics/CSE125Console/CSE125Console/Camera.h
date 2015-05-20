@@ -48,7 +48,7 @@ public:
 	int pointInFrustum(Vector3 &p);
 	int sphereInFrustum(Vector3 &p, float raio);
 	int boxInFrustum(Vector3 &b);
-
+	int mode = 0;
 	void drawPoints();
 	void drawLines();
 	void drawPlanes();

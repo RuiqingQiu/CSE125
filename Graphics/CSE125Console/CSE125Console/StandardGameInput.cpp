@@ -131,7 +131,8 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 	else if (key == 'N'){
 		g_pCore->pGameView->pViewCamera->rotation->z -= 10;
 	}
-	else if (key == 'j'){
+	else if (key == 'r'){
+		g_pCore->pGameView->pViewCamera->mode = (g_pCore->pGameView->pViewCamera->mode + 1) % 2;
 	}
 	else if (key == 'i'){
 	}

@@ -65,9 +65,16 @@ void Camera::UpdateCamera()
 	//direction.y = 0;
 	direction.normalize();
 	float distanceToPlayer = 10;
-	Vector3* newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer + 3, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
-	Vector3* newrotation = new Vector3(FollowingTarget->localTransform.rotation.x, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);//FollowingTarget->localTransform.rotation.z);
-
+	Vector3* newposition;
+	Vector3* newrotation;
+	if (mode == 0){
+		newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer + 3, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
+		newrotation = new Vector3(FollowingTarget->localTransform.rotation.x, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);//FollowingTarget->localTransform.rotation.z);
+	}
+	else{
+		newposition = new Vector3(FollowingTarget->localTransform.position.x + direction.x*3, FollowingTarget->localTransform.position.y + direction.y*3, FollowingTarget->localTransform.position.z + direction.z*3);
+		newrotation = new Vector3(FollowingTarget->localTransform.rotation.x, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);//FollowingTarget->localTransform.rotation.z);
+	}
 	this->position->negate();
 	this->rotation->negate();
 

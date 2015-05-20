@@ -10,7 +10,7 @@
 #include "EventWaiting.h"
 #include "EventEmergency.h"
 #include "GameCore.h"
-
+#include "Fire.h"
 #include "Window.h"
 EventSystem::EventSystem()
 {
@@ -108,6 +108,12 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		}
 		case TEventCollisionHappen:{
 									   printf("collision event received\n");
+									   EventCollision * h = (EventCollision *)event;
+									   //particle
+									   Fire* f = new Fire(h->x, h->y, h->z, 1, 1);
+									   f->static_object = true;
+									   g_pCore->pGameView->PushEnvironmentNode(f);
+
 									   //Collision sound
 									   break;
 

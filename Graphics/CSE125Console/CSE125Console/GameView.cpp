@@ -351,6 +351,13 @@ void GameView::highlight_second_pass(){
 	for each (GeoNode* node in EnvironmentList){
 		node->VOnDraw();
 	}
+	for (int i = 0; i < EnvironmentList.size(); i++){
+		GeoNode* node = EnvironmentList[i];
+		if (node->isDead)
+		{
+			EnvironmentList.erase(EnvironmentList.begin() + i);
+		}
+	}
 	//grass
 	for each (pair<float, GeoNode*> p in depthvec)
 	{
