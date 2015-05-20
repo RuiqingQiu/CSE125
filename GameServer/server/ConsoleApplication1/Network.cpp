@@ -128,8 +128,8 @@ void Network::receiveFromClients(std::vector<ObjectEvents*>* eventList){
 void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>* ge){
 
 
-	cout << "size of GO " << gameObjs->size() << endl;
-	cout << "size of GE " << ge->size() << endl;
+	//cout << "size of GO " << gameObjs->size() << endl;
+	//cout << "size of GE " << ge->size() << endl;
 
 	//cout << "send Action" << endl;
 	// send action packet
@@ -397,75 +397,75 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 								  pos = objectInfo.find(" ");
 								  token = objectInfo.substr(0, pos);
 									 // std::cout << token << std::endl;
-								  double xPos = stold(token);
+								  float xPos = stold(token);
 								  objectInfo.erase(0, pos  + 1);
 								  pos = objectInfo.find(" ");
 								  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-								  double yPos = stold(token);
+								  float yPos = stold(token);
 								  objectInfo.erase(0, pos  + 1);
 								  pos = objectInfo.find(" ");
 								  token = objectInfo.substr(0, pos);
 								  //std::cout << token << std::endl;
-								  double zPos = stold(token);
+								  float zPos = stold(token);
 								  objectInfo.erase(0, pos  + 1);
 								  
 										  					   //rotation
 								  pos = objectInfo.find(" ");
 								  token = objectInfo.substr(0, pos);
 									 // std::cout << token << std::endl;
-								  double xRot = stold(token);
+								  float xRot = stold(token);
 								  objectInfo.erase(0, pos  + 1);
 								  pos = objectInfo.find(" ");
 								  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-								  double yRot = stold(token);
+								  float yRot = stold(token);
 								  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  double zRot = stold(token);
+									  float zRot = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //block type
 										  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									 // std::cout << token << std::endl;
-									  double block_type = stold(token);
+									  float block_type = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //contraints
 										  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  double below = stold(token);
+									  float below = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									 // std::cout << token << std::endl;
-									  double left = stold(token);
+									  float left = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  double right = stold(token);
+									  float right = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  double front = stold(token);
+									  float front = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  double back = stold(token);
+									  float back = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 										  					   //stats
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
 									  //std::cout << token << std::endl;
-									  double health = stold(token);
+									  float health = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 									  btQuaternion* q = convertEulerToQuaternion(xRot, yRot, zRot); 
@@ -557,7 +557,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//std::cout << "NULL" << endl;
 			break;
 		}
-		cout << "GO ID: " <<(*i)->getId() << endl;
+		//cout << "GO ID: " <<(*i)->getId() << endl;
 		temp += to_string((*i)->getId());
 		temp += ' ';
 		temp += to_string((*i)->getX());

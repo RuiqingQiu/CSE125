@@ -20,7 +20,7 @@ ServerCore::~ServerCore()
 
 void ServerCore::serverLoop()
 {
-	gameLogic->numPlayers = 1;
+	gameLogic->numPlayers = 2;
 	
 	while (true)
 	{

@@ -408,12 +408,13 @@ void GameLogic::prePhyLogic(){
 								 {
 
 									 int cid = (*iter)->getCid();
-									 double xoffset = (cid % 2) * 30;
-									 double zoffset = cid - 2 < 0 ? 0 : 30;
+									 float xoffset = (cid % 2) * 30;
+									 float zoffset = cid - 2 < 0 ? 0 : 30;
 
 									 if ((*it)->getBuildID() == 0)
 									 {
 										 robot = (Robot *) clientPair.find(cid)->second;
+										 if (robot->getIsRobot()) cout << "is robot deleted in rebuild GOID: " << robot->getId() << endl;
 										 robot->setImmediateDeleted();
 										 robot = (Robot*)(*it);
 										 //clientPair.insert(std::pair<int, Robot*>(cid, robot));
@@ -431,8 +432,8 @@ void GameLogic::prePhyLogic(){
 									 {
 										 if (!(*it)->getIsWheel())
 										 {
-											 double initX = (*it)->getX();
-											 double initZ = (*it)->getZ();
+											 float initX = (*it)->getX();
+											 float initZ = (*it)->getZ();
 											 (*it)->setX(initX + xoffset);
 											 (*it)->setZ(initZ + zoffset);
 											 (*it)->createRigidBody();// &objCollisionPair);
@@ -559,7 +560,7 @@ void GameLogic::prePhyLogic(){
 			btWheelInfo rightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(3);
 			btWheelInfo bleftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(0);
 			btWheelInfo brightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(1);
-			double steering_delta = TURN_SPEED / 4;
+			double steering_delta = TURN_SPEED / 1.1;
 
 			if (leftWheel.m_steering > 0)
 				((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += -steering_delta;
@@ -579,10 +580,10 @@ void GameLogic::prePhyLogic(){
 			if (brightWheel.m_steering < 0)
 				((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += steering_delta;
 
-			if (leftWheel.m_steering < TURN_SPEED/4 && leftWheel.m_steering > -TURN_SPEED/4) ((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering = 0;
-			if (bleftWheel.m_steering < TURN_SPEED/4 && bleftWheel.m_steering > -TURN_SPEED/4) ((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering = 0;
-			if (rightWheel.m_steering < TURN_SPEED/4 && rightWheel.m_steering > -TURN_SPEED/4) ((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering = 0;
-			if (brightWheel.m_steering < TURN_SPEED/4 && brightWheel.m_steering > -TURN_SPEED/4) ((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering = 0;
+			if (leftWheel.m_steering < TURN_SPEED / 1.1 && leftWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering = 0;
+			if (bleftWheel.m_steering < TURN_SPEED / 1.1 && bleftWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering = 0;
+			if (rightWheel.m_steering < TURN_SPEED / 1.1 && rightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering = 0;
+			if (brightWheel.m_steering < TURN_SPEED / 1.1 && brightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering = 0;
 		}
 	}
 
@@ -622,19 +623,29 @@ void GameLogic::postPhyLogic(){
 		{
 			if (GO1->getIsWeapon() && !GO1->getIsRangedWeapon())
 			{
-				double knockback = -((MeleeWeapon*)GO1->getWeapon())->getKnockback();
-				btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
-				btVector3 boxRot = rbTrans.getBasis()[2];
+
+				double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
+				//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
+				//btVector3 boxRot = rbTrans.getBasis()[2];
+				btVector3 boxRot(GO2->getX() - GO1->getX(), 0, GO2->getZ() - GO1->getZ());
 				boxRot.normalize();
-				GO2->getBelongTo()->getRigidBody()->applyCentralImpulse(boxRot*knockback);
+				btVector3 newforce = boxRot*knockback;
+				GO2->getRigidBody()->applyCentralImpulse(newforce);
+				cout << "GO1 WEAPON: knockback " << knockback << endl;
+				cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
+
 			}
 			if (GO2->getIsWeapon() && !GO2->getIsRangedWeapon())
 			{
-				double knockback = -((MeleeWeapon*)GO2->getWeapon())->getKnockback();
-				btTransform rbTrans = GO2->getRigidBody()->getWorldTransform();
-				btVector3 boxRot = rbTrans.getBasis()[2];
+				double knockback = ((MeleeWeapon*)GO2->getWeapon())->getKnockback();
+				//btTransform rbTrans = GO2->getRigidBody()->getWorldTransform();
+				//btVector3 boxRot = rbTrans.getBasis()[2];
+				btVector3 boxRot(GO1->getX() - GO2->getX(), 0, GO1->getZ() - GO2->getZ());
 				boxRot.normalize();
-				GO1->getBelongTo()->getRigidBody()->applyCentralImpulse(boxRot*knockback);
+				btVector3 newforce = boxRot*knockback;
+				GO1->getRigidBody()->applyCentralImpulse(boxRot*knockback);
+				cout << "GO2 WEAPON: knockback " << knockback << endl;
+				cout << "GO2 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
 			}
 			//cout << "clientCollision" << clientCollision << endl;
 			GECollisonHappen* gech = new GECollisonHappen(clientCollision, (*it)->getX(), (*it)->getY(), (*it)->getZ());
@@ -700,7 +711,7 @@ void GameLogic::postDeathLogic(Robot* r)
 		vector<GameObj*> parts = r->getParts();
 		vector<GameObj*>::iterator it;
 		r->setId(1000000  + counter);
-		if (parts.empty()) return;
+		if (parts.size() == 0) return;
 		for (it = parts.begin(); it != parts.end(); it++)
 		{
 			breakConstraints(*it);
@@ -730,12 +741,13 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 			cout << "randomForce x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
 			randomForce.normalize();
 			cout << "randomForce normalized x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
-			g->getRigidBody()->applyCentralImpulse(randomForce*pt->getAppliedImpulse()*pt->getAppliedImpulse());
+			g->getRigidBody()->applyCentralImpulse(randomForce*5*sqrt(pt->getAppliedImpulse()));
 		}
 		else if (result == DELETED)
 		{
 			//cout << "GO Deleted ID: " << g->getId() << endl;
 			if (!g->getIsRobot()){
+				if (g->getIsRobot()) cout << "is robot deleted in postdamage GOID: " << g->getId() << endl;
 				g->setImmediateDeleted();
 		    }
 		}
@@ -782,11 +794,20 @@ void GameLogic::cleanDataStructures()
 		}
 		else
 		{
-
 			breakConstraints(*it);
+			
+		}
+	}
+
+	for (it = gameObjs.begin(); it != gameObjs.end(); it++)
+	{
+		if ((*it)->getDeleted())
+		{
 			gamePhysics->getDynamicsWorld()->removeRigidBody((*it)->getRigidBody());
 			deleteGameObj(*it);
+
 		}
+
 	}
 	gameObjs = new_gameObj;
 }
@@ -820,7 +841,9 @@ int GameLogic::breakConstraints(GameObj* g)
 				{
 					if ((*it1) != nullptr)
 					{
-						(*it1)->setDeleted();
+						if (!(*it1)->getIsRobot()){ //cout << "is robot deleted in breakconstraints GOID: " << (*it1)->getId() << endl;
+						   (*it1)->setDeleted();
+						}
 					}
 				}
 			}
@@ -877,6 +900,7 @@ void GameLogic::addGround()
 void GameLogic::deleteGameObj(GameObj* g)
 {
 	g->deleteConstraints();//&objCollisionPair);
+	
 	delete(g);
 }
 

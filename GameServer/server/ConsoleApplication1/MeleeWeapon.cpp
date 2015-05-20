@@ -11,14 +11,14 @@ MeleeWeapon::MeleeWeapon(int type)
 	switch (type)
 	{
 	case Needle:{
-		damage = .5;
+		damage = 2;
 		splash = 1;
 		knockback = 0;
 		break;
 	}
 	default:{
-		knockback = 10;
-		damage = 1000;
+		knockback = 350;
+		damage = 100;
 		splash = 2;
 		break;
 	}

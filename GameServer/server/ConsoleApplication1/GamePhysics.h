@@ -13,8 +13,8 @@
 #define MOVE_SPEED 1000
 #define CAP_BRAKE_SPEED 1000
 #define BRAKE_SPEED 10
-#define TURN_SPEED 0.05
-#define MAX_TURN_SPEED M_PI/6
+#define TURN_SPEED 0.02
+#define MAX_TURN_SPEED M_PI/8
 #define MAX_SPEED 80
 #define GRAVITY -30
 #define MAX_ENGINE_SPEED 2000
