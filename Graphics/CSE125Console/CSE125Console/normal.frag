@@ -58,7 +58,6 @@ vec3 CalcBumpedNormal(){
 }
 
 void main() {
- 
     vec4 normal = 2.0 * texture2D(norm, TexCoords) - 1.0;
     vec4 texColor = texture2D(tex, TexCoords);
     float dist = length(Position.xyz);

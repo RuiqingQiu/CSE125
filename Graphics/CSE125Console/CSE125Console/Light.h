@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #pragma once
+#ifndef __Light__
+#define __Light__
 #include <vector>
 #include "ComponentNode.h"
 #include "GeoNode.h"
@@ -10,6 +12,7 @@ class Light : public GeoNode
 public:
 	std::vector<ComponentNode> components;
 	float pos_x, pos_y, pos_z;
+	float red, green, blue;
 	Light();
 	Light(float x, float y, float z);
 	~Light();
@@ -19,4 +22,4 @@ public:
 	virtual void VOnDraw();
 	virtual void VOnUpdate(GameInfoPacket* pData);
 };
-
+#endif

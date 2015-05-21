@@ -24,43 +24,68 @@ uniform float Shininess;
 
 #define MAX_LIGHTS 6 
 
-vec4 lights[MAX_LIGHTS];
+struct Light
+{
+  vec4 position;
+  vec3 Ld;
+  vec3 La;
+  vec3 Ls;
+};
+
+Light lights[MAX_LIGHTS];
 uniform vec4 camera_offset;
 vec3 phongModel(vec3 normal, vec3 diffR){
 	
-	/*
-	lights[0] = camera_offset + vec4(0.0, 10.0, 0.0, 1.0);
-	lights[1] = camera_offset +vec4(5.0, 0.0, 0.0, 1.0);
-	lights[2] = camera_offset +vec4(-5.0, 0.0, -10.0, 1.0);
-	lights[3] = camera_offset +vec4(-5.0, 5.0, -10.0, 1.0);
-	lights[4] = camera_offset +vec4(5.0, 0.0, -10.0, 1.0);
-	lights[5] = camera_offset +vec4(0.0, 50.0, 0.0, 1.0);
-	*/
-	lights[0] = vec4(0.0, 10.0, 0.0, 1.0);
-	lights[1] = vec4(5.0, 0.0, 0.0, 1.0);
-	lights[2] = vec4(-5.0, 0.0, 0.0, 1.0);
-	lights[3] = vec4(0.0, 0.0, 0.0, 1.0);
-	lights[4] = vec4(5.0, 5.0, 0.0, 1.0);
-	lights[5] = vec4(0.0, 50.0, 0.0, 1.0);
+	
+	lights[0].position = camera_offset + vec4(0.0, 10.0, 0.0, 1.0);
+	lights[1].position = camera_offset + vec4(5.0, 0.0, 0.0, 1.0);
+	lights[2].position = camera_offset + vec4(-5.0, 0.0, -10.0, 1.0);
+	lights[3].position = camera_offset + vec4(-5.0, 5.0, -10.0, 1.0);
+	lights[4].position = camera_offset + vec4(5.0, 0.0, -10.0, 1.0);
+	lights[5].position = camera_offset + vec4(0.0, 50.0, 0.0, 1.0);
+	
+	lights[0].Ld = vec3(1.0, 1.0, 1.0);
+	lights[0].La = vec3(0.4, 0.4, 0.4);
+	lights[0].Ls = vec3(1.0, 1.0, 1.0);
 
+	lights[1].Ld = vec3(0.0, 0.0, 0.9);
+	lights[1].La = vec3(0.4, 0.4, 0.4);
+	lights[1].Ls = vec3(1.0, 1.0, 1.0);
 
+	lights[2].Ld = vec3(0.0, 0.9, 0.0);
+	lights[2].La = vec3(0.4, 0.4, 0.4);
+	lights[2].Ls = vec3(1.0, 1.0, 1.0);
+
+	lights[3].Ld = vec3(1.0, 1.0, 0.0);
+	lights[3].La = vec3(0.4, 0.4, 0.4);
+	lights[3].Ls = vec3(1.0, 1.0, 1.0);
+
+	lights[4].Ld = vec3(0.0, 1.0, 1.0);
+	lights[4].La = vec3(0.4, 0.4, 0.4);
+	lights[4].Ls = vec3(1.0, 1.0, 1.0);
+
+	lights[5].Ld = vec3(1.0, 0.0, 1.0);
+	lights[5].La = vec3(0.4, 0.4, 0.4);
+	lights[5].Ls = vec3(1.0, 1.0, 1.0);
+	
+	
 	vec3 Ld = vec3(1.0, 1.0, 1.0);
     vec3 La = vec3(0.4, 0.4, 0.4);
     vec3 Ls = vec3( 1.0, 1.0, 1.0);
 	vec3 LightPosition = vec3(0,0,10);
     vec3 Intensity = vec3(0.9,0.9,0.9);
-	vec3 ambAndDiff = La * Ka;
+	vec3 ambAndDiff = lights[0].La * Ka;
 	vec3 spec = vec3(0.0);
 	for(int i = 0; i < MAX_LIGHTS; i++){
-		float attenuation = 1.0 / (1.0 + 0.0 * length(lights[i] - Position) + 0.01 * pow(length(lights[i] - Position), 2));
+		float attenuation = 1.0 / (1.0 + 0.0 * length(lights[i].position - Position) + 0.01 * pow(length(lights[i].position - Position), 2));
 		vec3 n = normalize(Normal);
-		vec3 s = normalize(vec3(lights[i] - Position));
+		vec3 s = normalize(vec3(lights[i].position - Position));
 		vec3 v = normalize(-Position.xyz);
 		vec3 r = reflect(-s, n);
 		float sDotN = max( dot(s,Normal), 0.0 );
-		vec3 diffuse = attenuation * (Ld * Kd * sDotN);
+		vec3 diffuse = attenuation * (lights[i].Ld * Kd * sDotN);
 		if( sDotN > 0.0 )
-		    spec += attenuation * (Ls * Ks * pow( max( dot(r,v), 0.0 ), Shininess ));
+		    spec += attenuation * (lights[i].Ls * Ks * pow( max( dot(r,v), 0.0 ), Shininess ));
 		ambAndDiff += diffuse;
 	}
 	return ambAndDiff + spec;

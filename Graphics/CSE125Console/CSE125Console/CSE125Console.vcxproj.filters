@@ -70,6 +70,9 @@
     <Filter Include="Source Files\Light">
       <UniqueIdentifier>{a9dcfac1-a3f5-45b6-99a4-1cf6d9b5c91f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shader\LocalShader">
+      <UniqueIdentifier>{ee71fa24-0d82-4dbd-9b29-e173adf41c19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -648,24 +651,6 @@
     <None Include="grass.vert">
       <Filter>Source Files\Shader</Filter>
     </None>
-    <None Include="skybox.frag">
-      <Filter>Source Files\Shader\Group</Filter>
-    </None>
-    <None Include="skybox.vert">
-      <Filter>Source Files\Shader\Group</Filter>
-    </None>
-    <None Include="edge.vert">
-      <Filter>Source Files\Shader\Group</Filter>
-    </None>
-    <None Include="edge.frag">
-      <Filter>Source Files\Shader\Group</Filter>
-    </None>
-    <None Include="normal.vert">
-      <Filter>Source Files\Shader\Group</Filter>
-    </None>
-    <None Include="normal.frag">
-      <Filter>Source Files\Shader\Group</Filter>
-    </None>
     <None Include="blur.vert">
       <Filter>Source Files\Shader\Group</Filter>
     </None>
@@ -683,6 +668,24 @@
     </None>
     <None Include="material.frag">
       <Filter>Source Files\Shader\Group</Filter>
+    </None>
+    <None Include="edge.frag">
+      <Filter>Source Files\Shader\LocalShader</Filter>
+    </None>
+    <None Include="edge.vert">
+      <Filter>Source Files\Shader\LocalShader</Filter>
+    </None>
+    <None Include="normal.vert">
+      <Filter>Source Files\Shader\LocalShader</Filter>
+    </None>
+    <None Include="normal.frag">
+      <Filter>Source Files\Shader\LocalShader</Filter>
+    </None>
+    <None Include="skybox.frag">
+      <Filter>Source Files\Shader\LocalShader</Filter>
+    </None>
+    <None Include="skybox.vert">
+      <Filter>Source Files\Shader\LocalShader</Filter>
     </None>
   </ItemGroup>
 </Project>

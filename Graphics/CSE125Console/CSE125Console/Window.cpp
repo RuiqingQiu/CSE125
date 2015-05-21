@@ -171,58 +171,10 @@ void Window::initialize(void)
 	}
 	cout << "number of lights are " << light_sytem->lights.size() << endl;
 
-	Fire* f = new Fire(0,0,0,0,0);
-	f->static_object = true;
-	factory->battlemode->PushGeoNode(f);
+	//Fire* f = new Fire(0,0,0,0,0);
+	//f->static_object = true;
+	//factory->battlemode->PushGeoNode(f);
 
-	//////////////////////////
-	/*
-	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = EDGE_SHADER;
-	object->edge_highlight = true;
-	view->num_of_objs_highlight++;
-	object->localTransform.position = Vector3(0, 0, -17);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = BLUR_SHADER;
-	object->blur = true;
-	view->num_of_objs_blur++;
-	object->localTransform.position = Vector3(-3, 0, -17);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(CrystalCube);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(3, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(TREE1);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(0, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(TREE2);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(-5, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(TREE3);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(5, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-	*/
 	
 	object = Model3DFactory::generateObjectWithType(DESERT);
 	object->shader_type = BATTLEFIELD_SHADER;
@@ -234,23 +186,7 @@ void Window::initialize(void)
 	object->type = DESERT;
 	factory->battlemode->PushEnvironmentNode(object);
 
-	/*
-	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, -2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = false;
-	view->PushEnvironmentNode(object);
-	///////////////////////////
-	object = Model3DFactory::generateObjectWithType(BATTLEFIELDINNER);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, -2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->type = BATTLEFIELD
-	//factory->battlemode->PushGeoNode(object);
-	view->PushEnvironmentNode(object);
-	*/
-	//gt->displayTest5(factory->battlemode);
+	gt->displayTest2(factory->battlemode);
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
@@ -264,7 +200,46 @@ void Window::initialize(void)
 	//gt->displayTest5(factory->battlemode);
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
 
-	
+	Light* l1 = new Light(0.0, 10.0, 0.0);
+	Light* l2 = new Light(5.0, 0.0, 0.0);
+	Light* l3 = new Light(-5.0, 0.0, -10.0);
+	Light* l4 = new Light(-5.0, 5.0, -10.0);
+	Light* l5 = new Light(5.0, 0.0, -10.0);
+	Light* l6 = new Light(0.0, 50.0, 0.0);
+
+
+	l1->red = 1.0;
+	l1->green = 1.0;
+	l1->blue = 1.0; 
+
+	l2->red = 0.0;
+	l2->green = 0.0;
+	l2->blue = 0.9;
+
+	l3->red = 0.0;
+	l3->green = 0.9;
+	l3->blue = 0.0;
+
+	l4->red = 1.0;
+	l4->green = 1.0;
+	l4->blue = 0.0;
+
+	l5->red = 0.0;
+	l5->green = 1.0;
+	l5->blue = 1.0;
+
+	l6->red = 1.0;
+	l6->green = 0.0;
+	l6->blue = 1.0;
+
+	factory->battlemode->PushEnvironmentNode(l1);
+	factory->battlemode->PushEnvironmentNode(l2);
+	factory->battlemode->PushEnvironmentNode(l3);
+	factory->battlemode->PushEnvironmentNode(l4);
+	factory->battlemode->PushEnvironmentNode(l5);
+	factory->battlemode->PushEnvironmentNode(l6);
+
+
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
