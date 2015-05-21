@@ -30,8 +30,7 @@ Model3D::Model3D(RenderObject* r){
 	render_obj = r;
 	isTextured = true;
 	localTransform = Transform();
-	shader_type = REGULAR_SHADER;
-	//explosion = new Explosion();
+	shader_type = NORMAL_SHADER;
 }
 
 void Model3D::setShaderType(int type){
@@ -97,7 +96,39 @@ void Model3D::VOnDraw(){
 		if (false && this->type == BATTLEFIELD){
 			printf("battle field\n");
 		}
-		else if (this->edge_highlight){}
+		else if (this->edge_highlight){
+			//Passing modelMatrix
+			glUniformMatrix4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "ModelView"), 1, true,
+				localTransform.GetGLMatrix4().getFloatPointer());
+			//Passing four maps
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[0]);
+
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[1]);
+
+
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[2]);
+
+			glActiveTexture(GL_TEXTURE4);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[3]);
+
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "tex"), 1);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "norm"), 2);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 3);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 4);
+
+			// Make sure no bytes are padded:
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+			// Select GL_MODULATE to mix texture with polygon color for shading:
+			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+			// Use bilinear interpolation:
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
 		else{
 			Window::shader_system->BindShader(shader_type);
 

@@ -831,7 +831,7 @@ void buildView::addNode() {
 		if (check.equals(Vector3(0, 0, 0))) {
 			return;
 		}
-		currentNode->setShaderType(REGULAR_SHADER);
+		currentNode->setShaderType(NORMAL_SHADER);
 		PushGeoNode(currentNode);
 		//currentNode = NodeList[NodeList.size() - 1];
 		setCurrentNode(true);
