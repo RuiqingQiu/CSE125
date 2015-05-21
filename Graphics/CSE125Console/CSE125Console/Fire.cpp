@@ -13,7 +13,7 @@
 #include "SOIL.h"
 #include <ctime>
 
-int const MAX = 25;
+int const MAX = 75;
 
 //int timeCount = 1;
 //int timeToBurn = 500;
@@ -51,6 +51,9 @@ Fire::Fire(float x_pos, float y_pos, float z_pos, int particlemode, int particle
 	//glutInitDisplayMode(GLUT_RGBA | GLUT_ALPHA | GLUT_DOUBLE | GLUT_DEPTH);
 	initParticles();
 	LoadGLTextures();
+	startTime = clock();
+	isDead = false;
+	lifeTime = 10;// 10 sec
 }
 
 Fire::~Fire()
@@ -85,6 +88,12 @@ void Fire::VOnDraw()
 		DoSparks();
 
 
+	float currentTime = clock();
+	float seconds = (currentTime - startTime) / CLOCKS_PER_SEC;
+	if (seconds>lifeTime)
+	{
+		isDead = true;
+	}
 	//timeCount++;
 }
 
@@ -138,7 +147,7 @@ void Fire::DoFire()
 			particle[loop].r += 0.0002f * float(rand() % 100);
 			particle[loop].g += 0.0001f * float(rand() % 30);
 
-			particle[loop].life -= particle[loop].fade;
+			particle[loop].life -= particle[loop].fade*0.8f;
 			if (particle[loop].life <= 0.0f)
 				particle[loop].alive = false;
 
@@ -235,7 +244,7 @@ void Fire::DoSparks()
 			particle[loop].r += 0.0002f * float(rand() % 100);
 			particle[loop].g += 0.0001f * float(rand() % 50);
 
-			particle[loop].life -= particle[loop].fade;
+			particle[loop].life -= particle[loop].fade*0.1f;
 			if (particle[loop].life <= 0.0f)
 				particle[loop].alive = false;
 		}

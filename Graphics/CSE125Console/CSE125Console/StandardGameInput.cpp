@@ -156,6 +156,6 @@ void StandardGameInput::VProcessKeyInputUp(unsigned char key, int x, int y){
 	if (key == 'd'){
 		keyStates['d'] = false;
 	}
-	cout << "keyboard" << keyStates['a']  << " " <<  keyStates['w']  << " " << keyStates['s']  << " "<< keyStates['d'] << endl;
+	//cout << "keyboard" << keyStates['a']  << " " <<  keyStates['w']  << " " << keyStates['s']  << " "<< keyStates['d'] << endl;
 
 }

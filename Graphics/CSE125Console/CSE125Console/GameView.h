@@ -48,6 +48,7 @@ public:
 
 	void highlight_first_pass_build();
 	void highlight_second_pass_build();
+	void highlight_third_pass_build();
 
 	void blur_first_pass();
 	void blur_second_pass();
@@ -79,6 +80,10 @@ public:
 
 	bool isCurrentView;
 	GeoNode * currentNode;
+
+	GLuint lastFrame;
+	GLuint lastFb;
+	GLuint lastDepth;
 };
 
 #endif

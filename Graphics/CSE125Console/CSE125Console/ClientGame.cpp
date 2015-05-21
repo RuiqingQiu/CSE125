@@ -48,7 +48,7 @@ bool ClientGame::connectToServer(char* ipaddress)
 	CPacket packet;
 
 	packet.packet_type = INIT_CONNECTION;
-	string player_name = g_pCore->pPlayer->name;
+	string player_name = g_pCore->pPlayer->name + "\n\0";
 	strncpy_s(packet.data, player_name.c_str(), sizeof(packet.data));
 	packet.serialize(packet_data);
 
@@ -202,7 +202,7 @@ GameInfoPacket* ClientGame::update()
 		
 		default:{
 
-					printf("error in packet types : %i with length: %i\n", packet.packet_type, data_length);
+					//printf("error in packet types : %i with length: %i\n", packet.packet_type, data_length);
 					std::cout << packet.data << std::endl;
 					return nullptr;
 					break;

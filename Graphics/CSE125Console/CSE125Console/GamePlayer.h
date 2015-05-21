@@ -10,7 +10,7 @@ class GamePlayer
 {
 public:
 	int playerid;
-	std::string name = "Thomas\n\0";
+	std::string name = "Thomas";
 	string IPAddress;
 	GamePlayer();
 	~GamePlayer();

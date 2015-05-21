@@ -27,7 +27,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 	for (int i = 0; i < eventinfos.size(); i++)
 	{
 		EventInfo* event = eventinfos[i];
-		std::cout << "mydoubleptr points to " << typeid(*event).name() << '\n';
+		//std::cout << "mydoubleptr points to " << typeid(*event).name() << '\n';
 		switch (event->event_type){
 		case TEventDeath:{
 							 //Switch back to game view
