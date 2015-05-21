@@ -72,7 +72,7 @@ bool letters::setAllLetters() {
 	if (letters_set) return false;
 	// ascii a-z goes from 97 to 122
 	for (int i = 97; i < 123; i++) {
-		setTexture(i); // a.jpg
+		setTexture(i); // a.png
 	}
 	letters_set = true;
 	return true;
@@ -85,7 +85,7 @@ bool letters::setTexture(int i) {
 	GLuint * t = &letter[index];
 	char tmp = static_cast<char>(i); // cast to a char
 	string pictureName = string(1, tmp); // copy only once
-	string concat = path + pictureName + ".jpg";
+	string concat = path + pictureName + ".png";
 	*t = SOIL_load_OGL_texture
 		(
 		concat.c_str()
@@ -110,13 +110,13 @@ bool letters::setTexture(int i) {
 void letters::draw() {
 	glDisable(GL_LIGHTING);
 	glPushMatrix();
-	//glLoadMatrixd(glmatrix.getPointer());
 
 	glEnable(GL_TEXTURE_2D);
-	//glActiveTexture(GL_TEXTURE1);
+	glEnable(GL_BLEND);
 
-	// bind the texture to be the right letter to display
 	glBindTexture(GL_TEXTURE_2D, letter[letterToShow]);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// Make sure no bytes are padded:
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -130,7 +130,7 @@ void letters::draw() {
 	glEnd();
 
 	glPopMatrix();
-	//glEnable(GL_LIGHTING);
+	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
 }
 

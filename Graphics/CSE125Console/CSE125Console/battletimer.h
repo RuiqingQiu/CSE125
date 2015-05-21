@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "buildTimer.h"
+#include "numDisplay.h"
 
 class battleTimer : public numDisplay {
 
@@ -18,8 +18,11 @@ public:
 	void rePosition(int x, int y, int w, int h);
 	void createNumbers();
 
+	void updateTime(int time);
+
 	//no longer use local clock, use server sent time
 	//std::clock_t start;
+private:
 	int minLeft;
 	int secLeft;
 

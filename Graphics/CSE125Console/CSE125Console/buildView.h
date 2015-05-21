@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "gui.h"
-#include "buildTimer.h"
 #include "scoreBox.h"
 #include "sound.h" //for gui sound effect 
 
@@ -35,9 +34,10 @@ public:
 	//leave these public for now, 
 	//may need to access to sync to server time/score, etc.
 	scrollBox * scroll;
-	buildTimer * timer;
-	bool updateview;
+	battleTimer * timer;
 	int prevMouseState;
+	bool show_time;
+	//bool updateview;
 
 private:
 	//intialization helper functions

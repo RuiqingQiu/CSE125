@@ -71,6 +71,8 @@ void mainMenu::createButtons() {
 
 	backimg = new background("background1.jpg", width, height);
 	guiItems.push_back(backimg); // push in to the guiTexts vector
+
+	playersReady = new numDisplay("text/playersReady.jpg", width*(760.0 / 1920.0), height - 150, 400, 50);
 }
 
 // overwrite the gui drawAllItems function
@@ -80,6 +82,7 @@ void mainMenu::drawAllItems(){
 
 	if (playPressed) {
 		loading->draw();
+		playersReady->draw();
 	}
 	else {
 		// exchange the order, draw button first and then draw guiItems 
@@ -95,6 +98,7 @@ void mainMenu::drawAllItems(){
 void mainMenu::VUpdate() {
 	gui::VUpdate();
 	loading->update();
+	playersReady->displayValue = playerReady;
 }
 
 // add letters to the guiItem array
@@ -116,10 +120,12 @@ void mainMenu::addLetters(){
 		counter = 0;
 		// loop through the string
 		for (string::iterator it = n.begin(); it != n.end(); ++it) {
-			letters *l = new letters(start_w + counter * span, letterOffset, 22, 21.5); // pass in x,y position and its size
+			if (int(*it) != 32) {
+				letters *l = new letters(start_w + counter * span, letterOffset, 22, 21.5); // pass in x,y position and its size
+				l->letterToShow = int(*it) - 97; // from char to array index
+				guiLetters.push_back(l);
+			}
 			counter++;
-			l->letterToShow = int(*it) - 97; // from char to array index
-			guiLetters.push_back(l);
 		}
 	}
 
@@ -176,8 +182,7 @@ void mainMenu::VOnRender() {
 	drawAllItems();
 
 	// draw how many players are ready, drawText defined in gui.cpp
-	drawText(width*(760.0 / 1920.0), height - 150, std::to_string(playerReady) + " / " + std::to_string(MAX_PLAYER) + " players are ready", 1.0, 1.0, 1.0, GLUT_BITMAP_HELVETICA_18);
-	//drawText(width * 0.5, height * 0.55, g_pCore->i_pInput->name, 1.0, 1.0, 0.0, GLUT_BITMAP_TIMES_ROMAN_24);
+	//drawText(width*(760.0 / 1920.0), height - 150, std::to_string(playerReady) + " / " + std::to_string(MAX_PLAYER) + " players are ready", 1.0, 1.0, 1.0, GLUT_BITMAP_HELVETICA_18);
 	set3d();
 }
 

@@ -39,6 +39,7 @@ private:
 	button * exitButton;
 	button*  ipAdrressButton; // enter IP button
 	loadDisplay * loading;
+	numDisplay * playersReady;
 
 	int playerReady;
 	bool ready;

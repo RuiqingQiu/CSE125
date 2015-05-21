@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "gui.h"
-#include "battletimer.h"
 #include "healthBar.h"
 #include "cooldownDisplay.h"
 
@@ -13,6 +12,7 @@ public:
 
 	void VOnRender();
 	void VUpdate();
+	void setDimensions(int w, int h);
 	void createButtons();
 
 	viewType mouseClickFunc(int state, int x, int y);
@@ -21,7 +21,16 @@ public:
 	battleTimer * timer;
 	bool updateview;
 
-	healthBar * healthDisplay;
+	void updateHealth(float current, float max);
+	void updateName(string name);
 
 	cooldownDisplay * cooldown;
+	background * takeDamage;
+	bool damageTaken;
+
+private:
+	healthBar * healthDisplay;
+
+	float currDuration = 0;
+	float maxDuration = 3;
 };

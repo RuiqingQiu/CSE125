@@ -1,7 +1,9 @@
 #pragma once
-#include "guiItem.h"
+#include "numDisplay.h"
 
-class healthBar : public guiItem
+class letters;
+
+class healthBar : public numDisplay
 {
 public:
 	healthBar();
@@ -18,9 +20,20 @@ public:
 
 	virtual void draw();
 	virtual void update();
+	virtual void rePosition(int x, int y, int w, int h);
+
+	void updateRobotName(string name);
 
 private:
 	void init();
 	float healthPercent;
+
+	float eWidth = 1000.0 / 1300.0;
+	float eHeight = 100.0 / 200.0;
+	float wOff = 50.0 / 1300.0;
+	float hOff = 50.0 / 200.0;
+
+	vector<letters> roboName;
+
 };
 

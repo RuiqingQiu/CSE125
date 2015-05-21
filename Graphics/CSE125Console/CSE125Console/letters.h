@@ -24,4 +24,6 @@ class letters : public guiItem{
 		bool setTexture(int i);
 		bool setAllLetters();
 
+		int offset;
+
 };

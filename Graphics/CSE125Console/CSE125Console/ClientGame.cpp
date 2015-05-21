@@ -113,20 +113,32 @@ GameInfoPacket* ClientGame::update()
 			cout << "in init build" << endl;
 			Window::factory->menumode->isLoading = false;
 			Window::factory->switchView('1');
+			Window::factory->battlemode->updateName(g_pCore->i_pInput->name);
 			break;
 		}
 		case INIT_BATTLE:{
 			cout << "in init battle" << endl;
 			Window::factory->switchView('2');
+			Window::factory->buildmode->show_time = false;
 			break;
 		}
 		//client show the time only build mode
 		case TIMER:{
+			std::string result = std::string(packet.data);
+			int time = atoi(result.c_str());
+
+			//CHANGE BUILD MODE ONLY
+			Window::factory->buildmode->timer->updateTime(time);
+			////end GUI
+
 			break;
 		}
 		//client send build package if they havent done that, time's up
 		case BUILD_REQUEST:{
-			Window::build_to_battle = true;
+			//send build packet
+			g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList);
+			Window::factory->switchView('4');
+			//Window::build_to_battle = true;
 			break;
 		}
 		case GAME_STATE:

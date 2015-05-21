@@ -55,12 +55,8 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventTimer:{
 							 EventTimer * t = (EventTimer *)event;
 							 printf("time event received \n");
-							 //Change variable in build mode and battle mode
-
 							 //CHANGE BATTLE MODE ONLY
-							 int sec = t->time % 60;
-							 Window::factory->battlemode->timer->secLeft = sec;
-							 Window::factory->battlemode->timer->minLeft = (t->time - sec) / 60;
+							 Window::factory->battlemode->timer->updateTime(t->time);
 							 /////// end GUI
 
 							 break;
@@ -98,8 +94,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 									//this is for the GUI display update
 									if (h->player1id == g_pCore->pPlayer->playerid) {
-										Window::factory->battlemode->healthDisplay->currentHealth = h->health;
-										Window::factory->battlemode->healthDisplay->maxHealth = h->maxhealth;
+										Window::factory->battlemode->updateHealth(h->health, h->maxhealth);
 									}
 									/////// end GUI
 

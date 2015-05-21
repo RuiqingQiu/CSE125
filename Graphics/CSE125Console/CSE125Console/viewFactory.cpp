@@ -88,7 +88,7 @@ void viewFactory::setView() {
 	//hacky quick fix for being able to switch console modes with number keys
 	//if (viewmode != viewType::BUILD) buildmode->updateview = false;
 	currentView->isCurrentView = false;
-	currentView->VUpdate();
+	//currentView->VUpdate();
 	
 	//sky boxes needed for battle mode and console.
 	//not needed for menus and build mode

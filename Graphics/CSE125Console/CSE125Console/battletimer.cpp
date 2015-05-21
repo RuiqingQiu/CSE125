@@ -76,6 +76,7 @@ void battleTimer::update(){
 
 	// then update minutes
 	int idx = minLeft;
+	if (idx <= -1) idx = 0;
 	//std::cout << minLeft << std::endl;
 	for (int i = num_digits; i < BATTLE_NUM_DIGITS; i++) {
 		if (!(idx >= 0)) break;
@@ -96,9 +97,15 @@ void battleTimer::rePosition(int x, int y, int w, int h){
 	numDisplay::rePosition(x, y, w, h);
 
 	int off_comma = (off*3.0) + nSize;
-	for (int i = num_digits; i < BATTLE_NUM_DIGITS; i++) {
+	for (int i = num_digits; i < BATTLE_NUM_DIGITS; i++)
+	{
 		digits[i]->setPosition((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off);
 	}
 	colon->setPosition((xPos + width - (off*3.0)) - (nSize * 3), yPos + off);
+}
+
+void battleTimer::updateTime(int time) {
+	secLeft = time % 60;
+	minLeft = (time - secLeft) / 60;
 }
 
