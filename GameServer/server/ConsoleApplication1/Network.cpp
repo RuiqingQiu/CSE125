@@ -60,6 +60,8 @@ void Network::sendInitBuild(int type, int time){
 	memset(packet.data, 0, sizeof(packet.data));
 	memcpy(packet.data, packetInfoStr.c_str(), packetInfoStr.length());
 
+
+
 	packet.serialize(packet_data);
 	network->sendToAll(packet_data, packet_size);
 }
@@ -342,7 +344,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 				   break;
 	}
 	case BUILD_ROBOT: {
-		cout << "in build packet" << endl;
+		cout << "Received Build Robot Packet" << endl;
 						  ObjectEvents * e = new ObjectEvents(BUILD_ROBOT);
 						  
 							  string parseData = string(packet.data);
@@ -557,6 +559,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//std::cout << "NULL" << endl;
 			break;
 		}
+
 		//cout << "GO ID: " <<(*i)->getId() << endl;
 		temp += to_string((*i)->getId());
 		temp += ' ';
@@ -567,7 +570,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		temp += to_string((*i)->getZ());
 		temp += ' ';
 		btTransform trans;
-		if ((*i)->getIsRobot()){
+		if ((*i)->getIsRobot() == 1){
 
 			trans = ((Robot*)(*i))->getVehicle()->getChassisWorldTransform();
 			//float mat[16];

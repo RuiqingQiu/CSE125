@@ -89,6 +89,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObj->begin(); it != gameObj->end(); ++it)
 	{
+		if ((*it)->getCollisionType() == C_GROUND || (*it)->getCollisionType() == C_WALLS) continue;
 		btTransform trans;
 		if ((*it)->getIsRobot() != 0)
 		{
@@ -103,9 +104,10 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 		}
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
-		if (trans.getOrigin().getY() < -2)
+		if (trans.getOrigin().getY() < -1)
 		{
-			(*it)->setY(2);
+			(*it)->setY(1);
+			trans.getOrigin().setY((*it)->getY());
 		}
 		(*it)->setZ(trans.getOrigin().getZ());
 		//std::cout << "Y: " << trans.getOrigin().getY() << std::endl;//<< ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
@@ -295,6 +297,10 @@ void GamePhysics::robotForward(Robot* rb){
 	}
 	else
 	{
+		//btVector3 vel = v->getRigidBody()->getLinearVelocity();
+		//std::cout << "linear vector: " << vel.getX() << " , " << vel.getY() << " , " << vel.getZ() << std::endl;
+		//double mag = sqrt(vel.getX()*vel.getX() + vel.getY()*vel.getY() + vel.getZ()*vel.getZ());
+		//std::cout << "linear magnitude: " << mag << std::endl;
 		double scale = 1 - (v->getCurrentSpeedKmHour() / -MAX_SPEED);
 		v->applyEngineForce((v->getWheelInfo(0).m_engineForce - MOVE_SPEED)*(scale), 0);
 		v->applyEngineForce((v->getWheelInfo(1).m_engineForce - MOVE_SPEED)*(scale), 1);

@@ -19,10 +19,14 @@
 #include "GECollisonHappen.h"
 #include "GEScoreboardUpdate.h"
 #include <random>
+#include "Hill.h"
+#include "GEHillUpdate.h"
+#include "GEPlayerHillUpdate.h"
 
 #define FIELD_WIDTH 100
 #define FIELD_HEIGHT 100
 #define INSTANT_KILL 1
+#define UPDATE_HILL 15
 
 
 class GameLogic {
@@ -33,6 +37,7 @@ private:
 	TimeFrame*	physicsTimer;
 	DamageSystem* damageSystem;
 	Scoreboard* scoreboard;
+	Hill* hill;
 	int counter;
 
 
@@ -74,6 +79,8 @@ public:
 	void createHealthUpdateEvent(Robot*);
 	void createScoreboardUpdateEvent();
 	void createGEClientCollision( GameObj*, GameObj*);
+	void createHillUpdateEvent();
+	void createPlayerHillUpdateEvent(int);
 	void postDamageLogic(GameObj*, int e, btManifoldPoint*);
 	void postHealthLogic(Robot* arr[]);
 	void postDeathLogic(Robot*);

@@ -29,8 +29,7 @@ GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, do
 }
 
 GameObj::~GameObj(){
-	delete rigidBody;
-
+	//delete rigidBody;
 }
 
 double GameObj::getX(){
@@ -257,7 +256,7 @@ void GameObj::setBlockType(int bType)
 	}
 	case WALL:
 	{
-		_collisionType = C_WALLS;
+				 _collisionType = C_WALLS;
 		break;
 	}
 	case BATTLEFIELD:
@@ -278,7 +277,10 @@ void GameObj::setBlockType(int bType)
 
 	default:{
 		std::cout << "WRONG BLOCK TYPE " << bType << std::endl;
-				break;
+		_mass = 10;
+		_health = 200;
+		_collisionType = C_ROBOT_PARTS;
+		break;
 	}
 	}
 }
@@ -389,8 +391,8 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		Constraint* c = new Constraint();
 		c->_joint6DOF = joint6DOF;
 		constraints.push_back(c);
-		c = new Constraint();
-		c->_joint6DOF = joint6DOF;
+	/*	c = new Constraint();
+		c->_joint6DOF = joint6DOF;*/
 		o->getConstraints()->push_back(c);
 		return c;
 }
@@ -400,10 +402,11 @@ int GameObj::deleteConstraints()//std::map< btCollisionObject*, GameObj*>* pair)
 	std::vector<Constraint*>::iterator it;
 	int ret = 0;
 	// return value? 
-	if (constraints.size() == 0) return 1;
+	if (constraints.size() == 0) return ret;
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
 		Constraint* c = (*it);
+		if (c == nullptr) continue;
 		GameObj* other = nullptr;
 		if (c->_joint6DOF == nullptr) return ret;
 		if (&c->_joint6DOF->getRigidBodyA() == this->getRigidBody())
@@ -419,6 +422,7 @@ int GameObj::deleteConstraints()//std::map< btCollisionObject*, GameObj*>* pair)
 		}
 
 		//delete(c->_joint6DOF);
+
 		c->_joint6DOF = nullptr;
 		if (other != nullptr){
 			if (other->deleteInvalidConstraints())
@@ -452,12 +456,16 @@ int GameObj::deleteInvalidConstraints()
 		return 0;
 	}
 	
+	if (constraints.size() == 0) return 0;
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
+
 		Constraint* c = (*it);
+		if (c == nullptr) continue;
 		if (c->_joint6DOF == nullptr)
 		{
 			delete(c);
+			c = nullptr;
 		}
 		else
 		{

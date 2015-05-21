@@ -88,6 +88,7 @@
     <ClInclude Include="GameEvents.h" />
     <ClInclude Include="GECollisonHappen.h" />
     <ClInclude Include="GEHealthUpdate.h" />
+    <ClInclude Include="GEHillUpdate.h" />
     <ClInclude Include="GERobotDeath.h" />
     <ClInclude Include="GEScoreboardUpdate.h" />
     <ClInclude Include="GETime.h" />
@@ -129,6 +130,7 @@
     <ClCompile Include="GameEvents.cpp" />
     <ClCompile Include="GECollisonHappen.cpp" />
     <ClCompile Include="GEHealthUpdate.cpp" />
+    <ClCompile Include="GEHillUpdate.cpp" />
     <ClCompile Include="GERobotDeath.cpp" />
     <ClCompile Include="GEScoreboardUpdate.cpp" />
     <ClCompile Include="GETime.cpp" />
