@@ -33,8 +33,9 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 							 //Switch back to game view
 							 if (((EventDeath*)event)->death_id == (g_pCore->pPlayer->playerid)){
 								 printf("Death Event has been received \n");
+
 								 // switch to build view
-								 Window::factory->switchView('1');
+								 Window::factory->delayedRebuild();
 								 // switch to build view sound in Window
 								 
 							 }

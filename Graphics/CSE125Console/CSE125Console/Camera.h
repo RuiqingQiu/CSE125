@@ -53,6 +53,12 @@ public:
 	void drawLines();
 	void drawPlanes();
 	void drawNormals();
+
+	bool usePolar;
+
+	void updatePolar(float a, float i, float d);
+	void resetPolar();
+
 private:
 	void UpdateCamera();
 	Vector3 VectorLerp(Vector3* v1, Vector3* v2, float lerp, bool isangle);
@@ -65,4 +71,8 @@ private:
 		FARP
 	};
 
+	//polar controls
+	float distance;
+	float azimuth;
+	float incline;
 };

@@ -25,11 +25,13 @@ public:
 	void updateName(string name);
 
 	cooldownDisplay * cooldown;
-	background * takeDamage;
 	bool damageTaken;
+	bool isDead;
 
 private:
 	healthBar * healthDisplay;
+	background * takeDamage;
+	guiItem * onDeath;
 
 	float currDuration = 0;
 	float maxDuration = 3;
