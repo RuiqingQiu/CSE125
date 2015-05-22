@@ -4,6 +4,10 @@
 
 buildViewInput::buildViewInput()
 {
+	leftDown = false;
+	rightDown = false;
+	prevX = 0;
+	prevY = 0;
 }
 
 
@@ -28,6 +32,9 @@ void buildViewInput::VProcessKeyInput(unsigned char key, int x, int y) {
 		break;
 	case 'd':
 		newPos = g_pCore->pGameView->translateNode(Vector3(1, 0, 0), g_pCore->pGameView->currentNode);
+		break;
+	case 'r':
+		g_pCore->pGameView->pViewCamera->resetPolar();
 		break;
 	default:
 		break;
@@ -55,6 +62,35 @@ void buildViewInput::VProcessSpecialKey(int key, int x, int y) {
 	default:
 		break;
 	}
+}
+
+void buildViewInput::VProcessMouseClick(int button, int state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON) {
+		leftDown = (state == GLUT_DOWN);
+	}
+	else if (button == GLUT_RIGHT_BUTTON) {
+		rightDown = (state == GLUT_DOWN);
+	}
+}
+
+void buildViewInput::VProcessPassiveMouse(int x, int y) {
+	int dx = x - prevX;
+	int dy = -(y - prevY);
+
+	prevX = x;
+	prevY = y;
+
+	if (leftDown) {
+		g_pCore->pGameView->pViewCamera->updatePolar(dx, dy, 1);
+	}
+
+	if (rightDown) {
+		g_pCore->pGameView->pViewCamera->updatePolar(0, 0, 1.0 - (dx*0.01) );
+	}
+}
+
+void buildViewInput::VProcessMotion(int x, int y) {
+	VProcessPassiveMouse(x, y);
 }
 
 

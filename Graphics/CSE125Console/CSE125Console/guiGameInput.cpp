@@ -30,3 +30,7 @@ void guiGameInput::VProcessPassiveMouse(int x, int y) {
 void guiGameInput::VProcessKeyInputUp(unsigned char key, int x, int y){
 
 }
+
+void guiGameInput::VProcessMotion(int x, int y) {
+
+}

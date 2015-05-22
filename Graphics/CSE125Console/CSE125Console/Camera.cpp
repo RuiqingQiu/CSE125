@@ -6,6 +6,12 @@ Camera::Camera()
 	//localTransform = Transform();
 	rotation = new Vector3(-30, 0, 0);
 	IsFollowingEnabled = true;
+
+	distance = 6.0f;
+	azimuth = 0.0f;
+	incline = 0.0f;
+
+	usePolar = false;
 }
 
 
@@ -24,6 +30,14 @@ void Camera::setUpCamera(){
 	}
 	else{
 	}
+
+	if (usePolar) {
+		glTranslatef(0.0, 0.0, -distance);
+		glRotatef(incline, 1.0, 0.0, 0.0);
+		glRotatef(azimuth, 0.0, 1.0, 0.0);
+		return;
+	}
+
 	glRotatef(rotation->x, 1, 0, 0);
 	glRotatef(rotation->y, 0, 1, 0);
 	glRotatef(rotation->z, 0, 0, 1);
@@ -38,6 +52,23 @@ void Camera::setUpCamera(){
 	//this->drawPlanes();
 }
 
+void Camera::updatePolar(float a, float i, float d) {
+	azimuth += a;
+	incline += i;
+	distance = distance * d;
+
+	if (incline < 0) incline = 0;
+	if (incline > 90) incline = 90;
+
+	if (distance < 1) distance = 1;
+	if (distance > 10) distance = 10;
+}
+
+void Camera::resetPolar() {
+	distance = 6.0f;
+	azimuth = 0.0f;
+	incline = 0.0f;
+}
 
 void  Camera::setUpCameraWithGL(float position_x, float position_y, float position_z, float lookAt_x, float lookAt_y, float lookAt_z){
 	if (IsFollowingEnabled&&FollowingTarget != nullptr)

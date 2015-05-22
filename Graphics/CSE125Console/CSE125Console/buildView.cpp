@@ -21,6 +21,7 @@ buildView::~buildView() {
 }
 
 void buildView::init() {
+	pViewCamera->usePolar = true;
 	show_time = true;
 	//updateview = false;
 	sound = new Sound();
@@ -84,7 +85,7 @@ void buildView::createText() {
 
 	//grid textures
 	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
-	setTexture("uiItem/images/blackgrid_ext.jpg", &grids[1]);
+	setTexture("uiItem/images/grid_ext.png", &grids[1]);
 }
 
 void buildView::createButtons() {
@@ -198,9 +199,11 @@ void buildView::VOnRender() {
 	//if (currentNode->textureType == selectedType || true) 
 	//	currentNode->VOnDraw();
 	
-	GameView::highlight_first_pass_build();
-	GameView::highlight_second_pass_build();
-	
+	if (currentNode->textureType == selectedType) {
+		GameView::highlight_first_pass_build();
+		GameView::highlight_second_pass_build();
+	}
+
 	glPopMatrix();
 
 	glPushMatrix();
@@ -210,6 +213,9 @@ void buildView::VOnRender() {
 	glColor3f(1, 1, 1);
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, grids[0]);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glBegin(GL_QUADS);
 	//bottom
 	glTexCoord2f(1, 0); 

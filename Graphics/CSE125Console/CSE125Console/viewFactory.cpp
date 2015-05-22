@@ -167,31 +167,31 @@ void viewFactory::idleFunc() {
 			setView();
 		}
 	}
+
+	if (delay) {
+		start = std::clock();
+		duration = 0;
+		delay = false;
+		std::cout << "start delay " << std::endl;
+	}
+
+	if (duration != -1) {
+		duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		if (duration > 5) {
+			duration = -1;
+			battlemode->isDead = false;
+			switchView('1');
+		}
+	}
+
+	std::cout << "delay: " << duration << std::endl;
 }
 
 void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
-	//can't check from pGameView, so must do in factory
-	//function specific to buildmode
-	if (key == '6') {
-		//score->updateScore(1, 0, 0);
-	}
-	else if (key == '7') {
-		//score->updateScore(0, 1, 0);
-	}
-	else if(key == '8') {
-		//score->updateScore(0, 0, 1);
-	}
+	//only use this if need something that view switches or accesses gpCore from a view
 
-	if (viewmode != viewType::BUILD) return;
-	switch (key) {
-	case ',':
-		buildmode->rotateRobot(-90);
-		break;
-	case '.':
-		buildmode->rotateRobot(90);
-		break;
-	default:
-		break;
+	if ( key == 'y') {
+		delayedRebuild();
 	}
 }
 
@@ -208,4 +208,9 @@ void viewFactory::mouseFunc(int button, int state, int x, int y) {
 		setView();
 	}
 	prevMouseState = state;
+}
+
+void viewFactory::delayedRebuild() {
+	delay = true;
+	battlemode->isDead = true;
 }

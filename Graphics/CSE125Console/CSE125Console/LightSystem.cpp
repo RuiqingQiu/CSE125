@@ -55,7 +55,7 @@ void LightSystem::renderLights(GameView* view){
 void LightSystem::passUniform(GLuint program){
 	if (lights.size() == 6){
 		float l1_pos[4] = { Window::light_system->lights[0]->localTransform.position.x, Window::light_system->lights[0]->localTransform.position.y, Window::light_system->lights[0]->localTransform.position.z, 1 };
-		cout << Window::light_system->lights[0]->localTransform.position.x << " " << Window::light_system->lights[0]->localTransform.position.y << " " << Window::light_system->lights[0]->localTransform.position.z << endl;
+		//cout << Window::light_system->lights[0]->localTransform.position.x << " " << Window::light_system->lights[0]->localTransform.position.y << " " << Window::light_system->lights[0]->localTransform.position.z << endl;
 		glUniform4fv(glGetUniformLocation(program, "lights[0].position"), 1, l1_pos);
 		float l2_pos[4] = { Window::light_system->lights[1]->localTransform.position.x, Window::light_system->lights[1]->localTransform.position.y, Window::light_system->lights[1]->localTransform.position.z, 1 };
 		glUniform4fv(glGetUniformLocation(program, "lights[1].position"), 1, l2_pos);
