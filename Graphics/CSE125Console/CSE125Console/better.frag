@@ -46,11 +46,12 @@ void phongModel(vec4 position, vec3 normal, out vec3 ambAndDiff, out vec3 spec) 
 	}
 }
 
+//This is a shader for displaying lights, don't change
 void main() {
   
     vec3 ambAndDiff, spec;
 	phongModel(Position, Normal, ambAndDiff, spec);
-    vec4 shadeColor = vec4(ambAndDiff, 1.0) * vec4(1,0,0,1) + vec4(spec, 1.0);
+    vec4 shadeColor = vec4(ambAndDiff, 1.0) * gl_Color + vec4(spec, 1.0);
     gl_FragColor = shadeColor;
 }
 

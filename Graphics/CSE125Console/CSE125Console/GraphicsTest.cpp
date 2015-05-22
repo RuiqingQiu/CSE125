@@ -14,7 +14,7 @@ GraphicsTest::~GraphicsTest()
 void GraphicsTest::displayTest5(GameView* view){
 	Model3D* object;
 	object = Model3DFactory::generateObjectWithType(Turrent);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = LIGHTS_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -23,7 +23,7 @@ void GraphicsTest::displayTest5(GameView* view){
 	view->PushEnvironmentNode(object);
 
 	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = LIGHTS_SHADER;
 	object->localTransform.position = Vector3(5, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -32,7 +32,7 @@ void GraphicsTest::displayTest5(GameView* view){
 	view->PushEnvironmentNode(object);
 
 	object = Model3DFactory::generateObjectWithType(Needle);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = LIGHTS_SHADER;
 	object->localTransform.position = Vector3(-5, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -40,6 +40,7 @@ void GraphicsTest::displayTest5(GameView* view){
 	object->type = Needle;
 	view->PushEnvironmentNode(object);
 
+	/*
 	for (int i = 0; i < 1000; i++){
 		object = Model3DFactory::generateObjectWithType(WoodenCube);
 		object->auto_rotate = true;
@@ -51,6 +52,7 @@ void GraphicsTest::displayTest5(GameView* view){
 		object->type = WoodenCube;
 		view->PushEnvironmentNode(object);
 	}
+	*/
 }
 
 
@@ -243,7 +245,7 @@ void GraphicsTest::displayTest2(GameView* view){
 	for (int i = 9; i < 24; i++){
 		object = Model3DFactory::generateObjectWithType(BGun);
 		object->shader_type = MATERIAL_SHADER;
-		object->localTransform.position = Vector3(i*5 - 100, 0, -10);
+		object->localTransform.position = Vector3(i*5 - 100, 0, 0);
 		object->localTransform.rotation = Vector3(0, 0, 0);
 		object->identifier = -1;
 		//object->auto_rotate = true;

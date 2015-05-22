@@ -5,6 +5,7 @@
 
 #ifndef __LightSystem__
 #define __LightSystem__
+#include "GameView.h"
 class LightSystem
 {
 public:
@@ -13,6 +14,10 @@ public:
 	vector<Light*> lights;
 	void addLight(Light*);
 	void setCameraOffset(float x, float y, float z);
+
+	void initLights();
+	void renderLights(GameView* view);
+	void passUniform(GLuint);
 	LightSystem();
 	~LightSystem();
 };

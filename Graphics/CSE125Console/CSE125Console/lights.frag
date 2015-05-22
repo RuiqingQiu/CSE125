@@ -51,7 +51,7 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 		vec3 v = normalize(-Position.xyz);
 		vec3 r = reflect(-s, n);
 		float sDotN = max( dot(s,Normal), 0.0 );
-		vec3 diffuse = attenuation * (lights[i].Ld * Kd * sDotN);
+		vec3 diffuse = attenuation * (lights[i].Ld * diffR * sDotN);
 		if( sDotN > 0.0 )
 		    spec += attenuation * (lights[i].Ls * Ks * pow( max( dot(r,v), 0.0 ), Shininess ));
 		ambAndDiff += diffuse;

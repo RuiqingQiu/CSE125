@@ -23,6 +23,6 @@ void main()
     vec4 LightPosition = vec4(0.0, 10.0, 20.0, 1.0);
     LightDir = normalize(toObjectLocal * (LightPosition.xyz - Position.xyz));
     ViewDir = toObjectLocal * normalize(-Position.xyz);
-  
+    gl_FrontColor = gl_Color;
     gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
 }

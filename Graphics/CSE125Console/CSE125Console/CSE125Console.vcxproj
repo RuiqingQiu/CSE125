@@ -294,6 +294,8 @@
     <None Include="hard_shadow.vert" />
     <None Include="highlight.frag" />
     <None Include="highlight.vert" />
+    <None Include="lights.frag" />
+    <None Include="lights.vert" />
     <None Include="material.frag" />
     <None Include="material.vert" />
     <None Include="normal.frag" />

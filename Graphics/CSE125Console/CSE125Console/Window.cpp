@@ -29,7 +29,7 @@ int Window::height = 1000;   //Set window height in pixels here
 viewFactory * Window::factory; // factory of gui
 //static Model3DFactory* m_factory;
 ShaderSystem* Window::shader_system;
-LightSystem* Window::light_sytem;
+LightSystem* Window::light_system;
 bool Window::build_to_battle = false;
 static int counter = 0;
 static Cube* cube;
@@ -131,7 +131,7 @@ void Window::initialize(void)
 	//Shader part
 	gt = new GraphicsTest();
 	
-	light_sytem = new LightSystem();
+	light_system = new LightSystem();
 	shader_system = new ShaderSystem();
 	setupFBO();
 	
@@ -163,14 +163,6 @@ void Window::initialize(void)
 		}
 	}
 
-	//Here's for init lights
-	for (int i = -50; i < 50; i+=50){
-		for (int j = -50; j < 50; j+=50){
-			light_sytem->addLight(new Light());
-		}
-	}
-	cout << "number of lights are " << light_sytem->lights.size() << endl;
-
 	//Fire* f = new Fire(0,0,0,0,0);
 	//f->static_object = true;
 	//factory->battlemode->PushGeoNode(f);
@@ -187,7 +179,7 @@ void Window::initialize(void)
 	factory->battlemode->PushEnvironmentNode(object);
 
 	gt->displayTest2(factory->battlemode);
-
+	//gt->displayTest5(factory->battlemode);
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
 	factory->viewmode = viewType::BATTLE;
@@ -200,44 +192,9 @@ void Window::initialize(void)
 	//gt->displayTest5(factory->battlemode);
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
 
-	Light* l1 = new Light(0.0, 10.0, 0.0);
-	Light* l2 = new Light(5.0, 0.0, 0.0);
-	Light* l3 = new Light(-5.0, 0.0, -10.0);
-	Light* l4 = new Light(-5.0, 5.0, -10.0);
-	Light* l5 = new Light(5.0, 0.0, -10.0);
-	Light* l6 = new Light(0.0, 50.0, 0.0);
-
-
-	l1->red = 1.0;
-	l1->green = 1.0;
-	l1->blue = 1.0; 
-
-	l2->red = 0.0;
-	l2->green = 0.0;
-	l2->blue = 0.9;
-
-	l3->red = 0.0;
-	l3->green = 0.9;
-	l3->blue = 0.0;
-
-	l4->red = 1.0;
-	l4->green = 1.0;
-	l4->blue = 0.0;
-
-	l5->red = 0.0;
-	l5->green = 1.0;
-	l5->blue = 1.0;
-
-	l6->red = 1.0;
-	l6->green = 0.0;
-	l6->blue = 1.0;
-
-	factory->battlemode->PushEnvironmentNode(l1);
-	factory->battlemode->PushEnvironmentNode(l2);
-	factory->battlemode->PushEnvironmentNode(l3);
-	factory->battlemode->PushEnvironmentNode(l4);
-	factory->battlemode->PushEnvironmentNode(l5);
-	factory->battlemode->PushEnvironmentNode(l6);
+	//Init 6 lights and render them
+	light_system->initLights();
+	light_system->renderLights(factory->battlemode);
 
 
 	//connect to server
@@ -406,5 +363,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

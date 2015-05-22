@@ -13,10 +13,17 @@ static int counter = 0;
 Light::Light()
 {
 	localTransform.position = Vector3(0, 0, 0);
+	//Default values
+	Ld = Vector3(1.0, 1.0, 1.0);
+	Ls = Vector3(0.4, 0.4, 0.4);
+	La = Vector3(1.0, 1.0, 1.0);
 }
 
 Light::Light(float x, float y, float z){
 	localTransform.position = Vector3(x,y,z);
+	Ld = Vector3(1.0, 1.0, 1.0);
+	Ls = Vector3(0.4, 0.4, 0.4);
+	La = Vector3(1.0, 1.0, 1.0);
 }
 
 Light::~Light()
@@ -46,7 +53,7 @@ void Light::VOnDraw(){
 	glPushMatrix();
 	//Apply local transformation
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
-	glColor3f(red, green, blue);
+	glColor3f(Ld.x, Ld.y, Ld.z);
 	glutSolidSphere(0.4,20,20);
 	glColor3f(1, 1, 1);
 	glPopMatrix();

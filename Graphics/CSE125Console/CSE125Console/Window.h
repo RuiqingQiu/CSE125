@@ -29,7 +29,7 @@ public:
 	static void processMouse(int x, int y);
 	static ShaderSystem* shader_system;
 	static viewFactory* factory;
-	static LightSystem* light_sytem;
+	static LightSystem* light_system;
 	static Sound * soundObject; // static sound object
 	static bool build_to_battle; 
 
