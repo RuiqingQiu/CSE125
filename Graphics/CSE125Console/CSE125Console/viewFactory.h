@@ -14,6 +14,8 @@
 
 #include "scoreBox.h"
 
+#include <ctime>
+
 class viewFactory
 {
 public:
@@ -22,7 +24,7 @@ public:
 	viewFactory(bool d);
 	~viewFactory();
 
-	bool debug;
+	//bool debug = true;
 
 	GameView * currentView;
 
@@ -54,10 +56,17 @@ public:
 	void mouseFunc(int button, int state, int x, int y);
 	void keyboardFunc(unsigned char key, int x, int y);
 
+	void delayedRebuild();
+
 	//one scorebox for whole game
 	scoreBox * score;
 
 private:
 	int prevMouseState;
+
+	std::clock_t start;
+	bool delay;
+
+	float duration = -1;
 };
 

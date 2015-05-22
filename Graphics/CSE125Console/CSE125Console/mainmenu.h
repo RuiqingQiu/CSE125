@@ -20,8 +20,7 @@ public:
 	virtual void VUpdate();
 
 	viewType mouseClickFunc(int state, int x, int y);
-
-	bool isLoading;
+	bool isLoading; 
 
 private:
 	//helper initialization functions

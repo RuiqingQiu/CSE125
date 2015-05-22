@@ -182,7 +182,7 @@ void Window::initialize(void)
 	//gt->displayTest3(factory->battlemode);
 	//gt->displayTest4(factory->battlemode);
 	//gt->displayTest5(factory->battlemode);
-	//gt->displayTest6(factory->battlemode);
+	gt->displayTest6(factory->battlemode);
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
 	factory->viewmode = viewType::BATTLE;
@@ -204,7 +204,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
 }
 
 //----------------------------------------------------------------------------
@@ -259,12 +259,6 @@ void Window::processSpecialKeys(int key, int x, int y) {
 	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
 }
 
-void Window::processMouse(int x, int y)
-{
-	g_pCore->i_pInput->VProcessMouse(x, y);
-}
-
-
 void Window::processMouseClick(int button, int state, int x, int y) {
 	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
 	factory->mouseFunc(button, state, x, y);
@@ -275,6 +269,12 @@ void Window::processMouseClick(int button, int state, int x, int y) {
 void Window::processPassiveMouse(int x, int y) {
 	g_pCore->i_pInput->VProcessPassiveMouse(x, y);
 }
+
+void Window::processMotion(int x, int y)
+{
+	g_pCore->i_pInput->VProcessMotion(x, y);
+}
+
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
@@ -292,8 +292,6 @@ void Window::reshapeCallback(int w, int h) {
 	//Reshape, set up frame buffer object again based on the new width and height
 	setupFBO();
 }
-
-
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.

@@ -67,12 +67,13 @@ void mainMenu::createButtons() {
 	buttons.push_back(exitButton);
 	buttons.push_back(ipAdrressButton); // button[4] is enterIP Address
 
+	// the loading view after click on play button
 	loading = new loadDisplay(width*0.43, height*0.3, 250, 250);
 
 	backimg = new background("background1.jpg", width, height);
 	guiItems.push_back(backimg); // push in to the guiTexts vector
-
-	playersReady = new numDisplay("text/playersReady.jpg", width*(760.0 / 1920.0), height - 150, 400, 50);
+	playersReady = new numDisplay("text/playersReady.jpg", width*(760.0 / 1920.0), height - 150, 400, 50,1); 
+	
 }
 
 // overwrite the gui drawAllItems function
@@ -80,9 +81,10 @@ void mainMenu::drawAllItems(){
 	// but need to draw background first
 	guiItems[0]->draw();
 
+	// if player cliced on play button
 	if (playPressed) {
-		loading->draw();
-		playersReady->draw();
+		loading->draw(); // draw the loading view
+		playersReady->draw();  // draw the number of player ready
 	}
 	else {
 		// exchange the order, draw button first and then draw guiItems 
@@ -98,7 +100,8 @@ void mainMenu::drawAllItems(){
 void mainMenu::VUpdate() {
 	gui::VUpdate();
 	loading->update();
-	playersReady->displayValue = playerReady;
+	playersReady->displayValue = playerReady; // update the player ready value
+	playersReady->update(); // update number display
 }
 
 // add letters to the guiItem array

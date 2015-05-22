@@ -5,6 +5,7 @@
 
 enum displayConstants {
 	DEFAULT_NUM_DIGITS = 2,
+	DEFAULT_NUM_DIGITS_FOR_MAINMENU = 1,
 	BUILD_MAX_TIME = 90,
 	MIN = 5,
 	BATTLE_MAX_TIME = 60,
@@ -20,6 +21,7 @@ public:
 	numDisplay(string filename, int x, int y, bool f);
 	numDisplay(string filename, int x, int y, bool xf, bool yf);
 	numDisplay(string filename, int x, int y, int w, int h);
+	numDisplay(string filename, int x, int y, int w, int h,int mainmenuLoading); // loading view constructor
 	numDisplay(string filename, int x, int y, int w, int h, bool f);
 	numDisplay(string filename, int x, int y, int w, int h, bool xf, bool yf);
 	~numDisplay();
@@ -29,8 +31,10 @@ public:
 	virtual void rePosition(int x, int y, int w, int h);
 
 	float displayValue;
+	int mainmenuLoading; // mainmenu and build view has different number position
 
 protected:
+
 	virtual void createNumbers();
 
 	vector<numbers *> digits;

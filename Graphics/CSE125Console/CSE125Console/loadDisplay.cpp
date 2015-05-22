@@ -57,6 +57,5 @@ void loadDisplay::draw() {
 
 void loadDisplay::rePosition(int x, int y, int w, int h) {
 	guiItem::rePosition(x, y, w, h);
-
 	loadingText->setPosition(xPos + int(width * 100.0 / 500.0), yPos + int(height * 220.0 / 500.0));
 }
