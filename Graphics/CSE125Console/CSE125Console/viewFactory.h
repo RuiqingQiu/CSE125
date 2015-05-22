@@ -24,7 +24,7 @@ public:
 	viewFactory(bool d);
 	~viewFactory();
 
-	bool debug;
+	//bool debug = true;
 
 	GameView * currentView;
 

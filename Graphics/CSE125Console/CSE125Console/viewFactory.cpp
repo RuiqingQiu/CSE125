@@ -21,8 +21,6 @@ viewFactory::viewFactory()
 	score = new scoreBox(0, 0, 200, 100, true, false);
 	battlemode->addItem(score);
 	buildmode->addItem(score);
-
-	debug = false;
 }
 
 viewFactory::viewFactory(int w, int h) {
@@ -45,23 +43,15 @@ viewFactory::viewFactory(int w, int h) {
 	battlemode->addItem(score);
 	buildmode->addItem(score);
 
-	debug = false;
 	cout << "view factory loading done" << endl;
 
 }
 
 viewFactory::viewFactory(bool d) {
-	debug = d;
+	//debug = d;
 	viewmode = viewType::CONSOLE;
 	defaultView = new GameView();
 	battlemode = new battleView();
-
-	if (!debug) {
-		helpview = new helpMenu();
-		buildmode = new buildView();
-		menumode = new mainMenu();
-		currentView = defaultView;
-	}
 
 	gui_Input = new guiGameInput();
 	standard_Input = new StandardGameInput();
@@ -80,11 +70,6 @@ GameView * viewFactory::getView() {
 */
 //a gui factory
 void viewFactory::setView() {
-	if (debug) {
-		currentView = defaultView;
-		return;
-	}
-
 	//hacky quick fix for being able to switch console modes with number keys
 	//if (viewmode != viewType::BUILD) buildmode->updateview = false;
 	currentView->isCurrentView = false;
@@ -119,7 +104,6 @@ void viewFactory::setView() {
 }
 
 void viewFactory::switchView(unsigned char key) {
-	if (debug) return;
 	switch (key) {
 	case '1':
 		viewmode = viewType::BUILD;
@@ -147,7 +131,6 @@ void viewFactory::switchView(unsigned char key) {
 }
 
 void viewFactory::reshapeFunc(int w, int h) {
-	if (debug) return;
 	buildmode->setDimensions(w, h);
 	menumode->setDimensions(w, h);
 	helpview->setDimensions(w, h);
@@ -196,7 +179,6 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 }
 
 void viewFactory::mouseFunc(int button, int state, int x, int y) {
-	if (debug) return;
 	viewType s = currentView->mouseClickFunc(state, x, y);
 	if (s != viewmode) {
 		if (viewmode == viewType::BUILD && s == viewType::BATTLE) {
