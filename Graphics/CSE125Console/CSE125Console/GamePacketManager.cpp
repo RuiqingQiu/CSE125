@@ -82,6 +82,15 @@ bool GamePacketManager::SendShootEvent(int id){
 	strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
 	return client->sendPacket(cp);
 }
+bool GamePacketManager::SendSuicide(int id)
+{
+	CPacket cp;
+	cp.packet_type = SUICIDE;
+	string tmp = to_string(id) + "\n\0";
+	strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
+	return client->sendPacket(cp);
+}
+
 
 bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
 {

@@ -170,7 +170,7 @@ void buildView::VUpdate() {
 
 void buildView::VOnRender() {
 	GameView::highlight_first_pass();
-	GameView::highlight_second_pass();
+	GameView::highlight_second_pass_build2();
 	
 	//Clear color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

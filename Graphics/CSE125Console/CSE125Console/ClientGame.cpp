@@ -5,10 +5,7 @@
 #define RAD_TO_DEGREE_MULT 57.2957795
 ClientGame::ClientGame(void)
 {
-
-    network = new ClientNetwork();
-
-   
+    network = new ClientNetwork();   
 }
 
 //Helper function for split strings

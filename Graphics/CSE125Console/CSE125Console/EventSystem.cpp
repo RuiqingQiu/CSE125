@@ -100,6 +100,12 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									if (h->player1id == g_pCore->pPlayer->playerid) {
 										Window::factory->battlemode->healthDisplay->currentHealth = h->health;
 										Window::factory->battlemode->healthDisplay->maxHealth = h->maxhealth;
+										if (((float)h->health / (float)h->maxhealth) <= 0.2f){
+											g_pCore->pGameView->SetBlur(true, 0.15f, 0.3f);
+										}
+										else{
+											g_pCore->pGameView->SetBlur(false, 0.15f, 0.3f);
+										}
 									}
 									/////// end GUI
 
