@@ -72,10 +72,7 @@ void mainMenu::createButtons() {
 
 	backimg = new background("background1.jpg", width, height);
 	guiItems.push_back(backimg); // push in to the guiTexts vector
-	cout << "width is " << width << endl;
-	cout << "height is " << height << endl;
-	playersReady = new numDisplay("text/playersReady.jpg", width*(760.0 / 1920.0), height - 150, 400, 50,1);
-	playersReady->mainmenuLoading = true;
+	playersReady = new numDisplay("text/playersReady.jpg", width*(760.0 / 1920.0), height - 150, 400, 50,1); 
 	
 }
 
@@ -104,6 +101,7 @@ void mainMenu::VUpdate() {
 	gui::VUpdate();
 	loading->update();
 	playersReady->displayValue = playerReady; // update the player ready value
+	playersReady->update(); // update number display
 }
 
 // add letters to the guiItem array
