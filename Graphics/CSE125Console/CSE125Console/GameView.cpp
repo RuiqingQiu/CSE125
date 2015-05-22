@@ -344,7 +344,7 @@ void GameView::highlight_second_pass(){
 	
 
 	//motion blur effect
-	SetMotionBlur = true;
+	//SetMotionBlur = true;
 	if (SetMotionBlur){
 		//draw last frmae
 		glUseProgramObjectARB(0);
