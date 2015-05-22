@@ -6,6 +6,7 @@ static int counter = 0;
 Model3DGroup::Model3DGroup()
 {
 	localTransform = Transform();
+	shader_type = NORMAL_SHADER;
 }
 
 

@@ -52,7 +52,6 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(Turrent, new RenderObject("Assets/CrappyTurret/turretjoined.obj", "Assets/CrappyTurret/tex.png", "Assets/CrappyTurret/normals.png", "Assets/CrappyTurret/gloss.png", "Assets/CrappyTurret/metallic.png")));
 
 	render_obj_map.insert(std::pair<int, RenderObject*>(Railgun, new RenderObject("Assets/Railgun/railgun.obj", "Assets/Railgun/tex.png", "Assets/Railgun/normals.png", "Assets/Railgun/gloss.png", "Assets/Railgun/metallic.png")));
-	
 	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
 
 	

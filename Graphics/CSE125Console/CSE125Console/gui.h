@@ -10,6 +10,7 @@
 #include "background.h"
 #include "scrollBox.h"
 #include "scoreBox.h"
+#include "battletimer.h"
 
 class gui : public GameView {
 public:

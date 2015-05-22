@@ -113,6 +113,9 @@ void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 	case 'z':
 		name.append("z");
 		break;
+	case ' ':
+		name.append(" ");
+		break;
 	default:
 		break;
 	}

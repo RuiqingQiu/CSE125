@@ -33,8 +33,9 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 							 //Switch back to game view
 							 if (((EventDeath*)event)->death_id == (g_pCore->pPlayer->playerid)){
 								 printf("Death Event has been received \n");
+
 								 // switch to build view
-								 Window::factory->switchView('1');
+								 Window::factory->delayedRebuild();
 								 // switch to build view sound in Window
 								 
 							 }
@@ -55,12 +56,8 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventTimer:{
 							 EventTimer * t = (EventTimer *)event;
 							 printf("time event received \n");
-							 //Change variable in build mode and battle mode
-
 							 //CHANGE BATTLE MODE ONLY
-							 int sec = t->time % 60;
-							 Window::factory->battlemode->timer->secLeft = sec;
-							 Window::factory->battlemode->timer->minLeft = (t->time - sec) / 60;
+							 Window::factory->battlemode->timer->updateTime(t->time);
 							 /////// end GUI
 
 							 break;
@@ -98,14 +95,14 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 									//this is for the GUI display update
 									if (h->player1id == g_pCore->pPlayer->playerid) {
-										Window::factory->battlemode->healthDisplay->currentHealth = h->health;
-										Window::factory->battlemode->healthDisplay->maxHealth = h->maxhealth;
 										if (((float)h->health / (float)h->maxhealth) <= 0.2f){
 											g_pCore->pGameView->SetBlur(true, 0.15f, 0.3f);
 										}
 										else{
 											g_pCore->pGameView->SetBlur(false, 0.15f, 0.3f);
 										}
+
+										Window::factory->battlemode->updateHealth(h->health, h->maxhealth);
 									}
 									/////// end GUI
 

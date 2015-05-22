@@ -29,7 +29,7 @@ int Window::height = 1000;   //Set window height in pixels here
 viewFactory * Window::factory; // factory of gui
 //static Model3DFactory* m_factory;
 ShaderSystem* Window::shader_system;
-LightSystem* Window::light_sytem;
+LightSystem* Window::light_system;
 bool Window::build_to_battle = false;
 static int counter = 0;
 static Cube* cube;
@@ -131,7 +131,7 @@ void Window::initialize(void)
 	//Shader part
 	gt = new GraphicsTest();
 	
-	light_sytem = new LightSystem();
+	light_system = new LightSystem();
 	shader_system = new ShaderSystem();
 	setupFBO();
 	
@@ -163,66 +163,6 @@ void Window::initialize(void)
 		}
 	}
 
-	//Here's for init lights
-	for (int i = -50; i < 50; i+=50){
-		for (int j = -50; j < 50; j+=50){
-			light_sytem->addLight(new Light());
-		}
-	}
-	cout << "number of lights are " << light_sytem->lights.size() << endl;
-
-	Fire* f = new Fire(0,0,0,1,1);
-	f->static_object = true;
-	factory->battlemode->PushEnvironmentNode(f);
-
-	//////////////////////////
-	/*
-	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = EDGE_SHADER;
-	object->edge_highlight = true;
-	view->num_of_objs_highlight++;
-	object->localTransform.position = Vector3(0, 0, -17);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = BLUR_SHADER;
-	object->blur = true;
-	view->num_of_objs_blur++;
-	object->localTransform.position = Vector3(-3, 0, -17);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushGeoNode(object);
-
-	object = Model3DFactory::generateObjectWithType(CrystalCube);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(3, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(TREE1);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(0, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(TREE2);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(-5, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(TREE3);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(5, 0, -20);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = true;
-	view->PushEnvironmentNode(object);
-	*/
 	
 	object = Model3DFactory::generateObjectWithType(DESERT);
 	object->shader_type = BATTLEFIELD_SHADER;
@@ -234,24 +174,11 @@ void Window::initialize(void)
 	object->type = DESERT;
 	factory->battlemode->PushEnvironmentNode(object);
 
-	/*
-	object = Model3DFactory::generateObjectWithType(BATTLEFIELDOUTER);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, -2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->auto_rotate = false;
-	view->PushEnvironmentNode(object);
-	///////////////////////////
-	object = Model3DFactory::generateObjectWithType(BATTLEFIELDINNER);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, -2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->type = BATTLEFIELD
-	//factory->battlemode->PushGeoNode(object);
-	view->PushEnvironmentNode(object);
-	*/
+	//gt->displayTest2(factory->battlemode);
+	//gt->displayTest3(factory->battlemode);
+	//gt->displayTest4(factory->battlemode);
 	//gt->displayTest5(factory->battlemode);
-
+	gt->displayTest6(factory->battlemode);
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
 	factory->viewmode = viewType::MENU;
@@ -264,12 +191,17 @@ void Window::initialize(void)
 	//gt->displayTest5(factory->battlemode);
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
 
-	
+	//Init 6 lights and render them
+	light_system->initLights();
+	light_system->renderLights(factory->battlemode);
+
+
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
 }
 
 //----------------------------------------------------------------------------
@@ -324,12 +256,6 @@ void Window::processSpecialKeys(int key, int x, int y) {
 	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
 }
 
-void Window::processMouse(int x, int y)
-{
-	g_pCore->i_pInput->VProcessMouse(x, y);
-}
-
-
 void Window::processMouseClick(int button, int state, int x, int y) {
 	g_pCore->i_pInput->VProcessMouseClick(button, state, x, y);
 	factory->mouseFunc(button, state, x, y);
@@ -340,6 +266,12 @@ void Window::processMouseClick(int button, int state, int x, int y) {
 void Window::processPassiveMouse(int x, int y) {
 	g_pCore->i_pInput->VProcessPassiveMouse(x, y);
 }
+
+void Window::processMotion(int x, int y)
+{
+	g_pCore->i_pInput->VProcessMotion(x, y);
+}
+
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when graphics window is resized by the user
@@ -357,8 +289,6 @@ void Window::reshapeCallback(int w, int h) {
 	//Reshape, set up frame buffer object again based on the new width and height
 	setupFBO();
 }
-
-
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
@@ -431,5 +361,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

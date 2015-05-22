@@ -21,7 +21,9 @@ buildView::~buildView() {
 }
 
 void buildView::init() {
-	updateview = false;
+	pViewCamera->usePolar = true;
+	show_time = true;
+	//updateview = false;
 	sound = new Sound();
 	pViewCamera->rotation->x = 0;
 	pViewCamera->position->z = -7;
@@ -68,10 +70,10 @@ void buildView::init() {
 void buildView::createText() {
 	//text displays
 	//time.jpg dimensions: 800x100
-	//"fullscreen" 1920 width ratio, 1920/2 - 200 = 760  760/1920 
-	timer = new buildTimer(width*(760.0 / 1920.0), height - 60, 400, 50, false, false);
+	//"fullscreen" 1980 width ratio, 1980/2 - 200 = 740  740/1920 
+	timer = new battleTimer(width*(740 / 1920.0), height - 60, 500, 50, false, false);
 	timer->setScaling(true, false, width, height);
-	guiItems.push_back(timer);
+	//guiItems.push_back(timer);
 
 	//text box
 	//textbox.jpg dimensions: 600x400
@@ -83,7 +85,7 @@ void buildView::createText() {
 
 	//grid textures
 	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
-	setTexture("uiItem/images/blackgrid_ext.jpg", &grids[1]);
+	setTexture("uiItem/images/grid_ext.png", &grids[1]);
 }
 
 void buildView::createButtons() {
@@ -157,11 +159,15 @@ void buildView::createButtons() {
 void buildView::VUpdate() {
 	gui::VUpdate();
 
+	timer->update();
+
+	//not using this anymore
+	/*
 	if (!updateview && isCurrentView){// || true) { //use true to disable timer
 		timer->start = std::clock();
 	}
 	updateview = isCurrentView;
-
+	*/
 	blocksLeft = MAX_BLOCKS - NodeList.size();
 	blocksDisplay->displayValue = blocksLeft;
 }
@@ -193,9 +199,11 @@ void buildView::VOnRender() {
 	//if (currentNode->textureType == selectedType || true) 
 	//	currentNode->VOnDraw();
 	
-	GameView::highlight_first_pass_build();
-	GameView::highlight_second_pass_build();
-	
+	if (currentNode->textureType == selectedType) {
+		GameView::highlight_first_pass_build();
+		GameView::highlight_second_pass_build();
+	}
+
 	glPopMatrix();
 
 	glPushMatrix();
@@ -205,6 +213,9 @@ void buildView::VOnRender() {
 	glColor3f(1, 1, 1);
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, grids[0]);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glBegin(GL_QUADS);
 	//bottom
 	glTexCoord2f(1, 0); 
@@ -249,6 +260,7 @@ void buildView::VOnRender() {
 
 	set2d();
 	drawAllItems();
+	if (show_time) timer->draw();
 	set3d();
 	
 }
@@ -290,7 +302,7 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 
 	if ((battleButton->isSelected(x, height - y) &&
 		state == GLUT_UP)) {
-		updateview = false;
+		//updateview = false;
 		isCurrentView = false;
 		return viewType::BATTLE;
 	}
@@ -363,9 +375,11 @@ void buildView::clearConstraints() {
 }
 
 viewType buildView::checkTimeOut() {
+	/*
 	if (timer->timeLeft < 0) {
-		return viewType::BATTLE;
+		//return viewType::BATTLE;
 	}
+	*/
 	return viewType::BUILD;
 }
 
@@ -823,7 +837,7 @@ void buildView::addNode() {
 		if (check.equals(Vector3(0, 0, 0))) {
 			return;
 		}
-		currentNode->setShaderType(REGULAR_SHADER);
+		currentNode->setShaderType(NORMAL_SHADER);
 		PushGeoNode(currentNode);
 		//currentNode = NodeList[NodeList.size() - 1];
 		setCurrentNode(true);

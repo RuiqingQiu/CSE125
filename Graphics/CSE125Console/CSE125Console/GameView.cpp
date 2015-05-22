@@ -220,7 +220,7 @@ void GameView::highlight_second_pass(){
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	Window::light_sytem->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
+	Window::light_system->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
 	pViewCamera->setUpCamera();
 	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
 	Window::shader_system->BindShader(EDGE_SHADER);
@@ -344,6 +344,7 @@ void GameView::highlight_second_pass(){
 	
 
 	//motion blur effect
+	SetMotionBlur = true;
 	if (SetMotionBlur){
 		//draw last frmae
 		glUseProgramObjectARB(0);
@@ -412,7 +413,7 @@ void GameView::highlight_second_pass_build2()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	Window::light_sytem->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
+	Window::light_system->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
 	pViewCamera->setUpCamera();
 	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
 	Window::shader_system->BindShader(EDGE_SHADER);
@@ -573,7 +574,7 @@ void GameView::highlight_third_pass_build(GLuint lastFrame){
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	Window::light_sytem->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
+	Window::light_system->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
 	pViewCamera->setUpCamera();
 
 

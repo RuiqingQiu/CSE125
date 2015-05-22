@@ -30,8 +30,9 @@ Model3D::Model3D(RenderObject* r){
 	render_obj = r;
 	isTextured = true;
 	localTransform = Transform();
-	shader_type = REGULAR_SHADER;
-	//explosion = new Explosion();
+	shader_type = LIGHTS_SHADER;
+	//24 indicates material type, definition is material.h file
+	material.setMaterial_Property(24);
 }
 
 void Model3D::setShaderType(int type){
@@ -97,7 +98,39 @@ void Model3D::VOnDraw(){
 		if (false && this->type == BATTLEFIELD){
 			printf("battle field\n");
 		}
-		else if (this->edge_highlight){}
+		else if (this->edge_highlight){
+			//Passing modelMatrix
+			glUniformMatrix4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "ModelView"), 1, true,
+				localTransform.GetGLMatrix4().getFloatPointer());
+			//Passing four maps
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[0]);
+
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[1]);
+
+
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[2]);
+
+			glActiveTexture(GL_TEXTURE4);
+			glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[3]);
+
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "tex"), 1);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "norm"), 2);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 3);
+			glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 4);
+
+			// Make sure no bytes are padded:
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+			// Select GL_MODULATE to mix texture with polygon color for shading:
+			glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+			// Use bilinear interpolation:
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
 		else{
 			Window::shader_system->BindShader(shader_type);
 
@@ -108,7 +141,7 @@ void Model3D::VOnDraw(){
 		
 
 			if (this->shader_type == MATERIAL_SHADER){
-				float camera_offset[4] = { Window::light_sytem->camera_offset.x, Window::light_sytem->camera_offset.y, Window::light_sytem->camera_offset.z, 0.0 };
+				float camera_offset[4] = { Window::light_system->camera_offset.x, Window::light_system->camera_offset.y, Window::light_system->camera_offset.z, 0.0 };
 				glUniform4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_offset"), 1, camera_offset);
 				float Ka[3] = { float(this->material.material_ambient.x), float(this->material.material_ambient.y), float(this->material.material_ambient.z) };
 				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Ka"), 1, Ka);
@@ -118,9 +151,23 @@ void Model3D::VOnDraw(){
 				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Ks"), 1, Ks);
 				float Shininess = this->material.Shininess;
 				glUniform1f(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Shininess"), Shininess);
+				//True for using teapot, false use the regular model
 				tmp = true;
+				Window::light_system->passUniform(Window::shader_system->shader_ids[shader_type]);
+
 			}
 			else{
+				float camera_offset[4] = { Window::light_system->camera_offset.x, Window::light_system->camera_offset.y, Window::light_system->camera_offset.z, 0.0 };
+				glUniform4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_offset"), 1, camera_offset);
+				float Ka[3] = { float(this->material.material_ambient.x), float(this->material.material_ambient.y), float(this->material.material_ambient.z) };
+				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Ka"), 1, Ka);
+				float Kd[3] = { float(this->material.material_diffuse.x), float(this->material.material_diffuse.y), float(this->material.material_diffuse.z) };
+				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Kd"), 1, Kd);
+				float Ks[3] = { float(this->material.material_specular.x), float(this->material.material_specular.y), float(this->material.material_specular.z) };
+				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Ks"), 1, Ks);
+				float Shininess = this->material.Shininess;
+				glUniform1f(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Shininess"), Shininess);
+
 				//Passing four maps
 				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, render_obj->texturaID[0]);
@@ -139,6 +186,9 @@ void Model3D::VOnDraw(){
 				glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "norm"), 2);
 				glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "gloss"), 3);
 				glUniform1i(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "metallic"), 4);
+				//Passing information about the lights
+				Window::light_system->passUniform(Window::shader_system->shader_ids[shader_type]);
+
 			}
 			
 			// Make sure no bytes are padded:
@@ -158,6 +208,7 @@ void Model3D::VOnDraw(){
 			//glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
 		}
 		if (tmp){
+			//glutSolidCube(1);
 			glutSolidTeapot(1);
 		}
 		else{
