@@ -178,8 +178,11 @@ void Window::initialize(void)
 	object->type = DESERT;
 	factory->battlemode->PushEnvironmentNode(object);
 
-	gt->displayTest2(factory->battlemode);
+	//gt->displayTest2(factory->battlemode);
+	//gt->displayTest3(factory->battlemode);
+	//gt->displayTest4(factory->battlemode);
 	//gt->displayTest5(factory->battlemode);
+	//gt->displayTest6(factory->battlemode);
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
 	factory->viewmode = viewType::BATTLE;
@@ -201,7 +204,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
-	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
+	g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
 }
 
 //----------------------------------------------------------------------------

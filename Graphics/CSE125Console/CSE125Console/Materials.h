@@ -28,6 +28,7 @@ enum Material_Type{
 	Obsidian = 21,
 	Pearl = 22,
 	Turquoise = 23,
+	Common = 24,
 
 };
 class Materials

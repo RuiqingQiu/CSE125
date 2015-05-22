@@ -181,6 +181,13 @@ void Materials::setMaterial_Property(int MaterialType){
 			property_set = true;
 
 			break;
+		case Common:
+			material_ambient = Vector3(0.0, 0.0, 0.0);
+			material_diffuse = Vector3(0.64, 0.64, 0.64);
+			material_specular = Vector3(1.0, 1.0, 1.0);
+			Shininess = 12.8;
+			property_set = true;
+			break;
 		default:
 			cout << "material property default" << endl;
 			property_set = false;

@@ -30,7 +30,9 @@ Model3D::Model3D(RenderObject* r){
 	render_obj = r;
 	isTextured = true;
 	localTransform = Transform();
-	shader_type = NORMAL_SHADER;
+	shader_type = LIGHTS_SHADER;
+	//24 indicates material type, definition is material.h file
+	material.setMaterial_Property(24);
 }
 
 void Model3D::setShaderType(int type){
@@ -206,6 +208,7 @@ void Model3D::VOnDraw(){
 			//glMaterialfv(GL_FRONT, GL_SHININESS, &materials[m1].shininess);
 		}
 		if (tmp){
+			//glutSolidCube(1);
 			glutSolidTeapot(1);
 		}
 		else{

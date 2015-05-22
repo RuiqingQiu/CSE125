@@ -40,14 +40,14 @@ void Light::setPosition(float x, float y, float z){
 
 void Light::VOnDraw(){
 	counter = (counter + 1) % 360;
-	/*
+	
 	Matrix4 tmp;
 	tmp.makeRotateY(1);
 	Vector4 tmp1 = tmp * Vector4(localTransform.position.x, localTransform.position.y, localTransform.position.z, 1);
 	localTransform.position.x = tmp1.x;
 	localTransform.position.y = tmp1.y;
 	localTransform.position.z = tmp1.z;
-	*/
+	
 	Window::shader_system->BindShader(REGULAR_SHADER);
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();

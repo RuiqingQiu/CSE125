@@ -11,6 +11,47 @@ GraphicsTest::~GraphicsTest()
 {
 }
 
+void GraphicsTest::displayTest6(GameView* view){
+	int x = -20;
+	Model3D* object;
+	for (int i = BasicCube; i <= BLACKCUBE; i++){
+		object = Model3DFactory::generateObjectWithType(i);
+		object->shader_type = LIGHTS_SHADER;
+		object->localTransform.position = Vector3(x, 0, 0);
+		x += 2;
+		object->localTransform.rotation = Vector3(0, 0, 0);
+		object->identifier = -1;
+		object->isUpdated = true;
+		object->type = i;
+		view->PushEnvironmentNode(object);
+	}
+	for (int i = BGun; i <= Railgun; i++){
+		object = Model3DFactory::generateObjectWithType(i);
+		object->shader_type = LIGHTS_SHADER;
+		object->localTransform.position = Vector3(x, 0, 0);
+		x += 2;
+		object->localTransform.rotation = Vector3(0, 0, 0);
+		object->identifier = -1;
+		object->isUpdated = true;
+		object->type = i;
+		view->PushEnvironmentNode(object);
+	}
+	for (int i = Discount; i <= TronWheel; i++){
+		object = Model3DFactory::generateObjectWithType(i);
+		object->shader_type = LIGHTS_SHADER;
+		object->localTransform.position = Vector3(x, 0, 0);
+		x += 2;
+		object->localTransform.rotation = Vector3(0, 0, 0);
+		object->identifier = -1;
+		object->isUpdated = true;
+		object->type = i;
+		view->PushEnvironmentNode(object);
+	}
+
+}
+
+
+
 void GraphicsTest::displayTest5(GameView* view){
 	Model3D* object;
 	object = Model3DFactory::generateObjectWithType(Turrent);

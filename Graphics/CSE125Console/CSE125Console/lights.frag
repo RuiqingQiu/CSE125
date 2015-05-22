@@ -20,6 +20,7 @@ uniform vec3 Kd;
 uniform vec3 Ka;
 uniform vec3 Ks;
 uniform float Shininess;
+varying mat3 toObjectLocal;
 
 #define MAX_LIGHTS 6 
 
@@ -46,17 +47,20 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 	vec3 spec = vec3(0.0);
 	for(int i = 0; i < MAX_LIGHTS; i++){
 		float attenuation = 1.0 / (1.0 + 0.0 * length(lights[i].position - Position) + 0.01 * pow(length(lights[i].position - Position), 2));
-		vec3 n = normalize(Normal);
-		vec3 s = normalize(vec3(lights[i].position - Position));
-		vec3 v = normalize(-Position.xyz);
-		vec3 r = reflect(-s, n);
-		float sDotN = max( dot(s,Normal), 0.0 );
+		vec3 LightDir = normalize(toObjectLocal * (lights[i].position - Position.xyz));
+		vec3 ViewDir = toObjectLocal * normalize(-Position.xyz);
+		vec3 r = reflect(-LightDir, normal);
+		float sDotN = max(dot(LightDir, normal), 0.0);
+    
 		vec3 diffuse = attenuation * (lights[i].Ld * diffR * sDotN);
-		if( sDotN > 0.0 )
-		    spec += attenuation * (lights[i].Ls * Ks * pow( max( dot(r,v), 0.0 ), Shininess ));
+    
+		if(sDotN > 0.0){
+			spec += attenuation * (lights[i].Ls * Ks * pow(max(dot(r, ViewDir), 0.0), Shininess));
+		}
 		ambAndDiff += diffuse;
 	}
-	return ambAndDiff + spec;
+    return ambAndDiff + spec;
+
 }
 
 void main() {
