@@ -24,7 +24,7 @@ public:
 	bool SendMoveToBackward(int id);
 	bool SendShootEvent(int id);
 	bool SendRobotBuild(int id, std::vector<GeoNode *> nodeList);
-
+	bool SendSuicide(int id);
 	GameInfoPacket* tryGetGameInfo();
 };
 

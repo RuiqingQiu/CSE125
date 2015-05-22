@@ -8,6 +8,9 @@ GameView::GameView()
 {	
 	pViewCamera = new Camera();
 	currentNode = nullptr;
+	glGenTextures(1, &lastFrame1);
+	glGenTextures(1, &lastFrame2);
+
 }
 
 
@@ -304,8 +307,141 @@ void GameView::highlight_second_pass(){
 		}
 	}
 
-	//sorting grass from back to front before drawing
-	/*
+	vector<pair<float, GeoNode*>> depthvec;
+	for each (GeoNode* node in GrassList)
+	{
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		{
+			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
+			Vector4 position = modelview * (localpos);
+			float z = position.z;
+
+			pair<float, GeoNode*> p = make_pair(z, node);
+			depthvec.push_back(p);
+		}
+	}
+
+	sort(depthvec.begin(), depthvec.end(), pairCompare);
+
+	//Draw environment
+	for each (GeoNode* node in EnvironmentList){
+		node->VOnDraw();
+	}
+	for (int i = 0; i < EnvironmentList.size(); i++){
+		GeoNode* node = EnvironmentList[i];
+		//printf("size of particle is %i\n", EnvironmentList.size());
+
+		if (node->isDead)
+		{
+			EnvironmentList.erase(EnvironmentList.begin() + i);
+		}
+	}
+	//grass
+	for each (pair<float, GeoNode*> p in depthvec)
+	{
+		p.second->VOnDraw();
+	}
+	
+
+	//motion blur effect
+	SetMotionBlur = true;
+	if (SetMotionBlur){
+		//draw last frmae
+		glUseProgramObjectARB(0);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(-Window::width / 2, Window::width / 2, -Window::height / 2, Window::height / 2, 0, 20);
+		//glOrtho(-100, 100, -100, 100, 0, 20.0);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		
+		glColor4f(1, 1, 1, 0.5f);
+		glActiveTextureARB(GL_TEXTURE0);
+
+		int a = rand() % 100;
+		if (a >= 0){
+			glBindTexture(GL_TEXTURE_2D, lastFrame1);
+			glEnable(GL_TEXTURE_2D);
+			glTranslated(0, 0, -1);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3f(-Window::width / 2, -Window::height / 2, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(Window::width / 2, -Window::height / 2, 0);
+			glTexCoord2f(1, 1);
+			glVertex3f(Window::width / 2, Window::height / 2, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(-Window::width / 2, Window::height / 2, 0);
+		}
+		else{
+			glBindTexture(GL_TEXTURE_2D, lastFrame2);
+			glEnable(GL_TEXTURE_2D);
+			glTranslated(0, 0, -1);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3f(-Window::width / 2, -Window::height / 2, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(Window::width / 2, -Window::height / 2, 0);
+			glTexCoord2f(1, 1);
+			glVertex3f(Window::width / 2, Window::height / 2, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(-Window::width / 2, Window::height / 2, 0);
+		}
+		glEnd();
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+	}
+}
+
+void GameView::highlight_second_pass_build2()
+{
+	//Code below this is second pass
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//Clear color and depth buffers
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Set the OpenGL matrix mode to ModelView
+
+	glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	Window::light_system->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
+	pViewCamera->setUpCamera();
+	glBindTexture(GL_TEXTURE_2D, Window::shader_system->color);
+	Window::shader_system->BindShader(EDGE_SHADER);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "width"), Window::width);
+	glUniform1f(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "height"), Window::height);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "pass"), 2);
+	glUniform1i(glGetUniformLocationARB(Window::shader_system->shader_ids[EDGE_SHADER], "RenderTex"), 0);
+
+	glPushMatrix();
+	glTranslated(0, 0, -15);
+	//glutSolidTeapot(1);
+	// activate and specify pointer to vertex array
+	glPopMatrix();
+
+	if (currentNode != nullptr) currentNode->VOnDraw();
+	//List of items that need edge highlight
+	for each (GeoNode* node in NodeList){
+		if (node->edge_highlight){
+			node->VOnDraw();
+		}
+	}
+	if (currentNode)
+		currentNode->VOnDraw();
+	Window::shader_system->UnbindShader();
+
+	//glPushMatrix();
+	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
+	//sort Z before draw
 	float ptr[16];
 	glGetFloatv(GL_MODELVIEW_MATRIX, ptr);
 	Matrix4 modelview;
@@ -330,7 +466,40 @@ void GameView::highlight_second_pass(){
 	modelview.m[3][3] = ptr[15];
 
 	modelview.transpose();
-	*/
+
+	vector<pair<float, GeoNode*>> nodedepthvec;
+	for each (GeoNode* node in NodeList)
+	{
+		if (typeid(*node) == typeid(SkyBox) || node->static_object == true)
+		{
+			pair<float, GeoNode*> p = make_pair(999, node);
+			nodedepthvec.push_back(p);
+		}
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		{
+			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
+			Vector4 position = modelview * (localpos);
+			float z = -position.z;
+
+			pair<float, GeoNode*> p = make_pair(z, node);
+			nodedepthvec.push_back(p);
+		}
+	}
+
+	sort(nodedepthvec.begin(), nodedepthvec.end(), pairCompare);
+
+
+	for each (pair<float, GeoNode*> p in nodedepthvec)
+	{
+		//Don't draw if it uses 2 pass
+		if (p.second->edge_highlight || p.second->blur){
+
+		}
+		else{
+			p.second->VOnDraw();
+		}
+	}
+
 	vector<pair<float, GeoNode*>> depthvec;
 	for each (GeoNode* node in GrassList)
 	{
@@ -353,6 +522,8 @@ void GameView::highlight_second_pass(){
 	}
 	for (int i = 0; i < EnvironmentList.size(); i++){
 		GeoNode* node = EnvironmentList[i];
+		//printf("size of particle is %i\n", EnvironmentList.size());
+
 		if (node->isDead)
 		{
 			EnvironmentList.erase(EnvironmentList.begin() + i);
@@ -364,19 +535,157 @@ void GameView::highlight_second_pass(){
 		p.second->VOnDraw();
 	}
 
-
 }
 
 
+void GameView::highlight_third_pass_build(GLuint lastFrame){
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, lastFrame);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	//NULL means reserve texture memory, but texels are undefined
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 256, 256, 0, GL_BGRA, GL_UNSIGNED_BYTE, NULL);
+	//-------------------------
+	glGenFramebuffersEXT(1, &lastFb);
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, lastFb);
+	//Attach 2D texture to this FBO
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, lastFrame, 0);
+	//-------------------------
+	//-------------------------
+	//Does the GPU support current FBO configuration?
+	GLenum status;
+	status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
+
+	//-------------------------
+	//and now you can render to GL_TEXTURE_2D
+	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, lastFb);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClearDepth(1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//-------------------------	
+	//glViewport(0, 0, Window::width, Window::height);                                          //Set new viewport size
+	glViewport(0, 0, 256, 256);                                          //Set new viewport size
+
+	glMatrixMode(GL_PROJECTION);                                     //Set the OpenGL matrix mode to Projection
+	glLoadIdentity();                                                //Clear the projection matrix by loading the identity
+	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	Window::light_system->setCameraOffset(pViewCamera->position->x, pViewCamera->position->y, pViewCamera->position->z);
+	pViewCamera->setUpCamera();
 
 
+	//glPushMatrix();
+	//glLoadMatrixd(pViewCamera->GetCameraGLMatrix().getPointer());
+	//sort Z before draw
+	float ptr[16];
+	glGetFloatv(GL_MODELVIEW_MATRIX, ptr);
+	Matrix4 modelview;
+	modelview.m[0][0] = ptr[0];
+	modelview.m[0][1] = ptr[1];
+	modelview.m[0][2] = ptr[2];
+	modelview.m[0][3] = ptr[3];
+
+	modelview.m[1][0] = ptr[4];
+	modelview.m[1][1] = ptr[5];
+	modelview.m[1][2] = ptr[6];
+	modelview.m[1][3] = ptr[7];
+
+	modelview.m[2][0] = ptr[8];
+	modelview.m[2][1] = ptr[9];
+	modelview.m[2][2] = ptr[10];
+	modelview.m[2][3] = ptr[11];
+
+	modelview.m[3][0] = ptr[12];
+	modelview.m[3][1] = ptr[13];
+	modelview.m[3][2] = ptr[14];
+	modelview.m[3][3] = ptr[15];
+
+	modelview.transpose();
+
+	vector<pair<float, GeoNode*>> nodedepthvec;
+	for each (GeoNode* node in NodeList)
+	{
+		if (typeid(*node) == typeid(SkyBox) || node->static_object == true)
+		{
+			pair<float, GeoNode*> p = make_pair(999, node);
+			nodedepthvec.push_back(p);
+		}
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		{
+			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
+			Vector4 position = modelview * (localpos);
+			float z = -position.z;
+
+			pair<float, GeoNode*> p = make_pair(z, node);
+			nodedepthvec.push_back(p);
+		}
+	}
+
+	sort(nodedepthvec.begin(), nodedepthvec.end(), pairCompare);
+
+
+	for each (pair<float, GeoNode*> p in nodedepthvec)
+	{
+		//Don't draw if it uses 2 pass
+		if (p.second->edge_highlight || p.second->blur){
+
+		}
+		else{
+			p.second->VOnDraw();
+		}
+	}
+	
+	for (int i = 0; i < EnvironmentList.size(); i++){
+		GeoNode* node = EnvironmentList[i];
+		//printf("size of particle is %i\n", EnvironmentList.size());
+
+		if (node->isDead)
+		{
+			EnvironmentList.erase(EnvironmentList.begin() + i);
+		}
+		else{
+			node->VOnDraw();
+		}
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, Window::width, Window::height);
+}
+static float tclock = std::clock();
+
+void GameView::SetBlur(bool b, float b1, float b2)
+{
+	SetMotionBlur = b;
+	blurEfficient1 = b1;
+	blurEfficient2 = b2;
+}
 void GameView::VOnRender()
 {
 	blur_first_pass();
 	blur_second_pass();
 	
 	highlight_first_pass();
-	highlight_second_pass();	
+	highlight_second_pass();
+
+	//motion blur
+	if (SetMotionBlur){
+		float ct = std::clock();
+		if (((ct - tclock) / CLOCKS_PER_SEC) > blurEfficient1)
+		{
+			if (((ct - tclock) / CLOCKS_PER_SEC) > blurEfficient2)
+			{
+				highlight_third_pass_build(lastFrame2);
+				tclock = ct;
+			}
+			else{
+				highlight_third_pass_build(lastFrame1);
+			}
+		}
+	}
 }
 
 void GameView::VOnClientUpdate(GameInfoPacket* info)

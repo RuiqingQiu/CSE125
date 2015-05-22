@@ -222,6 +222,7 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 		if (!ready){
 			ready = true;
 			// if hit play button, means is ready
+			g_pCore->pGamePacketManager->ConnectToServer((char*)(g_pCore->pPlayer->IPAddress.c_str()));
 			playerReady = playerReady + 1;
 		}
 		// if all the players are ready, go to the build view

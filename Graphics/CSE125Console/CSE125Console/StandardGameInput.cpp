@@ -135,6 +135,9 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		g_pCore->pGameView->pViewCamera->mode = (g_pCore->pGameView->pViewCamera->mode + 1) % 2;
 	}
 	else if (key == 'i'){
+		//suicide
+		g_pCore->pGamePacketManager->SendSuicide(g_pCore->pPlayer->playerid);
+
 	}
 	else if (key == 'k'){
 	}
@@ -156,6 +159,6 @@ void StandardGameInput::VProcessKeyInputUp(unsigned char key, int x, int y){
 	if (key == 'd'){
 		keyStates['d'] = false;
 	}
-	cout << "keyboard" << keyStates['a']  << " " <<  keyStates['w']  << " " << keyStates['s']  << " "<< keyStates['d'] << endl;
+	//cout << "keyboard" << keyStates['a']  << " " <<  keyStates['w']  << " " << keyStates['s']  << " "<< keyStates['d'] << endl;
 
 }

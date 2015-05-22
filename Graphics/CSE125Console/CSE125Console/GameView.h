@@ -48,6 +48,9 @@ public:
 
 	void highlight_first_pass_build();
 	void highlight_second_pass_build();
+	void highlight_second_pass_build2();
+
+	void highlight_third_pass_build(GLuint lastframe);
 
 	void blur_first_pass();
 	void blur_second_pass();
@@ -79,6 +82,18 @@ public:
 
 	bool isCurrentView;
 	GeoNode * currentNode;
+
+	GLuint lastFrame1;
+	GLuint lastFrame2;
+
+	GLuint lastFb;
+	GLuint lastDepth;
+
+	void SetBlur(bool b, float b1, float b2);
+	bool SetMotionBlur = false;
+	float blurEfficient1 = 0.15f;
+	float blurEfficient2 = 0.30f;
+
 };
 
 #endif

@@ -13,11 +13,11 @@ public:
 
 	float size;
 	particles p;
-
+	float startTime;
 	float x_origin = 0;
 	float y_origin = 0;
 	float z_origin = 0;
-
+	float lifeTime = 10;
 	int mode;
 	int color;
 	void Fire::initParticles();

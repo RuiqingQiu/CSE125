@@ -2,12 +2,13 @@
 #include "mainmenuinput.h"
 
 mainMenuInput::mainMenuInput() :guiGameInput(){
-	IPAdress = "66.434.2334"; // test displaying the IP Address, need to change later
-
+	IPAdress = "128.54.70.26"; // test displaying the IP Address, need to change later
+	g_pCore->pPlayer->name = name;
+	g_pCore->pPlayer->IPAddress = IPAdress; // set the ip address in the game player object
 }
 
 mainMenuInput::~mainMenuInput(){
-
+	name = "Anonymous";
 }
 
 // handle robot name input

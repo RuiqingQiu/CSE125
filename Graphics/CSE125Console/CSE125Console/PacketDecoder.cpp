@@ -50,7 +50,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 	vector<EventInfo*> ret;
 	std::vector<std::string> events;
 	split1(data, events, '~');
-	cout << data << endl;
+	//cout << data << endl;
 	for (int i = 0; i < events.size()-1; i += 1){
 		std::vector<std::string> EventData;
 		split1(events[i], EventData, ' ');
@@ -59,7 +59,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 		switch (EventId) {
 			case TEventDeath:
 			{
-				printf("event death encode\n");
+				//printf("event death encode\n");
 				EventDeath* EDeath = new EventDeath();
 				EDeath->death_id = stoi(EventData[1]);
 				EDeath->killer_id = stoi(EventData[2]);

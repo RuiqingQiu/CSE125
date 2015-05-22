@@ -163,14 +163,10 @@ void Window::initialize(void)
 		}
 	}
 
-	//Fire* f = new Fire(0,0,0,0,0);
-	//f->static_object = true;
-	//factory->battlemode->PushGeoNode(f);
-
 	
 	object = Model3DFactory::generateObjectWithType(DESERT);
 	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, -2, 0);
+	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
 	//object->auto_rotate = true;
@@ -185,7 +181,7 @@ void Window::initialize(void)
 	gt->displayTest6(factory->battlemode);
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
-	factory->viewmode = viewType::BATTLE;
+	factory->viewmode = viewType::MENU;
 	factory->setView();
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
@@ -204,6 +200,7 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
+	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
 }
 

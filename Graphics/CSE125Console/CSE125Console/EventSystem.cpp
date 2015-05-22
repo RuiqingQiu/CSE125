@@ -27,7 +27,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 	for (int i = 0; i < eventinfos.size(); i++)
 	{
 		EventInfo* event = eventinfos[i];
-		std::cout << "mydoubleptr points to " << typeid(*event).name() << '\n';
+		//std::cout << "mydoubleptr points to " << typeid(*event).name() << '\n';
 		switch (event->event_type){
 		case TEventDeath:{
 							 //Switch back to game view
@@ -95,6 +95,13 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 									//this is for the GUI display update
 									if (h->player1id == g_pCore->pPlayer->playerid) {
+										if (((float)h->health / (float)h->maxhealth) <= 0.2f){
+											g_pCore->pGameView->SetBlur(true, 0.15f, 0.3f);
+										}
+										else{
+											g_pCore->pGameView->SetBlur(false, 0.15f, 0.3f);
+										}
+
 										Window::factory->battlemode->updateHealth(h->health, h->maxhealth);
 									}
 									/////// end GUI
