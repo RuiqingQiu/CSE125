@@ -7,30 +7,42 @@ numDisplay::numDisplay() : guiItem() {
 }
 
 numDisplay::numDisplay(string filename) : guiItem(filename) {
+	mainmenuLoading = 0;
 	createNumbers();
 }
 
 numDisplay::numDisplay(string filename, int x, int y) : guiItem(filename, x, y) {
+	mainmenuLoading = 0;
 	createNumbers();
 }
 
 numDisplay::numDisplay(string filename, int x, int y, bool f) : guiItem(filename, x, y, f) {
+	mainmenuLoading = 0;
 	createNumbers();
 }
 
 numDisplay::numDisplay(string filename, int x, int y, bool xf, bool yf) : guiItem(filename, x, y, xf, yf) {
+	mainmenuLoading = 0;
 	createNumbers();
 }
 
 numDisplay::numDisplay(string filename, int x, int y, int w, int h) : guiItem(filename, x, y, w, h) {
+	mainmenuLoading = 0;
+	createNumbers();
+}
+
+numDisplay::numDisplay(string filename, int x, int y, int w, int h, int loading) : guiItem(filename, x, y, w, h) {
+	mainmenuLoading = loading; // constructor for the loading number display
 	createNumbers();
 }
 
 numDisplay::numDisplay(string filename, int x, int y, int w, int h, bool f) : guiItem(filename, x, y, w, h, f) {
+	mainmenuLoading = 0;
 	createNumbers();
 }
 
 numDisplay::numDisplay(string filename, int x, int y, int w, int h, bool xf, bool yf) : guiItem(filename, x, y, w, h, xf, yf) {
+	mainmenuLoading = 0;
 	createNumbers();
 }
 
@@ -43,11 +55,23 @@ numDisplay::~numDisplay() {
 
 void numDisplay::createNumbers() {
 	displayValue = 0;
-	num_digits = DEFAULT_NUM_DIGITS;
+	if (!mainmenuLoading){
+		num_digits = DEFAULT_NUM_DIGITS; // 2
+	}
+	else{
+		num_digits = DEFAULT_NUM_DIGITS_FOR_MAINMENU; // 1
+	}
 	off = (20.0 / 100.0) * height;
 	nSize = height - (off*2.0);
 	for (int i = 0; i < num_digits; i++) {
-		digits.push_back(new numbers((xPos + width - (off*3.0)) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed));
+		if (!mainmenuLoading){
+			digits.push_back(new numbers((xPos + width - (off*3.0)) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed));
+		}
+		else{
+			off = (24.0/ 100.0) * height;
+			nSize = height - (off*2) -2;
+			digits.push_back(new numbers((xPos +  (nSize*(i+0.8))), yPos + off + 1, nSize, nSize, xfixed, yfixed)); // for mainmenu display
+		}
 	}
 }
 
