@@ -34,6 +34,7 @@ private:
 	double _rotX;
 	double _rotY;
 	double _rotZ;
+	double speedMultiplier = 1;
 	unsigned int _id;
 	int _isWheel = 0;
 	int _type;
@@ -69,6 +70,7 @@ protected:
 
 public:
 	static unsigned int _totalId;
+	int _deathSent;
 
 	GameObj();
 
@@ -90,6 +92,7 @@ public:
 	int getIsWheel();
 	void setImmediateDeleted();
 
+	int getHasDeleted();
 	int getIsRangedWeapon();
 
 	int getLeftID();

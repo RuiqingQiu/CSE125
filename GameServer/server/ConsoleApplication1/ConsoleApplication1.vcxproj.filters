@@ -154,6 +154,9 @@
     <ClInclude Include="GEHillUpdate.h">
       <Filter>Source Files\GameEvent</Filter>
     </ClInclude>
+    <ClInclude Include="GEPlayerHillUpdate.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -265,6 +268,9 @@
       <Filter>Source Files\GameLogic</Filter>
     </ClCompile>
     <ClCompile Include="GEHillUpdate.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GEPlayerHillUpdate.cpp">
       <Filter>Source Files\GameEvent</Filter>
     </ClCompile>
   </ItemGroup>

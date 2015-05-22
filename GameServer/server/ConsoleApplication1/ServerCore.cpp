@@ -20,7 +20,7 @@ ServerCore::~ServerCore()
 
 void ServerCore::serverLoop()
 {
-	gameLogic->numPlayers = 2;
+	gameLogic->numPlayers = 3;
 	
 	while (true)
 	{
@@ -53,6 +53,7 @@ void ServerCore::serverLoop()
 		{	
 			action = gameLogic->waitToConnect();
 			if (gameLogic->numPlayers< 4) action = ADDCLIENT;
+			cout << "action for init3: " << action << endl;
 			break;
 		}
 		case INIT_BUILD_STATE:

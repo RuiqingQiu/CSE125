@@ -19,7 +19,7 @@ RangedWeapon::RangedWeapon(int type)
 	{
 		range = MEDIUM_RANGED;
 		damage = 15;
-		attackSpeed = 4;
+		attackSpeed = 1;
 		splash = 1;
 
 		_pInitForce = -150;
@@ -34,7 +34,7 @@ RangedWeapon::RangedWeapon(int type)
 	{
 		range = FAR_RANGED;
 		damage = 30;
-		attackSpeed = 0.5;
+		attackSpeed = 1;
 		splash = 4;
 
 		_pInitForce = -100;

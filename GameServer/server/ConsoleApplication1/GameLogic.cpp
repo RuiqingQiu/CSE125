@@ -267,7 +267,7 @@ int GameLogic::gameStart(){
 	//}
 
 
-	countDown->startCountdown(300);
+	countDown->startCountdown(600);
 	physicsTimer->startClock();
 	countDown->startClock();
 	lastTime = countDown->getCurrentTime()/1000;
@@ -643,9 +643,9 @@ void GameLogic::postPhyLogic(){
 		GameObj* GO1 = (GameObj*)obj1->getUserPointer();//objCollisionPair.find(obj1)->second;
 		GameObj* GO2 = (GameObj*)obj2->getUserPointer();//objCollisionPair.find(obj2)->second;
 
-		//cout << "Collision pairs: GO1: " << GO1->getId() << endl;
-		//cout << "GO2: " << GO2->getId() << endl;
-		if ((GO1->getBelongTo()== GO2->getBelongTo())) continue;
+		if (GO1 == nullptr || GO2 == nullptr || GO1->getHasDeleted() || GO2->getHasDeleted()) continue;
+		if ((GO1->getBelongTo() == GO2->getBelongTo())) continue;
+
 		if (GO1->getBelongTo() != nullptr && GO2->getBelongTo() != nullptr){
 			if (((Robot*)GO1->getBelongTo())->getState() != PS_ALIVE) {
 				//cout <<"GO1 " << GO1->getCollisionType() << " belongs to null " << endl;
@@ -663,7 +663,7 @@ void GameLogic::postPhyLogic(){
 		int clientCollision = damageSystem->performDamage(GO1, GO2, e);
 		if (clientCollision != CH_INVALIDCOLLISION)
 		{
-			if (GO1->getIsWeapon() && !GO1->getIsRangedWeapon())
+			if (GO1->getBlockType() == Mallet && !GO2->getDeleted())
 			{
 
 				double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
@@ -672,12 +672,32 @@ void GameLogic::postPhyLogic(){
 				btVector3 boxRot(GO2->getX() - GO1->getX(), 0, GO2->getZ() - GO1->getZ());
 				boxRot.normalize();
 				btVector3 newforce = boxRot*knockback;
-				GO2->getRigidBody()->applyCentralImpulse(newforce);
+				newforce.setY(0);
+				/*GO2->getRigidBody()->applyCentralImpulse(newforce);
+				*/
 				//cout << "GO1 WEAPON: knockback " << knockback << endl;
 				//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
 
 			}
-			if (GO2->getIsWeapon() && !GO2->getIsRangedWeapon())
+			else if (GO1->getBlockType() == Mace && !GO2->getDeleted())
+			{
+
+				double spin = ((MeleeWeapon*)GO1->getWeapon())->getSpin();
+				//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
+				//btVector3 boxRot = rbTrans.getBasis()[2];
+				btVector3 boxRot(GO2->getX() - GO1->getX(), 0, GO2->getZ() - GO1->getZ());
+				btVector3 y(0, 1, 0);
+				boxRot = boxRot.cross(y);
+				boxRot.normalize();
+				int direction = (rand()%2==0) ? 1: -1;
+				btVector3 newforce = boxRot*spin*direction;
+				newforce.setY(0);
+				//GO2->getRigidBody()->applyTorqueImpulse(boxRot);
+				////cout << "GO1 WEAPON: knockback " << knockback << endl;
+				//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
+
+			}
+			if (GO2->getBlockType() == Mallet && !GO1->getDeleted())
 			{
 				double knockback = ((MeleeWeapon*)GO2->getWeapon())->getKnockback();
 				//btTransform rbTrans = GO2->getRigidBody()->getWorldTransform();
@@ -685,9 +705,28 @@ void GameLogic::postPhyLogic(){
 				btVector3 boxRot(GO1->getX() - GO2->getX(), 0, GO1->getZ() - GO2->getZ());
 				boxRot.normalize();
 				btVector3 newforce = boxRot*knockback;
-				GO1->getRigidBody()->applyCentralImpulse(boxRot*knockback);
+				newforce.setY(0);
+				//GO1->getRigidBody()->applyCentralImpulse(boxRot*knockback);
 				//cout << "GO2 WEAPON: knockback " << knockback << endl;
 				//cout << "GO2 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
+			}
+			else if (GO2->getBlockType() == Mace && !GO1->getDeleted())
+			{
+
+				double spin = ((MeleeWeapon*)GO2->getWeapon())->getSpin();
+				//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
+				//btVector3 boxRot = rbTrans.getBasis()[2];
+				btVector3 boxRot(GO2->getX() - GO1->getX(), 0, GO2->getZ() - GO1->getZ());
+				btVector3 y(0, 1, 0);
+				boxRot = boxRot.cross(y);
+				boxRot.normalize();
+				int direction = (rand() % 2 == 0) ? 1 : -1;
+				btVector3 newforce = boxRot*spin*direction;
+				newforce.setY(0);
+				//GO1->getRigidBody()->applyTorqueImpulse(boxRot);
+				//cout << "GO1 WEAPON: knockback " << knockback << endl;
+				//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
+
 			}
 			//cout << "clientCollision" << clientCollision << endl;
 			GECollisonHappen* gech = new GECollisonHappen(clientCollision, (*it)->getX(), (*it)->getY(), (*it)->getZ());
@@ -710,9 +749,6 @@ void GameLogic::postPhyLogic(){
 	}
 
 	postHealthLogic(dmgDealtArr);
-
-	
-
 
 	cleanDataStructures();
 	GamePhysics::collisionList.clear();
@@ -744,16 +780,27 @@ void GameLogic::postDeathLogic(Robot* r)
 {
 	if (r->getState() == PS_ALIVE)
 	{
-		scoreboard->incDeaths(r->getCID());
-		scoreboard->incTakedowns(r->getDiedTo()->getCID());
+		cout << "-----" << endl;
+		cout << "prev death:" << scoreboard->getDeaths()[r->getCID()] << endl;
 		createDeathEvent(r);
+		r->_deathSent = 0;
+		scoreboard->incDeaths(r->getCID());
+		cout << "inc death for " << r->getCID() << endl;
+		cout << "after death:" << scoreboard->getDeaths()[r->getCID()] << endl;
+		cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
+		scoreboard->incTakedowns(r->getDiedTo()->getCID());		
+		cout << "inc takedown for " << r->getDiedTo()->getCID() << endl;
+		cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
+		cout << "-----" << endl;
 		vector<GameObj*> parts = r->getParts();
 		vector<GameObj*>::iterator it;
 		r->setId(1000000  + counter);
-		if (parts.size() == 0) return;
 		for (it = parts.begin(); it != parts.end(); it++)
 		{
-			breakConstraints(*it);
+			if (!(*it)->getHasDeleted())
+			{
+				breakConstraints(*it);
+			}
 		}
 		parts.clear();
 	}
@@ -769,7 +816,7 @@ void GameLogic::createHealthUpdateEvent(Robot* r)
 void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 {
 	
-	if (!g->getDeleted())
+	if (!g->getHasDeleted())
 	{
 		if (result == BREAK_CONSTRAINT && g->getConstraints() != nullptr)
 		{
@@ -788,6 +835,7 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 			if (!g->getIsRobot()){
 				//if (g->getIsRobot()) cout << "is robot deleted in postdamage GOID: " << g->getId() << endl;
 				g->setImmediateDeleted();
+				breakConstraints(g);
 		    }
 		}
 		else if (result == DEATH)
@@ -801,28 +849,6 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 
 void GameLogic::cleanDataStructures()
 {
-//	std::map<int, GameObj *> new_clientPair;
-//	std::map<int, GameObj *>::iterator it1;
-//	for (it1 = clientPair.begin(); it1 != clientPair.end(); it1++)
-//	{
-//		//if (!(*it1).second->getDeleted())
-//		//{
-//		//	new_clientPair.insert((*it1));
-//		//}
-//	}
-//	clientPair = new_clientPair;
-
-	//std::map< btCollisionObject*, GameObj*> new_objCollisionPair;
-	//std::map< btCollisionObject*, GameObj*>::iterator it2;
-	//for (it2 = objCollisionPair.begin(); it2 != objCollisionPair.end(); it2++)
-	//{
-	//	if (!(*it2).second->getDeleted())
-	//	{
-	//		new_objCollisionPair.insert((*it2));
-	//	}
-	//}
-	//objCollisionPair = new_objCollisionPair;
-
 	std::vector<GameObj*> new_gameObj;
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObjs.begin(); it != gameObjs.end(); it++)
@@ -833,28 +859,10 @@ void GameLogic::cleanDataStructures()
 		}
 		else
 		{
-			std::vector<Constraint*>::iterator iter;
-			if ((*it)->getConstraints()->size() == 0) continue;
-			for (iter = (*it)->getConstraints()->begin(); iter != (*it)->getConstraints()->end(); iter++)
-			{
-				if (*iter == nullptr) continue;
-				if ((*iter)->_joint6DOF != nullptr)
-				{
-					(*iter)->_joint6DOF->setEnabled(false);
-				}
-			}
-			
-		}
-	}
-
-	for (it = gameObjs.begin(); it != gameObjs.end(); it++)
-	{
-		if ((*it)->getDeleted())
-		{
+			(*it)->getRigidBody()->setUserPointer(nullptr);
 			gamePhysics->getDynamicsWorld()->removeRigidBody((*it)->getRigidBody());
-			deleteGameObj(*it);
+			delete(*it);
 		}
-
 	}
 	gameObjs = new_gameObj;
 }
@@ -862,45 +870,30 @@ void GameLogic::cleanDataStructures()
 int GameLogic::breakConstraints(GameObj* g)
 {
 	std::vector<Constraint*>::iterator iter;
-	if (g->getConstraints()->size() == 0) return 0;
 	for (iter = g->getConstraints()->begin(); iter != g->getConstraints()->end(); iter++)
 	{
-		if ((*iter) == nullptr) continue;
-		if ((*iter)->_joint6DOF != nullptr)
-		{
-			(*iter)->_joint6DOF->setEnabled(false);
-		}
+		(*iter)->_joint6DOF->setEnabled(false);
 	}
+
+	g->deleteConstraints();
 	
-		Robot* r = (Robot*)g->getBelongTo();
-		// check if nullptr 
-		if (r == nullptr) return 0;
+	Robot* r = (Robot*)g->getBelongTo();
+	
+	if (r->getState() == PS_ALIVE){
 		std::vector<GameObj *> parts = r->getParts();
-		std::vector<GameObj *>new_parts;
+		std::vector<GameObj *> new_parts;
 		std::vector<GameObj *>::iterator it1;
-		// dont use parts.empty
-		if (!(parts.size() == 0))
+
+		for (it1 = parts.begin(); it1 != parts.end(); it1++)
 		{
-			for (it1 = parts.begin(); it1 != parts.end(); it1++)
+			if (!(*it1)->getHasDeleted())
 			{
-				if ((*it1) != nullptr)
-				{
-				   if ((*it1) != g)
-				   {
-				   		new_parts.push_back((*it1));
-					}
-
-				}
+				new_parts.push_back((*it1));
 			}
-			r->setParts(new_parts);
 		}
-
-			if (!g->getIsRobot())
-			{
-				g->setDeleted();
-			}
-		
-	return g->deleteConstraints();//&objCollisionPair);
+		r->setParts(new_parts);
+	}
+	return 0;
 }
 
 void GameLogic::createDeathEvent(Robot* r)
@@ -963,7 +956,7 @@ void GameLogic::deleteGameObj(GameObj* g)
 {
 	//g->deleteConstraints();//&objCollisionPair);
 	
-	delete(g);
+	//delete(g);
 	g = nullptr;
 }
 
@@ -1063,6 +1056,6 @@ void GameLogic::createHillUpdateEvent()
 
 void GameLogic::createPlayerHillUpdateEvent(int c)
 {
-	GEPlayerHillUpdate* ge = new GEPlayerHillUpdate(int c);
+	GEPlayerHillUpdate* ge = new GEPlayerHillUpdate(c);
 	gameEventList.push_back(ge);
 }

@@ -26,6 +26,7 @@ GameObj::GameObj(double posX, double posY, double posZ, double qX, double qY, do
 	_isRobot = 0;
 	deathTimer = NULL;
 	setBelongTo(nullptr);
+	_deathSent = 0;
 }
 
 GameObj::~GameObj(){
@@ -185,6 +186,33 @@ void GameObj::setBlockType(int bType)
 					   _collisionType = C_ROBOT_PARTS;
 					  break;
 	}
+
+
+	case CrystalCube:
+	{
+					   _mass = 7;
+					   _health = 170;
+					   _collisionType = C_ROBOT_PARTS;
+					   break;
+	}
+	case BLACKCUBE:
+	{
+						_mass = 7;
+						_health = 170;
+						_collisionType = C_ROBOT_PARTS;
+						break;
+	}
+
+
+	case BGun:{
+		_isWeapon = 1;
+		_isRanged = 1;
+		_health = 200;
+		_mass = 20;
+		_collisionType = C_ROBOT_PARTS;
+		break;
+
+	}
 	case Railgun:
 	{
 				 _isWeapon = 1;
@@ -221,6 +249,7 @@ void GameObj::setBlockType(int bType)
 	case Discount:
 	{
 						  _isWheel = 1;
+						  speedMultiplier = 1;
 						  break;
 	}
 	case Tire:
@@ -254,6 +283,23 @@ void GameObj::setBlockType(int bType)
 								_collisionType = C_ROBOT;
 							   break;
 	}
+
+	case THREEBYTHREE_BLACK:
+	{
+								_mass = 63;
+								_health = 1530;
+								_collisionType = C_ROBOT;
+								break;
+	}
+
+	case THREEBYTHREE_CRYSTAL:
+	{
+								_mass = 63;
+								_health = 1530;
+								_collisionType = C_ROBOT;
+								break;
+	}
+
 	case WALL:
 	{
 				 _collisionType = C_WALLS;
@@ -391,89 +437,59 @@ Constraint* GameObj::addConstraint(GameObj* o)
 		Constraint* c = new Constraint();
 		c->_joint6DOF = joint6DOF;
 		constraints.push_back(c);
-	/*	c = new Constraint();
-		c->_joint6DOF = joint6DOF;*/
 		o->getConstraints()->push_back(c);
 		return c;
 }
 
-int GameObj::deleteConstraints()//std::map< btCollisionObject*, GameObj*>* pair)
+int GameObj::deleteConstraints()
 {
+    std::vector<Constraint*> deleted;
 	std::vector<Constraint*>::iterator it;
-	int ret = 0;
-	// return value? 
-	if (constraints.size() == 0) return ret;
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
 		Constraint* c = (*it);
-		if (c == nullptr) continue;
-		GameObj* other = nullptr;
-		if (c->_joint6DOF == nullptr) return ret;
+		GameObj* other;
 		if (&c->_joint6DOF->getRigidBodyA() == this->getRigidBody())
 		{
 			other = (GameObj*)(&(c->_joint6DOF->getRigidBodyB()))->getUserPointer();
-				//pair->find(&c->_joint6DOF->getRigidBodyB())->second;
-			
 		}
 		else
 		{
 			other = (GameObj*) (&(c->_joint6DOF->getRigidBodyA()))->getUserPointer();
-				//pair->find(&c->_joint6DOF->getRigidBodyA())->second;
 		}
-
-		//delete(c->_joint6DOF);
 
 		c->_joint6DOF = nullptr;
-		if (other != nullptr){
-			if (other->deleteInvalidConstraints())
-			{
-				ret = 1;
-			}
-		}
+		other->deleteInvalidConstraints();
+		deleted.push_back(c);
 	}
-
 	constraints.clear();
+
 	if (!getIsRobot())
 	{
 		setDeleted();
-		return 1;
 	}
-	return ret;
+
+	for (it = deleted.begin(); it != deleted.end(); it++)
+	{
+		//delete(*it);
+	}
+	return 0;
 }
 
 int GameObj::deleteInvalidConstraints()
 {
 	std::vector<Constraint*>::iterator it;
 	std::vector<Constraint*> new_constraints;
-	// make sure constraints is 0 
-	if (constraints.size()==0)
-	{
-		if (!getIsRobot())
-		{
-			setDeleted();
-			return 1;
-		}
-		return 0;
-	}
-	
-	if (constraints.size() == 0) return 0;
+
 	for (it = constraints.begin(); it != constraints.end(); it++)
 	{
-
 		Constraint* c = (*it);
-		if (c == nullptr) continue;
-		if (c->_joint6DOF == nullptr)
-		{
-			delete(c);
-			c = nullptr;
-		}
-		else
+		if (c->_joint6DOF != nullptr)
 		{
 			new_constraints.push_back(c);
 		}
 	}
 	constraints = new_constraints;
-	
 	return 0;
 }
 
@@ -506,6 +522,12 @@ void GameObj::setImmediateDeleted()
 	if (deathTimer == NULL)
 		deathTimer = clock() - DEATH_DELAY * CLOCKS_PER_SEC;
 }
+
+int GameObj::getHasDeleted()
+{
+	return (deathTimer == NULL) ? 0 : 1;
+}
+
 int GameObj::getDeleted()
 {
 	//return (deathTimer != NULL);

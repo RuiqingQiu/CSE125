@@ -171,7 +171,31 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 	packet.serialize(packet_data);
 	//cout << "BERFORE SEND TO ALL" << endl;
 	//cout << packet.packet_type << endl;
-	network->sendToAll(packet_data, packet_size);
+	
+	
+	//network->sendToAll(packet_data, packet_size)
+	for (vector<GameObj*>::iterator i = gameObjs->begin();
+		i != gameObjs->end(); ++i)
+	{
+		if ((*i)->getIsRobot()){
+			Robot* r = (Robot*)(*i);
+			if (r->getState() == PS_ALIVE)
+			{
+				int cid = r->getCID();
+				network->sendToOne(packet_data, packet_size,cid);
+			}
+			else if(r->_deathSent == 0){
+				int cid = r->getCID();
+				cout << "send death package to : " << cid << endl;
+				network->sendToOne(packet_data, packet_size, cid);
+				r->_deathSent = 1;
+			}
+			else{
+				int cid = r->getCID();
+				cout << "do not send when in build: " << cid << endl;
+			}
+		}
+	}
 
 	//cout << "AFTER SEND TO ALL" << endl;
 
@@ -204,7 +228,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							  break;
 	}
 	case MOVE_LEFT: {
-						cout << "Move Left" << endl;
+						//cout << "Move Left" << endl;
 						ObjectEvents * e = new ObjectEvents(MOVE_LEFT);
 						string packetInfoStr = "";
 						int i;
@@ -226,7 +250,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						break;
 	}
 	case MOVE_RIGHT: {
-						 cout << "Move Right" << endl;
+						 //cout << "Move Right" << endl;
 						 ObjectEvents * e = new ObjectEvents(MOVE_RIGHT);
 						 string packetInfoStr = "";
 						 int i;
@@ -246,7 +270,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 
 	}
 	case MOVE_BACKWARD: {
-							cout << "Move Backward" << endl;
+							//cout << "Move Backward" << endl;
 							ObjectEvents * e = new ObjectEvents(MOVE_BACKWARD);
 							string packetInfoStr = "";
 							int i;
@@ -266,7 +290,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 
 	}
 	case MOVE_FORWARD: {
-						   cout << "Move Forward" << endl;
+						  // cout << "Move Forward" << endl;
 						   ObjectEvents * e = new ObjectEvents(MOVE_FORWARD);
 						   string packetInfoStr = "";
 						   int i;
@@ -344,7 +368,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 				   break;
 	}
 	case BUILD_ROBOT: {
-		cout << "Received Build Robot Packet" << endl;
+		//cout << "Received Build Robot Packet" << endl;
 						  ObjectEvents * e = new ObjectEvents(BUILD_ROBOT);
 						  
 							  string parseData = string(packet.data);
@@ -380,7 +404,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 														   					   }
 														   					   */
 														   
-														   					   //CID
+						   		  //CID
 								  pos = objectInfo.find(" ");
 								  token = objectInfo.substr(0, pos);
 								  //std::cout << token << std::endl;
@@ -559,8 +583,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//std::cout << "NULL" << endl;
 			break;
 		}
-
-		//cout << "GO ID: " <<(*i)->getId() << endl;
+		if ((*i)->getBlockType() == WALL)  cout << "GO ID: " <<(*i)->getId() << endl;
 		temp += to_string((*i)->getId());
 		temp += ' ';
 		temp += to_string((*i)->getX());
