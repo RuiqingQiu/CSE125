@@ -30,7 +30,7 @@ Model3D::Model3D(RenderObject* r){
 	render_obj = r;
 	isTextured = true;
 	localTransform = Transform();
-	shader_type = LIGHTS_SHADER;
+	shader_type = NORMAL_SHADER;
 	//24 indicates material type, definition is material.h file
 	material.setMaterial_Property(24);
 }

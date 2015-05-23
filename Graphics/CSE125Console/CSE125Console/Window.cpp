@@ -312,9 +312,11 @@ void Window::displayCallback() {
 	if (p!=nullptr) {
 		switch (p->packet_types){
 			case GAME_STATE:{
+				/*
 				if (factory->viewmode == viewType::BUILD){
 					return;
 				}
+				*/
 				//Update states in the actual battle mode
 				factory->battlemode->VOnClientUpdate(p);
 				//g_pCore->pGameView->VOnClientUpdate(p);

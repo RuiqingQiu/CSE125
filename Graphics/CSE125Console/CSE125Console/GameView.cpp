@@ -714,6 +714,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							   object->identifier = info->player_infos[i]->id;
 							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							   object->shader_type = LIGHTS_SHADER;
 							   NodeList.push_back(object);
 							   info->player_infos[i]->processed = true;
 							   break;
@@ -722,6 +723,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case GlowingCube:{
 								 Model3D* object = Model3DFactory::generateObjectWithType(GlowingCube);
 								 object->identifier = info->player_infos[i]->id;							   object->isUpdated = true;
+								 object->shader_type = LIGHTS_SHADER;
 
 								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -735,6 +737,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								Model3D* object = Model3DFactory::generateObjectWithType(WoodenCube);
 								object->identifier = info->player_infos[i]->id;
 								object->isUpdated = true;
+								object->shader_type = LIGHTS_SHADER;
 
 								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -746,6 +749,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case BGun:{
 						  Model3D* object = Model3DFactory::generateObjectWithType(BGun);							   
 						  object->isUpdated = true;
+						  object->shader_type = LIGHTS_SHADER;
+
 							object->identifier = info->player_infos[i]->id;
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -758,6 +763,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						  Model3D* object = Model3DFactory::generateObjectWithType(Mace);
 						  object->identifier = info->player_infos[i]->id;
 						  object->isUpdated = true;
+						  object->shader_type = LIGHTS_SHADER;
 
 						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -769,6 +775,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case Mallet:{
 							Model3D* object = Model3DFactory::generateObjectWithType(Mallet);
 							object->isUpdated = true;
+							object->shader_type = LIGHTS_SHADER;
 
 							object->identifier = info->player_infos[i]->id;
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
@@ -780,6 +787,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			}
 			case Needle:{
 							Model3D* object = Model3DFactory::generateObjectWithType(Needle);							   object->isUpdated = true;
+							object->shader_type = LIGHTS_SHADER;
 
 							object->identifier = info->player_infos[i]->id;
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
@@ -792,6 +800,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case Discount:{
 							  
 							  Model3D* object = Model3DFactory::generateObjectWithType(Discount);							   object->isUpdated = true;
+							  object->shader_type = LIGHTS_SHADER;
 
 							  object->identifier = info->player_infos[i]->id;
 							  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
@@ -804,6 +813,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case Railgun:{
 							 Model3D* object = Model3DFactory::generateObjectWithType(Railgun);							   object->isUpdated = true;
 							 object->identifier = info->player_infos[i]->id;
+							 object->shader_type = LIGHTS_SHADER;
+
 							 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
 							 NodeList.push_back(object);
@@ -813,6 +824,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case Tire:{
 						  
 						  Model3D* object = Model3DFactory::generateObjectWithType(Tire);							   object->isUpdated = true;
+						  object->shader_type = LIGHTS_SHADER;
 
 						  object->identifier = info->player_infos[i]->id;
 						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
@@ -826,6 +838,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 
 								 Model3D* object = Model3DFactory::generateObjectWithType(WoodenWheel);
 								 object->isUpdated = true;
+								 object->shader_type = LIGHTS_SHADER;
+
 								 object->identifier = info->player_infos[i]->id;
 								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -837,7 +851,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case CrystalCube:{
 								 Model3D* object = Model3DFactory::generateObjectWithType(CrystalCube);
 								 object->isUpdated = true;
-								 object->shader_type = NORMAL_SHADER;
+								 object->shader_type = LIGHTS_SHADER;
 								 object->identifier = info->player_infos[i]->id;
 								 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -845,6 +859,41 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								 info->player_infos[i]->processed = true;
 								 break;
 			}
+
+			case ALTNEEDLE:{
+							   Model3D* object = Model3DFactory::generateObjectWithType(ALTNEEDLE);
+							   object->isUpdated = true;
+							   object->shader_type = LIGHTS_SHADER;
+							   object->identifier = info->player_infos[i]->id;
+							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							   NodeList.push_back(object);
+							   info->player_infos[i]->processed = true;
+							   break;
+			}
+			case ALTMACE:{
+							 Model3D* object = Model3DFactory::generateObjectWithType(ALTMACE);
+							 object->isUpdated = true;
+							 object->shader_type = LIGHTS_SHADER;
+							 object->identifier = info->player_infos[i]->id;
+							 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							 NodeList.push_back(object);
+							 info->player_infos[i]->processed = true;
+							 break;
+			}
+			case Turrent:{
+							 Model3D* object = Model3DFactory::generateObjectWithType(Turrent);
+							 object->isUpdated = true;
+							 object->shader_type = LIGHTS_SHADER;
+							 object->identifier = info->player_infos[i]->id;
+							 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							 NodeList.push_back(object);
+							 info->player_infos[i]->processed = true;
+							 break;
+			} 
+
 			case BATTLEFIELD:{
 								 /*
 								 //cout << "enter here" << endl;
@@ -863,6 +912,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 										
 				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 				object->isUpdated = true;
+				object->shader_type = LIGHTS_SHADER;
+
 				object->identifier = info->player_infos[i]->id;
 				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -876,6 +927,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case THREEBYTHREE_GLOWING:{
 				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_GLOWING);
 				object->isUpdated = true;
+				object->shader_type = LIGHTS_SHADER;
 				object->identifier = info->player_infos[i]->id;
 				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -887,6 +939,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case THREEBYTHREE_WOODEN:{
 				Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
 				object->isUpdated = true;
+				object->shader_type = LIGHTS_SHADER;
 				object->identifier = info->player_infos[i]->id;
 				object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 				object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -896,10 +949,35 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 				break;
 
 			}
+			case THREEBYTHREE_BLACK:{
+										Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_BLACK);
+										object->isUpdated = true;
+										object->shader_type = LIGHTS_SHADER;
+										object->identifier = info->player_infos[i]->id;
+										object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+										object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+										object->localTransform.scale = Vector3(1, 1, 1);
+										NodeList.push_back(object);
+										info->player_infos[i]->processed = true;
+										break;
+			}
+			case THREEBYTHREE_CRYSTAL:{
+										  Model3D* object = Model3DFactory::generateObjectWithType(THREEBYTHREE_CRYSTAL);
+										  object->isUpdated = true;
+										  object->shader_type = LIGHTS_SHADER;
+										  object->identifier = info->player_infos[i]->id;
+										  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+										  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+										  object->localTransform.scale = Vector3(1, 1, 1);
+										  NodeList.push_back(object);
+										  info->player_infos[i]->processed = true;
+										  break;
+			}
 
 			case BLACKCUBE:{
 							   Model3D* object = Model3DFactory::generateObjectWithType(BLACKCUBE);
 							   object->isUpdated = true;
+							   object->shader_type = LIGHTS_SHADER;
 							   object->identifier = info->player_infos[i]->id;
 							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -911,6 +989,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case CUBEA:{
 						   Model3D* object = Model3DFactory::generateObjectWithType(CUBEA);
 						   object->isUpdated = true;
+						   object->shader_type = LIGHTS_SHADER;
 						   object->identifier = info->player_infos[i]->id;
 						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -922,6 +1001,8 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case CUBEB:{
 						   Model3D* object = Model3DFactory::generateObjectWithType(CUBEB);
 						   object->isUpdated = true;
+						   object->shader_type = LIGHTS_SHADER;
+
 						   object->identifier = info->player_infos[i]->id;
 						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -930,8 +1011,45 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						   info->player_infos[i]->processed = true;
 						   break;
 			}
+			case AltTire:{
+							 Model3D* object = Model3DFactory::generateObjectWithType(AltTire);
+							 object->isUpdated = true;
+							 object->shader_type = LIGHTS_SHADER;
 
+							 object->identifier = info->player_infos[i]->id;
+							 object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							 object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							 object->localTransform.scale = Vector3(1, 1, 1);
+							 NodeList.push_back(object);
+							 info->player_infos[i]->processed = true;
+							 break;
+			} 
+			case StoneTire:{
+							   Model3D* object = Model3DFactory::generateObjectWithType(StoneTire);
+									  object->isUpdated = true;
+									  object->shader_type = LIGHTS_SHADER;
 
+									  object->identifier = info->player_infos[i]->id;
+									  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+									  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+									  object->localTransform.scale = Vector3(1, 1, 1);
+									  NodeList.push_back(object);
+									  info->player_infos[i]->processed = true;
+									  break;
+			} 
+			case TronWheel:{
+							   Model3D* object = Model3DFactory::generateObjectWithType(TronWheel);
+							   object->isUpdated = true;
+							   object->shader_type = LIGHTS_SHADER;
+
+							   object->identifier = info->player_infos[i]->id;
+							   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+							   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+							   object->localTransform.scale = Vector3(1, 1, 1);
+							   NodeList.push_back(object);
+							   info->player_infos[i]->processed = true;
+							   break;
+			}
 			case WALL:{
 								break;
 			}
@@ -941,6 +1059,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case BULLET:{
 							Model3D* object = Model3DFactory::generateObjectWithType(BULLET);
 							object->isUpdated = true;
+							object->shader_type = LIGHTS_SHADER;
 							object->identifier = info->player_infos[i]->id;
 							object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 							object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
