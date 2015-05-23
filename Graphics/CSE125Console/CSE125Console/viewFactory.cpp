@@ -167,7 +167,7 @@ void viewFactory::idleFunc() {
 		}
 	}
 
-	std::cout << "delay: " << duration << std::endl;
+	//std::cout << "delay: " << duration << std::endl;
 }
 
 void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
