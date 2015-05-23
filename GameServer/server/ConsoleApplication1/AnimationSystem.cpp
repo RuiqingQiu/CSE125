@@ -34,6 +34,7 @@ void AnimationSystem::InitAnimationSystemWithStartingTime(float globalTimerStart
 void AnimationSystem::StepAnimationSystem(float deltaTime)
 {
 	globalTimer += deltaTime;
+
 	float TimeInSec = globalTimer / CLOCKS_PER_SEC;
 
 	std::vector<std::pair<int, Vector3>> UpdatePackets;
@@ -49,35 +50,41 @@ void AnimationSystem::StepAnimationSystem(float deltaTime)
 
 	//update the update packets here
 	//...TODO
+	for each (std::pair<int, Vector3> up in UpdatePackets)
+	{
+		printf("id : %i with pos %f %f %f\n", up.first, up.second.x, up.second.y, up.second.z);
+	}
 }
 
 void AnimationSystem::InitAnimationSystemWithAnimationFile(std::string filename)
 {
-	std::ifstream infile("thefile.txt");
+	std::ifstream infile(filename);
 	std::string line;
-	AnimationChanel* chanel;
+	AnimationChanel* chanel = nullptr;
 	while (std::getline(infile, line))
 	{
 		//std::istringstream iss(line);
-		std::vector<std::string> tokens = animsplit(line, ' ');
+		//printf("%s\n", line.c_str());
+		std::vector<std::string> tokens = animsplit(line.c_str(), ' ');
+		//printf("%s\n", tokens[0].c_str());
 		if (tokens.size() == 0)
 		{
 			//empty line
 			continue;
 		}
-		else if (tokens[0].length>2&&tokens[0][0] == '/'&&tokens[0][1] == '/')
+		else if (tokens[0].length()>2&&tokens[0][0] == '/'&&tokens[0][1] == '/')
 		{
 			//comment 
 			continue;
 		}
-		else if (tokens[0].compare("ANIM") == 0)
+		else if (strcmp(tokens[0].c_str(),"ANIM") == 0)
 		{
 			//New Animation
 			chanel = new AnimationChanel();
 			float OBJID = stof(tokens[1]);
 			chanel->ObjectId = OBJID;
 		}
-		else if (tokens[0].compare("FRAME") == 0)
+		else if (strcmp(tokens[0].c_str(), "FRAME") == 0)
 		{
 			//New frame
 			if (chanel == nullptr){
@@ -106,7 +113,7 @@ void AnimationSystem::InitAnimationSystemWithAnimationFile(std::string filename)
 			chanel->KeyFrames.push_back(Endframe);
 
 		}
-		else if (tokens[0].compare("TIMEPERIOD ") == 0)
+		else if (strcmp(tokens[0].c_str(), "TIMEPERIOD")==0)
 		{
 			if (chanel == nullptr){
 				printf("Something wrong with animation file or parser");
@@ -122,6 +129,13 @@ void AnimationSystem::InitAnimationSystemWithAnimationFile(std::string filename)
 
 			chanel->AnimationTimePeriod.push_back(period);
 		}
+		else if (strcmp(tokens[0].c_str(), "PUSHANIM") == 0)
+		{
+			//printf("pushanimm\n");
+			chanels.push_back(chanel);
+			chanel = nullptr;
+		}
+
 	}
 	IsAnimationFileParsed = true;
 }
@@ -169,6 +183,8 @@ bool AnimationChanel::GetUpdatePacket(float seconds, std::pair<int, Vector3> &ou
 			frame2 = frame;
 		}
 	}
+	printf("in sec %f %f\n", frame1.first, frame2.first);
+
 	//we get two frames, blend it
 	float protion = (seconds - frame1.first) / (frame2.first - frame1.first);
 	Vector3 NewPos = frame1.second + (frame2.second - frame1.second)*protion;
