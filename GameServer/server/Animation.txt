@@ -1,0 +1,5 @@
+//6000 second total with linear transformation
+//id shouldnt be -1
+ANIM 0
+TIMEPERIOD 60 80
+FRAME 60 80 0 0 0 0 10 0

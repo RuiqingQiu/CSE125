@@ -79,6 +79,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationTest.h" />
     <ClInclude Include="ClientGame.h" />
     <ClInclude Include="ClientNetwork.h" />
     <ClInclude Include="ComponentNode.h" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationTest.cpp" />
     <ClCompile Include="ClientGame.cpp" />
     <ClCompile Include="ClientNetwork.cpp" />
     <ClCompile Include="CSE125Console.cpp" />
@@ -119,6 +121,7 @@
     <ClCompile Include="ComponentNode.cpp" />
     <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="StandardGameInput.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

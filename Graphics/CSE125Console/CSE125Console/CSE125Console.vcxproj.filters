@@ -108,6 +108,9 @@
     <ClInclude Include="StandardGameInput.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -172,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="StandardGameInput.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTest.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
