@@ -106,8 +106,8 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 		(*it)->setY(trans.getOrigin().getY());
 		if (trans.getOrigin().getY() < -1)
 		{
-			(*it)->setY(1);
-			trans.getOrigin().setY((*it)->getY());
+			(*it)->setY(2);
+			trans.getOrigin().setY(2);
 		}
 		(*it)->setZ(trans.getOrigin().getZ());
 		//std::cout << "Y: " << trans.getOrigin().getY() << std::endl;//<< ", Y: " << trans.getOrigin().getY() << ", Z: " << trans.getOrigin().getZ() << std::endl;
@@ -240,11 +240,11 @@ void GamePhysics::robotBackward(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle();
 	//std::cout << "backward speed: " << v->getCurrentSpeedKmHour() << std::endl;
 
-	if (v->getCurrentSpeedKmHour() > MAX_SPEED)
+	if (v->getCurrentSpeedKmHour() > MAX_SPEED*rb->getSpeedMultiplier())
 	{
 		//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
 		//std::cout << "forward: " <<v->getWheelInfo(0).m_engineForce << std::endl;
-		double scale = (v->getCurrentSpeedKmHour() / MAX_SPEED) - 1;
+		double scale = (v->getCurrentSpeedKmHour() / (MAX_SPEED*rb->getSpeedMultiplier())) - 1;
 	v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 0);
 	v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 1);
 	v->applyEngineForce(-CAP_BRAKE_SPEED*(scale), 2);
@@ -255,7 +255,7 @@ void GamePhysics::robotBackward(Robot* rb){
 
 		//std::cout << "backward speed: " << v->getCurrentSpeedKmHour() << std::endl;
 		//std::cout << "forward: " << v->getWheelInfo(0).m_engineForce << std::endl;
-		double scale = 1 - (v->getCurrentSpeedKmHour() / MAX_SPEED);
+		double scale = 1 - (v->getCurrentSpeedKmHour() / (MAX_SPEED*rb->getSpeedMultiplier()));
 		//std::cout << v->getWheelInfo(0).m_engineForce << std::endl;
 		v->applyEngineForce((v->getWheelInfo(0).m_engineForce + MOVE_SPEED)*(scale), 0);
 		v->applyEngineForce((v->getWheelInfo(1).m_engineForce + MOVE_SPEED)*(scale), 1);
@@ -287,9 +287,9 @@ void GamePhysics::robotForward(Robot* rb){
 	btRaycastVehicle* v = rb->getVehicle(); 
 	//std::cout << "forward speed: " << v->getCurrentSpeedKmHour() << std::endl;
 
-	if (v->getCurrentSpeedKmHour() < -MAX_SPEED)
+	if (v->getCurrentSpeedKmHour() < -MAX_SPEED*rb->getSpeedMultiplier())
 	{
-		double scale = (v->getCurrentSpeedKmHour() / -MAX_SPEED) - 1;
+		double scale = (v->getCurrentSpeedKmHour() / (-MAX_SPEED*rb->getSpeedMultiplier())) - 1;
 		v->applyEngineForce((v->getWheelInfo(0).m_engineForce + CAP_BRAKE_SPEED)*(scale), 0);
 		v->applyEngineForce((v->getWheelInfo(1).m_engineForce + CAP_BRAKE_SPEED)*(scale), 1);
 		v->applyEngineForce((v->getWheelInfo(2).m_engineForce + CAP_BRAKE_SPEED)*(scale), 2);
@@ -301,7 +301,7 @@ void GamePhysics::robotForward(Robot* rb){
 		//std::cout << "linear vector: " << vel.getX() << " , " << vel.getY() << " , " << vel.getZ() << std::endl;
 		//double mag = sqrt(vel.getX()*vel.getX() + vel.getY()*vel.getY() + vel.getZ()*vel.getZ());
 		//std::cout << "linear magnitude: " << mag << std::endl;
-		double scale = 1 - (v->getCurrentSpeedKmHour() / -MAX_SPEED);
+		double scale = 1 - (v->getCurrentSpeedKmHour() / (-MAX_SPEED*rb->getSpeedMultiplier()));
 		v->applyEngineForce((v->getWheelInfo(0).m_engineForce - MOVE_SPEED)*(scale), 0);
 		v->applyEngineForce((v->getWheelInfo(1).m_engineForce - MOVE_SPEED)*(scale), 1);
 		v->applyEngineForce((v->getWheelInfo(2).m_engineForce - MOVE_SPEED)*(scale), 2);

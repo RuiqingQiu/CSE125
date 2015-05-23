@@ -90,6 +90,7 @@ public:
 	int endGame();
 
 
+	void applyMeleeForce(GameObj*, GameObj*);
 
 	btVector3* convertQuaternionToEuler(btQuaternion* q);
 	btQuaternion* convertEulerToQuaternion(double, double, double);

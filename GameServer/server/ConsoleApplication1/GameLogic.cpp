@@ -101,6 +101,7 @@ int GameLogic::gameStart(){
 			int cid = (*iter)->getCid();
 			double xoffset = (cid % 2) * 30;
 			double zoffset = cid - 2<0 ? 0 : 30;
+			double yoffset = 0;
 
 			if ((*it)->getBuildID() == 0)
 			{
@@ -108,6 +109,7 @@ int GameLogic::gameStart(){
 				robot->setCID(cid);
 				clientPair.insert(std::pair<int, Robot*>(cid, robot));
 				robot->setX(xoffset);
+				robot->setY(robot->getY()+yoffset);
 				robot->setZ(zoffset);
 				robot->createVehicle(d, robot->getWidth(), robot->getHeight(), robot->getDepth());//, &objCollisionPair);
 				gameObjs.push_back((*it));
@@ -116,10 +118,13 @@ int GameLogic::gameStart(){
 			{
 				if (!(*it)->getIsWheel())
 				{
+					double initY = (*it)->getY();
 					double initX = (*it)->getX();
 					double initZ = (*it)->getZ();
 					(*it)->setX(initX + xoffset);
 					(*it)->setZ(initZ + zoffset);
+					(*it)->setY(initY + yoffset);
+
 					(*it)->createRigidBody();// &objCollisionPair);
 					d->addRigidBody((*it)->getRigidBody());
 					//cout << "new build robot ids:  " << (*it)->getId() << endl;
@@ -128,6 +133,10 @@ int GameLogic::gameStart(){
 					{
 						(*it)->setWeapon((*it)->getIsRangedWeapon(), (*it)->getBlockType());
 					}
+				}
+				else
+				{
+					robot->addSpeedMultipler((*it)->getSpeedMultiplier());
 				}
 
 			}
@@ -439,6 +448,7 @@ void GameLogic::prePhyLogic(){
 									 int cid = (*iter)->getCid();
 									 float xoffset = (cid % 2) * 30;
 									 float zoffset = cid - 2 < 0 ? 0 : 30;
+									 float yoffset = 0;
 
 									 if ((*it)->getBuildID() == 0)
 									 {
@@ -450,6 +460,7 @@ void GameLogic::prePhyLogic(){
 										 robot->setCID(cid);
 										 robot->setX(xoffset);
 										 robot->setZ(zoffset);
+										 robot->setY(robot->getY() + yoffset);
 										 robot->createVehicle(d, robot->getWidth(), robot->getHeight(), robot->getDepth());//, &objCollisionPair);
 										 gameObjs.push_back((*it));
 										 //cout << "before assign" << clientPair.find(cid)->second << endl;
@@ -463,8 +474,10 @@ void GameLogic::prePhyLogic(){
 										 {
 											 float initX = (*it)->getX();
 											 float initZ = (*it)->getZ();
+											 float initY = (*it)->getY();
 											 (*it)->setX(initX + xoffset);
 											 (*it)->setZ(initZ + zoffset);
+											 (*it)->setY(initY + yoffset);
 											 (*it)->createRigidBody();// &objCollisionPair);
 											 d->addRigidBody((*it)->getRigidBody());
 											 gameObjs.push_back((*it));
@@ -472,6 +485,10 @@ void GameLogic::prePhyLogic(){
 											 {
 												 (*it)->setWeapon((*it)->getIsRangedWeapon(), (*it)->getBlockType());
 											 }
+										 }
+										 else
+										 {
+											 robot->addSpeedMultipler((*it)->getSpeedMultiplier());
 										 }
 
 									 }
@@ -538,7 +555,6 @@ void GameLogic::prePhyLogic(){
 								 robot->nextState();
 			}
 			default:{
-						gamePhysics->createPhysicsEvent(type, gObj);
 						break;
 			}
 			}
@@ -556,29 +572,29 @@ void GameLogic::prePhyLogic(){
 		std::vector<GameObj*>::iterator it;
 		for (it = gameObjs.begin(); it != gameObjs.end(); ++it)
 		{
-			if ((*it)->getIsRobot() != 0)
+			if ((*it)->getIsRobot()==1)
 			{
-				btRaycastVehicle* v = ((Robot*)*it)->getVehicle();
-				btScalar s = v->getCurrentSpeedKmHour();
-				double braking_force = s*BRAKE_SPEED;
-				v->applyEngineForce(-braking_force, 0);
-				v->applyEngineForce(-braking_force, 1);
-				v->applyEngineForce(-braking_force, 2);
-				v->applyEngineForce(-braking_force, 3);
+					btRaycastVehicle* v = ((Robot*)*it)->getVehicle();
+					btScalar s = v->getCurrentSpeedKmHour();
+					double braking_force = s*BRAKE_SPEED;
+					v->applyEngineForce(-braking_force, 0);
+					v->applyEngineForce(-braking_force, 1);
+					v->applyEngineForce(-braking_force, 2);
+					v->applyEngineForce(-braking_force, 3);
 
-				btVector3 vel = v->getRigidBody()->getLinearVelocity();
-				double mag = sqrt(vel.getX()*vel.getX() + vel.getY()*vel.getY() + vel.getZ()*vel.getZ());
+					btVector3 vel = v->getRigidBody()->getLinearVelocity();
+					double mag = sqrt(vel.getX()*vel.getX() + vel.getY()*vel.getY() + vel.getZ()*vel.getZ());
 
-				if (s >= MAX_SPEED || mag > MAX_SPEED/4)
-				{
-					v->getRigidBody()->setLinearFactor(btVector3(0.7, 0.7, 0.7));
-					v->getRigidBody()->setDamping(0.3, 0);
-				}
-				else
-				{
-					v->getRigidBody()->setLinearFactor(btVector3(1, 1, 1));
-					v->getRigidBody()->setDamping(0, 0);
-				}
+					if (s >= MAX_SPEED*(*it)->getSpeedMultiplier() || mag > MAX_SPEED*(*it)->getSpeedMultiplier() / 4)
+					{
+						v->getRigidBody()->setLinearFactor(btVector3(0.7, 0.7, 0.7));
+						v->getRigidBody()->setDamping(0.3, 0);
+					}
+					else
+					{
+						v->getRigidBody()->setLinearFactor(btVector3(1, 1, 1));
+						v->getRigidBody()->setDamping(0, 0);
+					}
 			}
 		}
 	}
@@ -597,36 +613,39 @@ void GameLogic::prePhyLogic(){
 		}*/
 		if ((*it)->getIsRobot() != 0)
 		{
-		//	cout << "release wheel " << endl;
-			btWheelInfo leftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(2);
-			btWheelInfo rightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(3);
-			btWheelInfo bleftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(0);
-			btWheelInfo brightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(1);
-			double steering_delta = TURN_SPEED / 1.1;
+			//	cout << "release wheel " << endl;
 
-			if (leftWheel.m_steering > 0)
-				((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += -steering_delta;
-			if (rightWheel.m_steering > 0)
-				((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering += -steering_delta;
-			if (leftWheel.m_steering < 0)
-				((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += steering_delta;
-			if (rightWheel.m_steering < 0)
-				((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering += steering_delta;
+				btWheelInfo leftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(2);
+				btWheelInfo rightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(3);
+				btWheelInfo bleftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(0);
+				btWheelInfo brightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(1);
+				double steering_delta = TURN_SPEED / 1.1;
 
-			if (bleftWheel.m_steering > 0)
-				((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering += -steering_delta;
-			if (brightWheel.m_steering > 0)
-				((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += -steering_delta;
-			if (bleftWheel.m_steering < 0)
-				((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering += steering_delta;
-			if (brightWheel.m_steering < 0)
-				((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += steering_delta;
+				if (leftWheel.m_steering > 0)
+					((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += -steering_delta;
+				if (rightWheel.m_steering > 0)
+					((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering += -steering_delta;
+				if (leftWheel.m_steering < 0)
+					((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += steering_delta;
+				if (rightWheel.m_steering < 0)
+					((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering += steering_delta;
 
-			if (leftWheel.m_steering < TURN_SPEED / 1.1 && leftWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering = 0;
-			if (bleftWheel.m_steering < TURN_SPEED / 1.1 && bleftWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering = 0;
-			if (rightWheel.m_steering < TURN_SPEED / 1.1 && rightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering = 0;
-			if (brightWheel.m_steering < TURN_SPEED / 1.1 && brightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering = 0;
-		}
+				if (bleftWheel.m_steering > 0)
+					((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering += -steering_delta;
+				if (brightWheel.m_steering > 0)
+					((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += -steering_delta;
+				if (bleftWheel.m_steering < 0)
+					((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering += steering_delta;
+				if (brightWheel.m_steering < 0)
+					((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering += steering_delta;
+
+				if (leftWheel.m_steering < TURN_SPEED / 1.1 && leftWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering = 0;
+				if (bleftWheel.m_steering < TURN_SPEED / 1.1 && bleftWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(0).m_steering = 0;
+				if (rightWheel.m_steering < TURN_SPEED / 1.1 && rightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering = 0;
+				if (brightWheel.m_steering < TURN_SPEED / 1.1 && brightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering = 0;
+
+			}
+
 	}
 
 	objEventList.clear();
@@ -659,76 +678,14 @@ void GameLogic::postPhyLogic(){
 
 		//std::cout << "Collision: GO1 Objid = " << GO1->getId() << ", type = " << GO1->getType() << ", GO2 Objid = " << GO2->getId() << ", type = " << GO2->getType() << std::endl;
 		
+
 		DamageEvent* e = new DamageEvent(GO1, GO2);
 		int clientCollision = damageSystem->performDamage(GO1, GO2, e);
 		if (clientCollision != CH_INVALIDCOLLISION)
 		{
-			if (GO1->getBlockType() == Mallet && !GO2->getDeleted())
-			{
-
-				double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
-				//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
-				//btVector3 boxRot = rbTrans.getBasis()[2];
-				btVector3 boxRot(GO2->getX() - GO1->getX(), 0, GO2->getZ() - GO1->getZ());
-				boxRot.normalize();
-				btVector3 newforce = boxRot*knockback;
-				newforce.setY(0);
-				/*GO2->getRigidBody()->applyCentralImpulse(newforce);
-				*/
-				//cout << "GO1 WEAPON: knockback " << knockback << endl;
-				//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
-
-			}
-			else if (GO1->getBlockType() == Mace && !GO2->getDeleted())
-			{
-
-				double spin = ((MeleeWeapon*)GO1->getWeapon())->getSpin();
-				//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
-				//btVector3 boxRot = rbTrans.getBasis()[2];
-				btVector3 boxRot(GO2->getX() - GO1->getX(), 0, GO2->getZ() - GO1->getZ());
-				btVector3 y(0, 1, 0);
-				boxRot = boxRot.cross(y);
-				boxRot.normalize();
-				int direction = (rand()%2==0) ? 1: -1;
-				btVector3 newforce = boxRot*spin*direction;
-				newforce.setY(0);
-				//GO2->getRigidBody()->applyTorqueImpulse(boxRot);
-				////cout << "GO1 WEAPON: knockback " << knockback << endl;
-				//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
-
-			}
-			if (GO2->getBlockType() == Mallet && !GO1->getDeleted())
-			{
-				double knockback = ((MeleeWeapon*)GO2->getWeapon())->getKnockback();
-				//btTransform rbTrans = GO2->getRigidBody()->getWorldTransform();
-				//btVector3 boxRot = rbTrans.getBasis()[2];
-				btVector3 boxRot(GO1->getX() - GO2->getX(), 0, GO1->getZ() - GO2->getZ());
-				boxRot.normalize();
-				btVector3 newforce = boxRot*knockback;
-				newforce.setY(0);
-				//GO1->getRigidBody()->applyCentralImpulse(boxRot*knockback);
-				//cout << "GO2 WEAPON: knockback " << knockback << endl;
-				//cout << "GO2 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
-			}
-			else if (GO2->getBlockType() == Mace && !GO1->getDeleted())
-			{
-
-				double spin = ((MeleeWeapon*)GO2->getWeapon())->getSpin();
-				//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
-				//btVector3 boxRot = rbTrans.getBasis()[2];
-				btVector3 boxRot(GO2->getX() - GO1->getX(), 0, GO2->getZ() - GO1->getZ());
-				btVector3 y(0, 1, 0);
-				boxRot = boxRot.cross(y);
-				boxRot.normalize();
-				int direction = (rand() % 2 == 0) ? 1 : -1;
-				btVector3 newforce = boxRot*spin*direction;
-				newforce.setY(0);
-				//GO1->getRigidBody()->applyTorqueImpulse(boxRot);
-				//cout << "GO1 WEAPON: knockback " << knockback << endl;
-				//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
-
-			}
-			//cout << "clientCollision" << clientCollision << endl;
+			
+			applyMeleeForce(GO1, GO2);
+			applyMeleeForce(GO2, GO1);
 			GECollisonHappen* gech = new GECollisonHappen(clientCollision, (*it)->getX(), (*it)->getY(), (*it)->getZ());
 			gameEventList.push_back(gech);
 		}
@@ -818,7 +775,7 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 	
 	if (!g->getHasDeleted())
 	{
-		if (result == BREAK_CONSTRAINT && g->getConstraints() != nullptr)
+		if (result == BREAK_CONSTRAINT )
 		{
 			//cout << "GO Break ID: " << g->getId() << endl;
 			breakConstraints(g);
@@ -855,6 +812,11 @@ void GameLogic::cleanDataStructures()
 	{
 		if (!(*it)->getDeleted())
 		{
+	/*		if (((*it)->getIsRobot() == 0) && ((*it)->getCollisionType() != C_PROJECTILE) && !((*it)->getIsWheel()) && ((*it)->getConstraints()->size() == 0))
+			{
+				(*it)->setDeleted();
+			}
+			*/
 			new_gameObj.push_back((*it));
 		}
 		else
@@ -1058,4 +1020,59 @@ void GameLogic::createPlayerHillUpdateEvent(int c)
 {
 	GEPlayerHillUpdate* ge = new GEPlayerHillUpdate(c);
 	gameEventList.push_back(ge);
+}
+
+
+
+void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
+
+	if (GO1->getBlockType() == Mallet && !GO2->getDeleted())
+	{
+
+		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
+		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
+		//btVector3 boxRot = rbTrans.getBasis()[2];
+		btVector3 boxRot(GO2->getX() - GO1->getX(), 1.5, GO2->getZ() - GO1->getZ());
+		boxRot.normalize();
+		btVector3 newforce = boxRot*knockback;
+		//newforce.setY(0);
+		GO2->getRigidBody()->applyCentralImpulse(newforce);
+		//cout << "GO1 WEAPON: knockback " << knockback << endl;
+		//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
+
+	}
+	else if (GO1->getBlockType() == Mace && !GO2->getDeleted())
+	{
+		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
+		double spin = ((MeleeWeapon*)GO1->getWeapon())->getSpin();
+		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
+		//btVector3 boxRot = rbTrans.getBasis()[2];
+		btVector3 upboxRot(0,1,0);
+		btVector3 boxRot(0, -1, 0);
+		int direction = (rand() % 2 == 0) ? 1 : -1;
+		btVector3 upnewforce = upboxRot*knockback;
+		btVector3 newforce = boxRot*spin*direction;
+		//newforce.setY(0);
+		//GO2->getRigidBody()->applyCentralImpulse(upnewforce);
+		GO2->getRigidBody()->applyTorque(newforce);
+		////cout << "GO1 WEAPON: knockback " << knockback << endl;
+		cout << "GO1 WEAPON knockup: x:" << upnewforce.getX() << " y: " << upnewforce.getY() << " Z: " << upnewforce.getZ() << endl;
+		cout << "GO1 WEAPON spin: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
+
+	}
+	else if( GO1->getBlockType() == Needle && !GO2->getDeleted())
+	{
+
+		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
+		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
+		//btVector3 boxRot = rbTrans.getBasis()[2];
+		btVector3 boxRot(GO2->getX() - GO1->getX(), 0, GO2->getZ() - GO1->getZ());
+		boxRot.normalize();
+		btVector3 newforce = boxRot*knockback;
+		//newforce.setY(0);
+		GO2->getRigidBody()->applyCentralImpulse(newforce);
+		//cout << "GO1 WEAPON: knockback " << knockback << endl;
+		//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
+
+	}
 }

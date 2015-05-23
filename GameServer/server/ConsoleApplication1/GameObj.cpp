@@ -65,6 +65,15 @@ double GameObj::getqY(){
 	return _qY;
 }
 
+void GameObj::setSpeedMultiplier(double s)
+{
+	speedMultiplier = s;
+}
+double GameObj::getSpeedMultiplier()
+{
+	return speedMultiplier;
+}
+
 double GameObj::getqZ(){
 	return _qZ;
 }
@@ -246,22 +255,38 @@ void GameObj::setBlockType(int bType)
 				   _collisionType = C_MELEE;
 					  break;
 	}
-	case Discount:
+	case StoneTire:
 	{
-						  _isWheel = 1;
-						  speedMultiplier = 1;
-						  break;
-	}
-	case Tire:
-	{
-				 _isWheel = 1;
-						  break;
+					  _isWheel = 1;
+					  speedMultiplier = 0.1;
+					  break;
 	}
 	case WoodenWheel:
 	{
 						_isWheel = 1;
+						speedMultiplier = 0.3;
+						break;
+	}
+	case Discount:
+	{
+						  _isWheel = 1;
+						  speedMultiplier = 0.375;
 						  break;
 	}
+
+	case Tire:
+	{
+				 _isWheel = 1;
+				 speedMultiplier = 0.425;
+						  break;
+	}
+	case TronWheel:
+	{
+					 _isWheel = 1;
+					 speedMultiplier = 10;
+					 break;
+	}
+
 	case THREEBYTHREE_BASIC:
 	{
 							   _mass = 90;
@@ -471,7 +496,7 @@ int GameObj::deleteConstraints()
 
 	for (it = deleted.begin(); it != deleted.end(); it++)
 	{
-		//delete(*it);
+		delete(*it);
 	}
 	return 0;
 }
@@ -637,4 +662,9 @@ void GameObj::setInitForce(double d)
 double GameObj::getInitForce()
 {
 	return _initForce;
+}
+
+void GameObj::addSpeedMultipler(double s)
+{
+	speedMultiplier += s;
 }

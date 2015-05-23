@@ -34,7 +34,7 @@ private:
 	double _rotX;
 	double _rotY;
 	double _rotZ;
-	double speedMultiplier = 1;
+	double speedMultiplier = 0;
 	unsigned int _id;
 	int _isWheel = 0;
 	int _type;
@@ -80,7 +80,9 @@ public:
 
 	void setInitForce(double);
 	double getInitForce();
-
+	void setSpeedMultiplier(double);
+	double getSpeedMultiplier();
+	void addSpeedMultipler(double);
 	void setLeftID(int);
 	void setRightID(int);
 	void setFrontID(int);
@@ -171,6 +173,7 @@ public:
 	double getMaxHealth();
 
 	double applyDamage(double);
+
 
 	void setWeapon(int meleeorranged, int weapontype);
 

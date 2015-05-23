@@ -1,5 +1,5 @@
 #include "MeleeWeapon.h"
-
+#include <iostream>
 MeleeWeapon::MeleeWeapon(int type)
 {
 
@@ -12,29 +12,32 @@ MeleeWeapon::MeleeWeapon(int type)
 	switch (type)
 	{
 	case Needle:{
-		damage = 2;
+		damage = 15;
 		splash = 1;
-		knockback = 0;
+		knockback = -100;
 		spin = 0;
 		break;
 	}
 	case Mace:{
-		knockback = 0;
-		damage = 75;
+				  std::cout << "defaultmaceg" << std::endl;
+		knockback = 300;
+		damage = 80;
 		splash = 1;
-		spin = 250;
+		spin = 5000;
 		break;
 	}
 	case Mallet:
 	{
 				   spin = 0;
-				   knockback = 350;
-				   damage = 100;
+				   knockback = 800;
+				   damage = 80;
 				   splash = 2;
 				   break;
 	}
 	default:
 	{
+			   std::cout << "default no dmg" << std::endl;
+			   
 			   damage = 0;
 			   splash = 0;
 			   knockback = 0;
