@@ -292,14 +292,9 @@ void Window::reshapeCallback(int w, int h) {
 
 //----------------------------------------------------------------------------
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
-int count1 = 0;
 void Window::displayCallback() {
 	clock_t startTime = clock();
-	count1++;
-	if (count1 == 10){
-		cout << "trigger explosion" << endl;
-		//tmp_object->triggerExplosion();
-	}
+	
 	// play the background music through out the whole game, may change with the view
 	soundObject->playMusic(); 
 
@@ -312,11 +307,6 @@ void Window::displayCallback() {
 	if (p!=nullptr) {
 		switch (p->packet_types){
 			case GAME_STATE:{
-				/*
-				if (factory->viewmode == viewType::BUILD){
-					return;
-				}
-				*/
 				//Update states in the actual battle mode
 				factory->battlemode->VOnClientUpdate(p);
 				//g_pCore->pGameView->VOnClientUpdate(p);
@@ -346,20 +336,21 @@ void Window::displayCallback() {
 	}
 	
 	//Send keyboard event, will put it to somewhere else 5/19/15
-	if (g_pCore->i_pInput->keyStates['a'] == true){
-		g_pCore->pGamePacketManager->SendMoveToLeft(g_pCore->pPlayer->playerid);
-	}
-	if (g_pCore->i_pInput->keyStates['w'] == true){
-		g_pCore->pGamePacketManager->SendMoveToForward(g_pCore->pPlayer->playerid);
-	}
-	if (g_pCore->i_pInput->keyStates['s'] == true){
-		g_pCore->pGamePacketManager->SendMoveToBackward(g_pCore->pPlayer->playerid);
-	}
+	if (factory->viewmode == viewType::BATTLE){
+		if (g_pCore->i_pInput->keyStates['a'] == true){
+			g_pCore->pGamePacketManager->SendMoveToLeft(g_pCore->pPlayer->playerid);
+		}
+		if (g_pCore->i_pInput->keyStates['w'] == true){
+			g_pCore->pGamePacketManager->SendMoveToForward(g_pCore->pPlayer->playerid);
+		}
+		if (g_pCore->i_pInput->keyStates['s'] == true){
+			g_pCore->pGamePacketManager->SendMoveToBackward(g_pCore->pPlayer->playerid);
+		}
 
-	if (g_pCore->i_pInput->keyStates['d'] == true){
-		g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
+		if (g_pCore->i_pInput->keyStates['d'] == true){
+			g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
+		}
 	}
-
 
 	//Draw everything
 	//g_pCore->pGameView->VOnRender();
