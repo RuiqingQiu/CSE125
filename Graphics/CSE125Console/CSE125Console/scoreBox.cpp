@@ -86,9 +86,9 @@ void scoreBox::update() {
 }
 
 void scoreBox::updateScore(int d, int h, int r) {
-	deaths += d;
-	hits += h;
-	rank += r;
+	deaths = d;
+	hits = h;
+	rank = r;
 }
 
 void scoreBox::draw() {

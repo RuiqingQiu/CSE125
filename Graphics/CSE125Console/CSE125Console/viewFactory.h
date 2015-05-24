@@ -5,6 +5,7 @@
 #include "buildView.h"
 #include "battleView.h"
 #include "mainmenu.h"
+#include "endView.h"
 
 #include "GameInputInterface.h"
 #include "guiGameInput.h"
@@ -36,6 +37,7 @@ public:
 	mainMenu * menumode;
 	helpMenu * helpview;
 	battleView * battlemode;
+	endView * gameOver;
 
 	GameInputInterface * currentInput;
 	guiGameInput* gui_Input;

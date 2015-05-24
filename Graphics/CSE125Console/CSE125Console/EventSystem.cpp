@@ -60,6 +60,12 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 							 Window::factory->battlemode->timer->updateTime(t->time);
 							 /////// end GUI
 
+							 /////check if the game has ended
+							 if (t->time <= 0) {
+								 Window::factory->switchView('5');
+							 }
+							 ////end check
+
 							 break;
 
 

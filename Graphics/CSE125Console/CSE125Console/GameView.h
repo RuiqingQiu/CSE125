@@ -19,7 +19,8 @@ enum class viewType {
 	BATTLE,
 	HELP,
 	MENU,
-	CONSOLE
+	CONSOLE,
+	GAME_END,
 };
 
 class GameView

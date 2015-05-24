@@ -10,6 +10,7 @@ viewFactory::viewFactory()
 	battlemode = new battleView();
 	buildmode = new buildView();
 	menumode = new mainMenu();
+	gameOver = new endView();
 	currentView = defaultView;
 
 	gui_Input = new guiGameInput();
@@ -31,6 +32,7 @@ viewFactory::viewFactory(int w, int h) {
 	battlemode = new battleView(w, h);
 	buildmode = new buildView(w, h);
 	menumode = new mainMenu(w, h);
+	gameOver = new endView(w, h);
 	currentView = defaultView;
 
 	gui_Input = new guiGameInput();
@@ -100,6 +102,10 @@ void viewFactory::setView() {
 		currentView = defaultView;
 		currentInput = standard_Input;
 	}
+	else if (viewmode == viewType::GAME_END) {
+		currentView = gameOver;
+		currentInput = standard_Input;
+	}
 	currentView->isCurrentView = true;
 }
 
@@ -122,7 +128,7 @@ void viewFactory::switchView(unsigned char key) {
 		setView();
 		break;
 	case '5':
-		viewmode = viewType::CONSOLE;
+		viewmode = viewType::GAME_END;
 		setView();
 		break;
 	default:

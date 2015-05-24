@@ -348,6 +348,9 @@
     <ClInclude Include="loadDisplay.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="endView.h">
+      <Filter>Source Files\GameView\GuiViews</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -598,6 +601,9 @@
     </ClCompile>
     <ClCompile Include="loadDisplay.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="endView.cpp">
+      <Filter>Source Files\GameView\GuiViews</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

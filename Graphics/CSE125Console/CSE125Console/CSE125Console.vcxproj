@@ -98,6 +98,7 @@
     <ClInclude Include="cooldownDisplay.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Definition.h" />
+    <ClInclude Include="endView.h" />
     <ClInclude Include="EventCollision.h" />
     <ClInclude Include="EventDeath.h" />
     <ClInclude Include="EventEmergency.h" />
@@ -186,6 +187,7 @@
     <ClCompile Include="cooldownDisplay.cpp" />
     <ClCompile Include="CSE125Console.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="endView.cpp" />
     <ClCompile Include="EventCollision.cpp" />
     <ClCompile Include="EventDeath.cpp" />
     <ClCompile Include="EventEmergency.cpp" />
