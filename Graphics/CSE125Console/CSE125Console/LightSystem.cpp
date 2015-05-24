@@ -22,11 +22,11 @@ void LightSystem::setCameraOffset(float x, float y, float z){
 }
 void LightSystem::initLights(){
 	Light* l1 = new Light(0.0, 10.0, 0.0);
-	Light* l2 = new Light(50.0, 10.0, 0.0);
-	Light* l3 = new Light(-50.0, 10.0, 0.0);
-	Light* l4 = new Light(0.0, 10.0, 50.0);
-	Light* l5 = new Light(0.0, 10.0, -50.0);
-	Light* l6 = new Light(35.0, 10.0, 35.0);
+	Light* l2 = new Light(40.0, 10.0, 0.0);
+	Light* l3 = new Light(-40.0, 10.0, 0.0);
+	Light* l4 = new Light(0.0, 10.0, 40.0);
+	Light* l5 = new Light(0.0, 10.0, -40.0);
+	Light* l6 = new Light(28.0, 10.0, 28.0);
 	//Light* l7 = new Light(-20.0, 20.0, 20.0);
 	//Light* l8 = new Light(20.0, 20.0, 20.0);
 	//Light* l9 = new Light(-20.0, 20.0, -20.0);
