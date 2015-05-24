@@ -54,6 +54,7 @@ enum ModelType{
 	TREE1 = 600,
 	TREE2 = 601,
 	TREE3 = 602,
+	BUILDING = 603,
 
 	//Other
 	BATTLEFIELD = 700,

@@ -54,7 +54,7 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 	vec3 ambAndDiff = lights[0].La * Ka;
 	vec3 spec = vec3(0.0);
 	for(int i = 0; i < MAX_LIGHTS; i++){
-		float attenuation = 1.0 / (1.0 + 0.0 * length(lights[i].position - Position) + 0.0005 * pow(length(lights[i].position - Position), 2));
+		float attenuation = 1.0 / (1.0 + 0.0 * length(lights[i].position - Position) + 0.001 * pow(length(lights[i].position - Position), 2));
 		vec3 LightDir = normalize(toObjectLocal * (lights[i].position - Position.xyz));
 		vec3 ViewDir = toObjectLocal * normalize(-Position.xyz);
 		vec3 r = reflect(-LightDir, normal);
