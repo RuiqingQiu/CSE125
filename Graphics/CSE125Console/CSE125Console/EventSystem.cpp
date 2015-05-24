@@ -9,6 +9,8 @@
 #include "EventCollision.h"
 #include "EventWaiting.h"
 #include "EventEmergency.h"
+#include "EventHillUpdate.h"
+#include "EventPlayerHillUpdate.h"
 #include "GameCore.h"
 #include "Fire.h"
 #include "Window.h"
@@ -129,6 +131,39 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventEmergency:{
 								 printf("emergency event received\n");
 								 break;
+
+		}
+		case TEventHillUpdate:{
+								 printf("hill update received\n");
+								 //
+								 EventHillUpdate * h = (EventHillUpdate *)event;
+								 Fire* f = new Fire(h->x, h->y, h->z, 1, 1);
+								 f->static_object = true;
+								 f->lifeTime = 30;
+
+								 g_pCore->pGameView->PushEnvironmentNode(f);
+
+								 break;
+
+		}
+		case TEventPlayerHillUpdate:{
+							   printf("Event player hill update\n");
+							   //
+							   EventPlayerHillUpdate * h = (EventPlayerHillUpdate *)event;
+							   //particle
+							   for each (GeoNode* node in g_pCore->pGameView->NodeList)
+							   {
+								   if (node->identifier == h->playerid)
+								   {
+									   //show something
+									   Fire* f = new Fire(node->localTransform.position.x, node->localTransform.position.y + 4, node->localTransform.position.z, 1, 1);
+									   f->static_object = true;
+									   f->lifeTime = 1;
+									   g_pCore->pGameView->PushEnvironmentNode(f);
+								   }
+							   }
+
+							   break;
 
 		}
 		case TEventDefault:{

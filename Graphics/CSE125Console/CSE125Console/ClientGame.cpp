@@ -99,6 +99,7 @@ GameInfoPacket* ClientGame::update()
     }
 	//return network_data;
     int i = 0;
+	bool hasState = false;
 	while (i < (unsigned int)data_length) 
     {
         packet.deserialize(&(network_data[i]));
@@ -157,9 +158,12 @@ GameInfoPacket* ClientGame::update()
 									 split(result, packetVector, '|');
 
 									 //parse datainfo
-									 vector<PlayerInfo*> infos = PacketDecoder::decodePacket(packetVector[0]);
-									 for (PlayerInfo* p : infos){
-										 g->player_infos.push_back(p);
+									 if (!hasState){
+										 vector<PlayerInfo*> infos = PacketDecoder::decodePacket(packetVector[0]);
+										 for (PlayerInfo* p : infos){
+											 g->player_infos.push_back(p);
+										 }
+										 hasState = true;
 									 }
 									 //parse eventinfo
 									 if (packetVector.size() > 1 && packetVector[1]!="")
@@ -170,7 +174,6 @@ GameInfoPacket* ClientGame::update()
 										 }
 									 }
 									 g->packet_types = packet.packet_type;
-
 								 }
 								 else{
 									 //it contains only the game object data info

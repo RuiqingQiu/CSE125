@@ -93,6 +93,8 @@ enum TEventType{
 	TEventCollisionHappen = 5,
 	TEventWaiting = 6,
 	TEventEmergency = 7,
+	TEventHillUpdate = 8,
+	TEventPlayerHillUpdate = 9,
 	TEventDefault = -1
 };
 #endif

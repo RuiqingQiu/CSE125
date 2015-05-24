@@ -348,6 +348,12 @@
     <ClInclude Include="loadDisplay.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="EventHillUpdate.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventPlayerHillUpdate.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -598,6 +604,12 @@
     </ClCompile>
     <ClCompile Include="loadDisplay.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHillUpdate.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventPlayerHillUpdate.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
