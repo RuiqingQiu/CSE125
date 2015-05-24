@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -348,16 +348,14 @@
     <ClInclude Include="loadDisplay.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="endView.h">
       <Filter>Source Files\GameView\GuiViews</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="EventHillUpdate.h">
       <Filter>Source Files\Event\EventPacket</Filter>
     </ClInclude>
     <ClInclude Include="EventPlayerHillUpdate.h">
       <Filter>Source Files\Event\EventPacket</Filter>
->>>>>>> origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -610,16 +608,14 @@
     <ClCompile Include="loadDisplay.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="endView.cpp">
       <Filter>Source Files\GameView\GuiViews</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="EventHillUpdate.cpp">
       <Filter>Source Files\Event\EventPacket</Filter>
     </ClCompile>
     <ClCompile Include="EventPlayerHillUpdate.cpp">
       <Filter>Source Files\Event\EventPacket</Filter>
->>>>>>> origin/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
