@@ -54,6 +54,8 @@ Model3DFactory::Model3DFactory()
 
 	render_obj_map.insert(std::pair<int, RenderObject*>(Railgun, new RenderObject("Assets/Railgun/railgun.obj", "Assets/Railgun/tex.png", "Assets/Railgun/normals.png", "Assets/Railgun/gloss.png", "Assets/Railgun/metallic.png")));
 	
+	render_obj_map.insert(std::pair<int, RenderObject*>(BUILDING, new RenderObject("Assets/Building/sandruins.obj", "Assets/Building/tex.png", "Assets/Building/normals.png", "Assets/Building/gloss.png", "Assets/Building/metallic.png")));
+
 	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
 
 	
@@ -614,6 +616,19 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					 break;
 
 	}
+	case BUILDING:{
+					  if (render_obj_map[type] == nullptr){
+						  cout << "model is not there" << endl;
+						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						  returnModel->type = BasicCube;
+						  return returnModel;
+					  }
+					  Model3D * returnModel = new Model3D(render_obj_map[type]);
+					  returnModel->type = Railgun;
+					  return returnModel;
+					  break;
+	}
+
 	default: {
 				 cout << "type " << type << " is not recognized" << endl;
 				 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);

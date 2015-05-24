@@ -103,8 +103,10 @@
     <ClInclude Include="EventDeath.h" />
     <ClInclude Include="EventEmergency.h" />
     <ClInclude Include="EventHealth.h" />
+    <ClInclude Include="EventHillUpdate.h" />
     <ClInclude Include="EventInfo.h" />
     <ClInclude Include="EventParticle.h" />
+    <ClInclude Include="EventPlayerHillUpdate.h" />
     <ClInclude Include="EventScoreboard.h" />
     <ClInclude Include="EventSystem.h" />
     <ClInclude Include="EventTimer.h" />
@@ -192,8 +194,10 @@
     <ClCompile Include="EventDeath.cpp" />
     <ClCompile Include="EventEmergency.cpp" />
     <ClCompile Include="EventHealth.cpp" />
+    <ClCompile Include="EventHillUpdate.cpp" />
     <ClCompile Include="EventInfo.cpp" />
     <ClCompile Include="EventParticle.cpp" />
+    <ClCompile Include="EventPlayerHillUpdate.cpp" />
     <ClCompile Include="EventScoreboard.cpp" />
     <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="EventTimer.cpp" />

@@ -21,12 +21,12 @@ void LightSystem::setCameraOffset(float x, float y, float z){
 
 }
 void LightSystem::initLights(){
-	Light* l1 = new Light(0.0, 20.0, 0.0);
-	Light* l2 = new Light(20.0, 20.0, 0.0);
-	Light* l3 = new Light(-20.0, 20.0, 0.0);
-	Light* l4 = new Light(0.0, 20.0, 20.0);
-	Light* l5 = new Light(0.0, 20.0, -20.0);
-	Light* l6 = new Light(10.0, 20.0, 10.0);
+	Light* l1 = new Light(0.0, 10.0, 0.0);
+	Light* l2 = new Light(40.0, 10.0, 0.0);
+	Light* l3 = new Light(-40.0, 10.0, 0.0);
+	Light* l4 = new Light(0.0, 10.0, 40.0);
+	Light* l5 = new Light(0.0, 10.0, -40.0);
+	Light* l6 = new Light(28.0, 10.0, 28.0);
 	//Light* l7 = new Light(-20.0, 20.0, 20.0);
 	//Light* l8 = new Light(20.0, 20.0, 20.0);
 	//Light* l9 = new Light(-20.0, 20.0, -20.0);
@@ -38,12 +38,6 @@ void LightSystem::initLights(){
 	l4->Ld = Vector3(0.8, 0.8, 0.0);
 	l5->Ld = Vector3(0.8, 0.3, 0.0);
 	l6->Ld = Vector3(0.0, 1.0, 1.0);
-
-	//l7->Ld = Vector3(0.2, 0.5, 0.8);
-	//l8->Ld = Vector3(0.7, 0.2, 0.8);
-	//l9->Ld = Vector3(0.7, 0.1, 0.0);
-	//l10->Ld = Vector3(0.7, 0.1, 0.7);
-
 
 	lights.clear();
 	lights.push_back(l1);

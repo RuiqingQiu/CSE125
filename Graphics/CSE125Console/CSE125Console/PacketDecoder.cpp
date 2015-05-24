@@ -10,7 +10,8 @@
 #include "EventCollision.h"
 #include "EventWaiting.h"
 #include "EventEmergency.h"
-
+#include "EventHillUpdate.h"
+#include "EventPlayerHillUpdate.h"
 
 #define RAD_TO_DEGREE_MULT 57.2957795
 
@@ -163,7 +164,31 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 				ret.push_back(EEmergency);
 				break;
 			}
+			case TEventHillUpdate:
+			{
+								//printf("event death encode\n");
+								EventHillUpdate* EHillUpdate = new EventHillUpdate();
+								EHillUpdate->x = stof(EventData[1]);
+								EHillUpdate->y = stof(EventData[2]);
+								EHillUpdate->z = stof(EventData[3]);
+								EHillUpdate->radius = stof(EventData[4]);
+								EHillUpdate->event_type = TEventHillUpdate;
+								EHillUpdate->processed = false;
 
+								ret.push_back(EHillUpdate);
+								break;
+			}
+			case TEventPlayerHillUpdate:
+			{
+								//printf("event death encode\n");
+								EventPlayerHillUpdate* EPlayerHill = new EventPlayerHillUpdate();
+								EPlayerHill->playerid = stoi(EventData[1]);
+
+								EPlayerHill->processed = false;
+								EPlayerHill->event_type = TEventPlayerHillUpdate;
+								ret.push_back(EPlayerHill);
+								break;
+			}
 			default:
 			{
 				//cout << "this is a good fix " << endl;

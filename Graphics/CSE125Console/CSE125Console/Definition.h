@@ -54,6 +54,7 @@ enum ModelType{
 	TREE1 = 600,
 	TREE2 = 601,
 	TREE3 = 602,
+	BUILDING = 603,
 
 	//Other
 	BATTLEFIELD = 700,
@@ -93,6 +94,8 @@ enum TEventType{
 	TEventCollisionHappen = 5,
 	TEventWaiting = 6,
 	TEventEmergency = 7,
+	TEventHillUpdate = 8,
+	TEventPlayerHillUpdate = 9,
 	TEventDefault = -1
 };
 #endif

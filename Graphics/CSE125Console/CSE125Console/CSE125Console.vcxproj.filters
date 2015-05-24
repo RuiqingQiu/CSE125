@@ -348,8 +348,16 @@
     <ClInclude Include="loadDisplay.h">
       <Filter>Source Files\GUI</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="endView.h">
       <Filter>Source Files\GameView\GuiViews</Filter>
+=======
+    <ClInclude Include="EventHillUpdate.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClInclude>
+    <ClInclude Include="EventPlayerHillUpdate.h">
+      <Filter>Source Files\Event\EventPacket</Filter>
+>>>>>>> origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -602,8 +610,16 @@
     <ClCompile Include="loadDisplay.cpp">
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="endView.cpp">
       <Filter>Source Files\GameView\GuiViews</Filter>
+=======
+    <ClCompile Include="EventHillUpdate.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+    </ClCompile>
+    <ClCompile Include="EventPlayerHillUpdate.cpp">
+      <Filter>Source Files\Event\EventPacket</Filter>
+>>>>>>> origin/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

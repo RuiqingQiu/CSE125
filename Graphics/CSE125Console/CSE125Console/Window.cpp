@@ -174,6 +174,17 @@ void Window::initialize(void)
 	object->type = DESERT;
 	factory->battlemode->PushEnvironmentNode(object);
 
+	/*
+	object = Model3DFactory::generateObjectWithType(BUILDING);
+	object->shader_type = NORMAL_SHADER;
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = BUILDING;
+	factory->battlemode->PushEnvironmentNode(object);
+	*/
 	//gt->displayTest2(factory->battlemode);
 	//gt->displayTest3(factory->battlemode);
 	//gt->displayTest4(factory->battlemode);
@@ -358,5 +369,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

@@ -86,7 +86,7 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 			g_pCore->pGamePacketManager->SendMoveToRight(g_pCore->pPlayer->playerid);
 		}
 	}
-	else if (key == 'q'){
+	else if (key == ' '){
 		g_pCore->pGamePacketManager->SendShootEvent(g_pCore->pPlayer->playerid);
 		// play explosion sound here
 		float x = 0;
@@ -94,44 +94,7 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		float z = 0;
 		sound->playExplosion(x, y, z);
 	}
-	else if (key == 'z'){
-		//g_pCore->pGameView->pViewCamera.rotateLeft();
-		g_pCore->pGameView->pViewCamera->position->x -= 1;
-	}
-	else if (key == 'Z'){
-		g_pCore->pGameView->pViewCamera->position->x += 1;
-	}
-	else if (key == 'c'){
-		g_pCore->pGameView->pViewCamera->position->z += 1;
-	}
-	else if (key == 'C'){
-		g_pCore->pGameView->pViewCamera->position->z -= 1;
-	}
-	else if (key == 'x'){
-		g_pCore->pGameView->pViewCamera->position->y += 0.1;
-	}
-	else if (key == 'X'){
-		g_pCore->pGameView->pViewCamera->position->y -= 0.1;
-	}
-	else if (key == 'v'){
-		g_pCore->pGameView->pViewCamera->rotation->x += 10;
-	}
-	else if (key == 'V'){
-		g_pCore->pGameView->pViewCamera->rotation->x -= 10;
-	}
-	else if (key == 'b'){
-		g_pCore->pGameView->pViewCamera->rotation->y += 10;
-	}
-	else if (key == 'B'){
-		g_pCore->pGameView->pViewCamera->rotation->y -= 10;
-	}
-	else if (key == 'n'){
-		g_pCore->pGameView->pViewCamera->rotation->z += 10;
-	}
-	else if (key == 'N'){
-		g_pCore->pGameView->pViewCamera->rotation->z -= 10;
-	}
-	else if (key == 'r'){
+	else if (key == '1'){
 		g_pCore->pGameView->pViewCamera->mode = (g_pCore->pGameView->pViewCamera->mode + 1) % 2;
 	}
 	else if (key == 'i'){
@@ -139,10 +102,7 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		g_pCore->pGamePacketManager->SendSuicide(g_pCore->pPlayer->playerid);
 
 	}
-	else if (key == 'k'){
-	}
-	else if (key == 'l'){
-	}
+
 }
 
 void StandardGameInput::VProcessKeyInputUp(unsigned char key, int x, int y){
