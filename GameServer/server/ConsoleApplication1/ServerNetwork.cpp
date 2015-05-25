@@ -139,7 +139,7 @@ int ServerNetwork::receiveData(int client_id, char * recvbuf)
 // send data to all clients
 void ServerNetwork::sendToAll(char * packets, int totalSize)
 {
-	cout << "in send to ALL" << endl;
+	//cout << "in send to ALL" << endl;
 	SOCKET currentSocket;
 	std::map<unsigned int, SOCKET>::iterator iter;
 	int iSendResult;

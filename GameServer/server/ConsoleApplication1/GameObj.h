@@ -53,6 +53,10 @@ private:
 	int back_id = -1;
 	int buildObj_id; //this is my id
 
+	double DoT;
+	double DoTTick;
+
+	int DoTFrom;
 
 	clock_t deathTimer;
 
@@ -129,6 +133,9 @@ public:
 
 	void setDamage(double);
 	double getDamage();
+	void addDoT(double d, int);
+	int applyDotDamge();
+	double getDoTTick();
 
 	void setX(double);
 	void setY(double);

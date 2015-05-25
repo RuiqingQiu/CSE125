@@ -31,7 +31,14 @@ void Robot::setTakeDowns(int takedowns)
 
 void Robot::setDeaths(int deaths){ }
 void Robot::setName(char* name){ _name = name; }
-
+int Robot::getJustBuilt()
+{
+	return justBuilt;
+}
+void Robot::setJustBuilt(int b)
+{
+	justBuilt = b;
+}
 int Robot::getCID(){ return _r_cid; }
 int Robot::getTakeDowns(){ return _takedowns; }
 int Robot::getDeaths(){ return _deaths; }

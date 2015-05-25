@@ -367,6 +367,24 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 				   eventList->push_back(e);
 				   break;
 	}
+	case SUICIDE:{
+				   ObjectEvents * e = new ObjectEvents(SUICIDE);
+				   string packetInfoStr = "";
+				   int i;
+				   for (i = 0;; i++)
+				   {
+					   if (packet.data[i] != '\n')
+						   packetInfoStr += packet.data[i];
+					   else
+					   {
+						   break;
+					   }
+				   }
+				   unsigned int cid = stoul(packetInfoStr);
+				   e->setCid(cid);
+				   eventList->push_back(e);
+				   break;
+	}
 	case BUILD_ROBOT: {
 		//cout << "Received Build Robot Packet" << endl;
 						  ObjectEvents * e = new ObjectEvents(BUILD_ROBOT);
@@ -500,7 +518,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 									 
 								     if (objId == 0) {
 
-										object = new Robot((int)cid, "Player");
+										object = new Robot((int)cid, "No Name");
 										object->setId(cid);
 										object->setX(xPos);
 										object->setY(yPos);

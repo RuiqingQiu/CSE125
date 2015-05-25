@@ -20,7 +20,6 @@ ServerCore::~ServerCore()
 
 void ServerCore::serverLoop()
 {
-	gameLogic->numPlayers = 3;
 	
 	while (true)
 	{
@@ -70,7 +69,7 @@ void ServerCore::serverLoop()
 		}
 		case INIT_GAME: 
 		{
-			 cout << "init game game start " << endl;
+			 cout << "init game start " << endl;
 			 action = gameLogic->gameStart();
 			 break;
 		}

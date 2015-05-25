@@ -16,14 +16,16 @@ MeleeWeapon::MeleeWeapon(int type)
 		splash = 1;
 		knockback = -100;
 		spin = 0;
+		DoT = 0;
 		break;
 	}
 	case Mace:{
 				  std::cout << "defaultmaceg" << std::endl;
-		knockback = 300;
-		damage = 80;
+		knockback = 100;
+		damage = 40;
 		splash = 1;
-		spin = 5000;
+		spin = 0;
+		DoT = 50;
 		break;
 	}
 	case Mallet:
@@ -32,6 +34,7 @@ MeleeWeapon::MeleeWeapon(int type)
 				   knockback = 800;
 				   damage = 80;
 				   splash = 2;
+				   DoT = 0;
 				   break;
 	}
 	default:
@@ -80,4 +83,13 @@ void MeleeWeapon::setSpin(double s)
 double MeleeWeapon::getSpin()
 {
 	return spin;
+}
+
+
+void MeleeWeapon::setDoT(double d){
+	DoT = d;
+
+}
+double MeleeWeapon::getDoT(){
+	return DoT;
 }

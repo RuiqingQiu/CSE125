@@ -22,6 +22,7 @@
 #include "Hill.h"
 #include "GEHillUpdate.h"
 #include "GEPlayerHillUpdate.h"
+#include "SpawnPoint.h"
 
 #define FIELD_WIDTH 100
 #define FIELD_HEIGHT 100
@@ -39,7 +40,9 @@ private:
 	Scoreboard* scoreboard;
 	Hill* hill;
 	int counter;
-
+	SpawnPoint* spawnPoint;
+	Robot* dmgDealtArr[4];
+	string names[4];
 
 	std::vector<GameObj*> gameObjs;
 	//when you delete a obj, deleteConstraints(), ~() delete rigidBody, set to nullptr

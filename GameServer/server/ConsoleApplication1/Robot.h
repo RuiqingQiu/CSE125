@@ -21,6 +21,7 @@ private:
 	int _wheelType;
 	Robot* diedTo = nullptr;
 	int _state;
+	int justBuilt = 1;
 
 public:
 	Robot(int, char*);
@@ -30,6 +31,9 @@ public:
 	void setTakeDowns(int);
 	void setDeaths(int);
 	void setName(char*);
+
+	int getJustBuilt();
+	void setJustBuilt(int);
 
 	void setDiedTo(Robot*);
 	Robot* getDiedTo();

@@ -6,6 +6,8 @@ class MeleeWeapon: public Weapon
 private:
 	double knockback;
 	double spin;
+	double DoT;
+
 public:
 	MeleeWeapon(int);
 	~MeleeWeapon();
@@ -14,5 +16,7 @@ public:
 	double getKnockback();
 	void setSpin(double);
 	double getSpin();
+	void setDoT(double);
+	double getDoT();
 };
 
