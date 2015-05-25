@@ -596,6 +596,11 @@ void GameObj::setMaxHealth(double h)
 	_maxHealth = h;
 	_health = h;
 }
+
+double GameObj::getDoT()
+{
+	return DoT;
+}
 double GameObj::getHealth()
 {
 	return (_health < 0) ? 0 : _health;
@@ -608,7 +613,7 @@ double GameObj::getMaxHealth()
 
 void GameObj::addDoT(double d, int c){
 	DoT += d;
-	DoTTick = DoT / 10;
+	DoTTick = (double)DoT / (double)10;
 	DoTFrom = c;
 }
 
@@ -622,6 +627,11 @@ int GameObj::applyDotDamge(){
 	DoT -= DoTTick;
 	return DoTFrom;
 	
+}
+
+int GameObj::getDoTFrom()
+{
+	return DoTFrom;
 }
 
 double GameObj::getDoTTick(){

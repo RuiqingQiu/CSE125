@@ -15,6 +15,13 @@ GameLogic::GameLogic()
 	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
 	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_WIDTH/10, 10);
 	counter = 0;
+	spawnPoint = new SpawnPoint(FIELD_WIDTH);
+	dmgDealtArr[4] = { nullptr };
+	int i;
+	for (i = 0; i < 4; i++)
+	{
+		names[i] = "";
+	}
 }
 
 GameLogic::~GameLogic()
@@ -25,6 +32,7 @@ GameLogic::~GameLogic()
 	delete damageSystem;
 	delete scoreboard;
 	delete hill;
+	delete spawnPoint;
 
 }
 
@@ -64,6 +72,7 @@ unsigned int GameLogic::waitToConnect()
 		case INIT_CONNECTION:
 			string name = (*iter)->getName();
 			(*iter)->setCid(cid);
+			names[cid] = name;
 			network->sendClientConfirmationPacket(name.c_str(), cid);
 			objEventList.erase(iter);
 			return ADDCLIENT;
@@ -76,8 +85,6 @@ unsigned int GameLogic::waitToConnect()
 
 // will be called in build function when the build mode ends
 int GameLogic::gameStart(){
-
-
 
 	addGround();
 	addWalls();
@@ -92,21 +99,47 @@ int GameLogic::gameStart(){
 		//Add robot parts to gameObjs and find the Robot, create rigidbodies
 		std::vector<GameObj*>::iterator it;
 		std::vector<GameObj*>::iterator it2;
-
 		btDynamicsWorld* d = gamePhysics->getDynamicsWorld();
 		Robot* robot = nullptr;
+		btVector3 sp = spawnPoint->nextPoint();
+		cout << " x y z: " << sp.getX() << " , " << sp.getY() << " , " << sp.getZ() << endl;
+		if (sp.getZ() < 0)
+		{
+			for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
+			{
+
+				(*it)->setX((*it)->getX()*-1);
+				(*it)->setZ((*it)->getZ()*-1);
+				btQuaternion q((*it)->getqX(), (*it)->getqY(), (*it)->getqZ(), (*it)->getqW());
+				btQuaternion rotQ(0, 1, 0, 0);
+				q = q*rotQ;
+				(*it)->setqX(q.getX());
+				(*it)->setqY(q.getY());
+				(*it)->setqZ(q.getZ());
+				(*it)->setqW(q.getW());
+			}
+		}
+
+
 		for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
 		{
 
 			int cid = (*iter)->getCid();
-			double xoffset = (cid % 2) * 30;
-			double zoffset = cid - 2<0 ? 0 : 30;
-			double yoffset = 0;
+			float xoffset = sp.getX();
+			float zoffset =  sp.getZ();
+			float yoffset =  sp.getY();
 
 			if ((*it)->getBuildID() == 0)
 			{
 				robot = (Robot*)(*it);
 				robot->setCID(cid);
+
+
+				char * nameChar = new char[names[cid].length() + 1];
+				std::strcpy(nameChar, names[cid].c_str());
+				robot->setName(nameChar);
+				//delete[] nameChar;
+
 				clientPair.insert(std::pair<int, Robot*>(cid, robot));
 				robot->setX(xoffset);
 				robot->setY(robot->getY()+yoffset);
@@ -200,7 +233,7 @@ int GameLogic::gameStart(){
 				}
 			}
 		}
-		
+		//createHealthUpdateEvent(robot);
 		robot->nextState();
 	}
 
@@ -284,6 +317,7 @@ int GameLogic::gameStart(){
 	cout << "end of game start" << endl;
 	network->sendInitBuild(INIT_BATTLE, 0);
 	objEventList.clear();
+	
 	return 0;
 }
 
@@ -318,6 +352,10 @@ int packet_counter = 0;
 
 unsigned int GameLogic::gameLoop (){
 
+	for (int i = 0; i < 4; i++)
+	{
+		dmgDealtArr[i] = nullptr;
+	}
 	packet_counter++;
     //ObjectEvents* objEvent = new ObjectEvents(SHOOT);
     //objEvent->setCid(0);
@@ -338,9 +376,21 @@ unsigned int GameLogic::gameLoop (){
 	//do physics
 	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/66.0),4);
 	gamePhysics->stepSimulation(&gameObjs, &GamePhysics::collisionList);
-	postPhyLogic();
+
 	
-	
+	std::map<int, GameObj *>::iterator iter;
+	for (iter = clientPair.begin(); iter != clientPair.end(); iter++)
+	{
+		Robot* r = (Robot*)(*iter).second;
+		if (r->getHasDeleted()) continue;
+		if (r->getState() == PS_ALIVE && r->getJustBuilt())
+		{
+			createHealthUpdateEvent(r);
+			r->setJustBuilt(0);
+		}
+	}
+
+
 	if (lastTime != (int) (countDown->getCurrentTime()/1000))
 	{
 		lastTime = (int) (countDown->getCurrentTime()/1000);
@@ -351,6 +401,7 @@ unsigned int GameLogic::gameLoop (){
 		std::map<int, GameObj *>::iterator it;
 		for (it = clientPair.begin(); it != clientPair.end(); it++)
 		{
+			
 			Robot* r = (Robot*)(*it).second;
 			int gainedGold = hill->inHill(r->getX(), r->getZ());
 			if (gainedGold > 0)
@@ -365,12 +416,53 @@ unsigned int GameLogic::gameLoop (){
 			hill->update();
 			//createHillUpdateEvent();
 		}
+
+
+		std::vector<GameObj *>::iterator it2;
+		for (it2 = gameObjs.begin(); it2 != gameObjs.end(); it2++)
+		{
+			//if ((*it2)->getHasDeleted()) continue;
+			int cid = (*it2)->applyDotDamge();
+			if (cid != -1)
+			{
+				if ((*it2)->getIsRobot()){
+					if ((*it2)->getHealth() <= 0){
+						Robot* DieTo = (Robot*)clientPair.find(cid)->second;
+						((Robot*)(*it2))->setDiedTo(DieTo);
+						postDamageLogic(*it2, DEATH, nullptr);
+					}
+					dmgDealtArr[((Robot*)(*it2)->getBelongTo())->getCID()] = (Robot*)(*it2)->getBelongTo();
+				}
+				else{
+					Robot* rb = (Robot*)(*it2)->getBelongTo();
+					if ((*it2)->getHealth() <= 0){
+						if (rb->getDoTFrom() == -1)
+						{
+							rb->addDoT((*it2)->getDoT(), cid);
+						}
+						else
+						{
+							rb->addDoT((*it2)->getDoT(), rb->getDoTFrom());
+						}
+						(*it2)->addDoT(-(*it2)->getDoT(), -1);
+						postDamageLogic(*it2, BREAK_CONSTRAINT, nullptr);
+					}
+					
+					if (rb->applyDamage((*it2)->getDoTTick()) <= 0){
+						Robot* DieTo = (Robot*)clientPair.find(cid)->second;
+						rb->setDiedTo(DieTo);
+					}
+					dmgDealtArr[rb->getCID()] = rb;
+				}
+			}
+		}
+
 		GETime* et = new GETime(lastTime);
 		gameEventList.push_back(et);
 	}
 
 
-
+	postPhyLogic();
 
 	if (scoreboard->getHasChanged())
 	{
@@ -421,6 +513,13 @@ void GameLogic::prePhyLogic(){
 					    projectiles.clear();
 						break;
 			}
+			case SUICIDE:{
+							 r->applyDamage(r->getMaxHealth());
+							 r->setDiedTo(r);
+							 dmgDealtArr[cid] = r;
+							 postDeathLogic(r);
+							 break;
+			}
 			default:{
 					gamePhysics->createPhysicsEvent(type, gObj);
 					break;
@@ -442,13 +541,30 @@ void GameLogic::prePhyLogic(){
 
 								 btDynamicsWorld* d = gamePhysics->getDynamicsWorld();
 								 Robot* robot = nullptr;
+								 btVector3 sp = spawnPoint->nextPoint();
+								 if (sp.getZ() < 0)
+								 {
+									 for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
+									 {
+										 (*it)->setX((*it)->getX()*-1);
+										 (*it)->setZ((*it)->getZ()*-1);
+										 btQuaternion q((*it)->getqX(), (*it)->getqY(), (*it)->getqZ(), (*it)->getqW());
+										 btQuaternion rotQ(0, 1, 0, 0);
+										 q = q*rotQ;
+										 (*it)->setqX(q.getX());
+										 (*it)->setqY(q.getY());
+										 (*it)->setqZ(q.getZ());
+										 (*it)->setqW(q.getW());
+									 }
+								 }
+
 								 for (it = (*iter)->roboBuild.begin(); it != (*iter)->roboBuild.end(); it++)
 								 {
 
 									 int cid = (*iter)->getCid();
-									 float xoffset = (cid % 2) * 30;
-									 float zoffset = cid - 2 < 0 ? 0 : 30;
-									 float yoffset = 0;
+									 float xoffset = sp.getX();
+										 float zoffset = sp.getZ();
+									 float yoffset = sp.getY();
 
 									 if ((*it)->getBuildID() == 0)
 									 {
@@ -458,6 +574,11 @@ void GameLogic::prePhyLogic(){
 										 robot = (Robot*)(*it);
 										 //clientPair.insert(std::pair<int, Robot*>(cid, robot));
 										 robot->setCID(cid);
+
+										 char * nameChar = new char[names[cid].length() + 1];
+										 std::strcpy(nameChar, names[cid].c_str());
+										 robot->setName(nameChar);
+
 										 robot->setX(xoffset);
 										 robot->setZ(zoffset);
 										 robot->setY(robot->getY() + yoffset);
@@ -551,8 +672,9 @@ void GameLogic::prePhyLogic(){
 									 }
 									 }
 								 }
-								 createHealthUpdateEvent(robot);
+								 //createHealthUpdateEvent(robot);
 								 robot->nextState();
+								 break;
 			}
 			default:{
 						break;
@@ -654,7 +776,6 @@ void GameLogic::prePhyLogic(){
 
 void GameLogic::postPhyLogic(){
 	std::vector<Collision *>::iterator it;
-	Robot* dmgDealtArr[4] = { nullptr };
 	for (it = GamePhysics::collisionList.begin(); it != GamePhysics::collisionList.end(); it++)
 	{
 		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
@@ -745,7 +866,11 @@ void GameLogic::postDeathLogic(Robot* r)
 		cout << "inc death for " << r->getCID() << endl;
 		cout << "after death:" << scoreboard->getDeaths()[r->getCID()] << endl;
 		cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
-		scoreboard->incTakedowns(r->getDiedTo()->getCID());		
+		if (r->getDiedTo() != nullptr)
+		{
+			scoreboard->incTakedowns(r->getDiedTo()->getCID());
+		}
+		
 		cout << "inc takedown for " << r->getDiedTo()->getCID() << endl;
 		cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
 		cout << "-----" << endl;
@@ -779,12 +904,7 @@ void GameLogic::postDamageLogic(GameObj* g, int result, btManifoldPoint* pt)
 		{
 			//cout << "GO Break ID: " << g->getId() << endl;
 			breakConstraints(g);
-			//cout << "Impulse: " << pt->getAppliedImpulse() << endl;
-			btVector3 randomForce((*dist)(generator), (*dist)(generator), (*dist)(generator));
-			//cout << "randomForce x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
-			randomForce.normalize();
-			//cout << "randomForce normalized x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
-			g->getRigidBody()->applyCentralImpulse(randomForce*5*sqrt(pt->getAppliedImpulse()));
+
 		}
 		else if (result == DELETED)
 		{
@@ -855,6 +975,13 @@ int GameLogic::breakConstraints(GameObj* g)
 		}
 		r->setParts(new_parts);
 	}
+	//cout << "Impulse: " << pt->getAppliedImpulse() << endl;
+	btVector3 randomForce((*dist)(generator), (*dist)(generator), (*dist)(generator));
+	//cout << "randomForce x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
+	randomForce.normalize();
+	//cout << "randomForce normalized x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
+	g->getRigidBody()->applyCentralImpulse(randomForce * 400);
+
 	return 0;
 }
 
@@ -1032,7 +1159,7 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
 		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
 		//btVector3 boxRot = rbTrans.getBasis()[2];
-		btVector3 boxRot(GO2->getX() - GO1->getX(), 1.5, GO2->getZ() - GO1->getZ());
+		btVector3 boxRot(GO2->getX() - GO1->getX(), 1.3, GO2->getZ() - GO1->getZ());
 		boxRot.normalize();
 		btVector3 newforce = boxRot*knockback;
 		//newforce.setY(0);
@@ -1043,21 +1170,19 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 	}
 	else if (GO1->getBlockType() == Mace && !GO2->getDeleted())
 	{
+
 		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
-		double spin = ((MeleeWeapon*)GO1->getWeapon())->getSpin();
 		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
 		//btVector3 boxRot = rbTrans.getBasis()[2];
-		btVector3 upboxRot(0,1,0);
-		btVector3 boxRot(0, -1, 0);
-		int direction = (rand() % 2 == 0) ? 1 : -1;
-		btVector3 upnewforce = upboxRot*knockback;
-		btVector3 newforce = boxRot*spin*direction;
+		btVector3 boxRot(GO2->getX() - GO1->getX(), 1.2, GO2->getZ() - GO1->getZ());
+		boxRot.normalize();
+		btVector3 newforce = boxRot*knockback;
 		//newforce.setY(0);
-		//GO2->getRigidBody()->applyCentralImpulse(upnewforce);
-		GO2->getRigidBody()->applyTorque(newforce);
-		////cout << "GO1 WEAPON: knockback " << knockback << endl;
-		cout << "GO1 WEAPON knockup: x:" << upnewforce.getX() << " y: " << upnewforce.getY() << " Z: " << upnewforce.getZ() << endl;
-		cout << "GO1 WEAPON spin: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
+		GO2->getRigidBody()->applyCentralImpulse(newforce);
+		Robot* r = (Robot*)GO1->getBelongTo();
+		GO2->addDoT(((MeleeWeapon*)GO1->getWeapon())->getDoT(), r->getCID());
+		//cout << "GO1 WEAPON: knockback " << knockback << endl;
+		//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
 
 	}
 	else if( GO1->getBlockType() == Needle && !GO2->getDeleted())
@@ -1073,6 +1198,7 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		GO2->getRigidBody()->applyCentralImpulse(newforce);
 		//cout << "GO1 WEAPON: knockback " << knockback << endl;
 		//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
-
+		Robot* r = (Robot*)GO1->getBelongTo();
+		r->applyDamage(-((MeleeWeapon*)GO1->getWeapon())->getDamage());
 	}
 }

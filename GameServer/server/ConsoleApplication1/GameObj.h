@@ -56,7 +56,7 @@ private:
 	double DoT;
 	double DoTTick;
 
-	int DoTFrom;
+	int DoTFrom = -1;
 
 	clock_t deathTimer;
 
@@ -92,6 +92,9 @@ public:
 	void setFrontID(int);
 	void setBackID(int);
 	void setBelowID(int);
+	int getDoTFrom();
+
+	double getDoT();
 
 	virtual GameObj* shoot() = 0;
 
