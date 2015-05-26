@@ -43,6 +43,7 @@ private:
 	int _isRobot = 0;
 	int	_isRanged = 0;
 	int _collisionType;
+	double blockForce = 0;
 
 	btRigidBody* rigidBody;
 		//constraints
@@ -82,6 +83,8 @@ public:
 	GameObj(double, double, double, double, double, double, double, int, double);
 	~GameObj();
 
+
+	double getBlockForce();
 	void setInitForce(double);
 	double getInitForce();
 	void setSpeedMultiplier(double);

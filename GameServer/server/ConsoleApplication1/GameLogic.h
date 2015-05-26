@@ -43,6 +43,7 @@ private:
 	SpawnPoint* spawnPoint;
 	Robot* dmgDealtArr[4];
 	string names[4];
+	int secondCounter = 0;
 
 	std::vector<GameObj*> gameObjs;
 	//when you delete a obj, deleteConstraints(), ~() delete rigidBody, set to nullptr
@@ -87,7 +88,8 @@ public:
 	void postDamageLogic(GameObj*, int e, btManifoldPoint*);
 	void postHealthLogic(Robot* arr[]);
 	void postDeathLogic(Robot*);
-
+	void updateDoTDamage();
+	void updateBlockForce();
 	int buildMode();
 	int startBuild();
 	int endGame();

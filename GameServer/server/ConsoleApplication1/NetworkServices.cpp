@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "NetworkServices.h"
+#include <iostream>
 
 int NetworkServices::sendMessage(SOCKET curSocket, char * message, int messageSize)
 {
@@ -13,11 +14,14 @@ int NetworkServices::receiveMessage(SOCKET curSocket, char * buffer, int bufSize
 
 
 
-//
+
 //int NetworkServices::sendMessage(SOCKET curSocket, char * message, int messageSize)
 //{
 //	int currSize = 0;
-//	std::string s = std::to_string(messageSize);
+//	std::string s = std::to_string(messageSize); 
+//		std::cout << "send" << std::endl;
+//	std::cout << "msg size: " << messageSize << std::endl;
+//	std::cout << "message: " << message << std::endl;
 //	s += "\0";
 //	char size[11];
 //	memset(size, 0, 11);
@@ -30,7 +34,7 @@ int NetworkServices::receiveMessage(SOCKET curSocket, char * buffer, int bufSize
 //	while (currSize < messageSize)
 //	{
 //
-//		res = send(curSocket, message, messageSize, 0);
+//		res = send(curSocket, &message[currSize], messageSize - currSize, 0);
 //		if (res < 0)
 //		{
 //			return res;
@@ -38,25 +42,35 @@ int NetworkServices::receiveMessage(SOCKET curSocket, char * buffer, int bufSize
 //		else
 //		{
 //			currSize += res;
+//			std::cout << "sent msg of size: " << res << std::endl;
 //		}
+//		std::cout << "currSize: " << currSize << std::endl;
 //	}
 //	return currSize;
 //}
 //
 //int NetworkServices::receiveMessage(SOCKET curSocket, char * buffer, int bufSize)
 //{
+//	std::cout << "receive" << std::endl;
 //	char* messageSize = nullptr;
-//	if (recv(curSocket, messageSize, 11, 0) != 11)
+//	int result = recv(curSocket, messageSize, 11, 0);
+//	std::cout << "result: " << result << std::endl;
+//	if (messageSize != nullptr)
+//	{
+//		std::cout << "messageSize: " << messageSize << std::endl;
+//	}
+//	if (result != 11)
 //		return -1;
 //
 //	int msgSize = std::stoul(messageSize);
 //
+//	std::cout << "msg size: " << msgSize << std::endl;
 //	int currSize = 0;
 //	int res;
 //	while (currSize < msgSize)
 //	{
 //
-//		res = recv(curSocket, buffer, bufSize, 0);
+//		res = recv(curSocket, &buffer[currSize], bufSize-currSize, 0);
 //		if (res < 0)
 //		{
 //			return res;
@@ -64,7 +78,10 @@ int NetworkServices::receiveMessage(SOCKET curSocket, char * buffer, int bufSize
 //		else
 //		{
 //			currSize += res;
+//			std::cout << "received msg of size: " << res << std::endl;
 //		}
+//		std::cout << "currSize: " << currSize << std::endl;
 //	}
+//	std::cout << "msg buffer: " << buffer << std::endl;
 //	return (currSize > bufSize) ? -1 : currSize;
 //}

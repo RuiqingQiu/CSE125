@@ -417,46 +417,15 @@ unsigned int GameLogic::gameLoop (){
 			//createHillUpdateEvent();
 		}
 
-
-		std::vector<GameObj *>::iterator it2;
-		for (it2 = gameObjs.begin(); it2 != gameObjs.end(); it2++)
+	
+		if (++secondCounter >= 3)
 		{
-			//if ((*it2)->getHasDeleted()) continue;
-			int cid = (*it2)->applyDotDamge();
-			if (cid != -1)
-			{
-				if ((*it2)->getIsRobot()){
-					if ((*it2)->getHealth() <= 0){
-						Robot* DieTo = (Robot*)clientPair.find(cid)->second;
-						((Robot*)(*it2))->setDiedTo(DieTo);
-						postDamageLogic(*it2, DEATH, nullptr);
-					}
-					dmgDealtArr[((Robot*)(*it2)->getBelongTo())->getCID()] = (Robot*)(*it2)->getBelongTo();
-				}
-				else{
-					Robot* rb = (Robot*)(*it2)->getBelongTo();
-					if ((*it2)->getHealth() <= 0){
-						if (rb->getDoTFrom() == -1)
-						{
-							rb->addDoT((*it2)->getDoT(), cid);
-						}
-						else
-						{
-							rb->addDoT((*it2)->getDoT(), rb->getDoTFrom());
-						}
-						(*it2)->addDoT(-(*it2)->getDoT(), -1);
-						postDamageLogic(*it2, BREAK_CONSTRAINT, nullptr);
-					}
-					
-					if (rb->applyDamage((*it2)->getDoTTick()) <= 0){
-						Robot* DieTo = (Robot*)clientPair.find(cid)->second;
-						rb->setDiedTo(DieTo);
-					}
-					dmgDealtArr[rb->getCID()] = rb;
-				}
-			}
+			secondCounter = 0;
+			updateBlockForce();
 		}
-
+		
+	
+		updateDoTDamage();
 		GETime* et = new GETime(lastTime);
 		gameEventList.push_back(et);
 	}
@@ -866,7 +835,7 @@ void GameLogic::postDeathLogic(Robot* r)
 		cout << "inc death for " << r->getCID() << endl;
 		cout << "after death:" << scoreboard->getDeaths()[r->getCID()] << endl;
 		cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
-		if (r->getDiedTo() != nullptr)
+		if (r->getDiedTo() != nullptr && r->getDiedTo()->getCID() != r->getCID())
 		{
 			scoreboard->incTakedowns(r->getDiedTo()->getCID());
 		}
@@ -1201,4 +1170,99 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		Robot* r = (Robot*)GO1->getBelongTo();
 		r->applyDamage(-((MeleeWeapon*)GO1->getWeapon())->getDamage());
 	}
+}
+
+void GameLogic::updateDoTDamage()
+{
+	std::vector<GameObj *>::iterator it2;
+	for (it2 = gameObjs.begin(); it2 != gameObjs.end(); it2++)
+	{
+		//if ((*it2)->getHasDeleted()) continue;
+		int cid = (*it2)->applyDotDamge();
+		if (cid != -1)
+		{
+			if ((*it2)->getIsRobot()){
+				if ((*it2)->getHealth() <= 0){
+					Robot* DieTo = (Robot*)clientPair.find(cid)->second;
+					((Robot*)(*it2))->setDiedTo(DieTo);
+					postDamageLogic(*it2, DEATH, nullptr);
+				}
+				dmgDealtArr[((Robot*)(*it2)->getBelongTo())->getCID()] = (Robot*)(*it2)->getBelongTo();
+			}
+			else{
+				Robot* rb = (Robot*)(*it2)->getBelongTo();
+				if ((*it2)->getHealth() <= 0){
+					if (rb->getDoTFrom() == -1)
+					{
+						rb->addDoT((*it2)->getDoT(), cid);
+					}
+					else
+					{
+						rb->addDoT((*it2)->getDoT(), rb->getDoTFrom());
+					}
+					(*it2)->addDoT(-(*it2)->getDoT(), -1);
+					postDamageLogic(*it2, BREAK_CONSTRAINT, nullptr);
+				}
+
+				if (rb->applyDamage((*it2)->getDoTTick()) <= 0){
+					Robot* DieTo = (Robot*)clientPair.find(cid)->second;
+					rb->setDiedTo(DieTo);
+				}
+				dmgDealtArr[rb->getCID()] = rb;
+			}
+		}
+	}
+}
+
+void GameLogic::updateBlockForce()
+{
+	int i;
+	double threshold = 40;
+	for (i = 0; i < numPlayers; i++)
+	{
+		Robot* r = (Robot*)clientPair.find(i)->second;
+		if (r->getState() != PS_ALIVE) continue;
+		double force = 0;
+		std::vector<GameObj *>::iterator it;
+		std::vector<GameObj*> parts = r->getParts();
+		for (it = parts.begin(); it != parts.end(); it++)
+		{
+			if ((*it)->getBlockType() == BLACKCUBE || (*it)->getBlockType() == GlowingCube || (*it)->getBlockType() == THREEBYTHREE_GLOWING || (*it)->getBlockType() == THREEBYTHREE_BLACK)
+			{
+				force += (*it)->getBlockForce();
+			}	
+		}
+		if (force != 0)
+		{
+			int j;
+			for (j = 0; j < numPlayers; j++)
+			{
+				if (j != i)
+				{
+					Robot* opp = (Robot*)clientPair.find(j)->second;
+					if (opp->getState() != PS_ALIVE) continue;
+					btVector3 direction(opp->getX() - r->getX(), opp->getY() - r->getY(), opp->getZ() - r->getZ());
+					double distance = direction.length();
+					double threshold = 40;
+					direction.normalize();
+					opp->getRigidBody()->applyCentralImpulse(direction*force*(threshold/distance));
+				}
+			}
+		}
+
+		for (it = gameObjs.begin(); it != gameObjs.end(); it++)
+		{
+			if ((*it)->getHasDeleted())
+			{
+				btVector3 direction((*it)->getX() - r->getX(), (*it)->getY() - r->getY(), (*it)->getZ() - r->getZ());
+
+				double distance = direction.length();
+				direction.normalize();
+				(*it)->getRigidBody()->applyCentralImpulse(direction*force/10*(threshold / distance) / (*it)->getMass());
+			}
+		}
+	}
+	
+
+	
 }

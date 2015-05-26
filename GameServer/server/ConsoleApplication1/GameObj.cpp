@@ -185,6 +185,7 @@ void GameObj::setBlockType(int bType)
 	{
 						_mass = 9;
 						_health = 190;
+						blockForce = 300;
 						_collisionType = C_ROBOT_PARTS;
 					  break;
 	}
@@ -208,6 +209,7 @@ void GameObj::setBlockType(int bType)
 	{
 						_mass = 7;
 						_health = 170;
+						blockForce = -300;
 						_collisionType = C_ROBOT_PARTS;
 						break;
 	}
@@ -258,26 +260,26 @@ void GameObj::setBlockType(int bType)
 	case StoneTire:
 	{
 					  _isWheel = 1;
-					  speedMultiplier = 0.1;
+					  speedMultiplier = 1;
 					  break;
 	}
 	case WoodenWheel:
 	{
 						_isWheel = 1;
-						speedMultiplier = 0.3;
+						speedMultiplier = 2;
 						break;
 	}
 	case Discount:
 	{
 						  _isWheel = 1;
-						  speedMultiplier = 0.375;
+						  speedMultiplier = 4;
 						  break;
 	}
 
 	case Tire:
 	{
 				 _isWheel = 1;
-				 speedMultiplier = 0.425;
+				 speedMultiplier = 7;
 						  break;
 	}
 	case TronWheel:
@@ -298,6 +300,7 @@ void GameObj::setBlockType(int bType)
 	{
 								 _mass = 81;
 								 _health = 1710;
+								 blockForce = 2700;
 								 _collisionType = C_ROBOT;
 							   break;
 	}
@@ -313,6 +316,7 @@ void GameObj::setBlockType(int bType)
 	{
 								_mass = 63;
 								_health = 1530;
+								blockForce = -2700;
 								_collisionType = C_ROBOT;
 								break;
 	}
@@ -355,7 +359,10 @@ void GameObj::setBlockType(int bType)
 	}
 	}
 }
-
+double GameObj::getBlockForce()
+{
+	return blockForce;
+}
 void GameObj::setIsRobot(int b)
 {
 	_isRobot = b;
