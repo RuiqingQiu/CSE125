@@ -92,7 +92,7 @@ void buildView::createButtons() {
 	//hardcoded button sizes for now
 
 	//battle button
-	battleButton = new button("menuItem/battle.jpg", width - 120, 20);
+	battleButton = new button("menuItem/battle.jpg", width - 120, 20, 200, 60);
 	battleButton->setTexture("menuItem/battle_sel.jpg", btnState::SELECTED);
 	battleButton->setTexture("menuItem/battle_press.jpg", btnState::PRESSED);
 	buttons.push_back(battleButton);
