@@ -228,7 +228,6 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							  break;
 	}
 	case MOVE_LEFT: {
-						//cout << "Move Left" << endl;
 						ObjectEvents * e = new ObjectEvents(MOVE_LEFT);
 						string packetInfoStr = "";
 						int i;
@@ -244,6 +243,8 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						//cout << packet.data << endl;
 						//cout << "recieved string "<< packetInfoStr << endl;
 						int cid = stoi(packetInfoStr);
+						cout << "Move Left :" << cid << endl;
+
 						//cout << "recived cid = " << cid << endl;
 						e->setCid(cid);
 						eventList->push_back(e);
@@ -265,6 +266,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						 }
 						 unsigned int cid = stoul(packetInfoStr);
 						 e->setCid(cid);
+						 cout << "Move Left :" << cid << endl;
 						 eventList->push_back(e);
 						 break;
 
@@ -285,6 +287,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							}
 							unsigned int cid = stoul(packetInfoStr);
 							e->setCid(cid);
+							cout << "Move Left :" << cid << endl;
 							eventList->push_back(e);
 							break;
 
@@ -305,50 +308,51 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						   }
 						   unsigned int cid = stoul(packetInfoStr);
 						   e->setCid(cid);
+						   cout << "Move Left :" << cid << endl;
 						   eventList->push_back(e);
 						   break;
 
 
 						   break;
 	}
-	case MOVE_UP: {
-					  ObjectEvents * e = new ObjectEvents(MOVE_UP);
-					  string packetInfoStr = "";
-					  int i;
-					  for (i = 0;; i++)
-					  {
-						  if (packet.data[i] != '\n')
-							  packetInfoStr += packet.data[i];
-						  else
-						  {
-							  break;
-						  }
-					  }
-					  unsigned int cid = stoul(packetInfoStr);
-					  e->setCid(cid);
-					  eventList->push_back(e);
-					  break;
+	//case MOVE_UP: {
+	//				  ObjectEvents * e = new ObjectEvents(MOVE_UP);
+	//				  string packetInfoStr = "";
+	//				  int i;
+	//				  for (i = 0;; i++)
+	//				  {
+	//					  if (packet.data[i] != '\n')
+	//						  packetInfoStr += packet.data[i];
+	//					  else
+	//					  {
+	//						  break;
+	//					  }
+	//				  }
+	//				  unsigned int cid = stoul(packetInfoStr);
+	//				  e->setCid(cid);
+	//				  eventList->push_back(e);
+	//				  break;
 
-	}
+	//}
 
-	case MOVE_DOWN: {
-						ObjectEvents * e = new ObjectEvents(MOVE_DOWN);
-						string packetInfoStr = "";
-						int i;
-						for (i = 0;; i++)
-						{
-							if (packet.data[i] != '\n')
-								packetInfoStr += packet.data[i];
-							else
-							{
-								break;
-							}
-						}
-						unsigned int cid = stoul(packetInfoStr);
-						e->setCid(cid);
-						eventList->push_back(e);
-						break;
-	}
+	//case MOVE_DOWN: {
+	//					ObjectEvents * e = new ObjectEvents(MOVE_DOWN);
+	//					string packetInfoStr = "";
+	//					int i;
+	//					for (i = 0;; i++)
+	//					{
+	//						if (packet.data[i] != '\n')
+	//							packetInfoStr += packet.data[i];
+	//						else
+	//						{
+	//							break;
+	//						}
+	//					}
+	//					unsigned int cid = stoul(packetInfoStr);
+	//					e->setCid(cid);
+	//					eventList->push_back(e);
+	//					break;
+	//}
 	case SHOOT:{
 				   ObjectEvents * e = new ObjectEvents(SHOOT);
 				   string packetInfoStr = "";
