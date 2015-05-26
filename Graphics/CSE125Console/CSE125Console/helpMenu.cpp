@@ -45,8 +45,6 @@ void helpMenu::createButtons() {
 
 	guiItems.push_back(backimg);
 	buttons.push_back(backButton);
-    buttons.push_back(next);
-    buttons.push_back(prev);
 }
 
 viewType helpMenu::mouseClickFunc(int state, int x, int y) {
@@ -67,12 +65,12 @@ viewType helpMenu::mouseClickFunc(int state, int x, int y) {
     }
     else if (prev->isSelected(x, height - y) &&
              state == GLUT_UP) {
-        if (currentPage == MAIN_PAGE) {
-            currentPage = BATTLE_PAGE;
+        if (currentPage == BATTLE_PAGE) {
+            currentPage = BUILD_PAGE;
         } else if (currentPage == BUILD_PAGE) {
             currentPage = MAIN_PAGE;
         } else {
-            currentPage = BUILD_PAGE;
+            currentPage = MAIN_PAGE;
         }
         backimg = pages[currentPage];
     }
@@ -83,4 +81,11 @@ viewType helpMenu::mouseClickFunc(int state, int x, int y) {
 
 void helpMenu::VOnRender() {
 	gui::VOnRender();
+    
+    if (currentPage != MAIN_PAGE) {
+        prev->draw();
+    }
+    if (currentPage != BATTLE_PAGE) {
+        next->draw();
+    }
 }
