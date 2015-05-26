@@ -21,22 +21,61 @@ helpMenu::~helpMenu()
 }
 
 void helpMenu::createButtons() {
-	backimg = new background("help.jpg", width, height);
-	button * back = new button("menuItem/back.jpg", width*0.45, height * 0.1);
-	back->setTexture("menuItem/back_sel.jpg", btnState::SELECTED);
-	back->setTexture("menuItem/back_press.jpg", btnState::PRESSED);
-	back->setScaling(true, true, width, height);
+	pages.push_back(new background("help1.jpg", width, height));
+    pages.push_back(new background("help2.jpg", width, height));
+    pages.push_back(new background("help3.jpg", width, height));
+    
+    currentPage = MAIN_PAGE;
+    backimg = pages[currentPage];
+    
+    backButton = new button("menuItem/back.jpg", width*0.45, height * 0.1);
+    backButton->setTexture("menuItem/back_sel.jpg", btnState::SELECTED);
+    backButton->setTexture("menuItem/back_press.jpg", btnState::PRESSED);
+    backButton->setScaling(true, true, width, height);
+
+    next = new button("menuItem/back.jpg", width*0.2, height * 0.1);
+    next->setTexture("menuItem/back_sel.jpg", btnState::SELECTED);
+    next->setTexture("menuItem/back_press.jpg", btnState::PRESSED);
+    next->setScaling(true, true, width, height);
+
+    prev = new button("menuItem/back.jpg", width*0.8, height * 0.1);
+    prev->setTexture("menuItem/back_sel.jpg", btnState::SELECTED);
+    prev->setTexture("menuItem/back_press.jpg", btnState::PRESSED);
+    prev->setScaling(true, true, width, height);
 
 	guiItems.push_back(backimg);
-	buttons.push_back(back);
+	buttons.push_back(backButton);
+    buttons.push_back(next);
+    buttons.push_back(prev);
 }
 
 viewType helpMenu::mouseClickFunc(int state, int x, int y) {
-	//back button
-	if (buttons[0]->isSelected(x, height - y) &&
+	if (backButton->isSelected(x, height - y) &&
 		state == GLUT_UP) {
 		return returnTo;
 	}
+    else if (next->isSelected(x, height - y) &&
+             state == GLUT_UP) {
+        if (currentPage == MAIN_PAGE) {
+            currentPage = BUILD_PAGE;
+        } else if (currentPage == BUILD_PAGE) {
+            currentPage = BATTLE_PAGE;
+        } else {
+            currentPage = MAIN_PAGE;
+        }
+        backimg = pages[currentPage];
+    }
+    else if (prev->isSelected(x, height - y) &&
+             state == GLUT_UP) {
+        if (currentPage == MAIN_PAGE) {
+            currentPage = BATTLE_PAGE;
+        } else if (currentPage == BUILD_PAGE) {
+            currentPage = MAIN_PAGE;
+        } else {
+            currentPage = BUILD_PAGE;
+        }
+        backimg = pages[currentPage];
+    }
 	else {
 		return viewType::HELP;
 	}
