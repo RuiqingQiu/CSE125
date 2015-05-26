@@ -80,12 +80,11 @@ viewType helpMenu::mouseClickFunc(int state, int x, int y) {
 }
 
 void helpMenu::VOnRender() {
-	gui::VOnRender();
-    
     if (currentPage != MAIN_PAGE) {
         prev->draw();
     }
     if (currentPage != BATTLE_PAGE) {
         next->draw();
     }
+	gui::VOnRender();
 }
