@@ -168,7 +168,7 @@ void buildView::VUpdate() {
 	}
 	updateview = isCurrentView;
 	*/
-	blocksLeft = MAX_BLOCKS - NodeList.size();
+	//blocksLeft = MAX_BLOCKS - NodeList.size();
 	blocksDisplay->displayValue = blocksLeft;
 }
 
@@ -839,6 +839,7 @@ void buildView::addNode() {
 		}
 		currentNode->setShaderType(NORMAL_SHADER);
 		PushGeoNode(currentNode);
+		blocksLeft = blocksLeft - currentNode->cost;
 		//currentNode = NodeList[NodeList.size() - 1];
 		setCurrentNode(true);
 		setConstraints();

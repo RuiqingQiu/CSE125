@@ -82,6 +82,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					Model3D * returnModel = new Model3D(render_obj_map[type]);
 					returnModel->type = Mallet;
 					returnModel->damageStat = 1;
+					returnModel->cost = 1;
 					return returnModel;
 					break;
 	}
@@ -95,6 +96,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 				  Model3D * returnModel = new Model3D(render_obj_map[type]);
 				  returnModel->damageStat = 1;
 				  returnModel->type = Mace;
+				  returnModel->cost = 1;
 				  return returnModel;
 				  break;
 	}
@@ -103,11 +105,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						  cout << "model is not there" << endl;
 						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						  returnModel->type = BasicCube;
+						  returnModel->cost = 1;
 						  return returnModel;
 					  }
 					  Model3D * returnModel = new Model3D(render_obj_map[type]);
 					  returnModel->speedStat = 1;
 					  returnModel->type = Discount;
+					  returnModel->cost = 1;
 					  return returnModel;
 					  break;
 	}
@@ -116,12 +120,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						cout << "model is not there" << endl;
 						Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						returnModel->type = BasicCube;
+						returnModel->cost = 1;
 						return returnModel;
 					}
 					Model3D * returnModel = new Model3D(render_obj_map[type]);
 					returnModel->damageStat = 1;
 					returnModel->type = Needle;
-
+					returnModel->cost = 1;
 					return returnModel;
 					break;
 	}
@@ -130,10 +135,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						   cout << "model is not there" << endl;
 						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						   returnModel->type = BasicCube;
+						   returnModel->cost = 1;
 						   return returnModel;
 					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
 					   returnModel->healthStat = 1;
+					   returnModel->cost = 1;
 					   returnModel->type = BasicCube;
 
 					   return returnModel;
@@ -144,11 +151,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 							cout << "model is not there" << endl;
 							Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 							returnModel->type = BasicCube;
+							returnModel->cost = 1;
 							return returnModel;
 						}
 						Model3D * returnModel = new Model3D(render_obj_map[type]);
 						returnModel->type = WoodenCube;
-
+						returnModel->cost = 1;
 						returnModel->healthStat = 1;
 						return returnModel;
 						break;
@@ -158,11 +166,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						   cout << "model is not there" << endl;
 						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						   returnModel->type = BasicCube;
+						   returnModel->cost = 1;
 						   return returnModel;
 					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
 					   returnModel->type = BLACKCUBE;
 					   returnModel->healthStat = 1;
+					   returnModel->cost = 1;
 					   return returnModel;
 					   break;
 	}
@@ -171,11 +181,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					   cout << "model is not there" << endl;
 					   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 					   returnModel->type = BasicCube;
+					   returnModel->cost = 1;
 					   return returnModel;
 				   }
 				   Model3D * returnModel = new Model3D(render_obj_map[type]);
 				   returnModel->type = CUBEA;
 				   returnModel->healthStat = 1;
+				   returnModel->cost = 1;
 				   return returnModel;
 				   break;
 	}
@@ -184,11 +196,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					   cout << "model is not there" << endl;
 					   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 					   returnModel->type = BasicCube;
+					   returnModel->cost = 1;
 					   return returnModel;
 				   }
 				   Model3D * returnModel = new Model3D(render_obj_map[type]);
 				   returnModel->type = CUBEB;
 				   returnModel->healthStat = 1;
+				   returnModel->cost = 1;
 				   return returnModel;
 				   break;
 	}
@@ -197,10 +211,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 							 cout << "model is not there" << endl;
 							 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 							 returnModel->type = BasicCube;
+							 returnModel->cost = 1;
 							 return returnModel;
 						 }
 						 Model3D * returnModel = new Model3D(render_obj_map[type]);
 						 returnModel->speedStat = 1;
+						 returnModel->cost = 1;
 						 returnModel->type = WoodenWheel;
 
 						 return returnModel;
@@ -211,10 +227,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					  cout << "model is not there" << endl;
 					  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 					  returnModel->type = BasicCube;
+					  returnModel->cost = 1;
 					  return returnModel;
 				  }
 				  Model3D * returnModel = new Model3D(render_obj_map[type]);
 				  returnModel->speedStat = 1;
+				  returnModel->cost = 1;
 				  returnModel->type = Tire;
 
 				  return returnModel;
@@ -225,12 +243,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 							 cout << "model is not there" << endl;
 							 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 							 returnModel->type = BasicCube;
+							 					returnModel->cost = 1;
 							 return returnModel;
 						 }
 						 Model3D * returnModel = new Model3D(render_obj_map[type]);
 						 returnModel->healthStat = 1;
 						 returnModel->type = GlowingCube;
-
+						 returnModel->cost = 1;
 						 return returnModel;
 						 break;
 	}
@@ -239,12 +258,13 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					  cout << "model is not there" << endl;
 					  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 					  returnModel->type = BasicCube;
+					  returnModel->cost = 1;
 					  return returnModel;
 				  }
 				  Model3D * returnModel = new Model3D(render_obj_map[type]);
 				  returnModel->healthStat = 1;
 				  returnModel->type = BGun;
-
+				  returnModel->cost = 1;
 				  return returnModel;
 				  break;
 	}
@@ -265,10 +285,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 							 cout << "model is not there" << endl;
 							 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 							 returnModel->type = BasicCube;
+							 returnModel->cost = 1;
 							 return returnModel;
 						 }
 						 Model3D * returnModel = new Model3D(render_obj_map[type]);
 						 returnModel->type = CrystalCube;
+						 returnModel->cost = 1;
 						 return returnModel;
 						 break;
 	}
@@ -535,10 +557,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						 cout << "model is not there" << endl;
 						 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						 returnModel->type = BasicCube;
+						 returnModel->cost = 1;
 						 return returnModel;
 					 }
 					 Model3D * returnModel = new Model3D(render_obj_map[type]);
 					 returnModel->type = ALTMACE;
+					 returnModel->cost = 1;
 					 return returnModel;
 					 break;
 	}
@@ -547,10 +571,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						   cout << "model is not there" << endl;
 						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						   returnModel->type = BasicCube;
+						   returnModel->cost = 1;
 						   return returnModel;
 					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
 					   returnModel->type = ALTNEEDLE;
+					   returnModel->cost = 1;
 					   return returnModel;
 					   break;
 	}
@@ -560,10 +586,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						 cout << "model is not there" << endl;
 						 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						 returnModel->type = BasicCube;
+						 returnModel->cost = 1;
 						 return returnModel;
 					 }
 					 Model3D * returnModel = new Model3D(render_obj_map[type]);
 					 returnModel->type = AltTire;
+					 returnModel->cost = 1;
 					 return returnModel;
 					 break;
 	}
@@ -572,6 +600,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						   cout << "model is not there" << endl;
 						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						   returnModel->type = BasicCube;
+						   returnModel->cost = 1;
 						   return returnModel;
 					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
@@ -584,10 +613,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						   cout << "model is not there" << endl;
 						   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						   returnModel->type = BasicCube;
+						   returnModel->cost = 1;
 						   return returnModel;
 					   }
 					   Model3D * returnModel = new Model3D(render_obj_map[type]);
 					   returnModel->type = TronWheel;
+					   returnModel->cost = 1;
 					   return returnModel;
 					   break;
 	}
@@ -596,10 +627,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						 cout << "model is not there" << endl;
 						 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						 returnModel->type = BasicCube;
+						 returnModel->cost = 1;
 						 return returnModel;
 					 }
 					 Model3D * returnModel = new Model3D(render_obj_map[type]);
 					 returnModel->type = Turrent;
+					 returnModel->cost = 1;
 					 return returnModel;
 					 break;
 	}
@@ -608,10 +641,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						 cout << "model is not there" << endl;
 						 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						 returnModel->type = BasicCube;
+						 returnModel->cost = 1;
 						 return returnModel;
 					 }
 					 Model3D * returnModel = new Model3D(render_obj_map[type]);
 					 returnModel->type = Railgun;
+					 returnModel->cost = 1;
 					 return returnModel;
 					 break;
 
@@ -621,10 +656,12 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						  cout << "model is not there" << endl;
 						  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 						  returnModel->type = BasicCube;
+						  returnModel->cost = 1;
 						  return returnModel;
 					  }
 					  Model3D * returnModel = new Model3D(render_obj_map[type]);
 					  returnModel->type = Railgun;
+					  returnModel->cost = 1;
 					  return returnModel;
 					  break;
 	}
@@ -633,6 +670,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 				 cout << "type " << type << " is not recognized" << endl;
 				 Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
 				 returnModel->type = BasicCube;
+				 returnModel->cost = 1;
 				 return returnModel;
 	}
 	}

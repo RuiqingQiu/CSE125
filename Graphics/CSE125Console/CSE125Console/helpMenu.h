@@ -23,12 +23,12 @@ public:
 	viewType returnTo;
     
     vector<background * > pages;
-    background * backimg;
     
     button * backButton;
     button * next;
     button * prev;
     
     helpPage currentPage;
+	int prevMouseState;
 };
 

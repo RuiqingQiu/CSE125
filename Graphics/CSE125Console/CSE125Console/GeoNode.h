@@ -44,5 +44,7 @@ public:
 	int back_id;
 	void setEdgeHighlight(bool);
 	virtual bool intersect(Vector3 pos);
+
+	int cost;
 };
 

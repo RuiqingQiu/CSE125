@@ -82,7 +82,7 @@ bool numbers::setTexture(int i) {
 
 	if (i > 9 || i < 0) return false;
 	GLuint * t = &nums[i];
-	string concat = path + std::to_string(i) + ".jpg";
+	string concat = path + std::to_string(i) + ".png";
 	*t = SOIL_load_OGL_texture
 		(
 		concat.c_str()
@@ -113,6 +113,8 @@ void numbers::draw() {
 	glEnable(GL_TEXTURE_2D);
 	//glActiveTexture(GL_TEXTURE1);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture(GL_TEXTURE_2D, nums[numIdx]);
 	// Make sure no bytes are padded:
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
