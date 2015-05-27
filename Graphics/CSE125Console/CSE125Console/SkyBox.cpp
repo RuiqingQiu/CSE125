@@ -134,6 +134,18 @@ void SkyBox::VOnDraw(){
 
 	glEnd();
 
+	/*
+	glBegin(GL_QUADS);
+
+	glNormal3f(0.0, -1.0, 0.0);
+
+	glVertex3f(-size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube); //front up right
+	glVertex3f(size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);  //connect to front left
+	glVertex3f(size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube); //connect to front up right
+	glVertex3f(-size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube); //connect to front up left
+
+	glEnd();
+	*/
 	glPopMatrix();
 
 	Window::shader_system->UnbindShader();

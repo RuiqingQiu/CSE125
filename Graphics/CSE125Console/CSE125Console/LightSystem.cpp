@@ -65,9 +65,9 @@ void LightSystem::passUniform(GLuint program){
 	if (lights.size() == 6){
 		for (int i = 0; i < lights.size(); i++){
 			
-			float red = 1.0;
-			float green = 1.0;
-			float blue = 1.0;
+			float red = 0.929;
+			float green = 0.788;
+			float blue = 0.68;
 			/*
 			//red to green
 			if (counter <= MAXCOUNTER){

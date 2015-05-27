@@ -1051,7 +1051,17 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							   break;
 			}
 			case WALL:{
-								break;
+						  Model3D* object = Model3DFactory::generateObjectWithType(BGun);
+						  object->isUpdated = true;
+						  object->shader_type = LIGHTS_SHADER;
+
+						  object->identifier = info->player_infos[i]->id;
+						  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+						  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						  object->localTransform.scale = Vector3(1, 1, 1);
+						  NodeList.push_back(object);
+						  info->player_infos[i]->processed = true;
+						break;
 			}
 			case BULLET_1:{
 							  break;
