@@ -20,6 +20,9 @@ public:
 	void rePosition(int x, int y, int w, int h);
 
 	void updateScore(int d, int h, int r);
+	int getDeaths();
+	int getTakedowns();
+	int getRank();
 
 	static string textPath;
 

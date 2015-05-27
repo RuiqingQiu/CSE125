@@ -44,6 +44,18 @@ scoreBox::~scoreBox()
 {
 }
 
+int scoreBox::getDeaths() {
+	return deaths;
+}
+
+int scoreBox::getTakedowns() {
+	return hits;
+}
+
+int scoreBox::getRank() {
+	return rank;
+}
+
 void scoreBox::createNumbers() {
 	deaths = 0;
 	hits = 0;

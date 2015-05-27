@@ -20,7 +20,7 @@ public:
 	numDisplay * takedowns;
 	numDisplay * rank;
 	
-	float numDeaths = 99;
+	float numDeaths;
 	float numTakedowns;
 	float myRank;
 };

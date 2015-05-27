@@ -21,6 +21,7 @@ buildView::~buildView() {
 }
 
 void buildView::init() {
+	money = 10;
 	pViewCamera->usePolar = true;
 	show_time = true;
 	//updateview = false;
@@ -29,7 +30,7 @@ void buildView::init() {
 	pViewCamera->position->z = -7;
 	selectedType = BasicCube;
 	yRotation = 180;
-	blocksLeft = MAX_BLOCKS;
+	//blocksLeft = MAX_BLOCKS;
 	center = Vector3(0, -2, 0);
 	templateSet = false;
 
@@ -92,7 +93,7 @@ void buildView::createButtons() {
 	//hardcoded button sizes for now
 
 	//battle button
-	battleButton = new button("menuItem/battle.jpg", width - 120, 20, 200, 60);
+	battleButton = new button("menuItem/battle.jpg", width - 220, 20, 200, 60);
 	battleButton->setTexture("menuItem/battle_sel.jpg", btnState::SELECTED);
 	battleButton->setTexture("menuItem/battle_press.jpg", btnState::PRESSED);
 	buttons.push_back(battleButton);
@@ -169,7 +170,7 @@ void buildView::VUpdate() {
 	updateview = isCurrentView;
 	*/
 	//blocksLeft = MAX_BLOCKS - NodeList.size();
-	blocksDisplay->displayValue = blocksLeft;
+	blocksDisplay->displayValue = money;
 }
 
 
@@ -839,7 +840,7 @@ void buildView::addNode() {
 		}
 		currentNode->setShaderType(NORMAL_SHADER);
 		PushGeoNode(currentNode);
-		blocksLeft = blocksLeft - currentNode->cost;
+		money = money - currentNode->cost;
 		//currentNode = NodeList[NodeList.size() - 1];
 		setCurrentNode(true);
 		setConstraints();

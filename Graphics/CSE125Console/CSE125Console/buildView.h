@@ -39,6 +39,8 @@ public:
 	bool show_time;
 	//bool updateview;
 
+	int money;
+
 private:
 	//intialization helper functions
 	void init();
@@ -60,7 +62,7 @@ private:
 	Vector3 center;
 	int selectedType;
 	float yRotation;
-	int blocksLeft;
+	//int blocksLeft;
 
 	//button pointers for checking special state switch
 	button * helpButton;

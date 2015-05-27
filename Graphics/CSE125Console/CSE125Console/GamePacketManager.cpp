@@ -92,7 +92,7 @@ bool GamePacketManager::SendSuicide(int id)
 }
 
 
-bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
+bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList, int money)
 {
 	CPacket cp;
 	cp.packet_type = BUILD_ROBOT;
@@ -116,7 +116,9 @@ bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList)
 		tmp += " " + to_string(nodeList[i]->front_id);
 		tmp += " " + to_string(nodeList[i]->back_id);
 
-		tmp += to_string(nodeList[i]->healthStat);
+		tmp += " 0";
+		tmp += " " + to_string(money);
+		//tmp += " " + to_string(nodeList[i]->healthStat);
 		//tmp += " " + to_string(nodeList[i]->damageStat);
 		//tmp += " " + to_string(nodeList[i]->speedStat);
 

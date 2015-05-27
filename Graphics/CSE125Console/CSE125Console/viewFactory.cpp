@@ -151,7 +151,7 @@ void viewFactory::idleFunc() {
 		if (s != viewmode) {
 			viewmode = s;
 			if (s == viewType::BATTLE) {
-				g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList);
+				//g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList);
 			}
 			setView();
 		}
@@ -189,7 +189,7 @@ void viewFactory::mouseFunc(int button, int state, int x, int y) {
 	if (s != viewmode) {
 		if (viewmode == viewType::BUILD && s == viewType::BATTLE) {
 			if (state == GLUT_UP && prevMouseState != GLUT_UP) {
-				g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList);
+				g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList, buildmode->money);
 			}
 		}
 		viewmode = s;
