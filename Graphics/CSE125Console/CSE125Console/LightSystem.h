@@ -6,10 +6,12 @@
 #ifndef __LightSystem__
 #define __LightSystem__
 #include "GameView.h"
+#define MAXCOUNTER 5000
 class LightSystem
 {
 public:
 	int num_of_lights = 6;
+	int counter = 0;
 	Vector3 camera_offset;
 	vector<Light*> lights;
 	void addLight(Light*);

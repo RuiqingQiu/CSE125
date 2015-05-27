@@ -30,15 +30,15 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(Tire, new RenderObject("Assets/Tire/tire.obj", "Assets/Tire/tex.png", "Assets/Tire/normals.png", "Assets/Tire/gloss.png", "Assets/Tire/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(WoodenWheel, new RenderObject("Assets/WoodenWheel/woodwheel.obj", "Assets/WoodenWheel/tex.png", "Assets/WoodenWheel/normals.png", "Assets/WoodenWheel/gloss.png", "Assets/WoodenWheel/metallic.png")));
 	//other
-	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELD, new RenderObject("Assets/BattleField/checkerboard.obj", "Assets/BattleField/tex.png", "Assets/BattleField/normals.png", "Assets/BattleField/gloss.png", "Assets/BattleField/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(TREE1, new RenderObject("Assets/Tree1/tree.obj", "Assets/Tree1/tex.png", "Assets/Tree1/normals.png", "Assets/Tree1/gloss.png", "Assets/Tree1/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(TREE2, new RenderObject("Assets/Tree2/tree.obj", "Assets/Tree2/tex.png", "Assets/Tree2/normals.png", "Assets/Tree2/gloss.png", "Assets/Tree2/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(TREE3, new RenderObject("Assets/Tree3/tree.obj", "Assets/Tree3/tex.png", "Assets/Tree3/normals.png", "Assets/Tree3/gloss.png", "Assets/Tree3/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELD, new RenderObject("Assets/BattleField/checkerboard.obj", "Assets/BattleField/tex.png", "Assets/BattleField/normals.png", "Assets/BattleField/gloss.png", "Assets/BattleField/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(TREE1, new RenderObject("Assets/Tree1/tree.obj", "Assets/Tree1/tex.png", "Assets/Tree1/normals.png", "Assets/Tree1/gloss.png", "Assets/Tree1/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(TREE2, new RenderObject("Assets/Tree2/tree.obj", "Assets/Tree2/tex.png", "Assets/Tree2/normals.png", "Assets/Tree2/gloss.png", "Assets/Tree2/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(TREE3, new RenderObject("Assets/Tree3/tree.obj", "Assets/Tree3/tex.png", "Assets/Tree3/normals.png", "Assets/Tree3/gloss.png", "Assets/Tree3/metallic.png")));
 	
 	//super battlefield
-	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDINNER, new RenderObject("Assets/BattleFieldInner/inner.obj", "Assets/BattleFieldInner/tex.png", "Assets/BattleFieldInner/normals.png", "Assets/BattleFieldInner/gloss.png", "Assets/BattleFieldInner/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDOUTER, new RenderObject("Assets/BattleFieldOuter/plane.obj", "Assets/BattleFieldOuter/tex.png", "Assets/BattleFieldOuter/normals.png", "Assets/BattleFieldOuter/gloss.png", "Assets/BattleFieldOuter/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(BULLET, new RenderObject("Assets/Bullet/bullet.obj", "Assets/Bullet/tex.png", "Assets/Bullet/normals.png", "Assets/Bullet/gloss.png", "Assets/Bullet/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDINNER, new RenderObject("Assets/BattleFieldInner/inner.obj", "Assets/BattleFieldInner/tex.png", "Assets/BattleFieldInner/normals.png", "Assets/BattleFieldInner/gloss.png", "Assets/BattleFieldInner/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDOUTER, new RenderObject("Assets/BattleFieldOuter/plane.obj", "Assets/BattleFieldOuter/tex.png", "Assets/BattleFieldOuter/normals.png", "Assets/BattleFieldOuter/gloss.png", "Assets/BattleFieldOuter/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(BULLET, new RenderObject("Assets/Bullet/bullet.obj", "Assets/Bullet/tex.png", "Assets/Bullet/normals.png", "Assets/Bullet/gloss.png", "Assets/Bullet/metallic.png")));
 	
 	
 	render_obj_map.insert(std::pair<int, RenderObject*>(ALTNEEDLE, new RenderObject("Assets/AltNeedle/altneedle.obj", "Assets/AltNeedle/tex.png", "Assets/AltNeedle/normals.png", "Assets/AltNeedle/gloss.png", "Assets/AltNeedle/metallic.png")));
@@ -54,7 +54,16 @@ Model3DFactory::Model3DFactory()
 
 	render_obj_map.insert(std::pair<int, RenderObject*>(Railgun, new RenderObject("Assets/Railgun/railgun.obj", "Assets/Railgun/tex.png", "Assets/Railgun/normals.png", "Assets/Railgun/gloss.png", "Assets/Railgun/metallic.png")));
 	
-	render_obj_map.insert(std::pair<int, RenderObject*>(BUILDING, new RenderObject("Assets/Building/sandruins.obj", "Assets/Building/tex.png", "Assets/Building/normals.png", "Assets/Building/gloss.png", "Assets/Building/metallic.png")));
+	//Newly added 5/26/15
+	//render_obj_map.insert(std::pair<int, RenderObject*>(BORDER, new RenderObject("Assets/Border/border.obj", "Assets/Border/tex.png", "Assets/Border/normals.png", "Assets/Border/gloss.png", "Assets/Border/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(CHESSBOARD, new RenderObject("Assets/Chessboard/chessboard.obj", "Assets/Chessboard/tex.png", "Assets/Chessboard/normals.png", "Assets/Chessboard/gloss.png", "Assets/Chessboard/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(FLOOR_COMPLEX, new RenderObject("Assets/FloorComplex/floor2.obj", "Assets/FloorComplex/tex.png", "Assets/FloorComplex/normals.png", "Assets/FloorComplex/gloss.png", "Assets/FloorComplex/metallic.png")));
+	//render_obj_map.insert(std::pair<int, RenderObject*>(FLOOR_SIMPLE, new RenderObject("Assets/FloorSimple/floor1.obj", "Assets/FloorSimple/tex.png", "Assets/FloorSimple/normals.png", "Assets/FloorSimple/gloss.png", "Assets/FloorSimple/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(STONEHENGE, new RenderObject("Assets/Stonehenge/sandhenge.obj", "Assets/Stonehenge/tex.png", "Assets/Stonehenge/normals.png", "Assets/Stonehenge/gloss.png", "Assets/Stonehenge/metallic.png")));
+
+
+	//Building is gone
+	//render_obj_map.insert(std::pair<int, RenderObject*>(BUILDING, new RenderObject("Assets/Building/sandruins.obj", "Assets/Building/tex.png", "Assets/Building/normals.png", "Assets/Building/gloss.png", "Assets/Building/metallic.png")));
 
 	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
 
@@ -664,6 +673,76 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					  returnModel->cost = 1;
 					  return returnModel;
 					  break;
+	}
+	case BORDER:{
+					if (render_obj_map[type] == nullptr){
+						cout << "model is not there" << endl;
+						Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+						returnModel->type = BasicCube;
+						returnModel->cost = 1;
+						return returnModel;
+					}
+					Model3D * returnModel = new Model3D(render_obj_map[type]);
+					returnModel->type = Railgun;
+					returnModel->cost = 1;
+					return returnModel;
+					break;
+	}
+	case CHESSBOARD:{
+						if (render_obj_map[type] == nullptr){
+							cout << "model is not there" << endl;
+							Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							returnModel->type = BasicCube;
+							returnModel->cost = 1;
+							return returnModel;
+						}
+						Model3D * returnModel = new Model3D(render_obj_map[type]);
+						returnModel->type = Railgun;
+						returnModel->cost = 1;
+						return returnModel;
+						break;
+	}
+	case FLOOR_COMPLEX:{
+						   if (render_obj_map[type] == nullptr){
+							   cout << "model is not there" << endl;
+							   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							   returnModel->type = BasicCube;
+							   returnModel->cost = 1;
+							   return returnModel;
+						   }
+						   Model3D * returnModel = new Model3D(render_obj_map[type]);
+						   returnModel->type = Railgun;
+						   returnModel->cost = 1;
+						   return returnModel;
+						   break;
+	}
+	case FLOOR_SIMPLE:{
+						  if (render_obj_map[type] == nullptr){
+							  cout << "model is not there" << endl;
+							  Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							  returnModel->type = BasicCube;
+							  returnModel->cost = 1;
+							  return returnModel;
+						  }
+						  Model3D * returnModel = new Model3D(render_obj_map[type]);
+						  returnModel->type = Railgun;
+						  returnModel->cost = 1;
+						  return returnModel;
+						  break;
+	}
+	case STONEHENGE:{
+						if (render_obj_map[type] == nullptr){
+							cout << "model is not there" << endl;
+							Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							returnModel->type = BasicCube;
+							returnModel->cost = 1;
+							return returnModel;
+						}
+						Model3D * returnModel = new Model3D(render_obj_map[type]);
+						returnModel->type = Railgun;
+						returnModel->cost = 1;
+						return returnModel;
+						break;
 	}
 
 	default: {

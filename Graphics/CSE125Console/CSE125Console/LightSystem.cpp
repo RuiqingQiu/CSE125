@@ -63,6 +63,38 @@ void LightSystem::renderLights(GameView* view){
 //This is for passing all the attribute of a light into the shader
 void LightSystem::passUniform(GLuint program){
 	if (lights.size() == 6){
+		for (int i = 0; i < lights.size(); i++){
+			float red = 0.0;
+			float green = 0.0;
+			float blue = 0.0;
+			//red to green
+			if (counter <= MAXCOUNTER){
+				red = (MAXCOUNTER - 1.0*counter) / MAXCOUNTER;
+				green = (1.0 * counter) / MAXCOUNTER;
+				blue = 0.0;
+			}
+			//green to blue
+			else if (counter <= 2 * MAXCOUNTER){
+				green = (MAXCOUNTER - 1.0*(counter - MAXCOUNTER)) / MAXCOUNTER;
+				blue = (1.0 * (counter - MAXCOUNTER)) / MAXCOUNTER;
+				red = 0.0;
+			}
+			//blue to red
+			else if (counter <= 3 * MAXCOUNTER){
+				blue = (MAXCOUNTER - 1.0*(counter-2*MAXCOUNTER)) / MAXCOUNTER;
+				red = (1.0 * (counter-2*MAXCOUNTER)) / MAXCOUNTER;
+				green = 0.0;
+			}
+			//reset counter
+			else{
+				counter = 0;
+				red = (MAXCOUNTER - 1.0*counter) / MAXCOUNTER;
+				green = (1.0 * counter) / MAXCOUNTER;
+				blue = 0.0;
+			}
+			counter = counter + 1;
+			lights[i]->Ld = Vector3(red,green,blue);
+		}
 		float l1_pos[4] = { Window::light_system->lights[0]->localTransform.position.x, Window::light_system->lights[0]->localTransform.position.y, Window::light_system->lights[0]->localTransform.position.z, 1 };
 		//cout << Window::light_system->lights[0]->localTransform.position.x << " " << Window::light_system->lights[0]->localTransform.position.y << " " << Window::light_system->lights[0]->localTransform.position.z << endl;
 		glUniform4fv(glGetUniformLocation(program, "lights[0].position"), 1, l1_pos);
