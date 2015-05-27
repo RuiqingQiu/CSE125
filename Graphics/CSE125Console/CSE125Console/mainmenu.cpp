@@ -40,10 +40,12 @@ void mainMenu::createButtons() {
 	playPressed = false;
 
 	button * robo = new button("menuItem/enterRobotName.jpg", width*0.3, height*0.5, 750, 100);
+	robo->setTexture("menuItem/enterRobotName_sel.jpg", btnState::SELECTED);
 	robo->setScaling(true, true, width, height);
 
 	//set up enter IP button
 	ipAdrressButton = new button("menuItem/enterIP.jpg", width*0.3, height*0.4, 750, 100);
+	ipAdrressButton->setTexture("menuItem/enterIP_sel.jpg", btnState::SELECTED);
 	ipAdrressButton->setScaling(true, true, width, height);
 	
 	playButton = new button("menuItem/play.jpg", width*0.43, height*0.3, 260, 50);
