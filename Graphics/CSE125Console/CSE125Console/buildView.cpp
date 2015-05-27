@@ -21,7 +21,7 @@ buildView::~buildView() {
 }
 
 void buildView::init() {
-	money = 10;
+	money = 40;
 	pViewCamera->usePolar = true;
 	show_time = true;
 	//updateview = false;
@@ -35,34 +35,34 @@ void buildView::init() {
 	templateSet = false;
 
 	//GeoNode * cube = new roboBase(3, 1);
-	GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
+	GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
 	cube->localTransform.position = Vector3(0, 0, 0);
 	cube->identifier = 0;
-	cube->textureType = THREEBYTHREE_BASIC;
+	cube->textureType = THREEBYTHREE_WOODEN;
 	PushGeoNode(cube);
 
-	GeoNode * wheel = Model3DFactory::generateObjectWithType(WoodenWheel);
+	GeoNode * wheel = Model3DFactory::generateObjectWithType(StoneTire);
 	wheel->localTransform.position = Vector3(1.6, -0.2, 1);
 	wheel->identifier = 1;
-	wheel->textureType = WoodenWheel;
+	wheel->textureType = StoneTire;
 	PushGeoNode(wheel);
 
-	GeoNode * wheel2 = Model3DFactory::generateObjectWithType(WoodenWheel);
+	GeoNode * wheel2 = Model3DFactory::generateObjectWithType(StoneTire);
 	wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
 	wheel2->identifier = 2;
-	wheel2->textureType = WoodenWheel;
+	wheel2->textureType = StoneTire;
 	PushGeoNode(wheel2);
 
-	GeoNode * wheel3 = Model3DFactory::generateObjectWithType(WoodenWheel);
+	GeoNode * wheel3 = Model3DFactory::generateObjectWithType(StoneTire);
 	wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
 	wheel3->identifier = 3;
-	wheel3->textureType = WoodenWheel;
+	wheel3->textureType = StoneTire;
 	PushGeoNode(wheel3);
 
-	GeoNode * wheel4 = Model3DFactory::generateObjectWithType(WoodenWheel);
+	GeoNode * wheel4 = Model3DFactory::generateObjectWithType(StoneTire);
 	wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
 	wheel4->identifier = 4;
-	wheel4->textureType = WoodenWheel;
+	wheel4->textureType = StoneTire;
 	PushGeoNode(wheel4);
 
 	setCurrentNode(false);
@@ -117,10 +117,10 @@ void buildView::createButtons() {
 	scroll->addListItem("weapons", ".jpg", true, true);
 	scroll->addsubListItem("weapons/bGun", ".jpg", BGun, true, false);
 	scroll->addsubListItem("weapons/mace", ".jpg", Mace, true, false);
-	scroll->addsubListItem("weapons/mace2", ".jpg", ALTMACE, true, false);
+	//scroll->addsubListItem("weapons/mace2", ".jpg", ALTMACE, true, false);
 	scroll->addsubListItem("weapons/mallet", ".jpg", Mallet, true, false);
 	scroll->addsubListItem("weapons/needle", ".jpg", Needle, true, false);
-	scroll->addsubListItem("weapons/needle2", ".jpg", ALTNEEDLE, true, false);
+	//scroll->addsubListItem("weapons/needle2", ".jpg", ALTNEEDLE, true, false);
 	scroll->addsubListItem("weapons/railgun", ".jpg", Railgun, true, false);
 	scroll->addsubListItem("weapons/turret", ".jpg", Turrent, true, false);
 
@@ -128,7 +128,7 @@ void buildView::createButtons() {
 	scroll->addListItem("wheels", ".jpg", true, true);
 	scroll->addsubListItem("wheels/discount", ".jpg", Discount, true, false);
 	scroll->addsubListItem("wheels/stone", ".jpg", StoneTire, true, false);
-	scroll->addsubListItem("wheels/tire", ".jpg", Tire, true, false);
+	//scroll->addsubListItem("wheels/tire", ".jpg", Tire, true, false);
 	scroll->addsubListItem("wheels/tire2", ".jpg", AltTire, true, false);
 	scroll->addsubListItem("wheels/tron", ".jpg", TronWheel, true, false);
 	scroll->addsubListItem("wheels/wooden", ".jpg", WoodenWheel, true, false);
@@ -495,22 +495,22 @@ void buildView::setTemplate() {
 			cube->identifier = 0;
 			cube->textureType = THREEBYTHREE_GLOWING;
 			PushGeoNode(cube);
-			GeoNode * wheel = Model3DFactory::generateObjectWithType(Tire);
+			GeoNode * wheel = Model3DFactory::generateObjectWithType(AltTire);
 			wheel->localTransform.position = Vector3(1.6, -0.2, 1);
 			wheel->identifier = 1;
 			wheel->textureType = Tire;
 			PushGeoNode(wheel);
-			GeoNode * wheel2 = Model3DFactory::generateObjectWithType(Tire);
+			GeoNode * wheel2 = Model3DFactory::generateObjectWithType(AltTire);
 			wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
 			wheel2->identifier = 2;
 			wheel2->textureType = Tire;
 			PushGeoNode(wheel2);
-			GeoNode * wheel3 = Model3DFactory::generateObjectWithType(Tire);
+			GeoNode * wheel3 = Model3DFactory::generateObjectWithType(AltTire);
 			wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
 			wheel3->identifier = 3;
 			wheel3->textureType = Tire;
 			PushGeoNode(wheel3);
-			GeoNode * wheel4 = Model3DFactory::generateObjectWithType(Tire);
+			GeoNode * wheel4 = Model3DFactory::generateObjectWithType(AltTire);
 			wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
 			wheel4->identifier = 4;
 			wheel4->textureType = Tire;
@@ -782,25 +782,39 @@ void buildView::setTemplate() {
 	}
 
 	if (selectedType >= BASES_BEGIN && selectedType <= BASES_END) {
-		delete NodeList[0];
 		GeoNode * cube = Model3DFactory::generateObjectWithType(selectedType);
 		cube->localTransform.position = Vector3(0, 0, 0);
 		cube->identifier = 0;
 		cube->textureType = selectedType;
+		
+		money += NodeList[0]->cost;
+		if (money - cube->cost < 0) {
+			money -= NodeList[0]->cost;
+			return;
+		}
+		delete NodeList[0];
 		NodeList[0] = cube;
+		money -= NodeList[0]->cost;
 		return;
 	}
 
 	if (selectedType >= WHEEL_BEGIN && selectedType <= WHEEL_END) {
 		//is a wheel
+		GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
+		money += NodeList[1]->cost;
+		if (money - object->cost < 0) {
+			money -= NodeList[1]->cost;
+			return;
+		}
 		for (int i = 1; i < BASE_SIZE; i++) {
-			GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
+			 object = Model3DFactory::generateObjectWithType(selectedType);
 			object->localTransform.position = NodeList[i]->localTransform.position;
 			object->identifier = NodeList[i]->identifier;
 			object->textureType = selectedType;
 			delete NodeList[i];
 			NodeList[i] = object;
 		}
+		money -= NodeList[1]->cost;
 		return;
 	}
 }
@@ -838,9 +852,12 @@ void buildView::addNode() {
 		if (check.equals(Vector3(0, 0, 0))) {
 			return;
 		}
+		if (money - currentNode->cost < 0) {
+			return;
+		}
 		currentNode->setShaderType(NORMAL_SHADER);
 		PushGeoNode(currentNode);
-		money = money - currentNode->cost;
+		money -= currentNode->cost;
 		//currentNode = NodeList[NodeList.size() - 1];
 		setCurrentNode(true);
 		setConstraints();
@@ -849,6 +866,7 @@ void buildView::addNode() {
 
 void buildView::removeNode() {
 	if (NodeList.size() > BASE_SIZE) {
+		money += NodeList[NodeList.size() - 1]->cost;
 		delete NodeList[NodeList.size() - 1];
 		NodeList.pop_back();
 	}

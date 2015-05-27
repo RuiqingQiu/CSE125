@@ -63,13 +63,13 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 							 /////// end GUI
 
 							 /////check if the game has ended
-							 if (t->time <= 0) {
-								 Window::factory->switchView('5');
+							 if (t->time <= 1) {
 								 ///send player data to end screen for display
 								 Window::factory->gameOver->numDeaths = Window::factory->score->getDeaths();
 								 Window::factory->gameOver->numTakedowns = Window::factory->score->getTakedowns();
 								 Window::factory->gameOver->myRank = Window::factory->score->getRank();
 								 ///end
+								 Window::factory->switchView('5');
 							 }
 							 ////end check
 
