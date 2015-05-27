@@ -6,6 +6,7 @@
 #ifndef __LightSystem__
 #define __LightSystem__
 #include "GameView.h"
+//This is a counter for light transition
 #define MAXCOUNTER 5000
 class LightSystem
 {
