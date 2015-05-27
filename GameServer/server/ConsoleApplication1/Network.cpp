@@ -243,7 +243,6 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						//cout << packet.data << endl;
 						//cout << "recieved string "<< packetInfoStr << endl;
 						int cid = stoi(packetInfoStr);
-						cout << "Move Left :" << cid << endl;
 
 						//cout << "recived cid = " << cid << endl;
 						e->setCid(cid);
@@ -266,7 +265,6 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						 }
 						 unsigned int cid = stoul(packetInfoStr);
 						 e->setCid(cid);
-						 cout << "Move Left :" << cid << endl;
 						 eventList->push_back(e);
 						 break;
 
@@ -287,7 +285,6 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 							}
 							unsigned int cid = stoul(packetInfoStr);
 							e->setCid(cid);
-							cout << "Move Left :" << cid << endl;
 							eventList->push_back(e);
 							break;
 
@@ -308,7 +305,6 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 						   }
 						   unsigned int cid = stoul(packetInfoStr);
 						   e->setCid(cid);
-						   cout << "Move Left :" << cid << endl;
 						   eventList->push_back(e);
 						   break;
 
@@ -512,8 +508,8 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 										  					   //stats
 									  pos = objectInfo.find(" ");
 									  token = objectInfo.substr(0, pos);
-									  //std::cout << token << std::endl;
-									  float health = stold(token);
+									  ////std::cout << token << std::endl;
+									  int money = stold(token);
 									  objectInfo.erase(0, pos  + 1);
 									  
 									  btQuaternion* q = convertEulerToQuaternion(xRot, yRot, zRot); 
@@ -532,6 +528,7 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 										object->setqZ(q->getZ());
 										object->setqW(q->getW());
 										object->setType(BOX);
+										((Robot*)object)->setCurrMoney(money);
 										((Robot*)object)->setWidth(3);
 										((Robot*)object)->setHeight(1);
 										((Robot*)object)->setDepth(3);
@@ -605,7 +602,6 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//std::cout << "NULL" << endl;
 			break;
 		}
-		if ((*i)->getBlockType() == WALL)  cout << "GO ID: " <<(*i)->getId() << endl;
 		temp += to_string((*i)->getId());
 		temp += ' ';
 		temp += to_string((*i)->getX());

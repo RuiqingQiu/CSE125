@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObj.h"
 
+#define SLOW_DELAY 1
+
 enum PLAYER_STATE {
 	PS_BUILD = 0,
 	PS_ALIVE = 1,
@@ -22,16 +24,23 @@ private:
 	Robot* diedTo = nullptr;
 	int _state;
 	int justBuilt = 1;
+	int currMoney = 0;
+	clock_t isSlowed;
+	double slowValue = 0;
 
 public:
 	Robot(int, char*);
 	~Robot();
 
+	void setCurrMoney(int);
+	int getCurrMoney();
 	void setCID(int);
 	void setTakeDowns(int);
 	void setDeaths(int);
 	void setName(char*);
 
+	void applySlow(double);
+	double getSlowValue();
 	int getJustBuilt();
 	void setJustBuilt(int);
 

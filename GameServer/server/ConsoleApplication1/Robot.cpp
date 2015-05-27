@@ -10,6 +10,7 @@ Robot::Robot(int cid, char* name)
 	setIsRobot(1);
 	_state = PS_BUILD;
 	setBelongTo(this);
+	isSlowed = NULL;
 }
 
 
@@ -226,7 +227,29 @@ void Robot::shoot(std::vector<GameObj*>* projectiles)
 }
 
 
-
+void Robot::applySlow(double slow)
+{
+	if (isSlowed == NULL)
+	{
+		isSlowed = clock();
+		slowValue = slow;
+	}
+	
+}
+double Robot::getSlowValue()
+{
+	if (isSlowed == NULL)
+	{
+		return 0;
+	}
+	if ((((double)(clock() - isSlowed) / CLOCKS_PER_SEC) > SLOW_DELAY))
+	{
+		isSlowed = NULL;
+		slowValue = 0;
+		return 0;
+	}
+	return slowValue;
+}
 
 
 void Robot::nextState()
@@ -270,6 +293,16 @@ void Robot::setDiedTo(Robot* r)
 Robot* Robot::getDiedTo()
 {
 	return diedTo;
+}
+
+
+void Robot::setCurrMoney(int m)
+{
+	currMoney = m;
+}
+int Robot::getCurrMoney()
+{
+	return currMoney;
 }
 
 

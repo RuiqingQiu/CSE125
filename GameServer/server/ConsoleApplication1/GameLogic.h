@@ -89,7 +89,8 @@ public:
 	void postHealthLogic(Robot* arr[]);
 	void postDeathLogic(Robot*);
 	void updateDoTDamage();
-	void updateBlockForce();
+	void updateBlockEffects();
+	void applyBulletEffect(GameObj* GO1, GameObj* GO2);
 	int buildMode();
 	int startBuild();
 	int endGame();

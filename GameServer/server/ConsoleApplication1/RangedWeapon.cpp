@@ -17,23 +17,55 @@ RangedWeapon::RangedWeapon(int type)
 	{
 	case Railgun:
 	{
-		range = MEDIUM_RANGED;
-		damage = 15;
-		attackSpeed = 1;
+		range = FAR_RANGED;
+		damage = 60;
+		attackSpeed = 1.5;
 		splash = 1;
 
-		_pInitForce = -150;
-		_pMass = 1;
+		_pInitForce = -400;
+		_pMass = 2;
 		_pWidth = 0.3;
 		_pHeight = 0.3;
-		_pDepth = 0.5;
+		_pDepth = 1;
 		_pBlockType =  BULLET;
 		break;
+	}
+	case BGun:
+	{
+				 range = MEDIUM_RANGED;
+				 damage = 10;
+				 attackSpeed = 4;
+				 splash = 1;
+
+				 _pInitForce = -185;
+				 _pMass = 0.8;
+				 _pWidth = 0.2;
+				 _pHeight = 0.2;
+				 _pDepth = 0.5;
+				 _pBlockType = BULLET;
+				 break;
+	}
+	case Turrent:
+	{
+
+			   range = FAR_RANGED;
+			   damage = 70;
+			   attackSpeed = 1;
+			   splash = 4;
+
+			   _pInitForce = -1000;
+			   _pMass = 8;
+			   _pWidth = 2;
+			   _pHeight = 2;
+			   _pDepth = 2;
+			   _pBlockType = BULLET;
+			   break;
+	
 	}
 	default:
 	{
 		range = FAR_RANGED;
-		damage = 30;
+		damage = 60;
 		attackSpeed = 1;
 		splash = 4;
 

@@ -44,6 +44,8 @@ private:
 	int	_isRanged = 0;
 	int _collisionType;
 	double blockForce = 0;
+	double blockHealing = 0;
+	double blockSlow = 0;
 
 	btRigidBody* rigidBody;
 		//constraints
@@ -56,6 +58,7 @@ private:
 
 	double DoT;
 	double DoTTick;
+	
 
 	int DoTFrom = -1;
 
@@ -96,6 +99,8 @@ public:
 	void setBackID(int);
 	void setBelowID(int);
 	int getDoTFrom();
+	double getHealing();
+	double getSlow();
 
 	double getDoT();
 

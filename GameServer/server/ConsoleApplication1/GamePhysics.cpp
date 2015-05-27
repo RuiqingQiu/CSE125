@@ -77,6 +77,11 @@ void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)//, std::map< btColli
 		else
 		{
 			(*it)->createRigidBody();// objcpair);
+			//if ((*it)->getBlockType() == BATTLEFIELD || (*it)->getBlockType() == WALL)
+			//{
+			//	(*it)->getRigidBody()->setLinearFactor(btVector3(0, 0, 0));
+			//	(*it)->getRigidBody()->setAngularFactor(btVector3(0, 0, 0));
+			//}
 		    dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
 		}
 	}
@@ -104,7 +109,7 @@ void GamePhysics::stepSimulation(std::vector<GameObj*> *gameObj,  std::vector<Co
 		}
 		(*it)->setX(trans.getOrigin().getX());
 		(*it)->setY(trans.getOrigin().getY());
-		if (trans.getOrigin().getY() < -1)
+		if (trans.getOrigin().getY() < -1.5)
 		{
 			(*it)->setY(2);
 			trans.getOrigin().setY(2);

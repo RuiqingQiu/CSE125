@@ -12,7 +12,7 @@ MeleeWeapon::MeleeWeapon(int type)
 	switch (type)
 	{
 	case Needle:{
-		damage = 15;
+		damage = 30;
 		splash = 1;
 		knockback = -100;
 		spin = 0;
@@ -22,7 +22,7 @@ MeleeWeapon::MeleeWeapon(int type)
 	case Mace:{
 				  std::cout << "defaultmaceg" << std::endl;
 		knockback = 100;
-		damage = 40;
+		damage = 80;
 		splash = 1;
 		spin = 0;
 		DoT = 50;
@@ -32,7 +32,7 @@ MeleeWeapon::MeleeWeapon(int type)
 	{
 				   spin = 0;
 				   knockback = 800;
-				   damage = 80;
+				   damage = 180;
 				   splash = 2;
 				   DoT = 0;
 				   break;

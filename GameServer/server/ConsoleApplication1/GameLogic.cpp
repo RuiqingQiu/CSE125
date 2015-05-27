@@ -13,7 +13,7 @@ GameLogic::GameLogic()
 	damageSystem = new DamageSystem(INSTANT_KILL);
 	scoreboard = new Scoreboard();
 	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
-	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_WIDTH/10, 10);
+	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_WIDTH/10, 1);
 	counter = 0;
 	spawnPoint = new SpawnPoint(FIELD_WIDTH);
 	dmgDealtArr[4] = { nullptr };
@@ -417,13 +417,14 @@ unsigned int GameLogic::gameLoop (){
 			//createHillUpdateEvent();
 		}
 
-	
-		if (++secondCounter >= 3)
+		++secondCounter;
+		if (secondCounter >= 3)
 		{
+			
 			secondCounter = 0;
-			updateBlockForce();
+			
 		}
-		
+		updateBlockEffects();
 	
 		updateDoTDamage();
 		GETime* et = new GETime(lastTime);
@@ -735,7 +736,12 @@ void GameLogic::prePhyLogic(){
 				if (rightWheel.m_steering < TURN_SPEED / 1.1 && rightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering = 0;
 				if (brightWheel.m_steering < TURN_SPEED / 1.1 && brightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering = 0;
 
-			}
+				double slowFactor = ((Robot *)*it)->getSlowValue();
+				btVector3 slow(1 - slowFactor, 1 - slowFactor, 1 - slowFactor);
+				((Robot *)*it)->getRigidBody()->setLinearFactor(slow);
+				((Robot *)*it)->getRigidBody()->setAngularFactor(slow);
+
+		}
 
 	}
 
@@ -773,9 +779,10 @@ void GameLogic::postPhyLogic(){
 		int clientCollision = damageSystem->performDamage(GO1, GO2, e);
 		if (clientCollision != CH_INVALIDCOLLISION)
 		{
-			
 			applyMeleeForce(GO1, GO2);
 			applyMeleeForce(GO2, GO1);
+			applyBulletEffect(GO1, GO2);
+			applyBulletEffect(GO2, GO1);
 			GECollisonHappen* gech = new GECollisonHappen(clientCollision, (*it)->getX(), (*it)->getY(), (*it)->getZ());
 			gameEventList.push_back(gech);
 		}
@@ -979,33 +986,106 @@ void GameLogic::addWalls()
 	GameObj* frontWall = new GOPlane(0, 0, FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, -1, 1);
 	GameObj* backWall = new GOPlane(0, 0, -FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, 1, 1);
 
+	btQuaternion q0(0, 0, 0, 1);
+	btQuaternion rotQ; 
+	btQuaternion q;
+
+	rotQ = btQuaternion(0, 0.12666666666, 0, 0);
+	q = q0*rotQ;
+	GameObj* pillar1 = new GOBox(10.5, 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	cout << " qxyz1: " << pillar1->getqX() << " , " << pillar1->getqY() << " , " << pillar1->getqZ() << " , " << pillar1->getqW() << endl;
+
+	rotQ = btQuaternion(0, -0.06111111111, 0, 0);
+	q = q0*rotQ;
+	GameObj* pillar2 = new GOBox(-12.01, 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	cout << " qxyz2: " << pillar2->getqX() << " , " << pillar2->getqY() << " , " << pillar2->getqZ() << " , " << pillar2->getqW() << endl;
+
+	rotQ = btQuaternion(0, -0.43216666666, 0, 0);
+	q = q0*rotQ;
+	GameObj* pillar3 = new GOBox(27.41, 10, 11.48, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+
+	rotQ = btQuaternion(0, -0.60327777777, 0, 0);
+	q = q0*rotQ;
+	GameObj* pillar4 = new GOBox(26.4, 10, -10.35, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+
+	rotQ = btQuaternion(0, -0.833, 0, 0);
+	q = q0*rotQ;
+	GameObj* pillar5 = new GOBox(10.72, 10, -27.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+
+	rotQ = btQuaternion(0, -1.1385, 0, 0);
+	q = q0*rotQ;
+	GameObj* pillar6 = new GOBox(-12.32, 10, -26.99, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
+
+	rotQ = btQuaternion(0, 0.34105555555, 0, 0);
+	q = q0*rotQ;
+	GameObj* pillar7 = new GOBox(-26.39, 10, 11.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+
+	rotQ = btQuaternion(0, -1.00916666667, 0, 0);
+	q = q0*rotQ;
+	GameObj* pillar8 = new GOBox(-27.95, 10, -10.19, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+
 	ceiling->setBlockType(WALL);
 	leftWall->setBlockType(WALL);
 	rightWall->setBlockType(WALL);
 	frontWall->setBlockType(WALL);
 	backWall->setBlockType(WALL);
+	pillar1->setBlockType(WALL);
+	pillar2->setBlockType(WALL);
+	pillar3->setBlockType(WALL);
+	pillar4->setBlockType(WALL);
+	pillar5->setBlockType(WALL);
+	pillar6->setBlockType(WALL);
+	pillar7->setBlockType(WALL);
+	pillar8->setBlockType(WALL);
 
 	ceiling->createRigidBody();
 	leftWall->createRigidBody();
 	rightWall->createRigidBody();
 	frontWall->createRigidBody();
 	backWall->createRigidBody();
+	pillar1->createRigidBody();
+	pillar2->createRigidBody();
+	pillar3->createRigidBody();
+	pillar4->createRigidBody();
+	pillar5->createRigidBody();
+	pillar6->createRigidBody();
+	pillar7->createRigidBody();
+	pillar8->createRigidBody();
 
 	gamePhysics->getDynamicsWorld()->addRigidBody(ceiling->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(leftWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(rightWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(frontWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(backWall->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar1->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar2->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar3->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar4->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar5->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar6->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar7->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar8->getRigidBody());
 
-	//gameObjs.push_back(ceiling);
-	//gameObjs.push_back(leftWall);
-	//gameObjs.push_back(rightWall);
-	//gameObjs.push_back(frontWall);
-	//gameObjs.push_back(backWall);
+
+
+	gameObjs.push_back(ceiling);
+	gameObjs.push_back(leftWall);
+	gameObjs.push_back(rightWall);
+	gameObjs.push_back(frontWall);
+	gameObjs.push_back(backWall);
+	gameObjs.push_back(pillar1);
+	gameObjs.push_back(pillar2);
+	gameObjs.push_back(pillar3);
+	gameObjs.push_back(pillar4);
+	gameObjs.push_back(pillar5);
+	gameObjs.push_back(pillar6);
+	gameObjs.push_back(pillar7);
+	gameObjs.push_back(pillar8);
 }
 void GameLogic::addGround()
 {
 	GameObj* ground = new GOPlane(0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
+	//GameObj* ground = new GOBox(0, -0.5, 0, 0, 0, 0, 1, 1, 10000000, 1, 10000000);
 	ground->setBlockType(BATTLEFIELD);
 	gameObjs.push_back(ground);
 }
@@ -1064,7 +1144,7 @@ int GameLogic::buildMode(){
 	}
 	else if (countDown->checkCountdown()){
 		int i;
-		for (i = 0; i < 1;i++)
+		for (i = 0; i < numPlayers;i++)
 		{
 			if (buildplayer[i] != 1)
 			{
@@ -1214,7 +1294,7 @@ void GameLogic::updateDoTDamage()
 	}
 }
 
-void GameLogic::updateBlockForce()
+void GameLogic::updateBlockEffects()
 {
 	int i;
 	double threshold = 40;
@@ -1223,6 +1303,7 @@ void GameLogic::updateBlockForce()
 		Robot* r = (Robot*)clientPair.find(i)->second;
 		if (r->getState() != PS_ALIVE) continue;
 		double force = 0;
+		double healing = 0;
 		std::vector<GameObj *>::iterator it;
 		std::vector<GameObj*> parts = r->getParts();
 		for (it = parts.begin(); it != parts.end(); it++)
@@ -1230,8 +1311,18 @@ void GameLogic::updateBlockForce()
 			if ((*it)->getBlockType() == BLACKCUBE || (*it)->getBlockType() == GlowingCube || (*it)->getBlockType() == THREEBYTHREE_GLOWING || (*it)->getBlockType() == THREEBYTHREE_BLACK)
 			{
 				force += (*it)->getBlockForce();
-			}	
+			}
+			else if ((*it)->getBlockType() == CrystalCube || (*it)->getBlockType() == THREEBYTHREE_CRYSTAL)
+			{
+				healing += (*it)->getHealing();
+			}
 		}
+		if (healing != 0)
+		{
+			r->applyDamage(-healing);
+			dmgDealtArr[r->getCID()] = r;
+		}
+
 		if (force != 0)
 		{
 			int j;
@@ -1265,4 +1356,15 @@ void GameLogic::updateBlockForce()
 	
 
 	
+}
+
+void GameLogic::applyBulletEffect(GameObj* GO1, GameObj* GO2)
+{
+	if (GO1->getBlockType() == BULLET && !GO2->getDeleted())
+	{
+		if (GO2->getBelongTo() != nullptr)
+		{
+			((Robot*)GO2->getBelongTo())->applySlow(GO1->getSlow());
+		}
+	}
 }
