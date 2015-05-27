@@ -194,7 +194,15 @@ void Window::initialize(void)
 	object->type = CHESSBOARD;
 	factory->battlemode->PushEnvironmentNode(object);
 	
-	
+	object = Model3DFactory::generateObjectWithType(LEGO);
+	object->shader_type = BATTLEFIELD_SHADER;
+	object->localTransform.position = Vector3(0, 2, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = LEGO;
+	factory->battlemode->PushEnvironmentNode(object);
 	/* models are not correct yet
 	object = Model3DFactory::generateObjectWithType(FLOOR_COMPLEX);
 	object->shader_type = BATTLEFIELD_SHADER;
@@ -230,7 +238,7 @@ void Window::initialize(void)
 	//gt->displayTest3(factory->battlemode);
 	//gt->displayTest4(factory->battlemode);
 	//gt->displayTest5(factory->battlemode);
-	//gt->displayTest6(factory->battlemode);
+	gt->displayTest6(factory->battlemode);
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
 	factory->viewmode = viewType::MENU;
@@ -335,7 +343,7 @@ void Window::reshapeCallback(int w, int h) {
     glLoadIdentity();                                                //Clear the projection matrix by loading the identity
 	gluPerspective(90.0, double(Window::width) / (double)Window::height, 0.1, 1000.0); //Set perspective projection viewing frustum
 	//glFrustum(-1, 1, -1 , 1, 1,5);
-	g_pCore->pGameView->pViewCamera->setCamInternals(90.0, double(Window::width) / (double)Window::height, 0.1, 30.0);
+	g_pCore->pGameView->pViewCamera->setCamInternals(90.0, double(Window::width) / (double)Window::height, 0.1, 100.0);
 	factory->reshapeFunc(w, h);
 
 	//Reshape, set up frame buffer object again based on the new width and height
@@ -410,5 +418,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }

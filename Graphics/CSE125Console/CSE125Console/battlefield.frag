@@ -63,6 +63,7 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 		vec3 diffuse = attenuation * (lights[i].Ld * diffR * sDotN);
     
 		if(sDotN > 0.0){
+			//Ks = texture2D(gloss, TexCoords).xyz;
 			spec += attenuation * (lights[i].Ls * Ks * pow(max(dot(r, ViewDir), 0.0), Shininess));
 		}
 		ambAndDiff += diffuse;

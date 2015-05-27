@@ -903,6 +903,7 @@ void generateTangents(
 		Vector3 tc1 = Vector3(texCoords[2 * i1 + 0], texCoords[2 * i1 + 1], 0);
 		Vector3 tc2 = Vector3(texCoords[2 * i2 + 0], texCoords[2 * i2 + 1], 0);
 		Vector3 tc3 = Vector3(texCoords[2 * i3 + 0], texCoords[2 * i3 + 1], 0);
+	
 
 		Vector3 q1 = p2 - p1;
 		Vector3 q2 = p3 - p1;

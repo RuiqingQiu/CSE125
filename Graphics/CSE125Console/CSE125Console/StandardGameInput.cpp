@@ -94,14 +94,21 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		float z = 0;
 		sound->playExplosion(x, y, z);
 	}
+	/*
 	else if (key == '1'){
 		g_pCore->pGameView->pViewCamera->mode = (g_pCore->pGameView->pViewCamera->mode + 1) % 2;
 	}
+	*/
 	else if (key == 'i'){
 		//suicide
 		g_pCore->pGamePacketManager->SendSuicide(g_pCore->pPlayer->playerid);
+	}
+	/*
+	//B is for boost
+	else if (key == 'b'){
 
 	}
+	*/
 	else if (key == 'z'){
 		g_pCore->pGameView->pViewCamera->position->x -= 1;
 	}

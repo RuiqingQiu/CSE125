@@ -64,9 +64,11 @@ void LightSystem::renderLights(GameView* view){
 void LightSystem::passUniform(GLuint program){
 	if (lights.size() == 6){
 		for (int i = 0; i < lights.size(); i++){
-			float red = 0.0;
-			float green = 0.0;
-			float blue = 0.0;
+			
+			float red = 1.0;
+			float green = 1.0;
+			float blue = 1.0;
+			/*
 			//red to green
 			if (counter <= MAXCOUNTER){
 				red = (MAXCOUNTER - 1.0*counter) / MAXCOUNTER;
@@ -93,6 +95,7 @@ void LightSystem::passUniform(GLuint program){
 				blue = 0.0;
 			}
 			counter = counter + 1;
+			*/
 			lights[i]->Ld = Vector3(red,green,blue);
 		}
 		float l1_pos[4] = { Window::light_system->lights[0]->localTransform.position.x, Window::light_system->lights[0]->localTransform.position.y, Window::light_system->lights[0]->localTransform.position.z, 1 };

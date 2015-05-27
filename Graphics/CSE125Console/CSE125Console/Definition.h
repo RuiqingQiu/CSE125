@@ -73,7 +73,8 @@ enum ModelType{
 	CHESSBOARD = 804,
 	FLOOR_COMPLEX = 805,
 	FLOOR_SIMPLE= 806,
-	STONEHENGE = 807
+	STONEHENGE = 807,
+	LEGO = 808
 };
 
 enum ShaderType{
