@@ -87,7 +87,7 @@ unsigned int GameLogic::waitToConnect()
 int GameLogic::gameStart(){
 
 	addGround();
-	addWalls();
+	//addWalls();
 
 	gamePhysics->initWorld(&gameObjs);//, &objCollisionPair);
 	cout << "end of init world" << endl;
@@ -738,6 +738,7 @@ void GameLogic::prePhyLogic(){
 
 				double slowFactor = ((Robot *)*it)->getSlowValue();
 				btVector3 slow(1 - slowFactor, 1 - slowFactor, 1 - slowFactor);
+				cout << " slowFactor: " << slow.getX() << " , " << slow.getY() << " , " << slow.getZ() << endl;
 				((Robot *)*it)->getRigidBody()->setLinearFactor(slow);
 				((Robot *)*it)->getRigidBody()->setAngularFactor(slow);
 
