@@ -180,7 +180,8 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 	//only use this if need something that view switches or accesses gpCore from a view
 
 	if ( key == 'y') {
-		delayedRebuild();
+		//delayedRebuild();
+		//battlemode->healing = true;
 	}
 }
 

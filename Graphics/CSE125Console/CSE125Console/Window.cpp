@@ -361,9 +361,29 @@ void Window::reshapeCallback(int w, int h) {
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
 void Window::displayCallback() {
 	clock_t startTime = clock();
-	
+
 	// play the background music through out the whole game, may change with the view
-	soundObject->playMusic(); 
+	if (factory->currentView == factory->menumode || factory->currentView == factory->defaultView){
+		//cout << "enter main menu  " << endl;
+		if (factory->menumode->playPressed){
+			//cout << "entering loading " << endl;
+			soundObject->playLoading();
+		}
+		else{
+			soundObject->playOpening();
+		}
+	}
+
+	// if in build mode play build view background music
+	else if (factory->currentView == factory->buildmode){
+		//cout << "enter build view  " << endl;
+		soundObject->playBuildViewBackground();
+	}
+	else if (factory->currentView == factory->battlemode){
+		//cout << "enter battle view " << endl;
+		soundObject->playMusic();
+	}
+
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 
