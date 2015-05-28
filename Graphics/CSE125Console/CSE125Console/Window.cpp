@@ -357,7 +357,7 @@ void Window::reshapeCallback(int w, int h) {
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
 void Window::displayCallback() {
 	clock_t startTime = clock();
-	
+
 	// play the background music through out the whole game, may change with the view
 	if (factory->currentView == factory->menumode || factory->currentView == factory->defaultView){
 		cout << "enter main menu  " << endl;
@@ -374,6 +374,7 @@ void Window::displayCallback() {
 		cout << "enter build view  " << endl;
 		soundObject->playBuildViewBackground();
 	}
+
 	
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
