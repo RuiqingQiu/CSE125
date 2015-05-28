@@ -24,5 +24,5 @@ void GEHillUpdate::to_string(std::string &s)
 	s += std::to_string(z);
 	s += " ";
 	s += std::to_string(r);
-	std::cout << " hill x z r:" << x << " , " << z << " , " << r << std::endl;
+	//std::cout << " hill x z r:" << x << " , " << z << " , " << r << std::endl;
 }

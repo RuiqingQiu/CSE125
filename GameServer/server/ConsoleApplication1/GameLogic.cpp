@@ -13,7 +13,7 @@ GameLogic::GameLogic()
 	damageSystem = new DamageSystem(INSTANT_KILL);
 	scoreboard = new Scoreboard();
 	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
-	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_WIDTH/10, 1);
+	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_WIDTH/5, 3);
 	counter = 0;
 	spawnPoint = new SpawnPoint(FIELD_WIDTH);
 	dmgDealtArr[4] = { nullptr };
@@ -90,7 +90,7 @@ int GameLogic::gameStart(){
 	addWalls();
 
 	gamePhysics->initWorld(&gameObjs);//, &objCollisionPair);
-	cout << "end of init world" << endl;
+	//cout << "end of init world" << endl;
 	vector<ObjectEvents*>::iterator iter;
 	for (iter = buildList.begin(); iter != buildList.end(); iter++)
 	{
@@ -313,7 +313,7 @@ int GameLogic::gameStart(){
 	countDown->startClock();
 	lastTime = countDown->getCurrentTime()/1000;
 	cout << "Timer: " << lastTime << endl;
-	cout << "end of game start" << endl;
+	//cout << "end of game start" << endl;
 	network->sendInitBuild(INIT_BATTLE, 0);
 	objEventList.clear();
 	
@@ -400,13 +400,15 @@ unsigned int GameLogic::gameLoop (){
 		std::map<int, GameObj *>::iterator it;
 		for (it = clientPair.begin(); it != clientPair.end(); it++)
 		{
-			
 			Robot* r = (Robot*)(*it).second;
-			int gainedGold = hill->inHill(r->getX(), r->getZ());
-			if (gainedGold > 0)
+			if (r->getState() == PS_ALIVE)
 			{
-				scoreboard->incGold((*it).first, gainedGold);
-				createPlayerHillUpdateEvent((*it).first);
+				int gainedGold = hill->inHill(r->getX(), r->getZ());
+				if (gainedGold > 0)
+				{
+					scoreboard->incGold((*it).first, gainedGold);
+					createPlayerHillUpdateEvent((*it).first);
+				}
 			}
 		}
 
@@ -417,7 +419,7 @@ unsigned int GameLogic::gameLoop (){
 		}
 
 		++secondCounter;
-		if (secondCounter >= 3)
+		if (secondCounter >= 5)
 		{
 			updateBlockEffects();
 			secondCounter = 0;
@@ -434,7 +436,7 @@ unsigned int GameLogic::gameLoop (){
 	postPhyLogic();
 	if (scoreboard->getHasChanged())
 	{
-		cout << "scoreboard changed--------------------------------------------------------------" << endl;
+		//cout << "scoreboard changed--------------------------------------------------------------" << endl;
 		createScoreboardUpdateEvent();
 	}
 
@@ -506,11 +508,11 @@ void GameLogic::prePhyLogic(){
 		}
 		else if(r->getState() == PS_BUILD)
 		{					
-			cout << "IN PS_BUILD1" << endl;
+			//cout << "IN PS_BUILD1" << endl;
 			switch (type) {
 			case BUILD_ROBOT:{
 	
-								 cout << "IN PS_BUILD2" << endl;
+								 //cout << "IN PS_BUILD2" << endl;
 						   
 								 double maxHealth = 0;
 								 //Add robot parts to gameObjs and find the Robot, create rigidbodies
@@ -839,22 +841,22 @@ void GameLogic::postDeathLogic(Robot* r)
 {
 	if (r->getState() == PS_ALIVE)
 	{
-		cout << "-----" << endl;
-		cout << "prev death:" << scoreboard->getDeaths()[r->getCID()] << endl;
+		//cout << "-----" << endl;
+		//cout << "prev death:" << scoreboard->getDeaths()[r->getCID()] << endl;
 		createDeathEvent(r);
 		r->_deathSent = 0;
 		scoreboard->incDeaths(r->getCID());
-		cout << "inc death for " << r->getCID() << endl;
-		cout << "after death:" << scoreboard->getDeaths()[r->getCID()] << endl;
-		cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
+		//cout << "inc death for " << r->getCID() << endl;
+		//cout << "after death:" << scoreboard->getDeaths()[r->getCID()] << endl;
+		//cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
 		if (r->getDiedTo() != nullptr && r->getDiedTo()->getCID() != r->getCID())
 		{
 			scoreboard->incTakedowns(r->getDiedTo()->getCID());
 		}
 		
-		cout << "inc takedown for " << r->getDiedTo()->getCID() << endl;
-		cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
-		cout << "-----" << endl;
+		//cout << "inc takedown for " << r->getDiedTo()->getCID() << endl;
+		//cout << "prev takedown:" << scoreboard->getTakedowns()[r->getCID()] << endl;
+		//cout << "-----" << endl;
 		vector<GameObj*> parts = r->getParts();
 		vector<GameObj*>::iterator it;
 		r->setId(1000000  + counter);
@@ -998,12 +1000,12 @@ void GameLogic::addWalls()
 	rotQ = btQuaternion(0, 0.12666666666, 0, 0);
 	q = q0*rotQ;
 	GameObj* pillar1 = new GOBox(10.5, 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
-	cout << " qxyz1: " << pillar1->getqX() << " , " << pillar1->getqY() << " , " << pillar1->getqZ() << " , " << pillar1->getqW() << endl;
+	//cout << " qxyz1: " << pillar1->getqX() << " , " << pillar1->getqY() << " , " << pillar1->getqZ() << " , " << pillar1->getqW() << endl;
 
 	rotQ = btQuaternion(0, -0.06111111111, 0, 0);
 	q = q0*rotQ;
 	GameObj* pillar2 = new GOBox(-12.01, 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
-	cout << " qxyz2: " << pillar2->getqX() << " , " << pillar2->getqY() << " , " << pillar2->getqZ() << " , " << pillar2->getqW() << endl;
+	//cout << " qxyz2: " << pillar2->getqX() << " , " << pillar2->getqY() << " , " << pillar2->getqZ() << " , " << pillar2->getqW() << endl;
 
 	rotQ = btQuaternion(0, -0.43216666666, 0, 0);
 	q = q0*rotQ;
@@ -1120,7 +1122,7 @@ int GameLogic::buildMode(){
 					if (buildplayer[cid] == 0){
 						 buildplayer[cid] = 1;
 						 buildnum++;
-						 cout << "buildnum" << buildnum << endl;
+						 //cout << "buildnum" << buildnum << endl;
 						 buildList.push_back(*iter);
 					 }
 					break;
@@ -1144,7 +1146,7 @@ int GameLogic::buildMode(){
 
 
 	if (buildnum >= numPlayers){
-		cout << "build finish" << endl;
+		//cout << "build finish" << endl;
 		return TIMEUP;
 	}
 	else if (countDown->checkCountdown()){
@@ -1201,7 +1203,7 @@ void GameLogic::createPlayerHillUpdateEvent(int c)
 {
 	GEPlayerHillUpdate* ge = new GEPlayerHillUpdate(c);
 	gameEventList.push_back(ge);
-	cout << " palyer in hill " << endl;
+	//cout << " palyer in hill " << endl;
 }
 
 
@@ -1303,7 +1305,7 @@ void GameLogic::updateDoTDamage()
 void GameLogic::updateBlockEffects()
 {
 	int i;
-	double threshold = 40;
+	double threshold = 30;
 	for (i = 0; i < numPlayers; i++)
 	{
 		Robot* r = (Robot*)clientPair.find(i)->second;
@@ -1340,9 +1342,16 @@ void GameLogic::updateBlockEffects()
 					if (opp->getState() != PS_ALIVE) continue;
 					btVector3 direction(opp->getX() - r->getX(), opp->getY() - r->getY(), opp->getZ() - r->getZ());
 					double distance = direction.length();
-					double threshold = 40;
 					direction.normalize();
-					opp->getRigidBody()->applyCentralImpulse(direction*force*(threshold/distance));
+					if ((threshold / distance) >= 1)
+					{
+						opp->getRigidBody()->applyCentralImpulse(direction*force);
+					}
+					else
+					{
+						opp->getRigidBody()->applyCentralImpulse(direction*force*(threshold / distance));
+					}
+					
 				}
 			}
 		}
@@ -1355,7 +1364,15 @@ void GameLogic::updateBlockEffects()
 
 				double distance = direction.length();
 				direction.normalize();
-				(*it)->getRigidBody()->applyCentralImpulse(direction*force/10*(threshold / distance) / (*it)->getMass());
+				if ((threshold / distance) >= 1)
+				{
+					(*it)->getRigidBody()->applyCentralImpulse(direction*force / 20);
+				}
+				else
+				{
+					(*it)->getRigidBody()->applyCentralImpulse(direction*force / (20 * (threshold / distance)));
+				}
+				
 			}
 		}
 	}

@@ -29,13 +29,13 @@ void Scoreboard::incDeaths(int cid)
 }
 void Scoreboard::incGold(int cid, int amt)
 {
-	std::cout << "old gold: " << gold[cid] << ", new gold: " << gold[cid] + amt << std::endl;
+	//std::cout << "old gold: " << gold[cid] << ", new gold: " << gold[cid] + amt << std::endl;
 	gold[cid] += amt;
 	hasChanged = 1;
 }
 void Scoreboard::setGold(int cid, int amt)
 {
-	std::cout << "old gold: " << gold[cid] << ", new gold: " << amt << std::endl;
+	//std::cout << "old gold: " << gold[cid] << ", new gold: " << amt << std::endl;
 	gold[cid] = amt;
 	hasChanged = 1;
 }

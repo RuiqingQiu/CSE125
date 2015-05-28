@@ -4,12 +4,38 @@
 
 int NetworkServices::sendMessage(SOCKET curSocket, char * message, int messageSize)
 {
-	return send(curSocket, message, messageSize, 0);
+	//timeval timeout;
+	//fd_set fds;
+	//FD_ZERO(&fds);
+	//FD_SET(curSocket, &fds);
+	//int selectResult = select(0, &fds, 0, 0, &timeout);
+	//if (selectResult != 0) {
+	//	std::cout << "Stalling in Send, selectResult: " << selectResult << std::endl;
+
+	//	return 0;
+	//}
+	//else
+	//{
+		return send(curSocket, message, messageSize, 0);
+	//}
 }
 
 int NetworkServices::receiveMessage(SOCKET curSocket, char * buffer, int bufSize)
 {
-	return recv(curSocket, buffer, bufSize, 0);
+	//timeval timeout;
+	//fd_set fds;
+	//FD_ZERO(&fds);
+	//FD_SET(curSocket, &fds);
+	//int selectResult = select(0, &fds, 0, 0, &timeout);
+	//if (selectResult != 1) {
+	//	std::cout << "Nothing in Receive, selectResult: " << selectResult << std::endl;
+	//	return 0;
+	//}
+	//else
+	//{
+		return recv(curSocket, buffer, bufSize, 0);
+	//}
+	
 }
 
 

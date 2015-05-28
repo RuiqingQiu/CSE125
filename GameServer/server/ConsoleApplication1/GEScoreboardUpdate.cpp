@@ -52,7 +52,7 @@ void GEScoreboardUpdate::to_string(std::string &s)
 		else ss += " ";
 		
 	}
-	std::cout << "scoreboard is: " << ss << std::endl;
+	//std::cout << "scoreboard is: " << ss << std::endl;
 
 
 }

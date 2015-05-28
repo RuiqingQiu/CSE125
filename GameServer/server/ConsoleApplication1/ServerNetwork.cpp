@@ -124,11 +124,11 @@ int ServerNetwork::receiveData(int client_id, char * recvbuf)
 		p.deserialize(recvbuf);
 
 
-		if (iResult == 0)
-		{
-			printf("Connection closed\n");
-			//closesocket(currentSocket);
-		}
+		//if (iResult == 0)
+		//{
+		//	//printf("Connection closed\n");
+		//	//closesocket(currentSocket);
+		//}
 
 		return iResult;
 	}
