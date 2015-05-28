@@ -21,6 +21,7 @@ ServerCore::~ServerCore()
 void ServerCore::serverLoop()
 {
 	gameLogic->numPlayers = 2;
+	cout << "Game requires " << gameLogic->numPlayers << " players." << endl;
 	int currNumPlayers = 0;
 	while (true)
 	{
