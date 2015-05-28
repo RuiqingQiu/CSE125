@@ -230,7 +230,7 @@ void Window::initialize(void)
 	object->type = FLOOR_SIMPLE;
 	factory->battlemode->PushEnvironmentNode(object);
 	*/
-	/*
+	
 	object = Model3DFactory::generateObjectWithType(STONEHENGE);
 	object->shader_type = NORMAL_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
@@ -240,7 +240,7 @@ void Window::initialize(void)
 	object->isUpdated = true;
 	object->type = STONEHENGE;
 	factory->battlemode->PushEnvironmentNode(object);
-	*/
+	
 	//gt->displayTest2(factory->battlemode);
 	//gt->displayTest3(factory->battlemode);
 	//gt->displayTest4(factory->battlemode);
