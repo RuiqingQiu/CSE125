@@ -148,6 +148,13 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 
 void main() {
     vec4 normal = 2.0 * texture2D(norm, TexCoords) - 1.0;
+	/*
+	vec3 incident_eye = normalize(Position.xyz);
+	vec3 reflected = reflect(incident_eye, normal.xyz);
+	//reflected = vec3(ViewMatrix * vec4(reflected, 0.0));
+	vec4 cubeMapColor = textureCube(cubeMap, reflected);
+	//gl_FragColor = cubeMapColor;
+	*/
     vec4 texColor = texture2D(tex, TexCoords);
     vec4 shadeColor = vec4(phongModel(normal.xyz, texColor.rgb), 1.0);
 
@@ -162,7 +169,7 @@ void main() {
 
 	 float albedo = 0.1f;
 
-	vec3 n = -normalize(toObjectLocal*normal.xyz);
+	vec3 n = -normalize(inverse(toObjectLocal)*normal.xyz);
 	  
     vec3 shadeColor2 = vec3 (
 

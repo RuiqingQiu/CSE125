@@ -25,6 +25,7 @@ public:
 	bool SendShootEvent(int id);
 	bool SendRobotBuild(int id, std::vector<GeoNode *> nodeList, int money);
 	bool SendSuicide(int id);
+	bool SendSpeedUp(int id);
 	GameInfoPacket* tryGetGameInfo();
 };
 

@@ -97,10 +97,11 @@ void scoreBox::update() {
 	
 }
 
-void scoreBox::updateScore(int d, int h, int r) {
+void scoreBox::updateScore(int d, int h, int r, int m) {
 	deaths = d;
 	hits = h;
 	rank = r;
+	money = m;
 }
 
 void scoreBox::draw() {

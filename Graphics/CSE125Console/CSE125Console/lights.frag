@@ -133,7 +133,7 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 }
 
 void main() {
-    vec4 normal = 2.0 * texture2D(norm, TexCoords) - 1.0;
+    vec4 normal = (2.0 * texture2D(norm, TexCoords) - 1.0);
     vec4 texColor = texture2D(tex, TexCoords);
     vec4 shadeColor = vec4(phongModel(normal.xyz, texColor.rgb), 1.0);
 
@@ -150,7 +150,7 @@ void main() {
 
 	 float albedo = 0.1f;
 
-	vec3 n = -normalize(toObjectLocal*normal.xyz);
+	vec3 n = -normalize(inverse(toObjectLocal)*normal.xyz);
 	  
     vec3 shadeColor2 = vec3 (
 

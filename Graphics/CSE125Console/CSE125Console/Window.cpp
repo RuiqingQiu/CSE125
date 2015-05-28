@@ -175,9 +175,10 @@ void Window::initialize(void)
 	object->isUpdated = true;
 	object->type = DESERT;
 	factory->battlemode->PushEnvironmentNode(object);
-
+	
+	
 	object = Model3DFactory::generateObjectWithType(BORDER);
-	object->shader_type = BATTLEFIELD_SHADER;
+	object->shader_type = REGULAR_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -186,6 +187,7 @@ void Window::initialize(void)
 	object->type = BORDER;
 	factory->battlemode->PushEnvironmentNode(object);
 
+	/*
 	object = Model3DFactory::generateObjectWithType(CHESSBOARD);
 	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, -2, 0);
@@ -206,7 +208,6 @@ void Window::initialize(void)
 	object->type = LEGO;
 	factory->battlemode->PushEnvironmentNode(object);
 
-	/*
 	object = Model3DFactory::generateObjectWithType(FLOOR_SIMPLE);
 	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
@@ -228,7 +229,8 @@ void Window::initialize(void)
 	object->type = STONEHENGE;
 	factory->battlemode->PushEnvironmentNode(object);
 
-	gt->displayTest6(factory->battlemode);
+	//gt->displayTest5(factory->battlemode);
+
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
 	factory->viewmode = viewType::MENU;
@@ -245,7 +247,7 @@ void Window::initialize(void)
 	light_system->initLights();
 	light_system->renderLights(factory->battlemode);
 
-	factory->battlemode->pViewCamera->FollowingTarget = object;
+	//factory->battlemode->pViewCamera->FollowingTarget = object;
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");
@@ -344,9 +346,29 @@ void Window::reshapeCallback(int w, int h) {
 // Callback method called by GLUT when window readraw is necessary or when glutPostRedisplay() was called.
 void Window::displayCallback() {
 	clock_t startTime = clock();
-	
+
 	// play the background music through out the whole game, may change with the view
-	soundObject->playMusic(); 
+	if (factory->currentView == factory->menumode || factory->currentView == factory->defaultView){
+		//cout << "enter main menu  " << endl;
+		if (factory->menumode->playPressed){
+			//cout << "entering loading " << endl;
+			soundObject->playLoading();
+		}
+		else{
+			soundObject->playOpening();
+		}
+	}
+
+	// if in build mode play build view background music
+	else if (factory->currentView == factory->buildmode){
+		//cout << "enter build view  " << endl;
+		soundObject->playBuildViewBackground();
+	}
+	else if (factory->currentView == factory->battlemode){
+		//cout << "enter battle view " << endl;
+		soundObject->playMusic();
+	}
+
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 

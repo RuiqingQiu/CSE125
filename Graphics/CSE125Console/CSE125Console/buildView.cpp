@@ -267,7 +267,7 @@ void buildView::VOnRender() {
 }
 
 viewType buildView::mouseClickFunc(int state, int x, int y) {
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < (int)buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height-y);
@@ -317,10 +317,12 @@ void buildView::keyPressFunc(unsigned char key, int x, int y) {
 	switch (key) {
 	case 8: //backsapce
 		//delete block
+		sound->playSelect();  // play the selection sound
 		removeNode();
 		break;
 	case 13: //enter
 		//add block
+		sound->playSelect(); // play the seletion sound 
 		addNode();
 		break;
 	}
@@ -328,7 +330,7 @@ void buildView::keyPressFunc(unsigned char key, int x, int y) {
 
 void buildView::setConstraints() {
 	clearConstraints();
-	for (int i = 0; i < NodeList.size(); i++) {
+	for (int i = 0; i < (int)NodeList.size(); i++) {
 		Vector3 compare = NodeList[i]->localTransform.position;
 		for (int j = 0; j < NodeList.size(); j++) {
 			Vector3 check = NodeList[j]->localTransform.position;
@@ -370,7 +372,7 @@ void buildView::setConstraints() {
 }
 
 void buildView::clearConstraints() {
-	for (int i = 0; i < NodeList.size(); i++) {
+	for (int i = 0; i < (int)NodeList.size(); i++) {
 		NodeList[i]->clearConstraints();
 	}
 }
@@ -412,7 +414,7 @@ void buildView::setTemplate() {
 	//add imediately instead of waiting for add button click or enter key press
 	if (selectedType >= TEMPLATE_BEGIN && selectedType <= TEMPLATE_END) {
 		//remove all non-base blocks use BASE_SIZE instead of 0
-		for (int i = 0; i < NodeList.size(); i++) {
+		for (int i = 0; i < (int)NodeList.size(); i++) {
 			delete NodeList[i];
 		}
 		NodeList.clear();
@@ -908,7 +910,7 @@ Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
 	int checkBelow = check.y;
 	while (checkBelow > 0) {
 		bool foundMatchBelow = false;
-		for (int i = 0; i < NodeList.size(); i++) {
+		for (int i = 0; i < (int)NodeList.size(); i++) {
 			Vector3 temp = NodeList[i]->localTransform.position;
 			if (temp.x == check.x && temp.z == check.z) {
 				if (temp.y == check.y - 1) {
@@ -924,7 +926,7 @@ Vector3 buildView::translateNode(Vector3 t, GeoNode * node) {
 	bool foundMatch = true;
 	while (foundMatch) {
 		foundMatch = false;
-		for (int i = 0; i < NodeList.size(); i++) {
+		for (int i = 0; i < (int)NodeList.size(); i++) {
 			Vector3 temp = NodeList[i]->localTransform.position;
 			if (NodeList[i]->intersect(check)) {
 				node->below_id = NodeList[i]->identifier;

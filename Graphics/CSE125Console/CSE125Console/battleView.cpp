@@ -29,6 +29,8 @@ void battleView:: createButtons() {
 	onDeath = new guiItem("HUD/dead.png", width*0.5 - 500, height* 0.7, 1000, 200, false, false);
 	onDeath->setScaling(true, false, width, height);
 
+	healDmg = new background("heal.png", width, height);
+
 	//cooldown = new cooldownDisplay(100, 100, 250, 250, true, false);
 	//guiItems.push_back(cooldown);
 }
@@ -41,15 +43,23 @@ void battleView::VUpdate() {
 	}
 	updateview = isCurrentView;
 
-	if (damageTaken || currDuration > 0) {
-		currDuration += 0.1;
+	if (damageTaken) {
+		dmgDuration += 0.1;
 	}
 
-	if (currDuration == maxDuration) {
-		currDuration = 0;
+	if (dmgDuration >= maxDuration) {
+		dmgDuration = 0;
+		damageTaken = false;
 	}
 
-	if (damageTaken) damageTaken = false;
+	if (healing) {
+		healDuration += 0.1;
+	}
+
+	if (healDuration >= maxDuration) {
+		healDuration = 0;
+		healing = false;
+	}
 }
 
 void battleView::updateName(string name) {
@@ -64,6 +74,7 @@ void battleView::VOnRender() {
 	//glEnable(GL_COLOR_MATERIAL);
 	//glColor4f(1.0, 1.0, 1.0, 1.0 - (currDuration / maxDuration) );
 	if (damageTaken || isDead) takeDamage->draw();
+	if (healing) healDmg->draw();
 	if (isDead) onDeath->draw();
 	//glDisable(GL_COLOR_MATERIAL);
 
@@ -80,10 +91,13 @@ void battleView::updateHealth(float current, float max) {
 		if (current < healthDisplay->currentHealth) {
 			damageTaken = true;
 		}
+		if (current > healthDisplay->currentHealth) {
+			healing = true;
+		}
 	}
 
-	healthDisplay->currentHealth = current;
-	healthDisplay->maxHealth = max;
+	healthDisplay->currentHealth = (current / max) * 50;
+	healthDisplay->maxHealth = 50;
 }
 
 void battleView::setDimensions(int w, int h) {
@@ -91,6 +105,7 @@ void battleView::setDimensions(int w, int h) {
 	int ydiff = h - height;
 
 	takeDamage->rePosition(xdiff, ydiff, w, h);
+	healDmg->rePosition(xdiff, ydiff, w, h);
 
 	gui::setDimensions(w, h);
 }

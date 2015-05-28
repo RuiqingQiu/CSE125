@@ -4,6 +4,7 @@
 class EventSystem
 {
 public:
+
 	EventSystem();
 	~EventSystem();
 	void ProcessGamePacket(GameInfoPacket* packet);
