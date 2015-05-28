@@ -25,6 +25,16 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				return CH_BULLETWALL;
 			}
+			case C_ROBOT_PARTS:
+			{
+					e->setResult1(NOTHING); e->setResult2(NOTHING);
+					return CH_PLAYERWALL;
+			}
+			case C_ROBOT:
+			{
+					e->setResult1(NOTHING); e->setResult2(NOTHING);
+					return CH_PLAYERWALL;
+			}
 			default:
 			{
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
@@ -96,6 +106,16 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
 				return CH_PLAYERPLAYER;
 			}
+			case C_ROBOT_PARTS:
+			{
+								  e->setResult1(NOTHING); e->setResult2(NOTHING);
+								  return CH_PLAYERPLAYER;
+			}
+
+			case C_WALLS:{
+							 e->setResult1(NOTHING); e->setResult2(NOTHING);
+							 return CH_PLAYERWALL;
+			}
 			default:
 			{
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
@@ -149,6 +169,22 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				}
 				return CH_PLAYERPLAYER;
 			}
+			case C_WALLS:{
+							 e->setResult1(NOTHING); e->setResult2(NOTHING);
+							 return CH_PLAYERWALL;
+			}
+			case C_ROBOT_PARTS:
+			{
+								  e->setResult1(NOTHING); e->setResult2(NOTHING);
+								  return CH_PLAYERPLAYER;
+			}
+			case C_ROBOT:
+			{
+								  e->setResult1(NOTHING); e->setResult2(NOTHING);
+								  return CH_PLAYERPLAYER;
+			}
+
+
 			default:
 			{
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
@@ -249,9 +285,6 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				//std::cout << "COLLISION: MELEE WITH ROBOT" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
-
-				 
-				
 
 				if (((Robot*)o2)->applyDamage(o1->getDamage()) <= 0)
 				{

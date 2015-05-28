@@ -100,7 +100,7 @@ public:
 	void setBelowID(int);
 	int getDoTFrom();
 	double getHealing();
-	double getSlow();
+	double getBlockSlow();
 
 	double getDoT();
 

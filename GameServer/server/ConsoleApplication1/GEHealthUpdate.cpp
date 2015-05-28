@@ -24,5 +24,5 @@ void GEHealthUpdate::to_string(std::string &s)
 	s += std::to_string(health);
 	s += " ";
 	s += std::to_string(maxHealth);
-	std::cout << "health: " << std::to_string(health) << "  max: " << std::to_string(maxHealth) << std::endl;
+	//std::cout << "health: " << std::to_string(health) << "  max: " << std::to_string(maxHealth) << std::endl;
 }

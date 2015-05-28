@@ -181,14 +181,14 @@ void GameObj::setBlockType(int bType)
 	switch (bType){
 	case BasicCube:
 	{
-			  _mass = 10;
+			  _mass = 15;
 			  _health = 370;
 			  _collisionType = C_ROBOT_PARTS;
 			  break;
 	}
 	case GlowingCube:
 	{
-						_mass = 9;
+						_mass = 17;
 						_health = 250;
 						blockForce = 300;
 						_collisionType = C_ROBOT_PARTS;
@@ -196,7 +196,7 @@ void GameObj::setBlockType(int bType)
 	}
 	case WoodenCube:
 	{
-					   _mass = 7;
+					   _mass = 10;
 					   _health = 200;
 					   _collisionType = C_ROBOT_PARTS;
 					  break;
@@ -205,7 +205,7 @@ void GameObj::setBlockType(int bType)
 
 	case CrystalCube:
 	{
-					   _mass = 7;
+					   _mass = 15;
 					   _health = 220;
 					   blockHealing = 20;
 					   _collisionType = C_ROBOT_PARTS;
@@ -213,7 +213,7 @@ void GameObj::setBlockType(int bType)
 	}
 	case BLACKCUBE:
 	{
-						_mass = 7;
+						_mass = 17;
 						_health = 250;
 						blockForce = -300;
 						_collisionType = C_ROBOT_PARTS;
@@ -225,7 +225,7 @@ void GameObj::setBlockType(int bType)
 		_isWeapon = 1;
 		_isRanged = 1;
 		_health = 200;
-		_mass = 20;
+		_mass = 30;
 		_collisionType = C_ROBOT_PARTS;
 		break;
 
@@ -235,14 +235,14 @@ void GameObj::setBlockType(int bType)
 				 _isWeapon = 1;
 				 _isRanged = 1;
 				 _health = 240;
-				 _mass = 20;
+				 _mass = 35;
 				 _collisionType = C_ROBOT_PARTS;
 					  break;
 	}
 	case Mace:
 	{
 				 _isWeapon = 1;
-				 _mass = 30;
+				 _mass = 35;
 				 _health = 300;
 				 _collisionType = C_MELEE;
 					  break;
@@ -250,7 +250,7 @@ void GameObj::setBlockType(int bType)
 	case Mallet:
 	{
 				   _isWeapon = 1;
-				   _mass = 25;
+				   _mass = 40;
 				   _health = 325;
 				   _collisionType = C_MELEE;
 					  break;
@@ -259,7 +259,7 @@ void GameObj::setBlockType(int bType)
 	{
 				   _isWeapon = 1;
 				   _health = 250;
-				   _mass = 6;
+				   _mass = 8;
 				   _collisionType = C_MELEE;
 					  break;
 	}
@@ -297,14 +297,14 @@ void GameObj::setBlockType(int bType)
 
 	case THREEBYTHREE_BASIC:
 	{
-							   _mass = 90;
+							   _mass = 135;
 							   _health = 3330;
 							   _collisionType = C_ROBOT;
 						  break;
 	}
 	case THREEBYTHREE_GLOWING:
 	{
-								 _mass = 81;
+								 _mass = 153;
 								 _health = 2250;
 								 blockForce = 2700;
 								 _collisionType = C_ROBOT;
@@ -312,7 +312,7 @@ void GameObj::setBlockType(int bType)
 	}
 	case THREEBYTHREE_WOODEN:
 	{
-								_mass = 63;
+								_mass = 90;
 								_health = 1800;
 								_collisionType = C_ROBOT;
 							   break;
@@ -320,7 +320,7 @@ void GameObj::setBlockType(int bType)
 
 	case THREEBYTHREE_BLACK:
 	{
-								_mass = 63;
+								_mass = 153;
 								_health = 2250;
 								blockForce = -2700;
 								_collisionType = C_ROBOT;
@@ -329,7 +329,7 @@ void GameObj::setBlockType(int bType)
 
 	case THREEBYTHREE_CRYSTAL:
 	{
-								_mass = 63;
+								_mass = 135;
 								_health = 1980;
 								blockHealing = 180;
 								_collisionType = C_ROBOT;
@@ -354,7 +354,7 @@ void GameObj::setBlockType(int bType)
 	case BULLET:
 	{
 		_collisionType = C_PROJECTILE;
-		blockSlow = 1;
+		blockSlow = 0.1;
 		//CHANGE THIS VALUE, it is set to 1 for testing purposes right now
 		break;
 	}
@@ -377,7 +377,7 @@ void GameObj::setIsRobot(int b)
 	_isRobot = b;
 }
 
-double GameObj::getSlow()
+double GameObj::getBlockSlow()
 {
 	return blockSlow;
 }

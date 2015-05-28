@@ -1,5 +1,5 @@
 #include "Scoreboard.h"
-
+#include <iostream>
 
 Scoreboard::Scoreboard()
 {
@@ -7,7 +7,7 @@ Scoreboard::Scoreboard()
 	for (i = 0; i < 4; i++){
 		takedowns[i] = 0;
 		deaths[i] = 0;
-		gold[i] = 0;
+		gold[i] = 40;
 	}
 
 }
@@ -29,7 +29,14 @@ void Scoreboard::incDeaths(int cid)
 }
 void Scoreboard::incGold(int cid, int amt)
 {
+	std::cout << "old gold: " << gold[cid] << ", new gold: " << gold[cid] + amt << std::endl;
 	gold[cid] += amt;
+	hasChanged = 1;
+}
+void Scoreboard::setGold(int cid, int amt)
+{
+	std::cout << "old gold: " << gold[cid] << ", new gold: " << amt << std::endl;
+	gold[cid] = amt;
 	hasChanged = 1;
 }
 

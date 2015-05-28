@@ -238,15 +238,28 @@ void Robot::applySlow(double slow)
 }
 double Robot::getSlowValue()
 {
+	//if (isSlowed == NULL)
+	//{
+	//	return 0;
+	//}
+	//if ((((double)(clock() - isSlowed) / CLOCKS_PER_SEC) > SLOW_DELAY))
+	//{
+	//	isSlowed = NULL;
+	//	slowValue = 0;
+	//	return 0;
+	//}
+	//return slowValue;
+
+
 	if (isSlowed == NULL)
 	{
-		return 0;
+		return 1;
 	}
 	if ((((double)(clock() - isSlowed) / CLOCKS_PER_SEC) > SLOW_DELAY))
 	{
 		isSlowed = NULL;
-		slowValue = 0;
-		return 0;
+		slowValue = 1;
+		return 1;
 	}
 	return slowValue;
 }

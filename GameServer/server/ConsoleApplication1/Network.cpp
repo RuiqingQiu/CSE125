@@ -385,6 +385,25 @@ void Network::convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* ev
 				   eventList->push_back(e);
 				   break;
 	}
+	case BOOST:
+	{
+					 ObjectEvents * e = new ObjectEvents(BOOST);
+					 string packetInfoStr = "";
+					 int i;
+					 for (i = 0;; i++)
+					 {
+						 if (packet.data[i] != '\n')
+							 packetInfoStr += packet.data[i];
+						 else
+						 {
+							 break;
+						 }
+					 }
+					 unsigned int cid = stoul(packetInfoStr);
+					 e->setCid(cid);
+					 eventList->push_back(e);
+					 break;
+	}
 	case BUILD_ROBOT: {
 		//cout << "Received Build Robot Packet" << endl;
 						  ObjectEvents * e = new ObjectEvents(BUILD_ROBOT);

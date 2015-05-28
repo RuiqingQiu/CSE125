@@ -87,7 +87,7 @@ unsigned int GameLogic::waitToConnect()
 int GameLogic::gameStart(){
 
 	addGround();
-	//addWalls();
+	addWalls();
 
 	gamePhysics->initWorld(&gameObjs);//, &objCollisionPair);
 	cout << "end of init world" << endl;
@@ -133,8 +133,7 @@ int GameLogic::gameStart(){
 			{
 				robot = (Robot*)(*it);
 				robot->setCID(cid);
-
-
+				scoreboard->setGold(cid, robot->getCurrMoney());
 				char * nameChar = new char[names[cid].length() + 1];
 				std::strcpy(nameChar, names[cid].c_str());
 				robot->setName(nameChar);
@@ -352,7 +351,7 @@ int packet_counter = 0;
 
 unsigned int GameLogic::gameLoop (){
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < numPlayers; i++)
 	{
 		dmgDealtArr[i] = nullptr;
 	}
@@ -407,35 +406,35 @@ unsigned int GameLogic::gameLoop (){
 			if (gainedGold > 0)
 			{
 				scoreboard->incGold((*it).first, gainedGold);
-				//createPlayerHillUpdateEvent((*it).first);
+				createPlayerHillUpdateEvent((*it).first);
 			}
 		}
 
 		if (lastTime % UPDATE_HILL == 0)
 		{
 			hill->update();
-			//createHillUpdateEvent();
+			createHillUpdateEvent();
 		}
 
 		++secondCounter;
 		if (secondCounter >= 3)
 		{
-			
+			updateBlockEffects();
 			secondCounter = 0;
-			
 		}
-		updateBlockEffects();
+
 	
 		updateDoTDamage();
+
 		GETime* et = new GETime(lastTime);
 		gameEventList.push_back(et);
 	}
 
 
 	postPhyLogic();
-
 	if (scoreboard->getHasChanged())
 	{
+		cout << "scoreboard changed--------------------------------------------------------------" << endl;
 		createScoreboardUpdateEvent();
 	}
 
@@ -489,6 +488,15 @@ void GameLogic::prePhyLogic(){
 							 dmgDealtArr[cid] = r;
 							 postDeathLogic(r);
 							 break;
+			}
+			case BOOST:
+			{
+						  btTransform rbTrans = r->getRigidBody()->getWorldTransform();
+						  btVector3 relativeForce = btVector3(0, 0, -4000);
+						  btMatrix3x3 boxRot = r->getRigidBody()->getWorldTransform().getBasis();
+						  btVector3 correctedForce = boxRot * relativeForce;
+						  r->getRigidBody()->applyCentralImpulse(correctedForce);
+						  break;
 			}
 			default:{
 					gamePhysics->createPhysicsEvent(type, gObj);
@@ -544,7 +552,7 @@ void GameLogic::prePhyLogic(){
 										 robot = (Robot*)(*it);
 										 //clientPair.insert(std::pair<int, Robot*>(cid, robot));
 										 robot->setCID(cid);
-
+										 scoreboard->setGold(cid, robot->getCurrMoney());
 										 char * nameChar = new char[names[cid].length() + 1];
 										 std::strcpy(nameChar, names[cid].c_str());
 										 robot->setName(nameChar);
@@ -677,7 +685,7 @@ void GameLogic::prePhyLogic(){
 					btVector3 vel = v->getRigidBody()->getLinearVelocity();
 					double mag = sqrt(vel.getX()*vel.getX() + vel.getY()*vel.getY() + vel.getZ()*vel.getZ());
 
-					if (s >= MAX_SPEED*(*it)->getSpeedMultiplier() || mag > MAX_SPEED*(*it)->getSpeedMultiplier() / 4)
+					if (s >= MAX_SPEED*(*it)->getSpeedMultiplier()*((Robot*)(*it))->getSlowValue() || mag > MAX_SPEED*(*it)->getSpeedMultiplier()*((Robot*)(*it))->getSlowValue() / 4)
 					{
 						v->getRigidBody()->setLinearFactor(btVector3(0.7, 0.7, 0.7));
 						v->getRigidBody()->setDamping(0.3, 0);
@@ -736,13 +744,9 @@ void GameLogic::prePhyLogic(){
 				if (rightWheel.m_steering < TURN_SPEED / 1.1 && rightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(3).m_steering = 0;
 				if (brightWheel.m_steering < TURN_SPEED / 1.1 && brightWheel.m_steering > -TURN_SPEED / 1.1) ((Robot *)*it)->getVehicle()->getWheelInfo(1).m_steering = 0;
 
-				double slowFactor = ((Robot *)*it)->getSlowValue();
-				btVector3 slow(1 - slowFactor, 1 - slowFactor, 1 - slowFactor);
-				cout << " slowFactor: " << slow.getX() << " , " << slow.getY() << " , " << slow.getZ() << endl;
-				((Robot *)*it)->getRigidBody()->setLinearFactor(slow);
-				((Robot *)*it)->getRigidBody()->setAngularFactor(slow);
 
 		}
+
 
 	}
 
@@ -818,7 +822,7 @@ void GameLogic::createScoreboardUpdateEvent()
 void GameLogic::postHealthLogic(Robot* arr[4])
 {
 	int i;
-	for (i = 0; i < 4; i++)
+	for (i = 0; i < numPlayers; i++)
 	{
 		if (arr[i] != nullptr)
 		{
@@ -1058,14 +1062,14 @@ void GameLogic::addWalls()
 	gamePhysics->getDynamicsWorld()->addRigidBody(rightWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(frontWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(backWall->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar1->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar2->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar3->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar4->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar5->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar6->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar7->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar8->getRigidBody());
+	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar1->getRigidBody());
+	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar2->getRigidBody());
+	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar3->getRigidBody());
+	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar4->getRigidBody());
+	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar5->getRigidBody());
+	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar6->getRigidBody());
+	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar7->getRigidBody());
+	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar8->getRigidBody());
 
 
 
@@ -1074,14 +1078,14 @@ void GameLogic::addWalls()
 	gameObjs.push_back(rightWall);
 	gameObjs.push_back(frontWall);
 	gameObjs.push_back(backWall);
-	gameObjs.push_back(pillar1);
-	gameObjs.push_back(pillar2);
-	gameObjs.push_back(pillar3);
-	gameObjs.push_back(pillar4);
-	gameObjs.push_back(pillar5);
-	gameObjs.push_back(pillar6);
-	gameObjs.push_back(pillar7);
-	gameObjs.push_back(pillar8);
+	//gameObjs.push_back(pillar1);
+	//gameObjs.push_back(pillar2);
+	//gameObjs.push_back(pillar3);
+	//gameObjs.push_back(pillar4);
+	//gameObjs.push_back(pillar5);
+	//gameObjs.push_back(pillar6);
+	//gameObjs.push_back(pillar7);
+	//gameObjs.push_back(pillar8);
 }
 void GameLogic::addGround()
 {
@@ -1197,6 +1201,7 @@ void GameLogic::createPlayerHillUpdateEvent(int c)
 {
 	GEPlayerHillUpdate* ge = new GEPlayerHillUpdate(c);
 	gameEventList.push_back(ge);
+	cout << " palyer in hill " << endl;
 }
 
 
@@ -1365,7 +1370,15 @@ void GameLogic::applyBulletEffect(GameObj* GO1, GameObj* GO2)
 	{
 		if (GO2->getBelongTo() != nullptr)
 		{
-			((Robot*)GO2->getBelongTo())->applySlow(GO1->getSlow());
+			Robot* r = (Robot*)GO2->getBelongTo();
+			btRaycastVehicle* v = r->getVehicle();
+			r->getRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
+			r->getRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+			v->applyEngineForce(0, 0);
+			v->applyEngineForce(0, 1);
+			v->applyEngineForce(0, 2);
+			v->applyEngineForce(0, 3);
+			r->applySlow(GO1->getBlockSlow());
 		}
 	}
 }

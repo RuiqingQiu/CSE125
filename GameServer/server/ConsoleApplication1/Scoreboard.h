@@ -14,7 +14,7 @@ public:
 	void incTakedowns(int);
 	void incDeaths(int);
 	void incGold(int, int);
-
+	void setGold(int cid, int amt);
 	int getHasChanged();
 	int* getTakedowns();
 	int* getDeaths();
