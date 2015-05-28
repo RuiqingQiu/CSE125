@@ -21,6 +21,7 @@ ServerCore::~ServerCore()
 void ServerCore::serverLoop()
 {
 	gameLogic->numPlayers = 2;
+	int currNumPlayers = 0;
 	while (true)
 	{
 		timeFrame->startClock();
@@ -31,32 +32,49 @@ void ServerCore::serverLoop()
 		case INIT_STATE0:{
 			action = gameLogic->waitToConnect();
 			if (gameLogic->numPlayers < 1) action = ADDCLIENT;
-			//cout << "action for init0: " << action << endl;
+			if (currNumPlayers == 0 && currNumPlayers < gameLogic->numPlayers)
+			{
+				cout << "Waiting for Player 1." << endl;
+				currNumPlayers++;
+			}
 			break;
 		}
 		case INIT_STATE1:
 		{	
 			action = gameLogic->waitToConnect();
 			if (gameLogic->numPlayers < 2) action = ADDCLIENT;
-			//cout << "action for init1: " << action << endl;
+			if (currNumPlayers == 1 && currNumPlayers < gameLogic->numPlayers)
+			{
+				cout << "Waiting for Player 1." << endl;
+				currNumPlayers++;
+			}
 			break;
 		}
 		case INIT_STATE2:
 		{	
 			action = gameLogic->waitToConnect();
 			if (gameLogic->numPlayers < 3) action = ADDCLIENT;
-			//cout << "action for init2: " << action << endl;
+			if (currNumPlayers == 20 && currNumPlayers < gameLogic->numPlayers)
+			{
+				cout << "Waiting for Player 1." << endl;
+				currNumPlayers++;
+			}
 			break;
 		}
 		case INIT_STATE3:
 		{	
 			action = gameLogic->waitToConnect();
 			if (gameLogic->numPlayers< 4) action = ADDCLIENT;
-			//cout << "action for init3: " << action << endl;
+			if (currNumPlayers == 3 && currNumPlayers < gameLogic->numPlayers)
+			{
+				cout << "Waiting for Player 1." << endl;
+				currNumPlayers++;
+			}
 			break;
 		}
 		case INIT_BUILD_STATE:
 		{
+			cout << "All players have connected." << endl;
 			action = gameLogic->startBuild();
 			break;
 		}
@@ -69,7 +87,7 @@ void ServerCore::serverLoop()
 		}
 		case INIT_GAME: 
 		{
-			 cout << "init game start " << endl;
+			 cout << "Initializing the game." << endl;
 			 action = gameLogic->gameStart();
 			 break;
 		}
