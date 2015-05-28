@@ -21,6 +21,7 @@ public:
 
 	viewType mouseClickFunc(int state, int x, int y);
 	bool isLoading; 
+	bool playPressed;
 
 private:
 	//helper initialization functions
@@ -49,5 +50,4 @@ private:
 	std::vector<guiItem*> guiLetters; // keep track of the letter in the string, later combined with guiItems vector
 	std::vector<guiItem*> guiNumbers; // keep track of the number in the Ip Adress
 
-	bool playPressed;
 };

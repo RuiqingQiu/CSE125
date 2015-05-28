@@ -9,7 +9,6 @@ string path = "sound/";
 
 Sound::Sound(){
 	/* Cannot call play in the constructor !!! */
-
 	// build view selection sound
 	string tmp = path + "select.wav";
 	if (!selectBuffer.loadFromFile(tmp))
@@ -46,11 +45,39 @@ Sound::Sound(){
 	selectSound.play();
 	selectSound.pause();
 
+	// loading view sound
+	tmp = path + "loading.wav";
+	if (!loadingBuffer.loadFromFile(tmp))
+		cout << "ERROR in loading loading sound effect " << endl;
+	loadingSound.setBuffer(loadingBuffer);
+	loadingSound.setLoop(true);
+	// need to play and then pause it
+	loadingSound.play();
+	loadingSound.stop();
+
+	// this will be our game entry sound
+	tmp = path + "opening.wav";
+	if (!openingBuffer.loadFromFile(tmp))
+		cout << "ERROR in loading opening sound effect " << endl;
+	openingSound.setBuffer(openingBuffer);
+	openingSound.setLoop(true);
+	// need to play and then pause it
+	openingSound.play();
+	openingSound.stop();
+
+
 	// game background music
 	// music doesn't preload the data
 	if (!music.openFromFile("Payback.wav"))
 		cout << "load music error " << endl;
 	music.setVolume(70); // lower the sound of the background music
+
+	// build view background music
+	tmp = path + "buildViewBackground.wav";
+	if (!buildViewBackground.openFromFile(tmp))
+		cout << "load music error " << endl;// lower the sound of the background music
+	buildViewBackground.setLoop(true);
+	buildViewBackground.setVolume(70);
 }
 
 
@@ -62,8 +89,12 @@ Sound::~Sound(){
 // This function is used to play music
 void Sound::playMusic(){
 	// for the first time displayCallback calls the playMusic
-	if (music.getStatus() != sf::Sound::Playing)
+	if (music.getStatus() != sf::Sound::Playing){
 		music.play();
+		buildViewBackground.stop();
+		loadingSound.stop();
+		openingSound.stop();
+	}
 	// without this part still working, so comment out for now
 	/*
 	if (music.getStatus() == sf::Sound::Playing){
@@ -73,6 +104,15 @@ void Sound::playMusic(){
 	}*/
 }
 
+// this function is to play build view background music
+void Sound::playBuildViewBackground(){
+	if (buildViewBackground.getStatus() != sf::Sound::Playing){
+		buildViewBackground.play();
+		openingSound.stop();
+		loadingSound.stop();
+		music.stop();
+	}
+}
 
 // This function is used to play sound, don't need to be play continued
 // need user location to play 3d sound
@@ -121,3 +161,20 @@ void Sound::playGun(float x, float y, float z){
 	}
 }
 
+// this function is to play the loading view sound
+void Sound::playLoading(){
+	cout << "play loading sound " << endl;
+	if (loadingSound.getStatus() == sf::Sound::Stopped){
+		music.pause();
+		openingSound.stop();
+		loadingSound.play();
+	}
+}
+
+// this function is to play the loading view sound
+void Sound::playOpening(){
+	cout << "play opening sound " << endl;
+	if (openingSound.getStatus() == sf::Sound::Stopped){
+		openingSound.play();
+	}
+}
