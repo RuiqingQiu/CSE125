@@ -90,6 +90,13 @@ bool GamePacketManager::SendSuicide(int id)
 	strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
 	return client->sendPacket(cp);
 }
+bool GamePacketManager::SendSpeedUp(int id){
+	CPacket cp;
+	cp.packet_type = BOOST;
+	string tmp = to_string(id) + "\n\0";
+	strncpy_s(cp.data, tmp.c_str(), sizeof(cp.data));
+	return client->sendPacket(cp);
+}
 
 
 bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList, int money)
@@ -116,7 +123,6 @@ bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList, 
 		tmp += " " + to_string(nodeList[i]->front_id);
 		tmp += " " + to_string(nodeList[i]->back_id);
 
-		tmp += " 0";
 		tmp += " " + to_string(money);
 		//tmp += " " + to_string(nodeList[i]->healthStat);
 		//tmp += " " + to_string(nodeList[i]->damageStat);

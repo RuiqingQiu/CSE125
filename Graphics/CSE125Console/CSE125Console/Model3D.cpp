@@ -52,7 +52,7 @@ void Model3D::VOnClientUpdate(GameInfoPacket* pData){
 	}
 	if (p){
 		if (p->type != this->type){
-			cout << "model type is not right" << endl;
+			//cout << "model type is not right" << endl;
 			//this->type = p->type; 
 			//this->render_obj = Model3DFactory::generateObjectWithType(this->type)->render_obj;
 		}

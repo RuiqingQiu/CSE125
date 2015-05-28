@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "GraphicsTest.h"
-
+#include "Fire.h"
 
 GraphicsTest::GraphicsTest()
 {
@@ -53,47 +53,9 @@ void GraphicsTest::displayTest6(GameView* view){
 
 
 void GraphicsTest::displayTest5(GameView* view){
-	Model3D* object;
-	object = Model3DFactory::generateObjectWithType(Turrent);
-	object->shader_type = LIGHTS_SHADER;
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	object->isUpdated = true;
-	object->type = Turrent;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(BGun);
-	object->shader_type = LIGHTS_SHADER;
-	object->localTransform.position = Vector3(5, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	object->isUpdated = true;
-	object->type = BGun;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(Needle);
-	object->shader_type = LIGHTS_SHADER;
-	object->localTransform.position = Vector3(-5, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	object->isUpdated = true;
-	object->type = Needle;
-	view->PushEnvironmentNode(object);
-
-	/*
-	for (int i = 0; i < 1000; i++){
-		object = Model3DFactory::generateObjectWithType(WoodenCube);
-		object->auto_rotate = true;
-		object->shader_type = NORMAL_SHADER;
-		object->localTransform.position = Vector3(i, 0, 0);
-		object->localTransform.rotation = Vector3(0, 0, 0);
-		object->identifier = -1;
-		object->isUpdated = true;
-		object->type = WoodenCube;
-		view->PushEnvironmentNode(object);
-	}
-	*/
+	Fire* f = new Fire(0, 0, 0, 1, 1);
+	f->lifeTime = 30;
+	view->PushEnvironmentNode(f);
 }
 
 

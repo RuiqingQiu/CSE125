@@ -171,7 +171,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 								EHillUpdate->x = stof(EventData[1]);
 								EHillUpdate->y = stof(EventData[2]);
 								EHillUpdate->z = stof(EventData[3]);
-								EHillUpdate->radius = stof(EventData[4]);
+								EHillUpdate->radius = stoi(EventData[4]);
 								EHillUpdate->event_type = TEventHillUpdate;
 								EHillUpdate->processed = false;
 

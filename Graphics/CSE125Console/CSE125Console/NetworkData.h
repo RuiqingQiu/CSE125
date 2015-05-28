@@ -23,7 +23,8 @@ enum PacketTypes {
 	TIMER = 13,
 	BUILD_REQUEST = 14,
 	INIT_BATTLE = 15,
-	SUICIDE = 16
+	SUICIDE = 16,
+	BOOST = 17,
 };
 
 struct CPacket {

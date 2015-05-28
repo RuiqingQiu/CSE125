@@ -128,7 +128,6 @@ GameInfoPacket* ClientGame::update()
 			//CHANGE BUILD MODE ONLY
 			Window::factory->buildmode->timer->updateTime(time);
 			////end GUI
-
 			break;
 		}
 		//client send build package if they havent done that, time's up

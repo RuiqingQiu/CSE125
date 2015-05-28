@@ -127,12 +127,39 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventCollisionHappen:{
 									   printf("collision event received\n");
 									   EventCollision * h = (EventCollision *)event;
-									   //particle
-									   Fire* f = new Fire(h->x, h->y, h->z, 1, 1);
-									   f->static_object = true;
-									   g_pCore->pGameView->PushEnvironmentNode(f);
-
-									   //Collision sound
+									   switch (h->collision_type){
+											//bullet player
+									   case 0:{
+												  Fire* f = new Fire(h->x, h->y, h->z, 1, 0);
+												  f->static_object = true;
+												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  break;
+									   }
+											//player player
+									   case 1:{
+												  Fire* f = new Fire(h->x, h->y, h->z, 1, 1);
+												  f->static_object = true;
+												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  break;
+									   }
+											//player wall
+									   case 2:{
+												  Fire* f = new Fire(h->x, h->y, h->z, 1, 2);
+												  f->static_object = true;
+												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  break;
+									   }
+											//bullet wall
+									   case 3:{
+												  Fire* f = new Fire(h->x, h->y, h->z, 1, 3);
+												  f->static_object = true;
+												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  break;
+									   }
+											//explorsion
+											case 4:
+												break; 
+									   }
 									   break;
 
 		}
@@ -148,17 +175,27 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		}
 		case TEventHillUpdate:{
 								 printf("hill update received\n");
-								 //
 								 EventHillUpdate * h = (EventHillUpdate *)event;
+								 /*
+								 Model3D* hill = Model3DFactory::generateObjectWithType(GlowingCube);
+								 hill->isUpdated = true;
+								 hill->shader_type = LIGHTS_SHADER;
+
+								 hill->localTransform.position = Vector3(h->x, h->y, h->z);
+								 g_pCore->pGameView->PushEnvironmentNode(hill);
+									*/
+								 //
+								 
 								 Fire* f = new Fire(h->x, h->y, h->z, 0, 2);
 								 f->static_object = true;
 								 f->lifeTime = 30;
-
+								 
 								 g_pCore->pGameView->PushEnvironmentNode(f);
 
 								 break;
 
 		}
+		//For displaying effect for user in the zone to receive money
 		case TEventPlayerHillUpdate:{
 							   printf("Event player hill update\n");
 							   //
