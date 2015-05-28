@@ -317,10 +317,12 @@ void buildView::keyPressFunc(unsigned char key, int x, int y) {
 	switch (key) {
 	case 8: //backsapce
 		//delete block
+		sound->playSelect();  // play the selection sound
 		removeNode();
 		break;
 	case 13: //enter
 		//add block
+		sound->playSelect(); // play the seletion sound 
 		addNode();
 		break;
 	}

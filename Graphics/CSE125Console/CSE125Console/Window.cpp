@@ -226,7 +226,7 @@ void Window::initialize(void)
 	object->type = FLOOR_SIMPLE;
 	factory->battlemode->PushEnvironmentNode(object);
 	*/
-	/*
+	
 	object = Model3DFactory::generateObjectWithType(STONEHENGE);
 	object->shader_type = NORMAL_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
@@ -236,7 +236,7 @@ void Window::initialize(void)
 	object->isUpdated = true;
 	object->type = STONEHENGE;
 	factory->battlemode->PushEnvironmentNode(object);
-	*/
+	
 	//gt->displayTest2(factory->battlemode);
 	//gt->displayTest3(factory->battlemode);
 	//gt->displayTest4(factory->battlemode);
@@ -360,22 +360,26 @@ void Window::displayCallback() {
 
 	// play the background music through out the whole game, may change with the view
 	if (factory->currentView == factory->menumode || factory->currentView == factory->defaultView){
-		cout << "enter main menu  " << endl;
+		//cout << "enter main menu  " << endl;
 		if (factory->menumode->playPressed){
-			cout << "entering loading " << endl;
+			//cout << "entering loading " << endl;
 			soundObject->playLoading();
 		}
 		else{
-			soundObject->playMusic();
+			soundObject->playOpening();
 		}
 	}
+
 	// if in build mode play build view background music
 	else if (factory->currentView == factory->buildmode){
-		cout << "enter build view  " << endl;
+		//cout << "enter build view  " << endl;
 		soundObject->playBuildViewBackground();
 	}
+	else if (factory->currentView == factory->battlemode){
+		//cout << "enter battle view " << endl;
+		soundObject->playMusic();
+	}
 
-	
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 

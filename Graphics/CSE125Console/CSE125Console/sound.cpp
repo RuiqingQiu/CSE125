@@ -55,6 +55,17 @@ Sound::Sound(){
 	loadingSound.play();
 	loadingSound.stop();
 
+	// this will be our game entry sound
+	tmp = path + "opening.wav";
+	if (!openingBuffer.loadFromFile(tmp))
+		cout << "ERROR in loading opening sound effect " << endl;
+	openingSound.setBuffer(openingBuffer);
+	openingSound.setLoop(true);
+	// need to play and then pause it
+	openingSound.play();
+	openingSound.stop();
+
+
 	// game background music
 	// music doesn't preload the data
 	if (!music.openFromFile("Payback.wav"))
@@ -81,6 +92,8 @@ void Sound::playMusic(){
 	if (music.getStatus() != sf::Sound::Playing){
 		music.play();
 		buildViewBackground.stop();
+		loadingSound.stop();
+		openingSound.stop();
 	}
 	// without this part still working, so comment out for now
 	/*
@@ -95,6 +108,8 @@ void Sound::playMusic(){
 void Sound::playBuildViewBackground(){
 	if (buildViewBackground.getStatus() != sf::Sound::Playing){
 		buildViewBackground.play();
+		openingSound.stop();
+		loadingSound.stop();
 		music.stop();
 	}
 }
@@ -151,6 +166,15 @@ void Sound::playLoading(){
 	cout << "play loading sound " << endl;
 	if (loadingSound.getStatus() == sf::Sound::Stopped){
 		music.pause();
+		openingSound.stop();
 		loadingSound.play();
+	}
+}
+
+// this function is to play the loading view sound
+void Sound::playOpening(){
+	cout << "play opening sound " << endl;
+	if (openingSound.getStatus() == sf::Sound::Stopped){
+		openingSound.play();
 	}
 }
