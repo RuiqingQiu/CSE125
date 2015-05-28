@@ -359,8 +359,22 @@ void Window::displayCallback() {
 	clock_t startTime = clock();
 	
 	// play the background music through out the whole game, may change with the view
-	soundObject->playMusic(); 
-
+	if (factory->currentView == factory->menumode || factory->currentView == factory->defaultView){
+		cout << "enter main menu  " << endl;
+		if (factory->menumode->playPressed){
+			cout << "entering loading " << endl;
+			soundObject->playLoading();
+		}
+		else{
+			soundObject->playMusic();
+		}
+	}
+	// if in build mode play build view background music
+	else if (factory->currentView == factory->buildmode){
+		cout << "enter build view  " << endl;
+		soundObject->playBuildViewBackground();
+	}
+	
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 

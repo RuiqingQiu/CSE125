@@ -16,6 +16,8 @@ public:
 	void playMusic();
 	void playSelect(); // play menu selection sound
 	void playGun(float,float,float); // play gun shot sound
+	void playBuildViewBackground();// play build view background music
+	void playLoading();
 
 private:
 	//Init server info here later
@@ -24,13 +26,16 @@ private:
 	sf::SoundBuffer explosionBuffer;
 	sf::SoundBuffer selectBuffer;
 	sf::SoundBuffer gunBuffer;
+	sf::SoundBuffer loadingBuffer;
 
 	sf::Sound explosionSound;
 	sf::Sound hammerSound;// lightweight obeject that plays loaded audio data from a sound buffer
 	sf::Sound selectSound;
 	sf::Sound gunSound;
+	sf::Sound loadingSound; // this is for the main menu loading
 
 	// music will play for the whole game, all other effects are sound
 	sf::Music music;// stream the data on the fly from the source file, play music that lasts several minites
+	sf::Music buildViewBackground; // background music for build view
 };
 #endif
