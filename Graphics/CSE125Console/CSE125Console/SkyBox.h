@@ -17,7 +17,7 @@ class SkyBox :
 	public GeoNode
 {
 public:
-	float size_of_texture_cube = 200;
+	float size_of_texture_cube = 500;
 	GLuint cubemapTexture;
 	SkyBox();
 	//pass in format: [path]/[skytexture name] do not pass in [_front.jpg] segment

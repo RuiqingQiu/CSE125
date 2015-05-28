@@ -852,7 +852,11 @@ std::string LoadObj(std::vector<shape_t> &shapes,
 
   bool ret = exportFaceGroupToShape(shape, vertexCache, v, vn, vt, faceGroup,
                                     material, name, true);
-  generateTangents(shape.mesh.positions, shape.mesh.normals, shape.mesh.indices, shape.mesh.texcoords, shape.mesh.tangent);
+  if (shape.mesh.normals.size() == 0 || shape.mesh.texcoords.size() == 0){
+  }
+  else{
+	  generateTangents(shape.mesh.positions, shape.mesh.normals, shape.mesh.indices, shape.mesh.texcoords, shape.mesh.tangent);
+  }
   /*
   for (int i = 0; i < shape.mesh.tangent.size(); i++){
 	              cout << "tangent are ";
