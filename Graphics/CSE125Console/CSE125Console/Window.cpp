@@ -360,7 +360,6 @@ void Window::displayCallback() {
 	
 	// play the background music through out the whole game, may change with the view
 	soundObject->playMusic(); 
-
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 

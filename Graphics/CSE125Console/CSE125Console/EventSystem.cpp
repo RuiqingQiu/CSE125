@@ -150,7 +150,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								 printf("hill update received\n");
 								 //
 								 EventHillUpdate * h = (EventHillUpdate *)event;
-								 Fire* f = new Fire(h->x, h->y, h->z, 1, 1);
+								 Fire* f = new Fire(h->x, h->y, h->z, 0, 2);
 								 f->static_object = true;
 								 f->lifeTime = 30;
 
@@ -169,9 +169,9 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								   if (node->identifier == h->playerid)
 								   {
 									   //show something
-									   Fire* f = new Fire(node->localTransform.position.x, node->localTransform.position.y + 4, node->localTransform.position.z, 1, 1);
+									   Fire* f = new Fire(node->localTransform.position.x, node->localTransform.position.y + 4, node->localTransform.position.z, 0, 3);
 									   f->static_object = true;
-									   f->lifeTime = 1;
+									   f->lifeTime = 5;
 									   g_pCore->pGameView->PushEnvironmentNode(f);
 								   }
 							   }
