@@ -57,7 +57,6 @@ void StandardGameInput::VProcessMouse(int x, int y)
 
 void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 {
-
 	if (key == 27){
 		exit(0);
 	}

@@ -26,13 +26,16 @@ public:
 
 	cooldownDisplay * cooldown;
 	bool damageTaken;
+	bool healing;
 	bool isDead;
 
 private:
 	healthBar * healthDisplay;
 	background * takeDamage;
+	background * healDmg;
 	guiItem * onDeath;
 
-	float currDuration = 0;
+	float dmgDuration = 0;
+	float healDuration = 0;
 	float maxDuration = 3;
 };
