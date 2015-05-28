@@ -243,27 +243,32 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 			this->normal.push_back(shapes[i].mesh.normals[3 * i3 + 0]);
 			this->normal.push_back(shapes[i].mesh.normals[3 * i3 + 1]);
 			this->normal.push_back(shapes[i].mesh.normals[3 * i3 + 2]);
+			if (shapes[i].mesh.texcoords.size() != 0){
+				this->texture.push_back(shapes[i].mesh.texcoords[2 * i1 + 0]);
+				this->texture.push_back(shapes[i].mesh.texcoords[2 * i1 + 1]);
 
-			this->texture.push_back(shapes[i].mesh.texcoords[2 * i1 + 0]);
-			this->texture.push_back(shapes[i].mesh.texcoords[2 * i1 + 1]);
+				this->texture.push_back(shapes[i].mesh.texcoords[2 * i2 + 0]);
+				this->texture.push_back(shapes[i].mesh.texcoords[2 * i2 + 1]);
 
-			this->texture.push_back(shapes[i].mesh.texcoords[2 * i2 + 0]);
-			this->texture.push_back(shapes[i].mesh.texcoords[2 * i2 + 1]);
+				this->texture.push_back(shapes[i].mesh.texcoords[2 * i3 + 0]);
+				this->texture.push_back(shapes[i].mesh.texcoords[2 * i3 + 1]);
+			}
+			if (shapes[i].mesh.tangent.size() == 0){
 
-			this->texture.push_back(shapes[i].mesh.texcoords[2 * i3 + 0]);
-			this->texture.push_back(shapes[i].mesh.texcoords[2 * i3 + 1]);
+			}
+			else{
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i1].x));
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i1].y));
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i1].z));
 
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i1].x));
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i1].y));
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i1].z));
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i2].x));
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i2].y));
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i2].z));
 
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i2].x));
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i2].y));
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i2].z));
-
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i3].x));
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i3].y));
-			this->tangent.push_back(float(shapes[i].mesh.tangent[i3].z));
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i3].x));
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i3].y));
+				this->tangent.push_back(float(shapes[i].mesh.tangent[i3].z));
+			}
 		}
 
 	}

@@ -47,17 +47,17 @@ Model3DFactory::Model3DFactory()
 	//render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDINNER, new RenderObject("Assets/BattleFieldInner/inner.obj", "Assets/BattleFieldInner/tex.png", "Assets/BattleFieldInner/normals.png", "Assets/BattleFieldInner/gloss.png", "Assets/BattleFieldInner/metallic.png")));
 	//render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDOUTER, new RenderObject("Assets/BattleFieldOuter/plane.obj", "Assets/BattleFieldOuter/tex.png", "Assets/BattleFieldOuter/normals.png", "Assets/BattleFieldOuter/gloss.png", "Assets/BattleFieldOuter/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(BULLET, new RenderObject("Assets/Bullet/bullet.obj", "Assets/Bullet/tex.png", "Assets/Bullet/normals.png", "Assets/Bullet/gloss.png", "Assets/Bullet/metallic.png")));
-	
+	*/
 	//Newly added 5/26/15
-	//render_obj_map.insert(std::pair<int, RenderObject*>(BORDER, new RenderObject("Assets/Border/border.obj", "Assets/Border/tex.png", "Assets/Border/normals.png", "Assets/Border/gloss.png", "Assets/Border/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(BORDER, new RenderObject("Assets/Border/border.obj", "Assets/Border/tex.png", "Assets/Border/normals.png", "Assets/Border/gloss.png", "Assets/Border/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(CHESSBOARD, new RenderObject("Assets/Chessboard/chessboard.obj", "Assets/Chessboard/tex.png", "Assets/Chessboard/normals.png", "Assets/Chessboard/gloss.png", "Assets/Chessboard/metallic.png")));
 	//render_obj_map.insert(std::pair<int, RenderObject*>(FLOOR_COMPLEX, new RenderObject("Assets/FloorComplex/floor2.obj", "Assets/FloorComplex/tex.png", "Assets/FloorComplex/normals.png", "Assets/FloorComplex/gloss.png", "Assets/FloorComplex/metallic.png")));
 	//render_obj_map.insert(std::pair<int, RenderObject*>(FLOOR_SIMPLE, new RenderObject("Assets/FloorSimple/floor1.obj", "Assets/FloorSimple/tex.png", "Assets/FloorSimple/normals.png", "Assets/FloorSimple/gloss.png", "Assets/FloorSimple/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(STONEHENGE, new RenderObject("Assets/Stonehenge/sandhenge.obj", "Assets/Stonehenge/tex.png", "Assets/Stonehenge/normals.png", "Assets/Stonehenge/gloss.png", "Assets/Stonehenge/metallic.png")));
-
+	
 	//Building is gone
 	//render_obj_map.insert(std::pair<int, RenderObject*>(BUILDING, new RenderObject("Assets/Building/sandruins.obj", "Assets/Building/tex.png", "Assets/Building/normals.png", "Assets/Building/gloss.png", "Assets/Building/metallic.png")));
-	*/
+	
 	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(LEGO, new RenderObject("Assets/legoblock/legoblock.obj", "Assets/legoblock/tex.png", "Assets/legoblock/normals.png", "Assets/legoblock/gloss.png", "Assets/legoblock/metallic.png")));
 	

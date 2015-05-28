@@ -283,19 +283,33 @@ void Model3D::VOnDraw(){
 			float *p = &render_obj->vertex[0];
 			float *n = &render_obj->normal[0];
 			float *t = &render_obj->texture[0];
-			float *tan = &render_obj->tangent[0];
-			glEnableClientState(GL_VERTEX_ARRAY);
-			glEnableClientState(GL_NORMAL_ARRAY);
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
-			glVertexPointer(3, GL_FLOAT, 0, p);
-			glTexCoordPointer(2, GL_FLOAT, 0, t);
-			glNormalPointer(GL_FLOAT, 0, n);
+			if (render_obj->tangent.size() == 0){
+				glEnableClientState(GL_VERTEX_ARRAY);
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+				glVertexPointer(3, GL_FLOAT, 0, p);
+				glTexCoordPointer(2, GL_FLOAT, 0, t);
+				glNormalPointer(GL_FLOAT, 0, n);
+				glDrawArrays(GL_TRIANGLES, 0, render_obj->vertex.size() / 3);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+				glDisableClientState(GL_NORMAL_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+			}
+			else{
+				float *tan = &render_obj->tangent[0];
+				glEnableClientState(GL_VERTEX_ARRAY);
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+				glVertexPointer(3, GL_FLOAT, 0, p);
+				glTexCoordPointer(2, GL_FLOAT, 0, t);
+				glNormalPointer(GL_FLOAT, 0, n);
 
-			glVertexAttribPointer(vt, 3, GL_FLOAT, GL_FALSE, 0, tan);
-			glDrawArrays(GL_TRIANGLES, 0, render_obj->vertex.size() / 3);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
-			glDisableClientState(GL_NORMAL_ARRAY);
-			glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+				glVertexAttribPointer(vt, 3, GL_FLOAT, GL_FALSE, 0, tan);
+				glDrawArrays(GL_TRIANGLES, 0, render_obj->vertex.size() / 3);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+				glDisableClientState(GL_NORMAL_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+			}
 			
 		}
 	}
