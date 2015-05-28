@@ -82,7 +82,11 @@ void SkyBox::VOnClientUpdate(GameInfoPacket* pData){
 }
 
 void SkyBox::VOnDraw(){
+	glPushMatrix();
+	localTransform.position.y = 100;
+	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
 
+	//glLoadIdentity();
 	glDisable(GL_CULL_FACE);
 	Window::shader_system->BindShader(SKYBOX_SHADER);
 	glBegin(GL_QUADS);
@@ -134,18 +138,17 @@ void SkyBox::VOnDraw(){
 
 	glEnd();
 
-	/*
+	
 	glBegin(GL_QUADS);
 
 	glNormal3f(0.0, -1.0, 0.0);
 
-	glVertex3f(-size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube); //front up right
-	glVertex3f(size_of_texture_cube, -size_of_texture_cube, size_of_texture_cube);  //connect to front left
-	glVertex3f(size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube); //connect to front up right
-	glVertex3f(-size_of_texture_cube, -size_of_texture_cube, -size_of_texture_cube); //connect to front up left
+	glVertex3f(-size_of_texture_cube, -localTransform.position.y-1, size_of_texture_cube); //front up right
+	glVertex3f(size_of_texture_cube, -localTransform.position.y-1, size_of_texture_cube);  //connect to front left
+	glVertex3f(size_of_texture_cube, -localTransform.position.y-1, -size_of_texture_cube); //connect to front up right
+	glVertex3f(-size_of_texture_cube, -localTransform.position.y-1, -size_of_texture_cube); //connect to front up left
 
 	glEnd();
-	*/
 	glPopMatrix();
 
 	Window::shader_system->UnbindShader();
@@ -167,6 +170,7 @@ bool SkyBox::initSkyBox()
 	faces.push_back("skyboxes/alpine_back.jpg");
 	faces.push_back("skyboxes/alpine_front.jpg");
 	*/
+
 	string concat = skyBoxName + "_left.jpg";
 	faces.push_back(concat);
 	cout << faces[0] << endl;
@@ -174,7 +178,7 @@ bool SkyBox::initSkyBox()
 	faces.push_back(concat);
 	concat = skyBoxName + "_top.jpg";
 	faces.push_back(concat);
-	concat = skyBoxName + "_top.jpg";
+	concat = skyBoxName + "_down.jpg";
 	faces.push_back(concat);
 	concat = skyBoxName + "_back.jpg";
 	faces.push_back(concat);

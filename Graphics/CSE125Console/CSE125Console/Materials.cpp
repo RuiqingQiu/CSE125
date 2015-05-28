@@ -184,8 +184,8 @@ void Materials::setMaterial_Property(int MaterialType){
 		case Common:
 			material_ambient = Vector3(0.0, 0.0, 0.0);
 			material_diffuse = Vector3(0.64, 0.64, 0.64);
-			material_specular = Vector3(1.0, 1.0, 1.0);
-			Shininess = 12.8;
+			material_specular = Vector3(0.4, 0.4, 0.4);
+			Shininess = 8;
 			property_set = true;
 			break;
 		default:

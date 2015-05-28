@@ -139,6 +139,25 @@ void Model3D::VOnDraw(){
 				localTransform.GetGLMatrix4().getFloatPointer());
 
 		
+					Matrix4 ret;
+					ret.identity();
+
+					Matrix4 m4_rotx;
+					m4_rotx.makeRotateX(Window::light_system->camera_rot.x);
+
+					Matrix4 m4_roty;
+					m4_roty.makeRotateY(Window::light_system->camera_rot.y);
+
+					Matrix4 m4_rotz;
+					m4_rotz.makeRotateZ(Window::light_system->camera_rot.z);
+
+					Matrix4 m4_rot;
+					m4_rot = m4_rotz*m4_roty*m4_rotx;
+
+					ret = m4_rot;
+
+			glUniformMatrix4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "CamRotMatrix"), 1, true,
+				m4_rot.getFloatPointer());
 
 			if (this->shader_type == MATERIAL_SHADER){
 				float camera_offset[4] = { Window::light_system->camera_offset.x, Window::light_system->camera_offset.y, Window::light_system->camera_offset.z, 0.0 };
@@ -163,7 +182,6 @@ void Model3D::VOnDraw(){
 				float camera_offset[4] = { Window::light_system->camera_offset.x, Window::light_system->camera_offset.y, Window::light_system->camera_offset.z, 0.0 };
 				glUniform4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_offset"), 1, camera_offset);
 				float camera_rot[3] = { Window::light_system->camera_rot.x, Window::light_system->camera_rot.y, Window::light_system->camera_rot.z};
-
 				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_rot"), 1, camera_rot);
 
 				float Ka[3] = { float(this->material.material_ambient.x), float(this->material.material_ambient.y), float(this->material.material_ambient.z) };
@@ -290,19 +308,33 @@ void Model3D::VOnDraw(){
 			float *p = &render_obj->vertex[0];
 			float *n = &render_obj->normal[0];
 			float *t = &render_obj->texture[0];
-			float *tan = &render_obj->tangent[0];
-			glEnableClientState(GL_VERTEX_ARRAY);
-			glEnableClientState(GL_NORMAL_ARRAY);
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
-			glVertexPointer(3, GL_FLOAT, 0, p);
-			glTexCoordPointer(2, GL_FLOAT, 0, t);
-			glNormalPointer(GL_FLOAT, 0, n);
+			if (render_obj->tangent.size() == 0){
+				glEnableClientState(GL_VERTEX_ARRAY);
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+				glVertexPointer(3, GL_FLOAT, 0, p);
+				glTexCoordPointer(2, GL_FLOAT, 0, t);
+				glNormalPointer(GL_FLOAT, 0, n);
+				glDrawArrays(GL_TRIANGLES, 0, render_obj->vertex.size() / 3);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+				glDisableClientState(GL_NORMAL_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+			}
+			else{
+				float *tan = &render_obj->tangent[0];
+				glEnableClientState(GL_VERTEX_ARRAY);
+				glEnableClientState(GL_NORMAL_ARRAY);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+				glVertexPointer(3, GL_FLOAT, 0, p);
+				glTexCoordPointer(2, GL_FLOAT, 0, t);
+				glNormalPointer(GL_FLOAT, 0, n);
 
-			glVertexAttribPointer(vt, 3, GL_FLOAT, GL_FALSE, 0, tan);
-			glDrawArrays(GL_TRIANGLES, 0, render_obj->vertex.size() / 3);
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
-			glDisableClientState(GL_NORMAL_ARRAY);
-			glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+				glVertexAttribPointer(vt, 3, GL_FLOAT, GL_FALSE, 0, tan);
+				glDrawArrays(GL_TRIANGLES, 0, render_obj->vertex.size() / 3);
+				glDisableClientState(GL_TEXTURE_COORD_ARRAY);//use texture coordinate
+				glDisableClientState(GL_NORMAL_ARRAY);
+				glDisableClientState(GL_VERTEX_ARRAY);  // disable vertex arrays
+			}
 			
 		}
 	}

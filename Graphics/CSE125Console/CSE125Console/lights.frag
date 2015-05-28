@@ -22,7 +22,7 @@ uniform vec3 Ks;
 uniform float Shininess;
 varying mat3 toObjectLocal;
 
-#define MAX_LIGHTS 6 
+#define MAX_LIGHTS 4 
 
 struct Light
 {
@@ -36,6 +36,50 @@ uniform Light lights[MAX_LIGHTS];
 uniform vec4 camera_offset;
 uniform vec3 camera_rot;
 uniform samplerCube cubeMap;
+
+
+uniform mat4 CamRotMatrix;
+
+
+mat4 skyred= mat4(
+ 0.187801 ,-0.034054, -0.031252 ,-0.028169 ,
+
+-0.034054 ,-0.187801 , 0.057621, -0.346192 ,
+
+-0.031252 , 0.057621 , 0.082221 , 0.141670 ,
+
+-0.028169 ,-0.346192,  0.141670 , 2.068047 
+);
+
+
+mat4 skygreen= mat4(
+0.171103, -0.041203 ,-0.030414 ,-0.052998 ,
+
+-0.041203, -0.171103 , 0.099270 ,-0.380704 ,
+
+-0.030414,  0.099270 , 0.096393 , 0.095560, 
+
+-0.052998, -0.380704 , 0.095560 , 2.170781 
+);
+
+mat4 skyblue= mat4(
+ 0.150290 ,-0.034794 ,-0.018080 ,-0.121960 ,
+
+-0.034794, -0.150290 , 0.125244 ,-0.441708 ,
+
+-0.018080,  0.125244 , 0.073867 , 0.050861, 
+
+-0.121960 ,-0.441708 , 0.050861  ,2.283642 
+);
+
+float irradmat (mat4 M, vec3 aaa)
+{
+    vec4 p = vec4( aaa.xyz, 1 );
+	//mat4 M2 = M;
+	vec4 temp = p*M;
+	return dot(p,temp);
+}
+
 
 mat4 rotationMatrix(vec3 axis, float angle)
 {
@@ -60,22 +104,18 @@ vec4 rotationGO(vec4 reflectd4 , mat4 rx, mat4 ry, mat4 rz)
 
 vec3 phongModel(vec3 normal, vec3 diffR){
 
-	mat4 rotationx = rotationMatrix(vec3(1,0,0), -camera_rot.x*0.0174532925);
-	mat4 rotationy = rotationMatrix(vec3(0,1,0), -camera_rot.y*0.0174532925);
-	mat4 rotationz = rotationMatrix(vec3(0,0,1), -camera_rot.z*0.0174532925);
-
-	lights[0].position = rotationGO(camera_offset + lights[0].position , rotationx,rotationy, rotationz);
-	lights[1].position = rotationGO(camera_offset + lights[1].position , rotationx,rotationy, rotationz);
-	lights[2].position = rotationGO(camera_offset + lights[2].position , rotationx,rotationy, rotationz);
-	lights[3].position = rotationGO(camera_offset + lights[3].position , rotationx,rotationy, rotationz);
-	lights[4].position = rotationGO(camera_offset + lights[4].position , rotationx,rotationy, rotationz);
-	lights[5].position = rotationGO(camera_offset + lights[5].position , rotationx,rotationy, rotationz);
+	lights[0].position = CamRotMatrix*(camera_offset + lights[0].position);
+	lights[1].position = CamRotMatrix*(camera_offset + lights[1].position);
+	lights[2].position = CamRotMatrix*(camera_offset + lights[2].position);
+	lights[3].position = CamRotMatrix*(camera_offset + lights[3].position);
+	//lights[4].position = CamRotMatrix*(camera_offset + lights[4].position);
+	//lights[5].position = CamRotMatrix*(camera_offset + lights[5].position);
 	
 	
 	vec3 ambAndDiff = lights[0].La * Ka;
 	vec3 spec = vec3(0.0);
 	for(int i = 0; i < MAX_LIGHTS; i++){
-		float attenuation = 1.0 / (1.0 + 0.0 * length(lights[i].position - Position) + 0.001 * pow(length(lights[i].position - Position), 2));
+		float attenuation =1.0 /( 1.0 + 0.001* pow(length(lights[i].position - Position), 2) );
 		vec3 LightDir = normalize(toObjectLocal * (lights[i].position - Position.xyz));
 		vec3 ViewDir = toObjectLocal * normalize(Position.xyz);
 		vec3 r = reflect(-LightDir, normal);
@@ -101,20 +141,24 @@ void main() {
 	vec3 reflectdir2 = reflect(ViewDir,normal);
 	vec3 reflectd = inverse(toObjectLocal)*reflectdir2; 
 
-	//camera_rot = vec3(0, 0, 90);
-	mat4 rotationx = rotationMatrix(vec3(1,0,0), camera_rot.x*0.0174532925);
-	mat4 rotationy = rotationMatrix(vec3(0,1,0), camera_rot.y*0.0174532925);
-	mat4 rotationz = rotationMatrix(vec3(0,0,1), camera_rot.z*0.0174532925);
-
 	vec4 reflectd4 = vec4(reflectd.xyz,1.0);
-	vec4 reflectd4z = rotationz*reflectd4;
-	vec4 reflectd4y = rotationy*reflectd4z;
-	vec4 reflectd4x = rotationx*reflectd4y;
+	vec4 reflectd4x = inverse(CamRotMatrix)*reflectd4;
 
 	vec4 cubeMapColor = textureCube(cubeMap, reflectd4x);
 
 
 
+	 float albedo = 0.1f;
 
-    gl_FragColor = cubeMapColor*0.0 + shadeColor;
-	}
+	vec3 n = -normalize(toObjectLocal*normal.xyz);
+	  
+    vec3 shadeColor2 = vec3 (
+
+	   albedo*abs(irradmat (skyred,  n)),
+	   albedo*abs(irradmat (skygreen, n)), 
+	   albedo*abs(irradmat (skyblue,  n))
+	   ) ;
+	//shadeColor2 = normalize(shadeColor2);
+
+    gl_FragColor = vec4(shadeColor2,1) + cubeMapColor*0.02*vec4(Kd.xyz,1) + shadeColor;
+}

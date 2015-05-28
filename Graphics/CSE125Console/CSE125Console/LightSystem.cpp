@@ -28,12 +28,12 @@ void LightSystem::setCameraRot(float x, float y, float z){
 }
 
 void LightSystem::initLights(){
-	Light* l1 = new Light(0.0, 10.0, 0.0);
-	Light* l2 = new Light(40.0, 10.0, 0.0);
-	Light* l3 = new Light(-40.0, 10.0, 0.0);
-	Light* l4 = new Light(0.0, 10.0, 40.0);
-	Light* l5 = new Light(0.0, 10.0, -40.0);
-	Light* l6 = new Light(28.0, 10.0, 28.0);
+	Light* l1 = new Light(0.0, 15.0, 0.0);
+	Light* l2 = new Light(40.0, 15.0, 0.0);
+	Light* l3 = new Light(-40.0, 15.0, 0.0);
+	Light* l4 = new Light(0.0, 15.0, 40.0);
+	//Light* l5 = new Light(0.0, 15.0, -40.0);
+	//Light* l6 = new Light(28.0, 15.0, 28.0);
 	//Light* l7 = new Light(-20.0, 20.0, 20.0);
 	//Light* l8 = new Light(20.0, 20.0, 20.0);
 	//Light* l9 = new Light(-20.0, 20.0, -20.0);
@@ -43,16 +43,16 @@ void LightSystem::initLights(){
 	l2->Ld = Vector3(0.8, 0.8, 0.8);
 	l3->Ld = Vector3(0.8, 0.8, 0.8);
 	l4->Ld = Vector3(0.8, 0.8, 0.8);
-	l5->Ld = Vector3(0.8, 0.8, 0.8);
-	l6->Ld = Vector3(0.8, 0.8, 0.8);
+	//l5->Ld = Vector3(0.8, 0.8, 0.8);
+	//l6->Ld = Vector3(0.8, 0.8, 0.8);
 
 	lights.clear();
 	lights.push_back(l1);
 	lights.push_back(l2);
 	lights.push_back(l3);
 	lights.push_back(l4);
-	lights.push_back(l5);
-	lights.push_back(l6);
+	//lights.push_back(l5);
+	//lights.push_back(l6);
 	//lights.push_back(l7);
 	//lights.push_back(l8);
 	//lights.push_back(l9);
@@ -69,7 +69,7 @@ void LightSystem::renderLights(GameView* view){
 
 //This is for passing all the attribute of a light into the shader
 void LightSystem::passUniform(GLuint program){
-	if (lights.size() == 6){
+	if (lights.size() == 4){
 		for (int i = 0; i < lights.size(); i++){
 			
 			float red = 0.929;
@@ -114,10 +114,10 @@ void LightSystem::passUniform(GLuint program){
 		glUniform4fv(glGetUniformLocation(program, "lights[2].position"), 1, l3_pos);
 		float l4_pos[4] = { Window::light_system->lights[3]->localTransform.position.x, Window::light_system->lights[3]->localTransform.position.y, Window::light_system->lights[3]->localTransform.position.z, 1 };
 		glUniform4fv(glGetUniformLocation(program, "lights[3].position"), 1, l4_pos);
-		float l5_pos[4] = { Window::light_system->lights[4]->localTransform.position.x, Window::light_system->lights[4]->localTransform.position.y, Window::light_system->lights[4]->localTransform.position.z, 1 };
-		glUniform4fv(glGetUniformLocation(program, "lights[4].position"), 1, l5_pos);
-		float l6_pos[4] = { Window::light_system->lights[5]->localTransform.position.x, Window::light_system->lights[5]->localTransform.position.y, Window::light_system->lights[5]->localTransform.position.z, 1 };
-		glUniform4fv(glGetUniformLocation(program, "lights[5].position"), 1, l6_pos);
+		//float l5_pos[4] = { Window::light_system->lights[4]->localTransform.position.x, Window::light_system->lights[4]->localTransform.position.y, Window::light_system->lights[4]->localTransform.position.z, 1 };
+		//glUniform4fv(glGetUniformLocation(program, "lights[4].position"), 1, l5_pos);
+		//float l6_pos[4] = { Window::light_system->lights[5]->localTransform.position.x, Window::light_system->lights[5]->localTransform.position.y, Window::light_system->lights[5]->localTransform.position.z, 1 };
+		//glUniform4fv(glGetUniformLocation(program, "lights[5].position"), 1, l6_pos);
 
 		float l1_ld[3] = { Window::light_system->lights[0]->Ld.x, Window::light_system->lights[0]->Ld.y, Window::light_system->lights[0]->Ld.z };
 		glUniform3fv(glGetUniformLocation(program, "lights[0].Ld"), 1, l1_ld);
@@ -147,6 +147,7 @@ void LightSystem::passUniform(GLuint program){
 		float l4_ls[3] = { Window::light_system->lights[3]->Ls.x, Window::light_system->lights[3]->Ls.y, Window::light_system->lights[3]->Ls.z };
 		glUniform3fv(glGetUniformLocation(program, "lights[3].Ls"), 1, l4_ls);
 
+		/*
 		float l5_ld[3] = { Window::light_system->lights[4]->Ld.x, Window::light_system->lights[4]->Ld.y, Window::light_system->lights[4]->Ld.z };
 		glUniform3fv(glGetUniformLocation(program, "lights[4].Ld"), 1, l5_ld);
 		float l5_la[3] = { Window::light_system->lights[4]->La.x, Window::light_system->lights[4]->La.y, Window::light_system->lights[4]->La.z };
@@ -160,6 +161,7 @@ void LightSystem::passUniform(GLuint program){
 		glUniform3fv(glGetUniformLocation(program, "lights[5].La"), 1, l6_la);
 		float l6_ls[3] = { Window::light_system->lights[5]->Ls.x, Window::light_system->lights[5]->Ls.y, Window::light_system->lights[5]->Ls.z };
 		glUniform3fv(glGetUniformLocation(program, "lights[5].Ls"), 1, l6_ls);
+		*/
 	}
 }
 

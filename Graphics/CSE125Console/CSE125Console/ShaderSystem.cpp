@@ -77,7 +77,7 @@ GLhandleARB loadShaderFromFile(char* filename, unsigned int type)
 
 ShaderSystem::ShaderSystem()
 {
-	loadShaders("better.vert", "better.frag");
+	loadShaders("lights.vert", "lights.frag");
 	loadShaders("skybox.vert", "skybox.frag");
 	loadShaders("reflect.vert", "reflect.frag");
 	loadShaders("refract.vert", "refract.frag");
@@ -88,6 +88,8 @@ ShaderSystem::ShaderSystem()
 	loadShaders("battlefield.vert", "battlefield.frag");
 	loadShaders("material.vert", "material.frag");
 	loadShaders("lights.vert", "lights.frag");
+
+//	loadShaders("better.vert", "better.frag");
 }
 
 

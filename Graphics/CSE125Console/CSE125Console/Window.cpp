@@ -197,7 +197,7 @@ void Window::initialize(void)
 	factory->battlemode->PushEnvironmentNode(object);
 	
 	object = Model3DFactory::generateObjectWithType(LEGO);
-	object->shader_type = BATTLEFIELD_SHADER;
+	object->shader_type = REGULAR_SHADER;
 	object->localTransform.position = Vector3(0, 2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -205,7 +205,29 @@ void Window::initialize(void)
 	object->isUpdated = true;
 	object->type = LEGO;
 	factory->battlemode->PushEnvironmentNode(object);
+
+	/*
+	object = Model3DFactory::generateObjectWithType(FLOOR_SIMPLE);
+	object->shader_type = BATTLEFIELD_SHADER;
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = FLOOR_SIMPLE;
+	factory->battlemode->PushEnvironmentNode(object);
+	*/
 	
+	object = Model3DFactory::generateObjectWithType(STONEHENGE);
+	object->shader_type = REGULAR_SHADER;
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = STONEHENGE;
+	factory->battlemode->PushEnvironmentNode(object);
+
 	gt->displayTest6(factory->battlemode);
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
@@ -325,7 +347,6 @@ void Window::displayCallback() {
 	
 	// play the background music through out the whole game, may change with the view
 	soundObject->playMusic(); 
-
 	//object->localTransform.rotation.y = counter;
 	//Manager get packet	
 
