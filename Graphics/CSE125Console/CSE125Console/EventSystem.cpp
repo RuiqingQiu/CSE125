@@ -97,7 +97,8 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									  }
 								  }
 
-								  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank);
+								  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank, s->gold[myID]);
+								  Window::factory->buildmode->money = s->gold[myID];
 								  /////// end GUI
 
 								  break;
