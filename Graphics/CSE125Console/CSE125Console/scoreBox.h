@@ -19,7 +19,7 @@ public:
 	void draw();
 	void rePosition(int x, int y, int w, int h);
 
-	void updateScore(int d, int h, int r);
+	void updateScore(int d, int h, int r, int m);
 	int getDeaths();
 	int getTakedowns();
 	int getRank();
@@ -35,6 +35,7 @@ private:
 	int deaths;
 	int hits;
 	int rank;
+	int money;
 
 	void createNumbers();
 
