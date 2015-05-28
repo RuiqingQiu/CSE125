@@ -95,14 +95,15 @@ void Camera::UpdateCamera()
 	Vector3 direction = Vector3(direction_temp.get_x(), direction_temp.get_y(), direction_temp.get_z());
 	//direction.y = 0;
 	direction.normalize();
-	float distanceToPlayer = 10;
+	float distanceToPlayer = 5;
 	Vector3* newposition;
 	Vector3* newrotation;
 	if (mode == 0){
 		newposition = new Vector3(FollowingTarget->localTransform.position.x - direction.x*distanceToPlayer, FollowingTarget->localTransform.position.y - direction.y*distanceToPlayer + 3, FollowingTarget->localTransform.position.z - direction.z*distanceToPlayer);
-		newrotation = new Vector3(FollowingTarget->localTransform.rotation.x, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);//FollowingTarget->localTransform.rotation.z);
+		newrotation = new Vector3(FollowingTarget->localTransform.rotation.x - 10, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);//FollowingTarget->localTransform.rotation.z);
 	}
 	else{
+		//first person view
 		newposition = new Vector3(FollowingTarget->localTransform.position.x + direction.x*3, FollowingTarget->localTransform.position.y + direction.y*3, FollowingTarget->localTransform.position.z + direction.z*3);
 		newrotation = new Vector3(FollowingTarget->localTransform.rotation.x, FollowingTarget->localTransform.rotation.y, FollowingTarget->localTransform.rotation.z);//FollowingTarget->localTransform.rotation.z);
 	}

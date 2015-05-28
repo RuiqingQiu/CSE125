@@ -14,9 +14,11 @@ public:
 	int num_of_lights = 6;
 	int counter = 0;
 	Vector3 camera_offset;
+	Vector3 camera_rot;
 	vector<Light*> lights;
 	void addLight(Light*);
 	void setCameraOffset(float x, float y, float z);
+	void setCameraRot(float x, float y, float z);
 
 	void initLights();
 	void renderLights(GameView* view);

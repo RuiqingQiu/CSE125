@@ -52,6 +52,7 @@ void main() {
     vec4 normal = 2.0 * texture2D(norm, TexCoords) - 1.0;
     vec4 texColor = texture2D(tex, TexCoords);
     vec4 shadeColor = vec4(phongModel(normal.xyz, texColor.rgb), 1.0);
+
     vec4 cubeMapColor = textureCube(cubeMap, ReflectDir);
     gl_FragColor = mix(shadeColor, cubeMapColor, ReflectFactor);
 }

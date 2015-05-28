@@ -205,42 +205,7 @@ void Window::initialize(void)
 	object->isUpdated = true;
 	object->type = LEGO;
 	factory->battlemode->PushEnvironmentNode(object);
-	/* models are not correct yet
-	object = Model3DFactory::generateObjectWithType(FLOOR_COMPLEX);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = FLOOR_COMPLEX;
-	factory->battlemode->PushEnvironmentNode(object);
 	
-	object = Model3DFactory::generateObjectWithType(FLOOR_SIMPLE);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = FLOOR_SIMPLE;
-	factory->battlemode->PushEnvironmentNode(object);
-	*/
-	/*
-	object = Model3DFactory::generateObjectWithType(STONEHENGE);
-	object->shader_type = NORMAL_SHADER;
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = STONEHENGE;
-	factory->battlemode->PushEnvironmentNode(object);
-	*/
-	//gt->displayTest2(factory->battlemode);
-	//gt->displayTest3(factory->battlemode);
-	//gt->displayTest4(factory->battlemode);
-	//gt->displayTest5(factory->battlemode);
 	gt->displayTest6(factory->battlemode);
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
@@ -258,7 +223,7 @@ void Window::initialize(void)
 	light_system->initLights();
 	light_system->renderLights(factory->battlemode);
 
-
+	factory->battlemode->pViewCamera->FollowingTarget = object;
 	//connect to server
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.92.217");

@@ -143,6 +143,9 @@ void Model3D::VOnDraw(){
 			if (this->shader_type == MATERIAL_SHADER){
 				float camera_offset[4] = { Window::light_system->camera_offset.x, Window::light_system->camera_offset.y, Window::light_system->camera_offset.z, 0.0 };
 				glUniform4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_offset"), 1, camera_offset);
+				float camera_rot[3] = { Window::light_system->camera_rot.x, Window::light_system->camera_rot.y, Window::light_system->camera_rot.z };
+				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_rot"), 1, camera_rot);
+
 				float Ka[3] = { float(this->material.material_ambient.x), float(this->material.material_ambient.y), float(this->material.material_ambient.z) };
 				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Ka"), 1, Ka);
 				float Kd[3] = { float(this->material.material_diffuse.x), float(this->material.material_diffuse.y), float(this->material.material_diffuse.z) };
@@ -159,6 +162,10 @@ void Model3D::VOnDraw(){
 			else{
 				float camera_offset[4] = { Window::light_system->camera_offset.x, Window::light_system->camera_offset.y, Window::light_system->camera_offset.z, 0.0 };
 				glUniform4fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_offset"), 1, camera_offset);
+				float camera_rot[3] = { Window::light_system->camera_rot.x, Window::light_system->camera_rot.y, Window::light_system->camera_rot.z};
+
+				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "camera_rot"), 1, camera_rot);
+
 				float Ka[3] = { float(this->material.material_ambient.x), float(this->material.material_ambient.y), float(this->material.material_ambient.z) };
 				glUniform3fv(glGetUniformLocation(Window::shader_system->shader_ids[shader_type], "Ka"), 1, Ka);
 				float Kd[3] = { float(this->material.material_diffuse.x), float(this->material.material_diffuse.y), float(this->material.material_diffuse.z) };
