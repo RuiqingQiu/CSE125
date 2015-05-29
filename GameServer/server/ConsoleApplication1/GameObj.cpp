@@ -289,6 +289,14 @@ void GameObj::setBlockType(int bType)
 				 speedMultiplier = 7;
 						  break;
 	}
+	case Tire:
+	{
+					std::cout << " in tire alt" << std::endl;
+					_isWheel = 1;
+					_blockType = AltTire;
+					speedMultiplier = 7;
+					break;
+	}
 	case TronWheel:
 	{
 					 _isWheel = 1;
@@ -362,6 +370,7 @@ void GameObj::setBlockType(int bType)
 
 	default:{
 		std::cout << "WRONG BLOCK TYPE " << bType << std::endl;
+
 		_mass = 10;
 		_health = 200;
 		_collisionType = C_ROBOT_PARTS;

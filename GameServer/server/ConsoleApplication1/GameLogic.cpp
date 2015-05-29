@@ -863,8 +863,8 @@ void GameLogic::postDeathLogic(Robot* r)
 		//cout << "-----" << endl;
 		vector<GameObj*> parts = r->getParts();
 		vector<GameObj*>::iterator it;
-		r->setId(1000000  + counter);
-		counter+=10;
+		r->setId(6900000  + counter);
+		counter +=10;
 		for (it = parts.begin(); it != parts.end(); it++)
 		{
 			if (!(*it)->getHasDeleted())
