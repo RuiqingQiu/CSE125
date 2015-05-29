@@ -186,12 +186,12 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								 g_pCore->pGameView->PushEnvironmentNode(hill);
 									*/
 								 //
-								 
+								 /*
 								 Fire* f = new Fire(h->x, h->y, h->z, 0, 2);
 								 f->static_object = true;
 								 f->lifeTime = 30;
-								 
-								 g_pCore->pGameView->PushEnvironmentNode(f);
+								 */
+								 //g_pCore->pGameView->PushEnvironmentNode(f);
 
 								 break;
 
@@ -200,6 +200,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventPlayerHillUpdate:{
 							   printf("Event player hill update\n");
 							   //
+							   /*
 							   EventPlayerHillUpdate * h = (EventPlayerHillUpdate *)event;
 							   //particle
 							   for each (GeoNode* node in g_pCore->pGameView->NodeList)
@@ -210,10 +211,10 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									   Fire* f = new Fire(node->localTransform.position.x, node->localTransform.position.y + 4, node->localTransform.position.z, 0, 3);
 									   f->static_object = true;
 									   f->lifeTime = 5;
-									   g_pCore->pGameView->PushEnvironmentNode(f);
+									  //g_pCore->pGameView->PushEnvironmentNode(f);
 								   }
 							   }
-
+							   */
 							   break;
 
 		}

@@ -1174,3 +1174,9 @@ Vector3 GameView::translateNode(Vector3 t, GeoNode * node) {
 	node->localTransform.position = node->localTransform.position + t;
 	return node->localTransform.position;
 }
+
+/*
+void GameView::PushParticleNode(Fire* fire){
+
+}
+*/

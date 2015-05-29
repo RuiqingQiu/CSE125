@@ -10,6 +10,7 @@
 #include "GamePlayer.h"
 #include "Plane.h"
 #include "Model3DFactory.h"
+//#include "Fire.h"
 
 #ifndef CSE125_GAMEVIEW
 #define CSE125_GAMEVIEW
@@ -38,6 +39,7 @@ public:
 	std::vector<GeoNode*> EnvironmentList;
 	std::vector<GeoNode*> GrassList;
 	std::vector<GeoNode*> NodeListBuffer;
+	//std::vector<Fire*> particleList;
 
 	Camera* pViewCamera;
 	GamePlayer* pPlayer;
@@ -52,7 +54,6 @@ public:
 	void highlight_second_pass_build2();
 
 	void highlight_third_pass_build(GLuint lastframe);
-
 	void blur_first_pass();
 	void blur_second_pass();
 	
@@ -66,6 +67,7 @@ public:
 
 	//node manipulation functions
 	void PushGrassNode(GeoNode* node);
+	//void PushParticleNode(Fire* fire);
 
 	void PushEnvironmentNode(GeoNode* node);
 	virtual void PushGeoNode(GeoNode* node);
