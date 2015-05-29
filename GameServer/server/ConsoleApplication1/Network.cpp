@@ -173,29 +173,29 @@ void Network::sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>
 	//cout << packet.packet_type << endl;
 	
 	
-	//network->sendToAll(packet_data, packet_size);
-	for (vector<GameObj*>::iterator i = gameObjs->begin();
-		i != gameObjs->end(); ++i)
-	{
-		if ((*i)->getIsRobot()){
-			Robot* r = (Robot*)(*i);
-			if (r->getState() == PS_ALIVE)
-			{
-				int cid = r->getCID();
-				network->sendToOne(packet_data, packet_size,cid);
-			}
-			else if(r->_deathSent == 0){
-				int cid = r->getCID();
-				//cout << "send death package to : " << cid << endl;
-				network->sendToOne(packet_data, packet_size, cid);
-				r->_deathSent = 1;
-			}
-			else{
-				int cid = r->getCID();
-				//cout << "do not send when in build: " << cid << endl;
-			}
-		}
-	}
+	network->sendToAll(packet_data, packet_size);
+	//for (vector<GameObj*>::iterator i = gameObjs->begin();
+	//	i != gameObjs->end(); ++i)
+	//{
+	//	if ((*i)->getIsRobot()){
+	//		Robot* r = (Robot*)(*i);
+	//		if (r->getState() == PS_ALIVE)
+	//		{
+	//			int cid = r->getCID();
+	//			network->sendToOne(packet_data, packet_size,cid);
+	//		}
+	//		else if(r->_deathSent == 0){
+	//			int cid = r->getCID();
+	//			//cout << "send death package to : " << cid << endl;
+	//			network->sendToOne(packet_data, packet_size, cid);
+	//			r->_deathSent = 1;
+	//		}
+	//		else{
+	//			int cid = r->getCID();
+	//			//cout << "do not send when in build: " << cid << endl;
+	//		}
+	//	}
+	//}
 
 	//cout << "AFTER SEND TO ALL" << endl;
 
@@ -739,8 +739,9 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 				int k;
 				for (k = 0; k < 4; k++){
 					btTransform tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(k).m_worldTransform;
-				
-					temp += to_string((*i)->getId()*2 + k + 100000);
+					temp += to_string( ((*i)->getId()+1)*10 + k + 1000000);
+
+				//	cout << temp << endl;
 					temp += ' ';
 					temp += to_string(tran0.getOrigin().getX());
 					temp += ' ';
