@@ -178,7 +178,7 @@ void Window::initialize(void)
 	
 	
 	object = Model3DFactory::generateObjectWithType(BORDER);
-	object->shader_type = REGULAR_SHADER;
+	object->shader_type = NORMAL_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -207,20 +207,21 @@ void Window::initialize(void)
 	object->isUpdated = true;
 	object->type = LEGO;
 	factory->battlemode->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(FLOOR_SIMPLE);
+	*/
+	/*
+	object = Model3DFactory::generateObjectWithType(FLOOR_COMPLEX);
 	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
 	//object->auto_rotate = true;
 	object->isUpdated = true;
-	object->type = FLOOR_SIMPLE;
+	object->type = FLOOR_COMPLEX;
 	factory->battlemode->PushEnvironmentNode(object);
 	*/
 	
 	object = Model3DFactory::generateObjectWithType(STONEHENGE);
-	object->shader_type = REGULAR_SHADER;
+	object->shader_type = NORMAL_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -273,7 +274,6 @@ void Window::idleCallback()
 void Window::processNormalKeys(unsigned char key, int x, int y) 
 {
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
-	factory->switchView(key);
 	factory->keyboardFunc(key, x, y);
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
@@ -305,6 +305,7 @@ void Window::processNormalKeysUp(unsigned char key, int x, int y)
 }
 
 void Window::processSpecialKeys(int key, int x, int y) {
+	factory->switchView(key);
 	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
 }
 

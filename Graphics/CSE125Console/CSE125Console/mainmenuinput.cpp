@@ -2,7 +2,8 @@
 #include "mainmenuinput.h"
 
 mainMenuInput::mainMenuInput() :guiGameInput(){
-	IPAdress = "128.54.70.26"; // test displaying the IP Address, need to change later
+	IPAdress = "128.54.70.35"; // test displaying the IP Address, need to change later
+	//IPAdress = "";
 	g_pCore->pPlayer->name = name;
 	g_pCore->pPlayer->IPAddress = IPAdress; // set the ip address in the game player object
 }
@@ -19,6 +20,7 @@ void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 		// but allow the user to delete character
 		if (key == 8){
 			name.pop_back();
+			
 		}
 		return;
 	}
@@ -33,6 +35,39 @@ void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 		break;
 	case 27:
 		exit(0);
+		break;
+	case '1':
+		IPAdress.append("1");
+		break;
+	case '2':
+		IPAdress.append("2");
+		break;
+	case '3':
+		IPAdress.append("3");
+		break;
+	case '4':
+		IPAdress.append("4");
+		break;
+	case '5':
+		IPAdress.append("5");
+		break;
+	case '6':
+		IPAdress.append("6");
+		break;
+	case '7':
+		IPAdress.append("7");
+		break;
+	case '8':
+		IPAdress.append("8");
+		break;
+	case '9':
+		IPAdress.append("9");
+		break;
+	case '0':
+		IPAdress.append("0");
+		break;
+	case '.':
+		IPAdress.append(".");
 		break;
 	// need to read input for robot name, inheritanted from GameInputInterface
 	case 'a':

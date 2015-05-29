@@ -69,7 +69,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								 Window::factory->gameOver->numTakedowns = Window::factory->score->getTakedowns();
 								 Window::factory->gameOver->myRank = Window::factory->score->getRank();
 								 ///end
-								 Window::factory->switchView('5');
+								 Window::factory->switchView(GLUT_KEY_F5);
 							 }
 							 ////end check
 

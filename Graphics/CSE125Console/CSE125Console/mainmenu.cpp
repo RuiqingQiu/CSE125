@@ -74,7 +74,7 @@ void mainMenu::createButtons() {
 
 	backimg = new background("background1.jpg", width, height);
 	guiItems.push_back(backimg); // push in to the guiTexts vector
-	playersReady = new numDisplay("text/playersReady.jpg", width*(760.0 / 1920.0), height - 150, 400, 50,1); 
+	//playersReady = new numDisplay("text/playersReady.jpg", width*(760.0 / 1920.0), height - 150, 400, 50,1); 
 	
 }
 
@@ -86,7 +86,7 @@ void mainMenu::drawAllItems(){
 	// if player cliced on play button
 	if (playPressed) {
 		loading->draw(); // draw the loading view
-		playersReady->draw();  // draw the number of player ready
+		//playersReady->draw();  // draw the number of player ready
 	}
 	else {
 		// exchange the order, draw button first and then draw guiItems 
@@ -102,8 +102,8 @@ void mainMenu::drawAllItems(){
 void mainMenu::VUpdate() {
 	gui::VUpdate();
 	loading->update();
-	playersReady->displayValue = playerReady; // update the player ready value
-	playersReady->update(); // update number display
+	//playersReady->displayValue = playerReady; // update the player ready value
+	//playersReady->update(); // update number display
 }
 
 // add letters to the guiItem array
@@ -228,8 +228,10 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 			playerReady = playerReady + 1;
 		}
 		// if all the players are ready, go to the build view
+		/*
 		if (playerReady == MAX_PLAYER)
 			return viewType::BUILD;
+		*/
 	}
 	// help button
 	else if (helpButton->isSelected(x, height - y)){

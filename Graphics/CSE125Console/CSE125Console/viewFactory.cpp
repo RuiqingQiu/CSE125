@@ -111,23 +111,23 @@ void viewFactory::setView() {
 
 void viewFactory::switchView(unsigned char key) {
 	switch (key) {
-	case '1':
+	case GLUT_KEY_F1:
 		viewmode = viewType::BUILD;
 		setView();
 		break;
-	case '2':
+	case GLUT_KEY_F2:
 		viewmode = viewType::BATTLE;
 		setView();
 		break;
-	case '3':
+	case GLUT_KEY_F3:
 		viewmode = viewType::HELP;
 		setView();
 		break;
-	case '4':
+	case GLUT_KEY_F4:
 		viewmode = viewType::MENU;
 		setView();
 		break;
-	case '5':
+	case GLUT_KEY_F5:
 		viewmode = viewType::GAME_END;
 		setView();
 		break;
@@ -169,7 +169,7 @@ void viewFactory::idleFunc() {
 		if (duration > 5) {
 			duration = -1;
 			battlemode->isDead = false;
-			switchView('1');
+			switchView(GLUT_KEY_F1);
 		}
 	}
 
