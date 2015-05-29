@@ -22,7 +22,7 @@ uniform vec3 Ks;
 uniform float Shininess;
 varying mat3 toObjectLocal;
 
-#define MAX_LIGHTS 4 
+#define MAX_LIGHTS 2 
 
 struct Light
 {
@@ -106,8 +106,8 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 
 	lights[0].position = CamRotMatrix*(camera_offset + lights[0].position);
 	lights[1].position = CamRotMatrix*(camera_offset + lights[1].position);
-	lights[2].position = CamRotMatrix*(camera_offset + lights[2].position);
-	lights[3].position = CamRotMatrix*(camera_offset + lights[3].position);
+	//lights[2].position = CamRotMatrix*(camera_offset + lights[2].position);
+	//lights[3].position = CamRotMatrix*(camera_offset + lights[3].position);
 	//lights[4].position = CamRotMatrix*(camera_offset + lights[4].position);
 	//lights[5].position = CamRotMatrix*(camera_offset + lights[5].position);
 	
@@ -115,13 +115,13 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 	vec3 ambAndDiff = lights[0].La * Ka;
 	vec3 spec = vec3(0.0);
 	for(int i = 0; i < MAX_LIGHTS; i++){
-		float attenuation =1.0 /( 1.0 + 0.001* pow(length(lights[i].position - Position), 2) );
+		float attenuation =1000.0 /(4*3.1415926*(pow(length(lights[i].position - Position)*0.4, 2) ) );
 		vec3 LightDir = normalize(toObjectLocal * (lights[i].position - Position.xyz));
-		vec3 ViewDir = toObjectLocal * normalize(Position.xyz);
+		vec3 ViewDir = toObjectLocal * normalize(-Position.xyz);
 		vec3 r = reflect(-LightDir, normal);
-		float sDotN = max(dot(LightDir, normal), 0.0);
+		float sDotN = max(dot(LightDir, normal), 0.1);
     
-		vec3 diffuse = attenuation * (lights[i].Ld * diffR * sDotN);
+		vec3 diffuse = attenuation * (max(0.0,lights[i].Ld * diffR * sDotN));
     
 		if(sDotN > 0.0){
 			spec += attenuation * (lights[i].Ls * Ks * pow(max(dot(r, ViewDir), 0.0), Shininess));
@@ -148,17 +148,16 @@ void main() {
 
 
 
-	 float albedo = 0.1f;
+	 float albedo = 0.35f;
 
-	vec3 n = -normalize(inverse(toObjectLocal)*normal.xyz);
+	vec3 n = normalize(inverse(toObjectLocal)*normal.xyz);
 	  
     vec3 shadeColor2 = vec3 (
-
-	   albedo*abs(irradmat (skyred,  n)),
-	   albedo*abs(irradmat (skygreen, n)), 
-	   albedo*abs(irradmat (skyblue,  n))
+	   albedo*max(irradmat (skyred,  n),0.2),
+	   albedo*max(irradmat (skygreen, n),0.2), 
+	   albedo*max(irradmat (skyblue,  n),0.2)
 	   ) ;
 	//shadeColor2 = normalize(shadeColor2);
 
-    gl_FragColor = vec4(shadeColor2,1) + cubeMapColor*0.02*vec4(Kd.xyz,1) + shadeColor;
+    gl_FragColor = shadeColor + (vec4(shadeColor2.x,shadeColor2.y,shadeColor2.z,1)*texColor + vec4((cubeMapColor*0.2*texColor).xyz,1)) ;//+ shadeColor;
 }

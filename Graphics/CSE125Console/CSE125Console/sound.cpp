@@ -119,13 +119,13 @@ void Sound::playBuildViewBackground(){
 void Sound::playExplosion(float x, float y,float z){
 	// for the first time
 	if (explosionSound.getStatus() == sf::Sound::Stopped){
-		cout << "Playing explosion sound " << endl;
+		//cout << "Playing explosion sound " << endl;
 		explosionSound.setPosition(x, y, z);
 		explosionSound.play();
 	}
 	// cannot do sleep for gun sound effect
 	if (explosionSound.getStatus() == sf::Sound::Playing){
-		cout << "Play explosion sound " << endl;
+		//cout << "Play explosion sound " << endl;
 		explosionSound.stop();
 		explosionSound.setPosition(x, y, z);
 		explosionSound.play();
@@ -135,7 +135,7 @@ void Sound::playExplosion(float x, float y,float z){
 
 // This function is used to play gui menu selection
 void Sound::playSelect(){
-	cout << "Enter play select " << endl;
+	//cout << "Enter play select " << endl;
 	if (selectSound.getStatus() == sf::Sound::Paused){
 		cout << "Play Select " << endl;
 		selectSound.play();
@@ -163,7 +163,7 @@ void Sound::playGun(float x, float y, float z){
 
 // this function is to play the loading view sound
 void Sound::playLoading(){
-	cout << "play loading sound " << endl;
+	//cout << "play loading sound " << endl;
 	if (loadingSound.getStatus() == sf::Sound::Stopped){
 		music.pause();
 		openingSound.stop();
@@ -173,7 +173,7 @@ void Sound::playLoading(){
 
 // this function is to play the loading view sound
 void Sound::playOpening(){
-	cout << "play opening sound " << endl;
+	//cout << "play opening sound " << endl;
 	if (openingSound.getStatus() == sf::Sound::Stopped){
 		openingSound.play();
 	}

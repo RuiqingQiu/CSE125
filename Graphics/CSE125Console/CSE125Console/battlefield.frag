@@ -128,7 +128,7 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 	vec3 ambAndDiff = lights[0].La * Ka;
 	vec3 spec = vec3(0.0);
 	for(int i = 0; i < MAX_LIGHTS; i++){
-		float attenuation =1.0 /( 1.0 + 0.001* pow(length(lights[i].position - Position), 2) );
+		float attenuation =1000.0 /(4*3.1415926*(pow(length(lights[i].position - Position), 2) ) );
 		vec3 LightDir = normalize(toObjectLocal * (lights[i].position - Position.xyz));
 		vec3 ViewDir = toObjectLocal * normalize(Position.xyz);
 		vec3 r = reflect(-LightDir, normal);
@@ -167,7 +167,7 @@ void main() {
 	vec4 cubeMapColor = textureCube(cubeMap, reflectd4x);
 
 
-	 float albedo = 0.1f;
+	 float albedo = 0.3f;
 
 	vec3 n = -normalize(inverse(toObjectLocal)*normal.xyz);
 	  
@@ -179,7 +179,7 @@ void main() {
 	   ) ;
 	//shadeColor2 = normalize(shadeColor2);
 
-    gl_FragColor = vec4(shadeColor2,1) + cubeMapColor*0.02*vec4(Kd.xyz,1) + shadeColor;
+    gl_FragColor = vec4(shadeColor2,1)*texColor + cubeMapColor*0.1*texColor + shadeColor;
 
     //gl_FragColor = cubeMapColor*0.2*vec4(Kd.xyz,1)+ shadeColor + vec4(0.1,0.1,0.1,1);
 

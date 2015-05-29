@@ -4,7 +4,7 @@
 Camera::Camera()
 {
 	//localTransform = Transform();
-	rotation = new Vector3(-30, 0, 0);
+	rotation = new Vector3(20, 0, 0);
 	IsFollowingEnabled = true;
 
 	distance = 6.0f;

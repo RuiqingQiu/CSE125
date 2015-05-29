@@ -500,22 +500,22 @@ void buildView::setTemplate() {
 			GeoNode * wheel = Model3DFactory::generateObjectWithType(AltTire);
 			wheel->localTransform.position = Vector3(1.6, -0.2, 1);
 			wheel->identifier = 1;
-			wheel->textureType = Tire;
+			wheel->textureType = AltTire;
 			PushGeoNode(wheel);
 			GeoNode * wheel2 = Model3DFactory::generateObjectWithType(AltTire);
 			wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
 			wheel2->identifier = 2;
-			wheel2->textureType = Tire;
+			wheel2->textureType = AltTire;
 			PushGeoNode(wheel2);
 			GeoNode * wheel3 = Model3DFactory::generateObjectWithType(AltTire);
 			wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
 			wheel3->identifier = 3;
-			wheel3->textureType = Tire;
+			wheel3->textureType = AltTire;
 			PushGeoNode(wheel3);
 			GeoNode * wheel4 = Model3DFactory::generateObjectWithType(AltTire);
 			wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
 			wheel4->identifier = 4;
-			wheel4->textureType = Tire;
+			wheel4->textureType = AltTire;
 			PushGeoNode(wheel4);
 
 			//added stuff to robot

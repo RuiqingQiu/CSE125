@@ -13,9 +13,10 @@ private:
 
 
 public:
-	//Center of the projection
-	Vector3 *position = new Vector3(0, 0, -10);
-	Vector3 *rotation = new Vector3(0, 0, 0);
+	
+
+	Vector3 *position = new Vector3(0, -40, -100);
+	Vector3 *rotation = new Vector3(20, 0, 0);
 	Vector3 *lookat = new Vector3(0, 0, -1);
 	Matrix4 camera_matrix;
 
