@@ -129,40 +129,46 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									   printf("collision event received\n");
 									   EventCollision * h = (EventCollision *)event;
 									   switch (h->collision_type){
-											//bullet player
+										   //bullet player
 									   case 0:{
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 0);
 												  f->static_object = true;
+												  f->lifeTime = 5;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  break;
 									   }
-											//player player
+										   //player player
 									   case 1:{
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 1);
 												  f->static_object = true;
+												  f->lifeTime = 5;
+
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  break;
 									   }
-											//player wall
+										   //player wall
 									   case 2:{
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 2);
 												  f->static_object = true;
+												  f->lifeTime = 5;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  break;
 									   }
-											//bullet wall
+										   //bullet wall
 									   case 3:{
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 3);
 												  f->static_object = true;
+												  f->lifeTime = 5;
+
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  break;
 									   }
-											//explorsion
-											case 4:
-												break; 
+										   //explorsion
+									   case 4:{
+												  break;
 									   }
-									   break;
-
+										   break;
+									   }
 		}
 		case TEventWaiting:{
 							   printf("waiting event received\n");

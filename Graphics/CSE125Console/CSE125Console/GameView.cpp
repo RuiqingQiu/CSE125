@@ -712,10 +712,9 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	{
 		if (!info->player_infos[i]->processed){
 			//cout << "create object" << endl;
+			//cout << "id " << info->player_infos[i]->id << endl;
 			switch (info->player_infos[i]->type){
-				cout << "data is not processed, need to create objects" << endl;
 				//CUBE = 0
-
 			case BasicCube:{
 							   Model3D* object = Model3DFactory::generateObjectWithType(BasicCube);
 							   object->isUpdated = true;
@@ -1036,7 +1035,6 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							   Model3D* object = Model3DFactory::generateObjectWithType(StoneTire);
 									  object->isUpdated = true;
 									  object->shader_type = shader_type;
-
 									  object->identifier = info->player_infos[i]->id;
 									  object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 									  object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
