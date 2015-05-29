@@ -998,42 +998,76 @@ void GameLogic::addWalls()
 	GameObj* backWall = new GOPlane(0, 0, -FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, 1, 1);
 
 	btQuaternion q0(0, 0, 0, 1);
-	btQuaternion rotQ; 
-	btQuaternion q;
+	 	btQuaternion* rotQ;
+	 	btQuaternion q;
+	
 
-	rotQ = btQuaternion(0, 0.12666666666, 0, 0);
-	q = q0*rotQ;
-	GameObj* pillar1 = new GOBox(10.5, 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
-	//cout << " qxyz1: " << pillar1->getqX() << " , " << pillar1->getqY() << " , " << pillar1->getqZ() << " , " << pillar1->getqW() << endl;
+		 	rotQ = network->convertEulerToQuaternion(0, 22.8, 0);
+	 	q = q0*(*rotQ);
+	 	GameObj* pillar1 = new GOBox(10.5, 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	 	cout << " qxyz1: " << pillar1->getqX() << " , " << pillar1->getqY() << " , " << pillar1->getqZ() << " , " << pillar1->getqW() << endl;
+	
 
-	rotQ = btQuaternion(0, -0.06111111111, 0, 0);
-	q = q0*rotQ;
-	GameObj* pillar2 = new GOBox(-12.01, 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
-	//cout << " qxyz2: " << pillar2->getqX() << " , " << pillar2->getqY() << " , " << pillar2->getqZ() << " , " << pillar2->getqW() << endl;
+		 	rotQ = network->convertEulerToQuaternion(0, -25, 0);
+		//rotQ = network->convertEulerToQuaternion(0, -13, 0); 
+		
 
-	rotQ = btQuaternion(0, -0.43216666666, 0, 0);
-	q = q0*rotQ;
-	GameObj* pillar3 = new GOBox(27.41, 10, 11.48, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		 	q = q0*(*rotQ);
+	 	GameObj* pillar2 = new GOBox(-12.01, 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	 	cout << " qxyz2: " << pillar2->getqX() << " , " << pillar2->getqY() << " , " << pillar2->getqZ() << " , " << pillar2->getqW() << endl;
+	
 
-	rotQ = btQuaternion(0, -0.60327777777, 0, 0);
-	q = q0*rotQ;
-	GameObj* pillar4 = new GOBox(26.4, 10, -10.35, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		
 
-	rotQ = btQuaternion(0, -0.833, 0, 0);
-	q = q0*rotQ;
-	GameObj* pillar5 = new GOBox(10.72, 10, -27.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		 	rotQ = network->convertEulerToQuaternion(0, 61.4, 0);
+	 	//rotQ = network->convertEulerToQuaternion(0, -77.8, 0); 
+		 	q = q0*(*rotQ);
+	 	////rotQ = btQuaternion(0, -0.43216666666, 0, 0); 
+		 	////q = q0*rotQ; 
+		 	GameObj* pillar3 = new GOBox(27.41, 10, 11.48, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	
 
-	rotQ = btQuaternion(0, -1.1385, 0, 0);
-	q = q0*rotQ;
-	GameObj* pillar6 = new GOBox(-12.32, 10, -26.99, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
+		 	rotQ = network->convertEulerToQuaternion(0, -77.8, 0);
+	 	//rotQ = network->convertEulerToQuaternion(0, -108.6, 0); 
+		 	q = q0*(*rotQ);
+	 	//rotQ = btQuaternion(0, -0.60327777777, 0, 0); 
+		 	//q = q0*rotQ; 
+		 	GameObj* pillar4 = new GOBox(27.4, 10, -11.35, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	
 
-	rotQ = btQuaternion(0, 0.34105555555, 0, 0);
-	q = q0*rotQ;
-	GameObj* pillar7 = new GOBox(-26.39, 10, 11.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		 	rotQ = network->convertEulerToQuaternion(0, -16, 0);
+	 	//rotQ = network->convertEulerToQuaternion(0, -149.94, 0); 
+		 	q = q0*(*rotQ);
+	 	//rotQ = btQuaternion(0, -0.833, 0, 0); 
+		 	//q = q0*rotQ; 
+		 	GameObj* pillar5 = new GOBox(11.72, 10, -28.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	
 
-	rotQ = btQuaternion(0, -1.00916666667, 0, 0);
-	q = q0*rotQ;
-	GameObj* pillar8 = new GOBox(-27.95, 10, -10.19, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		 	rotQ = network->convertEulerToQuaternion(0, 30.58, 0);
+	 	//rotQ = network->convertEulerToQuaternion(0, -205, 0); 
+		 	q = q0*(*rotQ);
+	 	//rotQ = btQuaternion(0, -1.1385, 0, 0); 
+		 	//q = q0*rotQ; 
+		 	GameObj* pillar6 = new GOBox(-12.32, 10, -26.99, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
+	
+
+		
+
+		 	//rotQ = network->convertEulerToQuaternion(0, 61.4, 0); 
+		 	rotQ = network->convertEulerToQuaternion(0, 88.62, 0);
+	 	q = q0*(*rotQ);
+	 	//rotQ = btQuaternion(0, 0.34105555555, 0, 0); 
+		 	//q = q0*rotQ; 
+		 	GameObj* pillar7 = new GOBox(-29.39, 10, 10.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	
+
+		 	rotQ = network->convertEulerToQuaternion(0, 71.049, 0);
+	 //	rotQ = network->convertEulerToQuaternion(0, -181.66, 0); 
+		 	q = q0*(*rotQ);
+	 	//rotQ = btQuaternion(0, -1.00916666667, 0, 0); 
+		 	//q = q0*rotQ; 
+			GameObj* pillar8 = new GOBox(-24.45, 10, -11.19, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+
 
 	ceiling->setBlockType(WALL);
 	leftWall->setBlockType(WALL);
@@ -1068,14 +1102,14 @@ void GameLogic::addWalls()
 	gamePhysics->getDynamicsWorld()->addRigidBody(rightWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(frontWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(backWall->getRigidBody());
-	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar1->getRigidBody());
-	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar2->getRigidBody());
-	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar3->getRigidBody());
-	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar4->getRigidBody());
-	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar5->getRigidBody());
-	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar6->getRigidBody());
-	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar7->getRigidBody());
-	//gamePhysics->getDynamicsWorld()->addRigidBody(pillar8->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar1->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar2->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar3->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar4->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar5->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar6->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar7->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(pillar8->getRigidBody());
 
 
 

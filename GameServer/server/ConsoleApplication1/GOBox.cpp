@@ -23,7 +23,7 @@ GameObj* GOBox::shoot()
 			if (((RangedWeapon *)w)->readyToShoot())
 			{
 
-				double rbDepth = getDepth() / 2 + ((RangedWeapon *)w)->getPDepth()/2 + 0.6f;
+				double rbDepth = getDepth() / 2 + ((RangedWeapon *)w)->getPDepth()/1.5 + 0.6f;
 				btTransform* rbTrans = &getRigidBody()->getWorldTransform();
 				btVector3 boxRot = rbTrans->getBasis()[2];
 				boxRot.normalize();
