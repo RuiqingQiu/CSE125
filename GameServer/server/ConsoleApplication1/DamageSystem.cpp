@@ -71,9 +71,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				//std::cout << "COLLISION: ROBOT WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				e->setDamage1();
-
+				double damage = o2->getDamage();
+				if (o2->getBlockType() == BULLET)
+				{
+					damage *= 2;
+				}
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
-				if (o1->applyDamage(o2->getDamage()) <= 0)
+				if (o1->applyDamage(damage) <= 0)
 				{
 
 					//std::cout << "ROB WITH PROJ BREAK CONST" << std::endl;
@@ -132,9 +136,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			{
 				//std::cout << "COLLISION: ROBOT PART WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
-
+				double damage = o2->getDamage();
+				if (o2->getBlockType() == BULLET)
+				{
+					damage *= 2;
+				}
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
-				if (o1->applyDamage(o2->getDamage()) <= 0)
+				if (o1->applyDamage(damage) <= 0)
 				{
 					//std::cout << "ROB PART WITH PROJ BREAK CONST" << std::endl;
 					e->setResult1(BREAK_CONSTRAINT);
@@ -142,7 +150,7 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setDamage1();
 				Robot* r = (Robot*)o1->getBelongTo();
 				
-				if (r->applyDamage(o2->getDamage()) <= 0)
+				if (r->applyDamage(damage) <= 0)
 				//if (r->applyDamage(1000) <= 0)
 				{
 					r->setDiedTo((Robot*)o2->getBelongTo());
@@ -214,9 +222,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				//std::cout << "COLLISION: PROJECTILE WITH ROBOT" << std::endl;
 				e->setResult1(DELETED); e->setResult2(NOTHING);
 				
-		
+				double damage = o1->getDamage();
+				if (o2->getBlockType() == BULLET)
+				{
+					damage *= 2;
+				}
 
-				if (o2->applyDamage(o1->getDamage()) <= 0)
+				if (o2->applyDamage(damage) <= 0)
 				{
 					((Robot*)o2)->setDiedTo((Robot*)o1->getBelongTo());
 					e->setResult2(DEATH);
@@ -231,14 +243,18 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				//std::cout << "COLLISION: PROJECTILE WITH ROBOT PART" << std::endl;
 				e->setResult1(DELETED); e->setResult2(NOTHING);
 
-		
-				if (o2->applyDamage(o1->getDamage()) <= 0)
+				double damage = o1->getDamage();
+				if (o2->getBlockType() == BULLET)
+				{
+					damage *= 2;
+				}
+				if (o2->applyDamage(damage) <= 0)
 				{
 					e->setResult2(BREAK_CONSTRAINT);
 				}
 				e->setDamage2();
 				Robot* r = (Robot*)o2->getBelongTo();
-				if (r->applyDamage(o1->getDamage()) <= 0)
+				if (r->applyDamage(damage) <= 0)
 				{
 					r->setDiedTo((Robot*)o1->getBelongTo());
 				}
@@ -255,14 +271,18 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				//std::cout << "COLLISION: PROJECTILE WITH MELEE" << std::endl;
 				e->setResult1(DELETED); e->setResult2(NOTHING);
 			
-				
-				if (o2->applyDamage(o1->getDamage()) <= 0)
+				double damage = o1->getDamage();
+				if (o2->getBlockType() == BULLET)
+				{
+					damage *= 2;
+				}
+				if (o2->applyDamage(damage) <= 0)
 				{
 					e->setResult2(BREAK_CONSTRAINT);
 				}
 				e->setDamage2();
 				Robot* r = (Robot*)o2->getBelongTo();
-				if (r->applyDamage(o1->getDamage()) <= 0)
+				if (r->applyDamage(damage) <= 0)
 				{
 					r->setDiedTo((Robot*)o1->getBelongTo());
 				}
@@ -314,16 +334,19 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
 				 
-			
-				if (o1->applyDamage(o2->getDamage()) <= 0)
+				double damage = o2->getDamage();
+				if (o2->getBlockType() == BULLET)
+				{
+					damage *= 2;
+				}
+				if (o1->applyDamage(damage) <= 0)
 				{
 					//std::cout << "ROB PART WITH PROJ BREAK CONST" << std::endl;
 					e->setResult1(BREAK_CONSTRAINT);
 				}
 				e->setDamage1();
 				Robot* r = (Robot*)o1->getBelongTo();
-				//if (r->applyDamage(o2->getDamage()) <= 0)
-				if (r->applyDamage(1000) <= 0)
+				if (r->applyDamage(damage) <= 0)
 				{
 					r->setDiedTo((Robot*)o2->getBelongTo());
 				}

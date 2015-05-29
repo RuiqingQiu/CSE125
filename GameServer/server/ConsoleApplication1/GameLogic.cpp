@@ -184,7 +184,10 @@ int GameLogic::gameStart(){
 		{
 			if ((*it)->getIsWheel())
 			{
+				cout << "setting wheel type robot/wheel: " << (*it)->getBlockType() << endl;
 				robot->setWheelType((*it)->getBlockType());
+				cout << "setting wheel type robot/wheel: " << robot->getWheelType() <<" / " << (*it)->getBlockType() << endl;
+
 			}
 			else
 			{
@@ -860,6 +863,7 @@ void GameLogic::postDeathLogic(Robot* r)
 		vector<GameObj*> parts = r->getParts();
 		vector<GameObj*>::iterator it;
 		r->setId(1000000  + counter);
+		counter+=10;
 		for (it = parts.begin(); it != parts.end(); it++)
 		{
 			if (!(*it)->getHasDeleted())
@@ -1075,11 +1079,11 @@ void GameLogic::addWalls()
 
 
 
-	gameObjs.push_back(ceiling);
-	gameObjs.push_back(leftWall);
-	gameObjs.push_back(rightWall);
-	gameObjs.push_back(frontWall);
-	gameObjs.push_back(backWall);
+	//gameObjs.push_back(ceiling);
+	//gameObjs.push_back(leftWall);
+	//gameObjs.push_back(rightWall);
+	//gameObjs.push_back(frontWall);
+	//gameObjs.push_back(backWall);
 	//gameObjs.push_back(pillar1);
 	//gameObjs.push_back(pillar2);
 	//gameObjs.push_back(pillar3);
@@ -1094,7 +1098,9 @@ void GameLogic::addGround()
 	GameObj* ground = new GOPlane(0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
 	//GameObj* ground = new GOBox(0, -0.5, 0, 0, 0, 0, 1, 1, 10000000, 1, 10000000);
 	ground->setBlockType(BATTLEFIELD);
-	gameObjs.push_back(ground);
+	ground->createRigidBody();
+	gamePhysics->getDynamicsWorld()->addRigidBody(ground->getRigidBody());
+	//gameObjs.push_back(ground);
 }
 
 void GameLogic::deleteGameObj(GameObj* g)

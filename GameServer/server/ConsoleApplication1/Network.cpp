@@ -740,7 +740,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 				for (k = 0; k < 4; k++){
 					btTransform tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(k).m_worldTransform;
 				
-					temp += to_string((*i)->getId()*5 + k + 100000);
+					temp += to_string((*i)->getId()*2 + k + 100000);
 					temp += ' ';
 					temp += to_string(tran0.getOrigin().getX());
 					temp += ' ';

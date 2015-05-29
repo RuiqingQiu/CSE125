@@ -12,22 +12,32 @@ RangedWeapon::RangedWeapon(int type)
 	double attackSpeed;
 	double splash;
 
-
 	switch (type)
 	{
 	case Railgun:
 	{
-		range = FAR_RANGED;
-		damage = 60;
-		attackSpeed = 1.5;
-		splash = 1;
+		//range = FAR_RANGED;
+		//damage = 60;
+		//attackSpeed = 1.5;
+		//splash = 1;
 
-		_pInitForce = -400;
-		_pMass = 2;
-		_pWidth = 0.3;
-		_pHeight = 0.3;
-		_pDepth = 1;
+		//_pInitForce = -400;
+		//_pMass = 2;
+		//_pWidth = 0.3;
+		//_pHeight = 0.3;
+		//_pDepth = 1;
 		_pBlockType =  BULLET;
+
+				   range = FAR_RANGED;
+				   damage = 300;
+				   attackSpeed = 0.5;
+				   splash = 4;
+
+				   _pInitForce = -15000;
+				   _pMass = 200;
+				   _pWidth = .8;
+				   _pHeight = .8;
+				   _pDepth = .8;
 		break;
 	}
 	case BGun:
@@ -45,23 +55,23 @@ RangedWeapon::RangedWeapon(int type)
 				 _pBlockType = BULLET;
 				 break;
 	}
-	case Turrent:
-	{
+	//case Cannon:
+	//{
 
-			   range = FAR_RANGED;
-			   damage = 70;
-			   attackSpeed = 1;
-			   splash = 4;
+	//		   range = FAR_RANGED;
+	//		   damage = 300;
+	//		   attackSpeed = 0.5;
+	//		   splash = 4;
 
-			   _pInitForce = -1000;
-			   _pMass = 8;
-			   _pWidth = 2;
-			   _pHeight = 2;
-			   _pDepth = 2;
-			   _pBlockType = BULLET;
-			   break;
-	
-	}
+	//		   _pInitForce = -3000;
+	//		   _pMass = 20;
+	//		   _pWidth = .8;
+	//		   _pHeight = .8;
+	//		   _pDepth = .8;
+	//		   _pBlockType = Cannon_Ball;
+	//		   break;
+	//
+	//}
 	default:
 	{
 		range = FAR_RANGED;

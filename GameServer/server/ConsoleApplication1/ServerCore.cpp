@@ -20,7 +20,7 @@ ServerCore::~ServerCore()
 
 void ServerCore::serverLoop()
 {
-	gameLogic->numPlayers = 2;
+	gameLogic->numPlayers = 3;
 	cout << "Game requires " << gameLogic->numPlayers << " players." << endl;
 	int currNumPlayers = 0;
 	while (true)
@@ -46,7 +46,7 @@ void ServerCore::serverLoop()
 			if (gameLogic->numPlayers < 2) action = ADDCLIENT;
 			if (currNumPlayers == 1 && currNumPlayers < gameLogic->numPlayers)
 			{
-				cout << "Waiting for Player 1." << endl;
+				cout << "Waiting for Player 2." << endl;
 				currNumPlayers++;
 			}
 			break;
@@ -57,7 +57,7 @@ void ServerCore::serverLoop()
 			if (gameLogic->numPlayers < 3) action = ADDCLIENT;
 			if (currNumPlayers == 20 && currNumPlayers < gameLogic->numPlayers)
 			{
-				cout << "Waiting for Player 1." << endl;
+				cout << "Waiting for Player 3." << endl;
 				currNumPlayers++;
 			}
 			break;
@@ -68,7 +68,7 @@ void ServerCore::serverLoop()
 			if (gameLogic->numPlayers< 4) action = ADDCLIENT;
 			if (currNumPlayers == 3 && currNumPlayers < gameLogic->numPlayers)
 			{
-				cout << "Waiting for Player 1." << endl;
+				cout << "Waiting for Player 4." << endl;
 				currNumPlayers++;
 			}
 			break;

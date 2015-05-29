@@ -282,8 +282,9 @@ void GameObj::setBlockType(int bType)
 						  break;
 	}
 
-	case Tire:
+	case AltTire:
 	{
+				 std::cout << " in tire " << std::endl;
 				 _isWheel = 1;
 				 speedMultiplier = 7;
 						  break;
