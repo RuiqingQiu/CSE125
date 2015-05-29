@@ -20,7 +20,7 @@ ServerCore::~ServerCore()
 
 void ServerCore::serverLoop()
 {
-	gameLogic->numPlayers = 3;
+	gameLogic->numPlayers = 4;
 	cout << "Game requires " << gameLogic->numPlayers << " players." << endl;
 	int currNumPlayers = 0;
 	while (true)

@@ -74,7 +74,14 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				double damage = o2->getDamage();
 				if (o2->getBlockType() == BULLET)
 				{
-					damage *= 2;
+					damage *= 2; std::cout <<"double dmg" << std::endl;
+				}
+				else if (o2->getBlockType() == BULLET)
+				{
+					if (rand() % 100 <= 10)
+					{
+						damage *= 3;
+					}
 				}
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
 				if (o1->applyDamage(damage) <= 0)
@@ -139,7 +146,14 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				double damage = o2->getDamage();
 				if (o2->getBlockType() == BULLET)
 				{
-					damage *= 2;
+					damage *= 2; std::cout <<"double dmg" << std::endl;
+				}
+				else if (o2->getBlockType() == BULLET)
+				{
+					if (rand() % 100 <= 10)
+					{
+						damage *= 3;
+					}
 				}
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
 				if (o1->applyDamage(damage) <= 0)
@@ -225,9 +239,15 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				double damage = o1->getDamage();
 				if (o2->getBlockType() == BULLET)
 				{
-					damage *= 2;
+					damage *= 2; std::cout <<"double dmg" << std::endl;
 				}
-
+				else if (o2->getBlockType() == BULLET)
+				{
+					if (rand() % 100 <= 10)
+					{
+						damage *= 3;
+					}
+				}
 				if (o2->applyDamage(damage) <= 0)
 				{
 					((Robot*)o2)->setDiedTo((Robot*)o1->getBelongTo());
@@ -246,7 +266,14 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				double damage = o1->getDamage();
 				if (o2->getBlockType() == BULLET)
 				{
-					damage *= 2;
+					damage *= 2; std::cout <<"double dmg" << std::endl;
+				}
+				else if (o2->getBlockType() == BULLET)
+				{
+					if (rand() % 100 <= 10)
+					{
+						damage *= 3;
+					}
 				}
 				if (o2->applyDamage(damage) <= 0)
 				{
@@ -274,7 +301,14 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				double damage = o1->getDamage();
 				if (o2->getBlockType() == BULLET)
 				{
-					damage *= 2;
+					damage *= 2; std::cout <<"double dmg" << std::endl;
+				}
+				else if (o2->getBlockType() == BULLET)
+				{
+					if (rand() % 100 <= 10)
+					{
+						damage *= 3;
+					}
 				}
 				if (o2->applyDamage(damage) <= 0)
 				{
@@ -337,7 +371,14 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				double damage = o2->getDamage();
 				if (o2->getBlockType() == BULLET)
 				{
-					damage *= 2;
+					damage *= 2; std::cout <<"double dmg" << std::endl;
+				}
+				else if (o2->getBlockType() == BULLET)
+				{
+					if (rand() % 100 <= 10)
+					{
+						damage *= 3;
+					}
 				}
 				if (o1->applyDamage(damage) <= 0)
 				{

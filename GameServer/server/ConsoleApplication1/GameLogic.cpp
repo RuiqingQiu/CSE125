@@ -22,6 +22,7 @@ GameLogic::GameLogic()
 	{
 		names[i] = "";
 	}
+	srand(time(NULL));
 }
 
 GameLogic::~GameLogic()
