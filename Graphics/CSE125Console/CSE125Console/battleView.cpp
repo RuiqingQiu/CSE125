@@ -31,7 +31,7 @@ void battleView:: createButtons() {
 
 	healDmg = new background("heal.png", width, height);
 
-	//cooldown = new cooldownDisplay(100, 100, 250, 250, true, false);
+	//cooldown = new cooldownDisplay(670, 10, 250, 250, true, false);
 	//guiItems.push_back(cooldown);
 }
 

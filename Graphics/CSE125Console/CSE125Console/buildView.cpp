@@ -84,6 +84,9 @@ void buildView::createText() {
 	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 900 * 0.25, 25, true, false);
 	guiItems.push_back(blocksDisplay);
 
+	descriptions = new blockDescriptions(width - 520, 710, 500, 200, false, true);
+	guiItems.push_back(descriptions);
+
 	//grid textures
 	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
 	setTexture("uiItem/images/grid_ext.png", &grids[1]);
@@ -101,7 +104,7 @@ void buildView::createButtons() {
 	int scale = 4;
 	
 	//scroll box
-	//scrollbox jpg dimensions: 1000x1600px
+	//scrollbox jpg dimensions: 1000x1200px
 	scroll = new scrollBox(width - 520, 100, 0.5);
 	buttons.push_back(scroll);
 
@@ -159,7 +162,6 @@ void buildView::createButtons() {
 
 void buildView::VUpdate() {
 	gui::VUpdate();
-
 	timer->update();
 
 	//not using this anymore
@@ -296,6 +298,7 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 
 	if (selectedType != scroll->currentSelection) {
 		selectedType = scroll->currentSelection;
+		descriptions->currDescription = selectedType;
 		setTemplate();
 	}
 	setCurrentNode(false);

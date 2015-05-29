@@ -3,6 +3,7 @@
 #include "gui.h"
 #include "scoreBox.h"
 #include "sound.h" //for gui sound effect 
+#include "blockDescriptions.h"
 
 enum buildViewConstants {
 	MAX_BLOCKS = 23,
@@ -71,5 +72,7 @@ private:
 	numDisplay * blocksDisplay;
 
 	Sound* sound; // for sound effect
+
+	blockDescriptions * descriptions;
 };
 

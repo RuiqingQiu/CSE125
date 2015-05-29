@@ -8,7 +8,7 @@ static map<int, RenderObject*> render_obj_map;
 Model3DFactory::Model3DFactory()
 {
 	cout << "Model3DFactory loading" << endl;
-
+	
 	//blocks
 	render_obj_map.insert(std::pair<int, RenderObject*>(BasicCube, new RenderObject("Assets/BasicCube/cube2.obj", "Assets/BasicCube/tex.png", "Assets/BasicCube/normals.png", "Assets/BasicCube/gloss.png", "Assets/BasicCube/metallic.png")));
 	
@@ -60,7 +60,6 @@ Model3DFactory::Model3DFactory()
 	
 	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(LEGO, new RenderObject("Assets/legoblock/legoblock.obj", "Assets/legoblock/tex.png", "Assets/legoblock/normals.png", "Assets/legoblock/gloss.png", "Assets/legoblock/metallic.png")));
-	
 	
 	cout << "Model3DFactory loading done" << endl;
 

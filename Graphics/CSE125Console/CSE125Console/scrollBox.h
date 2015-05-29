@@ -41,7 +41,7 @@ public:
 	button * addButton;
 	button * removeButton;
 	button * clearButton;
-	int currentSelection;
+	int currentSelection = -1;
 
 private:
 	double scale;
