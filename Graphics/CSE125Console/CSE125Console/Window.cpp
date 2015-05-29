@@ -350,9 +350,7 @@ void Window::displayCallback() {
 
 	// play the background music through out the whole game, may change with the view
 	if (factory->currentView == factory->menumode || factory->currentView == factory->defaultView){
-		//cout << "enter main menu  " << endl;
 		if (factory->menumode->playPressed){
-			//cout << "entering loading " << endl;
 			soundObject->playLoading();
 		}
 		else{
@@ -362,12 +360,14 @@ void Window::displayCallback() {
 
 	// if in build mode play build view background music
 	else if (factory->currentView == factory->buildmode){
-		//cout << "enter build view  " << endl;
 		soundObject->playBuildViewBackground();
 	}
 	else if (factory->currentView == factory->battlemode){
-		//cout << "enter battle view " << endl;
 		soundObject->playMusic();
+	}
+	// play the ending sound
+	else if (factory->currentView == factory->gameOver){
+		soundObject->playEnding();
 	}
 
 	//object->localTransform.rotation.y = counter;
