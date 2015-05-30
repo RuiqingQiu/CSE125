@@ -29,7 +29,7 @@ RangedWeapon::RangedWeapon(int type)
 		_pBlockType =  BULLET;
 
 				   range = FAR_RANGED;
-				   damage = 300;
+				   damage = 100;
 				   attackSpeed = 0.5;
 				   splash = 4;
 
@@ -44,7 +44,7 @@ RangedWeapon::RangedWeapon(int type)
 	{
 				 range = MEDIUM_RANGED;
 				 damage = 10;
-				 attackSpeed = 4;
+				 attackSpeed = 0.5;
 				 splash = 1;
 
 				 _pInitForce = -185;
