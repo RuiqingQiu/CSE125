@@ -81,7 +81,7 @@ void buildView::createText() {
 	//guiItems.push_back(score);
 
 	//blocks left display
-	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 900 * 0.25, 25, true, false);
+	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 200, 50, true, false, 4);
 	guiItems.push_back(blocksDisplay);
 
 	descriptions = new blockDescriptions(width - 520, 710, 500, 200, false, true);
@@ -423,6 +423,9 @@ void buildView::setTemplate() {
 		NodeList.clear();
 		//add the selected template robot build
 		if (selectedType == TEMPLATE_1) {
+			int templateCost = 0;
+			if (money - templateCost < 0) return;
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -494,6 +497,9 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon4);
 		}
 		else if (selectedType == TEMPLATE_2) {
+			int templateCost = 0;
+			if (money - templateCost < 0) return;
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_GLOWING);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -573,6 +579,9 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon4);
 		}
 		else if (selectedType == TEMPLATE_3) {
+			int templateCost = 0;
+			if (money - templateCost < 0) return;
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -660,6 +669,9 @@ void buildView::setTemplate() {
 
 		}
 		else if (selectedType == TEMPLATE_4) {
+			int templateCost = 0;
+			if (money - templateCost < 0) return;
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_BLACK);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -716,6 +728,9 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon3);
 		}
 		else {
+			int templateCost = 0;
+			if (money - templateCost < 0) return;
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_CRYSTAL);
 			cube->localTransform.position = Vector3(0, 0, 0);
