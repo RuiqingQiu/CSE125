@@ -16,7 +16,7 @@
 #include "RangedWeapon.h"
 #include "Weapon.h"
 
-#define DEATH_DELAY 600
+#define DEATH_DELAY 30
 
 
 

@@ -739,7 +739,7 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 				int k;
 				for (k = 0; k < 4; k++){
 					btTransform tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(k).m_worldTransform;
-					temp += to_string( ((*i)->getId()+1)*10 + k + 1000000);
+					temp += to_string( ((*i)->getId()+1)*4 + k + 1000000);
 
 				//	cout << temp << endl;
 					temp += ' ';
