@@ -3,47 +3,52 @@
 
 
 numDisplay::numDisplay() : guiItem() {
-	createNumbers();
+	createNumbers(0);
 }
 
 numDisplay::numDisplay(string filename) : guiItem(filename) {
 	mainmenuLoading = 0;
-	createNumbers();
+	createNumbers(0);
 }
 
 numDisplay::numDisplay(string filename, int x, int y) : guiItem(filename, x, y) {
 	mainmenuLoading = 0;
-	createNumbers();
+	createNumbers(0);
 }
 
 numDisplay::numDisplay(string filename, int x, int y, bool f) : guiItem(filename, x, y, f) {
 	mainmenuLoading = 0;
-	createNumbers();
+	createNumbers(0);
 }
 
 numDisplay::numDisplay(string filename, int x, int y, bool xf, bool yf) : guiItem(filename, x, y, xf, yf) {
 	mainmenuLoading = 0;
-	createNumbers();
+	createNumbers(0);
 }
 
 numDisplay::numDisplay(string filename, int x, int y, int w, int h) : guiItem(filename, x, y, w, h) {
 	mainmenuLoading = 0;
-	createNumbers();
+	createNumbers(0);
 }
 
 numDisplay::numDisplay(string filename, int x, int y, int w, int h, int loading) : guiItem(filename, x, y, w, h) {
 	mainmenuLoading = loading; // constructor for the loading number display
-	createNumbers();
+	createNumbers(0);
 }
 
 numDisplay::numDisplay(string filename, int x, int y, int w, int h, bool f) : guiItem(filename, x, y, w, h, f) {
 	mainmenuLoading = 0;
-	createNumbers();
+	createNumbers(0);
 }
 
 numDisplay::numDisplay(string filename, int x, int y, int w, int h, bool xf, bool yf) : guiItem(filename, x, y, w, h, xf, yf) {
 	mainmenuLoading = 0;
-	createNumbers();
+	createNumbers(0);
+}
+
+numDisplay::numDisplay(string filename, int x, int y, int w, int h, bool xf, bool yf, int digits) : guiItem(filename, x, y, w, h, xf, yf) {
+	mainmenuLoading = 0;
+	createNumbers(digits);
 }
 
 numDisplay::~numDisplay() {
@@ -53,14 +58,20 @@ numDisplay::~numDisplay() {
 	digits.clear();
 }
 
-void numDisplay::createNumbers() {
+void numDisplay::createNumbers(int d) {
 	displayValue = 0;
-	if (!mainmenuLoading){
-		num_digits = DEFAULT_NUM_DIGITS; // 2
+	if (d == 0) {
+		if (!mainmenuLoading){
+			num_digits = DEFAULT_NUM_DIGITS; // 2
+		}
+		else{
+			num_digits = DEFAULT_NUM_DIGITS_FOR_MAINMENU; // 1
+		}
 	}
-	else{
-		num_digits = DEFAULT_NUM_DIGITS_FOR_MAINMENU; // 1
+	else {
+		num_digits = d;
 	}
+
 	off = (20.0 / 100.0) * height;
 	nSize = height - (off*2.0);
 	for (int i = 0; i < num_digits; i++) {

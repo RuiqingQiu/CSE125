@@ -65,6 +65,15 @@ Sound::Sound(){
 	openingSound.play();
 	openingSound.stop();
 
+	// ending sound
+	tmp = path + "ending.wav";
+	if (!endingBuffer.loadFromFile(tmp))
+		cout << "ERROR in loading ending sound effect " << endl;
+	endingSound.setBuffer(endingBuffer);
+	endingSound.setLoop(true);
+	// need to play and then pause it
+	endingSound.play();
+	endingSound.stop();
 
 	// game background music
 	// music doesn't preload the data
@@ -176,5 +185,16 @@ void Sound::playOpening(){
 	//cout << "play opening sound " << endl;
 	if (openingSound.getStatus() == sf::Sound::Stopped){
 		openingSound.play();
+	}
+}
+
+
+void Sound::playEnding(){
+	cout << "play ending sound " << endl;
+	if (endingSound.getStatus() == sf::Sound::Stopped){
+		music.pause();
+		openingSound.stop();
+		loadingSound.stop();
+		endingSound.play();
 	}
 }

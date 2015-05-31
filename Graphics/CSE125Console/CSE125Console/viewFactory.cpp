@@ -19,7 +19,8 @@ viewFactory::viewFactory()
 	meunInput = new mainMenuInput();
 	currentInput = standard_Input;
 
-	score = new scoreBox(0, 0, 200, 100, true, false);
+	score = new scoreBox(0, 0, 300, 150, true, false);
+	buildmode->money = score->money;
 	battlemode->addItem(score);
 	buildmode->addItem(score);
 }
@@ -41,7 +42,8 @@ viewFactory::viewFactory(int w, int h) {
 	currentInput = standard_Input;
 	meunInput = new mainMenuInput();
 
-	score = new scoreBox(20, h - 110, 200, 100, true, false);
+	score = new scoreBox(20, h - 160, 300, 150, true, false);
+	buildmode->money = score->money;
 	battlemode->addItem(score);
 	buildmode->addItem(score);
 
@@ -111,23 +113,23 @@ void viewFactory::setView() {
 
 void viewFactory::switchView(unsigned char key) {
 	switch (key) {
-	case '1':
+	case GLUT_KEY_F1:
 		viewmode = viewType::BUILD;
 		setView();
 		break;
-	case '2':
+	case GLUT_KEY_F2:
 		viewmode = viewType::BATTLE;
 		setView();
 		break;
-	case '3':
+	case GLUT_KEY_F3:
 		viewmode = viewType::HELP;
 		setView();
 		break;
-	case '4':
+	case GLUT_KEY_F4:
 		viewmode = viewType::MENU;
 		setView();
 		break;
-	case '5':
+	case GLUT_KEY_F5:
 		viewmode = viewType::GAME_END;
 		setView();
 		break;
@@ -147,21 +149,17 @@ void viewFactory::idleFunc() {
 	//can't check from pGameView, so must do in factory
 	//function specific to buildmode
 	if (viewmode == viewType::BUILD) {
-		viewType s = buildmode->checkTimeOut();
-		if (s != viewmode) {
-			viewmode = s;
-			if (s == viewType::BATTLE) {
-				//g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList);
-			}
-			setView();
-		}
+		score->money = buildmode->money;
+	}
+	else if (viewmode == viewType::BATTLE) {
+		buildmode->money = score->money;
 	}
 
 	if (delay) {
 		start = std::clock();
 		duration = 0;
 		delay = false;
-		std::cout << "start delay " << std::endl;
+		//std::cout << "start delay " << std::endl;
 	}
 
 	if (duration != -1) {
@@ -169,11 +167,9 @@ void viewFactory::idleFunc() {
 		if (duration > 5) {
 			duration = -1;
 			battlemode->isDead = false;
-			switchView('1');
+			switchView(GLUT_KEY_F1);
 		}
 	}
-
-	//std::cout << "delay: " << duration << std::endl;
 }
 
 void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
@@ -190,7 +186,7 @@ void viewFactory::mouseFunc(int button, int state, int x, int y) {
 	if (s != viewmode) {
 		if (viewmode == viewType::BUILD && s == viewType::BATTLE) {
 			if (state == GLUT_UP && prevMouseState != GLUT_UP) {
-				g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList, buildmode->money);
+				g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList, score->money);
 			}
 		}
 		viewmode = s;

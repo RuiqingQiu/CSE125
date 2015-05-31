@@ -3,9 +3,9 @@
 
 string scoreBox::textPath = "text/scorebox.jpg";
 
-double scoreBox::border = 53.0 / 400.0;
-double scoreBox::spacing = 58.0 / 400.0;
-double scoreBox::sizing = 60.0 / 400.0;
+double scoreBox::border = 40.0 / 400.0;
+double scoreBox::spacing = 15.0 / 400.0;
+double scoreBox::sizing = 75.0 / 400.0;
 
 scoreBox::scoreBox() : guiItem() {
 	createNumbers();
@@ -49,7 +49,7 @@ int scoreBox::getDeaths() {
 }
 
 int scoreBox::getTakedowns() {
-	return hits;
+	return kills;
 }
 
 int scoreBox::getRank() {
@@ -58,58 +58,56 @@ int scoreBox::getRank() {
 
 void scoreBox::createNumbers() {
 	deaths = 0;
-	hits = 0;
+	kills = 0;
 	rank = 0;
+	money = 40;
 
 	double off = scoreBox::border  * height;
 	double offset = scoreBox::spacing * height;
-	int nSize = scoreBox::sizing * height;
-	for (int i = 0; i < MAX_DIGITS; i++) {
-		rankDigits[i] = new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed);
-		hitDigits[i] = new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off + nSize + offset, nSize, nSize, xfixed, yfixed);
-		deathDigits[i] = new numbers((xPos + width - off) - (nSize*(i + 1)), yPos + off + ((nSize + offset)*2), nSize, nSize, xfixed, yfixed);
-	}
+	int nSize = scoreBox::sizing * height; 
+
+	killsDisplay = new numDisplay("text/emptyNum.png", xPos + width - off - (nSize * 2), yPos + off + (nSize * 3) + (offset * 3), nSize * 2, nSize, true, false);
+	deathDisplay = new numDisplay("text/emptyNum.png", xPos + width - off - (nSize * 2), yPos + off + (nSize * 2) + (offset * 2), nSize * 2, nSize, true, false);
+	rankDisplay  = new numDisplay("text/emptyNum.png", xPos + width - off - (nSize * 2), yPos + off + (nSize * 1) + (offset * 1), nSize * 2, nSize, true, false);
+
+	moneyDisplay = new numDisplay("text/emptyNum.png", xPos + width - off - (nSize * 4), yPos + off + (nSize * 0) + (offset * 0), nSize * 4, nSize, true, false, 4);
+
+	numbers.push_back(killsDisplay);
+	numbers.push_back(deathDisplay);
+	numbers.push_back(rankDisplay);
+	numbers.push_back(moneyDisplay);
 }
 
 void scoreBox::update() {
 	//update score here
-	int idx = rank;
-	for (int i = 0; i < MAX_DIGITS; i++) {
-		if (!(idx >= 0)) break;
-		int digit = idx % 10;
-		rankDigits[i]->numIdx = digit;
-		idx /= 10;
-	}
-	idx = hits;
-	for (int i = 0; i < MAX_DIGITS; i++) {
-		if (!(idx >= 0)) break;
-		int digit = idx % 10;
-		hitDigits[i]->numIdx = digit;
-		idx /= 10;
-	}
-	idx = deaths;
-	for (int i = 0; i < MAX_DIGITS; i++) {
-		if (!(idx >= 0)) break;
-		int digit = idx % 10;
-		deathDigits[i]->numIdx = digit;
-		idx /= 10;
+	killsDisplay->displayValue = kills;
+	deathDisplay->displayValue = deaths;
+	rankDisplay->displayValue = rank;
+	moneyDisplay->displayValue = money;
+
+	for (int i = 0; i < 4; i++) {
+		numbers[i]->update();
 	}
 	
 }
 
 void scoreBox::updateScore(int d, int h, int r, int m) {
 	deaths = d;
-	hits = h;
+	kills = h;
 	rank = r;
 	money = m;
 }
 
+void scoreBox::updateScore(int d, int h, int r) {
+	deaths = d;
+	kills = h;
+	rank = r;
+}
+
 void scoreBox::draw() {
 	guiItem::draw();
-	for (int i = 0; i < MAX_DIGITS; i++) {
-		rankDigits[i]->draw();
-		hitDigits[i]->draw();
-		deathDigits[i]->draw();
+	for (int i = 0; i < 4; i++) {
+		numbers[i]->draw();
 	}
 }
 
@@ -119,10 +117,9 @@ void scoreBox::rePosition(int x, int y, int w, int h) {
 	double off = scoreBox::border  * height;
 	double offset = scoreBox::spacing * height;
 	int nSize = scoreBox::sizing * height;
+
 	//want to manually make sure it stays relative to time left box
-	for (int i = 0; i < MAX_DIGITS; i++) {
-		rankDigits[i]->setPosition((xPos + width - off) - (nSize*(i + 1)), yPos + off);
-		hitDigits[i]->setPosition((xPos + width - off) - (nSize*(i + 1)), yPos + off+nSize+offset);
-		deathDigits[i]->setPosition((xPos + width - off) - (nSize*(i + 1)), yPos + off+((nSize+offset)*2));
+	for (int i = 0; i < 4; i++) {
+		numbers[i]->rePosition(x, y, w, h);
 	}
 }

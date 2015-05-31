@@ -15,7 +15,7 @@ mainMenuInput::~mainMenuInput(){
 void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 	
 	// if the robot name is longer than max characters, doesn't allow user to add more letters
-	if (name.length() >= MAX_NUMBER){
+	if (name.length() >= MAX_NUMBER && enteringName){
 		// but allow the user to delete character
 		if (key == 8){
 			name.pop_back();
@@ -27,94 +27,169 @@ void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 	// "backspace is treated as ASCII 8 in opengl"
 	case 8:
 		// if string length is zero, cannot delete anymore
-		if (name.length() != 0){
+		if (name.length() != 0 && enteringName == true){
 			name.pop_back();
+		}
+		//delete ip address character
+		else if (IPAdress.length() != 0 && enteringAddress == true){
+			IPAdress.pop_back();
 		}
 		break;
 	case 27:
 		exit(0);
 		break;
+	case '1':
+		if (enteringAddress)
+			IPAdress.append("1");
+		break;
+	case '2':
+		if (enteringAddress)
+			IPAdress.append("2");
+		break;
+	case '3':
+		if (enteringAddress)
+			IPAdress.append("3");
+		break;
+	case '4':
+		if (enteringAddress)
+			IPAdress.append("4");
+		break;
+	case '5':
+		if (enteringAddress)
+			IPAdress.append("5");
+		break;
+	case '6':
+		if (enteringAddress)
+			IPAdress.append("6");
+		break;
+	case '7':
+		if (enteringAddress)
+			IPAdress.append("7");
+		break;
+	case '8':
+		if (enteringAddress)
+			IPAdress.append("8");
+		break;
+	case '9':
+		if (enteringAddress)
+			IPAdress.append("9");
+		break;
+	case '0':
+		if (enteringAddress)
+			IPAdress.append("0");
+		break;
+	case '.':
+		if (enteringAddress)
+			IPAdress.append(".");
+		break;
 	// need to read input for robot name, inheritanted from GameInputInterface
 	case 'a':
-		name.append("a");
+		if (enteringName)
+			name.append("a");
 		break;
 	case 'b':
-		name.append("b");
+		if (enteringName)
+			name.append("b");
 		break;
 	case 'c':
-		name.append("c");
+		if (enteringName)
+			name.append("c");
 		break;
 	case 'd':
-		name.append("d");
+		if (enteringName)
+			name.append("d");
 		break;
 	case 'e':
-		name.append("e");
+		if (enteringName)
+			name.append("e");
 		break;
 	case 'f':
-		name.append("f");
+		if (enteringName)
+			name.append("f");
 		break;
 	case 'g':
-		name.append("g");
+		if (enteringName)
+			name.append("g");
 		break;
 	case 'h':
-		name.append("h");
+		if (enteringName)
+			name.append("h");
 		break;
 	case 'i':
-		name.append("i");
+		if (enteringName)
+			name.append("i");
 		break;
 	case 'j':
-		name.append("j");
+		if (enteringName)
+			name.append("j");
 		break;
 	case 'k':
-		name.append("k");
+		if (enteringName)
+			name.append("k");
 		break;
 	case 'l':
-		name.append("l");
+		if (enteringName)
+			name.append("l");
 		break;
 	case 'm':
-		name.append("m");
+		if (enteringName)
+			name.append("m");
 		break;
 	case 'n':
-		name.append("n");
+		if (enteringName)
+			name.append("n");
 		break;
 	case 'o':
-		name.append("o");
+		if (enteringName)
+			name.append("o");
 		break;
 	case 'p':
-		name.append("p");
+		if (enteringName)
+			name.append("p");
 		break;
 	case 'q':
-		name.append("q");
+		if (enteringName)
+			name.append("q");
 		break;
 	case 'r':
-		name.append("r");
+		if (enteringName)
+			name.append("r");
 		break;
 	case 's':
-		name.append("s");
+		if (enteringName)
+			name.append("s");
 		break;
 	case 't':
-		name.append("t");
+		if (enteringName)
+			name.append("t");
 		break;
 	case 'u':
-		name.append("u");
+		if (enteringName)
+			name.append("u");
 		break;
 	case 'v':
-		name.append("v");
+		if (enteringName)
+			name.append("v");
 		break;
 	case 'w':
-		name.append("w");
+		if (enteringName)
+			name.append("w");
 		break;
 	case 'x':
-		name.append("x");
+		if (enteringName)
+			name.append("x");
 		break;
 	case 'y':
-		name.append("y");
+		if (enteringName)
+			name.append("y");
 		break;
 	case 'z':
-		name.append("z");
+		if (enteringName)
+			name.append("z");
 		break;
 	case ' ':
-		name.append(" ");
+		if (enteringName)
+			name.append(" ");
 		break;
 	default:
 		break;

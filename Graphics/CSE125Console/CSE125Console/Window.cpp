@@ -188,37 +188,6 @@ void Window::initialize(void)
 	object->type = BORDER;
 	factory->battlemode->PushEnvironmentNode(object);
 
-	/*
-	object = Model3DFactory::generateObjectWithType(CHESSBOARD);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, -2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = CHESSBOARD;
-	factory->battlemode->PushEnvironmentNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(LEGO);
-	object->shader_type = REGULAR_SHADER;
-	object->localTransform.position = Vector3(0, 2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = LEGO;
-	factory->battlemode->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(FLOOR_SIMPLE);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = FLOOR_SIMPLE;
-	factory->battlemode->PushEnvironmentNode(object);
-	*/
 	
 	object = Model3DFactory::generateObjectWithType(STONEHENGE);
 	object->shader_type = REGULAR_SHADER;
@@ -274,7 +243,6 @@ void Window::idleCallback()
 void Window::processNormalKeys(unsigned char key, int x, int y) 
 {
 	g_pCore->i_pInput->VProcessKeyInput(key, x, y);
-	factory->switchView(key);
 	factory->keyboardFunc(key, x, y);
 	g_pCore->pGameView = factory->currentView;
 	g_pCore->i_pInput = factory->currentInput;
@@ -306,6 +274,7 @@ void Window::processNormalKeysUp(unsigned char key, int x, int y)
 }
 
 void Window::processSpecialKeys(int key, int x, int y) {
+	factory->switchView(key);
 	g_pCore->i_pInput->VProcessSpecialKey(key, x, y);
 }
 
@@ -350,9 +319,7 @@ void Window::displayCallback() {
 
 	// play the background music through out the whole game, may change with the view
 	if (factory->currentView == factory->menumode || factory->currentView == factory->defaultView){
-		//cout << "enter main menu  " << endl;
 		if (factory->menumode->playPressed){
-			//cout << "entering loading " << endl;
 			soundObject->playLoading();
 		}
 		else{
@@ -362,12 +329,14 @@ void Window::displayCallback() {
 
 	// if in build mode play build view background music
 	else if (factory->currentView == factory->buildmode){
-		//cout << "enter build view  " << endl;
 		soundObject->playBuildViewBackground();
 	}
 	else if (factory->currentView == factory->battlemode){
-		//cout << "enter battle view " << endl;
 		soundObject->playMusic();
+	}
+	// play the ending sound
+	else if (factory->currentView == factory->gameOver){
+		soundObject->playEnding();
 	}
 
 	//object->localTransform.rotation.y = counter;

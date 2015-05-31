@@ -2,6 +2,7 @@
 #define __ShaderSystemDef__
 
 enum ModelType{
+	MODELS_BEGIN = 99,
 	//blocks
 	BasicCube = 100,
 	CrystalCube = 101,

@@ -69,7 +69,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								 Window::factory->gameOver->numTakedowns = Window::factory->score->getTakedowns();
 								 Window::factory->gameOver->myRank = Window::factory->score->getRank();
 								 ///end
-								 Window::factory->switchView('5');
+								 Window::factory->switchView(GLUT_KEY_F5);
 							 }
 							 ////end check
 
@@ -97,8 +97,12 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									  }
 								  }
 
-								  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank, s->gold[myID]);
-								  Window::factory->buildmode->money = s->gold[myID];
+								  if (Window::factory->viewmode == viewType::BUILD) {
+									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank);
+								  }
+								  else {
+									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank, s->gold[myID]);
+								  }
 								  /////// end GUI
 
 								  break;
@@ -129,40 +133,46 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									  // printf("collision event received\n");
 									   EventCollision * h = (EventCollision *)event;
 									   switch (h->collision_type){
-											//bullet player
+										   //bullet player
 									   case 0:{
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 0);
 												  f->static_object = true;
+												  f->lifeTime = 5;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  break;
 									   }
-											//player player
+										   //player player
 									   case 1:{
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 1);
 												  f->static_object = true;
+												  f->lifeTime = 5;
+
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  break;
 									   }
-											//player wall
+										   //player wall
 									   case 2:{
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 2);
 												  f->static_object = true;
+												  f->lifeTime = 5;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  break;
 									   }
-											//bullet wall
+										   //bullet wall
 									   case 3:{
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 3);
 												  f->static_object = true;
+												  f->lifeTime = 5;
+
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  break;
 									   }
-											//explorsion
-											case 4:
-												break; 
+										   //explorsion
+									   case 4:{
+												  break;
 									   }
-									   break;
-
+										   break;
+									   }
 		}
 		case TEventWaiting:{
 							  // printf("waiting event received\n");
@@ -186,12 +196,12 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								 g_pCore->pGameView->PushEnvironmentNode(hill);
 									*/
 								 //
-								 
+								 /*
 								 Fire* f = new Fire(h->x, h->y, h->z, 0, 2);
 								 f->static_object = true;
 								 f->lifeTime = 30;
-								 
-								 g_pCore->pGameView->PushEnvironmentNode(f);
+								 */
+								 //g_pCore->pGameView->PushEnvironmentNode(f);
 
 								 break;
 
@@ -200,6 +210,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventPlayerHillUpdate:{
 							  // printf("Event player hill update\n");
 							   //
+							   /*
 							   EventPlayerHillUpdate * h = (EventPlayerHillUpdate *)event;
 							   //particle
 							   for each (GeoNode* node in g_pCore->pGameView->NodeList)
@@ -210,10 +221,10 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									   Fire* f = new Fire(node->localTransform.position.x, node->localTransform.position.y + 4, node->localTransform.position.z, 0, 3);
 									   f->static_object = true;
 									   f->lifeTime = 5;
-									   g_pCore->pGameView->PushEnvironmentNode(f);
+									  //g_pCore->pGameView->PushEnvironmentNode(f);
 								   }
 							   }
-
+							   */
 							   break;
 
 		}

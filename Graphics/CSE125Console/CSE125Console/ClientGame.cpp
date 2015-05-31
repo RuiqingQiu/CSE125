@@ -110,13 +110,13 @@ GameInfoPacket* ClientGame::update()
 		case INIT_BUILD:{
 			cout << "in init build" << endl;
 			Window::factory->menumode->isLoading = false;
-			Window::factory->switchView('1');
+			Window::factory->switchView(GLUT_KEY_F1);
 			Window::factory->battlemode->updateName(g_pCore->i_pInput->name);
 			break;
 		}
 		case INIT_BATTLE:{
 			cout << "in init battle" << endl;
-			Window::factory->switchView('2');
+			Window::factory->switchView(GLUT_KEY_F2);
 			Window::factory->buildmode->show_time = false;
 			break;
 		}
@@ -133,8 +133,8 @@ GameInfoPacket* ClientGame::update()
 		//client send build package if they havent done that, time's up
 		case BUILD_REQUEST:{
 			//send build packet
-			g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList, Window::factory->buildmode->money);
-			Window::factory->switchView('4');
+			g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList, Window::factory->score->money);
+			Window::factory->switchView(GLUT_KEY_F4);
 			//Window::build_to_battle = true;
 			break;
 		}

@@ -13,6 +13,8 @@ public:
 	~GameInputInterface();
 	string name; // store the robot name
 	string IPAdress; // store the client IP address
+	bool enteringName;
+	bool enteringAddress;
 
 	virtual void VProcessKeyInput(unsigned char key, int x, int y);
 	virtual void VProcessSpecialKey(int key, int x, int y);

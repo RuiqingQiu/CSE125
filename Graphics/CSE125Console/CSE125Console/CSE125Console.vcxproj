@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="background.h" />
     <ClInclude Include="block.h" />
+    <ClInclude Include="blockDescriptions.h" />
     <ClInclude Include="buildTimer.h" />
     <ClInclude Include="buildView.h" />
     <ClInclude Include="buildViewInput.h" />
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClCompile Include="background.cpp" />
     <ClCompile Include="block.cpp" />
+    <ClCompile Include="blockDescriptions.cpp" />
     <ClCompile Include="buildTimer.cpp" />
     <ClCompile Include="buildView.cpp" />
     <ClCompile Include="buildViewInput.cpp" />

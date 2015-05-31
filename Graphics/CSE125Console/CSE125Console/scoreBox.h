@@ -1,6 +1,6 @@
 #pragma once
 #include "guiItem.h"
-#include "numbers.h"
+#include "numDisplay.h"
 
 #define MAX_DIGITS 2
 
@@ -20,6 +20,7 @@ public:
 	void rePosition(int x, int y, int w, int h);
 
 	void updateScore(int d, int h, int r, int m);
+	void updateScore(int d, int h, int r);
 	int getDeaths();
 	int getTakedowns();
 	int getRank();
@@ -31,16 +32,24 @@ public:
 	static double spacing;
 	static double sizing;
 
+	int money;
+
 private:
 	int deaths;
-	int hits;
+	int kills;
 	int rank;
-	int money;
 
 	void createNumbers();
 
 	numbers * deathDigits[MAX_DIGITS];
 	numbers * hitDigits[MAX_DIGITS];
 	numbers * rankDigits[MAX_DIGITS];
+
+	numDisplay * moneyDisplay;
+	numDisplay * deathDisplay;
+	numDisplay * killsDisplay;
+	numDisplay * rankDisplay;
+
+	vector<numDisplay *> numbers;
 };
 

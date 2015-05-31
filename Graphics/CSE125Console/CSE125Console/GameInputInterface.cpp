@@ -7,6 +7,8 @@ GameInputInterface::GameInputInterface()
 	// initialize the string
 	name = "";
 	IPAdress = "";
+	enteringName = false; 
+	enteringAddress = false;
 }
 
 

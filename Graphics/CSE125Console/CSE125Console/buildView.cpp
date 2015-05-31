@@ -21,7 +21,6 @@ buildView::~buildView() {
 }
 
 void buildView::init() {
-	money = 40;
 	pViewCamera->usePolar = true;
 	show_time = true;
 	//updateview = false;
@@ -72,17 +71,16 @@ void buildView::createText() {
 	//text displays
 	//time.jpg dimensions: 800x100
 	//"fullscreen" 1980 width ratio, 1980/2 - 200 = 740  740/1920 
-	timer = new battleTimer(width*(740 / 1920.0), height - 60, 500, 50, false, false);
+	timer = new battleTimer(width*(740.0 / 1920.0), height - 60, 500, 50, false, false);
 	timer->setScaling(true, false, width, height);
 	//guiItems.push_back(timer);
 
-	//text box
-	//textbox.jpg dimensions: 600x400
-	//guiItems.push_back(score);
+	noMoney = new guiItem("text/money.jpg", width*(790.0 / 1920.0), height - 120, 400, 50, false, false);
+	noMoney->setScaling(true, false, width, height);
+	//guiItems.push_back(noMoney);
 
-	//blocks left display
-	blocksDisplay = new numDisplay("text/blocks.jpg", 20, height - 150, 900 * 0.25, 25, true, false);
-	guiItems.push_back(blocksDisplay);
+	descriptions = new blockDescriptions(width - 520, 710, 500, 200, false, true);
+	guiItems.push_back(descriptions);
 
 	//grid textures
 	setTexture("uiItem/images/buildModeGrid.jpg", &grids[0]);
@@ -101,7 +99,7 @@ void buildView::createButtons() {
 	int scale = 4;
 	
 	//scroll box
-	//scrollbox jpg dimensions: 1000x1600px
+	//scrollbox jpg dimensions: 1000x1200px
 	scroll = new scrollBox(width - 520, 100, 0.5);
 	buttons.push_back(scroll);
 
@@ -159,21 +157,17 @@ void buildView::createButtons() {
 
 void buildView::VUpdate() {
 	gui::VUpdate();
-
 	timer->update();
 
-	//not using this anymore
-	/*
-	if (!updateview && isCurrentView){// || true) { //use true to disable timer
-		timer->start = std::clock();
+	if (moneyFlag) {
+		moneyDuration += 0.1;
 	}
-	updateview = isCurrentView;
-	*/
-	//blocksLeft = MAX_BLOCKS - NodeList.size();
-	blocksDisplay->displayValue = money;
+
+	if (moneyDuration >= maxDuration) {
+		moneyDuration = 0;
+		moneyFlag = false;
+	}
 }
-
-
 
 void buildView::VOnRender() {
 	GameView::highlight_first_pass();
@@ -262,6 +256,7 @@ void buildView::VOnRender() {
 	set2d();
 	drawAllItems();
 	if (show_time) timer->draw();
+	if (moneyFlag) noMoney->draw();
 	set3d();
 	
 }
@@ -296,6 +291,7 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 
 	if (selectedType != scroll->currentSelection) {
 		selectedType = scroll->currentSelection;
+		descriptions->currDescription = selectedType;
 		setTemplate();
 	}
 	setCurrentNode(false);
@@ -377,15 +373,6 @@ void buildView::clearConstraints() {
 	}
 }
 
-viewType buildView::checkTimeOut() {
-	/*
-	if (timer->timeLeft < 0) {
-		//return viewType::BATTLE;
-	}
-	*/
-	return viewType::BUILD;
-}
-
 void buildView::setCurrentNode(bool adding) {
 	int type = selectedType;
 
@@ -420,6 +407,12 @@ void buildView::setTemplate() {
 		NodeList.clear();
 		//add the selected template robot build
 		if (selectedType == TEMPLATE_1) {
+			int templateCost = 0;
+			if (money - templateCost < 0) {
+				moneyFlag = true;
+				return;
+			}
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_BASIC);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -491,6 +484,12 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon4);
 		}
 		else if (selectedType == TEMPLATE_2) {
+			int templateCost = 0;
+			if (money - templateCost < 0) {
+				moneyFlag = true;
+				return;
+			}
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_GLOWING);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -570,6 +569,12 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon4);
 		}
 		else if (selectedType == TEMPLATE_3) {
+			int templateCost = 0;
+			if (money - templateCost < 0) {
+				moneyFlag = true;
+				return;
+			}
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -657,6 +662,12 @@ void buildView::setTemplate() {
 
 		}
 		else if (selectedType == TEMPLATE_4) {
+			int templateCost = 0;
+			if (money - templateCost < 0) {
+				moneyFlag = true;
+				return;
+			}
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_BLACK);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -713,6 +724,12 @@ void buildView::setTemplate() {
 			PushGeoNode(weapon3);
 		}
 		else {
+			int templateCost = 0;
+			if (money - templateCost < 0) {
+				moneyFlag = true;
+				return;
+			}
+			money = money - templateCost;
 			//robo base
 			GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_CRYSTAL);
 			cube->localTransform.position = Vector3(0, 0, 0);
@@ -791,6 +808,7 @@ void buildView::setTemplate() {
 		
 		money += NodeList[0]->cost;
 		if (money - cube->cost < 0) {
+			moneyFlag = true;
 			money -= NodeList[0]->cost;
 			return;
 		}
@@ -805,6 +823,7 @@ void buildView::setTemplate() {
 		GeoNode * object = Model3DFactory::generateObjectWithType(selectedType);
 		money += NodeList[1]->cost;
 		if (money - object->cost < 0) {
+			moneyFlag = true;
 			money -= NodeList[1]->cost;
 			return;
 		}
@@ -855,6 +874,7 @@ void buildView::addNode() {
 			return;
 		}
 		if (money - currentNode->cost < 0) {
+			moneyFlag = true;
 			return;
 		}
 		currentNode->setShaderType(NORMAL_SHADER);

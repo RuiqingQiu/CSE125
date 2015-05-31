@@ -24,6 +24,7 @@ public:
 	numDisplay(string filename, int x, int y, int w, int h,int mainmenuLoading); // loading view constructor
 	numDisplay(string filename, int x, int y, int w, int h, bool f);
 	numDisplay(string filename, int x, int y, int w, int h, bool xf, bool yf);
+	numDisplay(string filename, int x, int y, int w, int h, bool xf, bool yf, int digits);
 	~numDisplay();
 
 	virtual void update();
@@ -35,7 +36,7 @@ public:
 
 protected:
 
-	virtual void createNumbers();
+	virtual void createNumbers(int digits);
 
 	vector<numbers *> digits;
 	int num_digits;
