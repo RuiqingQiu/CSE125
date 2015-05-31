@@ -190,7 +190,6 @@ GameInfoPacket* ClientGame::update()
 									 g->packet_types = packet.packet_type;
 								 }
 							 }
-							 return g;
 							 break;
 				}
 		   /*

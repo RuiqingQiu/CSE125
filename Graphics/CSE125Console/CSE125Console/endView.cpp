@@ -40,7 +40,7 @@ void endView::VUpdate() {
 }
 
 void endView::createDisplay() {
-	img = new background("gameOver.jpg", width, height);
+	img = new background("gameOver1.jpg", width, height);
 	guiItems.push_back(img);
 
 	deaths = new numDisplay("text/emptyNum.png", (width / 2.0)+100, (height / 2.0)-50, 100, 100);

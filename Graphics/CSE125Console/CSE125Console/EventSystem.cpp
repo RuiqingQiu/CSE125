@@ -34,7 +34,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventDeath:{
 							 //Switch back to game view
 							 if (((EventDeath*)event)->death_id == (g_pCore->pPlayer->playerid)){
-								 printf("Death Event has been received \n");
+								 //printf("Death Event has been received \n");
 
 								 // switch to build view
 								 Window::factory->delayedRebuild();
@@ -51,13 +51,13 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 							 break;
 		}
 		case TEventParticle:{
-								printf("particle event received \n");
+								//printf("particle event received \n");
 								//Window::factory->battlemode->PushGeoNode();
 								break;
 		}
 		case TEventTimer:{
 							 EventTimer * t = (EventTimer *)event;
-							 printf("time event received \n");
+							 //printf("time event received \n");
 							 //CHANGE BATTLE MODE ONLY
 							 Window::factory->battlemode->timer->updateTime(t->time);
 							 /////// end GUI
@@ -81,7 +81,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		}
 		case TEventScoreboard:{
 								  EventScoreboard * s = (EventScoreboard *) event;
-								  printf("scoreboard event received\n");
+								 // printf("scoreboard event received\n");
 
 								  //Change score variables in battle mode and build mode
 								  int myID = g_pCore->pPlayer->playerid;
@@ -114,7 +114,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		case TEventUpdateHealth:{
 									//Update health bar
 									EventHealth * h = (EventHealth *) event;
-									printf("health event received\n");
+									//printf("health event received\n");
 
 									//this is for the GUI display update
 									if (h->player1id == g_pCore->pPlayer->playerid) {
@@ -133,7 +133,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 		}
 		case TEventCollisionHappen:{
-									   printf("collision event received\n");
+									  // printf("collision event received\n");
 									   EventCollision * h = (EventCollision *)event;
 									   switch (h->collision_type){
 										   //bullet player
@@ -178,17 +178,17 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									   }
 		}
 		case TEventWaiting:{
-							   printf("waiting event received\n");
+							  // printf("waiting event received\n");
 							   break;
 
 		}
 		case TEventEmergency:{
-								 printf("emergency event received\n");
+								// printf("emergency event received\n");
 								 break;
 
 		}
 		case TEventHillUpdate:{
-								 printf("hill update received\n");
+								// printf("hill update received\n");
 								 EventHillUpdate * h = (EventHillUpdate *)event;
 								 /*
 								 Model3D* hill = Model3DFactory::generateObjectWithType(GlowingCube);
@@ -211,7 +211,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 		}
 		//For displaying effect for user in the zone to receive money
 		case TEventPlayerHillUpdate:{
-							   printf("Event player hill update\n");
+							  // printf("Event player hill update\n");
 							   //
 							   /*
 							   EventPlayerHillUpdate * h = (EventPlayerHillUpdate *)event;
@@ -232,7 +232,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 		}
 		case TEventDefault:{
-							   printf("Event default, should not entered\n");
+							   //printf("Event default, should not entered\n");
 							   break;
 
 		}

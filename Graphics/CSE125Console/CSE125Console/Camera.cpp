@@ -4,7 +4,7 @@
 Camera::Camera()
 {
 	//localTransform = Transform();
-	rotation = new Vector3(-30, 0, 0);
+	rotation = new Vector3(20, 0, 0);
 	IsFollowingEnabled = true;
 
 	distance = 6.0f;
@@ -110,8 +110,8 @@ void Camera::UpdateCamera()
 	this->position->negate();
 	this->rotation->negate();
 
-	*this->position = VectorLerp(position, newposition, 1, false);
-	*this->rotation = VectorLerp(rotation, newrotation, 1, true);
+	*this->position = VectorLerp(position, newposition, 0.8, false);
+	*this->rotation = VectorLerp(rotation, newrotation, 0.8, true);
 
 	this->position->negate();
 	this->rotation->negate();
