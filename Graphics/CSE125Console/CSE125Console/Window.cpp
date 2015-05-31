@@ -167,7 +167,7 @@ void Window::initialize(void)
 
 	
 	object = Model3DFactory::generateObjectWithType(DESERT);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -221,7 +221,7 @@ void Window::initialize(void)
 	*/
 	
 	object = Model3DFactory::generateObjectWithType(STONEHENGE);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = REGULAR_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
