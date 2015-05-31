@@ -20,7 +20,7 @@ ServerCore::~ServerCore()
 
 void ServerCore::serverLoop()
 {
-	gameLogic->numPlayers = 3;
+	gameLogic->numPlayers = 1;
 	cout << "Game requires " << gameLogic->numPlayers << " players." << endl;
 	int currNumPlayers = 0;
 	while (true)
@@ -115,7 +115,7 @@ void ServerCore::serverLoop()
 		//cout << "Sleep the frame." << endl;
 		//unsigned elapsed = clock() - t0;
 		////TimeFrame::frameSleep(timeFrame - elapsed);
-		timeFrame->frameSleep(33 - timeFrame->getElapsedTime()); //;
+		timeFrame->frameSleep(40 - timeFrame->getElapsedTime()); //;
 		////cout << elapsed << endl;
 		//cout << "Frame has completed sleeping." << endl;
 	}

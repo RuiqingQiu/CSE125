@@ -51,10 +51,12 @@ void Hill::createParticles(std::vector<GameObj*>* gameObjs)
 {
 	for (int i = 0; i < NUM_OF_PARTICLES; i++)
 	{
-		GameObj* object = new GOBox(x + rand() % radius *((rand() % 2) ? 1 : -1), rand() % field_height*((rand() % 2) ? 1 : -1), rand() % radius*((rand() % 2) ? 1 : -1), 0, 0, 0, 1, 0.1, 0.01, 0.01, 0.01);
-		object->setBlockType(TronWheel);
+		GameObj* object = new GOBox(x + rand() % radius *((rand() % 2) ? 1 : -1), rand() % field_height + 0.1, rand() % radius*((rand() % 2) ? 1 : -1),0, 0, 0, 1, .001, 1, 1, 1);
+        object->setBlockType(THREEBYTHREE_GLOWING);
+        object->setMass(0.001);
 		particles.push_back(object);
 		gameObjs->push_back(object);
+        std::cout << "created particles" << std::endl;
 	}
 }
 
@@ -66,15 +68,29 @@ void Hill::updateParticles()
 		double xx = (*it)->getX();
 		double yy = (*it)->getY();
 		double zz = (*it)->getZ();
-
-		if (sqrt((xx - x)*(xx - x) + (zz - z)*(zz - z)) > radius)
+        double distance = sqrt((xx - x)*(xx - x) + (zz - z)*(zz - z));
+        int randY = rand() % field_height + 0.1;
+        btVector3 direction(x - xx + 0.001, randY - yy, z - zz);
+        if (direction.getY() == 0) {
+            direction.setY(direction.getY() + 0.001);
+        }
+        direction.normalize();
+		if (distance > radius)
 		{
-			int randY = rand() % field_height*((rand() % 2) ? 1 : -1);
-			btVector3 direction(x - xx, randY - yy, x - xx);
-			direction.normalize();
-			double force = 5;
-			(*it)->getRigidBody()->applyCentralForce(direction*force);
+
+			double force = 0.05;
+            //std::cout << "updated particles with force" << std::endl;
+            btVector3 correctForce = distance*direction*force;
+            (*it)->getRigidBody()->applyCentralForce(correctForce);
 		}
+        else 
+        {
+            double force = 0.1;
+            //std::cout << "updated particles with force" << std::endl;
+            btVector3 correctForce = -direction*force;
+            (*it)->getRigidBody()->applyCentralForce(correctForce);
+
+        }
 	}
 
 }

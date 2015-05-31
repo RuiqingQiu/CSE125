@@ -17,7 +17,7 @@ RangedWeapon::RangedWeapon(int type)
 	case Railgun:
 	{
 		range = FAR_RANGED;
-		damage = 60;
+		damage = 120;
 		attackSpeed = 1.5;
 		splash = 1;
 
@@ -31,7 +31,7 @@ RangedWeapon::RangedWeapon(int type)
 	case BGun:
 	{
 				 range = MEDIUM_RANGED;
-				 damage = 10;
+				 damage = 50;
 				 attackSpeed = 4;
 				 splash = 1;
 
@@ -63,7 +63,7 @@ RangedWeapon::RangedWeapon(int type)
 	default:
 	{
 		range = FAR_RANGED;
-		damage = 60;
+		damage = 120;
 		attackSpeed = 1;
 		splash = 4;
 

@@ -25,9 +25,9 @@
 #include "SpawnPoint.h"
 
 #define FIELD_WIDTH 100
-#define FIELD_HEIGHT 100
+#define FIELD_HEIGHT 40
 #define INSTANT_KILL 1
-#define UPDATE_HILL 40
+#define UPDATE_HILL 30
 #define NUM_OF_CONSTRAINTS 1
 
 

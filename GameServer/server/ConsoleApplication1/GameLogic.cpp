@@ -13,7 +13,7 @@ GameLogic::GameLogic()
 	damageSystem = new DamageSystem(INSTANT_KILL);
 	scoreboard = new Scoreboard();
 	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
-	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT, FIELD_WIDTH/8, 2);
+	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT/4, FIELD_WIDTH/8, 2);
 	counter = 0;
 	spawnPoint = new SpawnPoint(FIELD_WIDTH);
 	dmgDealtArr[4] = { nullptr };
@@ -93,6 +93,14 @@ int GameLogic::gameStart(){
 	hill->createParticles(&gameObjs);
 
 	gamePhysics->initWorld(&gameObjs);//, &objCollisionPair);
+    vector<GameObj*>::iterator it;
+    for (it = gameObjs.begin(); it != gameObjs.end(); ++it) {
+        if ((*it)->getBlockType() == THREEBYTHREE_GLOWING) {
+            (*it)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+        }
+    }
+
+
 	//cout << "end of init world" << endl;
 	vector<ObjectEvents*>::iterator iter;
 	for (iter = buildList.begin(); iter != buildList.end(); iter++)
@@ -187,9 +195,7 @@ int GameLogic::gameStart(){
 		{
 			if ((*it)->getIsWheel())
 			{
-				cout << "setting wheel type robot/wheel: " << (*it)->getBlockType() << endl;
 				robot->setWheelType((*it)->getBlockType());
-				cout << "setting wheel type robot/wheel: " << robot->getWheelType() <<" / " << (*it)->getBlockType() << endl;
 
 			}
 			else
@@ -399,6 +405,7 @@ unsigned int GameLogic::gameLoop (){
 	}
 
 
+ 
 	if (lastTime != (int) (countDown->getCurrentTime()/1000))
 	{
 		lastTime = (int) (countDown->getCurrentTime()/1000);
@@ -427,7 +434,7 @@ unsigned int GameLogic::gameLoop (){
 			createHillUpdateEvent();
 		}
 
-		hill->updateParticles();
+
 
 		++secondCounter;
 		if (secondCounter >= 3)
@@ -441,6 +448,8 @@ unsigned int GameLogic::gameLoop (){
 		GETime* et = new GETime(lastTime);
 		gameEventList.push_back(et);
 	}
+
+    hill->updateParticles();
 
 
 	postPhyLogic();
@@ -974,8 +983,11 @@ int GameLogic::breakConstraints(GameObj* g)
 		r->setParts(new_parts);
 	}
 	//cout << "Impulse: " << pt->getAppliedImpulse() << endl;
-	btVector3 randomForce((*dist)(generator), (*dist)(generator), (*dist)(generator));
+    btVector3 randomForce((*dist)(generator), (*dist)(generator), (*dist)(generator));
 	//cout << "randomForce x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
+    if (randomForce.getY() == 0) {
+        randomForce.setY(randomForce.getY() + 0.001);
+    }
 	randomForce.normalize();
 	//cout << "randomForce normalized x y z: " << randomForce.getX() << " , " << randomForce.getY() << " , " << randomForce.getZ() << endl;
 	g->getRigidBody()->applyCentralImpulse(randomForce * 400);

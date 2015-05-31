@@ -49,43 +49,42 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 
 void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)//, std::map< btCollisionObject*, GameObj*>* objcpair)
 {
-	//dynamicsWorld->getSolverInfo().m_numIterations = 5;
-	dynamicsWorld->setGravity(btVector3(0,GRAVITY,0));
-	std::vector<GameObj*>::iterator it;
-	for (it = gameObj->begin(); it != gameObj->end(); ++it)
-	{
-		if ((*it)->getIsRobot() != 0)
-		{
-			((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3);//, objcpair);
+    //dynamicsWorld->getSolverInfo().m_numIterations = 5;
+    dynamicsWorld->setGravity(btVector3(0, GRAVITY, 0));
+    std::vector<GameObj*>::iterator it;
+    for (it = gameObj->begin(); it != gameObj->end(); ++it) {
+        if ((*it)->getIsRobot() != 0) {
+            ((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3);//, objcpair);
 
-		}
-		/*
-		else
-		{
-			(*it)->createRigidBody(objcpair);
-			dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
-		}*/
-	}
+        }
+        /*
+        else
+        {
+        (*it)->createRigidBody(objcpair);
+        dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
+        }*/
+    }
 
-	for (it = gameObj->begin(); it != gameObj->end(); ++it)
-	{
-		if ((*it)->getIsRobot() != 0)
-		{
-			//((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
+    for (it = gameObj->begin(); it != gameObj->end(); ++it) {
+        if ((*it)->getIsRobot() != 0) {
+            //((Robot *)(*it))->createVehicle(dynamicsWorld, 3, 1, 3, objcpair);
 
-		}
-		
-		else
-		{
-			(*it)->createRigidBody();// objcpair);
-			//if ((*it)->getBlockType() == BATTLEFIELD || (*it)->getBlockType() == WALL)
-			//{
-			//	(*it)->getRigidBody()->setLinearFactor(btVector3(0, 0, 0));
-			//	(*it)->getRigidBody()->setAngularFactor(btVector3(0, 0, 0));
-			//}
-		    dynamicsWorld->addRigidBody((*it)->getRigidBody());//, COL_OBJECT, objectCollisions);
-		}
-	}
+        }
+
+        else {
+            (*it)->createRigidBody();// objcpair);
+
+            //if ((*it)->getBlockType() == BATTLEFIELD || (*it)->getBlockType() == WALL)
+            //{
+            //	(*it)->getRigidBody()->setLinearFactor(btVector3(0, 0, 0));
+            //	(*it)->getRigidBody()->setAngularFactor(btVector3(0, 0, 0));
+            //}
+           //, COL_OBJECT, objectCollisions);
+            dynamicsWorld->addRigidBody((*it)->getRigidBody());
+        }
+        
+    }
+
 	dynamicsWorld->setInternalTickCallback((btInternalTickCallback)collisionCallback, &dynamicsWorld, (void*)1);
 
 }
