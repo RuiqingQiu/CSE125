@@ -72,7 +72,7 @@ void mainMenu::createButtons() {
 	// the loading view after click on play button
 	loading = new loadDisplay(width*0.43, height*0.3, 250, 250);
 
-	backimg = new background("background1.jpg", width, height);
+	backimg = new background("background3.jpg", width, height);
 	guiItems.push_back(backimg); // push in to the guiTexts vector
 	//playersReady = new numDisplay("text/playersReady.jpg", width*(760.0 / 1920.0), height - 150, 400, 50,1); 
 	
