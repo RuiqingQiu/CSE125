@@ -97,7 +97,7 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		//suicide
 		g_pCore->pGamePacketManager->SendSuicide(g_pCore->pPlayer->playerid);
 	}
-	else if (key == 'b'){
+	else if (key == 'q'){
 		g_pCore->pGamePacketManager->SendSpeedUp(g_pCore->pPlayer->playerid);
 	}
 	/*

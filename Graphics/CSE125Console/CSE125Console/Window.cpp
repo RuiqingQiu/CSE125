@@ -141,6 +141,7 @@ void Window::initialize(void)
 	//g_pCore->skybox = new SkyBox("skyboxes/space");
 	//g_pCore->skybox = new SkyBox("skyboxes/clouds");
 	g_pCore->skybox = new SkyBox("skyboxes/desert");
+	//g_pCore->skybox = new SkyBox("skyboxes/city");
 
 	//g_pCore->pPlayer->playerid = 1;
 	GameView* view = new GameView();
@@ -167,7 +168,7 @@ void Window::initialize(void)
 
 	
 	object = Model3DFactory::generateObjectWithType(DESERT);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -178,7 +179,7 @@ void Window::initialize(void)
 	
 	
 	object = Model3DFactory::generateObjectWithType(BORDER);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = REGULAR_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -187,41 +188,9 @@ void Window::initialize(void)
 	object->type = BORDER;
 	factory->battlemode->PushEnvironmentNode(object);
 
-	/*
-	object = Model3DFactory::generateObjectWithType(CHESSBOARD);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, -2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = CHESSBOARD;
-	factory->battlemode->PushEnvironmentNode(object);
-	
-	object = Model3DFactory::generateObjectWithType(LEGO);
-	object->shader_type = REGULAR_SHADER;
-	object->localTransform.position = Vector3(0, 2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = LEGO;
-	factory->battlemode->PushEnvironmentNode(object);
-	*/
-	/*
-	object = Model3DFactory::generateObjectWithType(FLOOR_COMPLEX);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = FLOOR_COMPLEX;
-	factory->battlemode->PushEnvironmentNode(object);
-	*/
 	
 	object = Model3DFactory::generateObjectWithType(STONEHENGE);
-	object->shader_type = NORMAL_SHADER;
+	object->shader_type = REGULAR_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -242,8 +211,8 @@ void Window::initialize(void)
 	//Game start with the menu mode
 
 	//gt->displayTest5(factory->battlemode);
-	*g_pCore->pGameView->pViewCamera->position = Vector3(0, 0, -10);
-
+	*g_pCore->pGameView->pViewCamera->position = Vector3(0, -40 , -100);
+	*g_pCore->pGameView->pViewCamera->rotation = Vector3(20, 0 ,0);
 	//Init 6 lights and render them
 	light_system->initLights();
 	light_system->renderLights(factory->battlemode);
@@ -376,7 +345,10 @@ void Window::displayCallback() {
 	//Every frame, first update the objects from server infos
 	GameInfoPacket* p = g_pCore->pGamePacketManager->tryGetGameInfo();
 	
+
 	if (p!=nullptr) {
+		printf("number of game objects: %i\n number of events: %i\n", p->player_infos.size(), p->event_infos.size());
+
 		switch (p->packet_types){
 			case GAME_STATE:{
 				//Update states in the actual battle mode

@@ -170,7 +170,7 @@ bool SkyBox::initSkyBox()
 	faces.push_back("skyboxes/alpine_back.jpg");
 	faces.push_back("skyboxes/alpine_front.jpg");
 	*/
-
+	
 	string concat = skyBoxName + "_left.jpg";
 	faces.push_back(concat);
 	cout << faces[0] << endl;
@@ -184,7 +184,21 @@ bool SkyBox::initSkyBox()
 	faces.push_back(concat);
 	concat = skyBoxName + "_front.jpg";
 	faces.push_back(concat);
-
+	/*
+	string concat = skyBoxName + "_left.tga";
+	faces.push_back(concat);
+	cout << faces[0] << endl;
+	concat = skyBoxName + "_right.tga";
+	faces.push_back(concat);
+	concat = skyBoxName + "_top.tga";
+	faces.push_back(concat);
+	concat = skyBoxName + "_down.tga";
+	faces.push_back(concat);
+	concat = skyBoxName + "_back.tga";
+	faces.push_back(concat);
+	concat = skyBoxName + "_front.tga";
+	faces.push_back(concat);
+	*/
 	cubemapTexture = loadCubemap(faces);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
