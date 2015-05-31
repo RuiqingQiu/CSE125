@@ -115,11 +115,11 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 	vec3 ambAndDiff = lights[0].La * Ka;
 	vec3 spec = vec3(0.0);
 	for(int i = 0; i < MAX_LIGHTS; i++){
-		float attenuation =1000.0 /(4*3.1415926*(pow(length(lights[i].position - Position)*0.4, 2) ) );
+		float attenuation =800.0 /(4*3.1415926*(pow(length(lights[i].position - Position)*0.7, 2) ) );
 		vec3 LightDir = normalize(toObjectLocal * (lights[i].position - Position.xyz));
 		vec3 ViewDir = toObjectLocal * normalize(-Position.xyz);
 		vec3 r = reflect(-LightDir, normal);
-		float sDotN = max(dot(LightDir, normal), 0.1);
+		float sDotN = max(dot(LightDir, normal), 0.0);
     
 		vec3 diffuse = attenuation * (max(0.0,lights[i].Ld * diffR * sDotN));
     
@@ -128,8 +128,20 @@ vec3 phongModel(vec3 normal, vec3 diffR){
 		}
 		ambAndDiff += diffuse;
 	}
-    return ambAndDiff + spec;
 
+	vec3 dirlight = CamRotMatrix*(camera_offset + vec4(-8,10,-5,1));
+	vec3 dirlightdir = normalize(toObjectLocal * (dirlight - Position.xyz));
+	float sDotNdir = max(dot(dirlightdir, normal), 0.0);
+	ambAndDiff += 1.0 * max(0.0,vec3(0.6,0.6,0.6) * diffR * sDotNdir);
+
+	
+	vec3 dirlight2 = CamRotMatrix*(camera_offset + vec4(8,10,5,1));
+	vec3 dirlightdir2 = normalize(toObjectLocal * (dirlight2 - Position.xyz));
+	float sDotNdir2 = max(dot(dirlightdir2, -normal), 0.0);
+	ambAndDiff += 1.0 * max(0.0,vec3(0.6,0.6,0.6) * diffR * sDotNdir2);
+
+    return ambAndDiff + spec;
+	
 }
 
 void main() {
@@ -137,18 +149,18 @@ void main() {
     vec4 texColor = texture2D(tex, TexCoords);
     vec4 shadeColor = vec4(phongModel(normal.xyz, texColor.rgb), 1.0);
 
-	vec3 ViewDir = toObjectLocal * normalize(Position.xyz);
-	vec3 reflectdir2 = reflect(ViewDir,normal);
-	vec3 reflectd = inverse(toObjectLocal)*reflectdir2; 
+	//vec3 ViewDir = toObjectLocal * normalize(Position.xyz);
+	//vec3 reflectdir2 = reflect(ViewDir,normal);
+	//vec3 reflectd = inverse(toObjectLocal)*reflectdir2; 
 
-	vec4 reflectd4 = vec4(reflectd.xyz,1.0);
-	vec4 reflectd4x = inverse(CamRotMatrix)*reflectd4;
+	//vec4 reflectd4 = vec4(reflectd.xyz,1.0);
+	//vec4 reflectd4x = inverse(CamRotMatrix)*reflectd4;
 
-	vec4 cubeMapColor = textureCube(cubeMap, reflectd4x);
+	//vec4 cubeMapColor = textureCube(cubeMap, reflectd4x);
 
 
 
-	 float albedo = 0.35f;
+	 float albedo = 0.23f;
 
 	vec3 n = normalize(inverse(toObjectLocal)*normal.xyz);
 	  
@@ -159,5 +171,5 @@ void main() {
 	   ) ;
 	//shadeColor2 = normalize(shadeColor2);
 
-    gl_FragColor = shadeColor + (vec4(shadeColor2.x,shadeColor2.y,shadeColor2.z,1)*texColor + vec4((cubeMapColor*0.2*texColor).xyz,1)) ;//+ shadeColor;
+    gl_FragColor = shadeColor + vec4(shadeColor2.x,shadeColor2.y,shadeColor2.z,1)*texColor; 
 }

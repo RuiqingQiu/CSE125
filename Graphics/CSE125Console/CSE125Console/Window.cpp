@@ -168,7 +168,7 @@ void Window::initialize(void)
 
 	
 	object = Model3DFactory::generateObjectWithType(DESERT);
-	object->shader_type = REGULAR_SHADER;
+	object->shader_type = BATTLEFIELD_SHADER;
 	object->localTransform.position = Vector3(0, 0, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
@@ -433,5 +433,5 @@ void Window::displayCallback() {
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();
-	//cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
 }
