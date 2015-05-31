@@ -133,7 +133,7 @@ GameInfoPacket* ClientGame::update()
 		//client send build package if they havent done that, time's up
 		case BUILD_REQUEST:{
 			//send build packet
-			g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList, Window::factory->buildmode->money);
+			g_pCore->pGamePacketManager->SendRobotBuild(g_pCore->pPlayer->playerid, g_pCore->pGameView->NodeList, Window::factory->score->money);
 			Window::factory->switchView(GLUT_KEY_F4);
 			//Window::build_to_battle = true;
 			break;

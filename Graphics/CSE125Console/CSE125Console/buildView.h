@@ -29,7 +29,6 @@ public:
 
 	//buildView only
 	void clearConstraints();
-	viewType checkTimeOut();
 	void rotateRobot(float degrees);
 
 	//leave these public for now, 
@@ -41,7 +40,6 @@ public:
 	//bool updateview;
 
 	int money;
-
 private:
 	//intialization helper functions
 	void init();
@@ -69,10 +67,14 @@ private:
 	button * helpButton;
 	button * battleButton;
 	bool templateSet;
-	numDisplay * blocksDisplay;
 
 	Sound* sound; // for sound effect
 
 	blockDescriptions * descriptions;
+
+	guiItem * noMoney;
+	bool moneyFlag = false;
+	float moneyDuration;
+	float maxDuration = 5;
 };
 

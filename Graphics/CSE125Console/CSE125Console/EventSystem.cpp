@@ -97,8 +97,12 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									  }
 								  }
 
-								  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank, s->gold[myID]);
-								  Window::factory->buildmode->money = s->gold[myID];
+								  if (Window::factory->viewmode == viewType::BUILD) {
+									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank);
+								  }
+								  else {
+									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank, s->gold[myID]);
+								  }
 								  /////// end GUI
 
 								  break;
