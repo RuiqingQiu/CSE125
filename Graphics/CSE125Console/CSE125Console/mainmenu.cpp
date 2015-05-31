@@ -210,11 +210,15 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 
 	// if enter IP address is selected
 	if (ipAdrressButton->isSelected(x, height - y)){
+		g_pCore->i_pInput->enteringName = false;
+		g_pCore->i_pInput->enteringAddress = true;
 		displayIp = true;
 	}
 
 	// if enter robot name is selected
 	if (buttons[0]->isSelected(x, height - y)){
+		g_pCore->i_pInput->enteringName = true;
+		g_pCore->i_pInput->enteringAddress = false;
 		displayName = true;
 	}
 

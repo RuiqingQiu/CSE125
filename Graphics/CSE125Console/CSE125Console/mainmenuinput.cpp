@@ -20,7 +20,6 @@ void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 		// but allow the user to delete character
 		if (key == 8){
 			name.pop_back();
-			
 		}
 		return;
 	}
@@ -29,8 +28,12 @@ void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
 	// "backspace is treated as ASCII 8 in opengl"
 	case 8:
 		// if string length is zero, cannot delete anymore
-		if (name.length() != 0){
+		if (name.length() != 0 && enteringName == true){
 			name.pop_back();
+		}
+		//delete ip address character
+		else if (IPAdress.length() != 0 && enteringAddress == true){
+			IPAdress.pop_back();
 		}
 		break;
 	case 27:
