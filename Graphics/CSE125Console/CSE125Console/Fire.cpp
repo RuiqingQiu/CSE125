@@ -14,11 +14,10 @@
 #include <ctime>
 
 int const MAX = 75;
-
+particles particle[MAX];
+GLuint texture[1];
 //int timeCount = 1;
 //int timeToBurn = 500;
-GLuint texture[1];
-particles particle[MAX];
 
 void Fire::LoadGLTextures()
 {
@@ -59,7 +58,7 @@ Fire::Fire(float x_pos, float y_pos, float z_pos, int particlemode, int particle
 Fire::~Fire()
 {
 	//Delete any dynamically allocated memory/objects here
-	delete texture;
+	//delete texture;
 }
 
 void Fire::VOnUpdate(GameInfoPacket* pData)
@@ -267,9 +266,18 @@ void Fire::initParticle(int loop)
 	particle[loop].alive = true;                 // Make All The Particles Active
 	particle[loop].life = 4.5f;                   // Give All The Particles Full Life
 
-	particle[loop].up = rand() % 2;                 // Assign whether up/down 
-	particle[loop].right = rand() % 2;                 // Assign whether right/left/neutral
-	particle[loop].in = rand() % 2;                  //Assign whether inwards or outwards
+	int r = rand() % 2;
+	bool t = true;
+	if (r == 0) t = false;
+	particle[loop].up = t;                 // Assign whether up/down 
+	r = rand() % 2;
+	t = true;
+	if (r == 0) t = false;
+	particle[loop].right = t;                 // Assign whether right/left/neutral
+	r = rand() % 2;
+	t = true;
+	if (r == 0) t = false;
+	particle[loop].in = t;                  //Assign whether inwards or outwards
 
 	particle[loop].x = x_origin;
 	particle[loop].y = y_origin;

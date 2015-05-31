@@ -62,7 +62,7 @@ void LightSystem::initLights(){
 }
 
 void LightSystem::renderLights(GameView* view){
-	for (int i = 0; i < lights.size(); i++){
+	for (int i = 0; i < (int)lights.size(); i++){
 		view->PushEnvironmentNode(lights[i]);
 	}
 }
@@ -70,7 +70,7 @@ void LightSystem::renderLights(GameView* view){
 //This is for passing all the attribute of a light into the shader
 void LightSystem::passUniform(GLuint program){
 	if (lights.size() == 4){
-		for (int i = 0; i < lights.size(); i++){
+		for (int i = 0; i < (int)lights.size(); i++){
 			
 			float red = 0.929;
 			float green = 0.788;

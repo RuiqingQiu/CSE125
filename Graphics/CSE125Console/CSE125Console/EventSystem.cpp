@@ -26,7 +26,7 @@ EventSystem::~EventSystem()
 void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 {
 	vector<EventInfo*>eventinfos = packet->event_infos;
-	for (int i = 0; i < eventinfos.size(); i++)
+	for (int i = 0; i < (int)eventinfos.size(); i++)
 	{
 		EventInfo* event = eventinfos[i];
 		//std::cout << "mydoubleptr points to " << typeid(*event).name() << '\n';
@@ -85,13 +85,15 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 								  //Change score variables in battle mode and build mode
 								  int myID = g_pCore->pPlayer->playerid;
-								  int myScore = s->takedowns[myID] - s->deaths[myID];
+								  float deaths = max(s->deaths[myID], 1);
+								  float myScore = s->takedowns[myID] / deaths;
 								  
 								  //calculate rank
 								  int rank = 1;
 								  for (int i = 0; i < 4; i++) {
 									  if (i != myID) {
-										  if (myScore < (s->takedowns[i] - s->deaths[i])) {
+										  deaths = max(s->deaths[myID], 1);
+										  if (myScore < (s->takedowns[i] / deaths) ) {
 											  rank++;
 										  }
 									  }
@@ -101,6 +103,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank);
 								  }
 								  else {
+									  Window::factory->buildmode->startingMoney = s->gold[myID];
 									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank, s->gold[myID]);
 								  }
 								  /////// end GUI

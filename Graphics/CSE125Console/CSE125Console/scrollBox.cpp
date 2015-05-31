@@ -60,7 +60,7 @@ scrollBox::scrollBox(int x, int y, double s, bool xf, bool yf) {
 
 scrollBox::~scrollBox()
 {
-	for (int i = 0; i < list.size(); i++) {
+	for (int i = 0; i < (int)list.size(); i++) {
 		delete list[i];
 	}
 	list.clear();
@@ -109,7 +109,7 @@ void scrollBox::draw() {
 	removeButton->draw();
 	clearButton->draw();
 	for (int i = displayIdx; i < displayIdx + MAXDISPLAY; i++) {
-		if (i >= list.size()) break;
+		if (i >= (int)list.size()) break;
 		list[i]->draw();
 	}
 }
@@ -121,14 +121,14 @@ void scrollBox::rePosition(int x, int y, int w, int h) {
 	addButton->rePosition(x, y, w, h);
 	removeButton->rePosition(x, y, w, h);
 	clearButton->rePosition(x, y, w, h);
-	for (int i = 0; i < list.size(); i++) {
+	for (int i = 0; i < (int)list.size(); i++) {
 		list[i]->rePosition(x, y, w, h);
 	}
 }
 
 int scrollBox::getTotalSize() {
 	int s = list.size();
-	for (int i = 0; i < list.size(); i++) {
+	for (int i = 0; i < (int)list.size(); i++) {
 		s += list[i]->subList.size();
 	}
 	return s;
@@ -180,7 +180,7 @@ bool scrollBox::isSelected(int x, int y) {
 	//if (upButton->isSelected(x, y)) return true;
 	//if (downButton->isSelected(x, y)) return true;
 
-	for (int i = 0; i < list.size(); i++) {
+	for (int i = 0; i < (int)list.size(); i++) {
 		if (list[i]->isSelected(x, y)) return true;
 	}
 
@@ -217,7 +217,7 @@ void scrollBox::onClick(int state, int x, int y) {
 	clearButton->onClick(state, x, y);
 	if (addButton->isSelected(x, y) || removeButton->isSelected(x, y)) return;
 	for (int i = displayIdx; i < displayIdx+MAXDISPLAY; i++) {
-		if (i >= list.size()) return;
+		if (i >= (int)list.size()) return;
 		if (!list[i]->subSel(x, y))
 			list[i]->showSubList = false;
 		if (list[i]->isSelected(x, y) && state == GLUT_UP) {
@@ -225,7 +225,7 @@ void scrollBox::onClick(int state, int x, int y) {
 		}
 		list[i]->onClick(state, x, y);
 		if (list[i]->showSubList) {
-			for (int j = 0; j < list[i]->subList.size(); j++) {
+			for (int j = 0; j < (int)list[i]->subList.size(); j++) {
 				list[i]->subList[j]->showSubList = false;
 				list[i]->subList[j]->onClick(state, x, y);
 				if (list[i]->subList[j]->isSelected(x, y) && state == GLUT_UP) {
@@ -239,7 +239,7 @@ void scrollBox::onClick(int state, int x, int y) {
 }
 
 void scrollBox::onHover(int x, int y) {
-	for (int i = 0; i < list.size(); i++) {
+	for (int i = 0; i < (int)list.size(); i++) {
 		list[i]->onHover(x, y);
 	}
 	addButton->onHover(x, y);

@@ -52,7 +52,7 @@ numDisplay::numDisplay(string filename, int x, int y, int w, int h, bool xf, boo
 }
 
 numDisplay::~numDisplay() {
-	for (int i = 0; i < digits.size(); i++) {
+	for (int i = 0; i < (int)digits.size(); i++) {
 		delete digits[i];
 	}
 	digits.clear();
@@ -98,7 +98,7 @@ void numDisplay::update() {
 
 void numDisplay::draw() {
 	guiItem::draw();
-	for (int i = 0; i < digits.size(); i++) {
+	for (int i = 0; i < (int)digits.size(); i++) {
 		digits[i]->draw();
 	}
 }

@@ -96,7 +96,6 @@ public:
 	bool SetMotionBlur = false;
 	float blurEfficient1 = 0.15f;
 	float blurEfficient2 = 0.30f;
-
 };
 
 #endif

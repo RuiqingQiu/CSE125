@@ -39,12 +39,14 @@ public:
 	bool show_time;
 	//bool updateview;
 
+	int startingMoney;
 	int money;
 private:
 	//intialization helper functions
 	void init();
 	void createText();
 	void createButtons();
+	void clearNodes();
 
 	//block adding/removing helper functions
 	void addNode();

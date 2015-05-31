@@ -80,7 +80,7 @@ listItem::listItem(string filename, int x, int y, double s, bool xf, bool yf) {
 
 listItem::~listItem()
 {
-	for (int i = 0; i < subList.size(); i++) {
+	for (int i = 0; i < (int)subList.size(); i++) {
 		delete subList[i];
 	}
 	subList.clear();
@@ -108,7 +108,7 @@ void listItem::draw() {
 	}
 	button::draw();
 	if (showSubList) {
-		for (int i = 0; i < subList.size(); i++) {
+		for (int i = 0; i < (int)subList.size(); i++) {
 			subList[i]->draw();
 		}
 	}
@@ -123,14 +123,14 @@ void listItem::onClick(int state, int x, int y) {
 
 void listItem::rePosition(int x, int y, int w, int h) {
 	button::rePosition(x, y, w, h);
-	for (int i = 0; i < subList.size(); i++) {
+	for (int i = 0; i < (int)subList.size(); i++) {
 		subList[i]->rePosition(x, y, w, h);
 	}
 }
 
 void listItem::onHover(int x, int y) {
 	button::onHover(x, y);
-	for (int i = 0; i < subList.size(); i++) {
+	for (int i = 0; i < (int)subList.size(); i++) {
 		subList[i]->onHover(x, y);
 	}
 }
@@ -140,7 +140,7 @@ bool listItem::isSelected(int x, int y) {
 }
 
 bool listItem::subSel(int x, int y) {
-	for (int i = 0; i < subList.size(); i++) {
+	for (int i = 0; i < (int)subList.size(); i++) {
 		if (subList[i]->isSelected(x, y))
 			return true;
 	}

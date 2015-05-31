@@ -18,12 +18,13 @@ gui::gui(int w, int h) {
 }
 
 gui::~gui() {
-	for (int i = 0; i < guiItems.size(); i++) {
+	GameView::~GameView();
+	for (int i = 0; i < (int)guiItems.size(); i++) {
 		delete guiItems[i];
 	}
 	guiItems.clear();
 
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < (int)buttons.size(); i++) {
 		delete buttons[i];
 	}
 	buttons.clear();
@@ -44,10 +45,10 @@ void gui::VOnClientUpdate(GameInfoPacket* info) {
 void gui::setDimensions(int w, int h) {
 	int xdiff = w - width;
 	int ydiff = h - height;
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < (int)buttons.size(); i++) {
 		buttons[i]->rePosition(xdiff, ydiff, w, h);
 	}
-	for (int i = 0; i < guiItems.size(); i++) {
+	for (int i = 0; i < (int)guiItems.size(); i++) {
 		guiItems[i]->rePosition(xdiff, ydiff, w, h);
 	}
 	width = w;
@@ -84,11 +85,11 @@ void gui::set3d() {
 }
 
 void gui::VUpdate() {
-	for (int i = 0; i < guiItems.size(); i++) {
+	for (int i = 0; i < (int)guiItems.size(); i++) {
 		guiItems[i]->update();
 	}
 
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < (int)buttons.size(); i++) {
 		buttons[i]->update();
 	}
 }
@@ -114,17 +115,17 @@ void gui::drawText(int x, int y, std::string text, float r, float g, float b, vo
 }
 
 void gui::drawAllItems() {
-	for (int i = 0; i < guiItems.size(); i++) {
+	for (int i = 0; i < (int)guiItems.size(); i++) {
 		guiItems[i]->draw();
 	}
 
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < (int)buttons.size(); i++) {
 		buttons[i]->draw();
 	}
 }
 
 viewType gui::mouseClickFunc(int state, int x, int y) {
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < (int)buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height - y);
@@ -133,7 +134,7 @@ viewType gui::mouseClickFunc(int state, int x, int y) {
 }
 
 void gui::passiveMouseFunc(int x, int y) {
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < (int)buttons.size(); i++) {
 		buttons[i]->onHover(x, height - y);
 	}
 }

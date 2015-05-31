@@ -67,7 +67,7 @@ double* Matrix4::getPointer()
 float* Matrix4::getFloatPointer(){
 	for (int i = 0; i < 4; i++){
 		for (int j = 0; j < 4; j++){
-			f_m[i][j] = m[i][j];
+			f_m[i][j] = (float) m[i][j];
 		}
 	}
 	return &f_m[0][0];
@@ -135,16 +135,16 @@ void Matrix4::makeRotateZ(double angle){
 void Matrix4::makeRotate(double angle, const Vector3& axis){
     angle = angle / 180.0 * M_PI;//Convert from degrees to radians
     identity();
-    float sinAngle, cosAngle;
-    float mag = sqrtf(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
+    double sinAngle, cosAngle;
+    double mag = sqrt(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
     
-    sinAngle = sinf (angle);
-    cosAngle = cosf (angle);
-    float xx, yy, zz, xy, yz, zx, xs, ys, zs;
-    float oneMinusCos;
-    float x = axis.x;
-    float y = axis.y;
-    float z = axis.z;
+    sinAngle = sin (angle);
+    cosAngle = cos (angle);
+    double xx, yy, zz, xy, yz, zx, xs, ys, zs;
+    double oneMinusCos;
+    double x = axis.x;
+	double y = axis.y;
+	double z = axis.z;
     x /= mag;
     y /= mag;
     z /= mag;
@@ -158,7 +158,7 @@ void Matrix4::makeRotate(double angle, const Vector3& axis){
     xs = x * sinAngle;
     ys = y * sinAngle;
     zs = z * sinAngle;
-    oneMinusCos = 1.0f - cosAngle;
+    oneMinusCos = 1.0 - cosAngle;
     
     m[0][0] = (oneMinusCos * xx) + cosAngle;
     m[0][1] = (oneMinusCos * xy) - zs;
@@ -314,9 +314,9 @@ Matrix4 Matrix4::inverseMatrix4x4(const float *m)
     if (D == 0) return false;
     
     D = 1.0 / D;
-    float out[16];
+    double out[16];
     for (int i = 0; i < 16; i++)
-        out[i] = inv[i] * D;
+        out[i] = (double) inv[i] * D;
     Matrix4 tmp = Matrix4();
     tmp.m[0][0] = out[0];
     tmp.m[0][1] = out[1];

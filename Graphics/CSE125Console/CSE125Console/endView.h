@@ -3,6 +3,8 @@
 #include "gui.h"
 #include "numDisplay.h"
 
+class letters;
+
 class endView : public gui {
 public:
 	endView();
@@ -10,6 +12,7 @@ public:
 	~endView();
 
 	void VUpdate();
+	void VOnRender();
 
 	void createDisplay();
 
@@ -23,5 +26,10 @@ public:
 	float numDeaths;
 	float numTakedowns;
 	float myRank;
+
+	void updateRobotName(string name);
+
+private:
+	vector<letters> roboName;
 };
 

@@ -104,7 +104,7 @@ bool GamePacketManager::SendRobotBuild(int id, std::vector<GeoNode *> nodeList, 
 	CPacket cp;
 	cp.packet_type = BUILD_ROBOT;
 	string tmp = "";
-	for (int i = 0; i < nodeList.size(); i++) {
+	for (int i = 0; i < (int) nodeList.size(); i++) {
 		//clientID objectID x y z EullerX EullerY EullerZ block_type below_id left_id right_id front_id back_id health \n
 		tmp += to_string(id) + " ";
 		tmp += to_string(nodeList[i]->identifier) + " ";

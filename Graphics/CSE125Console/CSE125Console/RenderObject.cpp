@@ -84,7 +84,7 @@ RenderObject::RenderObject(string filename, string texture, string normal, strin
 {
 	cout << "loading " << filename;
 	glGenTextures(3, texturaID);
-	int width, height;
+	//int width, height;
 	//unsigned char* image;
 
 	glBindTexture(GL_TEXTURE_2D, texturaID[0]);

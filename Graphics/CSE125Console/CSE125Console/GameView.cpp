@@ -23,7 +23,7 @@ void GameView::VUpdate() {
 }
 
 void GameView::setConstraints() {
-	for (int i = 0; i < NodeList.size(); i++) {
+	for (int i = 0; i <(int)NodeList.size(); i++) {
 		NodeList[i]->clearConstraints();
 	}
 }
@@ -329,7 +329,7 @@ void GameView::highlight_second_pass(){
 	for each (GeoNode* node in EnvironmentList){
 		node->VOnDraw();
 	}
-	for (int i = 0; i < EnvironmentList.size(); i++){
+	for (int i = 0; i <(int)EnvironmentList.size(); i++){
 		GeoNode* node = EnvironmentList[i];
 		//printf("size of particle is %i\n", EnvironmentList.size());
 
@@ -524,7 +524,7 @@ void GameView::highlight_second_pass_build2()
 	for each (GeoNode* node in EnvironmentList){
 		node->VOnDraw();
 	}
-	for (int i = 0; i < EnvironmentList.size(); i++){
+	for (int i = 0; i < (int)EnvironmentList.size(); i++){
 		GeoNode* node = EnvironmentList[i];
 		//printf("size of particle is %i\n", EnvironmentList.size());
 
@@ -645,7 +645,7 @@ void GameView::highlight_third_pass_build(GLuint lastFrame){
 		}
 	}
 	
-	for (int i = 0; i < EnvironmentList.size(); i++){
+	for (int i = 0; i <(int)EnvironmentList.size(); i++){
 		GeoNode* node = EnvironmentList[i];
 		//printf("size of particle is %i\n", EnvironmentList.size());
 
@@ -708,7 +708,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 	int shader_type = NORMAL_SHADER;
 	//int shader_type = LIGHTS_SHADER;
 	//Loop through the list to see anything that's not being processed. if so, create
-	for (int i = 0; i < info->player_infos.size(); i++)
+	for (int i = 0; i < (int)info->player_infos.size(); i++)
 	{
 		if (!info->player_infos[i]->processed){
 			//cout << "create object" << endl;
@@ -1099,7 +1099,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		delete NodeListBuffer[i];
 	}*/
 	NodeListBuffer.clear();
-	for (int i = 0; i < NodeList.size(); i++)
+	for (int i = 0; i <(int)NodeList.size(); i++)
 	{
 		//Skybox is an exception
 		if (!NodeList[i]->isUpdated && typeid(*NodeList[i]) != typeid(SkyBox))
@@ -1131,7 +1131,7 @@ void GameView::PushEnvironmentNode(GeoNode* node){
 
 void GameView::PopGeoNode(GeoNode* m_node)
 {
-	for (int i = 0; i < NodeList.size(); i++)
+	for (int i = 0; i < (int)NodeList.size(); i++)
 	{
 		if (NodeList[i] == m_node)
 		{
@@ -1144,7 +1144,7 @@ void GameView::PopGeoNode(GeoNode* m_node)
 //used for checking whether or not we need to push up the skybox 
 //when we change modes
 bool GameView::FindGeoNode(GeoNode* m_node) {
-	for (int i = 0; i < NodeList.size(); i++) {
+	for (int i = 0; i <(int)NodeList.size(); i++) {
 		if (NodeList[i] == m_node)
 		{
 			return true;

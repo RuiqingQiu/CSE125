@@ -61,12 +61,12 @@ void healthBar::updateRobotName(string name) {
 
 	int lSize = height * 36.0 / 200.0;
 	int j = 0;
-	for (int i = 0; i < name.length(); i++) {
+	for (int i = 0; i < (int)name.length(); i++) {
 		int test = (int)name.at(i);
 		if (test >= 97 && test <= 122) {
 			//lower case letters a-z
 			test = test - 97;
-			roboName.push_back(letters(xPos + (width * 120.0 / 1300) + (lSize * i), (height * 105.0 / 200.0), lSize, lSize, xfixed, yfixed));
+			roboName.push_back(letters(xPos + (width * 120.0 / 1300) + (lSize * i), yPos + (height * 105.0 / 200.0), lSize, lSize, xfixed, yfixed));
 			roboName[j].letterToShow = test;
 			roboName[j].offset = i;
 			j++;
@@ -93,7 +93,7 @@ void healthBar:: rePosition(int x, int y, int w, int h) {
 	}
 
 	int lSize = height * 36.0 / 200.0;
-	for (int i = 0; i < roboName.size(); i++) {
+	for (int i = 0; i < (int)roboName.size(); i++) {
 		roboName[i].setPosition(xPos + (width * 120.0 / 1300) + (lSize * roboName[i].offset), yPos + (height * 105.0 / 200.0));
 	}
 }
@@ -165,11 +165,11 @@ void healthBar::draw() {
 
 	glPopMatrix();
 
-	for (int i = 0; i < digits.size(); i++) {
+	for (int i = 0; i < (int) digits.size(); i++) {
 		digits[i]->draw();
 	}
 
-	for (int i = 0; i < roboName.size(); i++) {
+	for (int i = 0; i < (int) roboName.size(); i++) {
 		roboName[i].draw();
 	}
 

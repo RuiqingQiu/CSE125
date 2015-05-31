@@ -38,7 +38,6 @@ public:
 
 	virtual void VOnDraw();
 	virtual void VOnUpdate(GameInfoPacket* pData);
-
 };
 
 #endif

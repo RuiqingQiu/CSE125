@@ -56,7 +56,7 @@ bool cooldownDisplay::setMasks() {
 		setTexture(i);
 	}
 	nums_set = true;
-	//return true;
+	return true;
 }
 
 bool cooldownDisplay::setTexture(int i) {

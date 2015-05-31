@@ -82,7 +82,10 @@ bool ClientGame::sendPacket(CPacket packet)
 	packet.serialize(packet_data);
 
 	//printf("send %d\n", packet.packet_type);
-	return NetworkServices::sendMessage(network->ConnectSocket, packet_data, packet_size);
+	bool returnVal = true;
+	int r = NetworkServices::sendMessage(network->ConnectSocket, packet_data, packet_size);
+	if (r == 0) returnVal = false;
+	return returnVal;
 }
 
 
@@ -98,7 +101,7 @@ GameInfoPacket* ClientGame::update()
 		return nullptr;
     }
 	//return network_data;
-    int i = 0;
+    unsigned int i = 0;
 	bool hasState = false;
 	while (i < (unsigned int)data_length) 
     {
@@ -112,6 +115,7 @@ GameInfoPacket* ClientGame::update()
 			Window::factory->menumode->isLoading = false;
 			Window::factory->switchView(GLUT_KEY_F1);
 			Window::factory->battlemode->updateName(g_pCore->i_pInput->name);
+			Window::factory->gameOver->updateRobotName(g_pCore->i_pInput->name);
 			break;
 		}
 		case INIT_BATTLE:{

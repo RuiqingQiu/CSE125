@@ -52,7 +52,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 	std::vector<std::string> events;
 	split1(data, events, '~');
 	//cout << data << endl;
-	for (int i = 0; i < events.size()-1; i += 1){
+	for (int i = 0; i < (int)events.size()-1; i += 1){
 		std::vector<std::string> EventData;
 		split1(events[i], EventData, ' ');
 		int EventId = stoi(EventData[0]);
@@ -171,7 +171,7 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 								EHillUpdate->x = stof(EventData[1]);
 								EHillUpdate->y = stof(EventData[2]);
 								EHillUpdate->z = stof(EventData[3]);
-								EHillUpdate->radius = stoi(EventData[4]);
+								EHillUpdate->radius = stof(EventData[4]);
 								EHillUpdate->event_type = TEventHillUpdate;
 								EHillUpdate->processed = false;
 
@@ -213,7 +213,7 @@ vector<PlayerInfo*> PacketDecoder::decodePacket(string data)
 		return ret;
 	}
 	//1 + 3 + 16
-	for (int i = 0; i < v.size()-1; i += 8){
+	for (int i = 0; i < (int)v.size() - 1; i += 8){
 		PlayerInfo* p = new PlayerInfo();
 		p->id = stoi(v[i]);
 		p->x = stof(v[i + 1]);

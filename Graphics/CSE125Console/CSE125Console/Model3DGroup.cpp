@@ -47,7 +47,7 @@ void Model3DGroup::VOnDraw(){
 	glMultMatrixd(localTransform.GetGLMatrix4().getPointer());
 	//glMultMatrixf(mat);
 
-	for (int i = 0; i < objects.size(); i++){
+	for (int i = 0; i < (int)objects.size(); i++){
 		//Set all children's shader to be the parent's
 		objects[i]->shader_type = this->shader_type;
 		objects[i]->identifier = this->identifier;

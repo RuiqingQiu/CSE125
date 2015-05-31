@@ -90,10 +90,10 @@ void mainMenu::drawAllItems(){
 	}
 	else {
 		// exchange the order, draw button first and then draw guiItems 
-		for (int i = 0; i < buttons.size(); i++) {
+		for (int i = 0; i < (int)buttons.size(); i++) {
 			buttons[i]->draw();
 		}
-		for (int i = 1; i < guiItems.size(); i++) {
+		for (int i = 1; i < (int)guiItems.size(); i++) {
 			guiItems[i]->draw();
 		}
 	}
@@ -199,7 +199,7 @@ void mainMenu::VOnClientUpdate(GameInfoPacket* info) {
 viewType mainMenu::mouseClickFunc(int state, int x, int y){
 	if (playPressed && isLoading) return viewType::MENU;
 	if (playPressed && !isLoading) return viewType::BUILD;
-	for (int i = 0; i < buttons.size(); i++) {
+	for (int i = 0; i < (int)buttons.size(); i++) {
 		//y is goes top to bottom for mouse,
 		//and bottom to top for texture >.<
 		buttons[i]->onClick(state, x, height - y);

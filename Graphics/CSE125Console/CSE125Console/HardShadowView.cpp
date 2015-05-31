@@ -439,7 +439,7 @@ void HardShadowView::VOnClientUpdate(GameInfoPacket* info)
 
 	}
 	//Loop through the list to see anything that's not being processed. if so, create
-	for (int i = 0; i < info->player_infos.size(); i++){
+	for (int i = 0; i < (int)info->player_infos.size(); i++){
 		if (!info->player_infos[i]->processed){
 			cout << "create object" << endl;
 			switch (info->player_infos[i]->type){
@@ -552,7 +552,7 @@ void HardShadowView::PushGeoNode(GeoNode* node)
 
 void HardShadowView::PopGeoNode(GeoNode* m_node)
 {
-	for (int i = 0; i < NodeList.size(); i++)
+	for (int i = 0; i < (int)NodeList.size(); i++)
 	{
 		if (NodeList[i] == m_node)
 		{
@@ -565,7 +565,7 @@ void HardShadowView::PopGeoNode(GeoNode* m_node)
 //used for checking whether or not we need to push up the skybox 
 //when we change modes
 bool HardShadowView::FindGeoNode(GeoNode* m_node) {
-	for (int i = 0; i < NodeList.size(); i++) {
+	for (int i = 0; i < (int)NodeList.size(); i++) {
 		if (NodeList[i] == m_node)
 		{
 			return true;

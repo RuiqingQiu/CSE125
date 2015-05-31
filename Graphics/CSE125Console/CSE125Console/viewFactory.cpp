@@ -21,6 +21,7 @@ viewFactory::viewFactory()
 
 	score = new scoreBox(0, 0, 300, 150, true, false);
 	buildmode->money = score->money;
+	buildmode->startingMoney = score->money;
 	battlemode->addItem(score);
 	buildmode->addItem(score);
 }
@@ -44,6 +45,7 @@ viewFactory::viewFactory(int w, int h) {
 
 	score = new scoreBox(20, h - 160, 300, 150, true, false);
 	buildmode->money = score->money;
+	buildmode->startingMoney = score->money;
 	battlemode->addItem(score);
 	buildmode->addItem(score);
 
@@ -178,6 +180,8 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 	if ( key == 'y') {
 		//delayedRebuild();
 		//battlemode->healing = true;
+		//battlemode->updateName("butthead");
+		//gameOver->updateRobotName("butthead");
 	}
 }
 
