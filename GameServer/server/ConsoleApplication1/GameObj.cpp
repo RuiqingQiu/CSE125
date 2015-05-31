@@ -197,7 +197,7 @@ void GameObj::setBlockType(int bType)
 	case WoodenCube:
 	{
 					   _mass = 10;
-					   _health = 200;
+					   _health = 150;
 					   _collisionType = C_ROBOT_PARTS;
 					  break;
 	}
@@ -207,7 +207,7 @@ void GameObj::setBlockType(int bType)
 	{
 					   _mass = 15;
 					   _health = 220;
-					   blockHealing = 20;
+					   blockHealing = 40;
 					   _collisionType = C_ROBOT_PARTS;
 					   break;
 	}
@@ -322,7 +322,7 @@ void GameObj::setBlockType(int bType)
 	case THREEBYTHREE_WOODEN:
 	{
 								_mass = 90;
-								_health = 1800;
+								_health = 1350;
 								_collisionType = C_ROBOT;
 							   break;
 	}
@@ -340,7 +340,7 @@ void GameObj::setBlockType(int bType)
 	{
 								_mass = 135;
 								_health = 1980;
-								blockHealing = 180;
+								blockHealing = 360;
 								_collisionType = C_ROBOT;
 								break;
 	}

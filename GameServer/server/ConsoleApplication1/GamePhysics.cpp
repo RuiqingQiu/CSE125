@@ -49,6 +49,7 @@ btDiscreteDynamicsWorld* GamePhysics::getDynamicsWorld()
 
 void GamePhysics::initWorld(std::vector<GameObj*> *gameObj)//, std::map< btCollisionObject*, GameObj*>* objcpair)
 {
+	//dynamicsWorld->getSolverInfo().m_numIterations = 5;
 	dynamicsWorld->setGravity(btVector3(0,GRAVITY,0));
 	std::vector<GameObj*>::iterator it;
 	for (it = gameObj->begin(); it != gameObj->end(); ++it)

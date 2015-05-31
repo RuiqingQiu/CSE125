@@ -13,7 +13,7 @@ GameLogic::GameLogic()
 	damageSystem = new DamageSystem(INSTANT_KILL);
 	scoreboard = new Scoreboard();
 	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
-	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_WIDTH/5, 3);
+	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT, FIELD_WIDTH/8, 2);
 	counter = 0;
 	spawnPoint = new SpawnPoint(FIELD_WIDTH);
 	dmgDealtArr[4] = { nullptr };
@@ -89,6 +89,8 @@ int GameLogic::gameStart(){
 
 	addGround();
 	addWalls();
+
+	hill->createParticles(&gameObjs);
 
 	gamePhysics->initWorld(&gameObjs);//, &objCollisionPair);
 	//cout << "end of init world" << endl;
@@ -214,25 +216,28 @@ int GameLogic::gameStart(){
 			int be = (*it)->getBelowID();
 			for (it2 = parts.begin(); it2 != parts.end(); it2++)
 			{
-				if ((*it2)->getBuildID() == l)
+				for (int z = 0; z < NUM_OF_CONSTRAINTS; z++)
 				{
-					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-				}
-				if ((*it2)->getBuildID() == r)
-				{
-					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-				}
-				if ((*it2)->getBuildID() == f)
-				{
-					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-				}
-				if ((*it2)->getBuildID() == ba)
-				{
-					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-				}
-				if ((*it2)->getBuildID() == be)
-				{
-					d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+					if ((*it2)->getBuildID() == l)
+					{
+						d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+					}
+					if ((*it2)->getBuildID() == r)
+					{
+						d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+					}
+					if ((*it2)->getBuildID() == f)
+					{
+						d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+					}
+					if ((*it2)->getBuildID() == ba)
+					{
+						d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+					}
+					if ((*it2)->getBuildID() == be)
+					{
+						d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+					}
 				}
 			}
 		}
@@ -422,14 +427,15 @@ unsigned int GameLogic::gameLoop (){
 			createHillUpdateEvent();
 		}
 
+		hill->updateParticles();
+
 		++secondCounter;
-		if (secondCounter >= 5)
+		if (secondCounter >= 3)
 		{
 			updateBlockEffects();
 			secondCounter = 0;
 		}
 
-	
 		updateDoTDamage();
 
 		GETime* et = new GETime(lastTime);
@@ -634,26 +640,30 @@ void GameLogic::prePhyLogic(){
 									 int be = (*it)->getBelowID();
 									 for (it2 = parts.begin(); it2 != parts.end(); it2++)
 									 {
-									 if ((*it2)->getBuildID() == l)
-									 {
-									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-									 }
-									 if ((*it2)->getBuildID() == r)
-									 {
-									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-									 }
-									 if ((*it2)->getBuildID() == f)
-									 {
-									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-									 }
-									 if ((*it2)->getBuildID() == ba)
-									 {
-									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-									 }
-									 if ((*it2)->getBuildID() == be)
-									 {
-									 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
-									 }
+										 for (int z = 0; z < NUM_OF_CONSTRAINTS; z++)
+										 {
+
+											 if ((*it2)->getBuildID() == l)
+											 {
+												 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+											 }
+											 if ((*it2)->getBuildID() == r)
+											 {
+												 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+											 }
+											 if ((*it2)->getBuildID() == f)
+											 {
+												 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+											 }
+											 if ((*it2)->getBuildID() == ba)
+											 {
+												 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+											 }
+											 if ((*it2)->getBuildID() == be)
+											 {
+												 d->addConstraint((*it)->addConstraint((*it2))->_joint6DOF);
+											 }
+										 }
 									 }
 								 }
 								 //createHealthUpdateEvent(robot);
@@ -1006,68 +1016,46 @@ void GameLogic::addWalls()
 		 	rotQ = network->convertEulerToQuaternion(0, 22.8, 0);
 	 	q = q0*(*rotQ);
 	 	GameObj* pillar1 = new GOBox(10.5, 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
-	 	cout << " qxyz1: " << pillar1->getqX() << " , " << pillar1->getqY() << " , " << pillar1->getqZ() << " , " << pillar1->getqW() << endl;
 	
-
-		 	rotQ = network->convertEulerToQuaternion(0, -25, 0);
-		//rotQ = network->convertEulerToQuaternion(0, -13, 0); 
-		
-
+		rotQ = network->convertEulerToQuaternion(0, -25, 0);
 		 	q = q0*(*rotQ);
 	 	GameObj* pillar2 = new GOBox(-12.01, 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
-	 	cout << " qxyz2: " << pillar2->getqX() << " , " << pillar2->getqY() << " , " << pillar2->getqZ() << " , " << pillar2->getqW() << endl;
 	
-
-		
-
 		 	rotQ = network->convertEulerToQuaternion(0, 61.4, 0);
-	 	//rotQ = network->convertEulerToQuaternion(0, -77.8, 0); 
 		 	q = q0*(*rotQ);
-	 	////rotQ = btQuaternion(0, -0.43216666666, 0, 0); 
-		 	////q = q0*rotQ; 
 		 	GameObj* pillar3 = new GOBox(27.41, 10, 11.48, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
-	
 
 		 	rotQ = network->convertEulerToQuaternion(0, -77.8, 0);
-	 	//rotQ = network->convertEulerToQuaternion(0, -108.6, 0); 
 		 	q = q0*(*rotQ);
-	 	//rotQ = btQuaternion(0, -0.60327777777, 0, 0); 
-		 	//q = q0*rotQ; 
 		 	GameObj* pillar4 = new GOBox(27.4, 10, -11.35, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
-	
 
 		 	rotQ = network->convertEulerToQuaternion(0, -16, 0);
-	 	//rotQ = network->convertEulerToQuaternion(0, -149.94, 0); 
 		 	q = q0*(*rotQ);
-	 	//rotQ = btQuaternion(0, -0.833, 0, 0); 
-		 	//q = q0*rotQ; 
 		 	GameObj* pillar5 = new GOBox(11.72, 10, -28.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
-
 		 	rotQ = network->convertEulerToQuaternion(0, 30.58, 0);
-	 	//rotQ = network->convertEulerToQuaternion(0, -205, 0); 
-		 	q = q0*(*rotQ);
-	 	//rotQ = btQuaternion(0, -1.1385, 0, 0); 
-		 	//q = q0*rotQ; 
+			q = q0*(*rotQ);
 		 	GameObj* pillar6 = new GOBox(-12.32, 10, -26.99, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
-	
 
-		
-
-		 	//rotQ = network->convertEulerToQuaternion(0, 61.4, 0); 
 		 	rotQ = network->convertEulerToQuaternion(0, 88.62, 0);
 	 	q = q0*(*rotQ);
-	 	//rotQ = btQuaternion(0, 0.34105555555, 0, 0); 
-		 	//q = q0*rotQ; 
 		 	GameObj* pillar7 = new GOBox(-29.39, 10, 10.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
-
 		 	rotQ = network->convertEulerToQuaternion(0, 71.049, 0);
-	 //	rotQ = network->convertEulerToQuaternion(0, -181.66, 0); 
 		 	q = q0*(*rotQ);
-	 	//rotQ = btQuaternion(0, -1.00916666667, 0, 0); 
-		 	//q = q0*rotQ; 
 			GameObj* pillar8 = new GOBox(-24.45, 10, -11.19, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+
+
+
+			rotQ = network->convertEulerToQuaternion(0, 30.58, 0);
+			q = q0*(*rotQ);
+			GameObj* corner1 = new GOBox(-FIELD_WIDTH / 2, 10, -FIELD_WIDTH / 2, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 10, 20, 7);
+			GameObj* corner4 = new GOBox(FIELD_WIDTH / 2, 10, FIELD_WIDTH / 2, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 10, 20, 7);
+
+			rotQ = network->convertEulerToQuaternion(0, -16, 0);
+			q = q0*(*rotQ);
+			GameObj* corner2 = new GOBox(FIELD_WIDTH / 2, 10, -FIELD_WIDTH / 2, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 10, 20, 7);
+			GameObj* corner3 = new GOBox(-FIELD_WIDTH / 2, 10, FIELD_WIDTH / 2, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 10, 20, 7);
 
 
 	ceiling->setBlockType(WALL);
@@ -1083,6 +1071,10 @@ void GameLogic::addWalls()
 	pillar6->setBlockType(WALL);
 	pillar7->setBlockType(WALL);
 	pillar8->setBlockType(WALL);
+	corner1->setBlockType(WALL);
+	corner2->setBlockType(WALL);
+	corner3->setBlockType(WALL);
+	corner4->setBlockType(WALL);
 
 	ceiling->createRigidBody();
 	leftWall->createRigidBody();
@@ -1097,6 +1089,10 @@ void GameLogic::addWalls()
 	pillar6->createRigidBody();
 	pillar7->createRigidBody();
 	pillar8->createRigidBody();
+	corner1->createRigidBody();
+	corner2->createRigidBody();
+	corner3->createRigidBody();
+	corner4->createRigidBody();
 
 	gamePhysics->getDynamicsWorld()->addRigidBody(ceiling->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(leftWall->getRigidBody());
@@ -1111,6 +1107,10 @@ void GameLogic::addWalls()
 	gamePhysics->getDynamicsWorld()->addRigidBody(pillar6->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(pillar7->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(pillar8->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(corner1->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(corner2->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(corner3->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(corner4->getRigidBody());
 
 
 

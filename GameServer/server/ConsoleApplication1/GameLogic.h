@@ -28,6 +28,7 @@
 #define FIELD_HEIGHT 100
 #define INSTANT_KILL 1
 #define UPDATE_HILL 40
+#define NUM_OF_CONSTRAINTS 1
 
 
 class GameLogic {
