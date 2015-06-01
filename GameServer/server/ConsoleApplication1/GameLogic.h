@@ -46,7 +46,8 @@ private:
 	Robot* dmgDealtArr[4];
 	string names[4];
 	int secondCounter = 0;
-
+	GameObj* building;
+std::vector<GameObj*> pillars;
 	std::vector<GameObj*> gameObjs;
 	//when you delete a obj, deleteConstraints(), ~() delete rigidBody, set to nullptr
 	//

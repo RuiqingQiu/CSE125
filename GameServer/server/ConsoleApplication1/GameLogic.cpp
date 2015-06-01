@@ -1018,6 +1018,19 @@ void GameLogic::createDeathEvent(Robot* r)
 
 void GameLogic::addWalls()
 {
+
+	//GameObj* b = new GOBox(0, FIELD_HEIGHT*10, 0, 0, 0, 0, 1, 0, 0, 0.000001, 0.000001, 0.000001);
+	///b->setBlockType(BUILDING);
+	//gameObjs.push_back(b);
+	//building = b;
+	//pillars.push_back(p1);
+	// pillars.push_back(p2);
+	// pillars.push_back(p3);
+	// pillars.push_back(p4);
+	// pillars.push_back(p5);
+	// pillars.push_back(p6);
+	// pillars.push_back(p7);
+	// pillars.push_back(p8);
 	GameObj* ceiling = new GOPlane(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0, -1, 0, 1);
 	GameObj* leftWall = new GOPlane(-FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
 	GameObj* rightWall = new GOPlane(FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, -1, 0, 0, 1);
@@ -1031,35 +1044,35 @@ void GameLogic::addWalls()
 
 		 	rotQ = network->convertEulerToQuaternion(0, 22.8, 0);
 	 	q = q0*(*rotQ);
-	 	GameObj* pillar1 = new GOBox(10.5, 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	 	GameObj* p1 = new GOBox(10.5, 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		rotQ = network->convertEulerToQuaternion(0, -25, 0);
 		 	q = q0*(*rotQ);
-	 	GameObj* pillar2 = new GOBox(-12.01, 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	 	GameObj* p2 = new GOBox(-12.01, 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		 	rotQ = network->convertEulerToQuaternion(0, 61.4, 0);
 		 	q = q0*(*rotQ);
-		 	GameObj* pillar3 = new GOBox(27.41, 10, 11.48, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		 	GameObj* p3 = new GOBox(27.41, 10, 11.48, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 
 		 	rotQ = network->convertEulerToQuaternion(0, -77.8, 0);
 		 	q = q0*(*rotQ);
-		 	GameObj* pillar4 = new GOBox(27.4, 10, -11.35, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		 	GameObj* p4 = new GOBox(27.4, 10, -11.35, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 
 		 	rotQ = network->convertEulerToQuaternion(0, -16, 0);
 		 	q = q0*(*rotQ);
-		 	GameObj* pillar5 = new GOBox(11.72, 10, -28.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		 	GameObj* p5 = new GOBox(11.72, 10, -28.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		 	rotQ = network->convertEulerToQuaternion(0, 30.3, 0);
 			q = q0*(*rotQ);
-		 	GameObj* pillar6 = new GOBox(-9.24 ,10, -25.69, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
+		 	GameObj* p6 = new GOBox(-9.24 ,10, -25.69, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
 
 		 	rotQ = network->convertEulerToQuaternion(0, 98.62, 0);
 	 		q = q0*(*rotQ);
-		 	GameObj* pillar7 = new GOBox(-29.39, 10, 10.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+		 	GameObj* p7 = new GOBox(-29.39, 10, 10.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		 	rotQ = network->convertEulerToQuaternion(0, 71.049, 0);
 		 	q = q0*(*rotQ);
-			GameObj* pillar8 = new GOBox(-24.95, 10, -11.12, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+			GameObj* p8 = new GOBox(-24.95, 10, -11.12, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 
 
 
@@ -1079,14 +1092,14 @@ void GameLogic::addWalls()
 	rightWall->setBlockType(WALL);
 	frontWall->setBlockType(WALL);
 	backWall->setBlockType(WALL);
-	pillar1->setBlockType(WALL);
-	pillar2->setBlockType(WALL);
-	pillar3->setBlockType(WALL);
-	pillar4->setBlockType(WALL);
-	pillar5->setBlockType(WALL);
-	pillar6->setBlockType(WALL);
-	pillar7->setBlockType(WALL);
-	pillar8->setBlockType(WALL);
+	p1->setBlockType(WALL);
+	p2->setBlockType(WALL);
+	p3->setBlockType(WALL);
+	p4->setBlockType(WALL);
+	p5->setBlockType(WALL);
+	p6->setBlockType(WALL);
+	p7->setBlockType(WALL);
+	p8->setBlockType(WALL);
 	corner1->setBlockType(WALL);
 	corner2->setBlockType(WALL);
 	corner3->setBlockType(WALL);
@@ -1097,14 +1110,14 @@ void GameLogic::addWalls()
 	rightWall->createRigidBody();
 	frontWall->createRigidBody();
 	backWall->createRigidBody();
-	pillar1->createRigidBody();
-	pillar2->createRigidBody();
-	pillar3->createRigidBody();
-	pillar4->createRigidBody();
-	pillar5->createRigidBody();
-	pillar6->createRigidBody();
-	pillar7->createRigidBody();
-	pillar8->createRigidBody();
+	p1->createRigidBody();
+	p2->createRigidBody();
+	p3->createRigidBody();
+	p4->createRigidBody();
+	p5->createRigidBody();
+	p6->createRigidBody();
+	p7->createRigidBody();
+	p8->createRigidBody();
 	corner1->createRigidBody();
 	corner2->createRigidBody();
 	corner3->createRigidBody();
@@ -1115,14 +1128,14 @@ void GameLogic::addWalls()
 	gamePhysics->getDynamicsWorld()->addRigidBody(rightWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(frontWall->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(backWall->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar1->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar2->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar3->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar4->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar5->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar6->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar7->getRigidBody());
-	gamePhysics->getDynamicsWorld()->addRigidBody(pillar8->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(p1->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(p2->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(p3->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(p4->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(p5->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(p6->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(p7->getRigidBody());
+	gamePhysics->getDynamicsWorld()->addRigidBody(p8->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(corner1->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(corner2->getRigidBody());
 	gamePhysics->getDynamicsWorld()->addRigidBody(corner3->getRigidBody());
@@ -1135,14 +1148,14 @@ void GameLogic::addWalls()
 	//gameObjs.push_back(rightWall);
 	//gameObjs.push_back(frontWall);
 	//gameObjs.push_back(backWall);
-	//gameObjs.push_back(pillar1);
-	//gameObjs.push_back(pillar2);
-	//gameObjs.push_back(pillar3);
-	//gameObjs.push_back(pillar4);
-	/*gameObjs.push_back(pillar5);
-	gameObjs.push_back(pillar6);
-	gameObjs.push_back(pillar7);
-	gameObjs.push_back(pillar8);*/
+	//gameObjs.push_back(p1);
+	//gameObjs.push_back(p2);
+	//gameObjs.push_back(p3);
+	//gameObjs.push_back(p4);
+	/*gameObjs.push_back(p5);
+	gameObjs.push_back(p6);
+	gameObjs.push_back(p7);
+	gameObjs.push_back(p8);*/
 }
 void GameLogic::addGround()
 {
