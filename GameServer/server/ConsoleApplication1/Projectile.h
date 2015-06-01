@@ -21,9 +21,6 @@ public:
 	void createRigidBody() override; // std::map< btCollisionObject*, GameObj*> *) override;
 	GameObj* shoot() override;
 	float initForce;
-	double applyDamage(double) override;
-	void addDoT(double d, int) override;
-
 
 };
 
