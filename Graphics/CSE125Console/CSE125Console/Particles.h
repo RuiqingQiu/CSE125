@@ -32,7 +32,21 @@ typedef struct
 	float yi;
 	float zi;
 
+	//scale
+	float sx;
+	float sy;
+	float sz;
 
+	//rotation
+	float rx;
+	float ry;
+	float rz;
+
+	//alpha
+	float alpha;
+
+	//speed
+	float speed;
 }
 particles;
 #endif

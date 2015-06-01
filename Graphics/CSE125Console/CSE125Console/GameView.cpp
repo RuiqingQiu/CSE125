@@ -707,7 +707,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			 this->pViewCamera->FollowingTarget = node;
 		}
 	}
-	int shader_type = NORMAL_SHADER;
+	int shader_type = LIGHTS_SHADER;
 	//int shader_type = LIGHTS_SHADER;
 	//Loop through the list to see anything that's not being processed. if so, create
 	int createdobj = 0;
@@ -753,7 +753,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 								Model3D* object = Model3DFactory::generateObjectWithType(WoodenCube);
 								object->identifier = info->player_infos[i]->id;
 								object->isUpdated = true;
-								object->shader_type = shader_type;
+								object->shader_type = LIGHTS_SHADER;
 
 								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);

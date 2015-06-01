@@ -14,6 +14,7 @@
 #include "GameCore.h"
 #include "Fire.h"
 #include "Window.h"
+#include "ParticleSystem.h"
 EventSystem::EventSystem()
 {
 }
@@ -155,10 +156,24 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									   }
 										   //player wall
 									   case 2:{
+												  /*
+												  ParticleSystem* f = new ParticleSystem();
+												  f->localTransform.position = Vector3(h->x, h->y, h->z);
+												  f->static_object = true;
+												  f->lifeTime = 10;
+												  f->maxParticles = 75;
+												  f->pemissionRate = 0.05;
+												  f->spawnShape = ParticleInitShape::None;
+												  f->cylinderRadius = 2;
+												  f->startColor = Vector3(0.8, 0.8, 0);
+												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  */
+												  
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 2);
 												  f->static_object = true;
-												  f->lifeTime = 5;
+												  f->lifeTime = 1;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  
 												  break;
 									   }
 										   //bullet wall
@@ -205,6 +220,9 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								 f->lifeTime = 30;
 								 */
 								 //g_pCore->pGameView->PushEnvironmentNode(f);
+
+								
+								 //factory->battlemode->PushEnvironmentNode(f);
 
 								 break;
 

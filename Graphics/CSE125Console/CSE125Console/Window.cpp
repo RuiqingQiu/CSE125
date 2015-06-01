@@ -21,6 +21,7 @@
 #include "Model3DFactory.h"
 #include "Grass.h"
 #include "GraphicsTest.h"
+#include "ParticleSystem.h"
 #define TESTCAM 0
 
 int Window::width  = 1980;   //Set window width in pixels here
@@ -199,7 +200,7 @@ void Window::initialize(void)
 	object->type = STONEHENGE;
 	factory->battlemode->PushEnvironmentNode(object);
 
-	//gt->displayTest5(factory->battlemode);
+
 
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
 	//factory->viewmode = viewType::MENU;
@@ -224,6 +225,18 @@ void Window::initialize(void)
 	//g_pCore->pGamePacketManager->ConnectToServer("137.110.90.86");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.34");
 	//g_pCore->pGamePacketManager->ConnectToServer("128.54.70.26");
+
+	ParticleSystem* f = new ParticleSystem();
+	f->static_object = true;
+	f->lifeTime = 10;
+	f->maxParticles = 75;
+	f->pemissionRate = 0.1;
+	f->spawnShape = ParticleInitShape::None;
+	f->cylinderRadius = 2;
+	f->startColor = Vector3(0.8, 0.8, 0);
+	factory->battlemode->PushEnvironmentNode(f);
+
+	factory->battlemode->pViewCamera->FollowingTarget = f;
 }
 
 //----------------------------------------------------------------------------
@@ -403,4 +416,7 @@ void Window::displayCallback() {
 	glutSwapBuffers();
 	clock_t endTime = clock();
 	cout << "frame rate: " << 1.0 / (float((endTime - startTime)) / CLOCKS_PER_SEC) << endl;
+
+	//gt->displayTest5(factory->battlemode);
+	//factory->battlemode->pViewCamera->FollowingTarget = f;
 }

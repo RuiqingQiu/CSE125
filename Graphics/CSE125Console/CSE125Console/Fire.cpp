@@ -13,7 +13,7 @@
 #include "SOIL.h"
 #include <ctime>
 
-int const MAX = 75;
+int const MAX = 10;
 particles particle[MAX];
 GLuint texture[1];
 //int timeCount = 1;
@@ -65,18 +65,7 @@ void Fire::VOnUpdate(GameInfoPacket* pData)
 { }
 
 void Fire::VOnClientUpdate(GameInfoPacket* pData){
-	PlayerInfo* p = pData->get_player_info(this->identifier);
-	if (p){
 
-		localTransform.position.x = p->x;
-		localTransform.position.y = p->y;
-		localTransform.position.z = p->z;
-
-		localTransform.rotation.x = p->rx;
-		localTransform.rotation.y = p->ry;
-		localTransform.rotation.z = p->rz;
-		p->processed = true;
-	}
 }
 
 void Fire::VOnDraw()
@@ -194,17 +183,17 @@ void Fire::DoSparks()
 
 
 			glBegin(GL_TRIANGLE_STRIP);
-			glTexCoord2d(1, 1); glVertex3f(x + 0.4f, y + 0.4f, z); // Top Right
-			glTexCoord2d(0, 1); glVertex3f(x - 0.4f, y + 0.4f, z); // Top Left
-			glTexCoord2d(1, 0); glVertex3f(x + 0.4f, y - 0.4f, z); // Bottom Right
-			glTexCoord2d(0, 0); glVertex3f(x - 0.4f, y - 0.4f, z); // Bottom Left
+			glTexCoord2d(1, 1); glVertex3f(x + 0.2f, y + 0.2f, z); // Top Right
+			glTexCoord2d(0, 1); glVertex3f(x - 0.2f, y + 0.2f, z); // Top Left
+			glTexCoord2d(1, 0); glVertex3f(x + 0.2f, y - 0.2f, z); // Bottom Right
+			glTexCoord2d(0, 0); glVertex3f(x - 0.2f, y - 0.2f, z); // Bottom Left
 			glEnd();
 
 			glBegin(GL_TRIANGLE_STRIP);
-			glTexCoord2d(1, 1); glVertex3f(x + 0.4f, y, z + 0.4f); // Top Right
-			glTexCoord2d(0, 1); glVertex3f(x - 0.4f, y, z + 0.4f); // Top Left
-			glTexCoord2d(1, 0); glVertex3f(x + 0.4f, y, z - 0.4f); // Bottom Right
-			glTexCoord2d(0, 0); glVertex3f(x - 0.4f, y, z - 0.4f); // Bottom Left
+			glTexCoord2d(1, 1); glVertex3f(x + 0.2f, y, z + 0.2f); // Top Right
+			glTexCoord2d(0, 1); glVertex3f(x - 0.2f, y, z + 0.2f); // Top Left
+			glTexCoord2d(1, 0); glVertex3f(x + 0.2f, y, z - 0.2f); // Bottom Right
+			glTexCoord2d(0, 0); glVertex3f(x - 0.2f, y, z - 0.2f); // Bottom Left
 			glEnd();
 
 			int ran = rand() % 4 + 1;
@@ -220,24 +209,24 @@ void Fire::DoSparks()
 
 			if (p.right == 0)
 			{
-				particle[loop].x += 0.04f * float(rand() % ran + 0) * p.life / 5.0;
+				particle[loop].x += 0.01f * float(rand() % ran + 0) * p.life / 5.0;
 			}
 			else if (p.right == 1)
 			{
-				particle[loop].x -= 0.04f * float(rand() % ran + 0) * p.life / 5.0;
+				particle[loop].x -= 0.01f * float(rand() % ran + 0) * p.life / 5.0;
 			}
 			else
 			{
-				particle[loop].y += 0.03f * float(rand() % ran + 1) * p.life / 5.0;
+				particle[loop].y += 0.01f * float(rand() % ran + 1) * p.life / 5.0;
 			}
 
 			if (p.in)
 			{
-				particle[loop].z += 0.03f * float(rand() % ran + 1) * p.life / 5.0;
+				particle[loop].z += 0.01f * float(rand() % ran + 1) * p.life / 5.0;
 			}
 			else
 			{
-				particle[loop].z -= 0.03f * float(rand() % ran + 1) * p.life / 5.0;
+				particle[loop].z -= 0.01f * float(rand() % ran + 1) * p.life / 5.0;
 			}
 
 			particle[loop].r += 0.0002f * float(rand() % 100);
