@@ -16,6 +16,7 @@
 #include "Window.h"
 EventSystem::EventSystem()
 {
+	sound = new Sound(); // initialize a new Sound object
 }
 
 
@@ -159,6 +160,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 												  f->static_object = true;
 												  f->lifeTime = 5;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  sound->playCollisionWall(); // play collision to wall
 												  break;
 									   }
 										   //bullet wall
