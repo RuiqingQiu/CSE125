@@ -20,8 +20,8 @@ Hill::~Hill()
 
 void Hill::update()
 {
-	int newX = rand()%(field_width/2-radius)*((rand()%2) ? 1: -1);
-	int newZ = rand() % (field_width/2-radius)*((rand() % 2) ? 1 : -1);
+	int newX = rand()%(field_width/2-2*radius)*((rand()%2) ? 1: -1);
+	int newZ = rand() % (field_width/2-2*radius)*((rand() % 2) ? 1 : -1);
 	x = newX;
     z = newZ;
 }
@@ -51,9 +51,10 @@ void Hill::createParticles(std::vector<GameObj*>* gameObjs)
 {
 	for (int i = 0; i < NUM_OF_PARTICLES; i++)
 	{
-		GameObj* object = new GOBox(x + rand() % radius *((rand() % 2) ? 1 : -1), rand() % field_height + 0.1, rand() % radius*((rand() % 2) ? 1 : -1),0, 0, 0, 1, .001, 1, 1, 1);
-        object->setBlockType(THREEBYTHREE_GLOWING);
+		GameObj* object = new GOBox(x + rand() % radius *((rand() % 2) ? 1 : -1), rand() % field_height + 0.1, rand() % radius*((rand() % 2) ? 1 : -1),0, 0, 0, 1, .001, 0.1, 0.1, 0.1);
+        object->setBlockType(CrystalCube);
         object->setMass(0.001);
+		object->setCollisionType(C_INVALID);
 		particles.push_back(object);
 		gameObjs->push_back(object);
         std::cout << "created particles" << std::endl;
@@ -69,28 +70,71 @@ void Hill::updateParticles()
 		double yy = (*it)->getY();
 		double zz = (*it)->getZ();
         double distance = sqrt((xx - x)*(xx - x) + (zz - z)*(zz - z));
-        int randY = rand() % field_height + 0.1;
-        btVector3 direction(x - xx + 0.001, randY - yy, z - zz);
-        if (direction.getY() == 0) {
-            direction.setY(direction.getY() + 0.001);
+		int randY = ((double)(rand() -1)/ (RAND_MAX )) * (field_height - 0 + 1) + 0;
+        btVector3 direction(x - xx, randY - yy, z - zz);
+        
+		if (direction.getY() == 0) {
+            direction.setY(direction.getY() + 0.00001);
         }
         direction.normalize();
+		double force = .1;
+		btVector3 vel = (*it)->getRigidBody()->getLinearVelocity();
+		btVector3 normY(0,1,0);
+		btVector3 directionNoY(direction.getX(), 0, direction.getZ());
+		btVector3 rotDirection = directionNoY.cross(normY);
+		double len = rotDirection.length();
+		double scalar = vel.dot(rotDirection) / (len*len);
+		if (scalar == 0)
+		{
+			scalar = force;
+		}
+		double speedThreshold = 15;
+		vel = scalar*rotDirection;
+
+		if (rotDirection.getZ() == 0)
+		{
+			rotDirection.setZ(0.001);
+		}
+		rotDirection.normalize();
+		if (vel.length() > speedThreshold)
+		{
+			//(*it)->getRigidBody()->applyCentralForce(-rotDirection*force);
+		}
+		else
+		{
+			(*it)->getRigidBody()->applyCentralForce(rotDirection*force/8);
+		}
+
+		//if (distance > radius)
+		//{
+
+		//	double force = 0.05;
+  //          //std::cout << "updated particles with force" << std::endl;
+  //          btVector3 correctForce = distance*direction*force;
+  //          (*it)->getRigidBody()->applyCentralForce(correctForce);
+		//}
+  //      else 
+  //      {
+  //          double force = 0.1;
+  //          //std::cout << "updated particles with force" << std::endl;
+  //          btVector3 correctForce = -direction*force;
+  //          (*it)->getRigidBody()->applyCentralForce(correctForce);
+
+  //      }
+
 		if (distance > radius)
 		{
-
-			double force = 0.05;
-            //std::cout << "updated particles with force" << std::endl;
-            btVector3 correctForce = distance*direction*force;
-            (*it)->getRigidBody()->applyCentralForce(correctForce);
+			//std::cout << "updated particles with force" << std::endl;
+			btVector3 correctForce = distance/radius*direction*force;
+			(*it)->getRigidBody()->applyCentralForce(correctForce);
 		}
-        else 
-        {
-            double force = 0.1;
-            //std::cout << "updated particles with force" << std::endl;
-            btVector3 correctForce = -direction*force;
-            (*it)->getRigidBody()->applyCentralForce(correctForce);
+		else
+		{
+			//std::cout << "updated particles with force" << std::endl;
+			btVector3 correctForce = -((distance + 1) / distance)*direction*force/8;
+			(*it)->getRigidBody()->applyCentralForce(correctForce);
 
-        }
+		}
 	}
 
 }

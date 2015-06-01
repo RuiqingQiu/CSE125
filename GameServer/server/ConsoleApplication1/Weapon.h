@@ -3,6 +3,7 @@
 
 #ifndef WEAPON_H
 #define WEAPON_H
+
 #include "definition.h"
 
 class Weapon

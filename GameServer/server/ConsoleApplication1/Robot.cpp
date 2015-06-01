@@ -327,3 +327,20 @@ void Robot::setParts(std::vector<GameObj*> p){
 
 GameObj* Robot::shoot(){ 
 	return nullptr; }
+
+
+void Robot::addDoT(double d, int c){
+	DoT += d ;
+	DoTTick = (double)DoT / (double)10;
+	DoTFrom = c;
+}
+
+
+double Robot::applyDamage(double h){
+	_health -= h ;
+	if (_health > _maxHealth){
+		_health = _maxHealth;
+	}
+	return _health;
+}
+

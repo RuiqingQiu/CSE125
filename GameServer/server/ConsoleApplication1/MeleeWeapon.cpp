@@ -25,7 +25,7 @@ MeleeWeapon::MeleeWeapon(int type)
 		damage = 80;
 		splash = 1;
 		spin = 0;
-		DoT = 50;
+		DoT = 80;
 		break;
 	}
 	case Mallet:

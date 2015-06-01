@@ -96,3 +96,15 @@ void GOBox::createRigidBody()//std::map< btCollisionObject*, GameObj*> * map)
 	rb->setUserPointer(this);
 	this->setRigidBody(rb);
 }
+void GOBox::addDoT(double d, int c){
+	DoT += d / DMG_SCALAR;
+	DoTTick = (double)DoT / (double)10;
+	DoTFrom = c;
+}
+double GOBox::applyDamage(double h){
+	_health -= h / DMG_SCALAR;
+	if (_health > _maxHealth){
+		_health = _maxHealth;
+	}
+	return _health;
+}

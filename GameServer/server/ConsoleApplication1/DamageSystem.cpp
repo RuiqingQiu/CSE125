@@ -35,6 +35,11 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 					e->setResult1(NOTHING); e->setResult2(NOTHING);
 					return CH_PLAYERWALL;
 			}
+			case C_MELEE:
+			{
+							e->setResult1(NOTHING); e->setResult2(NOTHING);
+							return CH_PLAYERWALL;
+			}
 			default:
 			{
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
@@ -84,7 +89,7 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 					}
 				}
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
-				if (o1->applyDamage(damage) <= 0)
+				if (((Robot*)o1)->applyDamage(damage) <= 0)
 				{
 
 					//std::cout << "ROB WITH PROJ BREAK CONST" << std::endl;
@@ -100,7 +105,7 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(NOTHING); e->setResult2(NOTHING);
 
 				e->setDamage1();
-				if (o1->applyDamage(o2->getDamage()) <= 0)
+				if (((Robot*)o1)->applyDamage(o2->getDamage()) <= 0)
 				{
 					((Robot*)o1)->setDiedTo((Robot*)o2->getBelongTo());
 					e->setResult1(DEATH);
@@ -248,7 +253,7 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 						damage *= 3;
 					}
 				}
-				if (o2->applyDamage(damage) <= 0)
+				if (((Robot*)o2)->applyDamage(damage) <= 0)
 				{
 					((Robot*)o2)->setDiedTo((Robot*)o1->getBelongTo());
 					e->setResult2(DEATH);
@@ -414,6 +419,11 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 					r2->setDiedTo((Robot*)o1->getBelongTo());
 				}
 				return CH_PLAYERPLAYER;
+			}
+			case C_WALLS:
+			{
+							e->setResult1(NOTHING); e->setResult2(NOTHING);
+							return CH_PLAYERWALL;
 			}
 			default:
 			{

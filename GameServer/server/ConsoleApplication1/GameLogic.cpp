@@ -13,7 +13,7 @@ GameLogic::GameLogic()
 	damageSystem = new DamageSystem(INSTANT_KILL);
 	scoreboard = new Scoreboard();
 	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
-	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT/4, FIELD_WIDTH/8, 2);
+	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT/3, FIELD_WIDTH/12, 2);
 	counter = 0;
 	spawnPoint = new SpawnPoint(FIELD_WIDTH);
 	dmgDealtArr[4] = { nullptr };
@@ -92,11 +92,14 @@ int GameLogic::gameStart(){
 
 	hill->createParticles(&gameObjs);
 
+
 	gamePhysics->initWorld(&gameObjs);//, &objCollisionPair);
     vector<GameObj*>::iterator it;
     for (it = gameObjs.begin(); it != gameObjs.end(); ++it) {
-        if ((*it)->getBlockType() == THREEBYTHREE_GLOWING) {
-            (*it)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+        if ((*it)->getBlockType() == CrystalCube) {
+			(*it)->getRigidBody()->setGravity(btVector3(0, 0, 0));
+            //(*it)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
+			(*it)->getRigidBody()->setAngularFactor(btVector3(0, 1, 0));
         }
     }
 
@@ -875,6 +878,7 @@ void GameLogic::postDeathLogic(Robot* r)
 		if (r->getDiedTo() != nullptr && r->getDiedTo()->getCID() != r->getCID())
 		{
 			scoreboard->incTakedowns(r->getDiedTo()->getCID());
+			scoreboard->incGold(r->getDiedTo()->getCID(), GOLD_PER_KILL);
 		}
 		
 		//cout << "inc takedown for " << r->getDiedTo()->getCID() << endl;
@@ -1045,17 +1049,17 @@ void GameLogic::addWalls()
 		 	q = q0*(*rotQ);
 		 	GameObj* pillar5 = new GOBox(11.72, 10, -28.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
-		 	rotQ = network->convertEulerToQuaternion(0, 30.58, 0);
+		 	rotQ = network->convertEulerToQuaternion(0, 30.3, 0);
 			q = q0*(*rotQ);
-		 	GameObj* pillar6 = new GOBox(-12.32, 10, -26.99, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
+		 	GameObj* pillar6 = new GOBox(-9.24 ,10, -25.69, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
 
-		 	rotQ = network->convertEulerToQuaternion(0, 88.62, 0);
-	 	q = q0*(*rotQ);
+		 	rotQ = network->convertEulerToQuaternion(0, 98.62, 0);
+	 		q = q0*(*rotQ);
 		 	GameObj* pillar7 = new GOBox(-29.39, 10, 10.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		 	rotQ = network->convertEulerToQuaternion(0, 71.049, 0);
 		 	q = q0*(*rotQ);
-			GameObj* pillar8 = new GOBox(-24.45, 10, -11.19, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+			GameObj* pillar8 = new GOBox(-24.95, 10, -11.12, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 
 
 
@@ -1135,10 +1139,10 @@ void GameLogic::addWalls()
 	//gameObjs.push_back(pillar2);
 	//gameObjs.push_back(pillar3);
 	//gameObjs.push_back(pillar4);
-	//gameObjs.push_back(pillar5);
-	//gameObjs.push_back(pillar6);
-	//gameObjs.push_back(pillar7);
-	//gameObjs.push_back(pillar8);
+	/*gameObjs.push_back(pillar5);
+	gameObjs.push_back(pillar6);
+	gameObjs.push_back(pillar7);
+	gameObjs.push_back(pillar8);*/
 }
 void GameLogic::addGround()
 {
@@ -1319,7 +1323,7 @@ void GameLogic::updateDoTDamage()
 	for (it2 = gameObjs.begin(); it2 != gameObjs.end(); it2++)
 	{
 		//if ((*it2)->getHasDeleted()) continue;
-		int cid = (*it2)->applyDotDamge();
+		int cid = (*it2)->applyDotDamage();
 		if (cid != -1)
 		{
 			if ((*it2)->getIsRobot()){
@@ -1442,8 +1446,8 @@ void GameLogic::applyBulletEffect(GameObj* GO1, GameObj* GO2)
 		{
 			Robot* r = (Robot*)GO2->getBelongTo();
 			btRaycastVehicle* v = r->getVehicle();
-			r->getRigidBody()->setAngularVelocity(btVector3(0, 0, 0));
-			r->getRigidBody()->setLinearVelocity(btVector3(0, 0, 0));
+			r->getRigidBody()->setAngularVelocity(r->getRigidBody()->getAngularVelocity()*0.4);
+			r->getRigidBody()->setLinearVelocity(r->getRigidBody()->getLinearVelocity()*0.4);
 			v->applyEngineForce(0, 0);
 			v->applyEngineForce(0, 1);
 			v->applyEngineForce(0, 2);

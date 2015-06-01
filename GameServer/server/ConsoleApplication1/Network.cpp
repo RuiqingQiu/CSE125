@@ -644,6 +644,9 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			btScalar yaw = 0, pitch = 0, roll = 0;
 
 			trans.getBasis().getEulerZYX(yaw, pitch, roll);
+			//cout << "x :" << (*i)->getX() << endl;
+			//cout << "y :" << (*i)->getY() << endl;
+			//cout << "z :" << (*i)->getZ() << endl;
 			//cout << "yaw : " << yaw << endl;
 			//cout << "pitch : " << pitch << endl;
 			//cout << "roll : " << roll << endl;

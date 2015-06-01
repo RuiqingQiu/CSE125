@@ -58,3 +58,15 @@ void GOCapsule::createRigidBody()// std::map< btCollisionObject*, GameObj*> * ma
 
 
 GameObj* GOCapsule::shoot(){ return nullptr; }
+void GOCapsule::addDoT(double d, int c){
+	DoT += d / DMG_SCALAR;
+	DoTTick = (double)DoT / (double)10;
+	DoTFrom = c;
+}
+double GOCapsule::applyDamage(double h){
+	_health -= h / DMG_SCALAR;
+	if (_health > _maxHealth){
+		_health = _maxHealth;
+	}
+	return _health;
+}

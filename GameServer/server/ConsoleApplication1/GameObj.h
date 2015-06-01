@@ -16,6 +16,7 @@
 #include "RangedWeapon.h"
 #include "Weapon.h"
 
+#define DMG_SCALAR 5
 #define DEATH_DELAY 30
 
 
@@ -56,11 +57,6 @@ private:
 	int back_id = -1;
 	int buildObj_id; //this is my id
 
-	double DoT;
-	double DoTTick;
-	
-
-	int DoTFrom = -1;
 
 	clock_t deathTimer;
 
@@ -74,6 +70,12 @@ protected:
 	int _isWeapon = 0;
 	double _damage = 0;
 	double _initForce;
+
+	double DoT;
+	double DoTTick;
+
+
+	int DoTFrom = -1;
 	Weapon* weapon;
 
 public:
@@ -144,8 +146,8 @@ public:
 
 	void setDamage(double);
 	double getDamage();
-	void addDoT(double d, int);
-	int applyDotDamge();
+	
+int applyDotDamage();
 	double getDoTTick();
 
 	void setX(double);
@@ -190,8 +192,8 @@ public:
 	double getHealth();
 	double getMaxHealth();
 
-	double applyDamage(double);
-
+	virtual double applyDamage(double) =0 ;
+	virtual void addDoT(double d, int)=0;
 
 	void setWeapon(int meleeorranged, int weapontype);
 

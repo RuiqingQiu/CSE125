@@ -28,6 +28,7 @@
 #define FIELD_HEIGHT 40
 #define INSTANT_KILL 1
 #define UPDATE_HILL 30
+#define GOLD_PER_KILL 10
 #define NUM_OF_CONSTRAINTS 1
 
 

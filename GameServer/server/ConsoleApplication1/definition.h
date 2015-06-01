@@ -110,6 +110,7 @@ enum COLLISION_TYPE{
 	C_ROBOT_PARTS = 3,
 	C_PROJECTILE = 4,
 	C_MELEE = 5,
+	C_INVALID = 6,
 	
 };
 
