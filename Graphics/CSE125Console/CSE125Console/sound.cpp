@@ -75,10 +75,22 @@ Sound::Sound(){
 	endingSound.play();
 	endingSound.stop();
 
+	// collision to wall
+	tmp = path + "crashToWall.wav";
+	if (!collisionWallBuffer.loadFromFile(tmp))
+		cout << "ERROR in loading ending sound effect " << endl;
+	collisionWallSound.setBuffer(collisionWallBuffer);
+	collisionWallSound.setLoop(true);
+	// need to play and then pause it
+	collisionWallSound.play();
+	collisionWallSound.stop();
+
 	// game background music
 	// music doesn't preload the data
-	if (!music.openFromFile("Payback.wav"))
-		cout << "load music error " << endl;
+	tmp = path + "background.wav";
+	if (!music.openFromFile(tmp))
+		cout << "load background music error " << endl;
+	music.setLoop(true);
 	music.setVolume(70); // lower the sound of the background music
 
 	// build view background music
@@ -184,6 +196,7 @@ void Sound::playLoading(){
 void Sound::playOpening(){
 	//cout << "play opening sound " << endl;
 	if (openingSound.getStatus() == sf::Sound::Stopped){
+		music.stop();
 		openingSound.play();
 	}
 }
@@ -196,5 +209,12 @@ void Sound::playEnding(){
 		openingSound.stop();
 		loadingSound.stop();
 		endingSound.play();
+	}
+}
+
+void Sound::playCollisionWall(){
+	cout << "playing collision to wall " << endl;
+	if (collisionWallSound.getStatus() == sf::Sound::Stopped){
+		collisionWallSound.play();
 	}
 }

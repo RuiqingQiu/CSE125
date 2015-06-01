@@ -91,7 +91,7 @@ void StandardGameInput::VProcessKeyInput(unsigned char key, int x, int y)
 		float x = 0;
 		float y = 0;
 		float z = 0;
-		sound->playExplosion(x, y, z);
+		// sound->playExplosion(x, y, z); // doesn't sync with server
 	}
 	else if (key == 'i'){
 		//suicide
