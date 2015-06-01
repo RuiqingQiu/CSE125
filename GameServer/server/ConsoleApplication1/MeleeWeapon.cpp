@@ -20,8 +20,8 @@ MeleeWeapon::MeleeWeapon(int type)
 		break;
 	}
 	case Mace:{
-				  std::cout << "defaultmaceg" << std::endl;
-		knockback = 100;
+
+		knockback = 400;
 		damage = 80;
 		splash = 1;
 		spin = 0;

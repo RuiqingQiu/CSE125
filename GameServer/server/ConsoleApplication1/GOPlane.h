@@ -19,8 +19,6 @@ public:
 	double getXNorm();
 	double getYNorm();
 	double getZNorm();
-	double applyDamage(double) override;
-	void addDoT(double d, int) override;
 
 	double getPlaneConst();
 	btRigidBody* getRigidBody() override;

@@ -16,7 +16,7 @@
 #include "RangedWeapon.h"
 #include "Weapon.h"
 
-#define DMG_SCALAR 5
+#define DMG_SCALAR 50
 #define DEATH_DELAY 30
 
 
@@ -192,8 +192,8 @@ int applyDotDamage();
 	double getHealth();
 	double getMaxHealth();
 
-	virtual double applyDamage(double) =0 ;
-	virtual void addDoT(double d, int)=0;
+	double applyDamage(double) ;
+	void addDoT(double d, int);
 
 	void setWeapon(int meleeorranged, int weapontype);
 

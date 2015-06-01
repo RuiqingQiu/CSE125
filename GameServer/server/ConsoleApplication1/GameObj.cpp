@@ -724,3 +724,24 @@ void GameObj::addSpeedMultipler(double s)
 {
 	speedMultiplier += s;
 }
+
+void GameObj::addDoT(double d, int c){
+	if (getIsRobot() == 0)
+	{
+		d /=  DMG_SCALAR;
+	}
+	DoT += d;
+	DoTTick = (double)DoT / (double)10;
+	DoTFrom = c;
+}
+double GameObj::applyDamage(double h){
+	if (getIsRobot() == 0)
+	{
+		h /= DMG_SCALAR;
+	}
+	_health -= h;
+	if (_health > _maxHealth){
+		_health = _maxHealth;
+	}
+	return _health;
+}

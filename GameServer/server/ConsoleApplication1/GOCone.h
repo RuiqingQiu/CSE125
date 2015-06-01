@@ -17,9 +17,6 @@ public:
 	btRigidBody* getRigidBody() override;
 	GameObj* shoot() override;
 
-	double applyDamage(double) override;
-	void addDoT(double d, int) override;
-
 	void createRigidBody() override;// std::map< btCollisionObject*, GameObj*> *) override;
 };
 

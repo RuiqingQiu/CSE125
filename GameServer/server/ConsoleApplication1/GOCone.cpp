@@ -57,15 +57,3 @@ void GOCone::createRigidBody()//std::map< btCollisionObject*, GameObj*> * map)
 
 GameObj* GOCone::shoot(){ return nullptr; }
 
-void GOCone::addDoT(double d, int c){
-	DoT += d / DMG_SCALAR;
-	DoTTick = (double)DoT / (double)10;
-	DoTFrom = c;
-}
-double GOCone::applyDamage(double h){
-	_health -= h / DMG_SCALAR;
-	if (_health > _maxHealth){
-		_health = _maxHealth;
-	}
-	return _health;
-}

@@ -79,10 +79,6 @@ public:
 	int getState();
 
 
-
-	 double applyDamage(double) override;
- void addDoT(double d, int) override;
-
 	//void setState(int);
 };
 

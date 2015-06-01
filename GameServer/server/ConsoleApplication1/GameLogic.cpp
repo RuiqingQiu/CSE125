@@ -1016,6 +1016,16 @@ void GameLogic::createDeathEvent(Robot* r)
 	
 }
 
+/*void animateBuilding()
+{
+	if (b->getY() > 0)
+    {
+	   b->setY(b->getY() - BUILDING_Y_DELTA);
+   
+	}
+}*/
+
+
 void GameLogic::addWalls()
 {
 
