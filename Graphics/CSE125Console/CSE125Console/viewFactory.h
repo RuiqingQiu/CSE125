@@ -42,7 +42,7 @@ public:
 	GameInputInterface * currentInput;
 	guiGameInput* gui_Input;
 	StandardGameInput* standard_Input;
-	guiGameInput * build_Input;
+	buildViewInput * build_Input;
 	mainMenuInput* meunInput; // add menu input
 
 	//getters

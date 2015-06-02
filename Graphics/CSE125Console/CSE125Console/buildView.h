@@ -6,7 +6,7 @@
 #include "blockDescriptions.h"
 
 enum buildViewConstants {
-	MAX_BLOCKS = 23,
+	MAX_BLOCKS = 1000,
 	GRID_SIZE = 5,
 	HALF_GRID = 2,
 	BASE_SIZE = 5, //number of objects define base: base 3x3 plus 4 wheels
