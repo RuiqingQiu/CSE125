@@ -15,7 +15,7 @@ private:
 	int goldInc;
 	int index;
 	std::vector<GameObj*> particles;
-	btVector3 locations[13];
+	btVector3 locations[22];
 
 public:
 	Hill(int,int,int, int, int,int);

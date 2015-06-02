@@ -10,20 +10,28 @@ Hill::Hill(int xx, int zz, int w, int h, int rr, int gold)
 	radius = rr;
 	goldInc = gold;
 	srand(time(NULL));
-	locations[0] = btVector3(0, 0, 0);
-	locations[1] = btVector3(0, 0, -(field_width / 2 -  radius));
-	locations[2] = btVector3((field_width / 5 - radius), 0, -(field_width / 5 - radius));
-	locations[3] = btVector3(0, 0, (field_width / 2 -  radius));
-	locations[4] = btVector3(-(field_width / 5 - radius), 0, -(field_width / 5 - radius));
-	locations[5] = btVector3((field_width / 2 - radius), 0, 0);
-	locations[6] = btVector3(-(field_width / 5 - radius), 0, (field_width / 5 - radius));
-	locations[7] = btVector3(-(field_width / 2 -  radius), 0, 0);
-	locations[8] = btVector3((field_width / 5 - radius), 0, (field_width / 5 - radius));
-	locations[9] = btVector3(-(field_width / 2 -  radius), 0, -(field_width / 2 -  radius));
-	locations[10] = btVector3((field_width / 2 -  radius), 0, -(field_width / 2 -  radius));
-	locations[11] = btVector3((field_width / 2 -  radius), 0, (field_width / 2 -  radius));
-	locations[12] = btVector3(-(field_width / 2 -  radius), 0, -(field_width / 2 -  radius));
-	locations[13] = btVector3(-(field_width / 2 -  radius), 0, 0);
+	locations[0] = btVector3(0, 0, 0);//center
+	locations[1] = btVector3(0, 0, (field_width / 2 -  radius)); // bottom
+	locations[2] = btVector3((field_width / 5 - radius), 0, -(field_width / 5 - radius)); //top right center
+	locations[3] = btVector3(-(field_width / 2 - radius), 0, 0); // left
+	locations[4] = btVector3((field_width / 5 - radius), 0, (field_width / 5 - radius)); // bottom right center
+	locations[5] = btVector3(0, 0, -(field_width / 2 - radius)); //top
+	locations[6] = btVector3(-(field_width / 5 - radius), 0, (field_width / 5 - radius)); // bottom left center
+	locations[7] = btVector3((field_width / 2 - radius), 0, 0); // right
+	locations[8] = btVector3(-(field_width / 5 - radius), 0, -(field_width / 5 - radius)); // top left center
+	locations[9] = btVector3((field_width / 2 - radius), 0, (field_width / 2 - radius)); // bottom right 
+	locations[10] = btVector3(-(field_width / 2 - radius), 0, -(field_width / 2 - radius)); // bottom left
+	locations[11] = btVector3(-(field_width / 2 -  radius), 0, -(field_width / 2 -  radius)); // top left
+	locations[12] = btVector3((field_width / 2 -  radius), 0, -(field_width / 2 -  radius)); // top right
+	locations[13] = btVector3((field_width / 2 - radius), 0, 0); // right
+	locations[14] = btVector3(-(field_width / 5 - radius), 0, 0); // left center
+	locations[15] = btVector3((field_width / 5 - radius), 0, 0); // right center
+	locations[16] = btVector3(-(field_width / 2 - radius), 0, 0); // left
+	locations[17] = btVector3(-(field_width / 2 - radius), 0, -(field_width / 2 - radius)); // bottom left
+	locations[18] = btVector3(0, 0, (field_width / 2 - radius)); // bottom
+	locations[19] = btVector3(0, 0, -(field_width / 5 - radius)); // top center
+	locations[20] = btVector3(0, 0, (field_width / 5 - radius)); // bottom center
+	locations[21] = btVector3(0, 0, -(field_width / 2 - radius)); //top
 
 	index = 0;
 	x = locations[0].getX();
@@ -38,7 +46,7 @@ Hill::~Hill()
 
 void Hill::update()
 {
-	index = (index + 1)%13;
+	index = (index + 1)%22;
 	x = locations[index].getX();
 	z = locations[index].getZ();
 }
