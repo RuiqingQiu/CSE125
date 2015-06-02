@@ -190,15 +190,15 @@ void Window::initialize(void)
 	factory->battlemode->PushEnvironmentNode(object);
 
 	
-	object = Model3DFactory::generateObjectWithType(STONEHENGE);
-	object->shader_type = REGULAR_SHADER;
-	object->localTransform.position = Vector3(0, 0, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = STONEHENGE;
-	factory->battlemode->PushEnvironmentNode(object);
+	//object = Model3DFactory::generateObjectWithType(STONEHENGE);
+	//object->shader_type = REGULAR_SHADER;
+	//object->localTransform.position = Vector3(0, 0, 0);
+	//object->localTransform.rotation = Vector3(0, 0, 0);
+	//object->identifier = -1;
+	////object->auto_rotate = true;
+	//object->isUpdated = true;
+	//object->type = STONEHENGE;
+	//factory->battlemode->PushEnvironmentNode(object);
 
 
 
