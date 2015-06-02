@@ -251,6 +251,12 @@ void Window::idleCallback()
 
     //Call the display routine to draw the cube
     displayCallback();
+
+
+
+
+
+
 }
 
 void Window::processNormalKeys(unsigned char key, int x, int y) 

@@ -14,7 +14,6 @@ mainMenuInput::~mainMenuInput(){
 
 // handle robot name input
 void mainMenuInput::VProcessKeyInput(unsigned char key, int x, int y){
-	
 	// if the robot name is longer than max characters, doesn't allow user to add more letters
 	if (name.length() >= MAX_NUMBER && enteringName){
 		// but allow the user to delete character
