@@ -30,7 +30,12 @@
 #define UPDATE_HILL 30
 #define GOLD_PER_KILL 10
 #define NUM_OF_CONSTRAINTS 1
-
+#define BUILDING_Y_DELTA 0.05
+#define CROWN_Y_THRESHOLD 0.75
+#define CROWN_X_THRESHOLD 0.5
+#define CROWN_Z_THRESHOLD 0.4
+#define CROWN_Y_DELTA 0.1
+#define CROWN_XZ_DELTA 0.05
 
 class GameLogic {
 private:
@@ -46,7 +51,14 @@ private:
 	Robot* dmgDealtArr[4];
 	string names[4];
 	int secondCounter = 0;
+	double crownXoffset = 0;
+	double crownXdelta = -CROWN_XZ_DELTA;
+	double crownZoffset = 0;
+	double crownZdelta = CROWN_XZ_DELTA;
+	double crownYoffset = 0;
+	double crownYdelta = -CROWN_Y_DELTA;
 	GameObj* building;
+	GameObj* crown;
 std::vector<GameObj*> pillars;
 	std::vector<GameObj*> gameObjs;
 	//when you delete a obj, deleteConstraints(), ~() delete rigidBody, set to nullptr
@@ -97,6 +109,9 @@ public:
 	int buildMode();
 	int startBuild();
 	int endGame();
+	void animateBuilding();
+	void createCrown();
+	void animateCrown();
 
 
 	void applyMeleeForce(GameObj*, GameObj*);

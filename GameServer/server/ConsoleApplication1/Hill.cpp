@@ -52,12 +52,11 @@ void Hill::createParticles(std::vector<GameObj*>* gameObjs)
 	for (int i = 0; i < NUM_OF_PARTICLES; i++)
 	{
 		GameObj* object = new GOBox(x + rand() % radius *((rand() % 2) ? 1 : -1), rand() % field_height + 0.1, rand() % radius*((rand() % 2) ? 1 : -1),0, 0, 0, 1, .001, 0.1, 0.1, 0.1);
-        object->setBlockType(CrystalCube);
+		object->setBlockType(MONEY);
         object->setMass(0.001);
 		object->setCollisionType(C_INVALID);
 		particles.push_back(object);
 		gameObjs->push_back(object);
-        std::cout << "created particles" << std::endl;
 	}
 }
 

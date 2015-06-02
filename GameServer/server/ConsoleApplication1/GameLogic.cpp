@@ -13,7 +13,7 @@ GameLogic::GameLogic()
 	damageSystem = new DamageSystem(INSTANT_KILL);
 	scoreboard = new Scoreboard();
 	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
-	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT/3, FIELD_WIDTH/12, 2);
+	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT/3, FIELD_WIDTH/12, 3);
 	counter = 0;
 	spawnPoint = new SpawnPoint(FIELD_WIDTH);
 	dmgDealtArr[4] = { nullptr };
@@ -89,6 +89,7 @@ int GameLogic::gameStart(){
 
 	addGround();
 	addWalls();
+	createCrown();
 
 	hill->createParticles(&gameObjs);
 
@@ -96,9 +97,9 @@ int GameLogic::gameStart(){
 	gamePhysics->initWorld(&gameObjs);//, &objCollisionPair);
     vector<GameObj*>::iterator it;
     for (it = gameObjs.begin(); it != gameObjs.end(); ++it) {
-        if ((*it)->getBlockType() == CrystalCube) {
+		if ((*it)->getBlockType() == MONEY) 
+		{
 			(*it)->getRigidBody()->setGravity(btVector3(0, 0, 0));
-            //(*it)->getRigidBody()->setLinearFactor(btVector3(1, 0, 1));
 			(*it)->getRigidBody()->setAngularFactor(btVector3(0, 1, 0));
         }
     }
@@ -384,6 +385,10 @@ unsigned int GameLogic::gameLoop (){
 	
 	//if (countDown->checkCountdown()) return TIMEUP;
 	//do gamelogic for all ObjectEvents
+
+	animateCrown();
+	animateBuilding();
+
 	prePhyLogic();
 	
 	//pass the time into physics
@@ -1016,31 +1021,28 @@ void GameLogic::createDeathEvent(Robot* r)
 	
 }
 
-/*void animateBuilding()
+void GameLogic::animateBuilding()
 {
-	if (b->getY() > 0)
+	if (building->getY() - BUILDING_Y_DELTA > 0)
     {
-	   b->setY(b->getY() - BUILDING_Y_DELTA);
-   
+	   building->setY(building->getY() - BUILDING_Y_DELTA);
+	   std::vector<GameObj*>::iterator it;
+	   for (it = pillars.begin(); it != pillars.end(); it++)
+	   {
+		   (*it)->setY((*it)->getY() - BUILDING_Y_DELTA);
+		   (*it)->getRigidBody()->getWorldTransform().setOrigin(btVector3((*it)->getX(), (*it)->getY() - BUILDING_Y_DELTA, (*it)->getZ()));
+	   }
 	}
-}*/
+}
 
 
 void GameLogic::addWalls()
 {
 
-	//GameObj* b = new GOBox(0, FIELD_HEIGHT*10, 0, 0, 0, 0, 1, 0, 0, 0.000001, 0.000001, 0.000001);
-	///b->setBlockType(BUILDING);
-	//gameObjs.push_back(b);
-	//building = b;
-	//pillars.push_back(p1);
-	// pillars.push_back(p2);
-	// pillars.push_back(p3);
-	// pillars.push_back(p4);
-	// pillars.push_back(p5);
-	// pillars.push_back(p6);
-	// pillars.push_back(p7);
-	// pillars.push_back(p8);
+	GameObj* b = new GOBox(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
+	b->setBlockType(STONEHENGE);
+	b->setCollisionType(C_WALLS);
+
 	GameObj* ceiling = new GOPlane(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0, -1, 0, 1);
 	GameObj* leftWall = new GOPlane(-FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
 	GameObj* rightWall = new GOPlane(FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, -1, 0, 0, 1);
@@ -1048,41 +1050,42 @@ void GameLogic::addWalls()
 	GameObj* backWall = new GOPlane(0, 0, -FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, 1, 1);
 
 	btQuaternion q0(0, 0, 0, 1);
+
 	 	btQuaternion* rotQ;
 	 	btQuaternion q;
 	
 
 		 	rotQ = network->convertEulerToQuaternion(0, 22.8, 0);
 	 	q = q0*(*rotQ);
-	 	GameObj* p1 = new GOBox(10.5, 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+	 	GameObj* p1 = new GOBox(10.5, b->getY() + 10, 27.5, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		rotQ = network->convertEulerToQuaternion(0, -25, 0);
 		 	q = q0*(*rotQ);
-	 	GameObj* p2 = new GOBox(-12.01, 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+			GameObj* p2 = new GOBox(-12.01, b->getY() + 10, 27.29, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		 	rotQ = network->convertEulerToQuaternion(0, 61.4, 0);
 		 	q = q0*(*rotQ);
-		 	GameObj* p3 = new GOBox(27.41, 10, 11.48, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+			GameObj* p3 = new GOBox(27.41, b->getY() + 10, 11.48, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 
 		 	rotQ = network->convertEulerToQuaternion(0, -77.8, 0);
 		 	q = q0*(*rotQ);
-		 	GameObj* p4 = new GOBox(27.4, 10, -11.35, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+			GameObj* p4 = new GOBox(27.4, b->getY() + 10, -11.35, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 
 		 	rotQ = network->convertEulerToQuaternion(0, -16, 0);
 		 	q = q0*(*rotQ);
-		 	GameObj* p5 = new GOBox(11.72, 10, -28.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+			GameObj* p5 = new GOBox(11.72, b->getY() + 10, -28.16, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		 	rotQ = network->convertEulerToQuaternion(0, 30.3, 0);
 			q = q0*(*rotQ);
-		 	GameObj* p6 = new GOBox(-9.24 ,10, -25.69, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
+			GameObj* p6 = new GOBox(-9.24, b->getY() + 10, -25.69, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 15.4, 20, 5.2);
 
 		 	rotQ = network->convertEulerToQuaternion(0, 98.62, 0);
 	 		q = q0*(*rotQ);
-		 	GameObj* p7 = new GOBox(-29.39, 10, 10.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+			GameObj* p7 = new GOBox(-29.39, b->getY() + 10, 10.67, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 	
 		 	rotQ = network->convertEulerToQuaternion(0, 71.049, 0);
 		 	q = q0*(*rotQ);
-			GameObj* p8 = new GOBox(-24.95, 10, -11.12, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
+			GameObj* p8 = new GOBox(-24.95, b->getY() + 10, -11.12, q.getX(), q.getY(), q.getZ(), q.getW(), 0, 12.4, 20, 5.2);
 
 
 
@@ -1153,6 +1156,17 @@ void GameLogic::addWalls()
 
 
 
+
+	gameObjs.push_back(b);
+	building = b;
+	pillars.push_back(p1);
+	pillars.push_back(p2);
+	pillars.push_back(p3);
+	pillars.push_back(p4);
+	pillars.push_back(p5);
+	pillars.push_back(p6);
+	pillars.push_back(p7);
+	pillars.push_back(p8);
 	//gameObjs.push_back(ceiling);
 	//gameObjs.push_back(leftWall);
 	//gameObjs.push_back(rightWall);
@@ -1167,6 +1181,10 @@ void GameLogic::addWalls()
 	gameObjs.push_back(p7);
 	gameObjs.push_back(p8);*/
 }
+
+
+
+
 void GameLogic::addGround()
 {
 	GameObj* ground = new GOPlane(0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1);
@@ -1478,4 +1496,106 @@ void GameLogic::applyBulletEffect(GameObj* GO1, GameObj* GO2)
 			r->applySlow(GO1->getBlockSlow());
 		}
 	}
+}
+
+void GameLogic::createCrown()
+{
+	crown = new GOBox(FIELD_WIDTH / 2, FIELD_HEIGHT/4, FIELD_WIDTH / 2, 0, 0, 0, 1, 0.001, 0.01, 0.01, 0.01);
+	crown->setBlockType(WoodenCube);
+	crown->setMass(0.001);
+	crown->setCollisionType(C_INVALID);
+	gameObjs.push_back(crown);
+}
+
+void GameLogic::animateCrown()
+{
+	if (numPlayers == 1)
+	{
+		crown->setBelongTo(clientPair.find(0)->second);
+	}
+	else
+	{
+
+		double kdr[4];
+		for (int i = 0; i < numPlayers; i++)
+		{
+			kdr[i] = (double)scoreboard->getTakedowns()[i] / (double)scoreboard->getDeaths()[i];
+		}
+
+		int cid = -1;
+		double highestKDR = -1;
+		for (int i = 0; i < numPlayers; i++)
+		{
+			if (kdr[i] > highestKDR)
+			{
+				highestKDR = kdr[i];
+				cid = i;
+			}
+		}
+
+		for (int i = 0; i < numPlayers; i++)
+		{
+			if (kdr[i] == highestKDR && cid != i)
+			{
+				cid = -1;
+			}
+		}
+
+		if (cid == -1)
+		{
+			crown->setBelongTo(nullptr);
+		}
+		else
+		{
+			crown->setBelongTo(clientPair.find(cid)->second);
+		}
+	}
+
+	if (crown->getBelongTo() == nullptr)
+	{
+		crown->setX(FIELD_WIDTH/2);
+		crown->setY(FIELD_HEIGHT/4);
+		crown->setZ(FIELD_WIDTH/2);
+	}
+	else
+	{
+		crown->setX(crown->getBelongTo()->getX());
+		crown->setY(crown->getBelongTo()->getY() + 4);
+		crown->setZ(crown->getBelongTo()->getZ());
+	}
+
+	if (crownYoffset < -CROWN_Y_THRESHOLD)
+	{
+		crownYdelta = CROWN_Y_DELTA;
+	}
+	if (crownYoffset > CROWN_Y_THRESHOLD)
+	{
+		crownYdelta = -CROWN_Y_DELTA;
+	}
+
+	if (crownXoffset < -CROWN_X_THRESHOLD)
+	{
+		crownXdelta = CROWN_XZ_DELTA;
+	}
+	if (crownXoffset > CROWN_X_THRESHOLD)
+	{
+		crownXdelta = -CROWN_XZ_DELTA;
+	}
+
+	if (crownZoffset < -CROWN_Z_THRESHOLD)
+	{
+		crownZdelta = CROWN_XZ_DELTA;
+	}
+	if (crownZoffset > CROWN_Z_THRESHOLD)
+	{
+		crownZdelta = -CROWN_XZ_DELTA;
+	}
+	crownXoffset += crownXdelta;
+	crownYoffset += crownYdelta;
+	crownZoffset += crownZdelta;
+
+	crown->setX(crown->getX() + crownXoffset);
+	crown->setY(crown->getY() + crownYoffset);
+	crown->setZ(crown->getZ() + crownZoffset);
+
 }
