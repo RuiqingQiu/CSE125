@@ -62,7 +62,12 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(DESERT, new RenderObject("Assets/Desert/desert.obj", "Assets/Desert/tex.png", "Assets/Desert/normals.png", "Assets/Desert/gloss.png", "Assets/Desert/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(LEGO, new RenderObject("Assets/legoblock/legoblock.obj", "Assets/legoblock/tex.png", "Assets/legoblock/normals.png", "Assets/legoblock/gloss.png", "Assets/legoblock/metallic.png")));
 
+<<<<<<< HEAD
 	*/
+=======
+	//Moneyzone obbjects
+	render_obj_map.insert(std::pair<int, RenderObject*>(DOLLAR, new RenderObject("Assets/MoneyZone/DollarSign/dollar.obj", "Assets/MoneyZone/DollarSign/tex.png", "Assets/MoneyZone/DollarSign/normals.png", "Assets/MoneyZone/DollarSign/gloss.png", "Assets/MoneyZone/DollarSign/metallic.png")));
+>>>>>>> b078775cf0b8a1cc44cefbfad56896fe68c7ee30
 
 	cout << "Model3DFactory loading done" << endl;
 
@@ -622,6 +627,15 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						}
 						Model3D * returnModel = new Model3D(render_obj_map[type]);
 						returnModel->type = STONEHENGE;
+						return returnModel;
+						break;
+	}
+	case DOLLAR:{
+						if (render_obj_map[type] == nullptr) {
+							return generateDefault();
+						}
+						Model3D * returnModel = new Model3D(render_obj_map[type]);
+						returnModel->type = DOLLAR;
 						return returnModel;
 						break;
 	}
