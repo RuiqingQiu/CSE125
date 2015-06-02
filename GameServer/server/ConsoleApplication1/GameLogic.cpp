@@ -1041,7 +1041,7 @@ void GameLogic::addWalls()
 
 	GameObj* b = new GOBox(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
 	b->setBlockType(STONEHENGE);
-	b->setCollisionType(C_WALLS);
+	b->setCollisionType(C_INVALID);
 
 	GameObj* ceiling = new GOPlane(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0, -1, 0, 1);
 	GameObj* leftWall = new GOPlane(-FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
@@ -1500,11 +1500,11 @@ void GameLogic::applyBulletEffect(GameObj* GO1, GameObj* GO2)
 
 void GameLogic::createCrown()
 {
-	crown = new GOBox(FIELD_WIDTH / 2, FIELD_HEIGHT/4, FIELD_WIDTH / 2, 0, 0, 0, 1, 0.001, 0.01, 0.01, 0.01);
-	crown->setBlockType(WoodenCube);
-	crown->setMass(0.001);
-	crown->setCollisionType(C_INVALID);
-	gameObjs.push_back(crown);
+	GameObj* c = new GOBox(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
+	c->setBlockType(WoodenCube);
+	c->setCollisionType(C_INVALID);
+	gameObjs.push_back(c);
+	crown = c;
 }
 
 void GameLogic::animateCrown()
