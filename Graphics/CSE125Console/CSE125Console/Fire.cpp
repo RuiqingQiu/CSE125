@@ -74,14 +74,19 @@ void Fire::VOnDraw()
 		DoFire();
 	else if (mode == 1)
 		DoSparks();
+	else if (mode == 2)
+		DoMoneyZone();
 
-
-	float currentTime = clock();
-	float seconds = (currentTime - startTime) / CLOCKS_PER_SEC;
-	if (seconds>lifeTime)
+	//Decrement time if not money zone effect
+	/*if (mode != 2)
 	{
-		isDead = true;
-	}
+		float currentTime = clock();
+		float seconds = (currentTime - startTime) / CLOCKS_PER_SEC;
+		if (seconds > lifeTime)
+		{
+			isDead = true;
+		}
+	}*/
 	//timeCount++;
 }
 
@@ -110,7 +115,7 @@ void Fire::DoFire()
 			float z = p.z;
 
 			//glColor4f(r, g, b, particle[loop].life / 5 * 30.0f/timeCount );
-			glColor4f(r, g, b, particle[loop].life / 5);
+			glColor4f(r, g, b, particle[loop].life);
 
 			//float split = rand() % 2 - rand() % 2;
 			float split = 0;
@@ -196,6 +201,8 @@ void Fire::DoSparks()
 			glTexCoord2d(0, 0); glVertex3f(x - 0.2f, y, z - 0.2f); // Bottom Left
 			glEnd();
 
+
+
 			int ran = rand() % 4 + 1;
 
 			if (p.up)
@@ -244,6 +251,64 @@ void Fire::DoSparks()
 	glDisable(GL_BLEND);
 }
 
+
+void Fire::DoMoneyZone()
+{
+	srand(time(NULL));
+	glEnable(GL_TEXTURE_2D);							// Enable Texture Mapping ( NEW )
+	glDisable(GL_DEPTH_TEST);                       // Disables Depth Testing
+	glEnable(GL_BLEND);                         // Enable Blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);                   // Type Of Blending To Perform
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+
+
+	for (int loop = 0; loop < MAX; loop++)
+	{
+		p = particle[loop];
+
+		if (particle[loop].alive)                  // If The Particle Is Active
+		{
+			float r = p.r;
+			float g = p.g;
+			float b = p.b;
+
+			float x = p.x;
+			float y = p.y;
+			float z = p.z;
+
+			glColor4f(particle[loop].r, particle[loop].g, particle[loop].b, particle[loop].life);
+			glVertex3f(x, y, z);
+
+
+			glBegin(GL_TRIANGLE_STRIP);
+			glTexCoord2d(1, 1); glVertex3f(x + 0.2f, y + 0.2f, z); // Top Right
+			glTexCoord2d(0, 1); glVertex3f(x - 0.2f, y + 0.2f, z); // Top Left
+			glTexCoord2d(1, 0); glVertex3f(x + 0.2f, y - 0.2f, z); // Bottom Right
+			glTexCoord2d(0, 0); glVertex3f(x - 0.2f, y - 0.2f, z); // Bottom Left
+			glEnd();
+
+			glBegin(GL_TRIANGLE_STRIP);
+			glTexCoord2d(1, 1); glVertex3f(x + 0.2f, y, z + 0.2f); // Top Right
+			glTexCoord2d(0, 1); glVertex3f(x - 0.2f, y, z + 0.2f); // Top Left
+			glTexCoord2d(1, 0); glVertex3f(x + 0.2f, y, z - 0.2f); // Bottom Right
+			glTexCoord2d(0, 0); glVertex3f(x - 0.2f, y, z - 0.2f); // Bottom Left
+			glEnd();
+
+			particle[loop].y += 0.00055f * (float(rand() % 100 + 1) );
+
+			particle[loop].life -= particle[loop].fade*0.1f;
+			if (particle[loop].life <= 0.0f)
+				particle[loop].alive = false;
+		}
+
+	}
+
+	glBindTexture(GL_TEXTURE_2D, GL_TEXTURE0);
+	glEnable(GL_DEPTH_TEST);                       // Disables Depth Testing
+	glDisable(GL_BLEND);
+
+
+}
 void Fire::initParticles()
 {
 	for (int loop = 0; loop < MAX; loop++)                   // Initialize All The Textures
@@ -253,7 +318,7 @@ void Fire::initParticles()
 void Fire::initParticle(int loop)
 {
 	particle[loop].alive = true;                 // Make All The Particles Active
-	particle[loop].life = 4.5f;                   // Give All The Particles Full Life
+	particle[loop].life = 6.0f;                   // Give All The Particles Full Life
 
 	int r = rand() % 2;
 	bool t = true;
@@ -267,10 +332,19 @@ void Fire::initParticle(int loop)
 	t = true;
 	if (r == 0) t = false;
 	particle[loop].in = t;                  //Assign whether inwards or outwards
-
-	particle[loop].x = x_origin;
-	particle[loop].y = y_origin;
-	particle[loop].z = z_origin;
+	if (mode != 2)
+	{
+		particle[loop].x = x_origin;
+		particle[loop].y = y_origin;
+		particle[loop].z = z_origin;
+	}
+	else
+	{
+		particle[loop].x = x_origin + (rand() % 101) / 100.0 - (rand() % 101) / 100.0;
+		particle[loop].y = y_origin + (rand() % 101) / 100.0 - (rand() % 101) / 100.0;
+		particle[loop].z = z_origin + (rand() % 101) / 100.0 - (rand() % 101) / 100.0;
+	
+	}
 
 	particle[loop].fade = float(rand() % 100) / 1000.0f + 0.05f;   // Random Fade Speed
 	if (color == 0)
@@ -298,9 +372,9 @@ void Fire::initParticle(int loop)
 	}
 	else if (color == 3)
 	{
-		//red
-		particle[loop].r = 0.80f;
-		particle[loop].g = 0.2f;
+		//moneyzone yellow
+		particle[loop].r = 0.40f;
+		particle[loop].g = 0.4f;
 		particle[loop].b = 0.2f;
 	}
 }

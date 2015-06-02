@@ -28,6 +28,8 @@ public:
 	void Fire::DoFire();
 	// Some sparks
 	void Fire::DoSparks();
+	// Moneyzone effect
+	void Fire::DoMoneyZone();
 
 	std::vector<ComponentNode> components;
 
