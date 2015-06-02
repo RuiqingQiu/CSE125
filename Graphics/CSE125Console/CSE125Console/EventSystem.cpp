@@ -15,9 +15,10 @@
 #include "Fire.h"
 #include "Window.h"
 #include "ParticleSystem.h"
+
 EventSystem::EventSystem()
 {
-	sound = new Sound(); // initialize a new Sound object
+	//sound = new Sound(); // initialize a new Sound object
 }
 
 
@@ -174,8 +175,8 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 												  f->static_object = true;
 												  f->lifeTime = 1;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
-
-												  sound->playCollisionWall(); // play collision to wall
+												  Window::soundObject->playCollisionWall();// play collision to wall
+												  //sound->playCollisionWall(); 
 												  break;
 									   }
 										   //bullet wall
