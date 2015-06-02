@@ -60,7 +60,7 @@ void scoreBox::createNumbers() {
 	deaths = 0;
 	kills = 0;
 	rank = 0;
-	money = 40;
+	money = 40000;
 
 	double off = scoreBox::border  * height;
 	double offset = scoreBox::spacing * height;

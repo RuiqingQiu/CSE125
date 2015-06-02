@@ -149,9 +149,9 @@ void buildView::createButtons() {
 
 
 	//help button
-	helpButton = new button("menuItem/help.jpg", 20, 20, true);
-	helpButton->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
-	helpButton->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
+	helpButton = new button("menuItem/help.png", 20, 20, true);
+	helpButton->setTexture("menuItem/help_sel.png", btnState::SELECTED);
+	helpButton->setTexture("menuItem/help_press.png", btnState::PRESSED);
 	buttons.push_back(helpButton);
 }
 

@@ -96,8 +96,8 @@ void battleView::updateHealth(float current, float max) {
 		}
 	}
 
-	healthDisplay->currentHealth = (current / max) * 50;
-	healthDisplay->maxHealth = 50;
+	healthDisplay->maxHealth = max / 10.0;
+	healthDisplay->currentHealth = (current / 10.0) / healthDisplay->maxHealth;
 }
 
 void battleView::setDimensions(int w, int h) {

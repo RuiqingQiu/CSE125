@@ -39,28 +39,28 @@ void mainMenu::createButtons() {
 	isLoading = true;
 	playPressed = false;
 
-	button * robo = new button("menuItem/enterRobotName.jpg", width*0.3, height*0.5, 750, 100);
-	robo->setTexture("menuItem/enterRobotName_sel.jpg", btnState::SELECTED);
+	button * robo = new button("menuItem/enterRobotName.png", width*0.3, height*0.5, 750, 100);
+	robo->setTexture("menuItem/enterRobotName_sel.png", btnState::SELECTED);
 	robo->setScaling(true, true, width, height);
 
 	//set up enter IP button
-	ipAdrressButton = new button("menuItem/enterIP.jpg", width*0.3, height*0.4, 750, 100);
-	ipAdrressButton->setTexture("menuItem/enterIP_sel.jpg", btnState::SELECTED);
+	ipAdrressButton = new button("menuItem/enterIP.png", width*0.3, height*0.4, 750, 100);
+	ipAdrressButton->setTexture("menuItem/enterIP_sel.png", btnState::SELECTED);
 	ipAdrressButton->setScaling(true, true, width, height);
 	
-	playButton = new button("menuItem/play.jpg", width*0.43, height*0.3, 260, 50);
-	playButton->setTexture("menuItem/play_sel.jpg", btnState::SELECTED);
-	playButton->setTexture("menuItem/play_press.jpg", btnState::PRESSED);
+	playButton = new button("menuItem/play.png", width*0.43, height*0.3, 260, 50);
+	playButton->setTexture("menuItem/play_sel.png", btnState::SELECTED);
+	playButton->setTexture("menuItem/play_press.png", btnState::PRESSED);
 	playButton->setScaling(true, true, width, height);
 
-	helpButton = new button("menuItem/help.jpg", width*0.43, height * 0.2, 260, 50);
-	helpButton->setTexture("menuItem/help_sel.jpg", btnState::SELECTED);
-	helpButton->setTexture("menuItem/help_press.jpg", btnState::PRESSED);
+	helpButton = new button("menuItem/help.png", width*0.43, height * 0.2, 260, 50);
+	helpButton->setTexture("menuItem/help_sel.png", btnState::SELECTED);
+	helpButton->setTexture("menuItem/help_press.png", btnState::PRESSED);
 	helpButton->setScaling(true, true, width, height);
 
-	exitButton = new button("menuItem/exit.jpg", width*0.43, height * 0.1, 260, 50);
-	exitButton->setTexture("menuItem/exit_sel.jpg", btnState::SELECTED);
-	exitButton->setTexture("menuItem/exit_press.jpg", btnState::PRESSED);
+	exitButton = new button("menuItem/exit.png", width*0.43, height * 0.1, 260, 50);
+	exitButton->setTexture("menuItem/exit_sel.png", btnState::SELECTED);
+	exitButton->setTexture("menuItem/exit_press.png", btnState::PRESSED);
 	exitButton->setScaling(true, true, width, height);
 
 	buttons.push_back(robo);// button[0] is robot name

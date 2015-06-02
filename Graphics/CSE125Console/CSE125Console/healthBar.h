@@ -3,7 +3,7 @@
 
 class letters;
 
-class healthBar : public numDisplay
+class healthBar : public guiItem
 {
 public:
 	healthBar();
@@ -34,6 +34,8 @@ private:
 	float hOff = 50.0 / 200.0;
 
 	vector<letters> roboName;
+	numDisplay * maxHealthDisplay;
+	numDisplay * currHealthDisplay;
 
 };
 

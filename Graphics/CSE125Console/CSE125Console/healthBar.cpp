@@ -7,27 +7,27 @@ healthBar::healthBar() {
 	init();
 }
 
-healthBar::healthBar(int x, int y) : numDisplay("HUD/healthBar.png", x, y) {
+healthBar::healthBar(int x, int y) : guiItem("HUD/healthBar.png", x, y) {
 	init();
 }
 
-healthBar::healthBar(int x, int y, bool f) : numDisplay("HUD/healthBar.png", x, y, f) {
+healthBar::healthBar(int x, int y, bool f) : guiItem("HUD/healthBar.png", x, y, f) {
 	init();
 }
 
-healthBar::healthBar(int x, int y, bool xf, bool yf) : numDisplay("HUD/healthBar.png", x, y, xf, yf) {
+healthBar::healthBar(int x, int y, bool xf, bool yf) : guiItem("HUD/healthBar.png", x, y, xf, yf) {
 	init();
 }
 
-healthBar::healthBar(int x, int y, int w, int h) : numDisplay("HUD/healthBar.png", x, y, w, h) {
+healthBar::healthBar(int x, int y, int w, int h) : guiItem("HUD/healthBar.png", x, y, w, h) {
 	init();
 }
 
-healthBar::healthBar(int x, int y, int w, int h, bool f) : numDisplay("HUD/healthBar.png", x, y, w, h, f) {
+healthBar::healthBar(int x, int y, int w, int h, bool f) : guiItem("HUD/healthBar.png", x, y, w, h, f) {
 	init();
 }
 
-healthBar::healthBar(int x, int y, int w, int h, bool xf, bool yf) : numDisplay("HUD/healthBar.png", x, y, w, h, xf, yf) {
+healthBar::healthBar(int x, int y, int w, int h, bool xf, bool yf) : guiItem("HUD/healthBar.png", x, y, w, h, xf, yf) {
 	init();
 }
 
@@ -40,16 +40,9 @@ void healthBar::init() {
 	maxHealth = 20;
 	currentHealth = maxHealth;
 
-	nSize = height * 35.0/200.0;
-	//re-do numbers
-	for (int i = 0; i < num_digits; i++) {
-		digits[i]->setSize(nSize, nSize);
-		digits[i]->setPosition(xPos + width - (width * 40.0 / 1300.0) - (nSize*(i + 3)), yPos + (height / 2.0));
-	}
-
-	for (int i = num_digits; i < 4; i++) {
-		digits.push_back(new numbers(xPos + width - (width * 20.0 / 1300.0) - (nSize*(i - 1)), yPos + (height / 2.0) - nSize, nSize, nSize, xfixed, yfixed));
-	}
+	float nSize = height * 60.0/200.0;
+	currHealthDisplay = new numDisplay("text/emptyNum.png", xPos + width - (width * 50.0 / 1300.0), yPos + (height / 2.0), nSize, nSize, xfixed, yfixed, 4);
+	maxHealthDisplay  = new numDisplay("text/emptyNum.png", xPos + width - (width * 50.0 / 1300.0), yPos + (height / 2.0) - nSize, nSize, nSize, xfixed, yfixed, 4);
 
 	updateRobotName("no name");
 }
@@ -83,14 +76,9 @@ void healthBar::updateRobotName(string name) {
 }
 
 void healthBar:: rePosition(int x, int y, int w, int h) {
-	nSize = height * 35.0 / 200.0;
-	//want to manually make sure it stays relative to time left box
-	for (int i = 0; i < num_digits; i++) {
-		digits[i]->setPosition(xPos + width - (width * 40.0 / 1300.0) - (nSize*(i + 3)), yPos + (height / 2.0));
-	}
-	for (int i = num_digits; i < 4; i++) {
-		digits[i]->setPosition(xPos + width - (width * 20.0 / 1300.0) - (nSize*(i - 1)), yPos + (height / 2.0) - nSize);
-	}
+
+	maxHealthDisplay->rePosition(x, y, w, h);
+	currHealthDisplay->rePosition(x, y, w, h);
 
 	int lSize = height * 36.0 / 200.0;
 	for (int i = 0; i < (int)roboName.size(); i++) {
@@ -105,16 +93,11 @@ void healthBar::update() {
 	if (currentHealth > maxHealth) currentHealth = maxHealth;
 	healthPercent = currentHealth / maxHealth;
 
-	displayValue = currentHealth;
-	numDisplay::update();
+	currHealthDisplay->displayValue = currentHealth;
+	currHealthDisplay->update();
 
-	int idx = maxHealth;
-	for (int i = num_digits; i < 4; i++) {
-		if (!(idx >= 0)) break;
-		int digit = idx % 10;
-		digits[i]->numIdx = digit;
-		idx /= 10;
-	}
+	maxHealthDisplay->displayValue = maxHealth;
+	maxHealthDisplay->update();
 }
 
 void healthBar::draw() {
@@ -165,13 +148,12 @@ void healthBar::draw() {
 
 	glPopMatrix();
 
-	for (int i = 0; i < (int) digits.size(); i++) {
-		digits[i]->draw();
-	}
-
 	for (int i = 0; i < (int) roboName.size(); i++) {
 		roboName[i].draw();
 	}
+
+	currHealthDisplay->draw();
+	maxHealthDisplay->draw();
 
 	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
