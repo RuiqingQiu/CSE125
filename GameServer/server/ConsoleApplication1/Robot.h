@@ -2,6 +2,7 @@
 #include "GameObj.h"
 
 #define SLOW_DELAY 1
+#define BOOST_DELAY 5
 
 enum PLAYER_STATE {
 	PS_BUILD = 0,
@@ -27,6 +28,7 @@ private:
 	int currMoney = 0;
 	clock_t isSlowed;
 	double slowValue = 0;
+	clock_t boostCD;
 
 public:
 	Robot(int, char*);
@@ -38,6 +40,9 @@ public:
 	void setTakeDowns(int);
 	void setDeaths(int);
 	void setName(char*);
+
+	void setBoostCD();
+	int getBoostCD();
 
 	void applySlow(double);
 	double getSlowValue();

@@ -10,6 +10,24 @@ Hill::Hill(int xx, int zz, int w, int h, int rr, int gold)
 	radius = rr;
 	goldInc = gold;
 	srand(time(NULL));
+	locations[0] = btVector3(0, 0, 0);
+	locations[1] = btVector3(0, 0, -(field_width / 2 -  radius));
+	locations[2] = btVector3((field_width / 5 - radius), 0, -(field_width / 5 - radius));
+	locations[3] = btVector3(0, 0, (field_width / 2 -  radius));
+	locations[4] = btVector3(-(field_width / 5 - radius), 0, -(field_width / 5 - radius));
+	locations[5] = btVector3((field_width / 2 - radius), 0, 0);
+	locations[6] = btVector3(-(field_width / 5 - radius), 0, (field_width / 5 - radius));
+	locations[7] = btVector3(-(field_width / 2 -  radius), 0, 0);
+	locations[8] = btVector3((field_width / 5 - radius), 0, (field_width / 5 - radius));
+	locations[9] = btVector3(-(field_width / 2 -  radius), 0, -(field_width / 2 -  radius));
+	locations[10] = btVector3((field_width / 2 -  radius), 0, -(field_width / 2 -  radius));
+	locations[11] = btVector3((field_width / 2 -  radius), 0, (field_width / 2 -  radius));
+	locations[12] = btVector3(-(field_width / 2 -  radius), 0, -(field_width / 2 -  radius));
+	locations[13] = btVector3(-(field_width / 2 -  radius), 0, 0);
+
+	index = 0;
+	x = locations[0].getX();
+	z = locations[0].getZ();
 }
 
 
@@ -20,10 +38,9 @@ Hill::~Hill()
 
 void Hill::update()
 {
-	int newX = rand()%(field_width/2-2*radius)*((rand()%2) ? 1: -1);
-	int newZ = rand() % (field_width/2-2*radius)*((rand() % 2) ? 1 : -1);
-	x = newX;
-    z = newZ;
+	index = (index + 1)%13;
+	x = locations[index].getX();
+	z = locations[index].getZ();
 }
 
 int Hill::getX()

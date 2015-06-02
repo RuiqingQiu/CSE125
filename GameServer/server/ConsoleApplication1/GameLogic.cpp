@@ -13,7 +13,7 @@ GameLogic::GameLogic()
 	damageSystem = new DamageSystem(INSTANT_KILL);
 	scoreboard = new Scoreboard();
 	dist = new std::uniform_real_distribution<double>(-1.0f, 1.0f);
-	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT/3, FIELD_WIDTH/12, 3);
+	hill = new Hill(0, 0, FIELD_WIDTH, FIELD_HEIGHT/3, FIELD_WIDTH/12, 5);
 	counter = 0;
 	spawnPoint = new SpawnPoint(FIELD_WIDTH);
 	dmgDealtArr[4] = { nullptr };
@@ -34,7 +34,6 @@ GameLogic::~GameLogic()
 	delete scoreboard;
 	delete hill;
 	delete spawnPoint;
-
 }
 
 unsigned int GameLogic::waitToConnect()
@@ -520,11 +519,16 @@ void GameLogic::prePhyLogic(){
 			}
 			case BOOST:
 			{
-						  btTransform rbTrans = r->getRigidBody()->getWorldTransform();
-						  btVector3 relativeForce = btVector3(0, 0, -4000);
-						  btMatrix3x3 boxRot = r->getRigidBody()->getWorldTransform().getBasis();
-						  btVector3 correctedForce = boxRot * relativeForce;
-						  r->getRigidBody()->applyCentralImpulse(correctedForce);
+						  if (r->getBoostCD())
+						  {
+							  cout << "Boost" << endl;
+							  btTransform rbTrans = r->getRigidBody()->getWorldTransform();
+							  btVector3 relativeForce = btVector3(0, 0, -4000);
+							  btMatrix3x3 boxRot = r->getRigidBody()->getWorldTransform().getBasis();
+							  btVector3 correctedForce = boxRot * relativeForce;
+							  r->getRigidBody()->applyCentralImpulse(correctedForce);
+							  r->setBoostCD();
+						  }
 						  break;
 			}
 			default:{
@@ -1039,7 +1043,7 @@ void GameLogic::animateBuilding()
 void GameLogic::addWalls()
 {
 
-	GameObj* b = new GOBox(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
+	GameObj* b = new GOBox(0, FIELD_HEIGHT*1.25, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
 	b->setBlockType(STONEHENGE);
 	b->setCollisionType(C_WALLS);
 
@@ -1553,14 +1557,14 @@ void GameLogic::animateCrown()
 
 	if (crown->getBelongTo() == nullptr)
 	{
-		crown->setX(FIELD_WIDTH/2);
-		crown->setY(FIELD_HEIGHT/4);
-		crown->setZ(FIELD_WIDTH/2);
+		crown->setX(0);
+		crown->setY(FIELD_HEIGHT/2.5);
+		crown->setZ(0);
 	}
 	else
 	{
 		crown->setX(crown->getBelongTo()->getX());
-		crown->setY(crown->getBelongTo()->getY() + 4);
+		crown->setY(crown->getBelongTo()->getY() + 5);
 		crown->setZ(crown->getBelongTo()->getZ());
 	}
 
@@ -1598,4 +1602,12 @@ void GameLogic::animateCrown()
 	crown->setY(crown->getY() + crownYoffset);
 	crown->setZ(crown->getZ() + crownZoffset);
 
+	btQuaternion q(crown->getqX(), crown->getqY(), crown->getqZ(), crown->getqW());
+	btVector3* euler = convertQuaternionToEuler(&q);
+	euler->setY(euler->getY() + CROWN_Y_ROT_DELTA);
+	btQuaternion* newQ = network->convertEulerToQuaternion(euler->getX(), euler->getY(), euler->getZ());
+	crown->setqX(newQ->getX());
+	crown->setqY(newQ->getY());
+	crown->setqZ(newQ->getZ());
+	crown->setqW(newQ->getW());
 }

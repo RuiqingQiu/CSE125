@@ -671,10 +671,6 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		{
 			temp += "0 0 0 ";
 		}
-		else if ((*i)->getBlockType() == WoodenCube)
-		{
-			temp += "0 0 0 ";
-		}
 		else
 		{
 			(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);

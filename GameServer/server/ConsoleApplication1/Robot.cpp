@@ -11,6 +11,7 @@ Robot::Robot(int cid, char* name)
 	_state = PS_BUILD;
 	setBelongTo(this);
 	isSlowed = NULL;
+	boostCD = NULL;
 }
 
 
@@ -226,6 +227,27 @@ void Robot::shoot(std::vector<GameObj*>* projectiles)
 
 }
 
+
+void Robot::setBoostCD()
+{
+	if (boostCD == NULL)
+	{
+		boostCD = clock();
+	}
+}
+int Robot::getBoostCD()
+{
+	if (boostCD == NULL)
+	{
+		return 1;
+	}
+	if ((((double)(clock() - boostCD) / CLOCKS_PER_SEC) > BOOST_DELAY))
+	{
+		boostCD = NULL;
+		return 1;
+	}
+	return 0;
+}
 
 void Robot::applySlow(double slow)
 {

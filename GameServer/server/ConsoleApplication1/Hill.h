@@ -4,7 +4,7 @@
 #include <math.h>
 #include "GOBox.h"
 
-#define NUM_OF_PARTICLES 50
+#define NUM_OF_PARTICLES 25
 class Hill
 {
 private:
@@ -13,7 +13,9 @@ private:
 	int field_height;
 	int radius;
 	int goldInc;
+	int index;
 	std::vector<GameObj*> particles;
+	btVector3 locations[13];
 
 public:
 	Hill(int,int,int, int, int,int);
