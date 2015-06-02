@@ -54,10 +54,10 @@ void buildViewInput::VProcessSpecialKey(int key, int x, int y) {
 		g_pCore->pGameView->currentNode->localTransform.rotation.y -= 90;
 		break;
 	case GLUT_KEY_DOWN:
-		g_pCore->pGameView->currentNode->localTransform.rotation.x += 45;
+		g_pCore->pGameView->currentNode->localTransform.rotation.x += 90;
 		break;
 	case GLUT_KEY_UP:
-		g_pCore->pGameView->currentNode->localTransform.rotation.x -= 45;
+		g_pCore->pGameView->currentNode->localTransform.rotation.x -= 90;
 		break;
 	default:
 		break;
