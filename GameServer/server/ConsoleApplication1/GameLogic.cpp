@@ -1041,7 +1041,7 @@ void GameLogic::addWalls()
 
 	GameObj* b = new GOBox(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
 	b->setBlockType(STONEHENGE);
-	b->setCollisionType(C_INVALID);
+	b->setCollisionType(C_WALLS);
 
 	GameObj* ceiling = new GOPlane(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0, -1, 0, 1);
 	GameObj* leftWall = new GOPlane(-FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
@@ -1502,7 +1502,7 @@ void GameLogic::createCrown()
 {
 	GameObj* c = new GOBox(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
 	c->setBlockType(WoodenCube);
-	c->setCollisionType(C_INVALID);
+	c->setCollisionType(C_WALLS);
 	gameObjs.push_back(c);
 	crown = c;
 }
