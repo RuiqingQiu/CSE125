@@ -179,7 +179,7 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 
 	if ( key == 'y') {
 		//delayedRebuild();
-		//battlemode->healing = true;
+		battlemode->healing = true;
 		//battlemode->updateName("butthead");
 		//gameOver->updateRobotName("butthead");
 	}
