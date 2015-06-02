@@ -70,7 +70,7 @@ void battleView::updateName(string name) {
 void battleView::VOnRender() {
 	GameView::VOnRender();
 	set2d();
-
+	cout << "healing" << healing << " damage" << damageTaken << endl;
 	//glEnable(GL_COLOR_MATERIAL);
 	//glColor4f(1.0, 1.0, 1.0, 1.0 - (currDuration / maxDuration) );
 	if (damageTaken || isDead) takeDamage->draw();
@@ -87,17 +87,17 @@ viewType battleView::mouseClickFunc(int state, int x, int y){
 }
 
 void battleView::updateHealth(float current, float max) {
-	if (max == healthDisplay->maxHealth) {
-		if (current < healthDisplay->currentHealth) {
-			damageTaken = true;
-		}
-		if (current > healthDisplay->currentHealth) {
-			healing = true;
-		}
+
+
+	if (current/10.0 < healthDisplay->currentHealth) {
+		damageTaken = true;
+	}
+	if (current/10.0 > healthDisplay->currentHealth) {
+		healing = true;
 	}
 
 	healthDisplay->maxHealth = max / 10.0;
-	healthDisplay->currentHealth = (current / 10.0) / healthDisplay->maxHealth;
+	healthDisplay->currentHealth = (current / 10.0);
 }
 
 void battleView::setDimensions(int w, int h) {

@@ -89,14 +89,16 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 								  //Change score variables in battle mode and build mode
 								  int myID = g_pCore->pPlayer->playerid;
 								  float deaths = max(s->deaths[myID], 1);
-								  float myScore = s->takedowns[myID] / deaths;
+								  float kills = max(s->takedowns[myID], 1);
+								  float myScore = kills / deaths;
 								  
 								  //calculate rank
 								  int rank = 1;
 								  for (int i = 0; i < 4; i++) {
 									  if (i != myID) {
-										  deaths = max(s->deaths[myID], 1);
-										  if (myScore < (s->takedowns[i] / deaths) ) {
+										  kills = max(s->takedowns[i], 1);
+										  deaths = max(s->deaths[i], 1);
+										  if (myScore < (kills / deaths) ) {
 											  rank++;
 										  }
 									  }
