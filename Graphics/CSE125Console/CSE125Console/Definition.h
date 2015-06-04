@@ -60,7 +60,7 @@ enum ModelType{
 	//Other
 	BATTLEFIELD = 700,
 	WALL = 701,
-	BULLET_1 = 702,
+	CANNONBALL = 702,
 	BULLET = 703,
 
 	CUBEA = 751,

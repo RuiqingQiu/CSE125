@@ -221,7 +221,7 @@ void Window::initialize(void)
 
 	//Game start with the menu mode
 
-	//gt->displayTest5(factory->battlemode);
+	gt->displayTest5(factory->battlemode);
 	*g_pCore->pGameView->pViewCamera->position = Vector3(0, -40 , -100);
 	*g_pCore->pGameView->pViewCamera->rotation = Vector3(20, 0 ,0);
 	//Init 6 lights and render them

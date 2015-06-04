@@ -53,9 +53,26 @@ void GraphicsTest::displayTest6(GameView* view){
 
 
 void GraphicsTest::displayTest5(GameView* view){
-	Fire* f = new Fire(0, 0, 0, 1, 1);
-	f->lifeTime = 30;
-	view->PushEnvironmentNode(f);
+	Model3D* object;
+	object = Model3DFactory::generateObjectWithType(CANNONBALL);
+	object->shader_type = BATTLEFIELD_SHADER;
+	object->localTransform.position = Vector3(0, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = DESERT;
+	view->PushEnvironmentNode(object);
+
+	object = Model3DFactory::generateObjectWithType(Turrent);
+	object->shader_type = BATTLEFIELD_SHADER;
+	object->localTransform.position = Vector3(10, 0, 0);
+	object->localTransform.rotation = Vector3(0, 0, 0);
+	object->identifier = -1;
+	//object->auto_rotate = true;
+	object->isUpdated = true;
+	object->type = DESERT;
+	view->PushEnvironmentNode(object);
 }
 
 

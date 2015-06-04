@@ -26,7 +26,7 @@ Model3DFactory::Model3DFactory()
 	render_obj_map.insert(std::pair<int, RenderObject*>(Needle, new RenderObject("Assets/Needle/needle.obj", "Assets/Needle/tex.png", "Assets/Needle/normals.png", "Assets/Needle/gloss.png", "Assets/Needle/metallic.png")));
 	//render_obj_map.insert(std::pair<int, RenderObject*>(ALTNEEDLE, new RenderObject("Assets/AltNeedle/altneedle.obj", "Assets/AltNeedle/tex.png", "Assets/AltNeedle/normals.png", "Assets/AltNeedle/gloss.png", "Assets/AltNeedle/metallic.png")));
 	//render_obj_map.insert(std::pair<int, RenderObject*>(ALTMACE, new RenderObject("Assets/AltMace/final.obj", "Assets/AltMace/tex.png", "Assets/AltMace/normals.png", "Assets/AltMace/gloss.png", "Assets/AltMace/metallic.png")));
-	render_obj_map.insert(std::pair<int, RenderObject*>(Turrent, new RenderObject("Assets/CrappyTurret/turretjoined.obj", "Assets/CrappyTurret/tex.png", "Assets/CrappyTurret/normals.png", "Assets/CrappyTurret/gloss.png", "Assets/CrappyTurret/metallic.png")));
+	render_obj_map.insert(std::pair<int, RenderObject*>(Turrent, new RenderObject("Assets/PirateCannon/cannon.obj", "Assets/PirateCannon/tex.png", "Assets/PirateCannon/normals.png", "Assets/PirateCannon/gloss.png", "Assets/PirateCannon/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(Railgun, new RenderObject("Assets/Railgun/railgun.obj", "Assets/Railgun/tex.png", "Assets/Railgun/normals.png", "Assets/Railgun/gloss.png", "Assets/Railgun/metallic.png")));
 
 	//wheels
@@ -47,7 +47,8 @@ Model3DFactory::Model3DFactory()
 	//render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDINNER, new RenderObject("Assets/BattleFieldInner/inner.obj", "Assets/BattleFieldInner/tex.png", "Assets/BattleFieldInner/normals.png", "Assets/BattleFieldInner/gloss.png", "Assets/BattleFieldInner/metallic.png")));
 	//render_obj_map.insert(std::pair<int, RenderObject*>(BATTLEFIELDOUTER, new RenderObject("Assets/BattleFieldOuter/plane.obj", "Assets/BattleFieldOuter/tex.png", "Assets/BattleFieldOuter/normals.png", "Assets/BattleFieldOuter/gloss.png", "Assets/BattleFieldOuter/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(BULLET, new RenderObject("Assets/Bullet/bullet.obj", "Assets/Bullet/tex.png", "Assets/Bullet/normals.png", "Assets/Bullet/gloss.png", "Assets/Bullet/metallic.png")));
-	
+	render_obj_map.insert(std::pair<int, RenderObject*>(CANNONBALL, new RenderObject("Assets/Cannonball/cannonball.obj", "Assets/Cannonball/tex.png", "Assets/Cannonball/normals.png", "Assets/Cannonball/gloss.png", "Assets/Cannonball/metallic.png")));
+
 	//Newly added 5/26/15
 	render_obj_map.insert(std::pair<int, RenderObject*>(BORDER, new RenderObject("Assets/Border/border.obj", "Assets/Border/tex.png", "Assets/Border/normals.png", "Assets/Border/gloss.png", "Assets/Border/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(CHESSBOARD, new RenderObject("Assets/Chessboard/chessboard.obj", "Assets/Chessboard/tex.png", "Assets/Chessboard/normals.png", "Assets/Chessboard/gloss.png", "Assets/Chessboard/metallic.png")));
@@ -83,6 +84,20 @@ Model3D* Model3DFactory::generateDefault() {
 
 Model3D* Model3DFactory::generateObjectWithType(int type){
 	switch (type){
+	case CANNONBALL:{
+						if (render_obj_map[type] == nullptr){
+							cout << "model is not there, using BasicCube" << endl;
+							Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+							returnModel->type = BasicCube;
+							return returnModel;
+						}
+						Model3D * returnModel = new Model3D(render_obj_map[type]);
+						returnModel->type = Mallet;
+						returnModel->damageStat = 1;
+						returnModel->cost = 1;
+						return returnModel;
+						break;
+	}
 	case LEGO:{
 				  if (render_obj_map[type] == nullptr){
 					  cout << "model is not there, using BasicCube" << endl;
@@ -540,9 +555,6 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					returnModel->type = BULLET;
 					return returnModel;
 					break;
-	}
-	case BULLET_1:{
-					  break;
 	}
 	case BATTLEFIELDINNER:{
 							  if (render_obj_map[type] == nullptr) {

@@ -532,9 +532,6 @@ void HardShadowView::VOnClientUpdate(GameInfoPacket* info)
 			case WALL:{
 						  break;
 			}
-			case BULLET_1:{
-							  break;
-			}
 			case STONEHENGE:{
 								Model3D* object = Model3DFactory::generateObjectWithType(STONEHENGE);
 								object->identifier = info->player_infos[i]->id;

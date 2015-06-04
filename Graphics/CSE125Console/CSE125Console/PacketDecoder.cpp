@@ -198,16 +198,18 @@ vector<EventInfo*> PacketDecoder::decodeEvent(string data)
 	}
 	return ret;
 }
-
+union u {
+	float f;
+	int i;
+	char c[sizeof(float)];
+};
 vector<PlayerInfo*> PacketDecoder::decodePacket(string data)
 {
+	
 	vector<PlayerInfo*> ret;
 	std::vector<std::string> v;
 	split1(data, v, ' ');
-	/*
-	for (int i = 0; i < v.size(); i++){
-	cout << v[i] << endl;
-	}*/
+
 	if ((v.size()-1) % 8 != 0)
 	{
 		return ret;
@@ -227,15 +229,78 @@ vector<PlayerInfo*> PacketDecoder::decodePacket(string data)
 		p->processed = false;
 		
 		//p->print();
-		/*
-		for (int j = 0; j < 16; j++){
-		p->mat[j] = stof(v[i + 4 + j]);
-		// printf("%f, ", p->mat[j]);
-		if (j % 4 == 0){
-		//printf("\n");
-		}
-		}*/
 		ret.push_back(p);
 	}
+	
+	/*
+	cout << "In packet decoder data is " << data << endl;
+	cout << "Length is " << data.size() << endl;
+	vector<PlayerInfo*> ret;
+	std::vector<std::string> v;
+	char char_data[50000];
+	strcpy(char_data, data.c_str());
+	cout << "valid " << data.size() % 28 << endl;
+	for (int i = 0; i < data.size(); i += 4){
+		PlayerInfo* p = new PlayerInfo();
+		union u tmp;
+		tmp.c[0] = data[i];
+		tmp.c[1] = data[i + 1];
+		tmp.c[2] = data[i + 2];
+		tmp.c[3] = data[i + 3];
+		i += 4;
+		p->id = tmp.i;
+
+		tmp.c[0] = data[i];
+		tmp.c[1] = data[i + 1];
+		tmp.c[2] = data[i + 2];
+		tmp.c[3] = data[i + 3];
+		i += 4;
+		p->x = tmp.f;
+
+		tmp.c[0] = data[i];
+		tmp.c[1] = data[i + 1];
+		tmp.c[2] = data[i + 2];
+		tmp.c[3] = data[i + 3];
+		i += 4;
+		p->y = tmp.f;
+
+		tmp.c[0] = data[i];
+		tmp.c[1] = data[i + 1];
+		tmp.c[2] = data[i + 2];
+		tmp.c[3] = data[i + 3];
+		i += 4;
+		p->z = tmp.f;
+
+		tmp.c[0] = data[i];
+		tmp.c[1] = data[i + 1];
+		tmp.c[2] = data[i + 2];
+		tmp.c[3] = data[i + 3];
+		i += 4;
+		p->rx = tmp.f*RAD_TO_DEGREE_MULT;
+
+		tmp.c[0] = data[i];
+		tmp.c[1] = data[i + 1];
+		tmp.c[2] = data[i + 2];
+		tmp.c[3] = data[i + 3];
+		i += 4;
+		p->ry = tmp.f*RAD_TO_DEGREE_MULT;
+
+		tmp.c[0] = data[i];
+		tmp.c[1] = data[i + 1];
+		tmp.c[2] = data[i + 2];
+		tmp.c[3] = data[i + 3];
+		i += 4;
+		p->rz = tmp.f*RAD_TO_DEGREE_MULT;
+
+		tmp.c[0] = data[i];
+		tmp.c[1] = data[i + 1];
+		tmp.c[2] = data[i + 2];
+		tmp.c[3] = data[i + 3];
+		p->type = tmp.i;
+		//Check if this is something belong to that player
+		p->processed = false;
+		ret.push_back(p);
+	}
+	*/
 	return ret;
 }

@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "scoreBox.h"
 
-string scoreBox::textPath = "text/scorebox.jpg";
+//string scoreBox::textPath = "text/scorebox.jpg";
+string scoreBox::textPath = "text/scorebox1.jpg";
 
 double scoreBox::border = 40.0 / 400.0;
 double scoreBox::spacing = 15.0 / 400.0;
