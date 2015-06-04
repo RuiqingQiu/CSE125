@@ -433,8 +433,7 @@ void Window::displayCallback() {
 		factory->menumode->set2d();
 		factory->loading->draw();
 		factory->menumode->set3d();
-	}
-	if (factory->loadingBattle && factory->viewmode == viewType::BATTLE){
+	} else if (factory->loadingBattle && factory->viewmode == viewType::BATTLE){
 		factory->menumode->set2d();
 		factory->loading->draw();
 		factory->menumode->set3d();
