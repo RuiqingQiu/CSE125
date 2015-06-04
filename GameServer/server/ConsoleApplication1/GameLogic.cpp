@@ -1322,7 +1322,7 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
 		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
 		//btVector3 boxRot = rbTrans.getBasis()[2];
-		btVector3 boxRot(GO2->getX() - GO1->getX(), 0.75, GO2->getZ() - GO1->getZ());
+		btVector3 boxRot(GO2->getX() - GO1->getX(), 0.2, GO2->getZ() - GO1->getZ());
 		boxRot.normalize();
 		btVector3 newforce = boxRot*knockback;
 		//newforce.setY(0);
@@ -1337,7 +1337,7 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
 		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
 		//btVector3 boxRot = rbTrans.getBasis()[2];
-		btVector3 boxRot(GO2->getX() - GO1->getX(), 0.5, GO2->getZ() - GO1->getZ());
+		btVector3 boxRot(GO2->getX() - GO1->getX(), 0.1, GO2->getZ() - GO1->getZ());
 		boxRot.normalize();
 		btVector3 newforce = boxRot*knockback;
 		//newforce.setY(0);
@@ -1509,7 +1509,7 @@ void GameLogic::applyBulletEffect(GameObj* GO1, GameObj* GO2)
 void GameLogic::createCrown()
 {
 	GameObj* c = new GOBox(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
-	c->setBlockType(WoodenCube);
+	c->setBlockType(CROWN);
 	c->setCollisionType(C_WALLS);
 	gameObjs.push_back(c);
 	crown = c;

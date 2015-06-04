@@ -14,7 +14,7 @@
 #define CAP_BRAKE_SPEED 1000
 #define BRAKE_SPEED 20
 #define TURN_SPEED 0.04
-#define MAX_TURN_SPEED M_PI/7
+#define MAX_TURN_SPEED M_PI/6
 #define MAX_SPEED 40
 #define GRAVITY -30
 #define MAX_ENGINE_SPEED 2000

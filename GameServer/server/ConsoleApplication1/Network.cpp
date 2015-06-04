@@ -662,6 +662,11 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 		{
 			temp += "0 0 0 ";
 		}
+		else if ((*i)->getType() == CROWN){
+			temp += to_string((*i)->getqX());
+			temp += " 0 ";
+			temp += to_string((*i)->getqZ()) + " ";
+		}
 		else
 		{
 			(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);

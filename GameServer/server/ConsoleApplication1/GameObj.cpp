@@ -211,7 +211,7 @@ void GameObj::setBlockType(int bType)
 					   _mass = 15;
 					   _health = 220;
 					   _maxHealth = 220;
-					   blockHealing = 40;
+					   blockHealing = 26;
 					   _collisionType = C_ROBOT_PARTS;
 					   break;
 	}
@@ -224,7 +224,15 @@ void GameObj::setBlockType(int bType)
 						_collisionType = C_ROBOT_PARTS;
 						break;
 	}
-
+	case CANNON:{
+				  _isWeapon = 1;
+				  _isRanged = 1;
+				  _health = 300;
+				  _maxHealth = 300;
+				  _mass = 40;
+				  _collisionType = C_ROBOT_PARTS;
+				  break;
+	}
 
 	case BGun:{
 		_isWeapon = 1;
@@ -355,7 +363,7 @@ void GameObj::setBlockType(int bType)
 								_mass = 135;
 								_health = 1980;
 								_maxHealth = 1980;
-								blockHealing = 360;
+								blockHealing = 234;//360;
 								_collisionType = C_ROBOT;
 								break;
 	}
@@ -382,7 +390,9 @@ void GameObj::setBlockType(int bType)
 		//CHANGE THIS VALUE, it is set to 1 for testing purposes right now
 		break;
 	}
-
+	case CROWN:{
+				   break;
+	}
 	default:{
 		std::cout << "WRONG BLOCK TYPE " << bType << std::endl;
 
