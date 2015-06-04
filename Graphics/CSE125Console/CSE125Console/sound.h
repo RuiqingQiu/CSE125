@@ -21,6 +21,8 @@ public:
 	void playOpening(); // game starts
 	void playEnding(); // game ends
 	void playCollisionWall(); // player collision to wall
+	void playMoneyCollection(); // playing money collection sound
+	void playPPCrash(); // playing when player and player crash together
 
 private:
 	//Init server info here later
@@ -33,6 +35,8 @@ private:
 	sf::SoundBuffer openingBuffer; // for playing opening sound in mainmenu
 	sf::SoundBuffer endingBuffer; // for ending sound 
 	sf::SoundBuffer collisionWallBuffer; // collision to wall
+	sf::SoundBuffer moneyBuffer; // enter the money zone
+	sf::SoundBuffer ppcrashBuffer; // playing when player crash to player
 
 	sf::Sound explosionSound;
 	sf::Sound hammerSound;// lightweight obeject that plays loaded audio data from a sound buffer
@@ -42,6 +46,8 @@ private:
 	sf::Sound openingSound; // this is for main menu opening sound (game starts)
 	sf::Sound endingSound; // ending sound 
 	sf::Sound collisionWallSound;// collsion  to wall sound
+	sf::Sound moneySound; // play collecting money sound
+	sf::Sound ppcrashSound; // playing player crash to player sound
 
 	// music will play for the whole game, all other effects are sound
 	sf::Music music;// stream the data on the fly from the source file, play music that lasts several minites
