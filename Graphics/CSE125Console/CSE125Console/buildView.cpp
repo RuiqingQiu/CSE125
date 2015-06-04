@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "buildView.h"
 #include "Model3DFactory.h"
+#include "GameCore.h"
 
 //constructors
 buildView::buildView() : gui() {
@@ -150,7 +151,7 @@ void buildView::createButtons() {
 
 
 	//help button
-	helpButton = new button("menuItem/help.png", 20, 20, true);
+	helpButton = new button("menuItem/help.png", 70, 20, 240, 60);
 	helpButton->setTexture("menuItem/help_sel.png", btnState::SELECTED);
 	helpButton->setTexture("menuItem/help_press.png", btnState::PRESSED);
 	buttons.push_back(helpButton);
@@ -173,7 +174,6 @@ void buildView::VUpdate() {
 void buildView::VOnRender() {
 	GameView::highlight_first_pass();
 	GameView::highlight_second_pass_build2();
-	
 	//Clear color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -187,7 +187,7 @@ void buildView::VOnRender() {
 	glPushMatrix();
 	glTranslatef(center.x, center.y, center.z);
 	glRotatef(yRotation, 0.0, 1.0, 0.0);
-
+	g_pCore->skybox->VOnDraw();
 	
 	for each (GeoNode* node in NodeList) {
 		node->VOnDraw();

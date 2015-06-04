@@ -24,7 +24,7 @@
 #include "ParticleSystem.h"
 #define TESTCAM 0
 
-int Window::width  = 1980;   //Set window width in pixels here
+int Window::width  = 1900;   //Set window width in pixels here
 int Window::height = 1000;   //Set window height in pixels here
 
 viewFactory * Window::factory; // factory of gui
@@ -117,10 +117,21 @@ unsigned int split2(const std::string &txt, std::vector<std::string> &strs, char
 	return strs.size();
 }
 
-
+union u
+{
+	float f;
+	char s[sizeof(float)];
+};
 
 void Window::initialize(void)
 {
+	
+
+	union u foo;
+	foo.f = 2.45;
+	cout << foo.s << endl;
+
+
 	m_factory = new  Model3DFactory(); //must call before making view factory
 	factory = new viewFactory(width, height);
 
@@ -200,9 +211,8 @@ void Window::initialize(void)
 	//object->type = STONEHENGE;
 	//factory->battlemode->PushEnvironmentNode(object);
 
-
-
 	factory->battlemode->PushGeoNode(g_pCore->skybox);
+
 	//factory->viewmode = viewType::MENU;
 	factory->viewmode = viewType::MENU;
 	factory->setView();
