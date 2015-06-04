@@ -64,7 +64,8 @@ Model3DFactory::Model3DFactory()
 
 	//Moneyzone obbjects
 	render_obj_map.insert(std::pair<int, RenderObject*>(DOLLAR, new RenderObject("Assets/MoneyZone/DollarSign/dollar.obj", "Assets/MoneyZone/DollarSign/tex.png", "Assets/MoneyZone/DollarSign/normals.png", "Assets/MoneyZone/DollarSign/gloss.png", "Assets/MoneyZone/DollarSign/metallic.png")));
-	
+	render_obj_map.insert(std::pair<int, RenderObject*>(CROWN, new RenderObject("Assets/Crown/crown.obj", "Assets/Crown/tex.png", "Assets/Crown/normals.png", "Assets/Crown/gloss.png", "Assets/Crown/metallic.png")));
+
 	cout << "Model3DFactory loading done" << endl;
 
 }
@@ -646,6 +647,15 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 						returnModel->type = DOLLAR;
 						return returnModel;
 						break;
+	}
+	case CROWN:{
+				   if (render_obj_map[type] == nullptr) {
+					   return generateDefault();
+				   }
+				   Model3D * returnModel = new Model3D(render_obj_map[type]);
+				   returnModel->type = CROWN;
+				   return returnModel;
+				   break;
 	}
 	default: {
 				 cout << "type " << type << " is not recognized" << endl;

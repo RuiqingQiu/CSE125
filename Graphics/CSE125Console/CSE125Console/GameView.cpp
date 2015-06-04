@@ -801,6 +801,19 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 
 							break;
 			}
+			case CROWN:{
+						   Model3D* object = Model3DFactory::generateObjectWithType(Mallet);
+						   object->isUpdated = true;
+						   object->shader_type = shader_type;
+
+						   object->identifier = info->player_infos[i]->id;
+						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						   NodeList.push_back(object);
+						   info->player_infos[i]->processed = true;
+
+						   break;
+			}
 			case Needle:{
 							Model3D* object = Model3DFactory::generateObjectWithType(Needle);							   
 							object->isUpdated = true;

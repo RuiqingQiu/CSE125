@@ -76,7 +76,8 @@ enum ModelType{
 	FLOOR_SIMPLE = 806,
 	STONEHENGE = 807,
 	LEGO = 808,
-	DOLLAR = 1000
+	DOLLAR = 1000,
+	CROWN = 1001
 };
 
 enum ShaderType{
