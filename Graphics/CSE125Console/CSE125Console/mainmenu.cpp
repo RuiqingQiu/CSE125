@@ -85,7 +85,7 @@ void mainMenu::drawAllItems(){
 
 	// if player cliced on play button
 	if (playPressed) {
-		loading->draw(); // draw the loading view
+		//loading->draw(); // draw the loading view
 		//playersReady->draw();  // draw the number of player ready
 	}
 	else {
@@ -101,7 +101,7 @@ void mainMenu::drawAllItems(){
 
 void mainMenu::VUpdate() {
 	gui::VUpdate();
-	loading->update();
+	//loading->update();
 	//playersReady->displayValue = playerReady; // update the player ready value
 	//playersReady->update(); // update number display
 }

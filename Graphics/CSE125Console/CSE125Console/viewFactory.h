@@ -14,6 +14,7 @@
 #include "mainmenuinput.h"
 
 #include "scoreBox.h"
+#include "loadDisplay.h"
 
 #include <ctime>
 
@@ -62,6 +63,8 @@ public:
 
 	//one scorebox for whole game
 	scoreBox * score;
+	loadDisplay * loading;
+	bool loadingBattle = true;
 
 private:
 	int prevMouseState;
