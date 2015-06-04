@@ -79,7 +79,8 @@ void buildView::createText() {
 	noMoney->setScaling(true, false, width, height);
 	//guiItems.push_back(noMoney);
 
-	descriptions = new blockDescriptions(width - 520, 710, 500, 200, false, true);
+	//descriptions = new blockDescriptions(width - 520, 710, 500, 200, false, true);
+	descriptions = new blockDescriptions(20, 100, 500, 400, true, false);
 	guiItems.push_back(descriptions);
 
 	//grid textures

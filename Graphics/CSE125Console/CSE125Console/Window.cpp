@@ -418,6 +418,16 @@ void Window::displayCallback() {
 	//Draw everything
 	//g_pCore->pGameView->VOnRender();
 	factory->currentView->VOnRender();
+	if (factory->menumode->playPressed && factory->viewmode == viewType::MENU){
+		factory->menumode->set2d();
+		factory->loading->draw();
+		factory->menumode->set3d();
+	}
+	if (factory->loadingBattle && factory->viewmode == viewType::BATTLE){
+		factory->menumode->set2d();
+		factory->loading->draw();
+		factory->menumode->set3d();
+	}
 	glFlush();
 	glutSwapBuffers();
 	clock_t endTime = clock();

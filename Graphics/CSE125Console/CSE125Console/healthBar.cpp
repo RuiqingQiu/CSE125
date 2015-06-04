@@ -76,9 +76,13 @@ void healthBar::updateRobotName(string name) {
 }
 
 void healthBar:: rePosition(int x, int y, int w, int h) {
-
+	guiItem::rePosition(x, y, w, h);
 	maxHealthDisplay->rePosition(x, y, w, h);
 	currHealthDisplay->rePosition(x, y, w, h);
+
+	//float nSize = height * 60.0 / 200.0;
+	//currHealthDisplay->setPosition(xPos + width - (width * 50.0 / 1300.0), yPos + (height / 2.0));
+	//maxHealthDisplay->setPosition(xPos + width - (width * 50.0 / 1300.0), yPos + (height / 2.0) - nSize);
 
 	int lSize = height * 36.0 / 200.0;
 	for (int i = 0; i < (int)roboName.size(); i++) {

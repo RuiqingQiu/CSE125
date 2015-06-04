@@ -85,7 +85,8 @@ void buildViewInput::VProcessPassiveMouse(int x, int y) {
 	}
 
 	if (rightDown) {
-		g_pCore->pGameView->pViewCamera->updatePolar(0, 0, 1.0 - (dx*0.01) );
+		//removing zoom
+		//g_pCore->pGameView->pViewCamera->updatePolar(0, 0, 1.0 - (dx*0.01) );
 	}
 }
 

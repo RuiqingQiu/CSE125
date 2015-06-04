@@ -24,6 +24,9 @@ viewFactory::viewFactory()
 	buildmode->startingMoney = score->money;
 	battlemode->addItem(score);
 	buildmode->addItem(score);
+
+	// the loading view after click on play button
+	loading = new loadDisplay(0, 0, 250, 250);
 }
 
 viewFactory::viewFactory(int w, int h) {
@@ -48,6 +51,9 @@ viewFactory::viewFactory(int w, int h) {
 	buildmode->startingMoney = score->money;
 	battlemode->addItem(score);
 	buildmode->addItem(score);
+
+	// the loading view after click on play button
+	loading = new loadDisplay(w*0.43, h*0.3, 250, 250);
 
 	cout << "view factory loading done" << endl;
 
@@ -150,6 +156,9 @@ void viewFactory::reshapeFunc(int w, int h) {
 void viewFactory::idleFunc() {
 	//can't check from pGameView, so must do in factory
 	//function specific to buildmode
+
+	loading->update();
+
 	if (viewmode == viewType::BUILD) {
 		score->money = buildmode->money;
 	}
@@ -179,7 +188,9 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 
 	if ( key == 'y') {
 		//delayedRebuild();
-		battlemode->healing = true;
+		//battlemode->healing = true;
+		loadingBattle = !loadingBattle;
+		menumode->playPressed = !menumode->playPressed;
 		//battlemode->updateName("butthead");
 		//gameOver->updateRobotName("butthead");
 	}
