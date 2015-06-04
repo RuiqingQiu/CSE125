@@ -100,6 +100,7 @@ enum BLOCK_TYPE
 	STONEHENGE = 807,
 
 	MONEY = 1000,
+	CROWN = 1001,
 	};
 
 
