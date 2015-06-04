@@ -805,7 +805,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						   Model3D* object = Model3DFactory::generateObjectWithType(CROWN);
 						   object->isUpdated = true;
 						   object->shader_type = shader_type;
-
+						   object->localTransform.scale = Vector3(2.5, 2.5, 2.5);
 						   object->identifier = info->player_infos[i]->id;
 						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
@@ -1105,6 +1105,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			case CANNONBALL:{
 								Model3D* object = Model3DFactory::generateObjectWithType(CANNONBALL);
 								object->isUpdated = true;
+								object->localTransform.scale = Vector3(4, 4, 4);
 								object->shader_type = shader_type;
 								object->identifier = info->player_infos[i]->id;
 								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
