@@ -2,7 +2,7 @@
 #include "battletimer.h"
 
 
-string battleTimer::textPath = "text/time_long.png";
+string battleTimer::textPath = "text/time_long1.png";
 battleTimer::battleTimer() : numDisplay() {
 	createNumbers();
 }
@@ -49,7 +49,7 @@ void battleTimer::createNumbers() {
 		digits.push_back(new numbers((xPos + width - off_comma) - (nSize*(i + 1)), yPos + off, nSize, nSize, xfixed, yfixed));
 	}
 
-	colon = new guiItem("text/symbols/colon.jpg", (xPos + width - (off*3.0)) - (nSize * 3), yPos + off, nSize, nSize); // all things have the same size 
+	colon = new guiItem("text/symbols/colon.png", (xPos + width - (off*3.0)) - (nSize * 3), yPos + off, nSize, nSize); // all things have the same size 
 }
 
 void battleTimer::update(){

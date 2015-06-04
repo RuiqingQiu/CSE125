@@ -60,7 +60,7 @@ enum ModelType{
 	//Other
 	BATTLEFIELD = 700,
 	WALL = 701,
-	BULLET_1 = 702,
+	CANNONBALL = 702,
 	BULLET = 703,
 
 	CUBEA = 751,
@@ -76,7 +76,8 @@ enum ModelType{
 	FLOOR_SIMPLE = 806,
 	STONEHENGE = 807,
 	LEGO = 808,
-	DOLLAR = 1000
+	DOLLAR = 1000,
+	CROWN = 1001
 };
 
 enum ShaderType{

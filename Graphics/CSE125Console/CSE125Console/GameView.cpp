@@ -284,7 +284,7 @@ void GameView::highlight_second_pass(){
 			pair<float, GeoNode*> p = make_pair(999, node);
 			nodedepthvec.push_back(p);
 		}
-		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE || node->type == STONEHENGE)
 		{
 			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
 			Vector4 position = modelview * (localpos);
@@ -801,6 +801,19 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 
 							break;
 			}
+			case CROWN:{
+						   Model3D* object = Model3DFactory::generateObjectWithType(Mallet);
+						   object->isUpdated = true;
+						   object->shader_type = shader_type;
+
+						   object->identifier = info->player_infos[i]->id;
+						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						   NodeList.push_back(object);
+						   info->player_infos[i]->processed = true;
+
+						   break;
+			}
 			case Needle:{
 							Model3D* object = Model3DFactory::generateObjectWithType(Needle);							   
 							object->isUpdated = true;
@@ -914,6 +927,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							 info->player_infos[i]->processed = true;
 							 break;
 			} 
+	
 
 			case BATTLEFIELD:{
 								 /*
@@ -1088,7 +1102,17 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						  info->player_infos[i]->processed = true;
 						break;
 			}
-			case BULLET_1:{
+			case CANNONBALL:{
+								Model3D* object = Model3DFactory::generateObjectWithType(CANNONBALL);
+								object->isUpdated = true;
+								object->shader_type = shader_type;
+								object->identifier = info->player_infos[i]->id;
+								object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+								object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+								object->localTransform.scale = Vector3(1, 1, 1);
+								NodeList.push_back(object);
+								info->player_infos[i]->processed = true;
+								break;
 							  break;
 			}
 			case BULLET:{
