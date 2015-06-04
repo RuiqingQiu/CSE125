@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "gui.h"
+#include "sound.h"
 
 enum helpPage {
     MAIN_PAGE = 0,
@@ -30,5 +31,7 @@ public:
     
     helpPage currentPage;
 	int prevMouseState;
+private:
+	Sound* sound;
 };
 

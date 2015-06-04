@@ -2,16 +2,19 @@
 #include "helpMenu.h"
 
 helpMenu::helpMenu() : gui() {
+	sound = new Sound();
 	createButtons();
 	returnTo = viewType::MENU;
 }
 
 helpMenu::helpMenu(int w, int h) : gui(w, h) {
+	sound = new Sound();
 	createButtons();
 	returnTo = viewType::MENU;
 }
 
 helpMenu::helpMenu(int w, int h, viewType r) : gui(w, h) {
+	sound = new Sound();
 	createButtons();
 	returnTo = r;
 }
@@ -50,13 +53,16 @@ void helpMenu::createButtons() {
 viewType helpMenu::mouseClickFunc(int state, int x, int y) {
 	if (backButton->isSelected(x, height - y) &&
 		state == GLUT_UP) {
+		sound->playSelect();
 		return returnTo;
 	}
     else if (next->isSelected(x, height - y) &&
 		state == GLUT_UP && prevMouseState != GLUT_UP) {
         if (currentPage == MAIN_PAGE) {
             currentPage = BUILD_PAGE;
+			sound->playSelect();
         } else if (currentPage == BUILD_PAGE) {
+			sound->playSelect();
             currentPage = BATTLE_PAGE;
         } else {
             //currentPage = MAIN_PAGE;
@@ -65,13 +71,16 @@ viewType helpMenu::mouseClickFunc(int state, int x, int y) {
     else if (prev->isSelected(x, height - y) &&
 		state == GLUT_UP && prevMouseState != GLUT_UP) {
         if (currentPage == BATTLE_PAGE) {
+			sound->playSelect();
             currentPage = BUILD_PAGE;
         } else if (currentPage == BUILD_PAGE) {
+			sound->playSelect();
             currentPage = MAIN_PAGE;
         } else {
             //currentPage = MAIN_PAGE;
         }
     }
+	
 	prevMouseState = state;
 	return viewType::HELP;
 }
