@@ -11,7 +11,7 @@ Model3DFactory::Model3DFactory()
 	
 	//blocks
 	render_obj_map.insert(std::pair<int, RenderObject*>(BasicCube, new RenderObject("Assets/BasicCube/cube2.obj", "Assets/BasicCube/tex.png", "Assets/BasicCube/normals.png", "Assets/BasicCube/gloss.png", "Assets/BasicCube/metallic.png")));
-	
+
 	render_obj_map.insert(std::pair<int, RenderObject*>(CrystalCube, new RenderObject("Assets/CrystalMethCube/cubeofmeth.obj", "Assets/CrystalMethCube/tex.png", "Assets/CrystalMethCube/normals.png", "Assets/CrystalMethCube/gloss.png", "Assets/CrystalMethCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(GlowingCube, new RenderObject("Assets/WhiteCube/simplecube2.obj", "Assets/WhiteCube/tex.png", "Assets/WhiteCube/normals.png", "Assets/WhiteCube/gloss.png", "Assets/WhiteCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(WoodenCube, new RenderObject("Assets/WoodenCube/woodcube.obj", "Assets/WoodenCube/tex.png", "Assets/WoodenCube/normals.png", "Assets/WoodenCube/gloss.png", "Assets/WoodenCube/metallic.png")));
@@ -63,7 +63,7 @@ Model3DFactory::Model3DFactory()
 
 	//Moneyzone obbjects
 	render_obj_map.insert(std::pair<int, RenderObject*>(DOLLAR, new RenderObject("Assets/MoneyZone/DollarSign/dollar.obj", "Assets/MoneyZone/DollarSign/tex.png", "Assets/MoneyZone/DollarSign/normals.png", "Assets/MoneyZone/DollarSign/gloss.png", "Assets/MoneyZone/DollarSign/metallic.png")));
-	
+
 	cout << "Model3DFactory loading done" << endl;
 
 }
