@@ -76,7 +76,7 @@ void buildView::createText() {
 	timer->setScaling(true, false, width, height);
 	//guiItems.push_back(timer);
 
-	noMoney = new guiItem("text/money.jpg", width*(790.0 / 1920.0), height - 120, 400, 50, false, false);
+	noMoney = new guiItem("text/money.png", width*(790.0 / 1920.0), height - 120, 400, 50, false, false);
 	noMoney->setScaling(true, false, width, height);
 	//guiItems.push_back(noMoney);
 
@@ -811,6 +811,7 @@ void buildView::setTemplate() {
 			money -= NodeList[0]->cost;
 			return;
 		}
+
 		delete NodeList[0];
 		NodeList[0] = cube;
 		money -= NodeList[0]->cost;
@@ -827,7 +828,7 @@ void buildView::setTemplate() {
 			return;
 		}
 		for (int i = 1; i < BASE_SIZE; i++) {
-			 object = Model3DFactory::generateObjectWithType(selectedType);
+			object = Model3DFactory::generateObjectWithType(selectedType);
 			object->localTransform.position = NodeList[i]->localTransform.position;
 			object->identifier = NodeList[i]->identifier;
 			object->textureType = selectedType;

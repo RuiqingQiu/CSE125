@@ -216,6 +216,34 @@ void scrollBox::onClick(int state, int x, int y) {
 	removeButton->onClick(state, x, y);
 	clearButton->onClick(state, x, y);
 	if (addButton->isSelected(x, y) || removeButton->isSelected(x, y)) return;
+
+	//check if click is on a list or sublist item first, if not don't modify
+	bool clicked = false;
+	for (int i = 0; i < (int)list.size(); i++) {
+		if (list[i]->isSelected(x, y) && state == GLUT_UP) {
+			clicked = true;
+			break;
+		}
+		for (int j = 0; j < (int)list[i]->subList.size(); j++) {
+			if (list[i]->subList[j]->isSelected(x, y) && state == GLUT_UP) {
+				clicked = true;
+				break;
+			}
+		}
+	}
+	if (!clicked) return;
+
+	//reset sublist selection
+	for (int i = 0; i < (int)list.size(); i++) {
+		if (list[i]->showSubList) {
+			for (int j = 0; j < (int)list[i]->subList.size(); j++) {
+				list[i]->subList[j]->showSubList = false;
+			}
+		}
+	}
+
+	//if any button in the scroll list is clicked, update the display
+	// to show the correct list of items
 	for (int i = displayIdx; i < displayIdx+MAXDISPLAY; i++) {
 		if (i >= (int)list.size()) return;
 		if (!list[i]->subSel(x, y))

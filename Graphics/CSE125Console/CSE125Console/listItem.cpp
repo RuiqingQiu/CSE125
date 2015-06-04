@@ -106,6 +106,9 @@ void listItem::draw() {
 	if (showSubList) {
 		currState = btnState::PRESSED;
 	}
+	else {
+		currState = btnState::NORMAL;
+	}
 	button::draw();
 	if (showSubList) {
 		for (int i = 0; i < (int)subList.size(); i++) {
