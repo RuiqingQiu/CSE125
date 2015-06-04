@@ -27,17 +27,17 @@ void helpMenu::createButtons() {
     
     currentPage = MAIN_PAGE;
     
-    backButton = new button("menuItem/back.jpg", width*0.45, height * 0.1);
+    backButton = new button("menuItem/back.jpg", width*0.45, height * 0.1, 240, 60);
     backButton->setTexture("menuItem/back_sel.jpg", btnState::SELECTED);
     backButton->setTexture("menuItem/back_press.jpg", btnState::PRESSED);
     backButton->setScaling(true, true, width, height);
 
-    next = new button("menuItem/nextPage.jpg", width*0.8, height * 0.1, 120, 30);
+    next = new button("menuItem/nextPage.jpg", width*0.8, height * 0.1, 240, 60);
     next->setTexture("menuItem/nextPage_sel.jpg", btnState::SELECTED);
     next->setTexture("menuItem/nextPage_press.jpg", btnState::PRESSED);
     next->setScaling(true, true, width, height);
 
-    prev = new button("menuItem/prevPage.jpg", width*0.2, height * 0.1, 120, 30);
+    prev = new button("menuItem/prevPage.jpg", width*0.2, height * 0.1, 240, 60);
     prev->setTexture("menuItem/prevPage_sel.jpg", btnState::SELECTED);
     prev->setTexture("menuItem/prevPage_press.jpg", btnState::PRESSED);
     prev->setScaling(true, true, width, height);
