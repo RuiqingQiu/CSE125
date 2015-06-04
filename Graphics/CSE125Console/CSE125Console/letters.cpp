@@ -121,7 +121,7 @@ void letters::draw() {
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	// Draw a textured quad
-	glColor3f(1, 1, 1);
+	//glColor3f(1, 1, 1);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0); glVertex3f(xPos, yPos, 0);
 	glTexCoord2f(0, 1); glVertex3f(xPos, yPos + height, 0);

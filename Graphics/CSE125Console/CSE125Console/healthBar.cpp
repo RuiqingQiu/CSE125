@@ -149,6 +149,7 @@ void healthBar::draw() {
 	glPopMatrix();
 
 	for (int i = 0; i < (int) roboName.size(); i++) {
+		glColor3f(0, 0, 0);
 		roboName[i].draw();
 	}
 
