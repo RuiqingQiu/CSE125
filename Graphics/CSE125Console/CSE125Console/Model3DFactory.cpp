@@ -642,6 +642,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 							return generateDefault();
 						}
 						Model3D * returnModel = new Model3D(render_obj_map[type]);
+						returnModel->localTransform.scale = Vector3(3, 3, 3);
 						returnModel->type = DOLLAR;
 						return returnModel;
 						break;

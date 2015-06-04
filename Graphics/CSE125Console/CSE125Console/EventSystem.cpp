@@ -108,6 +108,12 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank);
 								  }
 								  else {
+										// check if enter the money zone
+									  int previous = Window::factory->buildmode->startingMoney;
+									  if (s->gold[myID] > previous){
+										  Window::soundObject->playMoneyCollection(); 
+									  }
+
 									  Window::factory->buildmode->startingMoney = s->gold[myID];
 									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank, s->gold[myID]);
 								  }
@@ -154,8 +160,8 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 1);
 												  f->static_object = true;
 												  f->lifeTime = 5;
-
 												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  Window::soundObject->playPPCrash(); // play player to player crash sound
 												  break;
 									   }
 										   //player wall

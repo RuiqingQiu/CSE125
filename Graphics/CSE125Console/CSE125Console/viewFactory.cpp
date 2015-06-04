@@ -189,8 +189,8 @@ void viewFactory::keyboardFunc(unsigned char key, int x, int y) {
 	if ( key == 'y') {
 		//delayedRebuild();
 		//battlemode->healing = true;
-		loadingBattle = !loadingBattle;
-		menumode->playPressed = !menumode->playPressed;
+		//loadingBattle = !loadingBattle;
+		//menumode->playPressed = !menumode->playPressed;
 		//battlemode->updateName("butthead");
 		//gameOver->updateRobotName("butthead");
 	}

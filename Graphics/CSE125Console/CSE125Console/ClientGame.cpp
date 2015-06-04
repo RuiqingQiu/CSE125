@@ -122,6 +122,7 @@ GameInfoPacket* ClientGame::update()
 			cout << "in init battle" << endl;
 			Window::factory->switchView(GLUT_KEY_F2);
 			Window::factory->buildmode->show_time = false;
+			Window::factory->loadingBattle = false;
 			break;
 		}
 		//client show the time only build mode

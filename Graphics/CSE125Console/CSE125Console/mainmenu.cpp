@@ -8,6 +8,7 @@ int start_w; // start to display robot name
 int start_h; // height should be the same
 
 mainMenu::mainMenu() : gui() {
+	sound = new Sound();
 	w = width;
 	h = height;
 	playerReady = 0;
@@ -21,6 +22,7 @@ mainMenu::mainMenu() : gui() {
 }
 
 mainMenu::mainMenu(int w, int h) : gui(w, h) {
+	sound = new Sound();
 	w = width;
 	h = height;
 	ready = false;
@@ -210,6 +212,7 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 
 	// if enter IP address is selected
 	if (ipAdrressButton->isSelected(x, height - y)){
+		sound->playSelect();
 		g_pCore->i_pInput->enteringName = false;
 		g_pCore->i_pInput->enteringAddress = true;
 		displayIp = true;
@@ -217,6 +220,7 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 
 	// if enter robot name is selected
 	if (buttons[0]->isSelected(x, height - y)){
+		sound->playSelect();
 		g_pCore->i_pInput->enteringName = true;
 		g_pCore->i_pInput->enteringAddress = false;
 		displayName = true;
@@ -224,6 +228,7 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 
 	//play button
 	if (playButton->isSelected(x, height - y)) {
+		sound->playSelect();
 		playPressed = true;
 		if (!ready){
 			ready = true;
@@ -231,17 +236,14 @@ viewType mainMenu::mouseClickFunc(int state, int x, int y){
 			g_pCore->pGamePacketManager->ConnectToServer((char*)(g_pCore->pPlayer->IPAddress.c_str()));
 			playerReady = playerReady + 1;
 		}
-		// if all the players are ready, go to the build view
-		/*
-		if (playerReady == MAX_PLAYER)
-			return viewType::BUILD;
-		*/
 	}
 	// help button
 	else if (helpButton->isSelected(x, height - y)){
+		sound->playSelect();
 		return viewType::HELP;
 	}
 	else if (exitButton->isSelected(x, height - y)) {
+		sound->playSelect();
 		exit(0);
 	}	
 	// stay at the menu button

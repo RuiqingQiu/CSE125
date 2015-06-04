@@ -13,8 +13,8 @@ Sound::Sound(){
 	string tmp = path + "select.wav";
 	if (!selectBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading select sound effect " << endl;
-	selectSound.setBuffer(selectBuffer);
 	selectSound.setLoop(true);
+	selectSound.setBuffer(selectBuffer);
 	// need to play and then pause it
 	selectSound.play();
 	selectSound.pause();
@@ -80,10 +80,28 @@ Sound::Sound(){
 	if (!collisionWallBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading ending sound effect " << endl;
 	collisionWallSound.setBuffer(collisionWallBuffer);
-	collisionWallSound.setLoop(true);
 	// need to play and then pause it
 	collisionWallSound.play();
 	collisionWallSound.stop();
+
+	// money collection sound 
+	tmp = path + "moneyCollection.wav";
+	if (!moneyBuffer.loadFromFile(tmp))
+		cout << "ERROR in loading money collection sound effect " << endl;
+	moneySound.setBuffer(moneyBuffer);
+	// need to play and then pause it
+	moneySound.play();
+	moneySound.stop();
+
+	// player and player crash
+	tmp = path + "carCrash.wav";
+	if (!ppcrashBuffer.loadFromFile(tmp))
+		cout << "ERROR in loading car crash buffer sound effect " << endl;
+	ppcrashSound.setBuffer(ppcrashBuffer);
+	// need to play and then pause it
+	ppcrashSound.play();
+	ppcrashSound.stop();
+
 
 	// game background music
 	// music doesn't preload the data
@@ -129,6 +147,7 @@ void Sound::playMusic(){
 void Sound::playBuildViewBackground(){
 	if (buildViewBackground.getStatus() != sf::Sound::Playing){
 		buildViewBackground.play();
+		moneySound.stop(); // no money sound
 		openingSound.stop();
 		loadingSound.stop();
 		music.stop();
@@ -148,6 +167,7 @@ void Sound::playExplosion(float x, float y,float z){
 	if (explosionSound.getStatus() == sf::Sound::Playing){
 		//cout << "Play explosion sound " << endl;
 		explosionSound.stop();
+		moneySound.stop();
 		explosionSound.setPosition(x, y, z);
 		explosionSound.play();
 	}
@@ -157,7 +177,7 @@ void Sound::playExplosion(float x, float y,float z){
 // This function is used to play gui menu selection
 void Sound::playSelect(){
 	//cout << "Enter play select " << endl;
-	if (selectSound.getStatus() == sf::Sound::Paused){
+	if (selectSound.getStatus() != sf::Sound::Playing){
 		cout << "Play Select " << endl;
 		selectSound.play();
 		Sleep(100); // sleep for 0.1 secs and then pause
@@ -177,6 +197,7 @@ void Sound::playGun(float x, float y, float z){
 	if (gunSound.getStatus() == sf::Sound::Playing){
 		cout << "Play gun " << endl;
 		gunSound.setPosition(x, y, z);
+		moneySound.stop();
 		gunSound.stop();
 		gunSound.play();
 	}
@@ -206,6 +227,7 @@ void Sound::playEnding(){
 	cout << "play ending sound " << endl;
 	if (endingSound.getStatus() == sf::Sound::Stopped){
 		music.pause();
+		moneySound.stop();
 		openingSound.stop();
 		loadingSound.stop();
 		endingSound.play();
@@ -215,6 +237,22 @@ void Sound::playEnding(){
 void Sound::playCollisionWall(){
 	cout << "playing collision to wall " << endl;
 	if (collisionWallSound.getStatus() == sf::Sound::Stopped){
+		moneySound.stop(); // stop collecting money
 		collisionWallSound.play();
+		
+	}
+}
+// play money collection sound
+void Sound::playMoneyCollection(){
+	if (moneySound.getStatus() == sf::Sound::Stopped){
+		moneySound.play();
+	}
+}
+
+
+// play player and player crash sound
+void Sound::playPPCrash(){
+	if (ppcrashSound.getStatus() == sf::Sound::Stopped){
+		ppcrashSound.play();
 	}
 }

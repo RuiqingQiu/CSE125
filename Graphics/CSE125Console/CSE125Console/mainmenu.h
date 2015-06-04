@@ -4,6 +4,7 @@
 #include "GameCore.h"
 #include "letters.h" // display textured letter
 #include "loadDisplay.h"
+#include "sound.h" 
 
 #define MAX_PLAYER 4
 
@@ -50,4 +51,5 @@ private:
 	std::vector<guiItem*> guiLetters; // keep track of the letter in the string, later combined with guiItems vector
 	std::vector<guiItem*> guiNumbers; // keep track of the number in the Ip Adress
 
+	Sound * sound;
 };
