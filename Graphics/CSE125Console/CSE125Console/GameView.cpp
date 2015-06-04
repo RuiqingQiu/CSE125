@@ -802,7 +802,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 							break;
 			}
 			case CROWN:{
-						   Model3D* object = Model3DFactory::generateObjectWithType(Mallet);
+						   Model3D* object = Model3DFactory::generateObjectWithType(CROWN);
 						   object->isUpdated = true;
 						   object->shader_type = shader_type;
 
