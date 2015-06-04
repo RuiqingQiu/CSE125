@@ -77,9 +77,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				e->setDamage1();
 				double damage = o2->getDamage();
-				if (o2->getBlockType() == BULLET)
+				if (o2->getBlockType() == CANNON_BALL)
 				{
-					damage *= 2; std::cout <<"double dmg" << std::endl;
+					Robot * r =(Robot*)o1->getBelongTo();
+					if (r->getHealth() < r->getMaxHealth()*0.15){
+						damage *= 2;
+						std::cout << "double dmg" << std::endl;
+					}
 				}
 				else if (o2->getBlockType() == BULLET)
 				{
@@ -149,9 +153,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				//std::cout << "COLLISION: ROBOT PART WITH PROJECTILE" << std::endl;
 				e->setResult1(NOTHING); e->setResult2(DELETED);
 				double damage = o2->getDamage();
-				if (o2->getBlockType() == BULLET)
+				if (o2->getBlockType() == CANNON_BALL)
 				{
-					damage *= 2; std::cout <<"double dmg" << std::endl;
+					Robot * r = (Robot*)o1->getBelongTo();
+					if (r->getHealth() < r->getMaxHealth()*0.15){
+						damage *= 2;
+						std::cout << "double dmg" << std::endl;
+					}
 				}
 				else if (o2->getBlockType() == BULLET)
 				{
@@ -242,11 +250,15 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(DELETED); e->setResult2(NOTHING);
 				
 				double damage = o1->getDamage();
-				if (o2->getBlockType() == BULLET)
+				if (o1->getBlockType() == CANNON_BALL)
 				{
-					damage *= 2; std::cout <<"double dmg" << std::endl;
+					Robot * r = (Robot*)o2->getBelongTo();
+					if (r->getHealth() < r->getMaxHealth()*0.15){
+						damage *= 2;
+						std::cout << "double dmg" << std::endl;
+					}
 				}
-				else if (o2->getBlockType() == BULLET)
+				else if (o1->getBlockType() == BULLET)
 				{
 					if (rand() % 100 <= 10)
 					{
@@ -269,11 +281,15 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(DELETED); e->setResult2(NOTHING);
 
 				double damage = o1->getDamage();
-				if (o2->getBlockType() == BULLET)
+				if (o1->getBlockType() == CANNON_BALL)
 				{
-					damage *= 2; std::cout <<"double dmg" << std::endl;
+					Robot * r = (Robot*)o2->getBelongTo();
+					if (r->getHealth() < r->getMaxHealth()*0.15){
+						damage *= 2;
+						std::cout << "double dmg" << std::endl;
+					}
 				}
-				else if (o2->getBlockType() == BULLET)
+				else if (o1->getBlockType() == BULLET)
 				{
 					if (rand() % 100 <= 10)
 					{
@@ -304,19 +320,26 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				e->setResult1(DELETED); e->setResult2(NOTHING);
 			
 				double damage = o1->getDamage();
-				if (o2->getBlockType() == BULLET)
+				if (o1->getBlockType() == CANNON_BALL)
 				{
-					damage *= 2; std::cout <<"double dmg" << std::endl;
+					Robot * r = (Robot*)o2->getBelongTo();
+					if (r->getHealth() < r->getMaxHealth()*0.15){
+						damage *= 2;
+						std::cout << "double dmg" << std::endl;
+					}
 				}
-				else if (o2->getBlockType() == BULLET)
+				else if (o1->getBlockType() == BULLET)
 				{
 					if (rand() % 100 <= 10)
 					{
 						damage *= 3;
 					}
 				}
-				if (o2->applyDamage(damage) <= 0)
+				double remain = o2->applyDamage(damage);
+				std::cout << "remain health melee pro" << std::endl;
+				if (remain <= 0)
 				{
+					//o2->applyDamage(0)
 					e->setResult2(BREAK_CONSTRAINT);
 				}
 				e->setDamage2();
@@ -356,9 +379,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			case C_ROBOT_PARTS:
 			{
 				//std::cout << "COLLISION: MELEE WITH ROBOT PART" << std::endl;
-				e->setResult1(NOTHING); e->setResult2(BREAK_CONSTRAINT);
+				e->setResult1(NOTHING); e->setResult2(NOTHING);
 				 
 				e->setDamage2();
+
+				if (o2->applyDamage(o1->getDamage()) <= 0){
+					e->setResult2(BREAK_CONSTRAINT);
+				}
 				Robot* r = (Robot*)o2->getBelongTo();
 				if (r->applyDamage(o1->getDamage()) <= 0)
 				{
@@ -374,9 +401,13 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 				//std::cout << "O2 damage" << o2->getDamage() << std::endl;
 				 
 				double damage = o2->getDamage();
-				if (o2->getBlockType() == BULLET)
+				if (o2->getBlockType() == CANNON_BALL)
 				{
-					damage *= 2; std::cout <<"double dmg" << std::endl;
+					Robot * r = (Robot*)o1->getBelongTo();
+					if (r->getHealth() < r->getMaxHealth()*0.15){
+						damage *= 2;
+						std::cout << "double dmg" << std::endl;
+					}
 				}
 				else if (o2->getBlockType() == BULLET)
 				{
@@ -385,7 +416,9 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 						damage *= 3;
 					}
 				}
-				if (o1->applyDamage(damage) <= 0)
+				double reeee = o1->applyDamage(damage);
+					std::cout << "remaining health " << reeee << std::endl;
+				if (reeee <= 0)
 				{
 					//std::cout << "ROB PART WITH PROJ BREAK CONST" << std::endl;
 					e->setResult1(BREAK_CONSTRAINT);
@@ -402,8 +435,16 @@ int DamageSystem::performDamage(GameObj* o1, GameObj* o2, DamageEvent* e)
 			case C_MELEE:
 			{
 				//std::cout << "COLLISION: MELEE WITH MELEE" << std::endl;
-				e->setResult1(BREAK_CONSTRAINT); e->setResult2(BREAK_CONSTRAINT);
+				e->setResult1(NOTHING); e->setResult2(NOTHING);
 			
+				if (o1->applyDamage(o2->getDamage()) <= 0)
+				{
+					e->setResult1(BREAK_CONSTRAINT);
+				}
+				if (o2->applyDamage(o1->getDamage()) <= 0)
+				{
+					e->setResult2(BREAK_CONSTRAINT);
+				}
 
 				e->setDamage1();
 				Robot* r1 = (Robot*)o1->getBelongTo();

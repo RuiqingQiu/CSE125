@@ -821,10 +821,14 @@ void GameLogic::postPhyLogic(){
 		int clientCollision = damageSystem->performDamage(GO1, GO2, e);
 		if (clientCollision != CH_INVALIDCOLLISION)
 		{
-			applyMeleeForce(GO1, GO2);
-			applyMeleeForce(GO2, GO1);
-			applyBulletEffect(GO1, GO2);
-			applyBulletEffect(GO2, GO1);
+			if (clientCollision == CH_PLAYERPLAYER){
+				applyMeleeForce(GO1, GO2);
+				applyMeleeForce(GO2, GO1);
+			}
+			if (clientCollision == CH_BULLETPLAYER){
+				applyBulletEffect(GO1, GO2);
+				applyBulletEffect(GO2, GO1);
+			}
 			GECollisonHappen* gech = new GECollisonHappen(clientCollision, (*it)->getX(), (*it)->getY(), (*it)->getZ());
 			gameEventList.push_back(gech);
 		}
@@ -895,7 +899,7 @@ void GameLogic::postDeathLogic(Robot* r)
 		//cout << "-----" << endl;
 		vector<GameObj*> parts = r->getParts();
 		vector<GameObj*>::iterator it;
-		r->setId(5900000  + counter);
+		r->setId(79000  + counter);
 		counter +=10;
 		for (it = parts.begin(); it != parts.end(); it++)
 		{
@@ -1043,11 +1047,11 @@ void GameLogic::animateBuilding()
 void GameLogic::addWalls()
 {
 
-	GameObj* b = new GOBox(0, FIELD_HEIGHT*1.25, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
+	GameObj* b = new GOBox(0, FIELD_HEIGHT*2, 0, 0, 0, 0, 1, 0, 0.0000001, 0.0000001, 0.0000001);
 	b->setBlockType(STONEHENGE);
 	b->setCollisionType(C_WALLS);
 
-	GameObj* ceiling = new GOPlane(0, FIELD_HEIGHT, 0, 0, 0, 0, 1, 0, 0, -1, 0, 1);
+	GameObj* ceiling = new GOPlane(0, FIELD_HEIGHT*2, 0, 0, 0, 0, 1, 0, 0, -1, 0, 1);
 	GameObj* leftWall = new GOPlane(-FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1);
 	GameObj* rightWall = new GOPlane(FIELD_WIDTH / 2, 0, 0, 0, 0, 0, 1, 0, -1, 0, 0, 1);
 	GameObj* frontWall = new GOPlane(0, 0, FIELD_WIDTH / 2, 0, 0, 0, 1, 0, 0, 0, -1, 1);
@@ -1318,7 +1322,7 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
 		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
 		//btVector3 boxRot = rbTrans.getBasis()[2];
-		btVector3 boxRot(GO2->getX() - GO1->getX(), 1.3, GO2->getZ() - GO1->getZ());
+		btVector3 boxRot(GO2->getX() - GO1->getX(), 0.75, GO2->getZ() - GO1->getZ());
 		boxRot.normalize();
 		btVector3 newforce = boxRot*knockback;
 		//newforce.setY(0);
@@ -1333,7 +1337,7 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
 		//btTransform rbTrans = GO1->getRigidBody()->getWorldTransform();
 		//btVector3 boxRot = rbTrans.getBasis()[2];
-		btVector3 boxRot(GO2->getX() - GO1->getX(), 1.2, GO2->getZ() - GO1->getZ());
+		btVector3 boxRot(GO2->getX() - GO1->getX(), 0.5, GO2->getZ() - GO1->getZ());
 		boxRot.normalize();
 		btVector3 newforce = boxRot*knockback;
 		//newforce.setY(0);
@@ -1344,7 +1348,7 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
 
 	}
-	else if( GO1->getBlockType() == Needle && !GO2->getDeleted())
+	else if( GO1->getBlockType() == Needle && !GO2->getDeleted() && GO2->getBlockType() != WALL )
 	{
 
 		double knockback = ((MeleeWeapon*)GO1->getWeapon())->getKnockback();
@@ -1367,7 +1371,7 @@ void GameLogic::updateDoTDamage()
 	std::vector<GameObj *>::iterator it2;
 	for (it2 = gameObjs.begin(); it2 != gameObjs.end(); it2++)
 	{
-		//if ((*it2)->getHasDeleted()) continue;
+		if ((*it2)->getHasDeleted()) continue;
 		int cid = (*it2)->applyDotDamage();
 		if (cid != -1)
 		{
@@ -1491,8 +1495,8 @@ void GameLogic::applyBulletEffect(GameObj* GO1, GameObj* GO2)
 		{
 			Robot* r = (Robot*)GO2->getBelongTo();
 			btRaycastVehicle* v = r->getVehicle();
-			r->getRigidBody()->setAngularVelocity(r->getRigidBody()->getAngularVelocity()*0.4);
-			r->getRigidBody()->setLinearVelocity(r->getRigidBody()->getLinearVelocity()*0.4);
+			r->getRigidBody()->setAngularVelocity(r->getRigidBody()->getAngularVelocity()*0.7);
+			r->getRigidBody()->setLinearVelocity(r->getRigidBody()->getLinearVelocity()*0.7);
 			v->applyEngineForce(0, 0);
 			v->applyEngineForce(0, 1);
 			v->applyEngineForce(0, 2);

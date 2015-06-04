@@ -43,23 +43,23 @@ RangedWeapon::RangedWeapon(int type)
 				 _pBlockType = BULLET;
 				 break;
 	}
-	//case Cannon:
-	//{
+	case CANNON:
+	{
 
-	//		   range = FAR_RANGED;
-	//		   damage = 300;
-	//		   attackSpeed = 0.5;
-	//		   splash = 4;
+			   range = FAR_RANGED;
+			   damage = 300;
+			   attackSpeed = 0.5;
+			   splash = 4;
 
-	//		   _pInitForce = -3000;
-	//		   _pMass = 20;
-	//		   _pWidth = .8;
-	//		   _pHeight = .8;
-	//		   _pDepth = .8;
-	//		   _pBlockType = Cannon_Ball;
-	//		   break;
-	//
-	//}
+			   _pInitForce = -3000;
+			   _pMass = 20;
+			   _pWidth = .8;
+			   _pHeight = .8;
+			   _pDepth = .8;
+			   _pBlockType = CANNON_BALL;
+			   break;
+	
+	}
 	default:
 	{
 		range = FAR_RANGED;

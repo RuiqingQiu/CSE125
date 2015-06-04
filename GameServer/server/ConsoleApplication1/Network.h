@@ -16,7 +16,16 @@
 #include "definition.h"
 #include <string>
 
+union u {
+	float f;
+	int i;
+	char c[sizeof(float)];
+};
+
 class Network {
+
+
+
 private:
 	// IDs for the clients connecting for table in ServerNetwork 
 	int client_id;
@@ -33,6 +42,7 @@ public:
 	void sendClientConfirmationPacket(const char* clientName, int client_ID);
 	int waitForConnections();
 	string convertData(vector<GameObj*> * gameObjs);
+	string convertDataX(vector<GameObj*> * gameObjs);
 	void receiveFromClients(std::vector<ObjectEvents*>*);
 	void sendActionPackets(vector<GameObj*> * gameObjs, vector<GameEvents*>*);
 	void convertObjectEvents(CPacket packet, std::vector<ObjectEvents*>* eventList);

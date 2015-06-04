@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<DEFECTS><DEFECT><SFA><FILEPATH>c:\users\zhxia\desktop\cse125\gameserver\server\consoleapplication1\</FILEPATH><FILENAME>servernetwork.cpp</FILENAME><LINE>116</LINE><COLUMN>30</COLUMN></SFA><DEFECTCODE>6262</DEFECTCODE><DESCRIPTION>Function uses '50020' bytes of stack:  exceeds /analyze:stacksize '16384'.  Consider moving some data to heap.</DESCRIPTION><FUNCTION>ServerNetwork::receiveData</FUNCTION><DECORATED>?receiveData@ServerNetwork@@QAEHHPAD@Z</DECORATED><FUNCLINE>116</FUNCLINE><PATH/></DEFECT></DEFECTS>

@@ -605,30 +605,31 @@ static string temp;
 static string temp1;
 string Network::convertData(vector<GameObj*> * gameObjs){
 	temp = "";
-	//cout <<"GAME OBJ SIZE IS : "<< gameObjs->size() << endl;\
 
-	if (gameObjs == nullptr)
-	{
-		//std::cout << "NULL" << endl;
-		return temp;
-	}
 
 	for (vector<GameObj*>::iterator i = gameObjs->begin();
 		i != gameObjs->end(); ++i)
 	{
-		if ((*i) == nullptr)
-		{
-			//std::cout << "NULL" << endl;
-			break;
-		}
-		temp += to_string((*i)->getId());
-		temp += ' ';
-		temp += to_string((*i)->getX());
-		temp += ' ';
-		temp += to_string((*i)->getY());
-		temp += ' ';
-		temp += to_string((*i)->getZ());
-		temp += ' ';
+	
+		/*
+		union u {
+			float f;
+			int i;
+			char c[sizeof(float)];
+		};
+		float a = 4.0;
+		u.f = a;
+		string(u.c);
+		*/
+
+		temp += to_string((*i)->getId()) + ' ';
+		//temp += ' ';
+		temp += to_string((*i)->getX()) + ' ';
+		//temp += ' ';
+		temp += to_string((*i)->getY()) + ' ';
+		//temp += ' ';
+		temp += to_string((*i)->getZ()) + ' ';
+		//temp += ' ';
 		btTransform trans;
 		if ((*i)->getIsRobot() == 1){
 
@@ -650,24 +651,14 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			//cout << "yaw : " << yaw << endl;
 			//cout << "pitch : " << pitch << endl;
 			//cout << "roll : " << roll << endl;
-			temp += to_string((float)roll);
-			temp += ' ';
-			temp += to_string((float)pitch);
-			temp += ' ';
-			temp += to_string((float)yaw);
-			temp += ' ';
-		}
-		else if ((*i)->getType() == PLANE)
-		{
-			temp += "0 0 0 ";
-			//temp += to_string((float)((GOPlane*)(*i))->getXNorm());
+			temp += to_string((float)roll) + ' ';
 			//temp += ' ';
-			//temp += to_string((float)((GOPlane*)(*i))->getYNorm());
+			temp += to_string((float)pitch) + ' ';
 			//temp += ' ';
-			//temp += to_string((float)((GOPlane*)(*i))->getZNorm());
+			temp += to_string((float)yaw) + ' ';
 			//temp += ' ';
 		}
-		else if ((*i)->getBlockType() == STONEHENGE)
+		else if ((*i)->getType() == PLANE || (*i)->getBlockType() == STONEHENGE)
 		{
 			temp += "0 0 0 ";
 		}
@@ -680,17 +671,17 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 			/*cout << "other yaw z rotation : " << yaw << endl;
 			cout << "other pitch y  : " << pitch << endl;
 			cout << "other roll x : " << roll << endl;*/
-			temp += to_string((float)roll);
-			temp += ' ';
-			temp += to_string((float)pitch);
-			temp += ' ';
-			temp += to_string((float)yaw);
-			temp += ' ';
+			temp += to_string((float)roll) + ' ';
+			//temp += ' ';
+			temp += to_string((float)pitch) + ' ';
+			//temp += ' ';
+			temp += to_string((float)yaw) + ' ';
+			//temp += ' ';
 		}
 
-		temp += to_string((*i)->getBlockType());
+		temp += to_string((*i)->getBlockType()) + ' ';
 		//std::cout << to_string((*i)->getBlockType()) << endl;
-		temp += ' ';
+		//temp += ' ';
 		/*
 		temp += to_string((*i)->getType());
 		temp += ' ';*/
@@ -744,18 +735,19 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 
 		if ((*i)->getIsRobot()){
 				int k;
+				btTransform tran0;
 				for (k = 0; k < 4; k++){
-					btTransform tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(k).m_worldTransform;
-					temp += to_string( ((*i)->getId()+1)*4 + k + 1000000);
+					 tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(k).m_worldTransform;
+					 temp += to_string(((*i)->getId()) * 4 + k + 200004) + ' ';
 
 				//	cout << temp << endl;
-					temp += ' ';
-					temp += to_string(tran0.getOrigin().getX());
-					temp += ' ';
-					temp += to_string(tran0.getOrigin().getY());
-					temp += ' ';
-					temp += to_string(tran0.getOrigin().getZ());
-					temp += ' ';
+					//temp += ' ';
+					 temp += to_string(tran0.getOrigin().getX()) + ' ';
+					//temp += ' ';
+					 temp += to_string(tran0.getOrigin().getY()) + ' ';
+					//temp += ' ';
+					 temp += to_string(tran0.getOrigin().getZ()) + ' ';
+					//temp += ' ';
 
 					btScalar yaw0 = 0, pitch0 = 0, roll0 = 0;
 
@@ -765,14 +757,14 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 						//cout << "yaw : " << yaw << endl;
 						//cout << "pitch : " << pitch << endl;
 						//cout << "roll : " << roll << endl;
-						temp += to_string((float)roll0);
-						temp += ' ';
-						temp += to_string((float)pitch0);
-						temp += ' ';
-						temp += to_string((float)yaw0);
-						temp += ' ';
-						temp += to_string(((Robot*)*i)->getWheelType() );
-						temp += ' ';
+					temp += to_string((float)roll0) + ' ';
+						//temp += ' ';
+						temp += to_string((float)pitch0) + ' ';
+						//temp += ' ';
+						temp += to_string((float)yaw0) + ' ';
+						//temp += ' ';
+						temp += to_string(((Robot*)*i)->getWheelType()) + ' ';
+						//temp += ' ';
 				}
 			}
 	}
@@ -782,6 +774,114 @@ string Network::convertData(vector<GameObj*> * gameObjs){
 
 	return temp;
 }
+
+
+
+string Network::convertDataX(vector<GameObj*> * gameObjs){
+	temp = "";
+
+	for (vector<GameObj*>::iterator i = gameObjs->begin();
+		i != gameObjs->end(); ++i)
+	{
+
+		union u id;
+		id.i = (*i)->getId();
+		union u x;
+		x.f = (*i)->getX();
+		union u y;
+		y.f = (*i)->getY();
+		union u z;
+		z.f = (*i)->getZ();
+
+		temp += string(id.c);
+		temp += string(x.c);
+		temp += string(y.c);
+		temp += string(z.c);
+
+		btTransform trans;
+		if ((*i)->getIsRobot() == 1){
+		
+			trans = ((Robot*)(*i))->getVehicle()->getChassisWorldTransform();
+			btScalar yaw = 0, pitch = 0, roll = 0;
+			trans.getBasis().getEulerZYX(yaw, pitch, roll);
+			union u yw;
+			yw.f = (float)yaw;
+			union u ph;
+			ph.f = (float)pitch;
+			union u rl;
+			rl.f = (float)roll;
+
+			temp += string(yw.c);
+			temp += string(ph.c);
+			temp += string(rl.c);
+		}
+		else if ((*i)->getType() == PLANE || (*i)->getBlockType() == STONEHENGE)
+		{
+			union u zero;
+			zero.i = 0;
+			temp += string(zero.c);
+			temp += string(zero.c);
+			temp += string(zero.c);
+		}
+		else
+		{
+			(*i)->getRigidBody()->getMotionState()->getWorldTransform(trans);
+			btScalar yaw = 0, pitch = 0, roll = 0;
+			trans.getBasis().getEulerZYX(yaw, pitch, roll);
+			union u yw;
+			yw.f = (float)yaw;
+			union u ph;
+			ph.f = (float)pitch;
+			union u rl;
+			rl.f = (float)roll;
+
+			temp += string(yw.c);
+			temp += string(ph.c);
+			temp += string(rl.c);
+		}
+
+		union u bt;
+		bt.i = (*i)->getBlockType();
+		temp += string(bt.c);
+
+		if ((*i)->getIsRobot()){
+			int k;
+			btTransform tran0;
+			for (k = 0; k < 4; k++){
+				tran0 = ((Robot*)(*i))->getVehicle()->getWheelInfo(k).m_worldTransform;
+				union u wid;
+				wid.i = ((*i)->getId()) * 4 + k + 200004;
+				union u tx;
+				tx.f = tran0.getOrigin().getX();
+				union u ty;
+				ty.f = tran0.getOrigin().getY();
+				union u tz;
+				tz.f = tran0.getOrigin().getZ();
+				btScalar yaw0 = 0, pitch0 = 0, roll0 = 0;
+				tran0.getBasis().getEulerZYX(yaw0, pitch0, roll0);
+				union u tyaw;
+				tyaw.f = (float)yaw0;
+				union u tpitch;
+				tpitch.f = (float)pitch0;
+				union u troll;
+				troll.f = (float)roll0;
+				union u wtype;
+				wtype.i = ((Robot*)*i)->getWheelType();
+
+				temp += string(wid.c);
+				temp += string(tx.c);
+				temp += string(ty.c);
+				temp += string(tz.c);
+				temp += string(tyaw.c);
+				temp += string(tpitch.c);
+				temp += string(troll.c);
+				temp += string(wtype.c);
+			}
+		}
+	}
+	return temp;
+}
+
 
 
 

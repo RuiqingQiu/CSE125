@@ -183,6 +183,7 @@ void GameObj::setBlockType(int bType)
 	{
 			  _mass = 15;
 			  _health = 370;
+			  _maxHealth = 370;
 			  _collisionType = C_ROBOT_PARTS;
 			  break;
 	}
@@ -190,6 +191,7 @@ void GameObj::setBlockType(int bType)
 	{
 						_mass = 17;
 						_health = 250;
+						_maxHealth = 250;
 						blockForce = 300;
 						_collisionType = C_ROBOT_PARTS;
 					  break;
@@ -197,6 +199,7 @@ void GameObj::setBlockType(int bType)
 	case WoodenCube:
 	{
 					   _mass = 10;
+					   _maxHealth = 150;
 					   _health = 150;
 					   _collisionType = C_ROBOT_PARTS;
 					  break;
@@ -207,6 +210,7 @@ void GameObj::setBlockType(int bType)
 	{
 					   _mass = 15;
 					   _health = 220;
+					   _maxHealth = 220;
 					   blockHealing = 40;
 					   _collisionType = C_ROBOT_PARTS;
 					   break;
@@ -215,6 +219,7 @@ void GameObj::setBlockType(int bType)
 	{
 						_mass = 17;
 						_health = 250;
+						_maxHealth = 250;
 						blockForce = -300;
 						_collisionType = C_ROBOT_PARTS;
 						break;
@@ -225,6 +230,7 @@ void GameObj::setBlockType(int bType)
 		_isWeapon = 1;
 		_isRanged = 1;
 		_health = 200;
+		_maxHealth = 200;
 		_mass = 30;
 		_collisionType = C_ROBOT_PARTS;
 		break;
@@ -235,6 +241,7 @@ void GameObj::setBlockType(int bType)
 				 _isWeapon = 1;
 				 _isRanged = 1;
 				 _health = 240;
+				 _maxHealth = 240;
 				 _mass = 35;
 				 _collisionType = C_ROBOT_PARTS;
 					  break;
@@ -244,6 +251,7 @@ void GameObj::setBlockType(int bType)
 				 _isWeapon = 1;
 				 _mass = 35;
 				 _health = 300;
+				 _maxHealth = 300;
 				 _collisionType = C_MELEE;
 					  break;
 	}
@@ -252,6 +260,7 @@ void GameObj::setBlockType(int bType)
 				   _isWeapon = 1;
 				   _mass = 40;
 				   _health = 325;
+				   _maxHealth = 325;
 				   _collisionType = C_MELEE;
 					  break;
 	}
@@ -259,6 +268,7 @@ void GameObj::setBlockType(int bType)
 	{
 				   _isWeapon = 1;
 				   _health = 250;
+				   _maxHealth = 250;
 				   _mass = 8;
 				   _collisionType = C_MELEE;
 					  break;
@@ -308,6 +318,7 @@ void GameObj::setBlockType(int bType)
 	{
 							   _mass = 135;
 							   _health = 3330;
+							   _maxHealth = 3330;
 							   _collisionType = C_ROBOT;
 						  break;
 	}
@@ -315,6 +326,7 @@ void GameObj::setBlockType(int bType)
 	{
 								 _mass = 153;
 								 _health = 2250;
+								 _maxHealth = 2250;
 								 blockForce = 2700;
 								 _collisionType = C_ROBOT;
 							   break;
@@ -323,6 +335,7 @@ void GameObj::setBlockType(int bType)
 	{
 								_mass = 90;
 								_health = 1350;
+								_maxHealth = 1350;
 								_collisionType = C_ROBOT;
 							   break;
 	}
@@ -331,6 +344,7 @@ void GameObj::setBlockType(int bType)
 	{
 								_mass = 153;
 								_health = 2250;
+								_maxHealth = 2250;
 								blockForce = -2700;
 								_collisionType = C_ROBOT;
 								break;
@@ -340,6 +354,7 @@ void GameObj::setBlockType(int bType)
 	{
 								_mass = 135;
 								_health = 1980;
+								_maxHealth = 1980;
 								blockHealing = 360;
 								_collisionType = C_ROBOT;
 								break;
@@ -355,7 +370,7 @@ void GameObj::setBlockType(int bType)
 		_collisionType = C_GROUND;
 		break;
 	}
-	case BULLET_1:
+	case CANNON_BALL:
 	{
 		_collisionType = C_PROJECTILE;
 		break;
@@ -363,7 +378,7 @@ void GameObj::setBlockType(int bType)
 	case BULLET:
 	{
 		_collisionType = C_PROJECTILE;
-		blockSlow = 0.1;
+		blockSlow = 0.5;
 		//CHANGE THIS VALUE, it is set to 1 for testing purposes right now
 		break;
 	}
@@ -373,6 +388,7 @@ void GameObj::setBlockType(int bType)
 
 		_mass = 10;
 		_health = 200;
+		_maxHealth = 200;
 		_collisionType = C_ROBOT_PARTS;
 		break;
 	}
@@ -726,22 +742,31 @@ void GameObj::addSpeedMultipler(double s)
 }
 
 void GameObj::addDoT(double d, int c){
-	if (getIsRobot() == 0)
-	{
-		d /=  DMG_SCALAR;
-	}
 	DoT += d;
 	DoTTick = (double)DoT / (double)10;
 	DoTFrom = c;
 }
 double GameObj::applyDamage(double h){
-	if (getIsRobot() == 0)
+	/*std::cout << "apply damage before check : " << h << std::endl;
+	std::cout << "getisrobot: " << getIsRobot() << std::endl;
+	std::cout << "block type" << getBlockType() << std::endl;*/
+	if (getIsWeapon() == 1)
 	{
 		h /= DMG_SCALAR;
-	}
-	_health -= h;
+		
+		//std::cout << "applydamage to none robot :" << h << std::endl;
+ 	}
+	//std::cout << "applydamage:" << h << std::endl;
+	//std::cout << "health:" << _health << std::endl;
+	_health = _health - h;
+	//std::cout << "after apply health:" << _health << std::endl;
+
 	if (_health > _maxHealth){
+		/*std::cout << "health in max:" << _health << std::endl;
+		std::cout << "MAX health in max:" << _health << std::endl;*/
 		_health = _maxHealth;
+		//std::cout << "health after max:" << _health << std::endl;
 	}
+	//std::cout << "final health:" << _health << std::endl;
 	return _health;
 }

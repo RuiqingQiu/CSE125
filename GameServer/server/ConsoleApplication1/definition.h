@@ -45,7 +45,7 @@ enum BLOCK_TYPE
 	Needle = 203,
 	ALTNEEDLE = 204,
 	ALTMACE = 205,
-	Turrent = 206,
+	CANNON = 206,
 	Railgun = 207,
 
 	//wheels
@@ -87,7 +87,7 @@ enum BLOCK_TYPE
 	//Other
 	BATTLEFIELD = 700,
 	WALL = 701,
-	BULLET_1 = 702,
+	CANNON_BALL = 702,
 	BULLET = 703,
 
 	CUBEA = 751,

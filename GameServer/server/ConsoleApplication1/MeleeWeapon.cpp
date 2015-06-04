@@ -12,7 +12,7 @@ MeleeWeapon::MeleeWeapon(int type)
 	switch (type)
 	{
 	case Needle:{
-		damage = 30;
+		damage = 10;
 		splash = 1;
 		knockback = -100;
 		spin = 0;
@@ -21,18 +21,18 @@ MeleeWeapon::MeleeWeapon(int type)
 	}
 	case Mace:{
 
-		knockback = 400;
-		damage = 80;
+		knockback = 150;
+		damage = 80/3;
 		splash = 1;
 		spin = 0;
-		DoT = 80;
+		DoT = 80/3;
 		break;
 	}
 	case Mallet:
 	{
 				   spin = 0;
 				   knockback = 800;
-				   damage = 180;
+				   damage = 180/3;
 				   splash = 2;
 				   DoT = 0;
 				   break;
