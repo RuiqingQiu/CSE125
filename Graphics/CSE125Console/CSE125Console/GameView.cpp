@@ -284,7 +284,7 @@ void GameView::highlight_second_pass(){
 			pair<float, GeoNode*> p = make_pair(999, node);
 			nodedepthvec.push_back(p);
 		}
-		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE)
+		if (pViewCamera->sphereInFrustum(node->localTransform.position, 1) != Camera::OUTSIDE || node->type == STONEHENGE)
 		{
 			Vector4 localpos = Vector4(node->localTransform.position.x, node->localTransform.position.y, node->localTransform.position.z, 1);
 			Vector4 position = modelview * (localpos);
