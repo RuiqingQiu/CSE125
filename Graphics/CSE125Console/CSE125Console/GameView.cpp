@@ -1170,7 +1170,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		}
 	}
 
-	std::printf("number of objects being created: %i\n", createdobj);
+	//std::printf("number of objects being created: %i\n", createdobj);
 	//Loop through the list and delete anything 
 	//Make a tmp list to store everything we want to render at the next pass
 	/*

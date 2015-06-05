@@ -129,7 +129,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 
 									//this is for the GUI display update
 									if (h->player1id == g_pCore->pPlayer->playerid) {
-										if (((float)h->health / (float)h->maxhealth) <= 0.2f){
+										if (((float)h->health / (float)h->maxhealth) <= 0.05f){
 											g_pCore->pGameView->SetBlur(true, 0.15f, 0.3f);
 										}
 										else{

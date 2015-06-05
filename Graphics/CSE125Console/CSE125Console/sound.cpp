@@ -229,6 +229,7 @@ void Sound::playOpening(){
 
 
 void Sound::playEnding(){
+
 	//cout << "play ending sound " << endl;
 	if (endingSound.getStatus() == sf::Sound::Stopped){
 		music.pause();
@@ -240,6 +241,7 @@ void Sound::playEnding(){
 }
 
 void Sound::playCollisionWall(){
+
 	//cout << "playing collision to wall " << endl;
 	if (collisionWallSound.getStatus() == sf::Sound::Stopped){
 			moneySound.stop(); // stop collecting money

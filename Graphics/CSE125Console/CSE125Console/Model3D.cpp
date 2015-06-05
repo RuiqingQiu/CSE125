@@ -96,7 +96,7 @@ void Model3D::VOnDraw(){
 		bool tmp = false;
 
 		if (false && this->type == BATTLEFIELD){
-			printf("battle field\n");
+			//printf("battle field\n");
 		}
 		else if (this->edge_highlight){
 			//Passing modelMatrix
