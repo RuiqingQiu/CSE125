@@ -7,7 +7,8 @@ using namespace std;
 
 string path = "sound/";
 
-Sound::Sound(){
+Sound::Sound(){ 
+		 
 	/* Cannot call play in the constructor !!! */
 	// build view selection sound
 	string tmp = path + "select.wav";
@@ -60,6 +61,7 @@ Sound::Sound(){
 	if (!openingBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading opening sound effect " << endl;
 	openingSound.setBuffer(openingBuffer);
+	openingSound.setVolume(50);
 	openingSound.setLoop(true);
 	// need to play and then pause it
 	openingSound.play();
@@ -146,11 +148,14 @@ void Sound::playMusic(){
 // this function is to play build view background music
 void Sound::playBuildViewBackground(){
 	if (buildViewBackground.getStatus() != sf::Sound::Playing){
-		buildViewBackground.play();
 		moneySound.stop(); // no money sound
+		ppcrashSound.stop(); // no crash sound
 		openingSound.stop();
 		loadingSound.stop();
+		collisionWallSound.stop();
 		music.stop();
+		buildViewBackground.play();
+		
 	}
 }
 
@@ -178,6 +183,7 @@ void Sound::playExplosion(float x, float y,float z){
 void Sound::playSelect(){
 	//cout << "Enter play select " << endl;
 	if (selectSound.getStatus() != sf::Sound::Playing){
+		//cout << "Play Select " << endl;
 		selectSound.play();
 		Sleep(100); // sleep for 0.1 secs and then pause
 		selectSound.pause();
@@ -186,6 +192,7 @@ void Sound::playSelect(){
 
 // This function is used to play gun shot sound
 void Sound::playGun(float x, float y, float z){
+	//cout << "Enter play gun shot effect " << endl;
 	// for the first time
 	if (gunSound.getStatus() == sf::Sound::Stopped){
 		gunSound.play();
@@ -193,6 +200,7 @@ void Sound::playGun(float x, float y, float z){
 
 	// cannot do sleep for gun sound effect
 	if (gunSound.getStatus() == sf::Sound::Playing){
+		//cout << "Play gun " << endl;
 		gunSound.setPosition(x, y, z);
 		moneySound.stop();
 		gunSound.stop();
@@ -221,6 +229,8 @@ void Sound::playOpening(){
 
 
 void Sound::playEnding(){
+
+	//cout << "play ending sound " << endl;
 	if (endingSound.getStatus() == sf::Sound::Stopped){
 		music.pause();
 		moneySound.stop();
@@ -231,23 +241,23 @@ void Sound::playEnding(){
 }
 
 void Sound::playCollisionWall(){
+
+	//cout << "playing collision to wall " << endl;
 	if (collisionWallSound.getStatus() == sf::Sound::Stopped){
-		moneySound.stop(); // stop collecting money
-		collisionWallSound.play();
-		
+			moneySound.stop(); // stop collecting money
+			collisionWallSound.play();
 	}
 }
 // play money collection sound
 void Sound::playMoneyCollection(){
 	if (moneySound.getStatus() == sf::Sound::Stopped){
-		moneySound.play();
+			moneySound.play();
 	}
 }
-
 
 // play player and player crash sound
 void Sound::playPPCrash(){
 	if (ppcrashSound.getStatus() == sf::Sound::Stopped){
-		ppcrashSound.play();
+			ppcrashSound.play();
 	}
 }

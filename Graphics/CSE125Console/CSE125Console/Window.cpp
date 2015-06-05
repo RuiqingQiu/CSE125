@@ -348,8 +348,7 @@ void Window::displayCallback() {
 		soundObject->playBuildViewBackground();
 	}
 	else if (factory->currentView == factory->battlemode){
-		soundObject->playMusic();
-		
+		soundObject->playMusic();	
 	}
 	// play the ending sound
 	else if (factory->currentView == factory->gameOver){
