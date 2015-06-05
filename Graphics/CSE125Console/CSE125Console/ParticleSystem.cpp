@@ -100,7 +100,7 @@ void ParticleSystem::VOnDraw()
 			float x = p.x;
 			float y = p.y;
 			float z = p.z;
-			glColor4f(p.r, p.g, p.b, min(0.5,1 - log10(((pduration-p.life) / pduration) * 10)));
+			glColor4f(p.r, p.g, p.b, max(0.0,1 - log10(((pduration-p.life) / pduration) * 10)));
 			float sx = max(0.0,log10((1 - p.life / pduration) * 10)*p.sx);
 			float sy = max(0.0,log10((1 - p.life / pduration) * 10)*p.sy);
 			float sz = max(0.0,log10((1 - p.life / pduration) * 10)*p.sz);
@@ -122,8 +122,8 @@ void ParticleSystem::VOnDraw()
 			//particle[loop].y += 0.00055f * (float(rand() % 100 + 1) * 100.0f/timeCount );
 			particle[loop].y += 0.00055f * (float(rand() % 100 + 1));
 
-			particle[loop].r += 0.0002f * float(rand() % 100);
-			particle[loop].g += 0.0001f * float(rand() % 30);
+			//particle[loop].r += 0.0002f * float(rand() % 100);
+			//particle[loop].g += 0.0001f * float(rand() % 30);
 
 			particle[loop].life -= deltatime;
 			if (particle[loop].life <= 0.0f)
