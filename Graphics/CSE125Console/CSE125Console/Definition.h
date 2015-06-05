@@ -62,6 +62,7 @@ enum ModelType{
 	WALL = 701,
 	CANNONBALL = 702,
 	BULLET = 703,
+	LASER = 704,
 
 	CUBEA = 751,
 	CUBEB = 752,

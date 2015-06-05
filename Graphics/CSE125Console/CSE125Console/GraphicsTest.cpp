@@ -54,35 +54,14 @@ void GraphicsTest::displayTest6(GameView* view){
 
 void GraphicsTest::displayTest5(GameView* view){
 	Model3D* object;
-	object = Model3DFactory::generateObjectWithType(CANNONBALL);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(0, 2, 0);
+	object = Model3DFactory::generateObjectWithType(LASER);
+	object->shader_type = LIGHTS_SHADER;
+	object->localTransform.position = Vector3(-3, 2, 0);
 	object->localTransform.rotation = Vector3(0, 0, 0);
 	object->identifier = -1;
 	//object->auto_rotate = true;
 	object->isUpdated = true;
-	object->type = CANNONBALL;
-	view->PushEnvironmentNode(object);
-
-	object = Model3DFactory::generateObjectWithType(Turrent);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(10, 2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = Turrent;
-	view->PushEnvironmentNode(object);
-
-
-	object = Model3DFactory::generateObjectWithType(CROWN);
-	object->shader_type = BATTLEFIELD_SHADER;
-	object->localTransform.position = Vector3(5, 2, 0);
-	object->localTransform.rotation = Vector3(0, 0, 0);
-	object->identifier = -1;
-	//object->auto_rotate = true;
-	object->isUpdated = true;
-	object->type = CROWN;
+	object->type = LASER;
 	view->PushEnvironmentNode(object);
 
 }

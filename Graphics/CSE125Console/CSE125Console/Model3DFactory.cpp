@@ -12,6 +12,7 @@ Model3DFactory::Model3DFactory()
 	//blocks
 	render_obj_map.insert(std::pair<int, RenderObject*>(BasicCube, new RenderObject("Assets/BasicCube/cube2.obj", "Assets/BasicCube/tex.png", "Assets/BasicCube/normals.png", "Assets/BasicCube/gloss.png", "Assets/BasicCube/metallic.png")));
 
+	
 	render_obj_map.insert(std::pair<int, RenderObject*>(CrystalCube, new RenderObject("Assets/CrystalMethCube/cubeofmeth.obj", "Assets/CrystalMethCube/tex.png", "Assets/CrystalMethCube/normals.png", "Assets/CrystalMethCube/gloss.png", "Assets/CrystalMethCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(GlowingCube, new RenderObject("Assets/WhiteCube/simplecube2.obj", "Assets/WhiteCube/tex.png", "Assets/WhiteCube/normals.png", "Assets/WhiteCube/gloss.png", "Assets/WhiteCube/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(WoodenCube, new RenderObject("Assets/WoodenCube/woodcube.obj", "Assets/WoodenCube/tex.png", "Assets/WoodenCube/normals.png", "Assets/WoodenCube/gloss.png", "Assets/WoodenCube/metallic.png")));
@@ -65,6 +66,8 @@ Model3DFactory::Model3DFactory()
 	//Moneyzone obbjects
 	render_obj_map.insert(std::pair<int, RenderObject*>(DOLLAR, new RenderObject("Assets/MoneyZone/DollarSign/dollar.obj", "Assets/MoneyZone/DollarSign/tex.png", "Assets/MoneyZone/DollarSign/normals.png", "Assets/MoneyZone/DollarSign/gloss.png", "Assets/MoneyZone/DollarSign/metallic.png")));
 	render_obj_map.insert(std::pair<int, RenderObject*>(CROWN, new RenderObject("Assets/Crown/crown.obj", "Assets/Crown/tex.png", "Assets/Crown/normals.png", "Assets/Crown/gloss.png", "Assets/Crown/metallic.png")));
+	
+	render_obj_map.insert(std::pair<int, RenderObject*>(LASER, new RenderObject("Assets/Laserbeam/laserbeam.obj", "Assets/Laserbeam/tex.png", "Assets/Laserbeam/normals.png", "Assets/Laserbeam/gloss.png", "Assets/Laserbeam/metallic.png")));
 
 	cout << "Model3DFactory loading done" << endl;
 
@@ -85,6 +88,20 @@ Model3D* Model3DFactory::generateDefault() {
 
 Model3D* Model3DFactory::generateObjectWithType(int type){
 	switch (type){
+	case LASER:{
+				   if (render_obj_map[type] == nullptr){
+					   cout << "model is not there, using BasicCube" << endl;
+					   Model3D * returnModel = new Model3D(render_obj_map[BasicCube]);
+					   returnModel->type = BasicCube;
+					   return returnModel;
+				   }
+				   Model3D * returnModel = new Model3D(render_obj_map[type]);
+				   returnModel->type = Mallet;
+				   returnModel->damageStat = 1;
+				   returnModel->cost = 1;
+				   return returnModel;
+				   break;
+	}
 	case CANNONBALL:{
 						if (render_obj_map[type] == nullptr){
 							cout << "model is not there, using BasicCube" << endl;

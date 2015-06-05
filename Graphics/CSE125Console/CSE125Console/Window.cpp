@@ -117,21 +117,8 @@ unsigned int split2(const std::string &txt, std::vector<std::string> &strs, char
 	return strs.size();
 }
 
-union u
-{
-	float f;
-	char s[sizeof(float)];
-};
-
 void Window::initialize(void)
 {
-	
-
-	union u foo;
-	foo.f = 2.45;
-	cout << foo.s << endl;
-
-
 	m_factory = new  Model3DFactory(); //must call before making view factory
 	factory = new viewFactory(width, height);
 

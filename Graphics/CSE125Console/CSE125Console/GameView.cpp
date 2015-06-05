@@ -721,7 +721,17 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 			//cout << "create object" << endl;
 			//cout << "id " << info->player_infos[i]->id << endl;
 			switch (info->player_infos[i]->type){
-
+			case LASER:{
+						   Model3D* object = Model3DFactory::generateObjectWithType(LASER);
+						   object->isUpdated = true;
+						   object->identifier = info->player_infos[i]->id;
+						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
+						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						   object->shader_type = shader_type;
+						   NodeList.push_back(object);
+						   info->player_infos[i]->processed = true;
+						   break;
+			}
 				//CUBE = 0
 			case BasicCube:{
 							   Model3D* object = Model3DFactory::generateObjectWithType(BasicCube);
