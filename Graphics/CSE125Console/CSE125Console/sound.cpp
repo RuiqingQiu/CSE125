@@ -60,6 +60,7 @@ Sound::Sound(){
 	if (!openingBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading opening sound effect " << endl;
 	openingSound.setBuffer(openingBuffer);
+	openingSound.setVolume(50);
 	openingSound.setLoop(true);
 	// need to play and then pause it
 	openingSound.play();
@@ -148,8 +149,10 @@ void Sound::playBuildViewBackground(){
 	if (buildViewBackground.getStatus() != sf::Sound::Playing){
 		buildViewBackground.play();
 		moneySound.stop(); // no money sound
+		ppcrashSound.stop(); // no crash sound
 		openingSound.stop();
 		loadingSound.stop();
+		collisionWallSound.stop();
 		music.stop();
 	}
 }
@@ -187,7 +190,7 @@ void Sound::playSelect(){
 
 // This function is used to play gun shot sound
 void Sound::playGun(float x, float y, float z){
-	cout << "Enter play gun shot effect " << endl;
+	//cout << "Enter play gun shot effect " << endl;
 	// for the first time
 	if (gunSound.getStatus() == sf::Sound::Stopped){
 		gunSound.play();
@@ -195,7 +198,7 @@ void Sound::playGun(float x, float y, float z){
 
 	// cannot do sleep for gun sound effect
 	if (gunSound.getStatus() == sf::Sound::Playing){
-		cout << "Play gun " << endl;
+		//cout << "Play gun " << endl;
 		gunSound.setPosition(x, y, z);
 		moneySound.stop();
 		gunSound.stop();
@@ -224,7 +227,7 @@ void Sound::playOpening(){
 
 
 void Sound::playEnding(){
-	cout << "play ending sound " << endl;
+	//cout << "play ending sound " << endl;
 	if (endingSound.getStatus() == sf::Sound::Stopped){
 		music.pause();
 		moneySound.stop();
@@ -235,7 +238,7 @@ void Sound::playEnding(){
 }
 
 void Sound::playCollisionWall(){
-	cout << "playing collision to wall " << endl;
+	//cout << "playing collision to wall " << endl;
 	if (collisionWallSound.getStatus() == sf::Sound::Stopped){
 		moneySound.stop(); // stop collecting money
 		collisionWallSound.play();
