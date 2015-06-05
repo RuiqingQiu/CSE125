@@ -153,6 +153,9 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 												  f->static_object = true;
 												  f->lifeTime = 5;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  if (Window::factory->viewmode == viewType::BATTLE){
+													  Window::soundObject->playExplosion(0,0,0); // play player to player crash sound
+												  }
 												  break;
 									   }
 										   //player player
@@ -195,8 +198,10 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 3);
 												  f->static_object = true;
 												  f->lifeTime = 5;
-
 												  g_pCore->pGameView->PushEnvironmentNode(f);
+												  if (Window::factory->viewmode == viewType::BATTLE){
+													  Window::soundObject->playExplosion(0, 0, 0); // play player to player crash sound
+												  }
 												  break;
 									   }
 										   //explorsion
