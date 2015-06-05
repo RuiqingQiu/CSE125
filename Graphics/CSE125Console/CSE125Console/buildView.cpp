@@ -33,39 +33,43 @@ void buildView::init() {
 	//blocksLeft = MAX_BLOCKS;
 	center = Vector3(0, -2, 0);
 	templateSet = false;
+    
+    createBase();
+}
 
-	//GeoNode * cube = new roboBase(3, 1);
-	GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
-	cube->localTransform.position = Vector3(0, 0, 0);
-	cube->identifier = 0;
-	cube->textureType = THREEBYTHREE_WOODEN;
-	PushGeoNode(cube);
-
-	GeoNode * wheel = Model3DFactory::generateObjectWithType(StoneTire);
-	wheel->localTransform.position = Vector3(1.6, -0.2, 1);
-	wheel->identifier = 1;
-	wheel->textureType = StoneTire;
-	PushGeoNode(wheel);
-
-	GeoNode * wheel2 = Model3DFactory::generateObjectWithType(StoneTire);
-	wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
-	wheel2->identifier = 2;
-	wheel2->textureType = StoneTire;
-	PushGeoNode(wheel2);
-
-	GeoNode * wheel3 = Model3DFactory::generateObjectWithType(StoneTire);
-	wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
-	wheel3->identifier = 3;
-	wheel3->textureType = StoneTire;
-	PushGeoNode(wheel3);
-
-	GeoNode * wheel4 = Model3DFactory::generateObjectWithType(StoneTire);
-	wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
-	wheel4->identifier = 4;
-	wheel4->textureType = StoneTire;
-	PushGeoNode(wheel4);
-
-	setCurrentNode(false);
+void buildView::createBase() {
+    //GeoNode * cube = new roboBase(3, 1);
+    GeoNode * cube = Model3DFactory::generateObjectWithType(THREEBYTHREE_WOODEN);
+    cube->localTransform.position = Vector3(0, 0, 0);
+    cube->identifier = 0;
+    cube->textureType = THREEBYTHREE_WOODEN;
+    PushGeoNode(cube);
+    
+    GeoNode * wheel = Model3DFactory::generateObjectWithType(StoneTire);
+    wheel->localTransform.position = Vector3(1.6, -0.2, 1);
+    wheel->identifier = 1;
+    wheel->textureType = StoneTire;
+    PushGeoNode(wheel);
+    
+    GeoNode * wheel2 = Model3DFactory::generateObjectWithType(StoneTire);
+    wheel2->localTransform.position = Vector3(-1.6, -0.2, 1);
+    wheel2->identifier = 2;
+    wheel2->textureType = StoneTire;
+    PushGeoNode(wheel2);
+    
+    GeoNode * wheel3 = Model3DFactory::generateObjectWithType(StoneTire);
+    wheel3->localTransform.position = Vector3(1.6, -0.2, -1);
+    wheel3->identifier = 3;
+    wheel3->textureType = StoneTire;
+    PushGeoNode(wheel3);
+    
+    GeoNode * wheel4 = Model3DFactory::generateObjectWithType(StoneTire);
+    wheel4->localTransform.position = Vector3(-1.6, -0.2, -1);
+    wheel4->identifier = 4;
+    wheel4->textureType = StoneTire;
+    PushGeoNode(wheel4);
+    
+    setCurrentNode(false);
 }
 
 void buildView::createText() {
@@ -283,10 +287,11 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 			removeNode();
 		}
 		else if (scroll->clearButton->isSelected(x, height - y)) {
-			while ((int)NodeList.size() > BASE_SIZE) {
+			while ((int)NodeList.size() > 0  ) //BASE_SIZE) {  //for resetting completely, return all money
 				//std::cout << "removing" << std::endl;
 				removeNode();
 			}
+            createBase();
 		}
 	}
 
@@ -895,11 +900,11 @@ void buildView::clearNodes() {
 }
 
 void buildView::removeNode() {
-	if ((int) NodeList.size() > BASE_SIZE) {
+	//if ((int) NodeList.size() > BASE_SIZE) {
 		money += NodeList[NodeList.size() - 1]->cost;
 		delete NodeList[NodeList.size() - 1];
 		NodeList.pop_back();
-	}
+	//}
 	setCurrentNode(false);
 }
 

@@ -47,6 +47,7 @@ private:
 	void createText();
 	void createButtons();
 	void clearNodes();
+    void createBase();
 
 	//block adding/removing helper functions
 	void addNode();
