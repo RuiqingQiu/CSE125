@@ -183,7 +183,7 @@ void Sound::playExplosion(float x, float y,float z){
 void Sound::playSelect(){
 	//cout << "Enter play select " << endl;
 	if (selectSound.getStatus() != sf::Sound::Playing){
-		cout << "Play Select " << endl;
+		//cout << "Play Select " << endl;
 		selectSound.play();
 		Sleep(100); // sleep for 0.1 secs and then pause
 		selectSound.pause();

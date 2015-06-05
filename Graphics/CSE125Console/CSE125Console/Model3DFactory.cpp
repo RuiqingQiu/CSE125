@@ -96,7 +96,7 @@ Model3D* Model3DFactory::generateObjectWithType(int type){
 					   return returnModel;
 				   }
 				   Model3D * returnModel = new Model3D(render_obj_map[type]);
-				   returnModel->type = Mallet;
+				   returnModel->type = LASER;
 				   returnModel->damageStat = 1;
 				   returnModel->cost = 1;
 				   return returnModel;

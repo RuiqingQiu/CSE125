@@ -717,7 +717,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		if (!info->player_infos[i]->processed)
 		{
 			createdobj++;
-			std::printf("create type is %i, id is %i\n", info->player_infos[i]->type, info->player_infos[i]->id);
+			//std::printf("create type is %i, id is %i\n", info->player_infos[i]->type, info->player_infos[i]->id);
 			//cout << "create object" << endl;
 			//cout << "id " << info->player_infos[i]->id << endl;
 			switch (info->player_infos[i]->type){
@@ -727,6 +727,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 						   object->identifier = info->player_infos[i]->id;
 						   object->localTransform.position = Vector3(info->player_infos[i]->x, info->player_infos[i]->y, info->player_infos[i]->z);
 						   object->localTransform.rotation = Vector3(info->player_infos[i]->rx, info->player_infos[i]->ry, info->player_infos[i]->rz);
+						   object->localTransform.scale = Vector3(2, 2, 2);
 						   object->shader_type = shader_type;
 						   NodeList.push_back(object);
 						   info->player_infos[i]->processed = true;
