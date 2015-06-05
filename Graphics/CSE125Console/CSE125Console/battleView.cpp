@@ -70,7 +70,7 @@ void battleView::updateName(string name) {
 void battleView::VOnRender() {
 	GameView::VOnRender();
 	set2d();
-	cout << "healing" << healing << " damage" << damageTaken << endl;
+	//cout << "healing" << healing << " damage" << damageTaken << endl;
 	//glEnable(GL_COLOR_MATERIAL);
 	//glColor4f(1.0, 1.0, 1.0, 1.0 - (currDuration / maxDuration) );
 	if (damageTaken || isDead) takeDamage->draw();
