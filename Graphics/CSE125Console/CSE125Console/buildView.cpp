@@ -3,6 +3,8 @@
 #include "Model3DFactory.h"
 #include "GameCore.h"
 
+//xcopy /y $(LocalDebuggerWorkingDirectory)\SFML-2.2\bin $(SolutionDir)\Debug
+
 //constructors
 buildView::buildView() : gui() {
 	init();
@@ -273,33 +275,32 @@ viewType buildView::mouseClickFunc(int state, int x, int y) {
 		buttons[i]->onClick(state, x, height-y);
 	}
 
-	if (state == GLUT_UP && prevMouseState != GLUT_UP) {
-		if (scroll->addButton->isSelected(x, height - y) ) {
-			// play the sound effect for selection
-			cout << "buildview play sound" << endl;
-			sound->playSelect();
-			addNode();
-		}
-		else if (scroll->removeButton->isSelected(x, height - y)) {
-			// play the sound effect for removing the object
-			cout << "buildview remove play sound" << endl;
-			sound->playSelect();
-			removeNode();
-		}
-		else if (scroll->clearButton->isSelected(x, height - y)) {
-			while ((int)NodeList.size() > 0  ) //BASE_SIZE) {  //for resetting completely, return all money
-				//std::cout << "removing" << std::endl;
-				removeNode();
-			}
+    if (state == GLUT_UP && prevMouseState != GLUT_UP) {
+        if (scroll->addButton->isSelected(x, height - y)) {
+            // play the sound effect for selection
+            cout << "buildview play sound" << endl;
+            sound->playSelect();
+            addNode();
+        } else if (scroll->removeButton->isSelected(x, height - y)) {
+            // play the sound effect for removing the object
+            cout << "buildview remove play sound" << endl;
+            sound->playSelect();
+            removeNode();
+        } else if (scroll->clearButton->isSelected(x, height - y)) {
+            while ((int)NodeList.size() > 0) { //BASE_SIZE) {  //for resetting completely, return all money
+                //std::cout << "removing" << std::endl;
+                removeNode();
+            }
             createBase();
-		}
-	}
+        }
+    }
 
-	if (selectedType != scroll->currentSelection) {
+	if (selectedType != scroll->currentSelection ) {
 		selectedType = scroll->currentSelection;
 		descriptions->currDescription = selectedType;
 		setTemplate();
 	}
+
 	setCurrentNode(false);
 	prevMouseState = state;
 
