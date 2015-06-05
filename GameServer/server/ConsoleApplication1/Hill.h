@@ -4,7 +4,7 @@
 #include <math.h>
 #include "GOBox.h"
 
-#define NUM_OF_PARTICLES 25
+#define NUM_OF_PARTICLES 15
 class Hill
 {
 private:

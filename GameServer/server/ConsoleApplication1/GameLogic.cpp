@@ -394,11 +394,13 @@ unsigned int GameLogic::gameLoop (){
 	unsigned int time = physicsTimer->getElapsedTime();
 	physicsTimer->startClock();
 
-	//do physics
-	gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1/66.0),4);
-	gamePhysics->stepSimulation(&gameObjs, &GamePhysics::collisionList);
+	//if (actionSent == 0){
+		//do physics
+		gamePhysics->getDynamicsWorld()->stepSimulation(btScalar(1 / 15.0), 1);
+		gamePhysics->stepSimulation(&gameObjs, &GamePhysics::collisionList);
 
-	
+	//}
+	//actionSent = (actionSent + 1) % 2;
 	std::map<int, GameObj *>::iterator iter;
 	for (iter = clientPair.begin(); iter != clientPair.end(); iter++)
 	{
@@ -467,6 +469,9 @@ unsigned int GameLogic::gameLoop (){
 	}
 
 	network->sendActionPackets(&gameObjs, &gameEventList);
+
+
+
 	gameEventList.clear();
 	
 	if (countDown->checkCountdown()){
@@ -756,7 +761,7 @@ void GameLogic::prePhyLogic(){
 				btWheelInfo rightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(3);
 				btWheelInfo bleftWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(0);
 				btWheelInfo brightWheel = ((Robot *)*it)->getVehicle()->getWheelInfo(1);
-				double steering_delta = TURN_SPEED / 1.1;
+				double steering_delta = TURN_SPEED / 3;
 
 				if (leftWheel.m_steering > 0)
 					((Robot *)*it)->getVehicle()->getWheelInfo(2).m_steering += -steering_delta;
@@ -793,6 +798,7 @@ void GameLogic::prePhyLogic(){
 
 void GameLogic::postPhyLogic(){
 	std::vector<Collision *>::iterator it;
+
 	for (it = GamePhysics::collisionList.begin(); it != GamePhysics::collisionList.end(); it++)
 	{
 		btCollisionObject* obj1 = static_cast<btCollisionObject*>((*it)->getObj1());
@@ -1358,7 +1364,7 @@ void GameLogic::applyMeleeForce(GameObj* GO1, GameObj* GO2){
 		boxRot.normalize();
 		btVector3 newforce = boxRot*knockback;
 		//newforce.setY(0);
-		GO2->getRigidBody()->applyCentralImpulse(newforce);
+		//GO2->getRigidBody()->applyCentralImpulse(newforce);
 		//cout << "GO1 WEAPON: knockback " << knockback << endl;
 		//cout << "GO1 WEAPON force direct: x:" << newforce.getX() << " y: " << newforce.getY() << " Z: " << newforce.getZ() << endl;
 		Robot* r = (Robot*)GO1->getBelongTo();
@@ -1411,7 +1417,7 @@ void GameLogic::updateDoTDamage()
 void GameLogic::updateBlockEffects()
 {
 	int i;
-	double threshold = 30;
+	double threshold = 10;
 	for (i = 0; i < numPlayers; i++)
 	{
 		Robot* r = (Robot*)clientPair.find(i)->second;
@@ -1422,13 +1428,15 @@ void GameLogic::updateBlockEffects()
 		std::vector<GameObj*> parts = r->getParts();
 		for (it = parts.begin(); it != parts.end(); it++)
 		{
-			if ((*it)->getBlockType() == BLACKCUBE || (*it)->getBlockType() == GlowingCube || (*it)->getBlockType() == THREEBYTHREE_GLOWING || (*it)->getBlockType() == THREEBYTHREE_BLACK)
-			{
-				force += (*it)->getBlockForce();
-			}
-			else if ((*it)->getBlockType() == CrystalCube || (*it)->getBlockType() == THREEBYTHREE_CRYSTAL)
-			{
-				healing += (*it)->getHealing();
+			if (!(*it)->getHasDeleted()){
+				if ((*it)->getBlockType() == BLACKCUBE || (*it)->getBlockType() == GlowingCube || (*it)->getBlockType() == THREEBYTHREE_GLOWING || (*it)->getBlockType() == THREEBYTHREE_BLACK)
+				{
+					force += (*it)->getBlockForce();
+				}
+				else if ((*it)->getBlockType() == CrystalCube || (*it)->getBlockType() == THREEBYTHREE_CRYSTAL)
+				{
+					healing += (*it)->getHealing();
+				}
 			}
 		}
 		if (healing != 0)
@@ -1489,14 +1497,14 @@ void GameLogic::updateBlockEffects()
 
 void GameLogic::applyBulletEffect(GameObj* GO1, GameObj* GO2)
 {
-	if (GO1->getBlockType() == BULLET && !GO2->getDeleted())
+	if (GO1->getBlockType() == LASER && !GO2->getDeleted())
 	{
 		if (GO2->getBelongTo() != nullptr)
 		{
 			Robot* r = (Robot*)GO2->getBelongTo();
 			btRaycastVehicle* v = r->getVehicle();
-			r->getRigidBody()->setAngularVelocity(r->getRigidBody()->getAngularVelocity()*0.7);
-			r->getRigidBody()->setLinearVelocity(r->getRigidBody()->getLinearVelocity()*0.7);
+			r->getRigidBody()->setAngularVelocity(r->getRigidBody()->getAngularVelocity()*0.6);
+			r->getRigidBody()->setLinearVelocity(r->getRigidBody()->getLinearVelocity()*0.6);
 			v->applyEngineForce(0, 0);
 			v->applyEngineForce(0, 1);
 			v->applyEngineForce(0, 2);

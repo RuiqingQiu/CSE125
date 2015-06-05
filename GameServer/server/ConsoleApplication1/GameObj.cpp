@@ -192,7 +192,7 @@ void GameObj::setBlockType(int bType)
 						_mass = 17;
 						_health = 250;
 						_maxHealth = 250;
-						blockForce = 300;
+						blockForce = 600;
 						_collisionType = C_ROBOT_PARTS;
 					  break;
 	}
@@ -211,7 +211,7 @@ void GameObj::setBlockType(int bType)
 					   _mass = 15;
 					   _health = 220;
 					   _maxHealth = 220;
-					   blockHealing = 26;
+					   blockHealing = 15;
 					   _collisionType = C_ROBOT_PARTS;
 					   break;
 	}
@@ -220,7 +220,7 @@ void GameObj::setBlockType(int bType)
 						_mass = 17;
 						_health = 250;
 						_maxHealth = 250;
-						blockForce = -300;
+						blockForce = -600;
 						_collisionType = C_ROBOT_PARTS;
 						break;
 	}
@@ -304,6 +304,7 @@ void GameObj::setBlockType(int bType)
 	{
 				 std::cout << " in tire " << std::endl;
 				 _isWheel = 1;
+				 _blockType = AltTire;
 				 speedMultiplier = 7;
 						  break;
 	}
@@ -335,7 +336,7 @@ void GameObj::setBlockType(int bType)
 								 _mass = 153;
 								 _health = 2250;
 								 _maxHealth = 2250;
-								 blockForce = 2700;
+								 blockForce = 5400;
 								 _collisionType = C_ROBOT;
 							   break;
 	}
@@ -353,7 +354,7 @@ void GameObj::setBlockType(int bType)
 								_mass = 153;
 								_health = 2250;
 								_maxHealth = 2250;
-								blockForce = -2700;
+								blockForce = -5400;
 								_collisionType = C_ROBOT;
 								break;
 	}
@@ -363,14 +364,20 @@ void GameObj::setBlockType(int bType)
 								_mass = 135;
 								_health = 1980;
 								_maxHealth = 1980;
-								blockHealing = 234;//360;
+								blockHealing = 135;//360;
 								_collisionType = C_ROBOT;
 								break;
 	}
+	case LASER:
+	{		
+			_collisionType = C_PROJECTILE;
+			blockSlow = 0.5;
+			break;
 
+	}
 	case WALL:
 	{
-				 _collisionType = C_WALLS;
+		_collisionType = C_WALLS;
 		break;
 	}
 	case BATTLEFIELD:
@@ -386,7 +393,7 @@ void GameObj::setBlockType(int bType)
 	case BULLET:
 	{
 		_collisionType = C_PROJECTILE;
-		blockSlow = 0.5;
+
 		//CHANGE THIS VALUE, it is set to 1 for testing purposes right now
 		break;
 	}

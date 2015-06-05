@@ -26,7 +26,8 @@ RangedWeapon::RangedWeapon(int type)
 		_pWidth = 0.3;
 		_pHeight = 0.3;
 		_pDepth = 1;
-		_pBlockType =  BULLET;
+		_pBlockType = LASER;
+		break;
 	}
 	case BGun:
 	{
@@ -48,7 +49,7 @@ RangedWeapon::RangedWeapon(int type)
 
 			   range = FAR_RANGED;
 			   damage = 300;
-			   attackSpeed = 0.5;
+			   attackSpeed = 0.35;
 			   splash = 4;
 
 			   _pInitForce = -3000;

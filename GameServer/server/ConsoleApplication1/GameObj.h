@@ -16,8 +16,8 @@
 #include "RangedWeapon.h"
 #include "Weapon.h"
 
-#define DMG_SCALAR 10
-#define DEATH_DELAY 30
+#define DMG_SCALAR 5
+#define DEATH_DELAY 10
 
 
 

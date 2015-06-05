@@ -69,7 +69,7 @@ std::vector<GameObj*> pillars;
 
 	std::map<int, GameObj *> clientPair;
 	//clear
-
+	int actionSent;
 	//std::map< btCollisionObject*, GameObj*> objCollisionPair;
 	//clear
 

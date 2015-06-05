@@ -34,7 +34,7 @@ GameObj* GOBox::shoot()
 				GameObj* proj = new Projectile(x, y, z, rbTrans->getRotation().getX(), rbTrans->getRotation().getY(), rbTrans->getRotation().getZ(), rbTrans->getRotation().getW(),
 					((RangedWeapon *)w)->getPMass(), ((RangedWeapon *)w)->getPWidth(), ((RangedWeapon *)w)->getPHeight(), ((RangedWeapon *)w)->getPDepth());
 				proj->setDamage(w->getDamage());
-				std::cout << "shoot: " << ((RangedWeapon *)w)->getPBlockType() << std::endl;
+				//std::cout << "shoot: " << ((RangedWeapon *)w)->getPBlockType() << std::endl;
 				proj->setBlockType(((RangedWeapon *)w)->getPBlockType());
 				((RangedWeapon *)w)->setLastShot();
 				((Projectile*)proj)->initForce = ((RangedWeapon *)w)->getPInitForce();
