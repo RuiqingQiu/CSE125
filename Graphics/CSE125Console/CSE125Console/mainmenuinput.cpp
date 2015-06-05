@@ -2,8 +2,8 @@
 #include "mainmenuinput.h"
 
 mainMenuInput::mainMenuInput() :guiGameInput(){
-	//IPAdress = "128.54.70.15"; // test displaying the IP Address, need to change later
-	IPAdress = "";
+	IPAdress = "137.110.147.30"; // test displaying the IP Address, need to change later
+	//IPAdress = "";
 	g_pCore->pPlayer->name = name;
 	g_pCore->pPlayer->IPAddress = IPAdress; // set the ip address in the game player object
 }
