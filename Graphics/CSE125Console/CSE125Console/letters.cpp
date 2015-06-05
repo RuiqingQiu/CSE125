@@ -96,7 +96,8 @@ bool letters::setTexture(int i) {
 		);
 	if (*t == 0) {
 		std::cout << concat.c_str() << std::endl;
-		printf("SOIL loading error: '%s'\n", SOIL_last_result());
+		
+		("SOIL loading error: '%s'\n", SOIL_last_result());
 		return false;
 	}
 

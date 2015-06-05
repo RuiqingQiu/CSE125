@@ -178,7 +178,6 @@ void Sound::playExplosion(float x, float y,float z){
 void Sound::playSelect(){
 	//cout << "Enter play select " << endl;
 	if (selectSound.getStatus() != sf::Sound::Playing){
-		cout << "Play Select " << endl;
 		selectSound.play();
 		Sleep(100); // sleep for 0.1 secs and then pause
 		selectSound.pause();
@@ -187,7 +186,6 @@ void Sound::playSelect(){
 
 // This function is used to play gun shot sound
 void Sound::playGun(float x, float y, float z){
-	cout << "Enter play gun shot effect " << endl;
 	// for the first time
 	if (gunSound.getStatus() == sf::Sound::Stopped){
 		gunSound.play();
@@ -195,7 +193,6 @@ void Sound::playGun(float x, float y, float z){
 
 	// cannot do sleep for gun sound effect
 	if (gunSound.getStatus() == sf::Sound::Playing){
-		cout << "Play gun " << endl;
 		gunSound.setPosition(x, y, z);
 		moneySound.stop();
 		gunSound.stop();
@@ -224,7 +221,6 @@ void Sound::playOpening(){
 
 
 void Sound::playEnding(){
-	cout << "play ending sound " << endl;
 	if (endingSound.getStatus() == sf::Sound::Stopped){
 		music.pause();
 		moneySound.stop();
@@ -235,7 +231,6 @@ void Sound::playEnding(){
 }
 
 void Sound::playCollisionWall(){
-	cout << "playing collision to wall " << endl;
 	if (collisionWallSound.getStatus() == sf::Sound::Stopped){
 		moneySound.stop(); // stop collecting money
 		collisionWallSound.play();

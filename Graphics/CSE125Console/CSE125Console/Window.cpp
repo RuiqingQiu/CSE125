@@ -364,7 +364,7 @@ void Window::displayCallback() {
 	
 
 	if (p!=nullptr) {
-		printf("number of game objects: %i\n number of events: %i\n", p->player_infos.size(), p->event_infos.size());
+		//printf("number of game objects: %i\n number of events: %i\n", p->player_infos.size(), p->event_infos.size());
 
 		switch (p->packet_types){
 			case GAME_STATE:{

@@ -717,7 +717,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		if (!info->player_infos[i]->processed)
 		{
 			createdobj++;
-			std::printf("create type is %i, id is %i\n", info->player_infos[i]->type, info->player_infos[i]->id);
+			//std::printf("create type is %i, id is %i\n", info->player_infos[i]->type, info->player_infos[i]->id);
 			//cout << "create object" << endl;
 			//cout << "id " << info->player_infos[i]->id << endl;
 			switch (info->player_infos[i]->type){
@@ -1169,7 +1169,7 @@ void GameView::VOnClientUpdate(GameInfoPacket* info)
 		}
 	}
 
-	std::printf("number of objects being created: %i\n", createdobj);
+	//std::printf("number of objects being created: %i\n", createdobj);
 	//Loop through the list and delete anything 
 	//Make a tmp list to store everything we want to render at the next pass
 	/*
