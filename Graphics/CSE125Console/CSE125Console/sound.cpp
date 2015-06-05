@@ -7,7 +7,8 @@ using namespace std;
 
 string path = "sound/";
 
-Sound::Sound(){
+Sound::Sound(){ 
+		 
 	/* Cannot call play in the constructor !!! */
 	// build view selection sound
 	string tmp = path + "select.wav";
@@ -147,13 +148,14 @@ void Sound::playMusic(){
 // this function is to play build view background music
 void Sound::playBuildViewBackground(){
 	if (buildViewBackground.getStatus() != sf::Sound::Playing){
-		buildViewBackground.play();
 		moneySound.stop(); // no money sound
 		ppcrashSound.stop(); // no crash sound
 		openingSound.stop();
 		loadingSound.stop();
 		collisionWallSound.stop();
 		music.stop();
+		buildViewBackground.play();
+		
 	}
 }
 
@@ -240,22 +242,20 @@ void Sound::playEnding(){
 void Sound::playCollisionWall(){
 	//cout << "playing collision to wall " << endl;
 	if (collisionWallSound.getStatus() == sf::Sound::Stopped){
-		moneySound.stop(); // stop collecting money
-		collisionWallSound.play();
-		
+			moneySound.stop(); // stop collecting money
+			collisionWallSound.play();
 	}
 }
 // play money collection sound
 void Sound::playMoneyCollection(){
 	if (moneySound.getStatus() == sf::Sound::Stopped){
-		moneySound.play();
+			moneySound.play();
 	}
 }
-
 
 // play player and player crash sound
 void Sound::playPPCrash(){
 	if (ppcrashSound.getStatus() == sf::Sound::Stopped){
-		ppcrashSound.play();
+			ppcrashSound.play();
 	}
 }

@@ -108,7 +108,7 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 									  Window::factory->score->updateScore(s->deaths[myID], s->takedowns[myID], rank);
 								  }
 								  else {
-										// check if enter the money zone
+										// check if enter the money zone, play the sound
 									  int previous = Window::factory->buildmode->startingMoney;
 									  if (s->gold[myID] > previous){
 										  Window::soundObject->playMoneyCollection(); 
@@ -161,7 +161,9 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 												  f->static_object = true;
 												  f->lifeTime = 5;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
-												  Window::soundObject->playPPCrash(); // play player to player crash sound
+												  if (Window::factory->viewmode == viewType::BATTLE){
+													  Window::soundObject->playPPCrash(); // play player to player crash sound
+												  }
 												  break;
 									   }
 										   //player wall
@@ -178,12 +180,13 @@ void EventSystem::ProcessGamePacket(GameInfoPacket* packet)
 												  f->startColor = Vector3(0.8, 0.8, 0);
 												  g_pCore->pGameView->PushEnvironmentNode(f);
 												  */
-												  
 												  Fire* f = new Fire(h->x, h->y, h->z, 1, 2);
 												  f->static_object = true;
 												  f->lifeTime = 1;
 												  g_pCore->pGameView->PushEnvironmentNode(f);
-												  Window::soundObject->playCollisionWall();// play collision to wall
+												  if (Window::factory->viewmode == viewType::BATTLE){
+													  Window::soundObject->playCollisionWall();// play collision to wall
+												  }
 												  //sound->playCollisionWall(); 
 												  break;
 									   }
