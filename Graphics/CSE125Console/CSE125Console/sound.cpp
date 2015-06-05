@@ -25,6 +25,7 @@ Sound::Sound(){
 	if (!explosionBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading explosion sound effect " << endl;
 	explosionSound.setBuffer(explosionBuffer);
+	explosionSound.setVolume(40); // lower the explosion sound
 	gunSound.play();
 	gunSound.stop();
 
@@ -61,7 +62,7 @@ Sound::Sound(){
 	if (!openingBuffer.loadFromFile(tmp))
 		cout << "ERROR in loading opening sound effect " << endl;
 	openingSound.setBuffer(openingBuffer);
-	openingSound.setVolume(50);
+	openingSound.setVolume(30);
 	openingSound.setLoop(true);
 	// need to play and then pause it
 	openingSound.play();
