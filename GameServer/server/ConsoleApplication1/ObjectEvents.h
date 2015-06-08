@@ -1,9 +1,13 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "GameObj.h"
 #include "NetworkData.h"
+
 
 class ObjectEvents
 {
+private:
 	unsigned int _event_type;
 	unsigned int _cid;
 	std::string _name;
@@ -17,6 +21,6 @@ public:
 	unsigned int getCid();
 	std::string getName();
 
-
+	std::vector<GameObj*> roboBuild;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObj.h"
+#include "Projectile.h"
 #include "definition.h"
 class GOBox : public GameObj
 {
@@ -18,5 +19,9 @@ public:
 	double getWidth();
 	double getHeight();
 	double getDepth();
-	void createRigidBody(std::map< btCollisionObject*, GameObj*> *) override;
+	btRigidBody* getRigidBody() override;
+	void createRigidBody() override; // std::map< btCollisionObject*, GameObj*> *) override;
+	GameObj* shoot() override;
+
+
 };

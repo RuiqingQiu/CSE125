@@ -1,9 +1,12 @@
 #include "GERobotDeath.h"
+#include <iostream>
 
 
-GERobotDeath::GERobotDeath()
+GERobotDeath::GERobotDeath(int c, int k)
 	:GameEvents(0)
 {
+	cid = c;
+	kcid = k;
 	//TODO: change int
 }
 
@@ -13,6 +16,13 @@ GERobotDeath::~GERobotDeath()
 }
 
 
-void GERobotDeath::to_string(char* st){
-
+void GERobotDeath::to_string(std::string& s){
+	//std::cout << "Sent Death Event" << std::endl;
+	s += std::to_string(_event_type);
+	s += " ";
+	s += std::to_string(cid);
+	s += " ";
+	s += std::to_string(kcid);
+	//std::cout << "to string:"<< s << "end"<< std::endl;
+	//std::cout << "cid" << cid << "kid" << kcid << std::endl;
 }

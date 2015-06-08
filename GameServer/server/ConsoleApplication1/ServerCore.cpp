@@ -20,7 +20,9 @@ ServerCore::~ServerCore()
 
 void ServerCore::serverLoop()
 {
-	
+	gameLogic->numPlayers = 4 ;
+	cout << "Game requires " << gameLogic->numPlayers << " players." << endl;
+	int currNumPlayers = 0;
 	while (true)
 	{
 		timeFrame->startClock();
@@ -30,39 +32,78 @@ void ServerCore::serverLoop()
 		{
 		case INIT_STATE0:{
 			action = gameLogic->waitToConnect();
-			//action = ADDCLIENT;
-			cout << "action for init0: " << action << endl;
+			if (gameLogic->numPlayers < 1) action = ADDCLIENT;
+			if (currNumPlayers == 0 && currNumPlayers < gameLogic->numPlayers)
+			{
+				cout << "Waiting for Player 1." << endl;
+				currNumPlayers++;
+			}
 			break;
 		}
 		case INIT_STATE1:
 		{	
 			action = gameLogic->waitToConnect();
-			action = ADDCLIENT;
-			cout << "action for init1: " << action << endl;
+			if (gameLogic->numPlayers < 2) action = ADDCLIENT;
+			if (currNumPlayers == 1 && currNumPlayers < gameLogic->numPlayers)
+			{
+				cout << "Waiting for Player 2." << endl;
+				currNumPlayers++;
+			}
 			break;
 		}
 		case INIT_STATE2:
 		{	
-			//action = gameLogic->waitToConnect();
-			action = ADDCLIENT;
-			cout << "action for init2: " << action << endl;
+			action = gameLogic->waitToConnect();
+			if (gameLogic->numPlayers < 3) action = ADDCLIENT;
+			if (currNumPlayers == 20 && currNumPlayers < gameLogic->numPlayers)
+			{
+				cout << "Waiting for Player 3." << endl;
+				currNumPlayers++;
+			}
 			break;
 		}
 		case INIT_STATE3:
 		{	
-			action = ADDCLIENT;
+			action = gameLogic->waitToConnect();
+			if (gameLogic->numPlayers< 4) action = ADDCLIENT;
+			if (currNumPlayers == 3 && currNumPlayers < gameLogic->numPlayers)
+			{
+				cout << "Waiting for Player 4." << endl;
+				currNumPlayers++;
+			}
+			break;
+		}
+		case INIT_BUILD_STATE:
+		{
+			cout << "All players have connected." << endl;
+			action = gameLogic->startBuild();
 			break;
 		}
 		case BUILD_STATE:
 		{	
-			gameLogic->gameStart();
-		    action = TIMEUP;
+		    action=	gameLogic->buildMode();
+			//gameLogic->gameStart();
+		    //action = TIMEUP;
 			break;
+		}
+		case INIT_GAME: 
+		{
+			 cout << "Initializing the game." << endl;
+			 action = gameLogic->gameStart();
+			 break;
 		}
 		case GAME_STATE0:
 		{	
 			action = gameLogic->gameLoop();
 			break;
+		}
+		case CLEAR_STATE:{
+		    action = gameLogic->clearGame();
+			break;
+		}
+		case END_STATE:{
+ 		    action = gameLogic->endGame();
+ 		    break;
 		}
 		default:
 		{	action = WAIT;
@@ -74,7 +115,7 @@ void ServerCore::serverLoop()
 		//cout << "Sleep the frame." << endl;
 		//unsigned elapsed = clock() - t0;
 		////TimeFrame::frameSleep(timeFrame - elapsed);
-		timeFrame->frameSleep(33 - timeFrame->getElapsedTime()); //;
+		timeFrame->frameSleep(40 - timeFrame->getElapsedTime()); //;
 		////cout << elapsed << endl;
 		//cout << "Frame has completed sleeping." << endl;
 	}

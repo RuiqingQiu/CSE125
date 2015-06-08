@@ -2,7 +2,6 @@
 #include <string.h>
 #include <iostream>
 #include <vector>
-#include "GameObj.h"
 #include "definition.h"
 
 
@@ -14,7 +13,7 @@ struct CPacket {
 
 	unsigned int packet_type;
 	//char data[1024];
-	char data[10000];
+	char data[5000];
 
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(CPacket));
@@ -28,7 +27,7 @@ struct CPacket {
 struct SPacket {
 
 	unsigned int packet_type;
-	char data[10000];
+	char data[50000];
 
 	void serialize(char * data) {
 		memcpy(data, this, sizeof(SPacket));

@@ -41,6 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\$(ProjectName)</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -53,7 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\rqiu\Desktop\CSE125\GameServer\bullet-2.82-r2704\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\bullet-2.82-r2704\bullet-2.82-r2704\src;C:\Users\User\Desktop\bullet-2.82-r2704\bullet-2.82-r2704\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,10 +82,22 @@
   <ItemGroup>
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Constraint.h" />
+    <ClInclude Include="DamageEvent.h" />
     <ClInclude Include="DamageSystem.h" />
     <ClInclude Include="definition.h" />
     <ClInclude Include="GameEvents.h" />
+    <ClInclude Include="GECollisonHappen.h" />
+    <ClInclude Include="GEHealthUpdate.h" />
+    <ClInclude Include="GEHillUpdate.h" />
+    <ClInclude Include="GEPlayerHillUpdate.h" />
     <ClInclude Include="GERobotDeath.h" />
+    <ClInclude Include="GEScoreboardUpdate.h" />
+    <ClInclude Include="GETime.h" />
+    <ClInclude Include="Hill.h" />
+    <ClInclude Include="MeleeWeapon.h" />
+    <ClInclude Include="Network.h" />
+    <ClInclude Include="NetworkData.h" />
+    <ClInclude Include="NetworkServices.h" />
     <ClInclude Include="ObjectEvents.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameObj.h" />
@@ -96,14 +109,15 @@
     <ClInclude Include="GOCylinder.h" />
     <ClInclude Include="GOPlane.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="Network.h" />
-    <ClInclude Include="NetworkData.h" />
-    <ClInclude Include="NetworkServices.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="RangedWeapon.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scoreboard.h" />
     <ClInclude Include="ServerCore.h" />
     <ClInclude Include="ServerNetwork.h" />
     <ClInclude Include="SPacketDecoder.h" />
+    <ClInclude Include="SpawnPoint.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TimeFrame.h" />
@@ -112,10 +126,21 @@
   <ItemGroup>
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Constraint.cpp" />
+    <ClCompile Include="DamageEvent.cpp" />
     <ClCompile Include="DamageSystem.cpp" />
     <ClCompile Include="definition.cpp" />
     <ClCompile Include="GameEvents.cpp" />
+    <ClCompile Include="GECollisonHappen.cpp" />
+    <ClCompile Include="GEHealthUpdate.cpp" />
+    <ClCompile Include="GEHillUpdate.cpp" />
+    <ClCompile Include="GEPlayerHillUpdate.cpp" />
     <ClCompile Include="GERobotDeath.cpp" />
+    <ClCompile Include="GEScoreboardUpdate.cpp" />
+    <ClCompile Include="GETime.cpp" />
+    <ClCompile Include="Hill.cpp" />
+    <ClCompile Include="MeleeWeapon.cpp" />
+    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="NetworkServices.cpp" />
     <ClCompile Include="ObjectEvents.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="GameObj.cpp" />
@@ -127,12 +152,14 @@
     <ClCompile Include="GOCylinder.cpp" />
     <ClCompile Include="GOPlane.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Network.cpp" />
-    <ClCompile Include="NetworkServices.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="RangedWeapon.cpp" />
     <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="Scoreboard.cpp" />
     <ClCompile Include="ServerCore.cpp" />
     <ClCompile Include="ServerNetwork.cpp" />
     <ClCompile Include="SPacketDecoder.cpp" />
+    <ClCompile Include="SpawnPoint.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TimeFrame.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -141,14 +168,14 @@
     <ResourceCompile Include="ConsoleApplication1.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\B\src\BulletCollision\BulletCollision.vcxproj">
-      <Project>{cc0064e9-5fc3-4615-a789-f87a219c9ac4}</Project>
+    <ProjectReference Include="..\..\..\..\bullet\src\BulletCollision\BulletCollision.vcxproj">
+      <Project>{e149059b-f101-4bad-abcb-ca859d9d79f9}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\B\src\BulletDynamics\BulletDynamics.vcxproj">
-      <Project>{4e320e5b-603d-46b6-a0a9-435b3f773cb4}</Project>
+    <ProjectReference Include="..\..\..\..\bullet\src\BulletDynamics\BulletDynamics.vcxproj">
+      <Project>{9d0acdc9-ac08-4c27-9552-7cf8eb9aae8a}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\B\src\LinearMath\LinearMath.vcxproj">
-      <Project>{1b718d22-ab55-4ae2-8ed4-6457351cc73f}</Project>
+    <ProjectReference Include="..\..\..\..\bullet\src\LinearMath\LinearMath.vcxproj">
+      <Project>{1f955804-08cf-4e4b-abd5-75c53ad9656a}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

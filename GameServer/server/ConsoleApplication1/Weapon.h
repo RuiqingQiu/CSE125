@@ -1,24 +1,33 @@
 #pragma once
+
+
+#ifndef WEAPON_H
+#define WEAPON_H
+
+#include "definition.h"
+
 class Weapon
 {
-private:
+protected:
 	int _type;
-	double _damage;
-	double _attackSpeed;
-	double _mass;
 
-	double _projectileSpeed;
+private:
+	int _range;
+	double _damage;
+	double _splash;
 
 public:
-	Weapon(int, double, double, double);
+	Weapon();
 	~Weapon();
 
-	void setProjectileSpeed(double);
-
-	int getType();
+	void setDamage(double);
+	
+	int getRange();
+	void setRange(int);
+	double getSplash();
+	void setSplash(double);
 	double getDamage();
-	double getAttackSpeed();
-	double getProjectileSpeed();
-	double getMass();
 };
 
+
+#endif

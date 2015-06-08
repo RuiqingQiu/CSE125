@@ -15,15 +15,23 @@ GameState::GameState()
 	init2map[ADDCLIENT] = INIT_STATE3;
 
 	init3map[WAIT] = INIT_STATE3;
-	init3map[ADDCLIENT] = BUILD_STATE;
+	init3map[ADDCLIENT] = INIT_BUILD_STATE;
+
+	initbuildmap[0] = BUILD_STATE;
+
 
 	buildmap[COUNTDOWN] = BUILD_STATE;
-	buildmap[TIMEUP] = GAME_STATE0;
+	buildmap[TIMEUP] = INIT_GAME;
 
+
+	initgamemap[0] = GAME_STATE0;
 
 	gamemap[COUNTDOWN] = GAME_STATE0;
-	gamemap[TIMEUP] = END_STATE;
+	gamemap[TIMEUP] = CLEAR_STATE;
 
+	clearmap[0] = END_STATE;
+
+	endmap[WAIT] = END_STATE;
 	endmap[RESTART] = INIT_STATE0;
 
 
@@ -32,8 +40,11 @@ GameState::GameState()
 	STATEMAP[INIT_STATE2] = init2map;
 	STATEMAP[INIT_STATE3] = init3map;
 	STATEMAP[BUILD_STATE] = buildmap;
+	STATEMAP[INIT_GAME] = initgamemap;
 	STATEMAP[GAME_STATE0] = gamemap;
+	STATEMAP[CLEAR_STATE] = clearmap;
 	STATEMAP[END_STATE] = endmap;
+	STATEMAP[INIT_BUILD_STATE] = initbuildmap;
 
 
 

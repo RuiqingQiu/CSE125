@@ -9,7 +9,6 @@
 #include "GameObj.h"
 #include "serverCore.h"
 #include "definition.h"
-#include <btBulletDynamicsCommon.h>
 
 void serverLoop(void *);
 void clientLoop(void);
@@ -18,7 +17,7 @@ ServerCore * serverCore;
 
 int main()
 {
-	btBoxShape *b = new btBoxShape(btVector3(0, 0, 0));
+
 	serverCore = new ServerCore();
 	serverCore->serverLoop();
 

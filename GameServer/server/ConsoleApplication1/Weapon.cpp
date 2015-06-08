@@ -1,11 +1,8 @@
 #include "Weapon.h"
 
 
-Weapon::Weapon(int type, double mass, double damage, double attackSpeed)
+Weapon::Weapon()
 {
-	_type = type;
-	_damage = damage;
-	_attackSpeed = attackSpeed;
 }
 
 
@@ -15,29 +12,33 @@ Weapon::~Weapon()
 
 
 
-void Weapon::setProjectileSpeed(double speed)
-{
-	_projectileSpeed = speed;
-}
-
 //weapon.cpp
-int Weapon::getType(){
-	return _type;
+int Weapon::getRange(){
+	return _range;
 }
 
 double Weapon::getDamage(){
 	return _damage;
 }
 
-double Weapon::getAttackSpeed(){
-	return _attackSpeed;
-}
 
-double Weapon::getProjectileSpeed(){
-	return _projectileSpeed;
-}
-
-double Weapon::getMass()
+void Weapon::setDamage(double d)
 {
-	return _mass;
+	_damage = d;
 }
+
+void Weapon::setRange(int r)
+{
+	_range = r;
+}
+
+void Weapon::setSplash(double s)
+{
+	_splash = s;
+}
+
+double Weapon::getSplash()
+{
+	return _splash;
+}
+

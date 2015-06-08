@@ -15,105 +15,154 @@
     </Filter>
     <Filter Include="Source Files\network">
       <UniqueIdentifier>{f8b8e3f2-7127-4e37-97ff-a1057e5f9cca}</UniqueIdentifier>
+      <ParseFiles>false</ParseFiles>
     </Filter>
     <Filter Include="Header Files\servergame">
       <UniqueIdentifier>{bed6139d-9b31-4602-b729-9d4a4776e800}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObJ">
+      <UniqueIdentifier>{d858453e-426a-4a51-b88b-a0167a25999b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameEvent">
+      <UniqueIdentifier>{db86fb2d-e563-499b-89ac-20cd056407d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameLogic">
+      <UniqueIdentifier>{1eb93d50-df71-4e41-8c3e-8b59a9bab300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GamePhysics">
+      <UniqueIdentifier>{796f9819-9fca-4052-8a12-dc20b6f8ee88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerNetwork.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NetworkServices.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NetworkData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObj.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="definition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameLogic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TimeFrame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Network.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GamePhysics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GOBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GOPlane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GOCylinder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GOCapsule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GOCone.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SPacketDecoder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectEvents.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameEvents.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Robot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Collision.h">
+      <Filter>Source Files\GamePhysics</Filter>
     </ClInclude>
     <ClInclude Include="Constraint.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\GamePhysics</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DamageSystem.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GamePhysics.h">
+      <Filter>Source Files\GamePhysics</Filter>
     </ClInclude>
     <ClInclude Include="GERobotDeath.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageEvent.h">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvents.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GOBox.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="GOCapsule.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="GOCone.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="GOCylinder.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="GOPlane.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeWeapon.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeapon.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic.h">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEvents.h">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageSystem.h">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="definition.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerCore.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPacketDecoder.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeFrame.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>Source Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkData.h">
+      <Filter>Source Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkServices.h">
+      <Filter>Source Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerNetwork.h">
+      <Filter>Source Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObj.h">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClInclude>
+    <ClInclude Include="GEHealthUpdate.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GEScoreboardUpdate.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GETime.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="Scoreboard.h">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GECollisonHappen.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="Hill.h">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="GEHillUpdate.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="GEPlayerHillUpdate.h">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnPoint.h">
+      <Filter>Source Files\GameLogic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -128,65 +177,107 @@
     <ClCompile Include="definition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameLogic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TimeFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Network.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePhysics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GOBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GOPlane.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GOCylinder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GOCapsule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GOCone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SPacketDecoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectEvents.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameObj.cpp">
+      <Filter>Source Files\GameObJ</Filter>
     </ClCompile>
-    <ClCompile Include="GameEvents.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GOBox.cpp">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClCompile>
+    <ClCompile Include="GOCone.cpp">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClCompile>
+    <ClCompile Include="GOCylinder.cpp">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClCompile>
+    <ClCompile Include="GOCapsule.cpp">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClCompile>
+    <ClCompile Include="GOPlane.cpp">
+      <Filter>Source Files\GameObJ</Filter>
     </ClCompile>
     <ClCompile Include="Robot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameObJ</Filter>
     </ClCompile>
     <ClCompile Include="Constraint.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GamePhysics</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GamePhysics</Filter>
     </ClCompile>
-    <ClCompile Include="DamageSystem.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GamePhysics.cpp">
+      <Filter>Source Files\GamePhysics</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeWeapon.cpp">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEvents.cpp">
+      <Filter>Source Files\GameEvent</Filter>
     </ClCompile>
     <ClCompile Include="GERobotDeath.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLogic.cpp">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageSystem.cpp">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageEvent.cpp">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeapon.cpp">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEvents.cpp">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\GameObJ</Filter>
+    </ClCompile>
+    <ClCompile Include="Network.cpp">
+      <Filter>Source Files\network</Filter>
     </ClCompile>
     <ClCompile Include="NetworkServices.cpp">
       <Filter>Source Files\network</Filter>
     </ClCompile>
     <ClCompile Include="ServerNetwork.cpp">
       <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="GEHealthUpdate.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GEScoreboardUpdate.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GETime.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Scoreboard.cpp">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="GECollisonHappen.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="Hill.cpp">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClCompile>
+    <ClCompile Include="GEHillUpdate.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="GEPlayerHillUpdate.cpp">
+      <Filter>Source Files\GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="SpawnPoint.cpp">
+      <Filter>Source Files\GameLogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

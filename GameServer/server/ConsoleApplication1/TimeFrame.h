@@ -4,12 +4,14 @@
 
 #include <windows.h>
 #include <ctime>
+#include <iostream>
 
 class TimeFrame {
 private:
 	unsigned clockTime;
 	unsigned countdownPeriod;
 	unsigned countdownTime;
+	unsigned lastTime;
 
 public:
 	TimeFrame();
@@ -29,6 +31,8 @@ public:
 
 	// Sleep frame for a given time period (in milliseconds)
 	void frameSleep(int milliseconds);
+	
+	int getCurrentTime();
 };
 
 #endif

@@ -15,7 +15,11 @@ public:
 	void setHeight(double);
 	double getRadius();
 	double getHeight();
-	void createRigidBody(std::map< btCollisionObject*, GameObj*> *) override;
+	GameObj* shoot() override;
+
+
+	btRigidBody* getRigidBody() override;
+	void createRigidBody();// std::map< btCollisionObject*, GameObj*> *) override;
 	
 };
 

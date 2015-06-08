@@ -41,6 +41,18 @@ int TimeFrame::checkCountdown()
 void TimeFrame::frameSleep(int milliseconds)
 {
 	//Need to fix this
-	if (milliseconds>0)
-	Sleep(milliseconds);
+	if (milliseconds > 0)
+	{
+		//std::cout << "Server Core sleeping for " << milliseconds<< " milliseconds." <<std::endl;
+	    Sleep(milliseconds);
+	}
+ 	
+}
+
+int TimeFrame::getCurrentTime(){
+	//std::cout << "Countdown time" << countdownPeriod << std::endl;
+	//std::cout << "Current time" << clock() << std::endl;
+	//std::cout << "Clock time" << clockTime << std::endl;
+
+	return countdownPeriod - (clock() - clockTime);
 }
