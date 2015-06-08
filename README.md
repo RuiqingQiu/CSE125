@@ -1,45 +1,22 @@
-////////////////////////////////////////////////////////////
-This is the project for CSE 125
+<h2>CSE 125 Spring 2015 Group 1: Battle Blocks</h2>
 
 Class website: http://cse125.ucsd.edu/2015/index.html
 
-Project website: coming soon
-
-////////////////////////////////////////////////////////////
+Project website: http://cse125.ucsd.edu/2015/cse125g1
 
 Project Description:
 
-Create a video game!
+A sandbox game that player can build robot of their own choice by putting pieces together and fight with other 3 players.
 
-///////////////////////////////////////////////////////////
-
-Team Name:
-
-Triton one
-
-////////////////////////////////////////////////////////////
+Team Name: Triton one
 
 Team Members: 
+- Mona Liu (UI and client)
+- Ruiqing Qiu (Graphics and client)
+- Mingshan Wang (UI and Sound)
+- Thomas Zeng (Graphics and client)
+- Vera Xia (Server and Physics)
+- Alex Luong (Modeling and Particle)
+- Jason Tan (Server and Physics)
 
-- Mona Liu
-- Ruiqing Qiu
-- Mingshan Wang
-- Thomas Zeng
-- Vera Xia
-- Alex
-- Jason Tan
-
-////////////////////////////////////////////////////////////
-
-Repo Policy:
-
-- master: deployed product
-
-- staging: ready for alpha/beta testing, commit from
-  development
-
-- development: stable version, can perform system tests
-
-- feature_name_example_branch: make a branch for each new 
-  feature, test locally, commit to branch, merge to 
-  development when you know feature works for sure
+The final version is currently on master branch
