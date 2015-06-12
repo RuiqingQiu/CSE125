@@ -20,3 +20,7 @@ Team Members:
 - Jason Tan (Server and Physics)
 
 The final version is currently on master branch
+
+To run our game, go to the CSE125_EXE folder and we have our client executable as a file CSE125Console.exe and our server as BattleBlocksServer4.exe.
+To connect to the server, enter the IP Address on the client side while the server is running. 
+To figure out the server IP Address, go to start menu and type in cmd, then ipconfig.
